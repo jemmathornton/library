@@ -191,17 +191,20 @@ function cover(b, extra = "", big = false){
   // read or reading: a tick (or bookmark) in the top corner, walnut and cream (her choice, 18 Oct); her stars, filled to
   // the rating with no number, in a strip across the foot
   // read: a cream "Read" sash across the top corner (her choice, 18 Oct, over a tick)
-  const badge = st === "read" ? `<span class="sash" title="Read">Read</span>` : st === "reading" ? `<span class="sash" title="Reading now">Reading</span>` : "";
+  // didn't finish: a "DNF" sash the same way (her choice, 18 Oct)
+  const badge = st === "read" ? `<span class="sash" title="Read">Read</span>` : st === "reading" ? `<span class="sash" title="Reading now">Reading</span>`
+    : st === "stopped" ? `<span class="sash" title="Didn’t finish">DNF</span>` : "";
   const r = reading(b).rating;
   const strip = r ? `<span class="rated" title="${starsText(r)} stars"><span class="sg-stars" style="--r:${(r / 5 * 100).toFixed(1)}%"><span>★★★★★</span><span aria-hidden="true">★★★★★</span></span></span>` : "";
-  const tag = b.notOwned ? `<span class="not-owned">Not owned</span>` : "";
-  return `<div class="cover${b.cover ? "" : " blank"} ${extra}" style="--c:${s ? s.color : "#5E3D22"}">${badge}${tag}${strip}${b.cover ? `<img src="${esc(coverSrc(b, big))}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
+  // not owned: the cover faded, with a walnut "Not owned" band across it (her choice, 18 Oct; not on a book's own page)
+  const tag = b.notOwned && !big ? `<span class="not-owned">Not owned</span>` : "";
+  return `<div class="cover${b.cover ? "" : " blank"}${tag ? " unowned" : ""} ${extra}" style="--c:${s ? s.color : "#5E3D22"}">${badge}${tag}${strip}${b.cover ? `<img src="${esc(coverSrc(b, big))}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
 }
 // a cover that won't load becomes a title card
 document.addEventListener("error", e => { const img = e.target; if (img.tagName === "IMG" && img.parentNode.classList.contains("cover")) { img.parentNode.classList.add("blank"); img.remove(); } }, true);
 
 const href = b => isElsewhere(b) ? "#" + b.id : "#b-" + b.id;
-const card = (b, note) => `<a class="bk${b.notOwned ? " no" : ""}" href="${href(b)}">${cover(b)}<h3>${esc(b.t)}</h3><div class="by">${esc(note || b.by)}</div>${b.notOwned ? `<div class="own-note">${ic("library")} Not owned</div>` : ""}</a>`;
+const card = (b, note) => `<a class="bk" href="${href(b)}">${cover(b)}<h3>${esc(b.t)}</h3><div class="by">${esc(note || b.by)}</div></a>`;
 const grid = (list, cls = "") => list.length ? `<div class="books ${cls}">${list.map(b => card(b)).join("")}</div>` : "";
 function listView(list){
   return `<div class="blist">${list.map(b => { const st = reading(b).status;
@@ -238,7 +241,6 @@ function renderNav(active){
       ${link("#to-buy", ic("shopping-bag"), "To buy", left)}
       ${link("#authors", ic("users"), "Authors", AUTHORS.length)}
       ${link("#stats", ic("chart"), "Stats")}
-      ${link("#trial-tags", ic("library"), "Not owned options")}
       ${link("#add", ic("plus"), "Add a book")}    </div>`;
 }
 
@@ -297,25 +299,6 @@ function shelfBooks(list, grouped = currentGrouped){
     </div>` + body;
 }
 let currentList = [], currentGrouped = false;
-// TRIAL (18 Oct): ways to show "Not owned", for her to choose; remove once she has
-function pageTagTrial(){
-  const pick = f => NOT_OWNED.filter(f)[0];
-  const no = [pick(e => e.cover && reading(e).rating >= 4), pick(e => e.cover && isReading(e)), pick(e => e.cover && !reading(e).rating && isRead(e)), pick(e => !e.cover)].filter(Boolean);
-  const own = BOOKS.filter(b => b.cover && isRead(b) && reading(b).rating).slice(3, 5);
-  const OPTS = [["i", "H with B’s fade", "The band from H, with the lighter fade from B."],
-    ["j", "H with B’s fade and outline", "As I, plus B’s dashed outline."],
-    ["a", "Faded", "Covers of books you don’t own are greyed and faded; yours stay bright."],
-    ["b", "Ghost outline", "Faded cover inside a dashed outline, like a space on the shelf."],
-    ["c", "Band across the cover", "A walnut band across the lower part of the cover."],
-    ["d", "Second sash", "A brass sash across the opposite corner to Read."],
-    ["e", "Library stamp", "A rubber-stamp mark across the middle of the cover."],
-    ["f", "Hanging ribbon", "A brass ribbon hanging from the top of the cover."],
-    ["g", "Line under the title", "The cover stays as it is; “Not owned” in brass under the author."],
-    ["h", "Faded and band", "Greyed cover plus the band (the most obvious)."]];
-  return hero({kicker: "Trial", title: "Not owned: <em>options</em>", text: "Each row: four books you don’t own, then two of yours to compare."})
-    + OPTS.map(([k, name, text]) => `<section class="trial-opt">${sectionHead(`${k.toUpperCase()}. ${name}`)}<p class="note">${text}</p>`
-      + `<div class="books row opt-${k}">${no.concat(own).map(b => card(b)).join("")}</div></section>`).join("");
-}
 function pageAllShelves(){
   currentList = BOOKS.concat(NOT_OWNED); currentGrouped = true;
   const shelves = SHELVES.filter(s => s.books.length && s.libib).length;
@@ -626,7 +609,6 @@ function route(){
   else if (key.startsWith("b-") && bookIndex[key.slice(2)]) { const b = bookIndex[key.slice(2)]; html = pageBook(b); active = "#shelf-" + b.shelf; title = b.t; }
   else if (key.startsWith("r-") && SG.books[+key.slice(2)] && !SG.books[+key.slice(2)].books) { const e = SG.books[+key.slice(2)]; html = pageSgBook(e); active = e.shelf ? "#shelf-" + e.shelf : "#reading"; title = e.t; }
   else if (key.startsWith("a-") && authorIndex[key.slice(2)]) { const a = authorIndex[key.slice(2)]; html = pageAuthor(a); active = "#authors"; title = a.name; }
-  else if (key === "trial-tags") { html = pageTagTrial(); title = "Not owned: options"; }
   else html = {authors: pageAuthors, reading: pageReading, "to-read": pageToRead, add: pageAdd, "to-buy": pageToBuy, stats: pageStats}[key]?.() || (active = "#home", pageHome());
   view.innerHTML = html; renderNav(active);
   document.title = title === "Jemma’s Library" ? title : `${curly(title)} · Jemma’s Library`;

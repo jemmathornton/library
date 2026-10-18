@@ -382,43 +382,9 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .now-card .by{font-size:13.5px;color:var(--muted);margin-top:4px}
 .now-card .label{color:var(--reading)}
 .wish-item h3.long{font-size:17px;line-height:1.2}
-/* books she has read but doesn't own, on the shelves (her choice, 18 Oct) */
-.cover .not-owned{position:absolute;z-index:1;left:6px;top:6px;padding:3px 7px;border-radius:4px;background:rgba(28,18,10,.82);color:#FBF4E6;font:800 8.5px/1 var(--body);letter-spacing:.14em;text-transform:uppercase}
+/* books she has read but doesn't own, on the shelves: faded cover, walnut band (her choice, 18 Oct) */
+.cover.unowned img{opacity:.4;filter:grayscale(.6)}
+.cover.unowned.blank::before{content:"";position:absolute;inset:0;background:rgba(247,241,228,.5)}
+.cover .not-owned{position:absolute;z-index:1;left:0;right:0;bottom:22%;padding:9px 0;text-align:center;color:#FBF4E6;font:800 11px/1 var(--body);letter-spacing:.24em;text-transform:uppercase;
+  background:rgba(42,28,16,.92);border-top:1px solid #C9A25A;border-bottom:1px solid #C9A25A;box-shadow:0 2px 8px rgba(0,0,0,.35)}
 .blist .cover .not-owned,.picked .cover .not-owned{display:none}
-.bk .own-note{display:none}
-/* TRIAL (18 Oct): ways to show "Not owned", for her to choose; remove the ones she doesn't pick */
-.trial-opt{margin:44px 0}
-.trial-opt .note{margin:-6px 0 18px}
-[class*="opt-"] .no .cover .not-owned{display:none}
-/* A faded */
-.opt-a .no .cover img,.opt-h .no .cover img{filter:grayscale(1) sepia(.25);opacity:.5}
-.opt-a .no .cover,.opt-h .no .cover{background:#D9CDB6}
-.opt-a .no .cover.blank,.opt-h .no .cover.blank{filter:grayscale(.9);opacity:.6}
-.opt-a .no h3,.opt-a .no .by{opacity:.6}
-.opt-a .no .cover .not-owned{display:block;left:50%;top:50%;transform:translate(-50%,-50%);padding:6px 10px;font-size:10px;background:rgba(28,18,10,.88)}
-/* B ghost outline */
-.opt-b .no .cover{outline:2px dashed #B8893A;outline-offset:4px;box-shadow:none}
-.opt-b .no .cover img{opacity:.4;filter:grayscale(.6)}
-.opt-b .no .cover.blank{opacity:.5}
-.opt-b .no .cover .not-owned{display:block;left:50%;top:50%;transform:translate(-50%,-50%);padding:6px 10px;font-size:10px;background:#B8893A;color:#2A1F16}
-/* C band, H band */
-.opt-c .no .cover .not-owned,.opt-h .no .cover .not-owned{display:block;left:0;right:0;top:auto;bottom:22%;border-radius:0;padding:9px 0;text-align:center;font-size:11px;letter-spacing:.24em;
-  background:rgba(42,28,16,.92);border-top:1px solid #C9A25A;border-bottom:1px solid #C9A25A;box-shadow:0 2px 8px rgba(0,0,0,.35)}
-/* D second sash, bottom-left */
-.opt-d .no .cover .not-owned{display:block;z-index:3;left:-38px;top:auto;bottom:38px;width:150px;transform:rotate(45deg);border-radius:0;text-align:center;padding:5px 0 4px;
-  background:#C9A25A;color:#2A1F16;font-size:8.5px;letter-spacing:.16em;box-shadow:0 1px 4px rgba(0,0,0,.35)}
-/* E stamp */
-.opt-e .no .cover .not-owned{display:block;left:50%;top:44%;transform:translate(-50%,-50%) rotate(-14deg);background:rgba(251,244,230,.82);color:#8A3B1E;
-  border:3px double #8A3B1E;border-radius:6px;padding:8px 10px;font:800 13px/1 var(--body);letter-spacing:.16em;white-space:nowrap;box-shadow:none}
-/* F hanging ribbon */
-.opt-f .no .cover .not-owned{display:block;left:14px;top:0;width:28px;height:118px;padding:10px 0 0;border-radius:0;background:#C9A25A;color:#2A1F16;
-  writing-mode:vertical-rl;text-align:start;font-size:9px;letter-spacing:.2em;clip-path:polygon(0 0,100% 0,100% 100%,50% 88%,0 100%);box-shadow:none}
-/* G line under the title */
-.opt-g .no .own-note{display:flex;align-items:center;gap:6px;margin-top:-4px;font:800 10.5px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:#A87A2E}
-.opt-g .no .own-note .i{width:14px;height:14px}
-/* I, J: H's band with B's fade (J adds B's outline) */
-.opt-i .no .cover img,.opt-j .no .cover img{opacity:.4;filter:grayscale(.6)}
-.opt-i .no .cover.blank,.opt-j .no .cover.blank{opacity:.5}
-.opt-j .no .cover{outline:2px dashed #B8893A;outline-offset:4px;box-shadow:none}
-.opt-i .no .cover .not-owned,.opt-j .no .cover .not-owned{display:block;left:0;right:0;top:auto;bottom:22%;border-radius:0;padding:9px 0;text-align:center;font-size:11px;letter-spacing:.24em;
-  background:rgba(42,28,16,.92);border-top:1px solid #C9A25A;border-bottom:1px solid #C9A25A;box-shadow:0 2px 8px rgba(0,0,0,.35)}
