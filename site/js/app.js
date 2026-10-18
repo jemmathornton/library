@@ -100,7 +100,7 @@ function readingLog(){
   [...BOOKS].sort((a, b) => !!b.cover - !!a.cover).forEach(b => { const k = sgFor[b.id] ? reading(b).key : b.id; if (!seen.has(k) && reading(b).status) { seen.add(k); out.push(b); } });
   return out.concat(ELSEWHERE);
 }
-const starsText = r => String(Math.round(r * 100) / 100).replace(/\.5$/, "½").replace(/\.25$/, "¼").replace(/\.75$/, "¾").replace(/^0(?=[¼½¾])/, "");
+const starsText = r => String(Math.round(r * 100) / 100);   // decimals, not ½ (her choice, 18 Oct)
 
 // ---------- series (data/series.json, in reading order) ----------
 // Her copies are found by title (as Libib or StoryGraph spell it, brackets, "Book 3" and series numbers ignored) and
@@ -144,7 +144,8 @@ function cover(b, extra = "", big = false){
   const s = shelfIndex[b.shelf], st = reading(b).status;
   const badge = st === "read" ? `<span class="badge" title="Read">${ic("check")}</span>` : st === "reading" ? `<span class="badge reading" title="Reading now">${ic("bookmark")}</span>` : "";
   // her stars (from StoryGraph, or given here) on the cover (her ask, 18 Oct)
-  const r = reading(b).rating, stars = r ? `<span class="rated" title="${r} stars">★ ${starsText(r)}</span>` : "";
+  // as five stars across the foot of the cover, filled to the rating, with the number (her choice, 18 Oct)
+  const r = reading(b).rating, stars = r ? `<span class="rated" title="${r} stars"><span class="sg-stars" style="--r:${(r / 5 * 100).toFixed(1)}%"><span>★★★★★</span><span aria-hidden="true">★★★★★</span></span><b>${starsText(r)}</b></span>` : "";
   return `<div class="cover${b.cover ? "" : " blank"} ${extra}" style="--c:${s ? s.color : "#5E3D22"}">${badge}${stars}${b.cover ? `<img src="${esc(coverSrc(b, big))}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
 }
 // a cover that won't load becomes a title card
