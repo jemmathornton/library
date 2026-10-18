@@ -18,7 +18,7 @@ const store = {
   set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch { return false; } },
 };
 const READ_KEY = "jemmas-library-reading", GOT_KEY = "jemmas-library-found", VIEW_KEY = "jemmas-library-view";
-let READ = store.get(READ_KEY, {}), GOT = store.get(GOT_KEY, {}), installPrompt = null;
+let READ = store.get(READ_KEY, {}), GOT = store.get(GOT_KEY, {});
 
 // ---------- the library ----------
 const SHELVES = DATA.shelves, shelfIndex = {};
@@ -145,9 +145,7 @@ function renderNav(active){
       ${link("#reading", ic("bookmark"), "Reading", nReading || null)}
       ${link("#to-buy", ic("shopping-bag"), "To buy", left)}
       ${link("#authors", ic("users"), "Authors", AUTHORS.length)}
-      ${link("#stats", ic("chart"), "Stats")}
-      ${installPrompt ? `<a href="#install" class="install" id="installApp">${ic("download")}Install as app</a>` : ""}
-    </div>`;
+      ${link("#stats", ic("chart"), "Stats")}    </div>`;
 }
 
 // ---------- pages ----------
@@ -439,9 +437,7 @@ document.addEventListener("change", e => {
 
 // installed as a Chrome app from the local server (sharp taskbar icon); opened straight from the folder it's an ordinary page
 if ("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("sw.js").catch(() => {});
-// while it isn't installed yet, the sidebar offers "Install as app" (Chrome's own install box, one click)
-addEventListener("beforeinstallprompt", e => { e.preventDefault(); installPrompt = e; renderNav(document.querySelector(".nav a.on")?.getAttribute("href") || "#home"); });
-addEventListener("appinstalled", () => { installPrompt = null; renderNav(document.querySelector(".nav a.on")?.getAttribute("href") || "#home"); });
-document.addEventListener("click", e => { if (!e.target.closest("#installApp")) return; e.preventDefault(); if (installPrompt) installPrompt.prompt(); });
+// no "Install as app" offer: her shortcut window already has its own sharp taskbar icon (18 Oct)
+addEventListener("beforeinstallprompt", e => e.preventDefault());
 
 route();
