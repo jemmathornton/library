@@ -7,7 +7,7 @@ Open Library first (50 ISBNs per request; its cover links are by picture id, whi
 search for a cover of another edition of the same book, then Google Books for the rest, one request a second. Covers are publishers' own pictures, linked, not copied, so the site needs the
 internet to show them; books with no cover get a plain title card drawn by the site.
 """
-import json, os, sys, time, urllib.parse, urllib.request
+import json, os, re, sys, time, urllib.parse, urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 DATA = os.path.join(ROOT, 'data')
@@ -74,6 +74,35 @@ def main():
         time.sleep(1)
     print(f'Google Books: {sum(1 for i in isbns if covers.get(i)) - found_ol}; none found: {sum(1 for i in isbns if i in covers and covers[i] is None)}; '
           f'not tried yet: {sum(1 for i in isbns if i not in covers)}')
+
+    # Last: Open Library's search by title and author, for books still without a cover, ISBN or not (Google Books
+    # stopped answering on 18 Oct). Covers found this way are stored under the book's id ("id-<id>").
+    title_tried = covers.setdefault('_byTitle', {})
+    found_t = 0
+    for name in ('books.json', 'to-buy.json', extra):
+        for b in (json.load(open(os.path.join(DATA, name), encoding='utf-8')) if isinstance(name, str) else name):
+            key = 'id-' + str(b.get('id', ''))
+            if covers.get(b.get('isbn13', '')) or covers.get(key) or (key in title_tried and '--retry' not in sys.argv) or not b.get('id'):
+                continue
+            title = re.split(r':\s', re.sub(r'\(.*?\)|\[.*?\]', '', b['title']))[0].strip()
+            names = b['authors'] if isinstance(b.get('authors'), list) else [{'name': n} for n in str(b.get('authors', '')).split(', ')]
+            author = next((a['name'] for a in names if a.get('name') and not a.get('role')), '')
+            q = {'title': title, 'limit': 5, 'fields': 'title,cover_i'}
+            if author:
+                q['author'] = author.split()[-1]
+            try:
+                docs = get('https://openlibrary.org/search.json?' + urllib.parse.urlencode(q)).get('docs', [])
+            except Exception as e:
+                print('  Open Library title search stopped:', e)
+                break
+            want = re.sub(r'[^a-z0-9]', '', title.lower())
+            hit = next((d for d in docs if d.get('cover_i') and re.sub(r'[^a-z0-9]', '', d.get('title', '').lower()).startswith(want[:20])), None)
+            title_tried[key] = bool(hit)
+            if hit:
+                covers[key] = {'src': f"https://covers.openlibrary.org/b/id/{hit['cover_i']}-L.jpg", 'from': 'Open Library (title search)'}
+                found_t += 1
+            time.sleep(1)
+    print(f'Open Library, by title: {found_t}')
 
     with open(OUT, 'w', encoding='utf-8', newline='\n') as fh:
         json.dump(dict(sorted(covers.items())), fh, ensure_ascii=False, indent=0)

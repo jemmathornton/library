@@ -1,0 +1,576 @@
+{
+ "_about": "Series in reading order (18 Oct, her yes). The site finds her copies by title and author surname; a title can have other spellings after a |, as Libib has them. Only series whose order is sure are here; others to add: Trebizon, Quest (Lisa Wright DeGroodt), Legacy of the Stones, Pure Dead.",
+ "series": [
+  {
+   "name": "Harry Potter",
+   "author": "Rowling",
+   "books": [
+    "Harry Potter and the Philosopher's Stone|Harry Potter and the Philosopher's Stone - Hufflepuff Edition",
+    "Harry Potter and the Chamber of Secrets",
+    "Harry Potter and the Prisoner of Azkaban",
+    "Harry Potter and the Goblet of Fire",
+    "Harry Potter and the Order of the Phoenix",
+    "Harry Potter and the Half-Blood Prince",
+    "Harry Potter and the Deathly Hallows"
+   ]
+  },
+  {
+   "name": "Malory Towers",
+   "author": "Blyton|Cox",
+   "books": [
+    "First Term at Malory Towers",
+    "Second Form at Malory Towers|The Second Form at Malory Towers",
+    "Third Year at Malory Towers",
+    "Upper Fourth at Malory Towers",
+    "In the Fifth at Malory Towers",
+    "Last Term at Malory Towers",
+    "New Term at Malory Towers|Malory Towers: New Term",
+    "Summer Term at Malory Towers",
+    "Winter Term at Malory Towers",
+    "Fun and Games at Malory Towers|Fund and Games at Malory Towers",
+    "Secrets at Malory Towers",
+    "Goodbye Malory Towers"
+   ]
+  },
+  {
+   "name": "St Clare’s",
+   "author": "Blyton|Cox",
+   "books": [
+    "The Twins at St Clare's",
+    "The O'Sullivan Twins",
+    "Summer Term at St Clare's",
+    "The Second Form at St Clare's|The Second Format St Clare's",
+    "The Third Form at St Clare's|Enid Blyton's Third Form at St Clare's",
+    "Kitty at St Clare's",
+    "Claudine at St Clare's",
+    "Fifth Formers at St Clare's|Fifth Formers of St Clare's",
+    "The Sixth Form at St Clare's|Enid Blyton's Sixth Form at St Clare's"
+   ]
+  },
+  {
+   "name": "The Famous Five",
+   "author": "Blyton",
+   "books": [
+    "Five on a Treasure Island",
+    "Five Go Adventuring Again",
+    "Five Run Away Together",
+    "Five Go to Smuggler's Top",
+    "Five Go Off in a Caravan",
+    "Five on Kirrin Island Again",
+    "Five Go Off to Camp",
+    "Five Get into Trouble",
+    "Five Fall into Adventure",
+    "Five on a Hike Together",
+    "Five Have a Wonderful Time",
+    "Five Go Down to the Sea",
+    "Five Go to Mystery Moor",
+    "Five Have Plenty of Fun",
+    "Five on a Secret Trail",
+    "Five Go to Billycock Hill",
+    "Five Get into a Fix",
+    "Five on Finniston Farm",
+    "Five Go to Demon's Rocks",
+    "Five Have a Mystery to Solve",
+    "Five Are Together Again"
+   ]
+  },
+  {
+   "name": "The Secret Seven",
+   "author": "Blyton",
+   "books": [
+    "The Secret Seven",
+    "Secret Seven Adventure",
+    "Well Done, Secret Seven",
+    "Secret Seven on the Trail",
+    "Go Ahead, Secret Seven",
+    "Good Work, Secret Seven",
+    "Secret Seven Win Through|The Secret Seven Win Through",
+    "Three Cheers, Secret Seven",
+    "Secret Seven Mystery",
+    "Puzzle for the Secret Seven",
+    "Secret Seven Fireworks",
+    "Good Old Secret Seven",
+    "Shock for the Secret Seven",
+    "Look Out, Secret Seven",
+    "Fun for the Secret Seven"
+   ]
+  },
+  {
+   "name": "The Adventure Series",
+   "author": "Blyton",
+   "books": [
+    "The Island of Adventure",
+    "The Castle of Adventure",
+    "The Valley of Adventure",
+    "The Sea of Adventure",
+    "The Mountain of Adventure",
+    "The Ship of Adventure",
+    "The Circus of Adventure",
+    "The River of Adventure"
+   ]
+  },
+  {
+   "name": "The Wishing Chair",
+   "author": "Blyton",
+   "books": [
+    "Adventures of the Wishing Chair",
+    "The Wishing Chair Again"
+   ]
+  },
+  {
+   "name": "Discworld",
+   "author": "Pratchett",
+   "books": [
+    "The Colour of Magic",
+    "The Light Fantastic",
+    "Equal Rites",
+    "Mort",
+    "Sourcery",
+    "Wyrd Sisters",
+    "Pyramids",
+    "Guards! Guards!",
+    "Eric",
+    "Moving Pictures",
+    "Reaper Man",
+    "Witches Abroad",
+    "Small Gods",
+    "Lords and Ladies",
+    "Men at Arms",
+    "Soul Music",
+    "Interesting Times",
+    "Maskerade",
+    "Feet of Clay",
+    "Hogfather",
+    "Jingo",
+    "The Last Continent",
+    "Carpe Jugulum",
+    "The Fifth Elephant",
+    "The Truth",
+    "Thief of Time",
+    "The Last Hero",
+    "The Amazing Maurice and His Educated Rodents",
+    "Night Watch",
+    "The Wee Free Men",
+    "Monstrous Regiment",
+    "A Hat Full of Sky",
+    "Going Postal",
+    "Thud!",
+    "Wintersmith",
+    "Making Money",
+    "Unseen Academicals",
+    "I Shall Wear Midnight",
+    "Snuff",
+    "Raising Steam",
+    "The Shepherd's Crown"
+   ]
+  },
+  {
+   "name": "The Science of Discworld",
+   "author": "Pratchett",
+   "books": [
+    "The Science of Discworld|The Science of Discworld Revised Edition",
+    "The Science of Discworld II: The Globe",
+    "The Science of Discworld III: Darwin's Watch|Science of Discworld III: Darwin's Watch",
+    "The Science of Discworld IV: Judgement Day"
+   ]
+  },
+  {
+   "name": "The Saga of Darren Shan",
+   "author": "Shan",
+   "books": [
+    "Cirque du Freak|Vampire Blood Trilogy",
+    "The Vampire's Assistant|Vampire Blood Trilogy",
+    "Tunnels of Blood|Vampire Blood Trilogy",
+    "Vampire Mountain",
+    "Trials of Death",
+    "The Vampire Prince",
+    "Hunters of the Dusk",
+    "Allies of the Night",
+    "Killers of the Dawn",
+    "The Lake of Souls",
+    "Lord of the Shadows",
+    "Sons of Destiny"
+   ]
+  },
+  {
+   "name": "The Demonata",
+   "author": "Shan",
+   "books": [
+    "Lord Loss",
+    "Demon Thief",
+    "Slawter",
+    "Bec|The Demonata - Bec",
+    "Blood Beast",
+    "Demon Apocalypse|Demon Apocalypes",
+    "Death's Shadow",
+    "Wolf Island|The Demonata - Wolf Island",
+    "Dark Calling",
+    "Hell's Heroes"
+   ]
+  },
+  {
+   "name": "Mates, Dates",
+   "author": "Hopkins",
+   "books": [
+    "Mates, Dates and Inflatable Bras",
+    "Mates, Dates and Cosmic Kisses",
+    "Mates, Dates and Portobello Princesses",
+    "Mates, Dates and Sleepover Secrets",
+    "Mates, Dates and Sole Survivors",
+    "Mates, Dates and Mad Mistakes",
+    "Mates, Dates and Pulling Power",
+    "Mates, Dates and Tempting Trouble",
+    "Mates, Dates and Great Escapes",
+    "Mates, Dates and Chocolate Cheats",
+    "Mates, Dates and Diamond Destiny",
+    "Mates, Dates and Sizzling Summers"
+   ]
+  },
+  {
+   "name": "Heartstopper",
+   "author": "Oseman",
+   "books": [
+    "Heartstopper Volume 1",
+    "Heartstopper Volume 2",
+    "Heartstopper Volume 3",
+    "Heartstopper Volume 4",
+    "Heartstopper Volume 5"
+   ]
+  },
+  {
+   "name": "Pendragon",
+   "author": "MacHale",
+   "books": [
+    "The Merchant of Death",
+    "The Lost City of Faar",
+    "The Never War",
+    "The Reality Bug",
+    "Black Water",
+    "The Rivers of Zadaa",
+    "The Quillan Games|Quillan Games",
+    "The Pilgrims of Rayne",
+    "Raven Rise|Pendragon: Raven Rise",
+    "The Soldiers of Halla"
+   ]
+  },
+  {
+   "name": "Artemis Fowl",
+   "author": "Colfer",
+   "books": [
+    "Artemis Fowl",
+    "The Arctic Incident",
+    "The Eternity Code|Artemis Fowl: The Eternity Code",
+    "The Opal Deception",
+    "The Lost Colony|Artemis Fowl and the Lost Colony",
+    "The Time Paradox|The Artemis Fowl: Time Paradox",
+    "The Atlantis Complex",
+    "The Last Guardian"
+   ]
+  },
+  {
+   "name": "The Black Magician",
+   "author": "Canavan",
+   "books": [
+    "The Magician's Apprentice",
+    "The Magicians' Guild",
+    "The Novice",
+    "The High Lord",
+    "The Ambassador's Mission",
+    "The Rogue",
+    "The Traitor Queen"
+   ]
+  },
+  {
+   "name": "Age of the Five",
+   "author": "Canavan",
+   "books": [
+    "Priestess of the White",
+    "Last of the Wilds",
+    "Voice of the Gods"
+   ]
+  },
+  {
+   "name": "Girls",
+   "author": "Wilson",
+   "books": [
+    "Girls in Love",
+    "Girls Under Pressure",
+    "Girls Out Late",
+    "Girls in Tears"
+   ]
+  },
+  {
+   "name": "The Adventure Zone",
+   "author": "McElroy",
+   "books": [
+    "Here There Be Gerblins|The Adventure Zone",
+    "Murder on the Rockport Limited|The Adventure Zone: Murder on the Rockport Limited",
+    "Petals to the Metal|The Adventure Zone: Petals to the Metal",
+    "The Crystal Kingdom|The Adventure Zone: the Crystal Kingdom",
+    "The Eleventh Hour|The Adventure Zone: the Eleventh Hour"
+   ]
+  },
+  {
+   "name": "Noughts & Crosses",
+   "author": "Blackman",
+   "books": [
+    "Noughts & Crosses|Noughts and Crosses",
+    "Knife Edge",
+    "Checkmate",
+    "Double Cross",
+    "Crossfire",
+    "Callback"
+   ]
+  },
+  {
+   "name": "Alex Rider",
+   "author": "Horowitz",
+   "books": [
+    "Stormbreaker",
+    "Point Blanc",
+    "Skeleton Key",
+    "Eagle Strike",
+    "Scorpia",
+    "Ark Angel",
+    "Snakehead",
+    "Crocodile Tears",
+    "Scorpia Rising"
+   ]
+  },
+  {
+   "name": "Simon Snow",
+   "author": "Rowell",
+   "books": [
+    "Carry On",
+    "Wayward Son",
+    "Any Way the Wind Blows"
+   ]
+  },
+  {
+   "name": "The Neapolitan Novels",
+   "author": "Ferrante",
+   "books": [
+    "My Brilliant Friend",
+    "The Story of a New Name",
+    "Those Who Leave and Those Who Stay",
+    "The Story of the Lost Child|Story of the Lost Child, The"
+   ]
+  },
+  {
+   "name": "The Wicked Years",
+   "author": "Maguire",
+   "books": [
+    "Wicked",
+    "Son of a Witch",
+    "A Lion Among Men",
+    "Out of Oz"
+   ]
+  },
+  {
+   "name": "The Murderbot Diaries",
+   "author": "Wells",
+   "books": [
+    "All Systems Red",
+    "Artificial Condition",
+    "Rogue Protocol",
+    "Exit Strategy",
+    "Network Effect",
+    "Fugitive Telemetry",
+    "System Collapse"
+   ]
+  },
+  {
+   "name": "Bobiverse",
+   "author": "Taylor",
+   "books": [
+    "We Are Legion (We Are Bob)|We Are Legion",
+    "For We Are Many",
+    "All These Worlds",
+    "Heaven's River",
+    "Not Till We Are Lost"
+   ]
+  },
+  {
+   "name": "Uglies",
+   "author": "Westerfeld",
+   "books": [
+    "Uglies",
+    "Pretties",
+    "Specials|Specials Pa",
+    "Extras|Extras Pa"
+   ]
+  },
+  {
+   "name": "Little Blue Envelopes",
+   "author": "Johnson",
+   "books": [
+    "13 Little Blue Envelopes",
+    "The Last Little Blue Envelope"
+   ]
+  },
+  {
+   "name": "The Sisterhood of the Traveling Pants",
+   "author": "Brashares",
+   "books": [
+    "The Sisterhood of the Traveling Pants",
+    "The Second Summer of the Sisterhood",
+    "Girls in Pants",
+    "Forever in Blue"
+   ]
+  },
+  {
+   "name": "Brambly Hedge",
+   "author": "Barklem",
+   "books": [
+    "Spring Story|Brambly Hedge Spring Story",
+    "Summer Story",
+    "Autumn Story|Autumn Story Bramley Hedge",
+    "Winter Story|Brambly Hedge Winter Story"
+   ]
+  },
+  {
+   "name": "Shades of Magic",
+   "author": "Schwab",
+   "books": [
+    "A Darker Shade of Magic",
+    "A Gathering of Shadows",
+    "A Conjuring of Light"
+   ]
+  },
+  {
+   "name": "Licanius",
+   "author": "Islington",
+   "books": [
+    "The Shadow of What Was Lost",
+    "An Echo of Things to Come",
+    "The Light of All That Falls"
+   ]
+  },
+  {
+   "name": "The Inheritance Cycle",
+   "author": "Paolini",
+   "books": [
+    "Eragon",
+    "Eldest",
+    "Brisingr",
+    "Inheritance"
+   ]
+  },
+  {
+   "name": "The Wind on Fire",
+   "author": "Nicholson",
+   "books": [
+    "The Wind Singer",
+    "Slaves of the Mastery",
+    "Firesong"
+   ]
+  },
+  {
+   "name": "His Dark Materials",
+   "author": "Pullman",
+   "books": [
+    "Northern Lights|The Golden Compass",
+    "The Subtle Knife",
+    "The Amber Spyglass"
+   ]
+  },
+  {
+   "name": "Winternight",
+   "author": "Arden",
+   "books": [
+    "The Bear and the Nightingale",
+    "The Girl in the Tower",
+    "The Winter of the Witch"
+   ]
+  },
+  {
+   "name": "The Doomspell Trilogy",
+   "author": "McNish",
+   "books": [
+    "The Doomspell",
+    "The Scent of Magic",
+    "The Wizard's Promise"
+   ]
+  },
+  {
+   "name": "Mortal Engines",
+   "author": "Reeve",
+   "books": [
+    "Mortal Engines",
+    "Predator's Gold",
+    "Infernal Devices",
+    "A Darkling Plain"
+   ]
+  },
+  {
+   "name": "Fever Crumb",
+   "author": "Reeve",
+   "books": [
+    "Fever Crumb",
+    "A Web of Air",
+    "Scrivener's Moon"
+   ]
+  },
+  {
+   "name": "The Hunger Games",
+   "author": "Collins",
+   "books": [
+    "The Hunger Games",
+    "Catching Fire",
+    "Mockingjay"
+   ]
+  },
+  {
+   "name": "The Study Series",
+   "author": "Snyder",
+   "books": [
+    "Poison Study",
+    "Magic Study",
+    "Fire Study"
+   ]
+  },
+  {
+   "name": "Bartimaeus",
+   "author": "Stroud",
+   "books": [
+    "The Amulet of Samarkand",
+    "The Golem's Eye",
+    "Ptolemy's Gate"
+   ]
+  },
+  {
+   "name": "The Old Kingdom",
+   "author": "Nix",
+   "books": [
+    "Sabriel",
+    "Lirael",
+    "Abhorsen"
+   ]
+  },
+  {
+   "name": "The Tyrant Philosophers",
+   "author": "Tchaikovsky",
+   "books": [
+    "City of Last Chances",
+    "House of Open Wounds",
+    "Days of Shattered Faith"
+   ]
+  },
+  {
+   "name": "DallerGut Dream Department Store",
+   "author": "Lee",
+   "books": [
+    "DallerGut Dream Department Store",
+    "Return to the DallerGut Dream Department Store"
+   ]
+  },
+  {
+   "name": "Morisaki Bookshop",
+   "author": "Yagisawa",
+   "books": [
+    "Days at the Morisaki Bookshop",
+    "More Days at the Morisaki Bookshop"
+   ]
+  }
+ ]
+}
