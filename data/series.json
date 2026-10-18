@@ -271,10 +271,15 @@
    "name": "The Black Magician",
    "author": "Canavan",
    "books": [
-    "The Magician's Apprentice",
     "The Magicians' Guild",
     "The Novice",
-    "The High Lord",
+    "The High Lord"
+   ]
+  },
+  {
+   "name": "Traitor Spy",
+   "author": "Canavan",
+   "books": [
     "The Ambassador's Mission",
     "The Rogue",
     "The Traitor Queen"
@@ -629,6 +634,53 @@
     "Deep Trouble",
     "Deep Water",
     "Deep Fear"
+   ]
+  },
+  {
+   "name": "Truth, Dare, Kiss or Promise",
+   "author": "Hopkins",
+   "books": [
+    "White Lies and Barefaced Truths",
+    "The Princess of Pop|Pop Princess",
+    "Teen Queens and Has-Beens",
+    "Starstruck",
+    "Double Dare",
+    "Midsummer Meltdown",
+    "Love Lottery",
+    "All Mates Together"
+   ]
+  },
+  {
+   "name": "Veronica Mars",
+   "author": "Thomas",
+   "books": [
+    "The Thousand-Dollar Tan Line|Veronica Mars: The Thousand-Dollar Tan Line",
+    "Mr. Kiss and Tell|Veronica Mars (2): An Original Mystery by Rob Thomas: Mr. Kiss and Tell"
+   ]
+  },
+  {
+   "name": "The Beyond Series",
+   "author": "Kershaw",
+   "books": [
+    "Didikai Witch",
+    "Demon Lupus"
+   ]
+  },
+  {
+   "name": "Sam Linnifer",
+   "author": "Webb",
+   "books": [
+    "Waywalkers",
+    "Timekeepers"
+   ]
+  },
+  {
+   "name": "Pendragon: Before the War",
+   "author": "MacHale",
+   "books": [
+    "Book One of the Travelers",
+    "Book Two of the Travelers",
+    "Book Three of the Travelers"
    ]
   }
  ]

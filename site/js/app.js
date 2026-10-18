@@ -26,15 +26,25 @@ const BOOKS = DATA.books, bookIndex = {}, authorIndex = {}, editions = {};
 
 // Display title: bracketed bits (series, edition, imprint) become a small line under it; a long subtitle after a colon
 // does too, unless the part before the colon ends in a number ("Famous Five 9: Five Fall Into Adventure" stays whole).
+// Imprints, formats, shop notes and prize blurbs aren't part of a title: they're dropped, not shown (her ask, 18 Oct).
+const TITLE_NOISE = /^(gollancz s\.?\s?f\.?|voyager classics|puffin modern classics|storybook classics|wiley desktop editions|rough guides main series|seasonal|seasonal activity books|offered exclusively by amazon|hardcover|hardback|paperback|e|mira|iuniverse paperback|quest|the emma press novels|a novel|author|one)$/i;
+const BLURB = /booker|bestseller|from the author of|shortlisted|longlisted|a novel for|award|spellbinding/i;
 function tidyTitle(raw){
-  let t = raw.trim(), bits = [], m;
+  let t = raw.trim().replace(/\s+(\.{3}\s*)?by\s+[^()]*\(\s*Author\s*\).*$/i, "").replace(/^The(?=[A-Z])/, "The "), bits = [], m;   // Amazon's "... by X ( Author ) ON date"
   while ((m = /\s*\(([^()]*)\)/.exec(t))) { if (m[1].trim()) bits.unshift(m[1].trim()); t = (t.slice(0, m.index) + t.slice(m.index + m[0].length)).trim(); }
   t = t.replace(/\s+Paperback$/i, "").replace(/[\s:;,–-]+$/, "").trim();   // "The Bear and The Nightingale: (Winternight Series)" leaves no colon behind
+  const blurb = /:\s*([^:]+)$/.exec(t);   // "Autumn: Longlisted for the Man Booker Prize 2017": the blurb goes
+  if (blurb && BLURB.test(blurb[1])) t = t.slice(0, blurb.index).trim();
+  const inSeries = /:\s*Number (\d+) in series$/i.exec(t);   // "Waywalkers: Number 1 in series"
+  if (inSeries) { bits.unshift("Book " + inSeries[1]); t = t.slice(0, inSeries.index).trim(); }
+  const of = /:\s*(\d+)\/\d+$/.exec(t);   // "Foundation: 1/3"
+  if (of) { bits.unshift("Book " + of[1]); t = t.slice(0, of.index).trim(); }
   // "Famous Five: 1: Five On A Treasure Island" -> "Five On A Treasure Island", with "Famous Five 1" underneath
   const numbered = /^(.+?):\s*(\d+):\s*(.+)$/.exec(t);
   if (numbered) { bits.unshift(numbered[1] + " " + numbered[2]); t = numbered[3]; }
   const c = numbered ? -1 : t.indexOf(": ");
   if (c > 0 && !/\d$/.test(t.slice(0, c)) && t.slice(0, c).split(/\s+/).length >= 2) { bits.unshift(t.slice(c + 2)); t = t.slice(0, c); }
+  bits = [...new Set(bits.map(x => /^\d+$/.test(x) ? "Book " + x : x.replace(/:\s*Bk\.?\s*\d+$/i, "")))].filter(x => !TITLE_NOISE.test(x) && !BLURB.test(x));
   return {t: t || raw, sub: bits.join(" · ")};
 }
 const sortTitle = t => t.toLowerCase().replace(/^(the|a|an)\s+/, "");
@@ -134,6 +144,17 @@ const seriesOf = {};   // book id -> [{series, entry}]
     if (hits.length && where !== "wish") seriesOf[b.id] = hits;
   }));
 })();
+// a book in a series shows the series' own title for it, with "Series, book n" underneath, instead of however Libib
+// wrote the series into the title ("Famous Five 10: Five On A Hike Together"); an edition note is kept. Boxed sets and
+// omnibuses (one book, several entries) keep their own title. Her own displayTitle always wins. (Her ask, 18 Oct.)
+BOOKS.forEach(b => {
+  const hits = seriesOf[b.id];
+  if (!hits || hits.length !== 1 || b.displayTitle || /collection|box(ed)? set|omnibus/i.test(b.title)) return;
+  const {series, entry} = hits[0];
+  const edition = (/(illustrated|hufflepuff|children's|collector's|centenary|special|anniversary|movie tie-in)[\w' -]*edition/i.exec(b.title) || [])[0];
+  b.t = entry.title; b.sub = `${series.name}, book ${entry.n}${edition ? " · " + edition.replace(/\b\w/g, c => c.toUpperCase()) : ""}`;
+  b.sortTitle = sortTitle(b.t);
+});
 // where she stands with one book of a series
 function entryState(e){
   const all = e.owned.concat(e.away), read = all.some(isRead), now = all.some(isReading);
