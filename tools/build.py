@@ -18,6 +18,7 @@ def load(name, default=None):
 def fix_names(books, fixes):
     """Libib's author names tidied (data/name-fixes.json); the surname the shelves file by follows the tidied first author."""
     for b in books:
+        b['title'] = fixes.get('titles', {}).get(b['title'], b['title'])
         authors = fixes['books'].get(b['title']) or b.get('authors') or []
         out, seen = [], set()
         for a in authors:

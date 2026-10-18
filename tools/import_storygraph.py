@@ -103,6 +103,8 @@ def main():
     print('Columns:', ', '.join(rows[0].keys()))
 
     books = json.load(open(os.path.join(DATA, 'books.json'), encoding='utf-8'))
+    if os.path.exists(os.path.join(DATA, 'added.json')):   # books added on the site since the Libib import
+        books += json.load(open(os.path.join(DATA, 'added.json'), encoding='utf-8'))
     by_isbn, by_ts, by_t = {}, {}, {}
     for b in books:
         for i in (b.get('isbn13'), isbn13(b.get('isbn10', ''))):
@@ -118,7 +120,10 @@ def main():
         for i in ids:
             group[i], key_of[i] = ids, k.split('|')[0]
 
-    out, how = [], {'isbn': 0, 'title and author': 0, 'title': 0, None: 0}
+    links_path = os.path.join(DATA, 'storygraph-links.json')
+    links = {k: v for k, v in json.load(open(links_path, encoding='utf-8')).items() if not k.startswith('_')} if os.path.exists(links_path) else {}
+    known = {b['id'] for b in books}
+    out, how = [], {'by hand': 0, 'isbn': 0, 'title and author': 0, 'title': 0, None: 0}
     for r in rows:
         title, authors = col(r, 'Title'), col(r, 'Authors', 'Author')
         e = {'title': title, 'authors': authors}
@@ -144,7 +149,9 @@ def main():
             e['isbn13'] = isbn
         t = short_title(title)
         match, way = None, None
-        if isbn and isbn in by_isbn:
+        if title in links:   # linked by hand (data/storygraph-links.json): a boxed set, a US title, a Libib typo
+            match, way = [i for i in links[title] if i in known], 'by hand'
+        elif isbn and isbn in by_isbn:
             # her other copies too, but only when StoryGraph's title is that book's ("Veronica Mars: The Thousand-Dollar
             # Tan Line" must not pull in "Veronica Mars (2): ... Mr. Kiss and Tell")
             b0 = by_isbn[isbn]
@@ -162,7 +169,7 @@ def main():
     for e in out:
         counts[e['status']] = counts.get(e['status'], 0) + 1
     print(f'{len(out)} StoryGraph books: ' + ', '.join(f'{n} {s}' for s, n in sorted(counts.items(), key=lambda x: -x[1])))
-    print(f"On her shelves: {len(out) - how[None]} (by ISBN {how['isbn']}, title and author {how['title and author']}, "
+    print(f"On her shelves: {len(out) - how[None]} (by hand {how['by hand']}, by ISBN {how['isbn']}, title and author {how['title and author']}, "
           f"title only {how['title']}); not on the shelves: {how[None]}")
     owned_unmatched = [e for e in out if 'books' not in e and (e.get('owned', '').lower() in ('yes', 'true'))]
     if owned_unmatched:
@@ -186,7 +193,8 @@ def main():
         today = date.today().isoformat()
         dest = os.path.join(ROOT, 'imports', f'storygraph-{today}')
         os.makedirs(dest, exist_ok=True)
-        shutil.copy2(src, dest)
+        if os.path.abspath(os.path.dirname(src)) != os.path.abspath(dest):   # re-importing the copy already kept here
+            shutil.copy2(src, dest)
         with open(os.path.join(DATA, 'storygraph.json'), 'w', encoding='utf-8', newline='\n') as fh:
             json.dump({'imported': today, 'file': os.path.basename(src), 'books': out}, fh, ensure_ascii=False, indent=1)
             fh.write('\n')

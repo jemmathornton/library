@@ -30,7 +30,12 @@
    "status": "read",
    "readCount": 1,
    "rating": 4.0,
-   "isbn13": "9780440238607"
+   "isbn13": "9780440238607",
+   "books": [
+    "ob32j7v0an",
+    "8gmvxl2ohq",
+    "t0gfkqv93y"
+   ]
   },
   {
    "title": "Cane River",
@@ -967,7 +972,10 @@
     ]
    ],
    "readCount": 1,
-   "isbn13": "9781405244756"
+   "isbn13": "9781405244756",
+   "books": [
+    "prqbsgqno7"
+   ]
   },
   {
    "title": "Assistant to the Villain",
@@ -3182,7 +3190,11 @@
    "status": "read",
    "readCount": 1,
    "rating": 4.0,
-   "isbn13": "9780439321600"
+   "isbn13": "9780439321600",
+   "books": [
+    "8gmvxjfohq",
+    "2ous4qktqt"
+   ]
   },
   {
    "title": "Harry Potter and the Deathly Hallows",
@@ -4971,7 +4983,10 @@
    "status": "read",
    "readCount": 1,
    "rating": 4.0,
-   "isbn13": "9780679879244"
+   "isbn13": "9780679879244",
+   "books": [
+    "ob32j7v0an"
+   ]
   },
   {
    "title": "Days at the Morisaki Bookshop",
