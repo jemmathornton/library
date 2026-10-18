@@ -392,3 +392,7 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .cover .special{position:absolute;z-index:1;left:-34px;top:16px;width:120px;transform:rotate(-45deg);text-align:center;padding:4px 0 3px;
   background:#C9A25A;color:#2A1F16;font:800 9.5px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;box-shadow:0 1px 4px rgba(0,0,0,.35)}
 .blist .cover .special,.series-list .cover .special{display:none}
+/* how she read it, on the sash: open book, headphones or tablet (her ask, 18 Oct) */
+.cover .sash .i{width:10px;height:10px;stroke-width:2.6;vertical-align:-1.5px;margin-right:4px}
+/* the sash sits a little further in, so "Reading" and "Paused" with their icon fit inside the corner (18 Oct) */
+.cover .sash{right:-29px;top:24px;letter-spacing:.13em}

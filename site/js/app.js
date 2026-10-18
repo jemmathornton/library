@@ -96,7 +96,8 @@ function sgMerged(list){   // a book she has on StoryGraph more than once (re-re
   const rated = list.filter(e => e.rating).sort(latest)[0], felt = list.filter(e => e.moods || e.pace).sort(latest)[0] || {};
   return {sg: true, status: best.status, started: best.started, finished: list.map(e => e.finished).sort().pop() || "", rating: rated && rated.rating,
     dates, readCount: Math.max(dates.filter(d => d[1]).length, ...list.map(e => e.readCount || 0)), moods: felt.moods, pace: felt.pace,
-    reviews: list.filter(e => e.review).map(e => e.review), key: list[0].id};
+    reviews: list.filter(e => e.review).map(e => e.review), key: list[0].id,
+    format: (list.filter(e => e.format).sort(latest)[0] || {}).format};   // how she read it last: paperback, hardcover, audio, digital
 }
 const isElsewhere = b => String(b.id).startsWith("r-");
 const reading = b => isElsewhere(b) ? (b.merged ||= sgMerged([b]))
@@ -194,8 +195,11 @@ function cover(b, extra = "", big = false){
   // the rating with no number, in a strip across the foot
   // read: a cream "Read" sash across the top corner (her choice, 18 Oct, over a tick)
   // didn't finish and paused: "DNF" and "Paused" sashes the same way (her choices, 18 Oct)
-  const badge = st === "read" ? `<span class="sash" title="Read">Read</span>` : st === "reading" ? `<span class="sash" title="Reading now">Reading</span>`
-    : st === "stopped" ? `<span class="sash" title="Didn’t finish">DNF</span>` : st === "paused" ? `<span class="sash" title="Paused">Paused</span>` : "";
+  // with a small icon for how she read it: an open book (print), headphones (audiobook) or a tablet (ebook) (her ask, 18 Oct)
+  const fmt = reading(b).format, how = {paperback: "book-open", hardcover: "book-open", audio: "headphones", digital: "tablet"}[fmt];
+  const sash = (word, title) => `<span class="sash" title="${title}${fmt ? " · " + FORMATS[fmt] : ""}">${how ? ic(how) : ""}${word}</span>`;
+  const badge = st === "read" ? sash("Read", "Read") : st === "reading" ? sash("Reading", "Reading now")
+    : st === "stopped" ? sash("DNF", "Didn’t finish") : st === "paused" ? sash("Paused", "Paused") : "";
   const r = reading(b).rating;
   const strip = r ? `<span class="rated" title="${starsText(r)} stars"><span class="sg-stars" style="--r:${(r / 5 * 100).toFixed(1)}%"><span>★★★★★</span><span aria-hidden="true">★★★★★</span></span></span>` : "";
   // not owned: the cover faded, with a walnut "Not owned" band across it (her choice, 18 Oct; not on a book's own page)
