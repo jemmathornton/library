@@ -24,7 +24,7 @@
 8. **StoryGraph links: done** (18 Oct). Northern Lights, The Subtle Knife and The Amber Spyglass count as read (The Golden Compass and the boxed set on StoryGraph, linked by hand in data/storygraph-links.json, British titles shown); both Fantastic Beasts copies read; Fun and Games at Malory Towers spelt right and read. Wicked stays linked to the Wicked Years boxed set.
 9. **No buttons: done** (18 Oct). Read or not read comes only from StoryGraph; book pages show it, nothing to click.
 
-10. **Series to add** (order not sure): Trebizon, the Quest books (Lisa Wright DeGroodt), Legacy of the Stones, Pure Dead. Tell me the order, or say leave them.
+10. **Series: done** (18 Oct). Trebizon, the Quest books, Legacy of the Stones and Pure Dead looked up online and added.
 
 ## Open (prototype limits)
 

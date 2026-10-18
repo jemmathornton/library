@@ -1,5 +1,5 @@
 {
- "_about": "Series in reading order (18 Oct, her yes). The site finds her copies by title and author surname; a title can have other spellings after a |, as Libib has them. Only series whose order is sure are here; others to add: Trebizon, Quest (Lisa Wright DeGroodt), Legacy of the Stones, Pure Dead.",
+ "_about": "Series in reading order (18 Oct, her yes). The site finds her copies by title and author surname; a title can have other spellings after a |, as Libib has them. Trebizon, Quest, Legacy of the Stones and Pure Dead looked up online (FantasticFiction, Goodreads, Amazon, Penguin).",
  "series": [
   {
    "name": "Harry Potter",
@@ -570,6 +570,65 @@
    "books": [
     "Days at the Morisaki Bookshop",
     "More Days at the Morisaki Bookshop"
+   ]
+  },
+  {
+   "name": "Trebizon",
+   "author": "Digby",
+   "books": [
+    "First Term at Trebizon",
+    "Second Term at Trebizon",
+    "Summer Term at Trebizon",
+    "Boy Trouble at Trebizon",
+    "More Trouble at Trebizon",
+    "The Tennis Term at Trebizon",
+    "Summer Camp at Trebizon",
+    "Into the Fourth at Trebizon",
+    "The Hockey Term at Trebizon|Hockey Term at Trebizon",
+    "Fourth Year Triumphs at Trebizon",
+    "The Ghostly Term at Trebizon",
+    "Fifth Year Friendships at Trebizon",
+    "Secret Letters at Trebizon",
+    "The Unforgettable Fifth at Trebizon"
+   ]
+  },
+  {
+   "name": "The Quest Series",
+   "author": "DeGroodt",
+   "books": [
+    "Oracle Quest",
+    "Relic Quest",
+    "Barrier Quest",
+    "Charm Quest",
+    "Land Quest",
+    "Wizard Quest",
+    "Seer Quest",
+    "Hunt Quest",
+    "Storm Quest",
+    "Healer Quest"
+   ]
+  },
+  {
+   "name": "Legacy of the Stones",
+   "author": "Palmer",
+   "books": [
+    "Song of Echoes",
+    "Age of Shadows",
+    "Sea of Souls",
+    "Crown of Sorrows",
+    "Realm of Mortals"
+   ]
+  },
+  {
+   "name": "Pure Dead",
+   "author": "Gliori",
+   "books": [
+    "Pure Dead Magic",
+    "Pure Dead Wicked",
+    "Pure Dead Brilliant",
+    "Deep Trouble",
+    "Deep Water",
+    "Deep Fear"
    ]
   }
  ]
