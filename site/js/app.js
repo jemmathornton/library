@@ -369,7 +369,7 @@ function pageBook(b){
       ${seriesLine(b)}
     </div></div></header>
     <div class="book-body"><div>
-      <p class="desc${b.description ? "" : " none"}">${b.description ? esc(b.description) : "No description on Libib."}</p>
+      ${b.description ? `<p class="desc">${esc(b.description)}</p>` : ""}
       ${sgFor[b.id] ? reviews(reading(b)) : ""}
       ${others.length ? sectionHead(`Other copies <em>you own</em>`) + grid(others) : ""}
       ${more.length ? sectionHead(`More by <em>${esc(au.name)}</em>`, au.books.length > more.length + 1 ? `<a class="more" href="#a-${au.id}">All ${au.books.length}</a>` : "") + grid(more) : ""}
@@ -379,7 +379,7 @@ function pageBook(b){
         ${fact("Shelf", `<a href="#shelf-${s.id}">${esc(s.name)}</a>`)}${fact("Publisher", esc(b.publisher || ""))}
         ${fact("Published", niceDate(b.published) || year(b.published))}${fact("Pages", b.pages ? num(b.pages) : "")}
         ${fact("ISBN-13", b.isbn13 || "")}${fact("ISBN-10", b.isbn10 || "")}${fact("Copies", b.copies > 1 ? b.copies : "")}
-        ${fact("Added", niceDate(b.added))}${fact("Title on Libib", b.t !== b.title ? esc(b.title) : "")}
+        ${fact("Added", niceDate(b.added))}${fact("Full title", b.t !== b.title ? esc(b.title) : "")}
       </dl></div></aside></div>`;
 }
 

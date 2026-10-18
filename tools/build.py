@@ -41,6 +41,11 @@ def build():
     covers = load('covers.json', {})
     # books.json is the Libib import (a re-import overwrites it); added.json holds books added on the site since
     books, wish = load('books.json') + load('added.json', []), load('to-buy.json', [])
+    details = load('details.json', {})   # Open Library's description, pages, publisher: only where the book has none
+    for b in books:
+        for f, v in details.get(b['id'], {}).items():
+            if not b.get(f):
+                b[f] = v
     gone = {x['id'] for x in load('removed.json', [])}   # duplicates she has said aren't real copies
     books = [b for b in books if b['id'] not in gone]
     bought = {x['wish'] for x in load('bought.json', [])}   # to-buy books she has since added to a shelf

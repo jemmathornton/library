@@ -9,5 +9,5 @@
   {"id": "non-fiction", "name": "Non-Fiction", "libib": "Non-Fiction", "color": "#A4542F"},
   {"id": "travel", "name": "Travel", "libib": "Travel", "color": "#2E7A92"},
   {"id": "unsorted", "name": "Not on a shelf yet", "libib": null, "color": "#8A8178",
-   "note": "Books that were only in Jemma’s Library on Libib and never moved to a genre."}
+   "note": "Books still waiting for a shelf."}
 ]
