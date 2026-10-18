@@ -29,7 +29,7 @@
 ## Open (prototype limits)
 
 - **Reading comes from StoryGraph** (`tools/import_storygraph.py`, export from 18 Oct). Export again and import to bring in new reading. 178 of 345 StoryGraph books are on her shelves; the rest (library books, ebooks, audiobooks) show only in the Reading log and search, never on the shelves (her rule, 18 Oct).
-- **Covers:** 604 of 638 shelf books have one (Open Library by ISBN and by title, then Amazon; Google Books refuses). The 34 left are mostly old books with no ISBN; a photo of the real cover would do for those.
+- **Covers:** 604 of 637 shelf books have one (Open Library by ISBN and title, then Amazon; Google Books and the Goodreads cover service weren’t answering on 18 Oct). The 33 left: 18 in the Old Book Collection (her own old copies, so a modern cover wouldn’t be hers: photos are best), and 15 small-press or unusual editions no source has. Photos dropped in a folder could be matched up.
 - Covers are copied into `site/covers/` (`tools/copy_covers.py`, after `find_covers.py`), so they show at once and work offline.
 - **Taskbar icon: fixed (18 Oct).** The shortcuts open the site from a small local server (http://localhost:8020, tools/serve.py, started at login) as an app window in its own Chrome profile; they carry the window’s app id, so Windows shows their icon (app-v2.ico, every size inside) on the taskbar, sharp. Reading marks or to-buy ticks made in the old window opened from the folder don’t carry over (“Save a backup” there, “Load a backup” here).
 - Phone layout not done yet (laptop first).
