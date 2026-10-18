@@ -30,6 +30,35 @@ $lnk.Save()
 Start-Process -FilePath $pythonw -ArgumentList "`"$(Join-Path $root 'tools\serve.py')`"" -WorkingDirectory $root -WindowStyle Hidden
 "Server started: http://localhost:8020/"
 
+# Windows knows the window by the app id Chrome gives it: "Chrome." + its address as Chrome writes it ("localhost_/") +
+# "." + the profile ("Chrome.Default", from ...\Jemmas Library\Chrome\Default). Read from the open window on 18 Oct.
+# The shortcuts carry the same id, so Windows can match the window to them and use their sharp icon on the taskbar
+# (Chrome's own window icon is its 32px tab icon stretched).
+$appId = "Chrome.localhost_/.Chrome.Default"
+Add-Type -TypeDefinition @'
+using System; using System.Runtime.InteropServices;
+public static class ShortcutAppId {
+  [StructLayout(LayoutKind.Sequential, Pack = 4)] struct PROPERTYKEY { public Guid fmtid; public uint pid; }
+  [StructLayout(LayoutKind.Explicit, Size = 24)] struct PROPVARIANT { [FieldOffset(0)] public ushort vt; [FieldOffset(8)] public IntPtr p; }
+  [ComImport, Guid("886D8EEB-8CF2-4446-8D02-CDBA1DBDCF99"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+  interface IPropertyStore { [PreserveSig] int GetCount(out uint c); [PreserveSig] int GetAt(uint i, out PROPERTYKEY k);
+    [PreserveSig] int GetValue(ref PROPERTYKEY k, out PROPVARIANT v); [PreserveSig] int SetValue(ref PROPERTYKEY k, ref PROPVARIANT v); [PreserveSig] int Commit(); }
+  [ComImport, Guid("0000010b-0000-0000-C000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+  interface IPersistFile { void GetClassID(out Guid c); [PreserveSig] int IsDirty(); void Load([MarshalAs(UnmanagedType.LPWStr)] string f, uint mode);
+    void Save([MarshalAs(UnmanagedType.LPWStr)] string f, bool remember); void SaveCompleted([MarshalAs(UnmanagedType.LPWStr)] string f); void GetCurFile(out IntPtr f); }
+  public static void Set(string path, string id) {
+    var link = Activator.CreateInstance(Type.GetTypeFromCLSID(new Guid("00021401-0000-0000-C000-000000000046")));
+    ((IPersistFile)link).Load(path, 2);
+    var key = new PROPERTYKEY { fmtid = new Guid("9F4C2855-9F79-4B39-A8D0-E1D42DE1D5F3"), pid = 5 };
+    var v = new PROPVARIANT { vt = 31, p = Marshal.StringToCoTaskMemUni(id) };
+    var st = (IPropertyStore)link;
+    Marshal.ThrowExceptionForHR(st.SetValue(ref key, ref v)); Marshal.ThrowExceptionForHR(st.Commit());
+    ((IPersistFile)link).Save(path, true);
+    Marshal.FreeCoTaskMem(v.p);
+  }
+}
+'@
+
 foreach ($dir in @($root, [Environment]::GetFolderPath('Desktop'), [Environment]::GetFolderPath('Programs'))) {
     $lnk = $shell.CreateShortcut((Join-Path $dir "Jemma's Library.lnk"))
     $lnk.TargetPath       = $chrome
@@ -38,5 +67,6 @@ foreach ($dir in @($root, [Environment]::GetFolderPath('Desktop'), [Environment]
     $lnk.WorkingDirectory = Join-Path $root 'site'
     $lnk.Description      = "Jemma's Library"
     $lnk.Save()
+    [ShortcutAppId]::Set($lnk.FullName, $appId)
     "Made $($lnk.FullName)"
 }
