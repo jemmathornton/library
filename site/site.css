@@ -39,12 +39,12 @@ em{font-style:italic}
 .nav{overflow-y:auto;padding:10px 12px 16px;flex:1;display:flex;flex-direction:column;gap:14px;scrollbar-color:rgba(255,255,255,.2) transparent}
 .nav-group{display:grid;gap:1px}
 .nav-group .label{padding:6px 12px 8px;color:var(--on-deep-mute)}
-.nav a{display:flex;align-items:center;gap:10px;padding:7px 12px;border-radius:8px;text-decoration:none;font-size:14.5px;font-weight:600}
+.nav a{display:flex;align-items:center;gap:10px;line-height:1.4;padding:7px 12px;border-radius:8px;text-decoration:none;font-size:14.5px;font-weight:600}
 .nav a:hover{background:rgba(255,255,255,.07)}
 .nav a.on{background:rgba(255,255,255,.13)}
 .nav a .i{color:var(--on-deep-mute)}
 .nav .n{margin-left:auto;font-size:12px;color:var(--on-deep-mute);font-variant-numeric:tabular-nums}
-.shelves-nav a{font-size:15.5px;padding:7px 12px}
+.shelves-nav a{font-size:15.5px;padding:6px 12px}
 .shelves-nav .dot{width:11px;height:11px}
 .nav-group.minor{margin-top:auto;padding-top:10px;border-top:1px solid rgba(255,255,255,.08)}
 .nav-group.minor a{font-size:13.5px;font-weight:600;padding:5px 12px;color:var(--on-deep-mute)}
@@ -264,3 +264,8 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .review+.review{margin-top:14px}
 .spoiler{filter:blur(5px);cursor:pointer;transition:filter .2s;border-radius:4px;background:var(--soft)}
 .spoiler.shown,.spoiler:focus{filter:none;background:none}
+
+/* all shelves at once */
+.dot.big{width:14px;height:14px;display:inline-block;vertical-align:middle;margin:-4px 14px 0 2px;box-shadow:none}
+.shelf-part .section-head{margin-top:56px}
+.nav a .i{font-size:15px}

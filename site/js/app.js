@@ -129,6 +129,7 @@ function renderNav(active){
   // (the name at the top is the way home)
   document.getElementById("nav").innerHTML = `
     <div class="nav-group shelves-nav"><span class="label">Shelves</span>
+      ${link("#shelves", ic("library"), "All shelves", BOOKS.length)}
       ${SHELVES.filter(s => s.books.length).map(s => link("#shelf-" + s.id, `<span class="dot" style="--c:${s.color}"></span>`, esc(s.name), s.books.length)).join("")}
     </div>
     <div class="nav-group minor">
@@ -147,35 +148,48 @@ function pageHome(){
       text: `Every book on the shelves at home, ${plural(SHELVES.filter(s => s.books.length && s.libib).length, "shelf", "shelves")} of them, brought over from Libib on 18 October 2026.`,
       figures: [[num(BOOKS.length), "books"], [num(AUTHORS.length), "authors"], [num(readingLog().filter(b => !isElsewhere(b) && isRead(b)).length), "of them read"], [num(WISH.length), "on the to-buy list"]]})
     + (now.length ? sectionHead("Reading <em>now</em>", `<a class="more" href="#reading">All reading</a>`) + grid(now, "row") : "")
-    + sectionHead("The <em>shelves</em>")
+    + sectionHead("The <em>shelves</em>", `<a class="more" href="#shelves">See them all at once</a>`)
     + `<div class="shelves">${SHELVES.filter(s => s.books.length).map(s => `<a class="shelf-card" href="#shelf-${s.id}" style="--c:${s.color}"><div class="fan">${fan(s)}</div>
         <div class="txt"><h3>${esc(s.name)}</h3><span>${plural(s.books.length, "book")}</span></div></a>`).join("")}</div>`
     + sectionHead("Recently <em>added</em>") + grid(recent, "row");
 }
 
-let shelfView = {filter: "all", sort: "title"};
+// shelves are in author surname order, like a real bookcase (her choice, 18 Oct)
+const SHELF_VIEW = {filter: "all", sort: "author"};
+let shelfView = {...SHELF_VIEW};
 const SORTS = {
+  author: ["Author surname", (a, b) => a.sortAuthor.localeCompare(b.sortAuthor) || a.sortTitle.localeCompare(b.sortTitle)],
   title: ["Title A–Z", (a, b) => a.sortTitle.localeCompare(b.sortTitle)],
-  author: ["Author", (a, b) => a.sortAuthor.localeCompare(b.sortAuthor) || a.sortTitle.localeCompare(b.sortTitle)],
   added: ["Recently added", (a, b) => (b.added || "").localeCompare(a.added || "")],
   old: ["Oldest first", (a, b) => (a.published || "9999").localeCompare(b.published || "9999")],
   new: ["Newest first", (a, b) => (b.published || "").localeCompare(a.published || "")],
 };
 const FILTERS = {all: ["All", () => true], unread: ["Not read", b => !isRead(b) && !isReading(b)], toread: ["To read", isToRead], reading: ["Reading", isReading], read: ["Read", isRead]};
 
-function shelfBooks(list){
+function shelfBooks(list, grouped = currentGrouped){
   const f = FILTERS[shelfView.filter][1], shown = list.filter(f).sort(SORTS[shelfView.sort][1]);
-  const view = store.get(VIEW_KEY, "covers");
+  const view = store.get(VIEW_KEY, "covers"), books = l => view === "list" ? listView(l) : grid(l);
+  // all shelves at once: each shelf in turn, in the same order as the sidebar
+  const body = !shown.length ? `<p class="empty">Nothing here yet.</p>` : !grouped ? books(shown)
+    : SHELVES.map(s => { const l = shown.filter(b => b.shelf === s.id); return l.length ? `<section class="shelf-part">`
+        + sectionHead(`<span class="dot big" style="--c:${s.color}"></span>${esc(s.name)}`, `<a class="more" href="#shelf-${s.id}">${plural(l.length, "book")}</a>`) + books(l) + `</section>` : ""; }).join("");
   return `<div class="toolbar" id="toolbar">
       <div class="chips">${Object.entries(FILTERS).map(([k, [l]]) => `<button type="button" data-filter="${k}" class="${shelfView.filter === k ? "on" : ""}">${l}</button>`).join("")}</div>
       <select id="sort" aria-label="Sort by">${Object.entries(SORTS).map(([k, [l]]) => `<option value="${k}"${shelfView.sort === k ? " selected" : ""}>${l}</option>`).join("")}</select>
       <div class="views"><button type="button" data-view="covers" class="${view === "covers" ? "on" : ""}" aria-label="Covers">${ic("grid")}</button><button type="button" data-view="list" class="${view === "list" ? "on" : ""}" aria-label="List">${ic("list")}</button></div>
       <span class="count">${plural(shown.length, "book")}</span>
-    </div>` + (shown.length ? (view === "list" ? listView(shown) : grid(shown)) : `<p class="empty">Nothing here yet.</p>`);
+    </div>` + body;
 }
-let currentList = [];
+let currentList = [], currentGrouped = false;
+function pageAllShelves(){
+  currentList = BOOKS; currentGrouped = true;
+  const shelves = SHELVES.filter(s => s.books.length && s.libib).length;
+  return hero({kicker: `<a href="#home">Every shelf</a>`, title: "All <em>shelves</em>", text: "The whole bookcase at once, shelf by shelf, each in author surname order.",
+      figures: [[num(BOOKS.length), "books"], [num(shelves), "shelves"], [num(AUTHORS.length), "authors"], [num(BOOKS.filter(isRead).length), "read"]]})
+    + `<div id="shelfBooks">${shelfBooks(BOOKS)}</div>`;
+}
 function pageShelf(s){
-  currentList = s.books;
+  currentList = s.books; currentGrouped = false;
   const authors = new Set(s.books.map(b => b.by)).size, pages = s.books.reduce((n, b) => n + (b.pages || 0), 0);
   return hero({kicker: `<a href="#home">Shelf</a>`, title: esc(s.name), color: s.color, text: s.note ? esc(s.note) : "",
       figures: [[num(s.books.length), "books"], [num(authors), "authors"], [num(s.books.filter(isRead).length), "read"], [num(pages), "pages"]]})
@@ -363,7 +377,8 @@ document.getElementById("nav").addEventListener("click", () => { if (q.value) q.
 function route(){
   const key = location.hash.slice(1) || "home", view = document.getElementById("view");
   let html, active = "#" + key, title = "Jemma’s Library";
-  if (key.startsWith("shelf-") && shelfIndex[key.slice(6)]) { shelfView = {filter: "all", sort: "title"}; const s = shelfIndex[key.slice(6)]; html = pageShelf(s); title = s.name; }
+  if (key.startsWith("shelf-") && shelfIndex[key.slice(6)]) { shelfView = {...SHELF_VIEW}; const s = shelfIndex[key.slice(6)]; html = pageShelf(s); title = s.name; }
+  else if (key === "shelves") { shelfView = {...SHELF_VIEW}; html = pageAllShelves(); title = "All shelves"; }
   else if (key.startsWith("b-") && bookIndex[key.slice(2)]) { const b = bookIndex[key.slice(2)]; html = pageBook(b); active = "#shelf-" + b.shelf; title = b.t; }
   else if (key.startsWith("r-") && SG.books[+key.slice(2)] && !SG.books[+key.slice(2)].books) { const e = SG.books[+key.slice(2)]; html = pageSgBook(e); active = "#reading"; title = e.t; }
   else if (key.startsWith("a-") && authorIndex[key.slice(2)]) { const a = authorIndex[key.slice(2)]; html = pageAuthor(a); active = "#authors"; title = a.name; }
