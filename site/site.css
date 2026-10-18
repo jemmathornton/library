@@ -382,3 +382,6 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .now-card .by{font-size:13.5px;color:var(--muted);margin-top:4px}
 .now-card .label{color:var(--reading)}
 .wish-item h3.long{font-size:17px;line-height:1.2}
+/* books she has read but doesn't own, on the shelves (her choice, 18 Oct) */
+.cover .not-owned{position:absolute;z-index:1;left:6px;top:6px;padding:3px 7px;border-radius:4px;background:rgba(28,18,10,.82);color:#FBF4E6;font:800 8.5px/1 var(--body);letter-spacing:.14em;text-transform:uppercase}
+.blist .cover .not-owned,.picked .cover .not-owned{display:none}

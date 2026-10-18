@@ -31,6 +31,7 @@ def short_title(s):
     """'Harry Potter and the Goblet of Fire: 4/7' and '... (Harry Potter 4)' -> 'harypoterandthegobletofire';
     a leading series number goes ('09: The Sixth Form at St Clare's' -> 'thesixthformatstclares')."""
     s = re.sub(r'^\s*\d+\s*[:.]\s*', '', re.sub(r'\(.*?\)', '', s or ''))
+    s = re.sub(r'^\s*(the|a|an)\s+', '', s, flags=re.I)   # "The Seven Husbands of Evelyn Hugo" is her "Seven Husbands..."
     return tkey(re.split(r':\s', s)[0])
 
 
