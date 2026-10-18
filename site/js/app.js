@@ -245,7 +245,6 @@ function renderNav(active){
       ${link("#to-buy", ic("shopping-bag"), "To buy", left)}
       ${link("#authors", ic("users"), "Authors", AUTHORS.length)}
       ${link("#stats", ic("chart"), "Stats")}
-      ${link("trial-covers/index.html", ic("library"), "Cover options")}
       ${link("#add", ic("plus"), "Add a book")}    </div>`;
 }
 
