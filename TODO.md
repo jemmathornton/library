@@ -22,14 +22,13 @@
 6. **Author names tidied** (18 Oct, her yes; `data/name-fixes.json`): e.g. Hans Christian Andersen, Florentyna Leow and Nina Mingya Powles (Libib had “LEOW”, “POWLES”), Shirley Barber and Phoebe Gilman added where Libib had no author, Anonymous dropped from The Familiar, Hwang Bo-reum filed under Hwang. Check any you’re not sure of.
 7. **Look:** yellows and browns since 18 Oct (walnut sidebar, cream pages, mustard gold); banners are made of each page’s own covers (her choice, 18 Oct). The shelf colours (now only the dots) are first picks.
 8. **StoryGraph links: done** (18 Oct). Northern Lights, The Subtle Knife and The Amber Spyglass count as read (The Golden Compass and the boxed set on StoryGraph, linked by hand in data/storygraph-links.json, British titles shown); both Fantastic Beasts copies read; Fun and Games at Malory Towers spelt right and read. Wicked stays linked to the Wicked Years boxed set.
-9. **Marking books here as well as on StoryGraph.** Books StoryGraph doesn’t know still have Not read / Reading / Read buttons, saved in this browser only. Keep them, or should everything go through StoryGraph?
+9. **No buttons: done** (18 Oct). Read or not read comes only from StoryGraph; book pages show it, nothing to click.
 
 10. **Series to add** (order not sure): Trebizon, the Quest books (Lisa Wright DeGroodt), Legacy of the Stones, Pure Dead. Tell me the order, or say leave them.
 
 ## Open (prototype limits)
 
 - **Reading comes from StoryGraph** (`tools/import_storygraph.py`, export from 18 Oct). Export again and import to bring in new reading. 178 of 345 StoryGraph books are on her shelves; the rest (library books, ebooks, audiobooks) show only in the Reading log and search, never on the shelves (her rule, 18 Oct).
-- **To-buy ticks and marks for books not on StoryGraph are saved in the browser only.** “Save a backup” is on the Reading page. They need proper saving before the site goes online.
 - **Covers:** 604 of 638 shelf books have one (Open Library by ISBN and by title, then Amazon; Google Books refuses). The 34 left are mostly old books with no ISBN; a photo of the real cover would do for those.
 - Covers are copied into `site/covers/` (`tools/copy_covers.py`, after `find_covers.py`), so they show at once and work offline.
 - **Taskbar icon: fixed (18 Oct).** The shortcuts open the site from a small local server (http://localhost:8020, tools/serve.py, started at login) as an app window in its own Chrome profile; they carry the window’s app id, so Windows shows their icon (app-v2.ico, every size inside) on the taskbar, sharp. Reading marks or to-buy ticks made in the old window opened from the folder don’t carry over (“Save a backup” there, “Load a backup” here).

@@ -1,5 +1,5 @@
 // Jemma's Library: the page code. Everything is drawn from DATA (js/data.js, built by tools/build.py from data/).
-// Reading marks (read, reading, dates, stars) and to-buy ticks are kept in this browser for now (see TODO.md).
+// Reading comes from StoryGraph (data/storygraph.json); the site shows it and never sets it (her choice, 18 Oct: no buttons).
 const ic = n => ICONS[n].replace("<svg ", '<svg class="i" aria-hidden="true" ');
 // shown text uses curly apostrophes and quotes; ids and links are untouched
 const curly = s => String(s ?? "").replace(/(^|[\s(\[“"—-])'/g, "$1‘").replace(/'/g, "’");
@@ -17,8 +17,7 @@ const store = {
   get(k, fallback){ try { return JSON.parse(localStorage.getItem(k)) ?? fallback; } catch { return fallback; } },
   set(k, v){ try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch { return false; } },
 };
-const READ_KEY = "jemmas-library-reading", GOT_KEY = "jemmas-library-found", VIEW_KEY = "jemmas-library-view";
-let READ = store.get(READ_KEY, {}), GOT = store.get(GOT_KEY, {});
+const VIEW_KEY = "jemmas-library-view";   // covers or list: a viewing preference, nothing more
 
 // ---------- the library ----------
 const SHELVES = DATA.shelves, shelfIndex = {};
@@ -92,7 +91,7 @@ function sgMerged(list){   // a book she has on StoryGraph more than once (re-re
 const isElsewhere = b => String(b.id).startsWith("r-");
 const reading = b => isElsewhere(b) ? (b.merged ||= sgMerged([b]))
   : sgFor[b.id] ? (sgFor[b.id].merged ||= sgMerged(sgFor[b.id]))
-  : ({...(b.status ? {status: b.status} : {}), ...(READ[b.id] || {})});
+  : (b.status ? {status: b.status} : {});
 const isRead = b => reading(b).status === "read", isReading = b => reading(b).status === "reading", isToRead = b => reading(b).status === "to-read";
 // everything she has read or means to read, each book once (not once per copy; a copy with a cover stands for the rest)
 function readingLog(){
@@ -180,7 +179,7 @@ const sectionHead = (title, more) => `<div class="section-head"><h2>${title}</h2
 
 // ---------- sidebar ----------
 function renderNav(active){
-  const nReading = readingLog().filter(isReading).length, left = WISH.filter(w => !GOT[w.id]).length;
+  const nReading = readingLog().filter(isReading).length, left = WISH.length;
   const link = (href, icon, text, n) => `<a href="${href}" class="${active === href ? "on" : ""}">${icon}${text}${n != null ? `<span class="n">${n}</span>` : ""}</a>`;
   // the shelves come first and largest (her choice, 18 Oct); the rest of the library is a quiet list at the foot
   // (the name at the top is the way home)
@@ -256,18 +255,14 @@ function pageShelf(s){
     + `<div id="shelfBooks">${shelfBooks(s.books)}</div>`;
 }
 
-function stars(n){
-  return `<div class="stars" role="group" aria-label="Your stars">${[1,2,3,4,5].map(i => `<button type="button" data-star="${i}" class="${n >= i ? "on" : ""}" aria-label="${i} star${i > 1 ? "s" : ""}">${ic("star")}</button>`).join("")}${n ? `<button type="button" class="clear" data-star="0">Clear</button>` : ""}</div>`;
-}
+// her reading on a book StoryGraph doesn't know: shown, never set here (her choice, 18 Oct: no buttons on the site)
 function readingPanel(b){
-  const r = reading(b), st = r.status || "none";
+  const st = reading(b).status;
   return `<div class="panel" id="readPanel"><h2>Your reading</h2>
-    <div class="seg" role="group" aria-label="Reading status">${[["none", "Not read", "book"], ["reading", "Reading", "bookmark"], ["read", "Read", "check"]].map(([k, l, i]) =>
-      `<button type="button" data-status="${k}" class="${st === k ? "on" : ""}">${ic(i)}${l}</button>`).join("")}</div>
-    ${st !== "none" ? `<div class="dates"><label>Started<input type="date" data-date="started" value="${esc(r.started || "")}"></label>${st === "read" ? `<label>Finished<input type="date" data-date="finished" value="${esc(r.finished || "")}"></label>` : ""}</div>` : ""}
-    ${st === "read" ? stars(r.rating || 0) : ""}
-    <span class="saved">Saved in this browser.</span></div>`;
+    <div class="sg-status ${st || "unread"}">${ic(st === "reading" ? "bookmark" : st === "read" ? "check" : "book")}${STATUS_WORDS[st] || "Not read"}</div>
+    <span class="saved">Not on StoryGraph.</span></div>`;
 }
+
 const MON = MONTHS.map(m => m.slice(0, 3));
 function dateRange([a, b]){   // ['2024-01-02', '2024-01-20'] -> '2 Jan – 20 Jan 2024'
   const p = d => (/^(\d{4})-(\d{2})-(\d{2})/.exec(d || "") || []).slice(1).map(Number);
@@ -372,9 +367,7 @@ function pageReading(){
     + order.map(y => sectionHead(y === "undated" ? "Read, <em>date not recorded</em>" : `${y} <em>· ${plural(years[y].length, "book")}</em>`) + grid(years[y])).join("")
     + (later.length ? sectionHead("Paused or <em>didn’t finish</em>") + grid(later) : "")
     + `<div class="note">${ic("info")}<div><b>${num(done.length - away)} of the books you’ve read are on your shelves; ${num(away)} aren’t.</b>
-        To bring in new reading, export again from StoryGraph and import it. Books StoryGraph doesn’t know can be marked on their own page; those marks stay in this browser.
-        <div class="backup"><button class="btn" type="button" id="saveBackup">${ic("download")}Save a backup of those marks</button>
-        <label class="btn">${ic("upload")}Load a backup<input type="file" id="loadBackup" accept=".json,application/json" hidden></label></div></div></div>`;
+        Everything here comes from StoryGraph; a new export brings in new reading.</div></div>`;
 }
 
 // ---------- series, in place on the shelves (her choice, 18 Oct: no page of their own) ----------
@@ -566,31 +559,12 @@ function route(){
 addEventListener("hashchange", () => { q.value = ""; route(); });
 
 // ---------- interactions ----------
-const saveRead = () => store.set(READ_KEY, READ);
-function setReading(id, change){
-  const b = bookIndex[id], r = {...reading(b), ...change};
-  if (r.status === "none") { READ[id] = {status: "none"}; }   // "none" also hides what Libib had
-  else READ[id] = Object.fromEntries(Object.entries(r).filter(([, v]) => v !== "" && v != null));
-  saveRead();
-}
 document.addEventListener("click", e => {
   const t = e.target.closest("button, a[data-jump]"); if (!t) return;
-  const id = location.hash.slice(3);
-  if (t.dataset.status) {
-    const today = new Date().toISOString().slice(0, 10), r = reading(bookIndex[id]), ch = {status: t.dataset.status};
-    if (ch.status === "reading" && !r.started) ch.started = today;
-    if (ch.status === "read" && !r.finished) ch.finished = today;
-    setReading(id, ch); route();
-  } else if (t.dataset.star) { setReading(id, {rating: +t.dataset.star || null}); route(); }
-  else if (t.dataset.filter || t.dataset.view) {
+  if (t.dataset.filter || t.dataset.view) {
     if (t.dataset.filter) shelfView.filter = t.dataset.filter; else store.set(VIEW_KEY, t.dataset.view);
     document.getElementById("shelfBooks").innerHTML = shelfBooks(currentList);
-  } else if (t.dataset.got) { GOT[t.dataset.got] = !GOT[t.dataset.got]; if (!GOT[t.dataset.got]) delete GOT[t.dataset.got]; store.set(GOT_KEY, GOT); const y = scrollY; route(); scrollTo(0, y); }
-  else if (t.dataset.jump) { e.preventDefault(); document.getElementById(t.dataset.jump).scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}); }
-  else if (t.id === "saveBackup") {
-    const blob = new Blob([JSON.stringify({reading: READ, found: GOT, saved: new Date().toISOString()}, null, 1)], {type: "application/json"});
-    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `jemmas-library-backup-${new Date().toISOString().slice(0, 10)}.json`; a.click(); URL.revokeObjectURL(a.href);
-  }
+  } else if (t.dataset.jump) { e.preventDefault(); document.getElementById(t.dataset.jump).scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}); }
 });
 document.addEventListener("click", e => { const s = e.target.closest(".spoiler"); if (s) s.classList.toggle("shown"); });
 document.addEventListener("click", e => { if (!e.target.closest("#pickOne")) return;
@@ -600,11 +574,6 @@ document.addEventListener("change", e => {
   const t = e.target;
   if (t.id === "sort") { shelfView.sort = t.value; document.getElementById("shelfBooks").innerHTML = shelfBooks(currentList); }
   else if (t.id === "pickFrom" || t.id === "pickShelf") { if (t.id === "pickFrom") pickFrom = t.value; else pickShelf = t.value; picked = null; document.getElementById("picker").outerHTML = picker(); }
-  else if (t.dataset.date) setReading(location.hash.slice(3), {[t.dataset.date]: t.value});
-  else if (t.id === "loadBackup" && t.files[0]) t.files[0].text().then(txt => {
-    try { const d = JSON.parse(txt); READ = d.reading || {}; GOT = d.found || {}; saveRead(); store.set(GOT_KEY, GOT); route(); }
-    catch { alert("That file isn’t a library backup."); }
-  });
 });
 
 // installed as a Chrome app from the local server (sharp taskbar icon); opened straight from the folder it's an ordinary page
