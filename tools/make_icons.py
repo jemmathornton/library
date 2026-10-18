@@ -3,7 +3,7 @@ Same method as the Sims site's icon: a lighter brown than the sidebar and thick 
 
     python -X utf8 tools/make_icons.py
 
-Writes site/icon.svg, site/icon-<size>.png (browser tab, app window) and site/icon.ico (Windows shortcut).
+Writes site/icon.svg, site/icon-<size>.png (browser tab, app window) and site/app-v2.ico (Windows shortcuts; see ICO below).
 Every size is drawn on its own (at 4x, then scaled down), so the small ones stay crisp.
 """
 import os
@@ -42,10 +42,25 @@ def main():
     imgs = {px: draw(px) for px in SIZES}
     for px, im in imgs.items():
         im.save(os.path.join(SITE, f'icon-{px}.png'))
-    imgs[256] = draw(256)
-    imgs[16].save(os.path.join(SITE, 'icon.ico'), sizes=[(s, s) for s in (16, 24, 32, 48, 64, 256)],
-                  append_images=[imgs[s] for s in (24, 32, 48, 64, 256)])
-    print('Written site/icon.svg, icon-<size>.png and icon.ico')
+    write_ico(os.path.join(SITE, ICO), [draw(px) for px in ICO_SIZES])
+    print(f'Written site/icon.svg, icon-<size>.png and {ICO}')
+
+
+# The Windows icon: every size drawn on its own and stored as PNG inside the .ico (Pillow's own .ico writer kept only
+# the 16px one, which Windows stretched: blurry, 18 Oct). Named with a version, because Windows keeps showing an old
+# picture for an icon file it has seen before (it showed the old green one); a new picture needs a new name.
+ICO, ICO_SIZES = 'app-v2.ico', (16, 20, 24, 32, 40, 48, 64, 96, 128, 256)
+
+
+def write_ico(path, images):
+    import io, struct
+    pngs = []
+    for im in images:
+        b = io.BytesIO(); im.save(b, 'PNG'); pngs.append((im.width, b.getvalue()))
+    out = struct.pack('<HHH', 0, 1, len(pngs)); offset = 6 + 16 * len(pngs)
+    for px, data in pngs:
+        out += struct.pack('<BBBBHHII', px % 256, px % 256, 0, 0, 1, 32, len(data), offset); offset += len(data)
+    open(path, 'wb').write(out + b''.join(d for _, d in pngs))
 
 
 if __name__ == '__main__':

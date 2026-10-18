@@ -11,7 +11,7 @@
 $root       = Split-Path -Parent $PSScriptRoot
 $pythonw    = "$env:LOCALAPPDATA\Programs\Python\Python313\pythonw.exe"
 $profileDir = Join-Path $env:LOCALAPPDATA "Jemmas Library\Chrome"
-$icon       = Join-Path $root 'site\icon.ico'
+$icon       = Join-Path $root 'site\app-v2.ico'   # a new name for each new picture: Windows keeps old icons by file name
 $chrome = @("$env:ProgramFiles\Google\Chrome\Application\chrome.exe", "${env:ProgramFiles(x86)}\Google\Chrome\Application\chrome.exe",
             "$env:LOCALAPPDATA\Google\Chrome\Application\chrome.exe", "${env:ProgramFiles(x86)}\Microsoft\Edge\Application\msedge.exe") |
           Where-Object { Test-Path $_ } | Select-Object -First 1
