@@ -21,7 +21,7 @@
    - The House in the Cerulean Sea, Solitaire, Kitty at St Clare’s, The Tennis Term at Trebizon
 4. **Happy Place** is on To buy but is already on Adult Fiction. Take it off the list?
 5. **Titles are tidied automatically.** Anything in brackets, and a long subtitle after a colon, moves to a smaller line (e.g. “Harry Potter and the Goblet of Fire: 4/7 (Harry Potter 4)”). The Libib title is still shown on the book page. Is this OK? Any book can get its own title (`displayTitle` in `data/books.json`).
-6. **Libib name mistakes**, e.g. “Hans Christian Anders a”, “Anonymous” as an author of The Familiar, Korean names sorted by given name. Fix as you spot them, or should I go through them?
+6. **Author names tidied** (18 Oct, her yes; `data/name-fixes.json`): e.g. Hans Christian Andersen, Florentyna Leow and Nina Mingya Powles (Libib had “LEOW”, “POWLES”), Shirley Barber and Phoebe Gilman added where Libib had no author, Anonymous dropped from The Familiar, Hwang Bo-reum filed under Hwang. Check any you’re not sure of.
 7. **Look:** yellows and browns since 18 Oct (walnut sidebar, cream pages, mustard gold); banners are made of each page’s own covers (her choice, 18 Oct). The shelf colours (now only the dots) are first picks.
 8. **StoryGraph books that may be on your shelves under another title.** Should these count as read?
    - Wicked: linked to “Wicked: The Wicked Years Vintage Collection” (a boxed set). Right?
@@ -30,6 +30,8 @@
    - Fantastic Beasts & Where to Find Them (read): two copies on the shelves (Comic Relief and Illustrated), so not linked
    - Fun and Games at Malory Towers (read): the Libib copy is spelt “Fund and Games”, so not linked
 9. **Marking books here as well as on StoryGraph.** Books StoryGraph doesn’t know still have Not read / Reading / Read buttons, saved in this browser only. Keep them, or should everything go through StoryGraph?
+
+10. **Series to add** (order not sure): Trebizon, the Quest books (Lisa Wright DeGroodt), Legacy of the Stones, Pure Dead. Tell me the order, or say leave them.
 
 ## Open (prototype limits)
 

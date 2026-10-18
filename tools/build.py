@@ -38,7 +38,8 @@ def fix_names(books, fixes):
 
 def build():
     covers = load('covers.json', {})
-    books, wish = load('books.json'), load('to-buy.json', [])
+    # books.json is the Libib import (a re-import overwrites it); added.json holds books added on the site since
+    books, wish = load('books.json') + load('added.json', []), load('to-buy.json', [])
     fixes = load('name-fixes.json', {'names': {}, 'remove': [], 'roles': {}, 'books': {}, 'surnames': {}})
     fix_names(books + wish, fixes)
     sg = load('storygraph.json', {'books': []})

@@ -1,16 +1,84 @@
-"""Serve site/ at http://localhost:8020 for the library's installed Chrome app.
+"""Serve site/ at http://localhost:8020 for the library's app window, and let it add books.
 
-Chrome only installs a site as a proper app (its own window and a sharp taskbar icon) when it comes from a server, not
-straight from the folder (18 Oct: the taskbar icon of a page window is the 32px tab icon stretched on her 200% screen).
 Started at login with no window by the shortcut tools/make_shortcuts.ps1 puts in her Startup folder. Only this computer
 can reach it. If it's already running, a second copy just stops.
 
     pythonw tools/serve.py
+
+Adding a book (the site's "Add a book" page, 18 Oct):
+    GET  /api/lookup?isbn=...   the book's details from Open Library (title, authors, publisher, date, pages, cover)
+    POST /api/books             saves it to data/added.json (kept apart from the Libib import, which a re-import
+                                overwrites), copies its cover into site/covers and rebuilds the site
+Both need the header "X-Library: 1", which only the site itself sends: a page from anywhere else can't add books.
 """
-import functools, http.server, os, sys
+import functools, http.server, json, os, re, subprocess, sys, urllib.parse, urllib.request
+from datetime import date
 
 PORT = 8020
-SITE = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'site')
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SITE, DATA = os.path.join(ROOT, 'site'), os.path.join(ROOT, 'data')
+ADDED = os.path.join(DATA, 'added.json')
+UA = {'User-Agent': "Jemma's Home Library (private)"}
+PYTHON = os.path.join(os.path.dirname(sys.executable), 'python.exe')   # under pythonw, run the build with python
+
+
+def get_json(url):
+    with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=20) as r:
+        return json.load(r)
+
+
+def lookup(isbn):
+    isbn = re.sub(r'[^0-9Xx]', '', isbn).upper()
+    d = get_json(f'https://openlibrary.org/api/books?format=json&jscmd=data&bibkeys=ISBN:{isbn}').get(f'ISBN:{isbn}')
+    if not d:
+        return {'found': False, 'isbn': isbn}
+    c = d.get('cover') or {}
+    return {'found': True, 'isbn': isbn, 'title': (d.get('title', '') + (': ' + d['subtitle'] if d.get('subtitle') else '')).strip(),
+            'authors': [a['name'] for a in d.get('authors', [])], 'publisher': ', '.join(p['name'] for p in d.get('publishers', [])),
+            'published': d.get('publish_date', ''), 'pages': d.get('number_of_pages'), 'cover': c.get('large') or c.get('medium') or ''}
+
+
+def isbn13(s):
+    s = re.sub(r'[^0-9Xx]', '', s or '').upper()
+    if len(s) == 10:
+        core = '978' + s[:9]
+        return core + str((10 - sum((3 if i % 2 else 1) * int(ch) for i, ch in enumerate(core)) % 10) % 10)
+    return s if len(s) == 13 else ''
+
+
+def add(book):
+    added = json.load(open(ADDED, encoding='utf-8')) if os.path.exists(ADDED) else []
+    shelves = {s['id'] for s in json.load(open(os.path.join(DATA, 'shelves.json'), encoding='utf-8'))}
+    title = (book.get('title') or '').strip()
+    if not title or book.get('shelf') not in shelves:
+        return {'ok': False, 'error': 'A book needs a title and a shelf.'}
+    i13 = isbn13(book.get('isbn', ''))
+    b = {'id': f'add{len(added) + 1:04d}', 'title': title,
+         'authors': [{'name': n.strip()} for n in book.get('authors', []) if n.strip()], 'shelf': book['shelf'],
+         'isbn13': i13, 'publisher': book.get('publisher', ''), 'published': book.get('published', ''),
+         'pages': int(book['pages']) if str(book.get('pages') or '').isdigit() else None,
+         'description': book.get('description', ''), 'added': date.today().isoformat(), 'copies': 1, 'addedHere': True}
+    if b['authors']:
+        b['surname'] = b['authors'][0]['name'].split()[-1]
+    b = {k: v for k, v in b.items() if v not in ('', None, [])}
+    added.append(b)
+    with open(ADDED, 'w', encoding='utf-8', newline='\n') as fh:
+        json.dump(added, fh, ensure_ascii=False, indent=1)
+        fh.write('\n')
+    if book.get('cover'):   # keep its cover like the others
+        covers_path = os.path.join(DATA, 'covers.json')
+        covers = json.load(open(covers_path, encoding='utf-8')) if os.path.exists(covers_path) else {}
+        key = i13 or 'id-' + b['id']
+        covers[key] = {'src': book['cover'], 'from': 'Open Library (added here)'}
+        with open(covers_path, 'w', encoding='utf-8', newline='\n') as fh:
+            json.dump(dict(sorted(covers.items())), fh, ensure_ascii=False, indent=0)
+            fh.write('\n')
+        sys.path.insert(0, os.path.join(ROOT, 'tools'))
+        from copy_covers import copy
+        copy(key, book['cover'])
+    subprocess.run([PYTHON, '-X', 'utf8', os.path.join(ROOT, 'tools', 'build.py')], cwd=ROOT, capture_output=True,
+                   creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+    return {'ok': True, 'id': b['id']}
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
@@ -21,10 +89,47 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.send_header('Cache-Control', 'no-cache')
         super().end_headers()
 
+    def reply(self, obj, code=200):
+        body = json.dumps(obj, ensure_ascii=False).encode('utf-8')
+        self.send_response(code)
+        self.send_header('Content-Type', 'application/json; charset=utf-8')
+        self.send_header('Content-Length', str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
+    def api_ok(self):
+        return self.headers.get('X-Library') == '1'
+
+    def do_GET(self):
+        if not self.path.startswith('/api/'):
+            return super().do_GET()
+        if not self.api_ok():
+            return self.reply({'error': 'not allowed'}, 403)
+        u = urllib.parse.urlparse(self.path)
+        if u.path == '/api/lookup':
+            try:
+                return self.reply(lookup(urllib.parse.parse_qs(u.query).get('isbn', [''])[0]))
+            except Exception as e:
+                return self.reply({'found': False, 'error': str(e)})
+        self.reply({'error': 'unknown'}, 404)
+
+    def do_POST(self):
+        if self.path != '/api/books' or not self.api_ok():
+            return self.reply({'error': 'not allowed'}, 403)
+        try:
+            book = json.loads(self.rfile.read(int(self.headers.get('Content-Length', 0))) or b'{}')
+            self.reply(add(book))
+        except Exception as e:
+            self.reply({'ok': False, 'error': str(e)}, 500)
+
+
+class Server(http.server.ThreadingHTTPServer):
+    allow_reuse_address = False   # on Windows "reuse" lets a second copy share the port; it must fail and stop instead
+
 
 def main():
     try:
-        server = http.server.ThreadingHTTPServer(('127.0.0.1', PORT), functools.partial(Handler, directory=SITE))
+        server = Server(('127.0.0.1', PORT), functools.partial(Handler, directory=SITE))
     except OSError:
         sys.exit(0)
     server.serve_forever()

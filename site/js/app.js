@@ -184,7 +184,8 @@ function renderNav(active){
       ${link("#series", ic("layers"), "Series", seriesShown().length)}
       ${link("#to-buy", ic("shopping-bag"), "To buy", left)}
       ${link("#authors", ic("users"), "Authors", AUTHORS.length)}
-      ${link("#stats", ic("chart"), "Stats")}    </div>`;
+      ${link("#stats", ic("chart"), "Stats")}
+      ${link("#add", ic("plus"), "Add a book")}    </div>`;
 }
 
 // ---------- pages ----------
@@ -433,9 +434,59 @@ function pageToBuy(){
   return hero({kicker: "On the lookout", title: "To <em>buy</em>", text: "Books to look out for. Tick one off when you find it.",
       figures: [[num(WISH.length - got), "still to find"], [num(got), "found"]]})
     + `<div class="wish">${list.map(w => `<div class="wish-item${GOT[w.id] ? " got" : ""}">${cover(w)}<div><h3>${esc(w.t)}</h3>${w.sub ? `<div class="by">${esc(w.sub)}</div>` : ""}<div class="by">${esc(w.by)}</div>
-        ${w.maybeOwned ? `<a class="flag" href="#b-${w.maybeOwned[0]}">${ic("info")}Already on a shelf?</a>` : ""}</div>
+        ${w.maybeOwned ? `<a class="flag" href="#b-${w.maybeOwned[0]}">${ic("info")}Already on a shelf?</a>` : ""}
+        ${GOT[w.id] ? `<a class="flag add" href="#add" data-add-from="${w.id}">${ic("plus")}Add it to a shelf</a>` : ""}</div>
         <button type="button" class="tick${GOT[w.id] ? " on" : ""}" data-got="${w.id}" aria-label="Found it" aria-pressed="${!!GOT[w.id]}">${ic("check")}</button></div>`).join("")}</div>`;
 }
+
+// ---------- add a book ----------
+// Typed or scanned ISBN -> details from Open Library (through the little server, tools/serve.py) -> a shelf -> saved in
+// data/added.json and the site rebuilt. Only works in her app window (served from the server), not from the folder.
+let addForm = {isbn: "", title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", note: "", busy: false};
+const api = (path, opts = {}) => fetch(path, {...opts, headers: {"X-Library": "1", "Content-Type": "application/json", ...(opts.headers || {})}}).then(r => r.json());
+function pageAdd(){
+  const f = addForm, served = location.protocol.startsWith("http");
+  const field = (k, label, extra = "") => `<label><span>${label}</span><input id="add-${k}" value="${esc(f[k] || "").replace(/’/g, "'")}" ${extra}></label>`;
+  return hero({kicker: "Your shelves", title: "Add a <em>book</em>", text: "Type or scan its ISBN (the barcode number, usually on the back), check the details, pick a shelf."})
+    + (!served ? `<div class="note">${ic("info")}<div><b>Open the library from its desktop shortcut to add books.</b> Opened straight from the folder, it can’t save anything.</div></div>` : "")
+    + `<div class="add-form" id="addForm">
+        <div class="isbn-row">${field("isbn", "ISBN", 'inputmode="numeric" autocomplete="off" placeholder="9780000000000"')}
+          <button class="btn pick" type="button" id="addLookup"${served ? "" : " disabled"}>${ic("search")}Look it up</button></div>
+        ${f.note ? `<p class="add-note">${esc(f.note)}</p>` : ""}
+        <div class="add-main">${f.cover ? `<div class="cover"><img src="${esc(f.cover)}" alt=""></div>` : `<div class="cover gap"></div>`}
+          <div class="add-fields">${field("title", "Title")}${field("authors", "Author(s), with commas between")}
+            <div class="two">${field("publisher", "Publisher")}${field("published", "Published")}</div>
+            <div class="two">${field("pages", "Pages", 'inputmode="numeric"')}
+              <label><span>Shelf</span><select id="add-shelf"><option value="">Choose a shelf…</option>${SHELVES.filter(s => s.libib).map(s => `<option value="${s.id}"${f.shelf === s.id ? " selected" : ""}>${esc(s.name)}</option>`).join("")}</select></label></div>
+            <button class="btn pick" type="button" id="addSave"${served && !f.busy ? "" : " disabled"}>${ic("plus")}${f.busy ? "Adding…" : "Add to the shelf"}</button>
+          </div></div></div>`;
+}
+const readAdd = () => ["isbn", "title", "authors", "publisher", "published", "pages"].forEach(k => { const el = document.getElementById("add-" + k); if (el) addForm[k] = el.value.trim(); });
+const redrawAdd = () => { const y = scrollY; document.getElementById("view").innerHTML = pageAdd(); scrollTo(0, y); };
+document.addEventListener("click", async e => {
+  const from = e.target.closest("[data-add-from]");
+  if (from) { const w = WISH.find(x => x.id === from.dataset.addFrom); addForm = {isbn: w.isbn13 || "", title: w.title, authors: w.by === "Unknown author" ? "" : w.by.replace(/ & /g, ", "), publisher: "", published: "", pages: "", cover: "", shelf: "", note: "", busy: false}; return; }
+  if (e.target.closest("#addLookup")) {
+    readAdd(); if (!addForm.isbn) { addForm.note = "Type the ISBN first."; return redrawAdd(); }
+    addForm.note = "Looking it up…"; redrawAdd();
+    try { const d = await api("api/lookup?isbn=" + encodeURIComponent(addForm.isbn));
+      if (d.found) Object.assign(addForm, {title: d.title, authors: d.authors.join(", "), publisher: d.publisher, published: d.published, pages: d.pages || "", cover: d.cover, note: "Found it. Check the details and pick a shelf."});
+      else addForm.note = "Open Library doesn’t know that ISBN. Fill in the details yourself."; }
+    catch { addForm.note = "Couldn’t reach Open Library. Fill in the details yourself."; }
+    return redrawAdd();
+  }
+  if (e.target.closest("#addSave")) {
+    readAdd(); addForm.shelf = document.getElementById("add-shelf").value;
+    if (!addForm.title || !addForm.shelf) { addForm.note = !addForm.title ? "It needs a title." : "Pick a shelf for it."; return redrawAdd(); }
+    addForm.busy = true; addForm.note = ""; redrawAdd();
+    try { const r = await api("api/books", {method: "POST", body: JSON.stringify({...addForm, authors: addForm.authors.split(",")})});
+      if (r.ok) { addForm = {isbn: "", title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", note: "", busy: false}; location.href = location.pathname + "?v=" + Date.now() + "#b-" + r.id; return; }
+      addForm.note = r.error || "That didn’t save."; }
+    catch { addForm.note = "That didn’t save: is the library open from its shortcut?"; }
+    addForm.busy = false; redrawAdd();
+  }
+});
+document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.id === "add-isbn") document.getElementById("addLookup")?.click(); });
 
 function pageStats(){
   const pages = BOOKS.reduce((n, b) => n + (b.pages || 0), 0), withPages = BOOKS.filter(b => b.pages);
@@ -493,7 +544,7 @@ function route(){
   else if (key.startsWith("b-") && bookIndex[key.slice(2)]) { const b = bookIndex[key.slice(2)]; html = pageBook(b); active = "#shelf-" + b.shelf; title = b.t; }
   else if (key.startsWith("r-") && SG.books[+key.slice(2)] && !SG.books[+key.slice(2)].books) { const e = SG.books[+key.slice(2)]; html = pageSgBook(e); active = "#reading"; title = e.t; }
   else if (key.startsWith("a-") && authorIndex[key.slice(2)]) { const a = authorIndex[key.slice(2)]; html = pageAuthor(a); active = "#authors"; title = a.name; }
-  else html = {authors: pageAuthors, reading: pageReading, "to-read": pageToRead, series: pageSeriesList, "to-buy": pageToBuy, stats: pageStats}[key]?.() || (active = "#home", pageHome());
+  else html = {authors: pageAuthors, reading: pageReading, "to-read": pageToRead, add: pageAdd, series: pageSeriesList, "to-buy": pageToBuy, stats: pageStats}[key]?.() || (active = "#home", pageHome());
   view.innerHTML = html; renderNav(active);
   document.title = title === "Jemma’s Library" ? title : `${curly(title)} · Jemma’s Library`;
   scrollTo(0, 0);
