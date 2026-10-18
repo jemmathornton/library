@@ -455,7 +455,7 @@ function pageToBuy(){
   const list = [...WISH].sort((a, b) => a.sortAuthor.localeCompare(b.sortAuthor) || a.sortTitle.localeCompare(b.sortTitle));
   return hero({kicker: "On the lookout", title: "To <em>buy</em>", text: "Books to look out for. When you find one, press Got it to put it on a shelf; it comes off this list.",
       figures: [[num(WISH.length), "still to find"]]})
-    + `<div class="wish">${list.map(w => `<div class="wish-item">${cover(w)}<div><h3>${esc(w.t)}</h3>${w.sub ? `<div class="by">${esc(w.sub)}</div>` : ""}<div class="by">${esc(w.by)}</div>
+    + `<div class="wish">${list.map(w => `<div class="wish-item">${cover(w)}<div><h3${w.t.length > 40 ? ' class="long"' : ""}>${esc(w.t)}</h3>${w.sub ? `<div class="by">${esc(w.sub)}</div>` : ""}<div class="by">${esc(w.by)}</div>
         ${w.maybeOwned ? `<a class="flag" href="#b-${w.maybeOwned[0]}">${ic("info")}Already on a shelf?</a>` : ""}</div>
         <a class="btn got-it" href="#add" data-add-from="${w.id}">${ic("check")}Got it</a></div>`).join("")}</div>`;
 }

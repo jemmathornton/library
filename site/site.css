@@ -381,3 +381,4 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .now-card h3{font-size:26px;line-height:1.05;margin-top:6px}
 .now-card .by{font-size:13.5px;color:var(--muted);margin-top:4px}
 .now-card .label{color:var(--reading)}
+.wish-item h3.long{font-size:17px;line-height:1.2}
