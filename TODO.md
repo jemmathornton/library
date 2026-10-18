@@ -29,5 +29,5 @@
 - **Reading marks and to-buy ticks are saved in the browser only.** Use “Save a backup” on the Reading page. They need proper saving before the site goes online (or `data/reading.json` read in by the build).
 - **Covers:** 459 of 638 books have one, from Open Library. Google Books refused today (too many requests): run `tools/find_covers.py` again another day for the 109 still untried. About 70 books have no ISBN, so no cover can be looked up for them.
 - Covers are copied into `site/covers/` (`tools/copy_covers.py`, after `find_covers.py`), so they show at once and work offline.
-- **Taskbar icon is blurry** (same as the Sims site). Chrome builds the taskbar icon of a page window from the tab icon, which it keeps at 32px on her 200% screen, then stretches it. The fix is to install the site as a proper Chrome app from a small local server (crisp icon, own taskbar group); waiting for her OK.
+- **Taskbar icon is blurry** (same as the Sims site). Chrome builds the taskbar icon of a page window from the tab icon, which it keeps at 32px on her 200% screen, then stretches it. The fix is to install the site as a proper Chrome app from a small local server (crisp icon, own taskbar group). Parked, her choice (18 Oct).
 - Phone layout not done yet (laptop first).
