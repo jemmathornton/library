@@ -22,7 +22,7 @@
 4. **Happy Place** is on To buy but is already on Adult Fiction. Take it off the list?
 5. **Titles are tidied automatically.** Anything in brackets, and a long subtitle after a colon, moves to a smaller line (e.g. “Harry Potter and the Goblet of Fire: 4/7 (Harry Potter 4)”). The Libib title is still shown on the book page. Is this OK? Any book can get its own title (`displayTitle` in `data/books.json`).
 6. **Libib name mistakes**, e.g. “Hans Christian Anders a”, “Anonymous” as an author of The Familiar, Korean names sorted by given name. Fix as you spot them, or should I go through them?
-7. **Look:** the colours for each shelf and the dark green sidebar are first picks.
+7. **Look:** yellows and browns since 18 Oct (walnut sidebar, cream pages, mustard gold). The shelf colours are first picks, kept different enough to tell apart.
 
 ## Open (prototype limits)
 

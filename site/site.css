@@ -1,16 +1,17 @@
-/* Jemma's Library: styles. Same family as Jemma's Sim World (deep sidebar, Instrument Serif + Manrope, brass accent);
+/* Jemma's Library: styles. Same family as Jemma's Sim World (deep sidebar, Instrument Serif + Manrope); her colours here are
+   yellows and browns (18 Oct): a dark walnut sidebar, cream paper, mustard-gold accent;
    shelves get their own colour, books show their real covers (or a plain title card when there's none). Icons: Lucide (ISC). */
 :root{
-  --paper:#F3F1EC; --surface:#FFFFFF; --ink:#1C1F1D; --muted:#646A66; --line:#E0DDD5; --soft:#EAE7E0;
-  --nav:#1D3029; --deep:#1D3029; --deep-2:#2B443A; --on-deep:#F2F4F1; --on-deep-mute:color-mix(in srgb,#fff 62%,var(--deep));
-  --brass:#C9A04A; --done:#2E8B57; --reading:#C9A04A;
+  --paper:#F7F1E4; --surface:#FFFCF6; --ink:#2A1F16; --muted:#75664F; --line:#E7DCC6; --soft:#EFE5D1;
+  --nav:#3B2616; --deep:#3B2616; --deep-2:#5E3D22; --on-deep:#FBF4E6; --on-deep-mute:color-mix(in srgb,#fff 62%,var(--deep));
+  --brass:#E4B23C; --done:#8A4B17; --reading:#B8861A;
   --display:"Instrument Serif","Iowan Old Style","Palatino Linotype",Georgia,serif;
   --body:"Manrope","Segoe UI",system-ui,sans-serif;
   --side:280px; color-scheme:light;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --paper:#111412; --surface:#191D1B; --ink:#E9ECE9; --muted:#A4ACA7; --line:#2A302D; --soft:#212623; --done:#5CC48A; color-scheme:dark }}
-:root[data-theme="dark"]{ --paper:#111412; --surface:#191D1B; --ink:#E9ECE9; --muted:#A4ACA7; --line:#2A302D; --soft:#212623; --done:#5CC48A; color-scheme:dark }
+  --paper:#16110C; --surface:#201911; --ink:#F0E7D8; --muted:#B3A48D; --line:#33291E; --soft:#2A2117; --done:#E0A15A; color-scheme:dark }}
+:root[data-theme="dark"]{ --paper:#16110C; --surface:#201911; --ink:#F0E7D8; --muted:#B3A48D; --line:#33291E; --soft:#2A2117; --done:#E0A15A; color-scheme:dark }
 
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -80,7 +81,7 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .note b{color:var(--ink)}
 
 /* ---------- covers ---------- */
-.cover{--c:#7A7F7C;aspect-ratio:2/3;border-radius:4px 7px 7px 4px;overflow:hidden;position:relative;background:var(--soft);
+.cover{--c:#8A8178;aspect-ratio:2/3;border-radius:4px 7px 7px 4px;overflow:hidden;position:relative;background:var(--soft);
   box-shadow:0 1px 2px rgba(0,0,0,.12),0 8px 22px -10px rgba(0,0,0,.35)}
 .cover img{width:100%;height:100%;object-fit:cover;display:block}
 .cover::after{content:"";position:absolute;inset:0 auto 0 0;width:6px;background:linear-gradient(90deg,rgba(0,0,0,.18),rgba(255,255,255,.08) 60%,transparent)}
@@ -92,7 +93,7 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .cover.blank .a{font:700 9.5px/1.3 var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.85;border-top:1px solid color-mix(in srgb,var(--brass) 80%,transparent);padding-top:8px}
 .cover .badge{position:absolute;right:7px;top:7px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:13px;z-index:1;
   background:#fff;color:var(--done);box-shadow:0 2px 6px rgba(0,0,0,.25)}
-.cover .badge.reading{color:#9a7424}
+.cover .badge.reading{color:var(--reading)}
 
 /* book grids */
 .books{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:30px 22px;container-type:inline-size}
@@ -116,7 +117,7 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .blist span{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .blist .st{font-size:12.5px;font-weight:700}
 .blist .st.read{color:var(--done)}
-.blist .st.reading{color:#9a7424}
+.blist .st.reading{color:var(--reading)}
 
 /* toolbar */
 .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin:34px 0 26px}
@@ -210,7 +211,7 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .wish-item .cover.blank .a{display:none}
 .wish-item h3{font-size:22px;line-height:1.05}
 .wish-item .by{font-size:13.5px;color:var(--muted)}
-.wish-item .flag{display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:700;color:#9a5a1e;background:color-mix(in srgb,#E9A54A 20%,transparent);padding:3px 9px;border-radius:99px;text-decoration:none}
+.wish-item .flag{display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:700;color:#8A4B17;background:color-mix(in srgb,var(--brass) 26%,transparent);padding:3px 9px;border-radius:99px;text-decoration:none}
 .wish-item.got{opacity:.55}
 .wish-item.got h3{text-decoration:line-through;text-decoration-thickness:1px}
 .tick{all:unset;cursor:pointer;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;color:transparent;font-size:16px}
