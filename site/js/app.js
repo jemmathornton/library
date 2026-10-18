@@ -160,7 +160,7 @@ BOOKS.forEach(b => {
 });
 // All her copies of one book share one reading record: StoryGraph may have linked each copy to a different entry (the
 // Prisoner of Azkaban twice, 18 Oct), so the entries of every copy are joined. The same for books not on her shelves
-// that StoryGraph lists twice (Worm): one is kept, with both entries' reading.
+// that StoryGraph lists twice (Worm; Murder at the Vicarage with and without "The"): one is kept, with both entries' reading.
 (function joinCopies(){
   const groups = {};
   BOOKS.forEach(b => (groups[bookKey(b)] ||= []).push(b));
@@ -169,7 +169,7 @@ BOOKS.forEach(b => {
     if (entries.length && copies.length > 1) copies.forEach(b => { sgFor[b.id] = entries.slice(); });
   });
   const away = {};
-  ELSEWHERE.forEach(e => (away[norm(e.t) + "|" + norm(e.by)] ||= []).push(e));
+  ELSEWHERE.forEach(e => (away[norm(e.t.replace(/^(the|a|an) /i, "")) + "|" + norm(e.by)] ||= []).push(e));
   Object.values(away).filter(l => l.length > 1).forEach(l => { l[0].merged = sgMerged(l); l.slice(1).forEach(e => ELSEWHERE.splice(ELSEWHERE.indexOf(e), 1)); });
 })();
 // Books she has read but doesn't own sit on a shelf too, tagged Not owned (her choice, 18 Oct; data/elsewhere-shelves.json).
