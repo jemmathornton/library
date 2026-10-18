@@ -79,6 +79,10 @@
 "src": "https://covers.openlibrary.org/b/id/8282263-L.jpg",
 "from": "Open Library"
 },
+"9780007222902": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0007222904.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9780007231317": {
 "src": "https://covers.openlibrary.org/b/id/8536337-L.jpg",
 "from": "Open Library"
@@ -98,6 +102,10 @@
 "9780007260362": {
 "src": "https://covers.openlibrary.org/b/id/8434789-L.jpg",
 "from": "Open Library"
+},
+"9780007260409": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0007260407.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9780007315857": {
 "src": "https://covers.openlibrary.org/b/id/10312943-L.jpg",
@@ -147,6 +155,10 @@
 "src": "https://covers.openlibrary.org/b/id/11541298-L.jpg",
 "from": "Open Library (another edition)"
 },
+"9780008487485": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0008487480.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9780008501860": {
 "src": "https://covers.openlibrary.org/b/id/15117021-L.jpg",
 "from": "Open Library"
@@ -159,6 +171,14 @@
 "src": "https://covers.openlibrary.org/b/id/13617295-L.jpg",
 "from": "Open Library (another edition)"
 },
+"9780008536718": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0008536716.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9780008536732": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0008536732.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9780008604219": {
 "src": "https://covers.openlibrary.org/b/id/14651259-L.jpg",
 "from": "Open Library (another edition)"
@@ -166,6 +186,10 @@
 "9780008612870": {
 "src": "https://covers.openlibrary.org/b/id/14714066-L.jpg",
 "from": "Open Library"
+},
+"9780008656744": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0008656746.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9780060082093": {
 "src": "https://covers.openlibrary.org/b/id/21071-L.jpg",
@@ -214,6 +238,10 @@
 "9780063337879": {
 "src": "https://covers.openlibrary.org/b/id/15234428-L.jpg",
 "from": "Open Library (another edition)"
+},
+"9780063349186": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0063349183.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9780063373273": {
 "src": "https://covers.openlibrary.org/b/id/14853057-L.jpg",
@@ -327,6 +355,10 @@
 "src": "https://covers.openlibrary.org/b/id/110942-L.jpg",
 "from": "Open Library"
 },
+"9780241275450": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0241275458.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9780241293867": {
 "src": "https://covers.openlibrary.org/b/id/10095953-L.jpg",
 "from": "Open Library"
@@ -342,6 +374,10 @@
 "9780241491515": {
 "src": "https://covers.openlibrary.org/b/id/10518111-L.jpg",
 "from": "Open Library"
+},
+"9780241517406": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0241517400.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9780241567838": {
 "src": "https://covers.openlibrary.org/b/id/13299708-L.jpg",
@@ -370,6 +406,14 @@
 "9780241975237": {
 "src": "https://covers.openlibrary.org/b/id/8081171-L.jpg",
 "from": "Open Library (another edition)"
+},
+"9780241983003": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0241983002.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9780241984406": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0241984408.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9780241984994": {
 "src": "https://covers.openlibrary.org/b/id/9134982-L.jpg",
@@ -547,13 +591,29 @@
 "src": "https://covers.openlibrary.org/b/id/14576161-L.jpg",
 "from": "Open Library"
 },
+"9780340704028": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0340704020.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9780340704035": {
 "src": "https://covers.openlibrary.org/b/id/10179648-L.jpg",
 "from": "Open Library"
 },
+"9780340704042": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0340704047.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9780340704059": {
 "src": "https://covers.openlibrary.org/b/id/2397538-L.jpg",
 "from": "Open Library"
+},
+"9780340704066": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0340704063.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9780340704189": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0340704187.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9780340704196": {
 "src": "https://covers.openlibrary.org/b/id/14605173-L.jpg",
@@ -563,9 +623,49 @@
 "src": "https://covers.openlibrary.org/b/id/10755623-L.jpg",
 "from": "Open Library"
 },
+"9780340704219": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0340704217.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9780340704226": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0340704225.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9780340704233": {
 "src": "https://covers.openlibrary.org/b/id/14590026-L.jpg",
 "from": "Open Library"
+},
+"9780340704240": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0340704241.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9780340704257": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/034070425X.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9780340704264": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0340704268.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9780340704271": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0340704276.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9780340704288": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0340704284.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9780340704295": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0340704292.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9780340704301": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0340704306.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9780340704318": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0340704314.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9780340822784": {
 "src": "https://covers.openlibrary.org/b/id/8497190-L.jpg",
@@ -574,6 +674,10 @@
 "9780340825440": {
 "src": "https://covers.openlibrary.org/b/id/10191759-L.jpg",
 "from": "Open Library"
+},
+"9780340841457": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0340841451.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9780340896983": {
 "src": "https://covers.openlibrary.org/b/id/8580421-L.jpg",
@@ -626,6 +730,10 @@
 "9780356515649": {
 "src": "https://covers.openlibrary.org/b/id/11639065-L.jpg",
 "from": "Open Library"
+},
+"9780356526713": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0356526712.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9780358197058": {
 "src": "https://covers.openlibrary.org/b/id/10716044-L.jpg",
@@ -1043,6 +1151,14 @@
 "src": "https://covers.openlibrary.org/b/id/6513831-L.jpg",
 "from": "Open Library"
 },
+"9780583333238": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0583333230.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9780583333245": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0583333249.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9780583333252": {
 "src": "https://covers.openlibrary.org/b/id/11424055-L.jpg",
 "from": "Open Library"
@@ -1066,6 +1182,10 @@
 "9780590748476": {
 "src": "https://covers.openlibrary.org/b/id/14536053-L.jpg",
 "from": "Open Library"
+},
+"9780593335833": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/059333583X.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9780593358337": {
 "src": "https://covers.openlibrary.org/b/id/11518965-L.jpg",
@@ -1131,6 +1251,18 @@
 "src": "https://covers.openlibrary.org/b/id/2533030-L.jpg",
 "from": "Open Library"
 },
+"9780595482030": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0595482031.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9780595497225": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0595497225.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9780595530021": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0595530028.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9780606384964": {
 "src": "https://covers.openlibrary.org/b/id/8476379-L.jpg",
 "from": "Open Library"
@@ -1154,6 +1286,10 @@
 "9780689872594": {
 "src": "https://covers.openlibrary.org/b/id/10318729-L.jpg",
 "from": "Open Library"
+},
+"9780689875540": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0689875541.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9780743468169": {
 "src": "https://covers.openlibrary.org/b/id/478175-L.jpg",
@@ -1271,6 +1407,14 @@
 "src": "https://covers.openlibrary.org/b/id/492044-L.jpg",
 "from": "Open Library"
 },
+"9780755504343": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0755504348.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9780756984403": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0756984408.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9780759557338": {
 "src": "https://covers.openlibrary.org/b/id/12733417-L.jpg",
 "from": "Open Library"
@@ -1323,9 +1467,17 @@
 "src": "https://covers.openlibrary.org/b/id/8144904-L.jpg",
 "from": "Open Library"
 },
+"9780822948766": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0822948761.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9780857308412": {
 "src": "https://covers.openlibrary.org/b/id/15147661-L.jpg",
 "from": "Open Library"
+},
+"9780857506108": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0857506102.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9780857529350": {
 "src": "https://covers.openlibrary.org/b/id/15207445-L.jpg",
@@ -1355,6 +1507,10 @@
 "src": "https://covers.openlibrary.org/b/id/10213838-L.jpg",
 "from": "Open Library"
 },
+"9780996984409": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/0996984402.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9781035036615": {
 "src": "https://covers.openlibrary.org/b/id/11137872-L.jpg",
 "from": "Open Library (another edition)"
@@ -1378,6 +1534,26 @@
 "9781035901531": {
 "src": "https://covers.openlibrary.org/b/id/15145810-L.jpg",
 "from": "Open Library"
+},
+"9781068300929": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1068300922.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781068300943": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1068300949.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781068696800": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/106869680X.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781068696824": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1068696826.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781068760303": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1068760303.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9781250030962": {
 "src": "https://covers.openlibrary.org/b/id/10139102-L.jpg",
@@ -1451,9 +1627,21 @@
 "src": "https://covers.openlibrary.org/b/id/13814080-L.jpg",
 "from": "Open Library"
 },
+"9781399704397": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1399704397.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781399724494": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1399724495.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9781399726344": {
 "src": "https://covers.openlibrary.org/b/id/15154833-L.jpg",
 "from": "Open Library"
+},
+"9781399980197": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/139998019X.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9781400049622": {
 "src": "https://covers.openlibrary.org/b/id/6307937-L.jpg",
@@ -1474,6 +1662,10 @@
 "9781405346993": {
 "src": "https://covers.openlibrary.org/b/id/9747913-L.jpg",
 "from": "Open Library"
+},
+"9781405348393": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1405348399.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9781405370578": {
 "src": "https://covers.openlibrary.org/b/id/11405051-L.jpg",
@@ -1611,6 +1803,30 @@
 "src": "https://covers.openlibrary.org/b/id/12636228-L.jpg",
 "from": "Open Library"
 },
+"9781425128081": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1425128084.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781425158620": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1425158625.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781432758349": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1432758349.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781440104145": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/144010414X.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781440128035": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1440128030.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781440187186": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1440187185.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9781440621680": {
 "src": "https://covers.openlibrary.org/b/id/6421012-L.jpg",
 "from": "Open Library"
@@ -1739,6 +1955,10 @@
 "src": "https://covers.openlibrary.org/b/id/8566363-L.jpg",
 "from": "Open Library"
 },
+"9781473569003": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1473569001.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9781473608993": {
 "src": "https://covers.openlibrary.org/b/id/12380724-L.jpg",
 "from": "Open Library"
@@ -1763,9 +1983,21 @@
 "src": "https://covers.openlibrary.org/b/id/15255141-L.jpg",
 "from": "Open Library"
 },
+"9781504762397": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1504762398.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781504763745": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1504763742.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9781509896882": {
 "src": "https://covers.openlibrary.org/b/id/10151130-L.jpg",
 "from": "Open Library"
+},
+"9781520088204": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1520088205.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9781526612144": {
 "src": "https://covers.openlibrary.org/b/id/14824655-L.jpg",
@@ -1778,6 +2010,14 @@
 "9781529005219": {
 "src": "https://covers.openlibrary.org/b/id/13190644-L.jpg",
 "from": "Open Library (another edition)"
+},
+"9781529039900": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1529039908.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781529050882": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/152905088X.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9781529087949": {
 "src": "https://covers.openlibrary.org/b/id/12563846-L.jpg",
@@ -1871,6 +2111,14 @@
 "src": "https://covers.openlibrary.org/b/id/14815321-L.jpg",
 "from": "Open Library"
 },
+"9781668068595": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1668068591.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781668239247": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1668239248.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9781680680584": {
 "src": "https://covers.openlibrary.org/b/id/8421582-L.jpg",
 "from": "Open Library"
@@ -1886,6 +2134,14 @@
 "9781680682267": {
 "src": "https://covers.openlibrary.org/b/id/10666914-L.jpg",
 "from": "Open Library"
+},
+"9781718178441": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1718178441.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781739529710": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1739529715.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9781760633080": {
 "src": "https://covers.openlibrary.org/b/id/9613551-L.jpg",
@@ -1918,6 +2174,10 @@
 "9781783785698": {
 "src": "https://covers.openlibrary.org/b/id/12416434-L.jpg",
 "from": "Open Library"
+},
+"9781784743925": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1784743925.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9781785031052": {
 "src": "https://covers.openlibrary.org/b/id/14745524-L.jpg",
@@ -1967,6 +2227,10 @@
 "src": "https://covers.openlibrary.org/b/id/12993424-L.jpg",
 "from": "Open Library (another edition)"
 },
+"9781799920922": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1799920925.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9781801108447": {
 "src": "https://covers.openlibrary.org/b/id/13509614-L.jpg",
 "from": "Open Library"
@@ -1991,13 +2255,49 @@
 "src": "https://covers.openlibrary.org/b/id/14845364-L.jpg",
 "from": "Open Library"
 },
+"9781805335511": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1805335510.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781837262137": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1837262136.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9781837581719": {
 "src": "https://covers.openlibrary.org/b/id/14600806-L.jpg",
 "from": "Open Library"
 },
+"9781837587667": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1837587663.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781838217723": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/183821772X.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781838217730": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1838217738.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9781838399504": {
 "src": "https://covers.openlibrary.org/b/id/13864064-L.jpg",
 "from": "Open Library"
+},
+"9781838399528": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1838399526.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781838399535": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1838399534.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781838399542": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1838399542.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781838399559": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1838399550.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9781838858476": {
 "src": "https://covers.openlibrary.org/b/id/12569812-L.jpg",
@@ -2187,21 +2487,77 @@
 "src": "https://covers.openlibrary.org/b/id/6449078-L.jpg",
 "from": "Open Library"
 },
+"9781908670953": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1908670959.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9781909531239": {
 "src": "https://covers.openlibrary.org/b/id/10951693-L.jpg",
 "from": "Open Library (another edition)"
+},
+"9781910263198": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1910263192.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781911751007": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/191175100X.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9781912766185": {
 "src": "https://covers.openlibrary.org/b/id/12880754-L.jpg",
 "from": "Open Library"
 },
+"9781912766789": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1912766787.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781912915347": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1912915340.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781913867553": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1913867552.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781913867904": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1913867900.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781914613432": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1914613430.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9781915368768": {
 "src": "https://covers.openlibrary.org/b/id/14939524-L.jpg",
 "from": "Open Library"
 },
+"9781915628008": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1915628008.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781915628381": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1915628385.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
 "9781915643919": {
 "src": "https://covers.openlibrary.org/b/id/14807108-L.jpg",
 "from": "Open Library"
+},
+"9781917095648": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1917095643.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781917126212": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1917126212.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781918483116": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1918483116.01.LZZZZZZZ.jpg",
+"from": "Amazon"
+},
+"9781918483185": {
+"src": "https://images-na.ssl-images-amazon.com/images/P/1918483183.01.LZZZZZZZ.jpg",
+"from": "Amazon"
 },
 "9781955252195": {
 "src": "https://covers.openlibrary.org/b/id/15118893-L.jpg",
@@ -2242,6 +2598,116 @@
 "9798985663211": {
 "src": "https://covers.openlibrary.org/b/id/15138960-L.jpg",
 "from": "Open Library"
+},
+"_amazon": {
+"9781913867553": true,
+"9781912766789": true,
+"9780241517406": true,
+"9781399724494": true,
+"9781915628008": true,
+"9781399980197": true,
+"9781917095648": true,
+"9781908670953": true,
+"9780241984406": true,
+"9781910263198": true,
+"9780008536718": true,
+"9781912915347": true,
+"9781915628381": true,
+"9783951967301": false,
+"9781838399528": true,
+"9780595482030": true,
+"9781838399542": true,
+"9781425158620": true,
+"9781425128081": true,
+"9781432758349": true,
+"9781440128035": true,
+"9780595497225": true,
+"9781739529710": true,
+"9780689875540": true,
+"9781838399559": true,
+"9781838399535": true,
+"9781440104145": true,
+"9781068696824": true,
+"9781440187186": true,
+"9780007260409": true,
+"9781068760303": true,
+"9781739529703": false,
+"9781918483185": true,
+"9781068696800": true,
+"9781918483116": true,
+"9780595530021": true,
+"9781838217723": true,
+"9781068300929": true,
+"9781068300943": true,
+"9781529039900": true,
+"9780857506108": true,
+"9780340841457": true,
+"9789635277940": false,
+"9780583333245": true,
+"9780583333238": true,
+"9780340704219": true,
+"9780340704226": true,
+"9780340704240": true,
+"9780340704257": true,
+"9780340704264": true,
+"9780340704271": true,
+"9780340704288": true,
+"9780340704295": true,
+"9780340704301": true,
+"9780340704318": true,
+"9780340704028": true,
+"9780340704042": true,
+"9780340704066": true,
+"9780340704189": true,
+"9781444948387": false,
+"9781444948363": false,
+"9780681406230": false,
+"9780952057178": false,
+"9780615479316": false,
+"9780996984409": true,
+"9781837587667": true,
+"9781914613432": true,
+"9781399704397": true,
+"9781405348393": true,
+"9780241275450": true,
+"9789898939630": false,
+"9781799920922": true,
+"9781393827597": false,
+"9781668068595": true,
+"9781784743925": true,
+"9781837262137": true,
+"9780007222902": true,
+"9781797159515": false,
+"9780755504343": true,
+"9781473569003": true,
+"9780822948766": true,
+"9781838217730": true,
+"9780593335833": true,
+"9780241983003": true,
+"9780756984403": true,
+"9780008742799": false,
+"9781520088204": true,
+"9780063349186": true,
+"9781627792189": false,
+"9781913867904": true,
+"9781805335511": true,
+"9781529050882": true,
+"9781956037180": false,
+"9780008656744": true,
+"9781964721187": false,
+"9781917126212": true,
+"9788073357528": false,
+"9781504762397": true,
+"9781504763745": true,
+"9781911751007": true,
+"9780008487485": true,
+"9781718178441": true,
+"9780008821685": false,
+"9780356526713": true,
+"9780571393824": false,
+"9780008536732": true,
+"9781668239247": true,
+"9781004209507": false
 },
 "_byTitle": {
 "id-2ousnrntqt": false,

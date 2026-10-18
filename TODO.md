@@ -37,7 +37,7 @@
 
 - **Reading comes from StoryGraph** (`tools/import_storygraph.py`, export from 18 Oct). Export again and import to bring in new reading. 178 of 345 StoryGraph books are on her shelves; the rest (library books, ebooks, audiobooks) show only in the Reading log and search, never on the shelves (her rule, 18 Oct).
 - **To-buy ticks and marks for books not on StoryGraph are saved in the browser only.** “Save a backup” is on the Reading page. They need proper saving before the site goes online.
-- **Covers:** 459 of 638 shelf books and 102 of the 167 StoryGraph books not on her shelves have one, from Open Library. Google Books refused on 18 Oct (too many requests): run `tools/find_covers.py` then `copy_covers.py` again another day for the 148 still untried. About 70 books have no ISBN, so no cover can be looked up for them.
+- **Covers:** 604 of 638 shelf books have one (Open Library by ISBN and by title, then Amazon; Google Books refuses). The 34 left are mostly old books with no ISBN; a photo of the real cover would do for those.
 - Covers are copied into `site/covers/` (`tools/copy_covers.py`, after `find_covers.py`), so they show at once and work offline.
 - **Taskbar icon: fixed (18 Oct).** The shortcuts open the site from a small local server (http://localhost:8020, tools/serve.py, started at login) as an app window in its own Chrome profile; they carry the window’s app id, so Windows shows their icon (app-v2.ico, every size inside) on the taskbar, sharp. Reading marks or to-buy ticks made in the old window opened from the folder don’t carry over (“Save a backup” there, “Load a backup” here).
 - Phone layout not done yet (laptop first).
