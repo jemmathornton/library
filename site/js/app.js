@@ -100,6 +100,10 @@ function readingLog(){
   [...BOOKS].sort((a, b) => !!b.cover - !!a.cover).forEach(b => { const k = sgFor[b.id] ? reading(b).key : b.id; if (!seen.has(k) && reading(b).status) { seen.add(k); out.push(b); } });
   return out.concat(ELSEWHERE);
 }
+// every time she finished a book (a re-read counts in its own year: 8 books read in 2025 and again in 2026; her
+// 100 books in 2025, 18 Oct); one date per finish, even when two StoryGraph editions of a book share it
+const finishes = b => { const r = reading(b), ends = [...new Set((r.dates || []).map(d => d[1]).filter(Boolean))];
+  return ends.length ? ends : r.finished ? [r.finished] : []; };
 const starsText = r => String(Math.round(r * 100) / 100);   // decimals, not ½ (her choice, 18 Oct)
 
 // ---------- series (data/series.json, in reading order) ----------
@@ -358,7 +362,7 @@ function pageReading(){
   const now = log.filter(isReading), done = log.filter(isRead).sort(byFinish), next = log.filter(b => isToRead(b) && !isElsewhere(b)).sort(SORTS.author[1]);
   const later = log.filter(b => ["paused", "stopped"].includes(reading(b).status));
   const thisYear = String(new Date().getFullYear()), years = {};
-  done.forEach(b => (years[year(reading(b).finished) || "undated"] ||= []).push(b));
+  done.forEach(b => { const ys = [...new Set(finishes(b).map(year).filter(Boolean))]; (ys.length ? ys : ["undated"]).forEach(y => (years[y] ||= []).push(b)); });
   const order = Object.keys(years).filter(y => y !== "undated").sort().reverse().concat(years.undated ? ["undated"] : []);
   const away = done.filter(isElsewhere).length;
   return hero({kicker: "Your reading", title: "Reading <em>log</em>", covers: now.concat(done),
@@ -470,9 +474,9 @@ document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.id
 function readingStats(bars, readYears){
   const done = readingLog().filter(isRead), rated = done.filter(b => reading(b).rating);
   const avg = rated.length ? rated.reduce((n, b) => n + reading(b).rating, 0) / rated.length : 0;
-  const thisYear = String(new Date().getFullYear()), inYear = done.filter(b => year(reading(b).finished) === thisYear);
+  const thisYear = String(new Date().getFullYear()), yearEnds = done.flatMap(finishes).filter(d => year(d) === thisYear), inYear = yearEnds;
   const pagesRead = done.reduce((n, b) => n + (b.pages || 0), 0);
-  const months = MON.map((m, i) => ({label: m, n: inYear.filter(b => +(reading(b).finished || "").slice(5, 7) === i + 1).length}));
+  const months = MON.map((m, i) => ({label: m, n: yearEnds.filter(d => +d.slice(5, 7) === i + 1).length}));
   const mmax = Math.max(1, ...months.map(m => m.n));
   const byAuthor = {};
   rated.forEach(b => { const a = (b.authors || []).find(x => !x.role) || (b.authors || [])[0]; if (!a) return; (byAuthor[a.name] ||= []).push(reading(b).rating); });
@@ -508,7 +512,7 @@ function pageStats(){
   const dec = {}; BOOKS.forEach(b => { const y = +year(b.published); if (y) { const d = Math.floor(y / 10) * 10; dec[d] = (dec[d] || 0) + 1; } });
   const decs = Object.keys(dec).map(Number).sort(), dmax = Math.max(...Object.values(dec));
   const readN = BOOKS.filter(isRead).length, perYear = {};
-  readingLog().filter(isRead).forEach(b => { const y = year(reading(b).finished); if (y) perYear[y] = (perYear[y] || 0) + 1; });
+  readingLog().filter(isRead).flatMap(finishes).forEach(d => { const y = year(d); if (y) perYear[y] = (perYear[y] || 0) + 1; });
   const readYears = Object.keys(perYear).sort().reverse().map(y => ({label: y, n: perYear[y], href: "#reading"}));
   return hero({kicker: "The numbers", title: "<em>Stats</em>", text: "How the library adds up.", covers: mixed([...BOOKS].reverse())})
     + `<div class="ledger"><div class="ledger-grid">
