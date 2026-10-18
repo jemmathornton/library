@@ -1,0 +1,61 @@
+{
+ "_about": "Libib's author names, tidied (18 Oct, her yes). The build applies these to every book; Libib's own data stays as imported. names: wrong spelling -> right. remove: not a person. books: a book's authors given whole (Libib has none or mangled them). surnames: how a name files on the shelves when it isn't the last word.",
+ "names": {
+  "TAYLOR. JENKINS REID": "Taylor Jenkins Reid",
+  "SALLY. ROONEY": "Sally Rooney",
+  "J K Rowling": "J. K. Rowling",
+  "J k Rowling": "J. K. Rowling",
+  "J.K. Rowling": "J. K. Rowling",
+  "R.E. Palmer": "R. E. Palmer",
+  "R.E Palmer": "R. E. Palmer",
+  "R E Palmer": "R. E. Palmer",
+  "Lisa Wright Degroodt": "Lisa Wright DeGroodt",
+  "Lisa Degroodt": "Lisa Wright DeGroodt",
+  "D.J. MacHale": "D. J. MacHale",
+  "D J Machale": "D. J. MacHale",
+  "Dr T. Wu": "Dr. T. Wu",
+  "Dennis E Taylor": "Dennis E. Taylor",
+  "enid blyton": "Enid Blyton",
+  "Jill. Barklem": "Jill Barklem",
+  "Victoria Schwab": "V. E. Schwab",
+  "Jeanette McCurdy": "Jennette McCurdy",
+  "J. Cohen": "Jack Cohen",
+  "Jack S. Cohen": "Jack Cohen",
+  "I. Stewart": "Ian Stewart",
+  "Hans Christian Anders a": "Hans Christian Andersen",
+  "LEOW": "Florentyna Leow",
+  "POWLES": "Nina Mingya Powles",
+  "LILY ZALON": "Lily Zalon",
+  "Alexander Mccall Smith": "Alexander McCall Smith",
+  "Dorling Kindersley Publishing Staff": "Dorling Kindersley",
+  "Dorling Kindersley Travel Staff": "Dorling Kindersley"
+ },
+ "remove": [
+  "Anonymous"
+ ],
+ "roles": {
+  "EDITOR": "Editor"
+ },
+ "books": {
+  "Only You Can Save Mankind": [
+   {
+    "name": "Terry Pratchett"
+   }
+  ],
+  "Tale of Martha B. Rabbit": [
+   {
+    "name": "Shirley Barber"
+   }
+  ],
+  "The Wonderful Pigs of Jillian Jiggs": [
+   {
+    "name": "Phoebe Gilman"
+   }
+  ]
+ },
+ "surnames": {
+  "Hwang Bo-reum": "Hwang",
+  "Alexander McCall Smith": "McCall Smith",
+  "Dorling Kindersley": "Dorling Kindersley"
+ }
+}

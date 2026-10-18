@@ -15,9 +15,32 @@ def load(name, default=None):
     return json.load(open(p, encoding='utf-8')) if os.path.exists(p) else default
 
 
+def fix_names(books, fixes):
+    """Libib's author names tidied (data/name-fixes.json); the surname the shelves file by follows the tidied first author."""
+    for b in books:
+        authors = fixes['books'].get(b['title']) or b.get('authors') or []
+        out, seen = [], set()
+        for a in authors:
+            name = fixes['names'].get(a['name'], a['name'])
+            if name in fixes['remove'] or name in seen:
+                continue
+            seen.add(name)
+            a = {**a, 'name': name}
+            if a.get('role'):
+                a['role'] = fixes['roles'].get(a['role'], a['role'])
+            out.append(a)
+        if out or b.get('authors'):
+            b['authors'] = out
+        lead = next((a['name'] for a in out if not a.get('role')), out[0]['name'] if out else '')
+        if lead:
+            b['surname'] = fixes['surnames'].get(lead, lead.split()[-1])
+
+
 def build():
     covers = load('covers.json', {})
     books, wish = load('books.json'), load('to-buy.json', [])
+    fixes = load('name-fixes.json', {'names': {}, 'remove': [], 'roles': {}, 'books': {}, 'surnames': {}})
+    fix_names(books + wish, fixes)
     sg = load('storygraph.json', {'books': []})
     for b in books + wish + [e for e in sg['books'] if 'books' not in e]:
         isbn = b.get('isbn13', '')
