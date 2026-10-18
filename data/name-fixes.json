@@ -31,7 +31,9 @@
   "Dorling Kindersley Travel Staff": "Dorling Kindersley",
   "Terry Pratchett Terri Pratchett": "Terry Pratchett",
   "Sir Terry Pratchett": "Terry Pratchett",
-  "M. H. Binstea": "M. H. Binstead"
+  "M. H. Binstea": "M. H. Binstead",
+  "Charles Dickins": "Charles Dickens",
+  "Johanna Spyn": "Johanna Spyri"
  },
  "remove": [
   "Anonymous"
@@ -54,6 +56,11 @@
    {
     "name": "Phoebe Gilman"
    }
+  ],
+  "Where In The Zoo Are You?": [
+   {
+    "name": "Robin Blumenthal"
+   }
   ]
  },
  "surnames": {
@@ -67,6 +74,13 @@
   "Comic Relief: Quidditch Through the Ages (Harry Potter's Schoolbooks)": "Quidditch Through the Ages (Comic Relief, Harry Potter's Schoolbooks)",
   "TheStreets of Ankh Morpork Being a Concife and Possibly Even Accurate Mapp of the Great City of the Discworld : Including Unfeen University and Environs! ... by Briggs, Stephen ( Author ) ON Nov-04-1993, Paperback": "The Streets of Ankh-Morpork",
   "TheThousand Autumns of Jacob De Zoet by Mitchell, David ( Author ) ON Mar-17-2011, Paperback": "The Thousand Autumns of Jacob de Zoet",
-  "Dear Mr. Potter (Leters of Love, Loss,e Magic": "Dear Mr. Potter: Letters of Love, Loss and Magic"
+  "Dear Mr. Potter (Leters of Love, Loss,e Magic": "Dear Mr. Potter: Letters of Love, Loss and Magic",
+  "Beer Rabbit's a Rascal": "Brer Rabbit's a Rascal",
+  "Andersans Fairy Tales": "Andersen's Fairy Tales",
+  "Thr Last Hero": "The Last Hero",
+  "INTERMEZZO": "Intermezzo",
+  "Autumn Story Bramley Hedge": "Autumn Story Brambly Hedge",
+  "The Second Format St.Clare's": "The Second Form at St.Clare's",
+  "Demon Apocalypes": "Demon Apocalypse"
  }
 }
