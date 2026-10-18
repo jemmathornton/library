@@ -260,7 +260,7 @@ function readingPanel(b){
   const st = reading(b).status;
   return `<div class="panel" id="readPanel"><h2>Your reading</h2>
     <div class="sg-status ${st || "unread"}">${ic(st === "reading" ? "bookmark" : st === "read" ? "check" : "book")}${STATUS_WORDS[st] || "Not read"}</div>
-    <span class="saved">Not on StoryGraph.</span></div>`;
+  </div>`;
 }
 
 const MON = MONTHS.map(m => m.slice(0, 3));
@@ -284,7 +284,7 @@ function sgPanel(r){
     ${r.rating ? `<div class="sg-rating">${starsShown(r.rating)}</div>` : ""}
     ${r.moods ? `<div class="moods">${r.moods.split(/,\s*/).map(m => `<span>${esc(m)}</span>`).join("")}</div>` : ""}
     ${r.pace ? `<div class="saved">Pace: ${esc(r.pace)}</div>` : ""}
-    <span class="saved">From StoryGraph, ${niceDate(SG.imported)}.</span></div>`;
+  </div>`;
 }
 const reviews = r => r.reviews && r.reviews.length ? sectionHead("Your <em>review</em>") + r.reviews.map(t => `<div class="review">${reviewHtml(t)}</div>`).join("") : "";
 
@@ -299,12 +299,12 @@ function pageSgBook(e){   // a book from StoryGraph that isn't on her shelves
       <div class="authors">${e.authors.map(a => authorIndex[slug(a.name)] ? `<span><a href="#a-${slug(a.name)}">${esc(a.name)}</a></span>` : `<span>${esc(a.name)}</span>`).join("")}</div>
     </div></div></header>
     <div class="book-body"><div>
-      ${reviews(r) || `<p class="desc none">A book you’ve read or mean to read that isn’t on your shelves, from StoryGraph.</p>`}
+      ${reviews(r) || `<p class="desc none">A book you’ve read or mean to read that isn’t on your shelves.</p>`}
       ${more.length ? sectionHead(`On your shelves by <em>${esc(known[0].name)}</em>`) + grid(more) : ""}
     </div><aside style="display:grid;gap:18px">
       ${sgPanel(r)}
       <div class="panel"><h2>Details</h2><dl class="facts">
-        ${fact("Format", fmt)}${fact("ISBN-13", e.isbn13 || "")}${fact("On StoryGraph since", niceDate(e.added))}
+        ${fact("Format", fmt)}${fact("ISBN-13", e.isbn13 || "")}${fact("On your list since", niceDate(e.added))}
       </dl></div></aside></div>`;
 }
 
@@ -361,13 +361,12 @@ function pageReading(){
   const order = Object.keys(years).filter(y => y !== "undated").sort().reverse().concat(years.undated ? ["undated"] : []);
   const away = done.filter(isElsewhere).length;
   return hero({kicker: "Your reading", title: "Reading <em>log</em>", covers: now.concat(done),
-      text: `From StoryGraph, ${niceDate(SG.imported)}. Books that aren’t on your shelves (library books, ebooks, audiobooks) are here too, but never on the shelves.`,
+      text: `Everything you’ve read and are reading. Books that aren’t on your shelves (library books, ebooks, audiobooks) are here too, but never on the shelves.`,
       figures: [[num(now.length), "reading now"], [num(done.length), "read"], [num((years[thisYear] || []).length), `finished in ${thisYear}`], [num(next.length), "to read from your shelves"]]})
     + sectionHead("Reading <em>now</em>") + (now.length ? grid(now) : `<p class="empty">Nothing on the go.</p>`)
     + order.map(y => sectionHead(y === "undated" ? "Read, <em>date not recorded</em>" : `${y} <em>· ${plural(years[y].length, "book")}</em>`) + grid(years[y])).join("")
     + (later.length ? sectionHead("Paused or <em>didn’t finish</em>") + grid(later) : "")
-    + `<div class="note">${ic("info")}<div><b>${num(done.length - away)} of the books you’ve read are on your shelves; ${num(away)} aren’t.</b>
-        Everything here comes from StoryGraph; a new export brings in new reading.</div></div>`;
+    + `<div class="note">${ic("info")}<div><b>${num(done.length - away)} of the books you’ve read are on your shelves; ${num(away)} aren’t.</b></div></div>`;
 }
 
 // ---------- series, in place on the shelves (her choice, 18 Oct: no page of their own) ----------
@@ -395,7 +394,7 @@ function pageToRead(){
   const log = readingLog(), mine = log.filter(b => isToRead(b) && !isElsewhere(b)).sort(SORTS.author[1]), away = ELSEWHERE.filter(isToRead).sort(SORTS.author[1]);
   const unread = BOOKS.filter(b => !isRead(b) && !isReading(b)).length;
   return hero({kicker: "Your reading", title: "To <em>read</em>", covers: mine.concat(away),
-      text: `From your StoryGraph to-read list, ${niceDate(SG.imported)}.`,
+      text: `Books you mean to read next.`,
       figures: [[num(mine.length), "on your shelves"], [num(away.length), "not on your shelves"], [num(unread), "unread books on your shelves in all"]]})
     + picker()
     + sectionHead("On your <em>shelves</em>", `<span class="more">Ready to read</span>`) + (mine.length ? grid(mine) : `<p class="empty">Nothing from your to-read list is on your shelves.</p>`)
@@ -480,7 +479,7 @@ function readingStats(bars, readYears){
   done.forEach(b => { const r = reading(b); (r.moods || "").split(/,\s*/).filter(Boolean).forEach(m => moods[m] = (moods[m] || 0) + 1); if (r.pace) paces[r.pace] = (paces[r.pace] || 0) + 1; });
   const moodRows = Object.entries(moods).map(([label, n]) => ({label: label[0].toUpperCase() + label.slice(1), n})).sort((a, b) => b.n - a.n).slice(0, 10);
   const starRows = [5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1, 0.5].map(s => ({label: "★".repeat(Math.floor(s)) + (s % 1 ? "½" : ""), n: rated.filter(b => Math.round(reading(b).rating * 2) / 2 === s).length})).filter(r => r.n);
-  return sectionHead("Your <em>reading</em>", `<span class="more">From StoryGraph, shelves or not</span>`)
+  return sectionHead("Your <em>reading</em>", `<span class="more">Shelves or not</span>`)
     + `<div class="ledger"><div class="ledger-grid">
         <div class="meter"><b>${num(done.length)}</b><span>books read</span></div>
         <div class="meter"><b>${num(inYear.length)}</b><span>finished in ${thisYear}</span></div>

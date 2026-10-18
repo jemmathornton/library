@@ -10,7 +10,7 @@ A private website of the books in Jemma’s home library: every book she owns, s
 - **Obvious bugs** can be fixed straight away; **anything needing her judgement** (shelves, titles, names, layout) goes on `TODO.md`.
 - **No AI-generated art.** Covers are the publishers’ own (Open Library / Google Books); a book with no cover gets a plain title card. Icons are Lucide (ISC).
 - **Her colours: yellows and browns.** No green (she hates the green, 18 Oct). Banners are made of the page’s own covers fading into walnut (her choice, 18 Oct); shelf colours appear only as dots.
-- **No buttons for reading:** read or not read comes only from StoryGraph and is shown, never set on the site (her choice, 18 Oct).
+- **No buttons for reading:** read or not read comes only from StoryGraph and is shown, never set on the site (her choice, 18 Oct). **The site never mentions StoryGraph** (her choice, 18 Oct): it is just her reading.
 - Laptop (1280px) first; phone layout when she asks.
 
 ## Where things are
