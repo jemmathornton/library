@@ -285,8 +285,8 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .kicker .dot{width:10px;height:10px;box-shadow:0 0 0 2px rgba(255,255,255,.15)}
 
 /* her stars on a cover */
-.cover .rated{position:absolute;left:0;right:0;bottom:0;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:6px;padding:14px 8px 6px;background:linear-gradient(0deg,rgba(28,18,10,.88) 0%,rgba(28,18,10,.7) 55%,transparent);color:#F5C44E}
-.cover .rated .sg-stars{font-size:13px;letter-spacing:1px;color:rgba(255,255,255,.3)}
+.cover .rated{position:absolute;left:0;right:0;bottom:0;z-index:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:14px 8px 6px;background:linear-gradient(0deg,rgba(28,18,10,.88) 0%,rgba(28,18,10,.7) 55%,transparent);color:#F5C44E}
+.cover .rated .sg-stars{font-size:15px;letter-spacing:1px;color:rgba(255,255,255,.3)}
 .cover .rated .sg-stars span+span{color:#F5C44E}
 .cover .rated b{font:700 11px/1 var(--body);color:#F5C44E}
 .blist .cover .rated{display:none}
