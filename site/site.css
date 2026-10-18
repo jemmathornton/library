@@ -375,8 +375,8 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .wish-item .btn.got-it .i{color:var(--done)}
 
 /* home: reading now, larger */
-.now-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:18px}
-.now-card{display:grid;grid-template-columns:100px minmax(0,1fr);gap:20px;align-items:center;padding:16px;border-radius:16px;background:var(--surface);border:1px solid var(--line);text-decoration:none}
+.now-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.now-card{display:grid;grid-template-columns:90px minmax(0,1fr);gap:16px;align-items:center;padding:16px;border-radius:16px;background:var(--surface);border:1px solid var(--line);text-decoration:none}
 .now-card:hover{border-color:var(--muted)}
 .now-card h3{font-size:26px;line-height:1.05;margin-top:6px}
 .now-card .by{font-size:13.5px;color:var(--muted);margin-top:4px}
