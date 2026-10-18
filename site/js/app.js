@@ -228,6 +228,7 @@ function renderNav(active){
     </div>
     <div class="nav-group minor">
       ${link("#reading", ic("bookmark"), "Reading", nReading || null)}
+      ${link("#elsewhere", ic("book-open"), "Read elsewhere", ELSEWHERE.filter(isRead).length)}
       ${link("#to-read", ic("clock"), "To read", readingLog().filter(b => isToRead(b) && !isElsewhere(b)).length || null)}
       ${link("#to-buy", ic("shopping-bag"), "To buy", left)}
       ${link("#authors", ic("users"), "Authors", AUTHORS.length)}
@@ -270,6 +271,7 @@ const SORTS = {
   added: ["Recently added", (a, b) => (b.added || "").localeCompare(a.added || "")],
   old: ["Oldest first", (a, b) => (a.published || "9999").localeCompare(b.published || "9999")],
   new: ["Newest first", (a, b) => (b.published || "").localeCompare(a.published || "")],
+  finished: ["Recently read", (a, b) => (finishes(b).sort().pop() || "").localeCompare(finishes(a).sort().pop() || "") || a.sortTitle.localeCompare(b.sortTitle)],
   stars: ["Your stars", (a, b) => (reading(b).rating || 0) - (reading(a).rating || 0) || a.sortAuthor.localeCompare(b.sortAuthor)],
 };
 const FILTERS = {all: ["All", () => true], unread: ["Not read", b => !isRead(b) && !isReading(b)], toread: ["To read", isToRead], reading: ["Reading", isReading], read: ["Read", isRead]};
@@ -289,6 +291,16 @@ function shelfBooks(list, grouped = currentGrouped){
     </div>` + body;
 }
 let currentList = [], currentGrouped = false;
+// books she has read (or means to) that aren't hers: library books, ebooks, audiobooks. A shelf of their own, kept apart
+// from the real shelves (her ask, 18 Oct)
+function pageElsewhere(){
+  currentList = ELSEWHERE; currentGrouped = false;
+  const fmt = {}; ELSEWHERE.forEach(e => { const f = FORMATS[e.format] || "Other"; fmt[f] = (fmt[f] || 0) + 1; });
+  return hero({kicker: `<a href="#reading">Your reading</a>`, title: "Read <em>elsewhere</em>", covers: [...ELSEWHERE].sort(SORTS.finished[1]),
+      text: "Books you’ve read or mean to read that aren’t on your shelves: library books, ebooks and audiobooks.",
+      figures: [[num(ELSEWHERE.filter(isRead).length), "read"], [num(ELSEWHERE.filter(isToRead).length), "to read"], ...Object.entries(fmt).sort((a, b) => b[1] - a[1]).slice(0, 2).map(([f, n]) => [num(n), f.toLowerCase() + "s"])]})
+    + `<div id="shelfBooks">${shelfBooks(ELSEWHERE)}</div>`;
+}
 function pageAllShelves(){
   currentList = BOOKS; currentGrouped = true;
   const shelves = SHELVES.filter(s => s.books.length && s.libib).length;
@@ -343,7 +355,7 @@ function pageSgBook(e){   // a book from StoryGraph that isn't on her shelves
   const more = known.length ? known[0].books.map(x => x.book).slice(0, 12) : [];
   const fact = (k, v) => v ? `<dt>${k}</dt><dd>${v}</dd>` : "";
   return `<header class="hero book-hero" style="--c:#8A6A3F"><div class="book-top">${cover(e, "", true)}<div>
-      <div class="kicker"><i></i><a class="label" href="#reading">Not on your shelves${fmt ? " · " + fmt : ""}</a></div>
+      <div class="kicker"><i></i><a class="label" href="#elsewhere">Not on your shelves${fmt ? " · " + fmt : ""}</a></div>
       <h1>${esc(e.t)}</h1>${e.sub ? `<div class="sub">${esc(e.sub)}</div>` : ""}
       <div class="authors">${e.authors.map(a => authorIndex[slug(a.name)] ? `<span><a href="#a-${slug(a.name)}">${esc(a.name)}</a></span>` : `<span>${esc(a.name)}</span>`).join("")}</div>
     </div></div></header>
@@ -595,9 +607,10 @@ function route(){
   if (key === "add" && !addFromWish && addForm.fromWish) addForm = {isbn: "", title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", note: "", busy: false};
   addFromWish = false;
   if (key.startsWith("shelf-") && shelfIndex[key.slice(6)]) { shelfView = {...SHELF_VIEW}; const s = shelfIndex[key.slice(6)]; html = pageShelf(s); title = s.name; }
+  else if (key === "elsewhere") { shelfView = {filter: "all", sort: "finished"}; html = pageElsewhere(); title = "Read elsewhere"; }
   else if (key === "shelves") { shelfView = {...SHELF_VIEW}; html = pageAllShelves(); title = "All shelves"; }
   else if (key.startsWith("b-") && bookIndex[key.slice(2)]) { const b = bookIndex[key.slice(2)]; html = pageBook(b); active = "#shelf-" + b.shelf; title = b.t; }
-  else if (key.startsWith("r-") && SG.books[+key.slice(2)] && !SG.books[+key.slice(2)].books) { const e = SG.books[+key.slice(2)]; html = pageSgBook(e); active = "#reading"; title = e.t; }
+  else if (key.startsWith("r-") && SG.books[+key.slice(2)] && !SG.books[+key.slice(2)].books) { const e = SG.books[+key.slice(2)]; html = pageSgBook(e); active = "#elsewhere"; title = e.t; }
   else if (key.startsWith("a-") && authorIndex[key.slice(2)]) { const a = authorIndex[key.slice(2)]; html = pageAuthor(a); active = "#authors"; title = a.name; }
   else html = {authors: pageAuthors, reading: pageReading, "to-read": pageToRead, add: pageAdd, "to-buy": pageToBuy, stats: pageStats}[key]?.() || (active = "#home", pageHome());
   view.innerHTML = html; renderNav(active);
