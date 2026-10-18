@@ -168,5 +168,50 @@
   "addedHere": true,
   "why": "She owns it but it was never in Libib (her answer, 18 Oct).",
   "surname": "Burke"
+ },
+ {
+  "id": "add0013",
+  "title": "In the Lives of Puppets (Illumicrate Edition)",
+  "authors": [
+   {
+    "name": "T. J. Klune"
+   }
+  ],
+  "shelf": "fantasy",
+  "added": "2026-10-18",
+  "copies": 1,
+  "addedHere": true,
+  "surname": "Klune",
+  "why": "Her Illumicrate copy; Libib only had her paperback (her answer, 18 Oct)."
+ },
+ {
+  "id": "add0014",
+  "title": "Somewhere Beyond the Sea (Illumicrate Edition)",
+  "authors": [
+   {
+    "name": "T. J. Klune"
+   }
+  ],
+  "shelf": "fantasy",
+  "added": "2026-10-18",
+  "copies": 1,
+  "addedHere": true,
+  "surname": "Klune",
+  "why": "Her Illumicrate copy; Libib only had her paperback (her answer, 18 Oct)."
+ },
+ {
+  "id": "add0015",
+  "title": "Under the Whispering Door (Illumicrate Edition)",
+  "authors": [
+   {
+    "name": "T. J. Klune"
+   }
+  ],
+  "shelf": "fantasy",
+  "added": "2026-10-18",
+  "copies": 1,
+  "addedHere": true,
+  "surname": "Klune",
+  "why": "Her Illumicrate copy; Libib only had her paperback (her answer, 18 Oct)."
  }
 ]

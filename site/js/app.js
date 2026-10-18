@@ -106,7 +106,7 @@ const isRead = b => reading(b).status === "read", isReading = b => reading(b).st
 // everything she has read or means to read, each book once (not once per copy; a copy with a cover stands for the rest)
 // one book, however many copies she owns: same tidied title and surname, and the same series number if it has one
 const bookKey = b => { const h = (seriesOf[b.id] || [])[0];
-  return norm(b.t) + "|" + norm(b.surname || b.by || "") + "|" + (h ? h.series.id + h.entry.n : norm(b.sub || "")); };
+  return norm(b.t) + "|" + norm(b.surname || b.by || "") + "|" + (h ? h.series.id + h.entry.n : norm(/edition$/i.test(b.sub || "") ? "" : b.sub || "")); };   // an edition note ("Illumicrate Edition") is still the same book
 function readingLog(){
   const seen = new Set(), out = [];
   [...BOOKS].sort((a, b) => !!b.cover - !!a.cover).forEach(b => { const k = bookKey(b); if (!seen.has(k) && reading(b).status) { seen.add(k); out.push(b); } });

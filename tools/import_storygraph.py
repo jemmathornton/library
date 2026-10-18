@@ -106,6 +106,10 @@ def main():
     books = json.load(open(os.path.join(DATA, 'books.json'), encoding='utf-8'))
     if os.path.exists(os.path.join(DATA, 'added.json')):   # books added on the site since the Libib import
         books += json.load(open(os.path.join(DATA, 'added.json'), encoding='utf-8'))
+    removed_path = os.path.join(DATA, 'removed.json')   # copies she says aren't real: her reading goes to the copy she kept
+    if os.path.exists(removed_path):
+        gone = {x['id'] for x in json.load(open(removed_path, encoding='utf-8'))}
+        books = [b for b in books if b['id'] not in gone]
     by_isbn, by_ts, by_t = {}, {}, {}
     for b in books:
         for i in (b.get('isbn13'), isbn13(b.get('isbn10', ''))):
