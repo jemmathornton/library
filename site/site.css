@@ -57,7 +57,7 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 
 /* hero */
 .hero{--c:var(--brass);margin-inline:min(calc(-1 * clamp(16px,4vw,56px)),calc((100% - 100cqw) / 2));padding:68px max(clamp(16px,4vw,56px),calc((100cqw - 100%) / 2)) 42px;color:var(--on-deep);position:relative;overflow:hidden;
-  background:radial-gradient(110% 90% at 88% 0%,color-mix(in srgb,var(--c) 70%,transparent) 0%,transparent 58%),linear-gradient(160deg,var(--deep-2),var(--deep) 70%)}
+  background:radial-gradient(110% 90% at 88% 0%,color-mix(in srgb,var(--brass) 38%,transparent) 0%,transparent 58%),linear-gradient(160deg,var(--deep-2),var(--deep) 70%)}
 .hero::before{content:"";position:absolute;right:-40px;top:-40px;width:520px;height:520px;opacity:.13;
   background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.95) 0 2px,transparent 2px 22px);
   mask-image:radial-gradient(closest-side,#000 25%,transparent);-webkit-mask-image:radial-gradient(closest-side,#000 25%,transparent);transform:rotate(-8deg)}
@@ -272,3 +272,14 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .dot.big{width:14px;height:14px;display:inline-block;vertical-align:middle;margin:-4px 14px 0 2px;box-shadow:none}
 .shelf-part .section-head{margin-top:56px}
 .nav a .i{font-size:15px}
+
+/* banners made of the page's own covers (a tilted wall of books on the right, fading into walnut behind the words) */
+.hero.shelved{background:var(--deep)}
+.hero.shelved::before{display:none}
+.hero .hero-shelf{position:absolute;z-index:0;top:-40px;bottom:-40px;right:-30px;width:66%;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));align-content:start;gap:8px;transform:rotate(-5deg);pointer-events:none}
+.hero-shelf img{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:2px 4px 4px 2px;display:block}
+.hero.shelved::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,var(--deep) 0%,var(--deep) 34%,color-mix(in srgb,var(--deep) 72%,transparent) 56%,color-mix(in srgb,var(--deep) 30%,transparent) 100%),
+             linear-gradient(0deg,var(--deep) 0%,color-mix(in srgb,var(--deep) 40%,transparent) 30%,transparent 55%)}
+.hero.shelved>*:not(.hero-shelf){z-index:2}
+.kicker .dot{width:10px;height:10px;box-shadow:0 0 0 2px rgba(255,255,255,.15)}

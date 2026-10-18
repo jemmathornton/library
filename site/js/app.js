@@ -117,8 +117,17 @@ function listView(list){
     return `<a href="${href(b)}">${cover(b)}<b>${esc(b.t)}</b><span>${esc(b.by)}</span><span>${esc(b.publisher || "")}</span><span>${year(b.published)}</span>`
       + `<span class="st ${st || ""}">${st === "read" ? "Read" : st === "reading" ? "Reading" : st === "to-read" ? "To read" : ""}</span></a>`; }).join("")}</div>`;
 }
-const hero = (o) => `<header class="hero" style="--c:${o.color || "var(--brass)"}"><div class="kicker"><i></i><span class="label">${o.kicker}</span></div>
-  <h1>${o.title}</h1>${o.text ? `<p>${o.text}</p>` : ""}${o.figures ? `<div class="figures">${o.figures.map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join("")}</div>` : ""}</header>`;
+// a banner is made of the page's own book covers, fading into the walnut behind the words (as the Sims site's banners
+// are each world's own map); pages with too few covers keep the plain walnut
+function shelfBanner(list){
+  const pics = (list || []).filter(b => b.cover).slice(0, 32);
+  return pics.length >= 8 ? `<div class="hero-shelf" aria-hidden="true">${pics.map(b => `<img src="${esc(coverSrc(b))}" alt="">`).join("")}</div>` : "";
+}
+const hero = (o) => { const bg = shelfBanner(o.covers);
+  return `<header class="hero${bg ? " shelved" : ""}">${bg}<div class="kicker">${o.color ? `<span class="dot" style="--c:${o.color}"></span>` : "<i></i>"}<span class="label">${o.kicker}</span></div>
+  <h1>${o.title}</h1>${o.text ? `<p>${o.text}</p>` : ""}${o.figures ? `<div class="figures">${o.figures.map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join("")}</div>` : ""}</header>`; };
+// a mix across the whole library: every few books, so all the shelves show
+const mixed = list => { const c = list.filter(b => b.cover), step = Math.max(1, Math.floor(c.length / 32)); return c.filter((b, i) => i % step === 0); };
 const sectionHead = (title, more) => `<div class="section-head"><h2>${title}</h2>${more || ""}</div>`;
 
 // ---------- sidebar ----------
@@ -144,7 +153,7 @@ function renderNav(active){
 function pageHome(){
   const now = readingLog().filter(isReading), recent = [...BOOKS].sort((a, b) => (b.added || "").localeCompare(a.added || "")).slice(0, 12);
   const fan = s => { const withCover = s.books.filter(b => b.cover), pick = (withCover.length >= 3 ? withCover : s.books).slice(0, 3); return pick.map(b => cover(b)).join(""); };
-  return hero({kicker: "Home library", title: "Jemma’s <em>Library</em>",
+  return hero({kicker: "Home library", title: "Jemma’s <em>Library</em>", covers: [...BOOKS].sort(SORTS.added[1]),
       text: `Every book on the shelves at home, ${plural(SHELVES.filter(s => s.books.length && s.libib).length, "shelf", "shelves")} of them, brought over from Libib on 18 October 2026.`,
       figures: [[num(BOOKS.length), "books"], [num(AUTHORS.length), "authors"], [num(readingLog().filter(b => !isElsewhere(b) && isRead(b)).length), "of them read"], [num(WISH.length), "on the to-buy list"]]})
     + (now.length ? sectionHead("Reading <em>now</em>", `<a class="more" href="#reading">All reading</a>`) + grid(now, "row") : "")
@@ -184,14 +193,14 @@ let currentList = [], currentGrouped = false;
 function pageAllShelves(){
   currentList = BOOKS; currentGrouped = true;
   const shelves = SHELVES.filter(s => s.books.length && s.libib).length;
-  return hero({kicker: `<a href="#home">Every shelf</a>`, title: "All <em>shelves</em>", text: "The whole bookcase at once, shelf by shelf, each in author surname order.",
+  return hero({kicker: `<a href="#home">Every shelf</a>`, title: "All <em>shelves</em>", covers: mixed(BOOKS), text: "The whole bookcase at once, shelf by shelf, each in author surname order.",
       figures: [[num(BOOKS.length), "books"], [num(shelves), "shelves"], [num(AUTHORS.length), "authors"], [num(BOOKS.filter(isRead).length), "read"]]})
     + `<div id="shelfBooks">${shelfBooks(BOOKS)}</div>`;
 }
 function pageShelf(s){
   currentList = s.books; currentGrouped = false;
   const authors = new Set(s.books.map(b => b.by)).size, pages = s.books.reduce((n, b) => n + (b.pages || 0), 0);
-  return hero({kicker: `<a href="#home">Shelf</a>`, title: esc(s.name), color: s.color, text: s.note ? esc(s.note) : "",
+  return hero({kicker: `<a href="#home">Shelf</a>`, title: esc(s.name), color: s.color, text: s.note ? esc(s.note) : "", covers: [...s.books].sort(SORTS.author[1]),
       figures: [[num(s.books.length), "books"], [num(authors), "authors"], [num(s.books.filter(isRead).length), "read"], [num(pages), "pages"]]})
     + `<div id="shelfBooks">${shelfBooks(s.books)}</div>`;
 }
@@ -282,7 +291,7 @@ function pageAuthors(){
   const groups = {};
   AUTHORS.forEach(a => { const L = (a.sort[0] || "#").toUpperCase(); (groups[/[A-Z]/.test(L) ? L : "#"] ||= []).push(a); });
   const letters = Object.keys(groups).sort();
-  return hero({kicker: "Browse", title: "The <em>authors</em>", text: "Everyone with a name on a book here, illustrators and translators included, by surname.",
+  return hero({kicker: "Browse", title: "The <em>authors</em>", covers: mixed([...BOOKS].sort(SORTS.author[1])), text: "Everyone with a name on a book here, illustrators and translators included, by surname.",
       figures: [[num(AUTHORS.length), "people"], [num(AUTHORS.filter(a => a.books.length > 1).length), "with more than one book"]]})
     + `<div class="letters">${letters.map(L => `<a href="#authors" data-jump="az-${L}">${L}</a>`).join("")}</div>`
     + letters.map(L => `<section class="az" id="az-${L}"><h2>${L}</h2><ul>${groups[L].map(a => `<li><a href="#a-${a.id}">${esc(a.name)}</a><span>${a.books.length}</span></li>`).join("")}</ul></section>`).join("");
@@ -290,7 +299,7 @@ function pageAuthors(){
 function pageAuthor(a){
   const list = a.books.map(x => x.book).sort((x, y) => (x.published || "9999").localeCompare(y.published || "9999"));
   const roles = [...new Set(a.books.map(x => x.role).filter(Boolean))];
-  return hero({kicker: `<a href="#authors">Author</a>`, title: esc(a.name), text: roles.length ? `Also credited as ${esc(roles.join(", ").toLowerCase())}.` : "",
+  return hero({kicker: `<a href="#authors">Author</a>`, title: esc(a.name), covers: list, text: roles.length ? `Also credited as ${esc(roles.join(", ").toLowerCase())}.` : "",
       figures: [[num(list.length), list.length === 1 ? "book" : "books"], [num(list.filter(isRead).length), "read"], [num(new Set(list.map(b => b.shelf)).size), "shelves"]]})
     + sectionHead("Their <em>books</em>", `<span class="more">Oldest first</span>`)
     + `<div class="books">${a.books.slice().sort((x, y) => (x.book.published || "9999").localeCompare(y.book.published || "9999")).map(x => card(x.book, x.role ? x.role : year(x.book.published) || x.book.by)).join("")}</div>`;
@@ -304,7 +313,7 @@ function pageReading(){
   done.forEach(b => (years[year(reading(b).finished) || "undated"] ||= []).push(b));
   const order = Object.keys(years).filter(y => y !== "undated").sort().reverse().concat(years.undated ? ["undated"] : []);
   const away = done.filter(isElsewhere).length;
-  return hero({kicker: "Your reading", title: "Reading <em>log</em>",
+  return hero({kicker: "Your reading", title: "Reading <em>log</em>", covers: now.concat(done),
       text: `From StoryGraph, ${niceDate(SG.imported)}. Books that aren’t on your shelves (library books, ebooks, audiobooks) are here too, but never on the shelves.`,
       figures: [[num(now.length), "reading now"], [num(done.length), "read"], [num((years[thisYear] || []).length), `finished in ${thisYear}`], [num(next.length), "to read from your shelves"]]})
     + sectionHead("Reading <em>now</em>") + (now.length ? grid(now) : `<p class="empty">Nothing on the go.</p>`)
@@ -340,7 +349,7 @@ function pageStats(){
   const readN = BOOKS.filter(isRead).length, perYear = {};
   readingLog().filter(isRead).forEach(b => { const y = year(reading(b).finished); if (y) perYear[y] = (perYear[y] || 0) + 1; });
   const readYears = Object.keys(perYear).sort().reverse().map(y => ({label: y, n: perYear[y], href: "#reading"}));
-  return hero({kicker: "The numbers", title: "<em>Stats</em>", text: "How the library adds up."})
+  return hero({kicker: "The numbers", title: "<em>Stats</em>", text: "How the library adds up.", covers: mixed([...BOOKS].reverse())})
     + `<div class="ledger"><div class="ledger-grid">
         <div class="meter"><b>${num(BOOKS.length)}</b><span>books on the shelves</span></div>
         <div class="meter"><b>${num(pages)}</b><span>pages (${num(withPages.length)} books with a page count)</span></div>
