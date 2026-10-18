@@ -61,9 +61,42 @@ AUTHORS.forEach(a => { a.sort = ((a.surname || a.name.split(" ").pop()) + " " + 
 AUTHORS.sort((x, y) => x.sort.localeCompare(y.sort));
 const WISH = DATA.toBuy; WISH.forEach(prep);
 
-// reading marks: hers in this browser win over what Libib had ("In progress" on one book)
-const reading = b => ({...(b.status ? {status: b.status} : {}), ...(READ[b.id] || {})});
-const isRead = b => reading(b).status === "read", isReading = b => reading(b).status === "reading";
+// ---------- reading ----------
+// StoryGraph is where she tracks her reading (data/storygraph.json, from its export): it wins for every book it knows.
+// A StoryGraph book can cover several copies on the shelves; ones not on the shelves (ebooks, audiobooks, borrowed)
+// get a page of their own (#r-<n>). Books StoryGraph doesn't know can be marked here (kept in this browser).
+const SG = DATA.storygraph || {books: []}, sgFor = {}, ELSEWHERE = [];
+const RANK = {reading: 5, read: 4, paused: 3, stopped: 2, "to-read": 1};
+const STATUS_WORDS = {read: "Read", reading: "Reading now", "to-read": "On your to-read list", stopped: "Didn’t finish", paused: "Paused"};
+const FORMATS = {digital: "Ebook", audio: "Audiobook", paperback: "Paperback", hardcover: "Hardback"};
+SG.books.forEach((e, i) => {
+  e.id = "r-" + i;
+  e.finished = (e.dates || []).map(d => d[1]).filter(Boolean).sort().pop() || e.lastRead || "";
+  e.started = ((e.dates || []).slice().sort((a, b) => (a[0] || "").localeCompare(b[0] || "")).pop() || [])[0] || "";
+  e.authors = [...new Set(String(e.authors || "").split(/,\s*/).filter(Boolean))].map(name => ({name}));
+  prep(e);
+  if (e.books) e.books.forEach(id => (sgFor[id] ||= []).push(e)); else ELSEWHERE.push(e);
+});
+function sgMerged(list){   // a book she has on StoryGraph more than once (re-reads, other editions): one record
+  const latest = (a, b) => (b.finished || "").localeCompare(a.finished || "");
+  const best = list.slice().sort((a, b) => RANK[b.status] - RANK[a.status] || latest(a, b))[0];
+  const dates = list.flatMap(e => e.dates || []).sort((a, b) => (a[0] || a[1] || "").localeCompare(b[0] || b[1] || ""));
+  const rated = list.filter(e => e.rating).sort(latest)[0], felt = list.filter(e => e.moods || e.pace).sort(latest)[0] || {};
+  return {sg: true, status: best.status, started: best.started, finished: list.map(e => e.finished).sort().pop() || "", rating: rated && rated.rating,
+    dates, readCount: Math.max(dates.filter(d => d[1]).length, ...list.map(e => e.readCount || 0)), moods: felt.moods, pace: felt.pace,
+    reviews: list.filter(e => e.review).map(e => e.review), key: list[0].id};
+}
+const isElsewhere = b => String(b.id).startsWith("r-");
+const reading = b => isElsewhere(b) ? (b.merged ||= sgMerged([b]))
+  : sgFor[b.id] ? (sgFor[b.id].merged ||= sgMerged(sgFor[b.id]))
+  : ({...(b.status ? {status: b.status} : {}), ...(READ[b.id] || {})});
+const isRead = b => reading(b).status === "read", isReading = b => reading(b).status === "reading", isToRead = b => reading(b).status === "to-read";
+// everything she has read or means to read, each book once (not once per copy; a copy with a cover stands for the rest)
+function readingLog(){
+  const seen = new Set(), out = [];
+  [...BOOKS].sort((a, b) => !!b.cover - !!a.cover).forEach(b => { const k = sgFor[b.id] ? reading(b).key : b.id; if (!seen.has(k) && reading(b).status) { seen.add(k); out.push(b); } });
+  return out.concat(ELSEWHERE);
+}
 
 // ---------- pieces ----------
 // covers are copied into covers/; one still only linked from Open Library uses its quicker medium size in lists
@@ -76,12 +109,13 @@ function cover(b, extra = "", big = false){
 // a cover that won't load becomes a title card
 document.addEventListener("error", e => { const img = e.target; if (img.tagName === "IMG" && img.parentNode.classList.contains("cover")) { img.parentNode.classList.add("blank"); img.remove(); } }, true);
 
-const card = (b, note) => `<a class="bk" href="#b-${b.id}">${cover(b)}<h3>${esc(b.t)}</h3><div class="by">${esc(note || b.by)}</div></a>`;
+const href = b => isElsewhere(b) ? "#" + b.id : "#b-" + b.id;
+const card = (b, note) => `<a class="bk" href="${href(b)}">${cover(b)}<h3>${esc(b.t)}</h3><div class="by">${esc(note || b.by)}</div></a>`;
 const grid = (list, cls = "") => list.length ? `<div class="books ${cls}">${list.map(b => card(b)).join("")}</div>` : "";
 function listView(list){
   return `<div class="blist">${list.map(b => { const st = reading(b).status;
-    return `<a href="#b-${b.id}">${cover(b)}<b>${esc(b.t)}</b><span>${esc(b.by)}</span><span>${esc(b.publisher || "")}</span><span>${year(b.published)}</span>`
-      + `<span class="st ${st || ""}">${st === "read" ? "Read" : st === "reading" ? "Reading" : ""}</span></a>`; }).join("")}</div>`;
+    return `<a href="${href(b)}">${cover(b)}<b>${esc(b.t)}</b><span>${esc(b.by)}</span><span>${esc(b.publisher || "")}</span><span>${year(b.published)}</span>`
+      + `<span class="st ${st || ""}">${st === "read" ? "Read" : st === "reading" ? "Reading" : st === "to-read" ? "To read" : ""}</span></a>`; }).join("")}</div>`;
 }
 const hero = (o) => `<header class="hero" style="--c:${o.color || "var(--brass)"}"><div class="kicker"><i></i><span class="label">${o.kicker}</span></div>
   <h1>${o.title}</h1>${o.text ? `<p>${o.text}</p>` : ""}${o.figures ? `<div class="figures">${o.figures.map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join("")}</div>` : ""}</header>`;
@@ -89,7 +123,7 @@ const sectionHead = (title, more) => `<div class="section-head"><h2>${title}</h2
 
 // ---------- sidebar ----------
 function renderNav(active){
-  const nReading = BOOKS.filter(isReading).length, left = WISH.filter(w => !GOT[w.id]).length;
+  const nReading = readingLog().filter(isReading).length, left = WISH.filter(w => !GOT[w.id]).length;
   const link = (href, icon, text, n) => `<a href="${href}" class="${active === href ? "on" : ""}">${icon}${text}${n != null ? `<span class="n">${n}</span>` : ""}</a>`;
   document.getElementById("nav").innerHTML = `
     <div class="nav-group"><span class="label">Library</span>
@@ -106,11 +140,11 @@ function renderNav(active){
 
 // ---------- pages ----------
 function pageHome(){
-  const now = BOOKS.filter(isReading), recent = [...BOOKS].sort((a, b) => (b.added || "").localeCompare(a.added || "")).slice(0, 12);
+  const now = readingLog().filter(isReading), recent = [...BOOKS].sort((a, b) => (b.added || "").localeCompare(a.added || "")).slice(0, 12);
   const fan = s => { const withCover = s.books.filter(b => b.cover), pick = (withCover.length >= 3 ? withCover : s.books).slice(0, 3); return pick.map(b => cover(b)).join(""); };
   return hero({kicker: "Home library", title: "Jemma’s <em>Library</em>",
       text: `Every book on the shelves at home, ${plural(SHELVES.filter(s => s.books.length && s.libib).length, "shelf", "shelves")} of them, brought over from Libib on 18 October 2026.`,
-      figures: [[num(BOOKS.length), "books"], [num(AUTHORS.length), "authors"], [num(BOOKS.filter(isRead).length), "read"], [num(WISH.length), "on the to-buy list"]]})
+      figures: [[num(BOOKS.length), "books"], [num(AUTHORS.length), "authors"], [num(readingLog().filter(b => !isElsewhere(b) && isRead(b)).length), "of them read"], [num(WISH.length), "on the to-buy list"]]})
     + (now.length ? sectionHead("Reading <em>now</em>", `<a class="more" href="#reading">All reading</a>`) + grid(now, "row") : "")
     + sectionHead("The <em>shelves</em>")
     + `<div class="shelves">${SHELVES.filter(s => s.books.length).map(s => `<a class="shelf-card" href="#shelf-${s.id}" style="--c:${s.color}"><div class="fan">${fan(s)}</div>
@@ -126,7 +160,7 @@ const SORTS = {
   old: ["Oldest first", (a, b) => (a.published || "9999").localeCompare(b.published || "9999")],
   new: ["Newest first", (a, b) => (b.published || "").localeCompare(a.published || "")],
 };
-const FILTERS = {all: ["All", () => true], unread: ["Not read", b => !reading(b).status], reading: ["Reading", isReading], read: ["Read", isRead]};
+const FILTERS = {all: ["All", () => true], unread: ["Not read", b => !isRead(b) && !isReading(b)], toread: ["To read", isToRead], reading: ["Reading", isReading], read: ["Read", isRead]};
 
 function shelfBooks(list){
   const f = FILTERS[shelfView.filter][1], shown = list.filter(f).sort(SORTS[shelfView.sort][1]);
@@ -159,6 +193,51 @@ function readingPanel(b){
     ${st === "read" ? stars(r.rating || 0) : ""}
     <span class="saved">Saved in this browser.</span></div>`;
 }
+const MON = MONTHS.map(m => m.slice(0, 3));
+function dateRange([a, b]){   // ['2024-01-02', '2024-01-20'] -> '2 Jan – 20 Jan 2024'
+  const p = d => (/^(\d{4})-(\d{2})-(\d{2})/.exec(d || "") || []).slice(1).map(Number);
+  const [y1, m1, d1] = p(a), [y2, m2, d2] = p(b);
+  if (!y2) return y1 ? `Started ${d1} ${MON[m1 - 1]} ${y1}` : "";
+  if (!y1 || a === b) return `${d2} ${MON[m2 - 1]} ${y2}`;
+  return `${d1} ${MON[m1 - 1]}${y1 !== y2 ? " " + y1 : ""} – ${d2} ${MON[m2 - 1]} ${y2}`;
+}
+const starsShown = r => `<span class="sg-stars" style="--r:${(r / 5 * 100).toFixed(1)}%" aria-label="${r} stars"><span>★★★★★</span><span aria-hidden="true">★★★★★</span></span><b class="sg-num">${r}</b>`;
+// her StoryGraph reviews: spoilers stay hidden until clicked
+const reviewHtml = t => esc(t).replace(/\[spoiler\]([\s\S]*?)(\[\/spoiler\]|$)/g, '<span class="spoiler" tabindex="0" title="Spoiler: click to show">$1</span>');
+function sgPanel(r){
+  const icon = {read: "check", reading: "bookmark", "to-read": "clock", stopped: "x", paused: "clock"}[r.status] || "book";
+  const dates = r.dates.filter(d => d[0] || d[1]);
+  return `<div class="panel"><h2>Your reading</h2>
+    <div class="sg-status ${r.status}">${ic(icon)}${STATUS_WORDS[r.status] || esc(r.status)}</div>
+    ${dates.length ? `<ul class="sg-dates">${dates.slice().reverse().map(d => `<li>${dateRange(d)}</li>`).join("")}</ul>` : ""}
+    ${r.readCount > 1 ? `<div class="saved">Read ${r.readCount} times</div>` : ""}
+    ${r.rating ? `<div class="sg-rating">${starsShown(r.rating)}</div>` : ""}
+    ${r.moods ? `<div class="moods">${r.moods.split(/,\s*/).map(m => `<span>${esc(m)}</span>`).join("")}</div>` : ""}
+    ${r.pace ? `<div class="saved">Pace: ${esc(r.pace)}</div>` : ""}
+    <span class="saved">From StoryGraph, ${niceDate(SG.imported)}.</span></div>`;
+}
+const reviews = r => r.reviews && r.reviews.length ? sectionHead("Your <em>review</em>") + r.reviews.map(t => `<div class="review">${reviewHtml(t)}</div>`).join("") : "";
+
+function pageSgBook(e){   // a book from StoryGraph that isn't on her shelves
+  const r = reading(e), fmt = FORMATS[e.format] || "";
+  const known = e.authors.map(a => authorIndex[slug(a.name)]).filter(Boolean);
+  const more = known.length ? known[0].books.map(x => x.book).slice(0, 12) : [];
+  const fact = (k, v) => v ? `<dt>${k}</dt><dd>${v}</dd>` : "";
+  return `<header class="hero book-hero" style="--c:#8A6A3F"><div class="book-top">${cover(e, "", true)}<div>
+      <div class="kicker"><i></i><a class="label" href="#reading">Not on your shelves${fmt ? " · " + fmt : ""}</a></div>
+      <h1>${esc(e.t)}</h1>${e.sub ? `<div class="sub">${esc(e.sub)}</div>` : ""}
+      <div class="authors">${e.authors.map(a => authorIndex[slug(a.name)] ? `<span><a href="#a-${slug(a.name)}">${esc(a.name)}</a></span>` : `<span>${esc(a.name)}</span>`).join("")}</div>
+    </div></div></header>
+    <div class="book-body"><div>
+      ${reviews(r) || `<p class="desc none">A book you’ve read or mean to read that isn’t on your shelves, from StoryGraph.</p>`}
+      ${more.length ? sectionHead(`On your shelves by <em>${esc(known[0].name)}</em>`) + grid(more) : ""}
+    </div><aside style="display:grid;gap:18px">
+      ${sgPanel(r)}
+      <div class="panel"><h2>Details</h2><dl class="facts">
+        ${fact("Format", fmt)}${fact("ISBN-13", e.isbn13 || "")}${fact("On StoryGraph since", niceDate(e.added))}
+      </dl></div></aside></div>`;
+}
+
 function pageBook(b){
   const s = shelfIndex[b.shelf], others = (editions[norm(b.title) + "|" + norm(b.surname || "")] || []).filter(x => x !== b);
   const lead = (b.authors || []).find(a => !a.role), au = lead && authorIndex[slug(lead.name)];
@@ -171,10 +250,11 @@ function pageBook(b){
     </div></div></header>
     <div class="book-body"><div>
       <p class="desc${b.description ? "" : " none"}">${b.description ? esc(b.description) : "No description on Libib."}</p>
+      ${sgFor[b.id] ? reviews(reading(b)) : ""}
       ${others.length ? sectionHead(`Other copies <em>you own</em>`) + grid(others) : ""}
       ${more.length ? sectionHead(`More by <em>${esc(au.name)}</em>`, au.books.length > more.length + 1 ? `<a class="more" href="#a-${au.id}">All ${au.books.length}</a>` : "") + grid(more) : ""}
     </div><aside style="display:grid;gap:18px">
-      ${readingPanel(b)}
+      ${sgFor[b.id] ? sgPanel(reading(b)) : readingPanel(b)}
       <div class="panel"><h2>Details</h2><dl class="facts">
         ${fact("Shelf", `<a href="#shelf-${s.id}">${esc(s.name)}</a>`)}${fact("Publisher", esc(b.publisher || ""))}
         ${fact("Published", niceDate(b.published) || year(b.published))}${fact("Pages", b.pages ? num(b.pages) : "")}
@@ -202,14 +282,23 @@ function pageAuthor(a){
 }
 
 function pageReading(){
-  const now = BOOKS.filter(isReading), done = BOOKS.filter(isRead).sort((a, b) => (reading(b).finished || "").localeCompare(reading(a).finished || ""));
-  const thisYear = String(new Date().getFullYear()), yearDone = done.filter(b => year(reading(b).finished) === thisYear);
-  return hero({kicker: "Your reading", title: "Reading <em>log</em>", text: "Mark a book as reading or read on its own page; it shows up here.",
-      figures: [[num(now.length), "reading now"], [num(done.length), "read"], [num(yearDone.length), `finished in ${thisYear}`], [num(done.reduce((n, b) => n + (b.pages || 0), 0)), "pages read"]]})
+  const log = readingLog(), byFinish = (a, b) => (reading(b).finished || "").localeCompare(reading(a).finished || "");
+  const now = log.filter(isReading), done = log.filter(isRead).sort(byFinish), next = log.filter(b => isToRead(b) && !isElsewhere(b)).sort(SORTS.author[1]);
+  const later = log.filter(b => ["paused", "stopped"].includes(reading(b).status));
+  const thisYear = String(new Date().getFullYear()), years = {};
+  done.forEach(b => (years[year(reading(b).finished) || "undated"] ||= []).push(b));
+  const order = Object.keys(years).filter(y => y !== "undated").sort().reverse().concat(years.undated ? ["undated"] : []);
+  const away = done.filter(isElsewhere).length;
+  return hero({kicker: "Your reading", title: "Reading <em>log</em>",
+      text: `From StoryGraph, ${niceDate(SG.imported)}. Books that aren’t on your shelves (library books, ebooks, audiobooks) are here too, but never on the shelves.`,
+      figures: [[num(now.length), "reading now"], [num(done.length), "read"], [num((years[thisYear] || []).length), `finished in ${thisYear}`], [num(next.length), "to read from your shelves"]]})
     + sectionHead("Reading <em>now</em>") + (now.length ? grid(now) : `<p class="empty">Nothing on the go.</p>`)
-    + sectionHead("Finished") + (done.length ? grid(done) : `<p class="empty">Nothing marked as read yet. Libib didn’t have any of this, so it starts here.</p>`)
-    + `<div class="note">${ic("info")}<div><b>Your marks are saved in this browser only</b> while this is a prototype. Save a backup now and then so nothing is lost.
-        <div class="backup"><button class="btn" type="button" id="saveBackup">${ic("download")}Save a backup</button>
+    + (next.length ? sectionHead("Up next <em>from your shelves</em>", `<span class="more">On your StoryGraph to-read list</span>`) + grid(next) : "")
+    + order.map(y => sectionHead(y === "undated" ? "Read, <em>date not recorded</em>" : `${y} <em>· ${plural(years[y].length, "book")}</em>`) + grid(years[y])).join("")
+    + (later.length ? sectionHead("Paused or <em>didn’t finish</em>") + grid(later) : "")
+    + `<div class="note">${ic("info")}<div><b>${num(done.length - away)} of the books you’ve read are on your shelves; ${num(away)} aren’t.</b>
+        To bring in new reading, export again from StoryGraph and import it. Books StoryGraph doesn’t know can be marked on their own page; those marks stay in this browser.
+        <div class="backup"><button class="btn" type="button" id="saveBackup">${ic("download")}Save a backup of those marks</button>
         <label class="btn">${ic("upload")}Load a backup<input type="file" id="loadBackup" accept=".json,application/json" hidden></label></div></div></div>`;
 }
 
@@ -233,7 +322,9 @@ function pageStats(){
   const topPubs = Object.entries(pubs).map(([label, n]) => ({label, n})).sort((a, b) => b.n - a.n).slice(0, 10);
   const dec = {}; BOOKS.forEach(b => { const y = +year(b.published); if (y) { const d = Math.floor(y / 10) * 10; dec[d] = (dec[d] || 0) + 1; } });
   const decs = Object.keys(dec).map(Number).sort(), dmax = Math.max(...Object.values(dec));
-  const readN = BOOKS.filter(isRead).length;
+  const readN = BOOKS.filter(isRead).length, perYear = {};
+  readingLog().filter(isRead).forEach(b => { const y = year(reading(b).finished); if (y) perYear[y] = (perYear[y] || 0) + 1; });
+  const readYears = Object.keys(perYear).sort().reverse().map(y => ({label: y, n: perYear[y], href: "#reading"}));
   return hero({kicker: "The numbers", title: "<em>Stats</em>", text: "How the library adds up."})
     + `<div class="ledger"><div class="ledger-grid">
         <div class="meter"><b>${num(BOOKS.length)}</b><span>books on the shelves</span></div>
@@ -242,6 +333,7 @@ function pageStats(){
         <div class="meter"><b>${Math.round(readN / BOOKS.length * 100)}%</b><span>read (${plural(readN, "book")})</span></div>
       </div></div>`
     + sectionHead("By <em>shelf</em>") + bars(shelves, shelves[0].n)
+    + (readYears.length ? sectionHead("Books read <em>each year</em>", `<span class="more">From StoryGraph, shelves or not</span>`) + bars(readYears, Math.max(...readYears.map(r => r.n))) : "")
     + sectionHead("Most <em>books</em> by", `<span class="more">Written, not illustrated or translated</span>`) + bars(top, top[0].n)
     + sectionHead("When they were <em>published</em>") + `<div class="decades">${decs.map(d => `<div><b>${dec[d]}</b><i style="height:${(dec[d] / dmax * 100).toFixed(1)}%"></i><span>${d}s</span></div>`).join("")}</div>`
     + sectionHead("Top <em>publishers</em>") + bars(topPubs, topPubs[0].n);
@@ -255,9 +347,11 @@ function pageSearch(term){
   const hit = b => b.title.toLowerCase().includes(t) || b.by.toLowerCase().includes(t) || (b.authors || []).some(a => a.name.toLowerCase().includes(t))
     || (tn.length >= 6 && ((b.isbn13 || "").includes(tn) || (b.isbn10 || "").toLowerCase().includes(tn)));
   const books = BOOKS.filter(hit).sort(SORTS.title[1]), authors = AUTHORS.filter(a => a.name.toLowerCase().includes(t)), wish = WISH.filter(hit);
+  const away = ELSEWHERE.filter(hit).sort(SORTS.title[1]);
   return `<div class="section-head" style="margin-top:56px"><h2>Results for <em>‘${esc(term)}’</em></h2><span class="more">${plural(books.length, "book")}</span></div>`
     + (authors.length ? `<div class="chips" style="margin-bottom:28px">${authors.slice(0, 20).map(a => `<a class="btn" href="#a-${a.id}">${ic("user")}${esc(a.name)} · ${a.books.length}</a>`).join("")}</div>` : "")
     + (books.length ? grid(books) : `<p class="empty">No books match.</p>`)
+    + (away.length ? sectionHead("Read or to read, <em>not on your shelves</em>") + grid(away) : "")
     + (wish.length ? sectionHead("On the <em>to-buy list</em>") + `<div class="books">${wish.map(w => `<a class="bk" href="#to-buy">${cover(w)}<h3>${esc(w.t)}</h3><div class="by">${esc(w.by)}</div></a>`).join("")}</div>` : "");
 }
 q.addEventListener("input", () => { const v = q.value.trim(); if (v.length >= 2) { document.getElementById("view").innerHTML = pageSearch(v); scrollTo(0, 0); } else if (!v) route(); });
@@ -270,6 +364,7 @@ function route(){
   let html, active = "#" + key, title = "Jemma’s Library";
   if (key.startsWith("shelf-") && shelfIndex[key.slice(6)]) { shelfView = {filter: "all", sort: "title"}; const s = shelfIndex[key.slice(6)]; html = pageShelf(s); title = s.name; }
   else if (key.startsWith("b-") && bookIndex[key.slice(2)]) { const b = bookIndex[key.slice(2)]; html = pageBook(b); active = "#shelf-" + b.shelf; title = b.t; }
+  else if (key.startsWith("r-") && SG.books[+key.slice(2)] && !SG.books[+key.slice(2)].books) { const e = SG.books[+key.slice(2)]; html = pageSgBook(e); active = "#reading"; title = e.t; }
   else if (key.startsWith("a-") && authorIndex[key.slice(2)]) { const a = authorIndex[key.slice(2)]; html = pageAuthor(a); active = "#authors"; title = a.name; }
   else html = {authors: pageAuthors, reading: pageReading, "to-buy": pageToBuy, stats: pageStats}[key]?.() || (active = "#home", pageHome());
   view.innerHTML = html; renderNav(active);
@@ -305,6 +400,7 @@ document.addEventListener("click", e => {
     const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `jemmas-library-backup-${new Date().toISOString().slice(0, 10)}.json`; a.click(); URL.revokeObjectURL(a.href);
   }
 });
+document.addEventListener("click", e => { const s = e.target.closest(".spoiler"); if (s) s.classList.toggle("shown"); });
 document.addEventListener("change", e => {
   const t = e.target;
   if (t.id === "sort") { shelfView.sort = t.value; document.getElementById("shelfBooks").innerHTML = shelfBooks(currentList); }

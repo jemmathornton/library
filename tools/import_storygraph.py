@@ -1,14 +1,16 @@
 """Import Jemma's StoryGraph export (Manage Account > Export StoryGraph Library, a CSV) as her reading record.
 
     python -X utf8 tools/import_storygraph.py <export.csv>            report only, changes nothing
+    python -X utf8 tools/import_storygraph.py <export.csv> --matches  the report plus every match, to check them
     python -X utf8 tools/import_storygraph.py <export.csv> --apply    copies the CSV into imports/ and writes data/storygraph.json
 
 StoryGraph is where she tracks her reading (18 Oct), so it is the reading record for every book it knows: status, dates,
 stars, review, moods. Each StoryGraph book is matched to a book on her shelves by ISBN (10 or 13), then by title and
-surname, then by title alone when only one book has it. Books with no match (ebooks, library books, ones not owned) are
-kept too; the site lists them as read elsewhere. The export is the whole library every time, so a new import replaces the old.
+surname, then by title alone when only one book has it; a match covers every copy she owns of that book (reading is
+about the book, not the edition). Books with no match (ebooks, library books, ones not owned) are kept too; the site
+lists them as read elsewhere. The export is the whole library every time, so a new import replaces the old.
 """
-import csv, json, os, re, shutil, sys
+import csv, html, json, os, re, shutil, sys
 from datetime import date
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -17,12 +19,25 @@ STATUS = {'read': 'read', 'currently-reading': 'reading', 'to-read': 'to-read', 
 
 
 def norm(s):
-    return re.sub(r'[^a-z0-9]', '', re.sub(r'\(.*?\)|\[.*?\]', '', (s or '').lower()))
+    return re.sub(r'[^a-z0-9]', '', re.sub(r'\(.*?\)|\[.*?\]', '', (s or '').lower().replace('&', ' and ')))
+
+
+def tkey(s):
+    """A title for matching: as norm(), with doubled letters made single, so British and US spellings meet (Traveller/Traveler)."""
+    return re.sub(r'(.)\1', r'\1', norm(s))
 
 
 def short_title(s):
-    """'Harry Potter and the Goblet of Fire: 4/7' and '... (Harry Potter 4)' -> 'harrypotterandthegobletoffire'"""
-    return norm(re.split(r':\s', re.sub(r'\(.*?\)', '', s or ''))[0])
+    """'Harry Potter and the Goblet of Fire: 4/7' and '... (Harry Potter 4)' -> 'harypoterandthegobletofire';
+    a leading series number goes ('09: The Sixth Form at St Clare's' -> 'thesixthformatstclares')."""
+    s = re.sub(r'^\s*\d+\s*[:.]\s*', '', re.sub(r'\(.*?\)', '', s or ''))
+    return tkey(re.split(r':\s', s)[0])
+
+
+def after_colon(s):
+    """'Comic Relief: Quidditch Through the Ages (...)' -> 'quiditchthroughtheages' (another way the title may be written)."""
+    parts = re.split(r':\s', re.sub(r'\(.*?\)', '', s or ''), maxsplit=1)
+    return tkey(parts[1]) if len(parts) > 1 else ''
 
 
 def isbn13(s):
@@ -46,17 +61,29 @@ def col(row, *names):
 
 
 def dates_read(s):
-    """'2024/01/02-2024/01/20, 2025/03/01-' -> [['2024-01-02', '2024-01-20'], ['2025-03-01', '']]"""
+    """'2024/01/02-2024/01/20, 2025/03/01-' -> [['2024-01-02', '2024-01-20'], ['2025-03-01', '']]
+    (splitting on the first '-' works because StoryGraph writes dates with '/')."""
     out = []
     for part in re.split(r',\s*', s or ''):
-        if not part.strip():
+        part = part.strip()
+        if not part:
             continue
-        ends = [d.strip().replace('/', '-') for d in part.split('-', 1)] if re.match(r'^\d{4}/', part.strip()) else [part.strip(), '']
-        if len(ends) == 1:
-            ends.append('')
-        # '2024/01/02-2024/01/20' split on the first '-' only works because StoryGraph uses '/' inside dates
-        out.append(ends[:2])
+        ends = [d.strip().replace('/', '-') for d in part.split('-', 1)] if re.match(r'^\d{4}/', part) else [part, '']
+        out.append((ends + [''])[:2])
     return out
+
+
+NL = chr(10)
+
+
+def review_text(s):
+    """StoryGraph reviews are HTML: keep the words and line breaks; spoilers become [spoiler]...[/spoiler] for the site to hide."""
+    s = re.sub(r'<br\s*/?>|</p>|</div>', NL, s or '', flags=re.I)
+    s = re.sub(r'<[^>]+>', '', s)
+    s = html.unescape(s).replace(chr(160), ' ')
+    s = re.sub(r'<\s*spoiler\s*>', '[spoiler]', s, flags=re.I)
+    s = re.sub(r'<\s*/\s*spoiler\s*>', '[/spoiler]', s, flags=re.I)
+    return re.sub(NL + '{3,}', NL * 2, s).strip()
 
 
 def surname(authors):
@@ -82,8 +109,14 @@ def main():
             if i:
                 by_isbn.setdefault(i, b['id'])
         t = short_title(b.get('displayTitle') or b['title'])
-        by_ts.setdefault(t + '|' + norm(b.get('surname', '')), b['id'])
-        by_t.setdefault(t, set()).add(b['id'])
+        by_ts.setdefault(t + '|' + norm(b.get('surname', '')), []).append(b['id'])
+        for k in (t, after_colon(b.get('displayTitle') or b['title'])):
+            if k:
+                by_t.setdefault(k, set()).add(b['id'])
+    group, key_of = {}, {}   # every copy of the same book: same short title and surname
+    for k, ids in by_ts.items():
+        for i in ids:
+            group[i], key_of[i] = ids, k.split('|')[0]
 
     out, how = [], {'isbn': 0, 'title and author': 0, 'title': 0, None: 0}
     for r in rows:
@@ -94,7 +127,7 @@ def main():
                          ('review', ('Review',)), ('tags', ('Tags',)), ('owned', ('Owned?', 'Owned'))):
             v = col(r, *names)
             if v:
-                e[k] = v.replace('/', '-') if k in ('added', 'lastRead') else v
+                e[k] = v.replace('/', '-') if k in ('added', 'lastRead') else review_text(v) if k == 'review' else v
         raw_status = col(r, 'Read Status', 'Status').lower()
         e['status'] = STATUS.get(raw_status, raw_status or 'to-read')
         if col(r, 'Dates Read'):
@@ -112,14 +145,17 @@ def main():
         t = short_title(title)
         match, way = None, None
         if isbn and isbn in by_isbn:
-            match, way = by_isbn[isbn], 'isbn'
+            # her other copies too, but only when StoryGraph's title is that book's ("Veronica Mars: The Thousand-Dollar
+            # Tan Line" must not pull in "Veronica Mars (2): ... Mr. Kiss and Tell")
+            b0 = by_isbn[isbn]
+            match, way = (group[b0] if t == key_of[b0] else [b0]), 'isbn'
         elif t + '|' + surname(authors) in by_ts:
             match, way = by_ts[t + '|' + surname(authors)], 'title and author'
-        elif len(by_t.get(t, ())) == 1:
-            match, way = next(iter(by_t[t])), 'title'
+        elif by_t.get(t) and len({tuple(group[i]) for i in by_t[t]}) == 1:   # one book, maybe in several copies
+            match, way = group[next(iter(by_t[t]))], 'title'
         how[way] += 1
         if match:
-            e['book'] = match
+            e['books'] = match
         out.append(e)
 
     counts = {}
@@ -128,20 +164,23 @@ def main():
     print(f'{len(out)} StoryGraph books: ' + ', '.join(f'{n} {s}' for s, n in sorted(counts.items(), key=lambda x: -x[1])))
     print(f"On her shelves: {len(out) - how[None]} (by ISBN {how['isbn']}, title and author {how['title and author']}, "
           f"title only {how['title']}); not on the shelves: {how[None]}")
-    owned_unmatched = [e for e in out if 'book' not in e and (e.get('owned', '').lower() in ('yes', 'true'))]
+    owned_unmatched = [e for e in out if 'books' not in e and (e.get('owned', '').lower() in ('yes', 'true'))]
     if owned_unmatched:
         print(f'{len(owned_unmatched)} marked owned on StoryGraph but not found on the shelves, e.g.:')
         for e in owned_unmatched[:15]:
             print('  ', e['title'], '|', e['authors'])
     linked = {}
     for e in out:
-        if 'book' in e:
-            linked.setdefault(e['book'], []).append(e['title'])
+        for b in e.get('books', []):
+            linked.setdefault(b, []).append(e['title'])
     twice = {k: v for k, v in linked.items() if len(v) > 1}
     if twice:
-        print(f'{len(twice)} shelf books matched by more than one StoryGraph entry (the latest read is used):')
-        for k, v in list(twice.items())[:10]:
-            print('  ', v)
+        print(f'{len(twice)} shelf books matched by more than one StoryGraph entry (the site joins them).')
+    if '--matches' in sys.argv:
+        titles = {b['id']: b['title'] for b in books}
+        for e in out:
+            if 'books' in e:
+                print(f"  {e['title']}  ->  {' / '.join(titles[i] for i in e['books'])}")
 
     if '--apply' in sys.argv:
         today = date.today().isoformat()

@@ -1,4 +1,4 @@
-"""Find a cover picture for every book with an ISBN-13 (shelves and to-buy list) and remember it in data/covers.json.
+"""Find a cover picture for every book with an ISBN-13 (shelves, to-buy list, StoryGraph books not on the shelves) and remember it in data/covers.json.
 
     python -X utf8 tools/find_covers.py            looks up only books not tried before
     python -X utf8 tools/find_covers.py --retry    tries the ones with no cover found again
@@ -23,8 +23,10 @@ def get(url):
 def main():
     covers = json.load(open(OUT, encoding='utf-8')) if os.path.exists(OUT) else {}
     isbns = []
-    for name in ('books.json', 'to-buy.json'):
-        for b in json.load(open(os.path.join(DATA, name), encoding='utf-8')):
+    sg = os.path.join(DATA, 'storygraph.json')   # books read elsewhere (not on her shelves) get covers too
+    extra = [e for e in json.load(open(sg, encoding='utf-8'))['books'] if 'books' not in e] if os.path.exists(sg) else []
+    for name in ('books.json', 'to-buy.json', extra):
+        for b in (json.load(open(os.path.join(DATA, name), encoding='utf-8')) if isinstance(name, str) else name):
             i = b.get('isbn13')
             if i and i not in isbns and (i not in covers or (covers[i] is None and '--retry' in sys.argv)):
                 isbns.append(i)

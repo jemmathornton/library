@@ -243,3 +243,19 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .btn{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-size:13.5px;font-weight:700}
 .btn:hover{border-color:var(--ink)}
 .btn:focus-visible{outline:2px solid var(--brass)}
+
+/* ---------- StoryGraph reading ---------- */
+.sg-status{display:flex;align-items:center;gap:10px;font:400 26px/1.1 var(--display);color:var(--ink)}
+.sg-status .i{font-size:20px;color:var(--brass)}
+.sg-status.read .i{color:var(--done)}
+.sg-dates{list-style:none;margin:0;padding:0;display:grid;gap:2px;font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+.sg-rating{display:flex;align-items:center;gap:10px}
+.sg-stars{position:relative;display:inline-block;font-size:21px;letter-spacing:2px;line-height:1;color:var(--line)}
+.sg-stars span+span{position:absolute;inset:0 auto 0 0;width:var(--r);overflow:hidden;white-space:nowrap;color:var(--brass)}
+.sg-num{font:400 22px/1 var(--display)}
+.moods{display:flex;flex-wrap:wrap;gap:6px}
+.moods span{font-size:12px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--soft);color:var(--muted)}
+.review{font-size:16px;line-height:1.7;max-width:68ch;white-space:pre-line;padding:18px 22px;border-left:3px solid var(--brass);background:var(--surface);border-radius:0 12px 12px 0}
+.review+.review{margin-top:14px}
+.spoiler{filter:blur(5px);cursor:pointer;transition:filter .2s;border-radius:4px;background:var(--soft)}
+.spoiler.shown,.spoiler:focus{filter:none;background:none}
