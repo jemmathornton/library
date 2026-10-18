@@ -56,6 +56,9 @@ def build():
     fixes = load('name-fixes.json', {'names': {}, 'remove': [], 'roles': {}, 'books': {}, 'surnames': {}})
     fix_names(books + wish, fixes)
     sg = load('storygraph.json', {'books': []})
+    fixes_r = {k: v for k, v in load('reading-fixes.json', {}).items() if not k.startswith('_')}   # statuses she has corrected
+    for e in sg['books']:
+        e['status'] = fixes_r.get(e['title'], e['status'])
     no_cover = {x['id'] for x in load('no-cover.json', {'books': []})['books']}   # old books: no modern reprint covers
     for b in books + wish + [e for e in sg['books'] if 'books' not in e]:
         if b.get('id') in no_cover:

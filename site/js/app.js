@@ -191,9 +191,9 @@ function cover(b, extra = "", big = false){
   // read or reading: a tick (or bookmark) in the top corner, walnut and cream (her choice, 18 Oct); her stars, filled to
   // the rating with no number, in a strip across the foot
   // read: a cream "Read" sash across the top corner (her choice, 18 Oct, over a tick)
-  // didn't finish: a "DNF" sash the same way (her choice, 18 Oct)
+  // didn't finish and paused: "DNF" and "Paused" sashes the same way (her choices, 18 Oct)
   const badge = st === "read" ? `<span class="sash" title="Read">Read</span>` : st === "reading" ? `<span class="sash" title="Reading now">Reading</span>`
-    : st === "stopped" ? `<span class="sash" title="Didn’t finish">DNF</span>` : "";
+    : st === "stopped" ? `<span class="sash" title="Didn’t finish">DNF</span>` : st === "paused" ? `<span class="sash" title="Paused">Paused</span>` : "";
   const r = reading(b).rating;
   const strip = r ? `<span class="rated" title="${starsText(r)} stars"><span class="sg-stars" style="--r:${(r / 5 * 100).toFixed(1)}%"><span>★★★★★</span><span aria-hidden="true">★★★★★</span></span></span>` : "";
   // not owned: the cover faded, with a walnut "Not owned" band across it (her choice, 18 Oct; not on a book's own page)
