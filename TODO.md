@@ -29,7 +29,7 @@
 ## Open (prototype limits)
 
 - **Reading comes from StoryGraph** (`tools/import_storygraph.py`, export from 18 Oct). Export again and import to bring in new reading. 178 of 345 StoryGraph books are on her shelves; the rest (library books, ebooks, audiobooks) show only in the Reading log and search, never on the shelves (her rule, 18 Oct).
-- **Covers:** 631 of 637 shelf books have one. The last 27 came from a web image search (18 Oct): for the Old Book Collection they are pictures of the same old edition, not her own copy. Still none: The Model Railway Hobby, Practical Railway Working, Harvard Classics Reading Guide, Witness (Adam E. Holton), Invasion Day Series, Dear Mr. Potter (only a wide banner exists).
+- **Covers:** 602 of 637 shelf books have one. Old Book Collection (before 1964, no ISBN): only covers that look like old editions are kept; 29 that were later reprints are title cards instead (her call, 18 Oct; data/no-cover.json). Still nothing found: The Model Railway Hobby, Practical Railway Working, Harvard Classics Reading Guide, Witness (Adam E. Holton), Invasion Day Series, Dear Mr. Potter.
 - Covers are copied into `site/covers/` (`tools/copy_covers.py`, after `find_covers.py`), so they show at once and work offline.
 - **Taskbar icon: fixed (18 Oct).** The shortcuts open the site from a small local server (http://localhost:8020, tools/serve.py, started at login) as an app window in its own Chrome profile; they carry the window’s app id, so Windows shows their icon (app-v2.ico, every size inside) on the taskbar, sharp. Reading marks or to-buy ticks made in the old window opened from the folder don’t carry over (“Save a backup” there, “Load a backup” here).
 - Phone layout not done yet (laptop first).

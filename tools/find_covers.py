@@ -78,11 +78,14 @@ def main():
     # Last: Open Library's search by title and author, for books still without a cover, ISBN or not (Google Books
     # stopped answering on 18 Oct). Covers found this way are stored under the book's id ("id-<id>").
     title_tried = covers.setdefault('_byTitle', {})
+    nc = os.path.join(DATA, 'no-cover.json')   # old books that should stay without a (modern) cover
+    no_cover = {'id-' + x['id'] for x in json.load(open(nc, encoding='utf-8'))['books']} if os.path.exists(nc) else set()
+    title_tried.update({k: False for k in no_cover})
     found_t = 0
     for name in ('books.json', 'to-buy.json', extra):
         for b in (json.load(open(os.path.join(DATA, name), encoding='utf-8')) if isinstance(name, str) else name):
             key = 'id-' + str(b.get('id', ''))
-            if covers.get(b.get('isbn13', '')) or covers.get(key) or (key in title_tried and '--retry' not in sys.argv) or not b.get('id'):
+            if covers.get(b.get('isbn13', '')) or covers.get(key) or key in no_cover or (key in title_tried and '--retry' not in sys.argv) or not b.get('id'):
                 continue
             title = re.split(r':\s', re.sub(r'\(.*?\)|\[.*?\]', '', b['title']))[0].strip()
             names = b['authors'] if isinstance(b.get('authors'), list) else [{'name': n} for n in str(b.get('authors', '')).split(', ')]

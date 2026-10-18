@@ -1,0 +1,121 @@
+{
+ "_about": "Old Book Collection books (before 1964, no ISBN) whose only covers found online are later reprints: no cover rather than a modern one (her call, 18 Oct). The build shows a title card; tools/find_covers.py skips them.",
+ "books": [
+  {
+   "id": "59qsgeiv9x",
+   "title": "Adventures of the Wishing Chair"
+  },
+  {
+   "id": "yq0s7pfr71",
+   "title": "Bimbo and Topsy"
+  },
+  {
+   "id": "jlcyduuqlq",
+   "title": "Black Beauty"
+  },
+  {
+   "id": "tol53o093y",
+   "title": "Brer Rabbit Again"
+  },
+  {
+   "id": "8u1tifmohq",
+   "title": "China Fights Back"
+  },
+  {
+   "id": "cp5qridmmk",
+   "title": "Claudine at St Clare's"
+  },
+  {
+   "id": "whc2eftisd",
+   "title": "Five Get Into a Fix"
+  },
+  {
+   "id": "xiuezl2jps",
+   "title": "Five Go To Mystery Moor"
+  },
+  {
+   "id": "ogh4ago0an",
+   "title": "Five on a Hike Together"
+  },
+  {
+   "id": "cp5qr4vmmk",
+   "title": "Five on a Secret Trail"
+  },
+  {
+   "id": "i1mtejklqm",
+   "title": "Five on a Treasure Island"
+  },
+  {
+   "id": "hfp8tti19k",
+   "title": "Good Old Secret Seven"
+  },
+  {
+   "id": "0bs67wgdcu",
+   "title": "Journal"
+  },
+  {
+   "id": "8u1tnmtohq",
+   "title": "Just William"
+  },
+  {
+   "id": "g3fxkyrbt4",
+   "title": "Look Out Secret Seven"
+  },
+  {
+   "id": "ogh4anm0an",
+   "title": "Second Form at Malory Towers"
+  },
+  {
+   "id": "4x81ll9kbx",
+   "title": "Secret Seven Fireworks"
+  },
+  {
+   "id": "6dlpm4y8dt",
+   "title": "Summer Term at St Clare's"
+  },
+  {
+   "id": "umeoydkgnz",
+   "title": "Tales of Toyland"
+  },
+  {
+   "id": "wh3xgysisd",
+   "title": "The Adventures of Huckleberry Finn"
+  },
+  {
+   "id": "tol5ji493y",
+   "title": "The Complete Oxford Shakespeare"
+  },
+  {
+   "id": "aktlqhipsz",
+   "title": "The O'Sullivan Twins"
+  },
+  {
+   "id": "baejywscho",
+   "title": "The Second Form at St Clare's"
+  },
+  {
+   "id": "g3fxkkybt4",
+   "title": "The Secret Seven Win Through"
+  },
+  {
+   "id": "lz39v8s7b9",
+   "title": "The Twins at St Clare's"
+  },
+  {
+   "id": "py8mlpkno7",
+   "title": "The Wishing Chair Again"
+  },
+  {
+   "id": "8u7n3pwohq",
+   "title": "Third Year at Malory Towers"
+  },
+  {
+   "id": "yq0shzbr71",
+   "title": "Upper Fourth at Malory Towers"
+  },
+  {
+   "id": "dcf8ke4u84",
+   "title": "Well Done Secret Seven"
+  }
+ ]
+}

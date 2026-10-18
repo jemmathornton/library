@@ -2812,51 +2812,51 @@
 "id-cp2uffxmmk": true,
 "id-7snw62uhd6": false,
 "id-28iexxftqt": true,
-"id-59qsgeiv9x": true,
+"id-59qsgeiv9x": false,
 "id-hfp82xb19k": false,
 "id-mntgwag31h": false,
-"id-yq0s7pfr71": true,
-"id-jlcyduuqlq": true,
+"id-yq0s7pfr71": false,
+"id-jlcyduuqlq": false,
 "id-mntgwj431h": false,
 "id-umsrn8vgnz": false,
 "id-tol53o093y": false,
 "id-0bs6kb8dcu": true,
 "id-i1ajbublqm": true,
 "id-xibkehkjps": false,
-"id-8u1tifmohq": true,
-"id-cp5qridmmk": true,
+"id-8u1tifmohq": false,
+"id-cp5qridmmk": false,
 "id-8u1tiscohq": true,
 "id-i1mt5hqlqm": false,
 "id-aktlq1lpsz": false,
-"id-whc2eftisd": true,
+"id-whc2eftisd": false,
 "id-aktlqn3psz": true,
 "id-aktljmbpsz": true,
 "id-v6jcdvv26q": true,
 "id-v6jcu0o26q": true,
-"id-xiuezl2jps": true,
+"id-xiuezl2jps": false,
 "id-mnvwrmh31h": true,
 "id-py97wjuno7": true,
-"id-ogh4ago0an": true,
-"id-cp5qr4vmmk": true,
-"id-i1mtejklqm": true,
+"id-ogh4ago0an": false,
+"id-cp5qr4vmmk": false,
+"id-i1mtejklqm": false,
 "id-yq0s7kvr71": true,
 "id-rwdf1zdxoz": true,
 "id-cp5qrytmmk": true,
-"id-hfp8tti19k": true,
+"id-hfp8tti19k": false,
 "id-28iexpltqt": false,
 "id-6dh2w1u8dt": false,
 "id-v6jcumc26q": true,
-"id-0bs67wgdcu": true,
-"id-8u1tnmtohq": true,
-"id-g3fxkyrbt4": true,
+"id-0bs67wgdcu": false,
+"id-8u1tnmtohq": false,
+"id-g3fxkyrbt4": false,
 "id-v6wfrst26q": true,
 "id-28iex5gtqt": false,
-"id-ogh4anm0an": true,
-"id-4x81ll9kbx": true,
-"id-6dlpm4y8dt": true,
+"id-ogh4anm0an": false,
+"id-4x81ll9kbx": false,
+"id-6dlpm4y8dt": false,
 "id-ogz9lt80an": false,
-"id-umeoydkgnz": true,
-"id-wh3xgysisd": true,
+"id-umeoydkgnz": false,
+"id-wh3xgysisd": false,
 "id-jlcy5z6qlq": true,
 "id-tol5ji493y": false,
 "id-6dh2aia8dt": true,
@@ -2865,16 +2865,16 @@
 "id-28iec5ytqt": true,
 "id-7snw9i5hd6": true,
 "id-xibke74jps": false,
-"id-aktlqhipsz": true,
+"id-aktlqhipsz": false,
 "id-hfp82qm19k": false,
-"id-baejywscho": true,
+"id-baejywscho": false,
 "id-i1ajtfdlqm": false,
-"id-g3fxkkybt4": true,
-"id-lz39v8s7b9": true,
-"id-py8mlpkno7": true,
-"id-8u7n3pwohq": true,
-"id-yq0shzbr71": true,
-"id-dcf8ke4u84": true,
+"id-g3fxkkybt4": false,
+"id-lz39v8s7b9": false,
+"id-py8mlpkno7": false,
+"id-8u7n3pwohq": false,
+"id-yq0shzbr71": false,
+"id-dcf8ke4u84": false,
 "id-8gmvxddohq": false,
 "id-jldo53mqlq": true,
 "id-v8dznt726q": false,
@@ -2931,10 +2931,6 @@
 "src": "https://covers.openlibrary.org/b/id/14605251-L.jpg",
 "from": "Open Library (title search)"
 },
-"id-0bs67wgdcu": {
-"src": "https://covers.openlibrary.org/b/id/969995-L.jpg",
-"from": "Open Library (title search)"
-},
 "id-0bs6kb8dcu": {
 "src": "https://covers.openlibrary.org/b/id/14608011-L.jpg",
 "from": "Open Library (title search)"
@@ -2979,10 +2975,6 @@
 "src": "https://covers.openlibrary.org/b/id/15248784-L.jpg",
 "from": "Open Library (title search)"
 },
-"id-4x81ll9kbx": {
-"src": "https://covers.openlibrary.org/b/id/14576170-L.jpg",
-"from": "Open Library (title search)"
-},
 "id-5601a1fv9x": {
 "src": "https://covers.openlibrary.org/b/id/14600356-L.jpg",
 "from": "Open Library (title search)"
@@ -2993,10 +2985,6 @@
 },
 "id-5601pbmv9x": {
 "src": "https://covers.openlibrary.org/b/id/6298909-L.jpg",
-"from": "Open Library (title search)"
-},
-"id-59qsgeiv9x": {
-"src": "https://covers.openlibrary.org/b/id/14585887-L.jpg",
 "from": "Open Library (title search)"
 },
 "id-59y4gluv9x": {
@@ -3010,10 +2998,6 @@
 "id-6dh2w1u8dt": {
 "src": "https://pictures.abebooks.com/inventory/22676100275.jpg",
 "from": "web image search (18 Oct)"
-},
-"id-6dlpm4y8dt": {
-"src": "https://covers.openlibrary.org/b/id/14572761-L.jpg",
-"from": "Open Library (title search)"
 },
 "id-6ubmksc8dt": {
 "src": "https://covers.openlibrary.org/b/id/435892-L.jpg",
@@ -3059,20 +3043,8 @@
 "src": "https://covers.openlibrary.org/b/id/14504972-L.jpg",
 "from": "Open Library (title search)"
 },
-"id-8u1tifmohq": {
-"src": "https://covers.openlibrary.org/b/id/2266929-L.jpg",
-"from": "Open Library (title search)"
-},
 "id-8u1tiscohq": {
 "src": "https://covers.openlibrary.org/b/id/5541327-L.jpg",
-"from": "Open Library (title search)"
-},
-"id-8u1tnmtohq": {
-"src": "https://covers.openlibrary.org/b/id/199176-L.jpg",
-"from": "Open Library (title search)"
-},
-"id-8u7n3pwohq": {
-"src": "https://covers.openlibrary.org/b/id/14576552-L.jpg",
 "from": "Open Library (title search)"
 },
 "id-8uiqpq6ohq": {
@@ -3103,10 +3075,6 @@
 "src": "https://pictures.abebooks.com/inventory/7390378094.jpg",
 "from": "web image search (18 Oct)"
 },
-"id-aktlqhipsz": {
-"src": "https://covers.openlibrary.org/b/id/11691001-L.jpg",
-"from": "Open Library (title search)"
-},
 "id-aktlqn3psz": {
 "src": "https://covers.openlibrary.org/b/id/14599583-L.jpg",
 "from": "Open Library (title search)"
@@ -3117,10 +3085,6 @@
 },
 "id-ay4ig65psz": {
 "src": "https://covers.openlibrary.org/b/id/14645723-L.jpg",
-"from": "Open Library (title search)"
-},
-"id-baejywscho": {
-"src": "https://covers.openlibrary.org/b/id/14597638-L.jpg",
 "from": "Open Library (title search)"
 },
 "id-bpkol7lcho": {
@@ -3139,24 +3103,12 @@
 "src": "https://covers.openlibrary.org/b/id/7933116-L.jpg",
 "from": "Open Library (title search)"
 },
-"id-cp5qr4vmmk": {
-"src": "https://covers.openlibrary.org/b/id/14600237-L.jpg",
-"from": "Open Library (title search)"
-},
-"id-cp5qridmmk": {
-"src": "https://covers.openlibrary.org/b/id/14599615-L.jpg",
-"from": "Open Library (title search)"
-},
 "id-cp5qrytmmk": {
 "src": "https://covers.openlibrary.org/b/id/14602684-L.jpg",
 "from": "Open Library (title search)"
 },
 "id-cpfzj81mmk": {
 "src": "https://covers.openlibrary.org/b/id/14645780-L.jpg",
-"from": "Open Library (title search)"
-},
-"id-dcf8ke4u84": {
-"src": "https://covers.openlibrary.org/b/id/14571252-L.jpg",
 "from": "Open Library (title search)"
 },
 "id-dmp9q8vu84": {
@@ -3173,14 +3125,6 @@
 },
 "id-ft873ofe5y": {
 "src": "https://covers.openlibrary.org/b/id/12728811-L.jpg",
-"from": "Open Library (title search)"
-},
-"id-g3fxkkybt4": {
-"src": "https://covers.openlibrary.org/b/id/14571179-L.jpg",
-"from": "Open Library (title search)"
-},
-"id-g3fxkyrbt4": {
-"src": "https://covers.openlibrary.org/b/id/14571253-L.jpg",
 "from": "Open Library (title search)"
 },
 "id-g3zhrqsbt4": {
@@ -3203,10 +3147,6 @@
 "src": "https://i.pinimg.com/originals/96/3c/ae/963caea68cd90b48a9c45ebd88e537c2.jpg",
 "from": "web image search (18 Oct)"
 },
-"id-hfp8tti19k": {
-"src": "https://covers.openlibrary.org/b/id/14571257-L.jpg",
-"from": "Open Library (title search)"
-},
 "id-i1ajbublqm": {
 "src": "https://covers.openlibrary.org/b/id/14923671-L.jpg",
 "from": "Open Library (title search)"
@@ -3218,10 +3158,6 @@
 "id-i1mt5hqlqm": {
 "src": "https://i.pinimg.com/originals/b9/f5/20/b9f5203902feb860383d00bbc8ec2bd4.jpg",
 "from": "web image search (18 Oct)"
-},
-"id-i1mtejklqm": {
-"src": "https://covers.openlibrary.org/b/id/14570937-L.jpg",
-"from": "Open Library (title search)"
 },
 "id-izer06ilqm": {
 "src": "https://covers.openlibrary.org/b/id/760853-L.jpg",
@@ -3237,10 +3173,6 @@
 },
 "id-jlcy5z6qlq": {
 "src": "https://covers.openlibrary.org/b/id/9316478-L.jpg",
-"from": "Open Library (title search)"
-},
-"id-jlcyduuqlq": {
-"src": "https://covers.openlibrary.org/b/id/5007492-L.jpg",
 "from": "Open Library (title search)"
 },
 "id-jldo53mqlq": {
@@ -3261,10 +3193,6 @@
 },
 "id-ls5xdul7b9": {
 "src": "https://covers.openlibrary.org/b/id/8417016-L.jpg",
-"from": "Open Library (title search)"
-},
-"id-lz39v8s7b9": {
-"src": "https://covers.openlibrary.org/b/id/14578402-L.jpg",
 "from": "Open Library (title search)"
 },
 "id-mnefmna31h": {
@@ -3303,14 +3231,6 @@
 "src": "https://covers.openlibrary.org/b/id/6767292-L.jpg",
 "from": "Open Library (title search)"
 },
-"id-ogh4ago0an": {
-"src": "https://covers.openlibrary.org/b/id/14602830-L.jpg",
-"from": "Open Library (title search)"
-},
-"id-ogh4anm0an": {
-"src": "https://covers.openlibrary.org/b/id/14603046-L.jpg",
-"from": "Open Library (title search)"
-},
 "id-ogz9lt80an": {
 "src": "https://m.media-amazon.com/images/I/51tKeTpblSL.jpg",
 "from": "web image search (18 Oct)"
@@ -3331,10 +3251,6 @@
 "src": "https://covers.openlibrary.org/b/id/12817682-L.jpg",
 "from": "Open Library (title search)"
 },
-"id-py8mlpkno7": {
-"src": "https://covers.openlibrary.org/b/id/14576157-L.jpg",
-"from": "Open Library (title search)"
-},
 "id-py97wjuno7": {
 "src": "https://covers.openlibrary.org/b/id/14605143-L.jpg",
 "from": "Open Library (title search)"
@@ -3349,18 +3265,6 @@
 },
 "id-tohvjhy93y": {
 "src": "https://covers.openlibrary.org/b/id/13100111-L.jpg",
-"from": "Open Library (title search)"
-},
-"id-tol53o093y": {
-"src": "https://m.media-amazon.com/images/I/91aTEfxZDZL._SL1500_.jpg",
-"from": "web image search (18 Oct)"
-},
-"id-tol5ji493y": {
-"src": "https://m.media-amazon.com/images/I/71-84qLLHJL._SL1500_.jpg",
-"from": "web image search (18 Oct)"
-},
-"id-umeoydkgnz": {
-"src": "https://covers.openlibrary.org/b/id/12636931-L.jpg",
 "from": "Open Library (title search)"
 },
 "id-umsrn8vgnz": {
@@ -3387,14 +3291,6 @@
 "src": "https://covers.openlibrary.org/b/id/761162-L.jpg",
 "from": "Open Library (title search)"
 },
-"id-wh3xgysisd": {
-"src": "https://covers.openlibrary.org/b/id/1237481-L.jpg",
-"from": "Open Library (title search)"
-},
-"id-whc2eftisd": {
-"src": "https://covers.openlibrary.org/b/id/14577738-L.jpg",
-"from": "Open Library (title search)"
-},
 "id-whgdvgxisd": {
 "src": "https://covers.openlibrary.org/b/id/8746533-L.jpg",
 "from": "Open Library (title search)"
@@ -3407,20 +3303,8 @@
 "src": "https://d2pk39vnfxxys4.cloudfront.net/content/images/thumbs/0011119_captain-of-two-schools_300.jpeg",
 "from": "web image search (18 Oct)"
 },
-"id-xiuezl2jps": {
-"src": "https://covers.openlibrary.org/b/id/14595290-L.jpg",
-"from": "Open Library (title search)"
-},
 "id-yq0s7kvr71": {
 "src": "https://covers.openlibrary.org/b/id/14605167-L.jpg",
-"from": "Open Library (title search)"
-},
-"id-yq0s7pfr71": {
-"src": "https://covers.openlibrary.org/b/id/14591050-L.jpg",
-"from": "Open Library (title search)"
-},
-"id-yq0shzbr71": {
-"src": "https://covers.openlibrary.org/b/id/14597066-L.jpg",
 "from": "Open Library (title search)"
 },
 "id-yq89z87r71": {

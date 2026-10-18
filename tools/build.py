@@ -48,7 +48,10 @@ def build():
     fixes = load('name-fixes.json', {'names': {}, 'remove': [], 'roles': {}, 'books': {}, 'surnames': {}})
     fix_names(books + wish, fixes)
     sg = load('storygraph.json', {'books': []})
+    no_cover = {x['id'] for x in load('no-cover.json', {'books': []})['books']}   # old books: no modern reprint covers
     for b in books + wish + [e for e in sg['books'] if 'books' not in e]:
+        if b.get('id') in no_cover:
+            continue
         isbn = b.get('isbn13', '')
         # a cover is found by ISBN, or by title for books without one (stored as "id-<id>", tools/find_covers.py)
         key = isbn if isbn and (covers.get(isbn) or os.path.exists(os.path.join(SITE, 'covers', isbn + '.jpg'))) else 'id-' + str(b.get('id', ''))
