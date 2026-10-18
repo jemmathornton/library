@@ -154,8 +154,10 @@ BOOKS.forEach(b => {
   const hits = seriesOf[b.id];
   if (!hits || hits.length !== 1 || b.displayTitle || /collection|box(ed)? set|omnibus/i.test(b.title)) return;
   const {series, entry} = hits[0];
-  const edition = (/(illustrated|hufflepuff|children's|collector's|centenary|special|anniversary|movie tie-in)[\w' -]*edition/i.exec(b.title) || [])[0];
-  b.t = entry.title; b.sub = `${series.name}, book ${entry.n}${edition ? " · " + edition.replace(/\b\w/g, c => c.toUpperCase()) : ""}`;
+  // her special editions (data/editions.json) first, then an edition named in the title
+  const edition = (b.special || (/(illustrated|hufflepuff|children's|collector's|centenary|special|anniversary|movie tie-in|illumicrate)[\w' -]*edition/i.exec(b.title) || [])[0] || "")
+    .replace(/(^|[\s-])\w/g, c => c.toUpperCase()).replace(/'/g, "’");
+  b.t = entry.title; b.sub = `${series.name}, book ${entry.n}${edition ? " · " + edition : ""}`;
   b.sortTitle = sortTitle(b.t);
 });
 // All her copies of one book share one reading record: StoryGraph may have linked each copy to a different entry (the

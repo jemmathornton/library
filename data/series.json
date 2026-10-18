@@ -1,5 +1,5 @@
 {
- "_about": "Series in reading order (18 Oct, her yes). The site finds her copies by title and author surname; a title can have other spellings after a |, as Libib has them. Trebizon, Quest, Legacy of the Stones and Pure Dead looked up online (FantasticFiction, Goodreads, Amazon, Penguin). Twilight, A Good Girl's Guide to Murder (publication order, Kill Joy last) and Narnia (the numbered order of today's editions) added 18 Oct for books she has read but doesn't own.",
+ "_about": "Series in reading order (18 Oct, her yes). The site finds her copies by title and author surname; a title can have other spellings after a |, as Libib has them. Trebizon, Quest, Legacy of the Stones and Pure Dead looked up online (FantasticFiction, Goodreads, Amazon, Penguin). Twilight, A Good Girl's Guide to Murder (publication order, Kill Joy last) and Narnia (the numbered order of today's editions) added 18 Oct for books she has read but doesn't own. 18 Oct thorough check: Kitty Collins, Miss Marple, Notes from a Small Island, Natural Human Saga, Castaways of the Flying Dutchman, Before the Coffee Gets Cold, Cerulean Chronicles, Mother of Learning, We Were Liars, Shetland Witch, Seasonal Quartet, Quest for Qieta, Hogwarts Library, Fantastic Beasts screenplays, Edge Chronicles (her copy's chronological numbering), Foundation, Theodore Boone, Thomas Covenant, Larten Crepsley, Hierarchy, Hedge Witch, Solitaire (publication order) added; Quest Series 11-13 from the books' own covers; Cursed Child as Harry Potter 8.",
  "series": [
   {
    "name": "Harry Potter",
@@ -11,7 +11,8 @@
     "Harry Potter and the Goblet of Fire",
     "Harry Potter and the Order of the Phoenix",
     "Harry Potter and the Half-Blood Prince",
-    "Harry Potter and the Deathly Hallows"
+    "Harry Potter and the Deathly Hallows",
+    "Harry Potter and the Cursed Child"
    ]
   },
   {
@@ -429,7 +430,7 @@
    "books": [
     "Spring Story|Brambly Hedge Spring Story",
     "Summer Story",
-    "Autumn Story|Autumn Story Bramley Hedge",
+    "Autumn Story|Autumn Story Bramley Hedge|Autumn Story Brambly Hedge",
     "Winter Story|Brambly Hedge Winter Story"
    ]
   },
@@ -610,7 +611,10 @@
     "Seer Quest",
     "Hunt Quest",
     "Storm Quest",
-    "Healer Quest"
+    "Healer Quest",
+    "Rebellion Quest",
+    "Dimension Quest",
+    "Guardian Quest"
    ]
   },
   {
@@ -714,6 +718,220 @@
     "The Voyage of the Dawn Treader",
     "The Silver Chair",
     "The Last Battle"
+   ]
+  },
+  {
+   "name": "Kitty Collins",
+   "author": "Brent",
+   "books": [
+    "How to Kill Men and Get Away With It",
+    "I Bet You'd Look Good in a Coffin",
+    "To All the Men I've Killed Before"
+   ]
+  },
+  {
+   "name": "Miss Marple",
+   "author": "Christie",
+   "books": [
+    "The Murder at the Vicarage|Murder at the Vicarage",
+    "The Body in the Library",
+    "The Moving Finger",
+    "A Murder Is Announced",
+    "They Do It with Mirrors",
+    "A Pocket Full of Rye",
+    "4.50 from Paddington",
+    "The Mirror Crack'd from Side to Side",
+    "A Caribbean Mystery",
+    "At Bertram's Hotel",
+    "Nemesis",
+    "Sleeping Murder"
+   ]
+  },
+  {
+   "name": "Notes from a Small Island",
+   "author": "Bryson",
+   "books": [
+    "Notes from a Small Island",
+    "The Road to Little Dribbling"
+   ]
+  },
+  {
+   "name": "The Natural Human Saga",
+   "author": "Gay",
+   "books": [
+    "The Callista Alignment",
+    "The Callista Ascendancy"
+   ]
+  },
+  {
+   "name": "Castaways of the Flying Dutchman",
+   "author": "Jacques",
+   "books": [
+    "Castaways of the Flying Dutchman",
+    "The Angel's Command|Angel's Command",
+    "Voyage of Slaves"
+   ]
+  },
+  {
+   "name": "Before the Coffee Gets Cold",
+   "author": "Kawaguchi",
+   "books": [
+    "Before the Coffee Gets Cold",
+    "Tales from the Cafe|Tales from the Café",
+    "Before Your Memory Fades",
+    "Before We Say Goodbye",
+    "Before We Forget Kindness"
+   ]
+  },
+  {
+   "name": "The Cerulean Chronicles",
+   "author": "Klune",
+   "books": [
+    "The House in the Cerulean Sea",
+    "Somewhere Beyond the Sea"
+   ]
+  },
+  {
+   "name": "Mother of Learning",
+   "author": "Kurmaic",
+   "books": [
+    "Mother of Learning: Arc 1|Mother of Learning: ARC 1",
+    "Mother of Learning: Arc 2|Mother of Learning: ARC 2",
+    "Mother of Learning: Arc 3|Mother of Learning: ARC 3"
+   ]
+  },
+  {
+   "name": "We Were Liars",
+   "author": "Lockhart",
+   "books": [
+    "We Were Liars",
+    "Family of Liars"
+   ]
+  },
+  {
+   "name": "The Shetland Witch",
+   "author": "Macdonald",
+   "books": [
+    "The Shetland Witch|The Shetland Witch: Or, Atropos Wants Her Shears Back",
+    "Stories from the Shetland Witch|Stories from The Shetland Witch: In Achaea & Mrs Sinclair and the Feather Haa"
+   ]
+  },
+  {
+   "name": "Seasonal Quartet",
+   "author": "Smith",
+   "books": [
+    "Autumn",
+    "Winter",
+    "Spring",
+    "Summer"
+   ]
+  },
+  {
+   "name": "The Quest for Qieta",
+   "author": "Wu",
+   "books": [
+    "The Quest for Qieta",
+    "Memories of the Kurai"
+   ]
+  },
+  {
+   "name": "Hogwarts Library",
+   "author": "Rowling",
+   "books": [
+    "Fantastic Beasts and Where to Find Them",
+    "Quidditch Through the Ages",
+    "The Tales of Beedle the Bard"
+   ]
+  },
+  {
+   "name": "Fantastic Beasts Screenplays",
+   "author": "Rowling",
+   "books": [
+    "Fantastic Beasts and Where to Find Them: The Original Screenplay",
+    "Fantastic Beasts: The Crimes of Grindelwald",
+    "Fantastic Beasts: The Secrets of Dumbledore"
+   ]
+  },
+  {
+   "name": "The Edge Chronicles",
+   "author": "Stewart|Riddell",
+   "books": [
+    "The Curse of the Gloamglozer",
+    "The Winter Knights",
+    "Clash of the Sky Galleons",
+    "Beyond the Deepwoods",
+    "Stormchaser",
+    "Midnight Over Sanctaphrax",
+    "The Last of the Sky Pirates",
+    "Vox",
+    "Freeglader",
+    "The Immortals"
+   ]
+  },
+  {
+   "name": "Foundation",
+   "author": "Asimov",
+   "books": [
+    "Foundation",
+    "Foundation and Empire",
+    "Second Foundation"
+   ]
+  },
+  {
+   "name": "Theodore Boone",
+   "author": "Grisham",
+   "books": [
+    "Theodore Boone: Kid Lawyer|Theodore Boone: Theodore Boone 1",
+    "Theodore Boone: The Abduction",
+    "Theodore Boone: The Accused",
+    "Theodore Boone: The Activist",
+    "Theodore Boone: The Fugitive",
+    "Theodore Boone: The Scandal",
+    "Theodore Boone: The Accomplice"
+   ]
+  },
+  {
+   "name": "The Chronicles of Thomas Covenant",
+   "author": "Donaldson",
+   "books": [
+    "Lord Foul's Bane",
+    "The Illearth War",
+    "The Power That Preserves"
+   ]
+  },
+  {
+   "name": "The Saga of Larten Crepsley",
+   "author": "Shan",
+   "books": [
+    "Birth of a Killer",
+    "Ocean of Blood",
+    "Palace of the Damned",
+    "Brothers to the Death"
+   ]
+  },
+  {
+   "name": "Hierarchy",
+   "author": "Islington",
+   "books": [
+    "The Will of the Many",
+    "The Strength of the Few"
+   ]
+  },
+  {
+   "name": "The Hedge Witch Series",
+   "author": "Critchley",
+   "books": [
+    "Bringing Down the Flowers",
+    "The Parsley Bed"
+   ]
+  },
+  {
+   "name": "Solitaire",
+   "author": "Oseman",
+   "books": [
+    "Solitaire",
+    "Nick and Charlie",
+    "This Winter"
    ]
   }
  ]
