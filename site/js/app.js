@@ -104,9 +104,12 @@ const reading = b => isElsewhere(b) ? (b.merged ||= sgMerged([b]))
   : (b.status ? {status: b.status} : {});
 const isRead = b => reading(b).status === "read", isReading = b => reading(b).status === "reading", isToRead = b => reading(b).status === "to-read";
 // everything she has read or means to read, each book once (not once per copy; a copy with a cover stands for the rest)
+// one book, however many copies she owns: same tidied title and surname, and the same series number if it has one
+const bookKey = b => { const h = (seriesOf[b.id] || [])[0];
+  return norm(b.t) + "|" + norm(b.surname || b.by || "") + "|" + (h ? h.series.id + h.entry.n : norm(b.sub || "")); };
 function readingLog(){
   const seen = new Set(), out = [];
-  [...BOOKS].sort((a, b) => !!b.cover - !!a.cover).forEach(b => { const k = sgFor[b.id] ? reading(b).key : b.id; if (!seen.has(k) && reading(b).status) { seen.add(k); out.push(b); } });
+  [...BOOKS].sort((a, b) => !!b.cover - !!a.cover).forEach(b => { const k = bookKey(b); if (!seen.has(k) && reading(b).status) { seen.add(k); out.push(b); } });
   return out.concat(ELSEWHERE);
 }
 // every time she finished a book (a re-read counts in its own year: 8 books read in 2025 and again in 2026; her
@@ -155,6 +158,20 @@ BOOKS.forEach(b => {
   b.t = entry.title; b.sub = `${series.name}, book ${entry.n}${edition ? " · " + edition.replace(/\b\w/g, c => c.toUpperCase()) : ""}`;
   b.sortTitle = sortTitle(b.t);
 });
+// All her copies of one book share one reading record: StoryGraph may have linked each copy to a different entry (the
+// Prisoner of Azkaban twice, 18 Oct), so the entries of every copy are joined. The same for books not on her shelves
+// that StoryGraph lists twice (Worm): one is kept, with both entries' reading.
+(function joinCopies(){
+  const groups = {};
+  BOOKS.forEach(b => (groups[bookKey(b)] ||= []).push(b));
+  Object.values(groups).forEach(copies => {
+    const entries = [...new Set(copies.flatMap(b => sgFor[b.id] || []))];
+    if (entries.length && copies.length > 1) copies.forEach(b => { sgFor[b.id] = entries.slice(); });
+  });
+  const away = {};
+  ELSEWHERE.forEach(e => (away[norm(e.t) + "|" + norm(e.by)] ||= []).push(e));
+  Object.values(away).filter(l => l.length > 1).forEach(l => { l[0].merged = sgMerged(l); l.slice(1).forEach(e => ELSEWHERE.splice(ELSEWHERE.indexOf(e), 1)); });
+})();
 // where she stands with one book of a series
 function entryState(e){
   const all = e.owned.concat(e.away), read = all.some(isRead), now = all.some(isReading);
