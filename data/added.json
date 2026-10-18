@@ -122,21 +122,6 @@
   "surname": "DeGroodt"
  },
  {
-  "id": "add0009",
-  "title": "The Hobbit",
-  "authors": [
-   {
-    "name": "J.R.R. Tolkien"
-   }
-  ],
-  "shelf": "fantasy",
-  "added": "2026-10-18",
-  "copies": 1,
-  "addedHere": true,
-  "why": "She owns it but it was never in Libib (her answer, 18 Oct).",
-  "surname": "Tolkien"
- },
- {
   "id": "add0010",
   "title": "The Callista Ascendancy",
   "authors": [

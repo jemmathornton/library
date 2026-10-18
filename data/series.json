@@ -1,5 +1,5 @@
 {
- "_about": "Series in reading order (18 Oct, her yes). The site finds her copies by title and author surname; a title can have other spellings after a |, as Libib has them. Trebizon, Quest, Legacy of the Stones and Pure Dead looked up online (FantasticFiction, Goodreads, Amazon, Penguin).",
+ "_about": "Series in reading order (18 Oct, her yes). The site finds her copies by title and author surname; a title can have other spellings after a |, as Libib has them. Trebizon, Quest, Legacy of the Stones and Pure Dead looked up online (FantasticFiction, Goodreads, Amazon, Penguin). Twilight, A Good Girl's Guide to Murder (publication order, Kill Joy last) and Narnia (the numbered order of today's editions) added 18 Oct for books she has read but doesn't own.",
  "series": [
   {
    "name": "Harry Potter",
@@ -681,6 +681,39 @@
     "Book One of the Travelers",
     "Book Two of the Travelers",
     "Book Three of the Travelers"
+   ]
+  },
+  {
+   "name": "Twilight",
+   "author": "Meyer",
+   "books": [
+    "Twilight",
+    "New Moon",
+    "Eclipse",
+    "Breaking Dawn"
+   ]
+  },
+  {
+   "name": "A Good Girl's Guide to Murder",
+   "author": "Jackson",
+   "books": [
+    "A Good Girl's Guide to Murder",
+    "Good Girl, Bad Blood",
+    "As Good As Dead",
+    "Kill Joy"
+   ]
+  },
+  {
+   "name": "The Chronicles of Narnia",
+   "author": "Lewis",
+   "books": [
+    "The Magician's Nephew",
+    "The Lion, the Witch and the Wardrobe",
+    "The Horse and His Boy",
+    "Prince Caspian",
+    "The Voyage of the Dawn Treader",
+    "The Silver Chair",
+    "The Last Battle"
    ]
   }
  ]
