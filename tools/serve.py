@@ -65,6 +65,14 @@ def add(book):
     with open(ADDED, 'w', encoding='utf-8', newline='\n') as fh:
         json.dump(added, fh, ensure_ascii=False, indent=1)
         fh.write('\n')
+    if book.get('fromWish'):   # added from the to-buy list: it comes off the list (data/bought.json, read by the build)
+        bought_path = os.path.join(DATA, 'bought.json')
+        bought = json.load(open(bought_path, encoding='utf-8')) if os.path.exists(bought_path) else []
+        if book['fromWish'] not in [x['wish'] for x in bought]:
+            bought.append({'wish': book['fromWish'], 'book': b['id'], 'date': b['added']})
+        with open(bought_path, 'w', encoding='utf-8', newline='\n') as fh:
+            json.dump(bought, fh, ensure_ascii=False, indent=1)
+            fh.write('\n')
     if book.get('cover'):   # keep its cover like the others
         covers_path = os.path.join(DATA, 'covers.json')
         covers = json.load(open(covers_path, encoding='utf-8')) if os.path.exists(covers_path) else {}

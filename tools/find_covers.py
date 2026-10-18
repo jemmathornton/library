@@ -104,6 +104,34 @@ def main():
             time.sleep(1)
     print(f'Open Library, by title: {found_t}')
 
+    # Then Amazon's own cover pictures, by ISBN-10 (small presses Open Library doesn't have; 18 Oct). Amazon answers a
+    # missing cover with a 1-pixel picture, so only real pictures count.
+    from PIL import Image
+    import io
+    amazon_tried = covers.setdefault('_amazon', {})
+    found_a = 0
+    for name in ('books.json', 'to-buy.json', extra):
+        for b in (json.load(open(os.path.join(DATA, name), encoding='utf-8')) if isinstance(name, str) else name):
+            i = b.get('isbn13', '')
+            if not i.startswith('978') or covers.get(i) or covers.get('id-' + str(b.get('id', ''))) or (i in amazon_tried and '--retry' not in sys.argv):
+                continue
+            core = i[3:12]
+            check = (11 - sum((10 - n) * int(c) for n, c in enumerate(core)) % 11) % 11
+            i10 = core + ('X' if check == 10 else str(check))
+            url = f'https://images-na.ssl-images-amazon.com/images/P/{i10}.01.LZZZZZZZ.jpg'
+            try:
+                with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30) as r:
+                    img = Image.open(io.BytesIO(r.read()))
+                ok = img.width > 50 and img.height > 50
+            except Exception:
+                ok = False
+            amazon_tried[i] = ok
+            if ok:
+                covers[i] = {'src': url, 'from': 'Amazon'}
+                found_a += 1
+            time.sleep(1)
+    print(f'Amazon: {found_a}')
+
     with open(OUT, 'w', encoding='utf-8', newline='\n') as fh:
         json.dump(dict(sorted(covers.items())), fh, ensure_ascii=False, indent=0)
         fh.write('\n')

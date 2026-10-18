@@ -40,6 +40,8 @@ def build():
     covers = load('covers.json', {})
     # books.json is the Libib import (a re-import overwrites it); added.json holds books added on the site since
     books, wish = load('books.json') + load('added.json', []), load('to-buy.json', [])
+    bought = {x['wish'] for x in load('bought.json', [])}   # to-buy books she has since added to a shelf
+    wish = [w for w in wish if w['id'] not in bought]
     fixes = load('name-fixes.json', {'names': {}, 'remove': [], 'roles': {}, 'books': {}, 'surnames': {}})
     fix_names(books + wish, fixes)
     sg = load('storygraph.json', {'books': []})

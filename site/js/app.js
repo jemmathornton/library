@@ -406,19 +406,19 @@ function pageToRead(){
 }
 
 function pageToBuy(){
-  const got = WISH.filter(w => GOT[w.id]).length;
+  // found one? "Got it" adds it to a shelf, and it comes off this list by itself (her ask, 18 Oct)
   const list = [...WISH].sort((a, b) => a.sortAuthor.localeCompare(b.sortAuthor) || a.sortTitle.localeCompare(b.sortTitle));
-  return hero({kicker: "On the lookout", title: "To <em>buy</em>", text: "Books to look out for. Tick one off when you find it.",
-      figures: [[num(WISH.length - got), "still to find"], [num(got), "found"]]})
-    + `<div class="wish">${list.map(w => `<div class="wish-item${GOT[w.id] ? " got" : ""}">${cover(w)}<div><h3>${esc(w.t)}</h3>${w.sub ? `<div class="by">${esc(w.sub)}</div>` : ""}<div class="by">${esc(w.by)}</div>
-        ${w.maybeOwned ? `<a class="flag" href="#b-${w.maybeOwned[0]}">${ic("info")}Already on a shelf?</a>` : ""}
-        ${GOT[w.id] ? `<a class="flag add" href="#add" data-add-from="${w.id}">${ic("plus")}Add it to a shelf</a>` : ""}</div>
-        <button type="button" class="tick${GOT[w.id] ? " on" : ""}" data-got="${w.id}" aria-label="Found it" aria-pressed="${!!GOT[w.id]}">${ic("check")}</button></div>`).join("")}</div>`;
+  return hero({kicker: "On the lookout", title: "To <em>buy</em>", text: "Books to look out for. When you find one, press Got it to put it on a shelf; it comes off this list.",
+      figures: [[num(WISH.length), "still to find"]]})
+    + `<div class="wish">${list.map(w => `<div class="wish-item">${cover(w)}<div><h3>${esc(w.t)}</h3>${w.sub ? `<div class="by">${esc(w.sub)}</div>` : ""}<div class="by">${esc(w.by)}</div>
+        ${w.maybeOwned ? `<a class="flag" href="#b-${w.maybeOwned[0]}">${ic("info")}Already on a shelf?</a>` : ""}</div>
+        <a class="btn got-it" href="#add" data-add-from="${w.id}">${ic("check")}Got it</a></div>`).join("")}</div>`;
 }
 
 // ---------- add a book ----------
 // Typed or scanned ISBN -> details from Open Library (through the little server, tools/serve.py) -> a shelf -> saved in
 // data/added.json and the site rebuilt. Only works in her app window (served from the server), not from the folder.
+let addFromWish = false;   // the Add page opened from "Got it" keeps its to-buy book; opened any other way it starts empty
 let addForm = {isbn: "", title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", note: "", busy: false};
 const api = (path, opts = {}) => fetch(path, {...opts, headers: {"X-Library": "1", "Content-Type": "application/json", ...(opts.headers || {})}}).then(r => r.json());
 function pageAdd(){
@@ -442,7 +442,8 @@ const readAdd = () => ["isbn", "title", "authors", "publisher", "published", "pa
 const redrawAdd = () => { const y = scrollY; document.getElementById("view").innerHTML = pageAdd(); scrollTo(0, y); };
 document.addEventListener("click", async e => {
   const from = e.target.closest("[data-add-from]");
-  if (from) { const w = WISH.find(x => x.id === from.dataset.addFrom); addForm = {isbn: w.isbn13 || "", title: w.title, authors: w.by === "Unknown author" ? "" : w.by.replace(/ & /g, ", "), publisher: "", published: "", pages: "", cover: "", shelf: "", note: "", busy: false}; return; }
+  if (from) { const w = WISH.find(x => x.id === from.dataset.addFrom); addFromWish = true; addForm = {isbn: w.isbn13 || "", title: w.title, authors: w.by === "Unknown author" ? "" : w.by.replace(/ & /g, ", "), publisher: "", published: "", pages: "", cover: "", shelf: "", busy: false, fromWish: w.id,
+    note: "From your to-buy list: type the ISBN of the copy you got and look it up, or just pick a shelf. It comes off the list when you add it."}; return; }
   if (e.target.closest("#addLookup")) {
     readAdd(); if (!addForm.isbn) { addForm.note = "Type the ISBN first."; return redrawAdd(); }
     addForm.note = "Looking it up…"; redrawAdd();
@@ -465,6 +466,37 @@ document.addEventListener("click", async e => {
 });
 document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.id === "add-isbn") document.getElementById("addLookup")?.click(); });
 
+// her reading in numbers, from StoryGraph (her ask, 18 Oct): every book she has read, on the shelves or not
+function readingStats(bars, readYears){
+  const done = readingLog().filter(isRead), rated = done.filter(b => reading(b).rating);
+  const avg = rated.length ? rated.reduce((n, b) => n + reading(b).rating, 0) / rated.length : 0;
+  const thisYear = String(new Date().getFullYear()), inYear = done.filter(b => year(reading(b).finished) === thisYear);
+  const pagesRead = done.reduce((n, b) => n + (b.pages || 0), 0);
+  const months = MON.map((m, i) => ({label: m, n: inYear.filter(b => +(reading(b).finished || "").slice(5, 7) === i + 1).length}));
+  const mmax = Math.max(1, ...months.map(m => m.n));
+  const byAuthor = {};
+  rated.forEach(b => { const a = (b.authors || []).find(x => !x.role) || (b.authors || [])[0]; if (!a) return; (byAuthor[a.name] ||= []).push(reading(b).rating); });
+  const bestAuthors = Object.entries(byAuthor).filter(([, rs]) => rs.length >= 2)
+    .map(([name, rs]) => ({label: name, n: rs.reduce((x, y) => x + y, 0) / rs.length, href: authorIndex[slug(name)] ? "#a-" + slug(name) : "", count: rs.length}))
+    .sort((a, b) => b.n - a.n || b.count - a.count).slice(0, 10).map(r => ({...r, text: `${starsText(Math.round(r.n * 100) / 100)} ★ · ${r.count} books`}));
+  const moods = {}, paces = {};
+  done.forEach(b => { const r = reading(b); (r.moods || "").split(/,\s*/).filter(Boolean).forEach(m => moods[m] = (moods[m] || 0) + 1); if (r.pace) paces[r.pace] = (paces[r.pace] || 0) + 1; });
+  const moodRows = Object.entries(moods).map(([label, n]) => ({label: label[0].toUpperCase() + label.slice(1), n})).sort((a, b) => b.n - a.n).slice(0, 10);
+  const starRows = [5, 4.5, 4, 3.5, 3, 2.5, 2, 1.5, 1, 0.5].map(s => ({label: "★".repeat(Math.floor(s)) + (s % 1 ? "½" : ""), n: rated.filter(b => Math.round(reading(b).rating * 2) / 2 === s).length})).filter(r => r.n);
+  return sectionHead("Your <em>reading</em>", `<span class="more">From StoryGraph, shelves or not</span>`)
+    + `<div class="ledger"><div class="ledger-grid">
+        <div class="meter"><b>${num(done.length)}</b><span>books read</span></div>
+        <div class="meter"><b>${num(inYear.length)}</b><span>finished in ${thisYear}</span></div>
+        <div class="meter"><b>${avg ? starsText(Math.round(avg * 100) / 100) : "–"}</b><span>stars on average (${plural(rated.length, "book")} rated)</span></div>
+        <div class="meter"><b>${num(pagesRead)}</b><span>pages read (books on the shelves)</span></div>
+      </div></div>`
+    + sectionHead(`${thisYear}, <em>month by month</em>`) + `<div class="decades">${months.map(m => `<div><b>${m.n || ""}</b><i style="height:${(m.n / mmax * 100).toFixed(1)}%"></i><span>${m.label}</span></div>`).join("")}</div>`
+    + (readYears.length ? sectionHead("Books read <em>each year</em>") + bars(readYears, Math.max(...readYears.map(r => r.n))) : "")
+    + (bestAuthors.length ? sectionHead("Your highest-rated <em>authors</em>", `<span class="more">Two or more books rated</span>`) + bars(bestAuthors, 5) : "")
+    + (starRows.length ? sectionHead("How you <em>rate</em>") + bars(starRows, Math.max(...starRows.map(r => r.n))) : "")
+    + (moodRows.length ? sectionHead("Moods you read <em>most</em>") + bars(moodRows, moodRows[0].n) : "")
+    + (Object.keys(paces).length ? sectionHead("Pace") + bars(Object.entries(paces).map(([label, n]) => ({label: label[0].toUpperCase() + label.slice(1), n})).sort((a, b) => b.n - a.n), Math.max(...Object.values(paces))) : "");
+}
 function pageStats(){
   const pages = BOOKS.reduce((n, b) => n + (b.pages || 0), 0), withPages = BOOKS.filter(b => b.pages);
   const bars = (rows, max) => `<div class="bars">${rows.map(r => `<${r.href ? `a href="${r.href}"` : "div"} class="bar-row" style="--c:${r.color || "var(--deep-2)"}"><b>${esc(r.label)}</b><div class="track"><i style="width:${(r.n / max * 100).toFixed(1)}%"></i></div><span>${r.text || num(r.n)}</span></${r.href ? "a" : "div"}>`).join("")}</div>`;
@@ -486,7 +518,7 @@ function pageStats(){
         <div class="meter"><b>${Math.round(readN / BOOKS.length * 100)}%</b><span>read (${plural(readN, "book")})</span></div>
       </div></div>`
     + sectionHead("By <em>shelf</em>") + bars(shelves, shelves[0].n)
-    + (readYears.length ? sectionHead("Books read <em>each year</em>", `<span class="more">From StoryGraph, shelves or not</span>`) + bars(readYears, Math.max(...readYears.map(r => r.n))) : "")
+    + readingStats(bars, readYears)
     + sectionHead("Most <em>books</em> by", `<span class="more">Written, not illustrated or translated</span>`) + bars(top, top[0].n)
     + sectionHead("When they were <em>published</em>") + `<div class="decades">${decs.map(d => `<div><b>${dec[d]}</b><i style="height:${(dec[d] / dmax * 100).toFixed(1)}%"></i><span>${d}s</span></div>`).join("")}</div>`
     + sectionHead("Top <em>publishers</em>") + bars(topPubs, topPubs[0].n);
@@ -515,6 +547,8 @@ document.getElementById("nav").addEventListener("click", () => { if (q.value) q.
 function route(){
   const key = location.hash.slice(1) || "home", view = document.getElementById("view");
   let html, active = "#" + key, title = "Jemma’s Library";
+  if (key === "add" && !addFromWish && addForm.fromWish) addForm = {isbn: "", title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", note: "", busy: false};
+  addFromWish = false;
   if (key.startsWith("shelf-") && shelfIndex[key.slice(6)]) { shelfView = {...SHELF_VIEW}; const s = shelfIndex[key.slice(6)]; html = pageShelf(s); title = s.name; }
   else if (key === "shelves") { shelfView = {...SHELF_VIEW}; html = pageAllShelves(); title = "All shelves"; }
   else if (key.startsWith("b-") && bookIndex[key.slice(2)]) { const b = bookIndex[key.slice(2)]; html = pageBook(b); active = "#shelf-" + b.shelf; title = b.t; }
