@@ -29,3 +29,4 @@ A private website of the books in Jemma’s home library: every book she owns, s
 - Python 3.13: `C:/Users/Jemma/AppData/Local/Programs/Python/Python313/python.exe`, run with `-X utf8`. Ask before installing anything.
 - Check with the `library` preview (`.claude/launch.json`, port 8011) at 1280px; her app reads the same files through port 8020, so a rebuild shows there at once. Opening `site/index.html` straight from the folder still works too.
 - Git repo: commit after each piece of work (`data.js` included).
+- **Weekly backup:** the Windows task "Jemma’s Library - weekly backup" (Sundays 09:30, `tools/make_backup_task.ps1`) runs `tools/backup.py`: commits any changes, then zips the project to Documents\Library backups (keeps 8). Log in `logs/backup.log`.
