@@ -35,7 +35,7 @@
 
 - **Reading comes from StoryGraph** (`tools/import_storygraph.py`, export from 18 Oct). Export again and import to bring in new reading. 178 of 345 StoryGraph books are on her shelves; the rest (library books, ebooks, audiobooks) show only in the Reading log and search, never on the shelves (her rule, 18 Oct).
 - **To-buy ticks and marks for books not on StoryGraph are saved in the browser only.** “Save a backup” is on the Reading page. They need proper saving before the site goes online.
-- **Covers:** 459 of 638 books have one, from Open Library. Google Books refused today (too many requests): run `tools/find_covers.py` again another day for the 109 still untried. About 70 books have no ISBN, so no cover can be looked up for them.
+- **Covers:** 459 of 638 shelf books and 102 of the 167 StoryGraph books not on her shelves have one, from Open Library. Google Books refused on 18 Oct (too many requests): run `tools/find_covers.py` then `copy_covers.py` again another day for the 148 still untried. About 70 books have no ISBN, so no cover can be looked up for them.
 - Covers are copied into `site/covers/` (`tools/copy_covers.py`, after `find_covers.py`), so they show at once and work offline.
 - **Taskbar icon is blurry** (same as the Sims site). Chrome builds the taskbar icon of a page window from the tab icon, which it keeps at 32px on her 200% screen, then stretches it. The fix is to install the site as a proper Chrome app from a small local server (crisp icon, own taskbar group). Parked, her choice (18 Oct).
 - Phone layout not done yet (laptop first).

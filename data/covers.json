@@ -63,6 +63,18 @@
 "src": "https://covers.openlibrary.org/b/id/11400-L.jpg",
 "from": "Open Library"
 },
+"9780007202300": {
+"src": "https://covers.openlibrary.org/b/id/13274-L.jpg",
+"from": "Open Library"
+},
+"9780007202324": {
+"src": "https://covers.openlibrary.org/b/id/13278-L.jpg",
+"from": "Open Library"
+},
+"9780007208456": {
+"src": "https://covers.openlibrary.org/b/id/11171284-L.jpg",
+"from": "Open Library"
+},
 "9780007221134": {
 "src": "https://covers.openlibrary.org/b/id/8282263-L.jpg",
 "from": "Open Library"
@@ -115,6 +127,14 @@
 "src": "https://covers.openlibrary.org/b/id/13123154-L.jpg",
 "from": "Open Library"
 },
+"9780008216672": {
+"src": "https://covers.openlibrary.org/b/id/14523196-L.jpg",
+"from": "Open Library (another edition)"
+},
+"9780008239398": {
+"src": "https://covers.openlibrary.org/b/id/8536739-L.jpg",
+"from": "Open Library (another edition)"
+},
 "9780008244125": {
 "src": "https://covers.openlibrary.org/b/id/10484915-L.jpg",
 "from": "Open Library"
@@ -127,6 +147,10 @@
 "src": "https://covers.openlibrary.org/b/id/11541298-L.jpg",
 "from": "Open Library (another edition)"
 },
+"9780008501860": {
+"src": "https://covers.openlibrary.org/b/id/15117021-L.jpg",
+"from": "Open Library"
+},
 "9780008511685": {
 "src": "https://covers.openlibrary.org/b/id/15201307-L.jpg",
 "from": "Open Library"
@@ -135,16 +159,36 @@
 "src": "https://covers.openlibrary.org/b/id/13617295-L.jpg",
 "from": "Open Library (another edition)"
 },
+"9780008604219": {
+"src": "https://covers.openlibrary.org/b/id/14651259-L.jpg",
+"from": "Open Library (another edition)"
+},
 "9780008612870": {
 "src": "https://covers.openlibrary.org/b/id/14714066-L.jpg",
+"from": "Open Library"
+},
+"9780060082093": {
+"src": "https://covers.openlibrary.org/b/id/21071-L.jpg",
 "from": "Open Library"
 },
 "9780060278250": {
 "src": "https://covers.openlibrary.org/b/id/24531-L.jpg",
 "from": "Open Library"
 },
+"9780060290115": {
+"src": "https://covers.openlibrary.org/b/id/3699270-L.jpg",
+"from": "Open Library"
+},
 "9780060541439": {
 "src": "https://covers.openlibrary.org/b/id/12786371-L.jpg",
+"from": "Open Library"
+},
+"9780060764906": {
+"src": "https://covers.openlibrary.org/b/id/9184522-L.jpg",
+"from": "Open Library"
+},
+"9780061125270": {
+"src": "https://covers.openlibrary.org/b/id/45902-L.jpg",
 "from": "Open Library"
 },
 "9780061240485": {
@@ -153,6 +197,34 @@
 },
 "9780061976810": {
 "src": "https://covers.openlibrary.org/b/id/14639249-L.jpg",
+"from": "Open Library"
+},
+"9780062338051": {
+"src": "https://covers.openlibrary.org/b/id/12786407-L.jpg",
+"from": "Open Library"
+},
+"9780062963505": {
+"src": "https://covers.openlibrary.org/b/id/13236044-L.jpg",
+"from": "Open Library"
+},
+"9780063036857": {
+"src": "https://covers.openlibrary.org/b/id/10833047-L.jpg",
+"from": "Open Library"
+},
+"9780063337879": {
+"src": "https://covers.openlibrary.org/b/id/15234428-L.jpg",
+"from": "Open Library (another edition)"
+},
+"9780063373273": {
+"src": "https://covers.openlibrary.org/b/id/14853057-L.jpg",
+"from": "Open Library (another edition)"
+},
+"9780064410939": {
+"src": "https://covers.openlibrary.org/b/id/11182657-L.jpg",
+"from": "Open Library"
+},
+"9780066238500": {
+"src": "https://covers.openlibrary.org/b/id/9185109-L.jpg",
 "from": "Open Library"
 },
 "9780091886578": {
@@ -189,6 +261,14 @@
 },
 "9780099590088": {
 "src": "https://covers.openlibrary.org/b/id/15249126-L.jpg",
+"from": "Open Library"
+},
+"9780099759911": {
+"src": "https://covers.openlibrary.org/b/id/15152696-L.jpg",
+"from": "Open Library (another edition)"
+},
+"9780140167771": {
+"src": "https://covers.openlibrary.org/b/id/6623129-L.jpg",
 "from": "Open Library"
 },
 "9780140364545": {
@@ -245,6 +325,14 @@
 },
 "9780143016632": {
 "src": "https://covers.openlibrary.org/b/id/110942-L.jpg",
+"from": "Open Library"
+},
+"9780241293867": {
+"src": "https://covers.openlibrary.org/b/id/10095953-L.jpg",
+"from": "Open Library"
+},
+"9780241338094": {
+"src": "https://covers.openlibrary.org/b/id/8834919-L.jpg",
 "from": "Open Library"
 },
 "9780241388440": {
@@ -331,6 +419,14 @@
 "src": "https://covers.openlibrary.org/b/id/10522212-L.jpg",
 "from": "Open Library"
 },
+"9780316015844": {
+"src": "https://covers.openlibrary.org/b/id/12642040-L.jpg",
+"from": "Open Library"
+},
+"9780316067928": {
+"src": "https://covers.openlibrary.org/b/id/12643375-L.jpg",
+"from": "Open Library"
+},
 "9780316068048": {
 "src": "https://covers.openlibrary.org/b/id/13248202-L.jpg",
 "from": "Open Library"
@@ -338,6 +434,18 @@
 "9780316089258": {
 "src": "https://covers.openlibrary.org/b/id/7395309-L.jpg",
 "from": "Open Library (another edition)"
+},
+"9780316160209": {
+"src": "https://covers.openlibrary.org/b/id/15174663-L.jpg",
+"from": "Open Library"
+},
+"9780316290791": {
+"src": "https://covers.openlibrary.org/b/id/14552624-L.jpg",
+"from": "Open Library"
+},
+"9780316312486": {
+"src": "https://covers.openlibrary.org/b/id/12431959-L.jpg",
+"from": "Open Library"
 },
 "9780330446297": {
 "src": "https://covers.openlibrary.org/b/id/14596605-L.jpg",
@@ -487,9 +595,21 @@
 "src": "https://covers.openlibrary.org/b/id/7828673-L.jpg",
 "from": "Open Library"
 },
+"9780345418265": {
+"src": "https://covers.openlibrary.org/b/id/11173424-L.jpg",
+"from": "Open Library"
+},
+"9780345459855": {
+"src": "https://covers.openlibrary.org/b/id/210916-L.jpg",
+"from": "Open Library"
+},
 "9780349139555": {
 "src": "https://covers.openlibrary.org/b/id/213299-L.jpg",
 "from": "Open Library (another edition)"
+},
+"9780356504889": {
+"src": "https://covers.openlibrary.org/b/id/9158524-L.jpg",
+"from": "Open Library"
 },
 "9780356507774": {
 "src": "https://covers.openlibrary.org/b/id/15156412-L.jpg",
@@ -502,6 +622,22 @@
 "9780356507859": {
 "src": "https://covers.openlibrary.org/b/id/9248546-L.jpg",
 "from": "Open Library (another edition)"
+},
+"9780356515649": {
+"src": "https://covers.openlibrary.org/b/id/11639065-L.jpg",
+"from": "Open Library"
+},
+"9780358197058": {
+"src": "https://covers.openlibrary.org/b/id/10716044-L.jpg",
+"from": "Open Library"
+},
+"9780358310365": {
+"src": "https://covers.openlibrary.org/b/id/10433791-L.jpg",
+"from": "Open Library (another edition)"
+},
+"9780358616382": {
+"src": "https://covers.openlibrary.org/b/id/14574560-L.jpg",
+"from": "Open Library"
 },
 "9780375814129": {
 "src": "https://covers.openlibrary.org/b/id/233811-L.jpg",
@@ -530,6 +666,10 @@
 "9780375892776": {
 "src": "https://covers.openlibrary.org/b/id/6769509-L.jpg",
 "from": "Open Library (another edition)"
+},
+"9780385534635": {
+"src": "https://covers.openlibrary.org/b/id/8750523-L.jpg",
+"from": "Open Library"
 },
 "9780385601832": {
 "src": "https://covers.openlibrary.org/b/id/6506958-L.jpg",
@@ -595,8 +735,24 @@
 "src": "https://covers.openlibrary.org/b/id/6791224-L.jpg",
 "from": "Open Library"
 },
+"9780435233075": {
+"src": "https://covers.openlibrary.org/b/id/274953-L.jpg",
+"from": "Open Library"
+},
 "9780439165860": {
 "src": "https://covers.openlibrary.org/b/id/276218-L.jpg",
+"from": "Open Library"
+},
+"9780439321600": {
+"src": "https://covers.openlibrary.org/b/id/9326659-L.jpg",
+"from": "Open Library"
+},
+"9780439680097": {
+"src": "https://covers.openlibrary.org/b/id/278952-L.jpg",
+"from": "Open Library"
+},
+"9780439861366": {
+"src": "https://covers.openlibrary.org/b/id/9184783-L.jpg",
 "from": "Open Library"
 },
 "9780439963930": {
@@ -611,8 +767,24 @@
 "src": "https://covers.openlibrary.org/b/id/12907378-L.jpg",
 "from": "Open Library"
 },
+"9780440238607": {
+"src": "https://covers.openlibrary.org/b/id/281626-L.jpg",
+"from": "Open Library"
+},
+"9780440863687": {
+"src": "https://covers.openlibrary.org/b/id/6791290-L.jpg",
+"from": "Open Library"
+},
 "9780440868262": {
 "src": "https://covers.openlibrary.org/b/id/7542400-L.jpg",
+"from": "Open Library"
+},
+"9780446678452": {
+"src": "https://covers.openlibrary.org/b/id/288251-L.jpg",
+"from": "Open Library"
+},
+"9780449300022": {
+"src": "https://covers.openlibrary.org/b/id/12722988-L.jpg",
 "from": "Open Library"
 },
 "9780450011849": {
@@ -627,8 +799,24 @@
 "src": "https://covers.openlibrary.org/b/id/6451459-L.jpg",
 "from": "Open Library"
 },
+"9780525538882": {
+"src": "https://covers.openlibrary.org/b/id/9280646-L.jpg",
+"from": "Open Library"
+},
+"9780525555254": {
+"src": "https://covers.openlibrary.org/b/id/15254093-L.jpg",
+"from": "Open Library"
+},
+"9780545044257": {
+"src": "https://covers.openlibrary.org/b/id/1278800-L.jpg",
+"from": "Open Library"
+},
 "9780545096324": {
 "src": "https://covers.openlibrary.org/b/id/12786391-L.jpg",
+"from": "Open Library"
+},
+"9780545142991": {
+"src": "https://covers.openlibrary.org/b/id/7089622-L.jpg",
 "from": "Open Library"
 },
 "9780552124751": {
@@ -879,6 +1067,58 @@
 "src": "https://covers.openlibrary.org/b/id/14536053-L.jpg",
 "from": "Open Library"
 },
+"9780593358337": {
+"src": "https://covers.openlibrary.org/b/id/11518965-L.jpg",
+"from": "Open Library"
+},
+"9780593418918": {
+"src": "https://covers.openlibrary.org/b/id/15123629-L.jpg",
+"from": "Open Library"
+},
+"9780593441299": {
+"src": "https://covers.openlibrary.org/b/id/14861424-L.jpg",
+"from": "Open Library"
+},
+"9780593498958": {
+"src": "https://covers.openlibrary.org/b/id/13128853-L.jpg",
+"from": "Open Library"
+},
+"9780593535363": {
+"src": "https://covers.openlibrary.org/b/id/13208816-L.jpg",
+"from": "Open Library"
+},
+"9780593537619": {
+"src": "https://covers.openlibrary.org/b/id/14562207-L.jpg",
+"from": "Open Library"
+},
+"9780593599839": {
+"src": "https://covers.openlibrary.org/b/id/14599789-L.jpg",
+"from": "Open Library (another edition)"
+},
+"9780593717714": {
+"src": "https://covers.openlibrary.org/b/id/14603758-L.jpg",
+"from": "Open Library"
+},
+"9780593723739": {
+"src": "https://covers.openlibrary.org/b/id/15166161-L.jpg",
+"from": "Open Library"
+},
+"9780593723760": {
+"src": "https://covers.openlibrary.org/b/id/14579522-L.jpg",
+"from": "Open Library"
+},
+"9780593724996": {
+"src": "https://covers.openlibrary.org/b/id/14840090-L.jpg",
+"from": "Open Library"
+},
+"9780593732045": {
+"src": "https://covers.openlibrary.org/b/id/14840893-L.jpg",
+"from": "Open Library"
+},
+"9780593815946": {
+"src": "https://covers.openlibrary.org/b/id/15260519-L.jpg",
+"from": "Open Library"
+},
 "9780595396047": {
 "src": "https://covers.openlibrary.org/b/id/1305167-L.jpg",
 "from": "Open Library"
@@ -897,6 +1137,14 @@
 },
 "9780670913527": {
 "src": "https://covers.openlibrary.org/b/id/12636337-L.jpg",
+"from": "Open Library"
+},
+"9780670919987": {
+"src": "https://covers.openlibrary.org/b/id/7892681-L.jpg",
+"from": "Open Library"
+},
+"9780679879244": {
+"src": "https://covers.openlibrary.org/b/id/12612402-L.jpg",
 "from": "Open Library"
 },
 "9780689861109": {
@@ -1023,6 +1271,14 @@
 "src": "https://covers.openlibrary.org/b/id/492044-L.jpg",
 "from": "Open Library"
 },
+"9780759557338": {
+"src": "https://covers.openlibrary.org/b/id/12733417-L.jpg",
+"from": "Open Library"
+},
+"9780765377067": {
+"src": "https://covers.openlibrary.org/b/id/10861303-L.jpg",
+"from": "Open Library"
+},
 "9780778301929": {
 "src": "https://covers.openlibrary.org/b/id/8598565-L.jpg",
 "from": "Open Library"
@@ -1063,8 +1319,24 @@
 "src": "https://covers.openlibrary.org/b/id/9329193-L.jpg",
 "from": "Open Library"
 },
+"9780804172707": {
+"src": "https://covers.openlibrary.org/b/id/8144904-L.jpg",
+"from": "Open Library"
+},
+"9780857308412": {
+"src": "https://covers.openlibrary.org/b/id/15147661-L.jpg",
+"from": "Open Library"
+},
+"9780857529350": {
+"src": "https://covers.openlibrary.org/b/id/15207445-L.jpg",
+"from": "Open Library (another edition)"
+},
 "9780857868787": {
 "src": "https://covers.openlibrary.org/b/id/10310735-L.jpg",
+"from": "Open Library"
+},
+"9780895941220": {
+"src": "https://covers.openlibrary.org/b/id/7102067-L.jpg",
 "from": "Open Library"
 },
 "9780952057109": {
@@ -1082,6 +1354,10 @@
 "9780956010902": {
 "src": "https://covers.openlibrary.org/b/id/10213838-L.jpg",
 "from": "Open Library"
+},
+"9781035036615": {
+"src": "https://covers.openlibrary.org/b/id/11137872-L.jpg",
+"from": "Open Library (another edition)"
 },
 "9781035045105": {
 "src": "https://covers.openlibrary.org/b/id/14801187-L.jpg",
@@ -1113,6 +1389,10 @@
 },
 "9781250153715": {
 "src": "https://covers.openlibrary.org/b/id/8771639-L.jpg",
+"from": "Open Library"
+},
+"9781250178633": {
+"src": "https://covers.openlibrary.org/b/id/14550040-L.jpg",
 "from": "Open Library"
 },
 "9781250186928": {
@@ -1155,6 +1435,10 @@
 "src": "https://covers.openlibrary.org/b/id/13335836-L.jpg",
 "from": "Open Library"
 },
+"9781250827951": {
+"src": "https://covers.openlibrary.org/b/id/15095727-L.jpg",
+"from": "Open Library"
+},
 "9781250881205": {
 "src": "https://covers.openlibrary.org/b/id/14814969-L.jpg",
 "from": "Open Library"
@@ -1167,8 +1451,16 @@
 "src": "https://covers.openlibrary.org/b/id/13814080-L.jpg",
 "from": "Open Library"
 },
+"9781399726344": {
+"src": "https://covers.openlibrary.org/b/id/15154833-L.jpg",
+"from": "Open Library"
+},
 "9781400049622": {
 "src": "https://covers.openlibrary.org/b/id/6307937-L.jpg",
+"from": "Open Library"
+},
+"9781405244756": {
+"src": "https://covers.openlibrary.org/b/id/14571329-L.jpg",
 "from": "Open Library"
 },
 "9781405270250": {
@@ -1335,6 +1627,10 @@
 "src": "https://covers.openlibrary.org/b/id/14591688-L.jpg",
 "from": "Open Library (another edition)"
 },
+"9781444929935": {
+"src": "https://covers.openlibrary.org/b/id/13094805-L.jpg",
+"from": "Open Library"
+},
 "9781444930078": {
 "src": "https://covers.openlibrary.org/b/id/14595356-L.jpg",
 "from": "Open Library"
@@ -1439,6 +1735,10 @@
 "src": "https://covers.openlibrary.org/b/id/10618421-L.jpg",
 "from": "Open Library"
 },
+"9781473224186": {
+"src": "https://covers.openlibrary.org/b/id/8566363-L.jpg",
+"from": "Open Library"
+},
 "9781473608993": {
 "src": "https://covers.openlibrary.org/b/id/12380724-L.jpg",
 "from": "Open Library"
@@ -1446,6 +1746,22 @@
 "9781473687370": {
 "src": "https://covers.openlibrary.org/b/id/10328489-L.jpg",
 "from": "Open Library (another edition)"
+},
+"9781473687417": {
+"src": "https://covers.openlibrary.org/b/id/10706216-L.jpg",
+"from": "Open Library"
+},
+"9781476759906": {
+"src": "https://covers.openlibrary.org/b/id/12485744-L.jpg",
+"from": "Open Library"
+},
+"9781500453305": {
+"src": "https://covers.openlibrary.org/b/id/7992545-L.jpg",
+"from": "Open Library"
+},
+"9781501161933": {
+"src": "https://covers.openlibrary.org/b/id/15255141-L.jpg",
+"from": "Open Library"
 },
 "9781509896882": {
 "src": "https://covers.openlibrary.org/b/id/10151130-L.jpg",
@@ -1467,6 +1783,10 @@
 "src": "https://covers.openlibrary.org/b/id/12563846-L.jpg",
 "from": "Open Library"
 },
+"9781529111798": {
+"src": "https://covers.openlibrary.org/b/id/13899782-L.jpg",
+"from": "Open Library"
+},
 "9781529115543": {
 "src": "https://covers.openlibrary.org/b/id/15154388-L.jpg",
 "from": "Open Library"
@@ -1479,8 +1799,28 @@
 "src": "https://covers.openlibrary.org/b/id/14433087-L.jpg",
 "from": "Open Library"
 },
+"9781529339888": {
+"src": "https://covers.openlibrary.org/b/id/15220031-L.jpg",
+"from": "Open Library"
+},
 "9781529344790": {
 "src": "https://covers.openlibrary.org/b/id/13785578-L.jpg",
+"from": "Open Library"
+},
+"9781534441606": {
+"src": "https://covers.openlibrary.org/b/id/10323535-L.jpg",
+"from": "Open Library"
+},
+"9781538753712": {
+"src": "https://covers.openlibrary.org/b/id/10839617-L.jpg",
+"from": "Open Library"
+},
+"9781538769256": {
+"src": "https://covers.openlibrary.org/b/id/14842920-L.jpg",
+"from": "Open Library"
+},
+"9781579126254": {
+"src": "https://covers.openlibrary.org/b/id/836717-L.jpg",
 "from": "Open Library"
 },
 "9781595141323": {
@@ -1505,6 +1845,30 @@
 },
 "9781609452865": {
 "src": "https://covers.openlibrary.org/b/id/11528240-L.jpg",
+"from": "Open Library"
+},
+"9781635570298": {
+"src": "https://covers.openlibrary.org/b/id/10093837-L.jpg",
+"from": "Open Library"
+},
+"9781635575637": {
+"src": "https://covers.openlibrary.org/b/id/10226290-L.jpg",
+"from": "Open Library (another edition)"
+},
+"9781644453162": {
+"src": "https://covers.openlibrary.org/b/id/14839787-L.jpg",
+"from": "Open Library"
+},
+"9781645241720": {
+"src": "https://covers.openlibrary.org/b/id/15141331-L.jpg",
+"from": "Open Library"
+},
+"9781649375803": {
+"src": "https://covers.openlibrary.org/b/id/15115360-L.jpg",
+"from": "Open Library"
+},
+"9781668036587": {
+"src": "https://covers.openlibrary.org/b/id/14815321-L.jpg",
 "from": "Open Library"
 },
 "9781680680584": {
@@ -1539,12 +1903,20 @@
 "src": "https://covers.openlibrary.org/b/id/12784013-L.jpg",
 "from": "Open Library"
 },
+"9781782275008": {
+"src": "https://covers.openlibrary.org/b/id/10307314-L.jpg",
+"from": "Open Library"
+},
 "9781783295401": {
 "src": "https://covers.openlibrary.org/b/id/8790707-L.jpg",
 "from": "Open Library"
 },
 "9781783295425": {
 "src": "https://covers.openlibrary.org/b/id/8600497-L.jpg",
+"from": "Open Library"
+},
+"9781783785698": {
+"src": "https://covers.openlibrary.org/b/id/12416434-L.jpg",
 "from": "Open Library"
 },
 "9781785031052": {
@@ -1561,6 +1933,14 @@
 },
 "9781785652448": {
 "src": "https://covers.openlibrary.org/b/id/8539932-L.jpg",
+"from": "Open Library"
+},
+"9781785652509": {
+"src": "https://covers.openlibrary.org/b/id/10719299-L.jpg",
+"from": "Open Library"
+},
+"9781786062918": {
+"src": "https://covers.openlibrary.org/b/id/12817682-L.jpg",
 "from": "Open Library"
 },
 "9781786583239": {
@@ -1605,6 +1985,10 @@
 },
 "9781804994139": {
 "src": "https://covers.openlibrary.org/b/id/15131199-L.jpg",
+"from": "Open Library"
+},
+"9781805220589": {
+"src": "https://covers.openlibrary.org/b/id/14845364-L.jpg",
 "from": "Open Library"
 },
 "9781837581719": {
@@ -1661,6 +2045,10 @@
 },
 "9781844280957": {
 "src": "https://covers.openlibrary.org/b/id/894932-L.jpg",
+"from": "Open Library"
+},
+"9781846276835": {
+"src": "https://covers.openlibrary.org/b/id/9202388-L.jpg",
 "from": "Open Library"
 },
 "9781847384218": {
@@ -1823,8 +2211,24 @@
 "src": "https://covers.openlibrary.org/b/id/15118894-L.jpg",
 "from": "Open Library"
 },
+"9781967967063": {
+"src": "https://covers.openlibrary.org/b/id/15252285-L.jpg",
+"from": "Open Library"
+},
+"9781982141172": {
+"src": "https://covers.openlibrary.org/b/id/14572431-L.jpg",
+"from": "Open Library"
+},
+"9781982141233": {
+"src": "https://covers.openlibrary.org/b/id/15150165-L.jpg",
+"from": "Open Library"
+},
 "9781982185824": {
 "src": "https://covers.openlibrary.org/b/id/14611415-L.jpg",
+"from": "Open Library"
+},
+"9781984820709": {
+"src": "https://covers.openlibrary.org/b/id/14578473-L.jpg",
 "from": "Open Library"
 },
 "9783540859857": {
@@ -1834,5 +2238,9 @@
 "9798217168422": {
 "src": "https://covers.openlibrary.org/b/id/14853332-L.jpg",
 "from": "Open Library (another edition)"
+},
+"9798985663211": {
+"src": "https://covers.openlibrary.org/b/id/15138960-L.jpg",
+"from": "Open Library"
 }
 }
