@@ -416,3 +416,9 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 /* G line under the title */
 .opt-g .no .own-note{display:flex;align-items:center;gap:6px;margin-top:-4px;font:800 10.5px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:#A87A2E}
 .opt-g .no .own-note .i{width:14px;height:14px}
+/* I, J: H's band with B's fade (J adds B's outline) */
+.opt-i .no .cover img,.opt-j .no .cover img{opacity:.4;filter:grayscale(.6)}
+.opt-i .no .cover.blank,.opt-j .no .cover.blank{opacity:.5}
+.opt-j .no .cover{outline:2px dashed #B8893A;outline-offset:4px;box-shadow:none}
+.opt-i .no .cover .not-owned,.opt-j .no .cover .not-owned{display:block;left:0;right:0;top:auto;bottom:22%;border-radius:0;padding:9px 0;text-align:center;font-size:11px;letter-spacing:.24em;
+  background:rgba(42,28,16,.92);border-top:1px solid #C9A25A;border-bottom:1px solid #C9A25A;box-shadow:0 2px 8px rgba(0,0,0,.35)}

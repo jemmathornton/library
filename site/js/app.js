@@ -302,7 +302,9 @@ function pageTagTrial(){
   const pick = f => NOT_OWNED.filter(f)[0];
   const no = [pick(e => e.cover && reading(e).rating >= 4), pick(e => e.cover && isReading(e)), pick(e => e.cover && !reading(e).rating && isRead(e)), pick(e => !e.cover)].filter(Boolean);
   const own = BOOKS.filter(b => b.cover && isRead(b) && reading(b).rating).slice(3, 5);
-  const OPTS = [["a", "Faded", "Covers of books you don’t own are greyed and faded; yours stay bright."],
+  const OPTS = [["i", "H with B’s fade", "The band from H, with the lighter fade from B."],
+    ["j", "H with B’s fade and outline", "As I, plus B’s dashed outline."],
+    ["a", "Faded", "Covers of books you don’t own are greyed and faded; yours stay bright."],
     ["b", "Ghost outline", "Faded cover inside a dashed outline, like a space on the shelf."],
     ["c", "Band across the cover", "A walnut band across the lower part of the cover."],
     ["d", "Second sash", "A brass sash across the opposite corner to Read."],
