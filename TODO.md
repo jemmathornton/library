@@ -2,7 +2,7 @@
 
 ## For Jemma to decide
 
-1. **12 books that never moved to a genre.** They were only in Jemma’s Library on Libib, so they’re on “Not on a shelf yet”. Which shelf should each go on?
+1. **12 books that never moved to a genre** (left for now, her call 18 Oct). They were only in Jemma’s Library on Libib, so they’re on “Not on a shelf yet”. Which shelf should each go on?
    - A Tale of Time City (Diana Wynne Jones)
    - Forward (Maeve Clark and others)
    - Pure Dead Brilliant and Deep Water (Debi Gliori)
@@ -12,14 +12,12 @@
    - Christmas Activity Book (Catherine Bruzzone, Clare Beaton)
    - Fun to Make Paper Craft (Anna Curti)
    - Where In The Zoo Are You?
-2. **Two books that look like duplicates.** In each case one copy has no ISBN. Is there one copy or two?
-   - I’m Glad My Mom Died (Non-Fiction): one added Jan 2025 with no ISBN, one added Apr 2026
-   - Sourcery (Fantasy): “original paperback” with no ISBN, and the 2004 Corgi edition
+2. **Duplicates: done** (18 Oct). I’m Glad My Mom Died: one copy (the one without an ISBN is dropped, `data/removed.json`). Sourcery: two copies, both kept.
 3. **Same title twice, different editions.** These are kept as separate books, shown under “Other copies you own”. Say if any shouldn’t be:
    - Harry Potter: several sets (1997 Bloomsbury, the 2014 set, illustrated editions, Hufflepuff edition)
    - Malory Towers and St Clare’s: newer copies on Children’s, old copies on Old Book Collection
    - The House in the Cerulean Sea, Solitaire, Kitty at St Clare’s, The Tennis Term at Trebizon
-4. **Happy Place** is on To buy but is already on Adult Fiction. Take it off the list?
+4. **Happy Place: done** (18 Oct), off the to-buy list (already on Adult Fiction).
 5. **Titles are tidied automatically.** Anything in brackets, and a long subtitle after a colon, moves to a smaller line (e.g. “Harry Potter and the Goblet of Fire: 4/7 (Harry Potter 4)”). The Libib title is still shown on the book page. Is this OK? Any book can get its own title (`displayTitle` in `data/books.json`).
 6. **Author names tidied** (18 Oct, her yes; `data/name-fixes.json`): e.g. Hans Christian Andersen, Florentyna Leow and Nina Mingya Powles (Libib had “LEOW”, “POWLES”), Shirley Barber and Phoebe Gilman added where Libib had no author, Anonymous dropped from The Familiar, Hwang Bo-reum filed under Hwang. Check any you’re not sure of.
 7. **Look:** yellows and browns since 18 Oct (walnut sidebar, cream pages, mustard gold); banners are made of each page’s own covers (her choice, 18 Oct). The shelf colours (now only the dots) are first picks.
