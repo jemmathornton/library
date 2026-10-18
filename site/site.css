@@ -97,8 +97,9 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .cover.blank .t{font:400 clamp(15px,1.7cqw,22px)/1.08 var(--display);overflow:hidden;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;text-wrap:balance}
 .cover.blank .a{font:700 9.5px/1.3 var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.85;border-top:1px solid color-mix(in srgb,var(--brass) 80%,transparent);padding-top:8px}
 .cover .badge{position:absolute;right:7px;top:7px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:13px;z-index:1;
-  background:#fff;color:var(--done);box-shadow:0 2px 6px rgba(0,0,0,.25)}
-.cover .badge.reading{color:var(--reading)}
+  background:#3B2616;color:#FBF4E6;box-shadow:0 0 0 1.5px rgba(251,244,230,.85),0 2px 6px rgba(0,0,0,.35)}
+.cover .badge .i{stroke-width:3}
+.cover .badge.reading{color:#FBF4E6}
 
 /* book grids */
 .books{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:30px 22px;container-type:inline-size}
