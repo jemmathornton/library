@@ -125,16 +125,17 @@ const sectionHead = (title, more) => `<div class="section-head"><h2>${title}</h2
 function renderNav(active){
   const nReading = readingLog().filter(isReading).length, left = WISH.filter(w => !GOT[w.id]).length;
   const link = (href, icon, text, n) => `<a href="${href}" class="${active === href ? "on" : ""}">${icon}${text}${n != null ? `<span class="n">${n}</span>` : ""}</a>`;
+  // the shelves come first and largest (her choice, 18 Oct); the rest of the library sits below them
   document.getElementById("nav").innerHTML = `
-    <div class="nav-group"><span class="label">Library</span>
+    <div class="nav-group shelves-nav"><span class="label">Shelves</span>
+      ${SHELVES.filter(s => s.books.length).map(s => link("#shelf-" + s.id, `<span class="dot" style="--c:${s.color}"></span>`, esc(s.name), s.books.length)).join("")}
+    </div>
+    <div class="nav-group minor"><span class="label">Library</span>
       ${link("#home", ic("home"), "Home")}
       ${link("#reading", ic("bookmark"), "Reading", nReading || null)}
       ${link("#to-buy", ic("shopping-bag"), "To buy", left)}
       ${link("#authors", ic("users"), "Authors", AUTHORS.length)}
       ${link("#stats", ic("chart"), "Stats")}
-    </div>
-    <div class="nav-group"><span class="label">Shelves</span>
-      ${SHELVES.filter(s => s.books.length).map(s => link("#shelf-" + s.id, `<span class="dot" style="--c:${s.color}"></span>`, esc(s.name), s.books.length)).join("")}
     </div>`;
 }
 
