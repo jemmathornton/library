@@ -30,7 +30,7 @@ const BOOKS = DATA.books, bookIndex = {}, authorIndex = {}, editions = {};
 function tidyTitle(raw){
   let t = raw.trim(), bits = [], m;
   while ((m = /\s*\(([^()]*)\)/.exec(t))) { if (m[1].trim()) bits.unshift(m[1].trim()); t = (t.slice(0, m.index) + t.slice(m.index + m[0].length)).trim(); }
-  t = t.replace(/\s+Paperback$/i, "").trim();
+  t = t.replace(/\s+Paperback$/i, "").replace(/[\s:;,–-]+$/, "").trim();   // "The Bear and The Nightingale: (Winternight Series)" leaves no colon behind
   const c = t.indexOf(": ");
   if (c > 0 && !/\d$/.test(t.slice(0, c)) && t.slice(0, c).split(/\s+/).length >= 2) { bits.unshift(t.slice(c + 2)); t = t.slice(0, c); }
   return {t: t || raw, sub: bits.join(" · ")};
