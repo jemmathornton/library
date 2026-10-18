@@ -186,7 +186,7 @@ function cover(b, extra = "", big = false){
   // read or reading: a tick (or bookmark) in the top corner, walnut and cream (her choice, 18 Oct); her stars, filled to
   // the rating with no number, in a strip across the foot
   // read: a cream "Read" sash across the top corner (her choice, 18 Oct, over a tick)
-  const badge = st === "read" ? `<span class="sash" title="Read">Read</span>` : st === "reading" ? `<span class="badge reading" title="Reading now">${ic("bookmark")}</span>` : "";
+  const badge = st === "read" ? `<span class="sash" title="Read">Read</span>` : st === "reading" ? `<span class="sash" title="Reading now">Reading</span>` : "";
   const r = reading(b).rating;
   const strip = r ? `<span class="rated" title="${starsText(r)} stars"><span class="sg-stars" style="--r:${(r / 5 * 100).toFixed(1)}%"><span>★★★★★</span><span aria-hidden="true">★★★★★</span></span></span>` : "";
   return `<div class="cover${b.cover ? "" : " blank"} ${extra}" style="--c:${s ? s.color : "#5E3D22"}">${badge}${strip}${b.cover ? `<img src="${esc(coverSrc(b, big))}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
