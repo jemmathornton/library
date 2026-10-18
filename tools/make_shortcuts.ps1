@@ -26,3 +26,21 @@ foreach ($dir in @($root, [Environment]::GetFolderPath('Desktop'), [Environment]
     $old = Join-Path $dir "Jemma's Library.lnk"
     if ((Test-Path $old) -and ($shell.CreateShortcut($old).Arguments -match 'file:///')) { Remove-Item $old; "Removed old $old" }
 }
+
+# Until the app is installed, a Desktop shortcut opens the site in Chrome, where the sidebar offers "Install as app".
+# Once Chrome has made the app's own shortcut ("Jemma’s Library", curly apostrophe), this one goes.
+$chrome  = @("$env:ProgramFiles\Google\Chrome\Application\chrome.exe", "${env:ProgramFiles(x86)}\Google\Chrome\Application\chrome.exe",
+             "$env:LOCALAPPDATA\Google\Chrome\Application\chrome.exe") | Where-Object { Test-Path $_ } | Select-Object -First 1
+$desk    = [Environment]::GetFolderPath('Desktop')
+$temp    = Join-Path $desk "Jemma's Library.lnk"
+$appLnk  = @((Join-Path $desk "Jemma$([char]0x2019)s Library.lnk"), (Join-Path ([Environment]::GetFolderPath('Programs')) "Chrome Apps\Jemma$([char]0x2019)s Library.lnk")) | Where-Object { Test-Path $_ }
+if ($appLnk) { if (Test-Path $temp) { Remove-Item $temp; "App installed: removed $temp" } }
+elseif ($chrome) {
+    $lnk = $shell.CreateShortcut($temp)
+    $lnk.TargetPath   = $chrome
+    $lnk.Arguments    = "http://localhost:8020/"
+    $lnk.IconLocation = "$(Join-Path $root 'site\icon.ico'),0"
+    $lnk.Description  = "Jemma's Library (install it as an app from the sidebar)"
+    $lnk.Save()
+    "Made $temp (until the app is installed)"
+}
