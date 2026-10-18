@@ -201,7 +201,7 @@ function cover(b, extra = "", big = false){
 document.addEventListener("error", e => { const img = e.target; if (img.tagName === "IMG" && img.parentNode.classList.contains("cover")) { img.parentNode.classList.add("blank"); img.remove(); } }, true);
 
 const href = b => isElsewhere(b) ? "#" + b.id : "#b-" + b.id;
-const card = (b, note) => `<a class="bk" href="${href(b)}">${cover(b)}<h3>${esc(b.t)}</h3><div class="by">${esc(note || b.by)}</div></a>`;
+const card = (b, note) => `<a class="bk${b.notOwned ? " no" : ""}" href="${href(b)}">${cover(b)}<h3>${esc(b.t)}</h3><div class="by">${esc(note || b.by)}</div>${b.notOwned ? `<div class="own-note">${ic("library")} Not owned</div>` : ""}</a>`;
 const grid = (list, cls = "") => list.length ? `<div class="books ${cls}">${list.map(b => card(b)).join("")}</div>` : "";
 function listView(list){
   return `<div class="blist">${list.map(b => { const st = reading(b).status;
@@ -296,6 +296,23 @@ function shelfBooks(list, grouped = currentGrouped){
     </div>` + body;
 }
 let currentList = [], currentGrouped = false;
+// TRIAL (18 Oct): ways to show "Not owned", for her to choose; remove once she has
+function pageTagTrial(){
+  const pick = f => NOT_OWNED.filter(f)[0];
+  const no = [pick(e => e.cover && reading(e).rating >= 4), pick(e => e.cover && isReading(e)), pick(e => e.cover && !reading(e).rating && isRead(e)), pick(e => !e.cover)].filter(Boolean);
+  const own = BOOKS.filter(b => b.cover && isRead(b) && reading(b).rating).slice(3, 5);
+  const OPTS = [["a", "Faded", "Covers of books you don’t own are greyed and faded; yours stay bright."],
+    ["b", "Ghost outline", "Faded cover inside a dashed outline, like a space on the shelf."],
+    ["c", "Band across the cover", "A walnut band across the lower part of the cover."],
+    ["d", "Second sash", "A brass sash across the opposite corner to Read."],
+    ["e", "Library stamp", "A rubber-stamp mark across the middle of the cover."],
+    ["f", "Hanging ribbon", "A brass ribbon hanging from the top of the cover."],
+    ["g", "Line under the title", "The cover stays as it is; “Not owned” in brass under the author."],
+    ["h", "Faded and band", "Greyed cover plus the band (the most obvious)."]];
+  return hero({kicker: "Trial", title: "Not owned: <em>options</em>", text: "Each row: four books you don’t own, then two of yours to compare."})
+    + OPTS.map(([k, name, text]) => `<section class="trial-opt">${sectionHead(`${k.toUpperCase()}. ${name}`)}<p class="note">${text}</p>`
+      + `<div class="books row opt-${k}">${no.concat(own).map(b => card(b)).join("")}</div></section>`).join("");
+}
 function pageAllShelves(){
   currentList = BOOKS.concat(NOT_OWNED); currentGrouped = true;
   const shelves = SHELVES.filter(s => s.books.length && s.libib).length;
@@ -606,6 +623,7 @@ function route(){
   else if (key.startsWith("b-") && bookIndex[key.slice(2)]) { const b = bookIndex[key.slice(2)]; html = pageBook(b); active = "#shelf-" + b.shelf; title = b.t; }
   else if (key.startsWith("r-") && SG.books[+key.slice(2)] && !SG.books[+key.slice(2)].books) { const e = SG.books[+key.slice(2)]; html = pageSgBook(e); active = e.shelf ? "#shelf-" + e.shelf : "#reading"; title = e.t; }
   else if (key.startsWith("a-") && authorIndex[key.slice(2)]) { const a = authorIndex[key.slice(2)]; html = pageAuthor(a); active = "#authors"; title = a.name; }
+  else if (key === "trial-tags") { html = pageTagTrial(); title = "Not owned: options"; }
   else html = {authors: pageAuthors, reading: pageReading, "to-read": pageToRead, add: pageAdd, "to-buy": pageToBuy, stats: pageStats}[key]?.() || (active = "#home", pageHome());
   view.innerHTML = html; renderNav(active);
   document.title = title === "Jemma’s Library" ? title : `${curly(title)} · Jemma’s Library`;
