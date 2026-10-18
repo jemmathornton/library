@@ -10,9 +10,14 @@ Adding a book (the site's "Add a book" page, 18 Oct):
     POST /api/books             saves it to data/added.json (kept apart from the Libib import, which a re-import
                                 overwrites), copies its cover into site/covers and rebuilds the site
 Both need the header "X-Library: 1", which only the site itself sends: a page from anywhere else can't add books.
+
+New reading (18 Oct, her ask): every 5 minutes it looks in her Downloads for the newest StoryGraph export (a CSV whose
+first line is StoryGraph's own column list). When there's a newer one than last time, tools/import_storygraph.py copies
+it into imports/ and brings it in, and the site is rebuilt. Her Downloads file is only read, never changed.
+Last import in data/storygraph-source.json; what happened in logs/reading-updates.log.
 """
-import functools, http.server, json, os, re, subprocess, sys, urllib.parse, urllib.request
-from datetime import date
+import functools, http.server, json, os, re, subprocess, sys, threading, time, urllib.parse, urllib.request
+from datetime import date, datetime
 
 PORT = 8020
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -131,6 +136,62 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             self.reply({'ok': False, 'error': str(e)}, 500)
 
 
+SG_HEADER = 'Title,Authors,Contributors,ISBN/UID'
+SG_STATE = os.path.join(DATA, 'storygraph-source.json')
+SG_LOG = os.path.join(ROOT, 'logs', 'reading-updates.log')
+
+
+def sg_log(msg):
+    os.makedirs(os.path.dirname(SG_LOG), exist_ok=True)
+    with open(SG_LOG, 'a', encoding='utf-8') as fh:
+        fh.write(f'{datetime.now():%Y-%m-%d %H:%M} {msg}\n')
+
+
+def newest_export():
+    downloads = os.path.join(os.path.expanduser('~'), 'Downloads')
+    best = None
+    for f in os.listdir(downloads):
+        p = os.path.join(downloads, f)
+        if not f.lower().endswith('.csv') or not os.path.isfile(p):
+            continue
+        try:
+            with open(p, encoding='utf-8-sig') as fh:
+                if not fh.readline().startswith(SG_HEADER):
+                    continue
+        except OSError:
+            continue
+        if best is None or os.path.getmtime(p) > os.path.getmtime(best):
+            best = p
+    return best
+
+
+def watch_reading():
+    while True:
+        try:
+            p = newest_export()
+            state = json.load(open(SG_STATE, encoding='utf-8')) if os.path.exists(SG_STATE) else {}
+            if p and os.path.getmtime(p) > state.get('mtime', 0):
+                time.sleep(10)   # let a download finish
+                r = subprocess.run([PYTHON, '-X', 'utf8', os.path.join(ROOT, 'tools', 'import_storygraph.py'), p, '--apply'],
+                                   cwd=ROOT, capture_output=True, text=True, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+                if r.returncode == 0:
+                    subprocess.run([PYTHON, '-X', 'utf8', os.path.join(ROOT, 'tools', 'build.py')], cwd=ROOT, capture_output=True,
+                                   creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+                    with open(SG_STATE, 'w', encoding='utf-8', newline='\n') as fh:
+                        json.dump({'file': os.path.basename(p), 'mtime': os.path.getmtime(p), 'imported': datetime.now().isoformat(timespec='minutes')}, fh, indent=1)
+                        fh.write('\n')
+                    summary = next((l for l in r.stdout.splitlines() if l.startswith(('On her shelves', '345', 'StoryGraph')) or 'StoryGraph books' in l), '')
+                    sg_log(f'imported {os.path.basename(p)}: {summary}')
+                else:
+                    sg_log(f'import of {os.path.basename(p)} failed: {(r.stderr or r.stdout).strip()[-300:]}')
+                    state['mtime'] = os.path.getmtime(p)   # don't retry the same file every 5 minutes
+                    with open(SG_STATE, 'w', encoding='utf-8', newline='\n') as fh:
+                        json.dump(state, fh, indent=1)
+        except Exception as e:
+            sg_log(f'watch failed: {e}')
+        time.sleep(300)
+
+
 class Server(http.server.ThreadingHTTPServer):
     allow_reuse_address = False   # on Windows "reuse" lets a second copy share the port; it must fail and stop instead
 
@@ -140,6 +201,7 @@ def main():
         server = Server(('127.0.0.1', PORT), functools.partial(Handler, directory=SITE))
     except OSError:
         sys.exit(0)
+    threading.Thread(target=watch_reading, daemon=True).start()
     server.serve_forever()
 
 
