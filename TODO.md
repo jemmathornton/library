@@ -22,7 +22,7 @@
 4. **Happy Place** is on To buy but is already on Adult Fiction. Take it off the list?
 5. **Titles are tidied automatically.** Anything in brackets, and a long subtitle after a colon, moves to a smaller line (e.g. “Harry Potter and the Goblet of Fire: 4/7 (Harry Potter 4)”). The Libib title is still shown on the book page. Is this OK? Any book can get its own title (`displayTitle` in `data/books.json`).
 6. **Libib name mistakes**, e.g. “Hans Christian Anders a”, “Anonymous” as an author of The Familiar, Korean names sorted by given name. Fix as you spot them, or should I go through them?
-7. **Look:** yellows and browns since 18 Oct (walnut sidebar, cream pages, mustard gold). The shelf colours are first picks, kept different enough to tell apart.
+7. **Look:** yellows and browns since 18 Oct (walnut sidebar, cream pages, mustard gold); banners are made of each page’s own covers (her choice, 18 Oct). The shelf colours (now only the dots) are first picks.
 8. **StoryGraph books that may be on your shelves under another title.** Should these count as read?
    - Wicked: linked to “Wicked: The Wicked Years Vintage Collection” (a boxed set). Right?
    - The Golden Compass and the His Dark Materials boxed set (read) vs Northern Lights, The Subtle Knife and The Amber Spyglass on Fantasy: not linked
