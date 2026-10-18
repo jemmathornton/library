@@ -48,6 +48,10 @@ def build():
                 b[f] = v
     gone = {x['id'] for x in load('removed.json', [])}   # duplicates she has said aren't real copies
     books = [b for b in books if b['id'] not in gone]
+    editions = load('editions.json', {})   # editions Libib doesn't say (her Illumicrate copies)
+    for b in books:
+        if b['id'] in editions and not b['id'].startswith('_'):
+            b['title'] += f" ({editions[b['id']]})"
     moves = load('shelf-moves.json', {})   # shelves she chose for books Libib has on no genre shelf
     for b in books:
         b['shelf'] = moves.get(b['id'], b['shelf'])

@@ -34,5 +34,4 @@
 - Covers are copied into `site/covers/` (`tools/copy_covers.py`, after `find_covers.py`), so they show at once and work offline.
 - **Taskbar icon: fixed (18 Oct).** The shortcuts open the site from a small local server (http://localhost:8020, tools/serve.py, started at login) as an app window in its own Chrome profile; they carry the window’s app id, so Windows shows their icon (app-v2.ico, every size inside) on the taskbar, sharp. Reading marks or to-buy ticks made in the old window opened from the folder don’t carry over (“Save a backup” there, “Load a backup” here).
 - Phone layout not done yet (laptop first).
-1. **The House in the Cerulean Sea**: two copies (paperback and Illumicrate). Which Libib copy is the Illumicrate one, so it gets that cover? (18 Oct)
 1. **Covers still not right** (18 Oct): Kill Joy, As Good As Dead and Murder at the Vicarage show audiobook squares (no matching print cover found); Scion is a 3D book photo; Beedle the Bard Collector's Edition is a photo of the box. Trebizon, Artemis Fowl, Discworld and Harry Potter have mixed designs because her copies have different ISBNs (editions); left as they are unless she says they all match.
