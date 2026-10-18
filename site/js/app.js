@@ -198,17 +198,30 @@ function renderNav(active){
 }
 
 // ---------- pages ----------
+// home (her yes to a fuller one, 18 Oct): this year in figures, what she's reading, what she just finished, a pick
+// for what to read next, the shelves, and what's new on them
 function pageHome(){
-  const now = readingLog().filter(isReading), recent = [...BOOKS].sort((a, b) => (b.added || "").localeCompare(a.added || "")).slice(0, 12);
+  const log = readingLog(), now = log.filter(isReading), thisYear = String(new Date().getFullYear());
+  const lastFinish = b => finishes(b).sort().pop() || "";
+  const done = log.filter(isRead).filter(b => lastFinish(b)).sort((a, b) => lastFinish(b).localeCompare(lastFinish(a))).slice(0, 6);
+  const yearReads = log.filter(isRead).flatMap(finishes).filter(d => year(d) === thisYear).length;
+  const toRead = log.filter(b => isToRead(b) && !isElsewhere(b)).length;
+  const recent = [...BOOKS].sort((a, b) => (b.added || "").localeCompare(a.added || "")).slice(0, 6);
   const fan = s => { const withCover = s.books.filter(b => b.cover), pick = (withCover.length >= 3 ? withCover : s.books).slice(0, 3); return pick.map(b => cover(b)).join(""); };
+  const shortDate = d => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(d || ""); return m ? `${+m[3]} ${MON[m[2] - 1]}` : ""; };
+  const readAll = log.filter(isRead), mine = readAll.filter(b => !isElsewhere(b)).length;
   return hero({kicker: "Home library", title: "Jemma’s <em>Library</em>", covers: [...BOOKS].sort(SORTS.added[1]),
-      text: `Every book on the shelves at home, ${plural(SHELVES.filter(s => s.books.length && s.libib).length, "shelf", "shelves")} of them, brought over from Libib on 18 October 2026.`,
-      figures: [[num(BOOKS.length), "books"], [num(AUTHORS.length), "authors"], [num(readingLog().filter(b => !isElsewhere(b) && isRead(b)).length), "of them read"], [num(WISH.length), "on the to-buy list"]]})
-    + (now.length ? sectionHead("Reading <em>now</em>", `<a class="more" href="#reading">All reading</a>`) + grid(now, "row") : "")
+      text: "Every book on the shelves at home, and everything you read.",
+      figures: [[num(yearReads), `read in ${thisYear}`], [num(BOOKS.length), "books on the shelves"], [num(toRead), "to read from your shelves"], [num(AUTHORS.length), "authors"]]})
+    + (now.length ? sectionHead("Reading <em>now</em>", `<a class="more" href="#reading">All your reading</a>`)
+        + `<div class="now-row">${now.map(b => { const st = reading(b).started; return `<a class="now-card" href="${href(b)}">${cover(b, "", true)}<div><span class="label">Reading now</span><h3>${esc(b.t)}</h3><div class="by">${esc(b.by)}</div>${st ? `<div class="by">Started ${niceDate(st)}</div>` : ""}</div></a>`; }).join("")}</div>` : "")
+    + (done.length ? sectionHead("Just <em>finished</em>") + `<div class="books row">${done.map(b => card(b, `Finished ${shortDate(lastFinish(b))}`)).join("")}</div>` : "")
+    + picker()
     + sectionHead("The <em>shelves</em>", `<a class="more" href="#shelves">See them all at once</a>`)
     + `<div class="shelves">${SHELVES.filter(s => s.books.length).map(s => `<a class="shelf-card" href="#shelf-${s.id}" style="--c:${s.color}"><div class="fan">${fan(s)}</div>
         <div class="txt"><h3>${esc(s.name)}</h3><span>${plural(s.books.length, "book")}</span></div></a>`).join("")}</div>`
-    + sectionHead("Recently <em>added</em>") + grid(recent, "row");
+    + sectionHead("New on the <em>shelves</em>") + `<div class="books row">${recent.map(b => card(b, `Added ${niceDate(b.added)}`)).join("")}</div>`
+    + `<p class="home-foot">You’ve read ${plural(readAll.length, "book")}, ${num(mine)} of them from your own shelves.</p>`;
 }
 
 // shelves are in author surname order, like a real bookcase (her choice, 18 Oct)
