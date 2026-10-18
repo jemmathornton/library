@@ -1,7 +1,54 @@
 {
  "_about": "StoryGraph books linked by hand to the books on her shelves they are (her answers, 18 Oct), by StoryGraph title. tools/import_storygraph.py uses these before its own matching.",
- "His Dark Materials 3-Book Mass Market Paperback Boxed Set": ["ob32j7v0an", "8gmvxl2ohq", "t0gfkqv93y"],
- "The Golden Compass": ["ob32j7v0an"],
- "Fantastic Beasts & Where to Find Them": ["8gmvxjfohq", "2ous4qktqt"],
- "Fun and Games at Malory Towers": ["prqbsgqno7"]
+ "His Dark Materials 3-Book Mass Market Paperback Boxed Set": [
+  "ob32j7v0an",
+  "8gmvxl2ohq",
+  "t0gfkqv93y"
+ ],
+ "The Golden Compass": [
+  "ob32j7v0an"
+ ],
+ "Fantastic Beasts & Where to Find Them": [
+  "8gmvxjfohq",
+  "2ous4qktqt"
+ ],
+ "Fun and Games at Malory Towers": [
+  "prqbsgqno7"
+ ],
+ "A Degree of Love": [
+  "add0001"
+ ],
+ "All the Lonely People": [
+  "add0002"
+ ],
+ "An Anthology of New Feminist Translations": [
+  "add0003"
+ ],
+ "Dengue Boy": [
+  "add0004"
+ ],
+ "The Midnight Train": [
+  "add0005"
+ ],
+ "Dimension Quest": [
+  "add0006"
+ ],
+ "Guardian Quest": [
+  "add0007"
+ ],
+ "Rebellion Quest": [
+  "add0008"
+ ],
+ "The Hobbit, or There and Back Again": [
+  "add0009"
+ ],
+ "The Callista Ascendancy": [
+  "add0010"
+ ],
+ "Becoming": [
+  "add0011"
+ ],
+ "Malory Towers: New Term: Book 7": [
+  "9dbekf36rp"
+ ]
 }

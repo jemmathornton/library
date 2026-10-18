@@ -2,7 +2,9 @@
 
 ## For Jemma to decide
 
-1. **12 books that never moved to a genre** (left for now, her call 18 Oct). They were only in Jemma’s Library on Libib, so they’re on “Not on a shelf yet”. Which shelf should each go on?
+1. **Raven’s Gate** (Anthony Horowitz): she isn’t sure she has read or owns it (18 Oct). On Young Adult, tagged Not owned, until she checks.
+1. **Katabasis**: just bought; tagged Not owned until she scans it in (Add a book, or Libib). Then it needs a line in `data/storygraph-links.json` or a re-import so her reading follows it.
+1. **The Woman in Me**: she said she owns Becoming but not Unseen; not asked about this one, so it stays Not owned.
    - A Tale of Time City (Diana Wynne Jones)
    - Forward (Maeve Clark and others)
    - Pure Dead Brilliant and Deep Water (Debi Gliori)

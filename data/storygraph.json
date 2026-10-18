@@ -282,7 +282,10 @@
     ]
    ],
    "readCount": 2,
-   "rating": 4.5
+   "rating": 4.5,
+   "books": [
+    "add0006"
+   ]
   },
   {
    "title": "Harry, a History: The True Story of a Boy Wizard, His Fans, and Life Inside the Harry Potter Phenomenon",
@@ -314,7 +317,10 @@
     ]
    ],
    "readCount": 2,
-   "rating": 4.0
+   "rating": 4.0,
+   "books": [
+    "add0008"
+   ]
   },
   {
    "title": "Malory Towers: New Term: Book 7",
@@ -331,7 +337,10 @@
     ]
    ],
    "readCount": 1,
-   "isbn13": "9781444929935"
+   "isbn13": "9781444929935",
+   "books": [
+    "9dbekf36rp"
+   ]
   },
   {
    "title": "Winter Term at Malory Towers",
@@ -574,7 +583,10 @@
    ],
    "readCount": 1,
    "rating": 5.0,
-   "isbn13": "9781837262137"
+   "isbn13": "9781837262137",
+   "books": [
+    "add0005"
+   ]
   },
   {
    "title": "The Island of Missing Trees",
@@ -1146,7 +1158,10 @@
    ],
    "readCount": 1,
    "rating": 4.0,
-   "isbn13": "9781838217730"
+   "isbn13": "9781838217730",
+   "books": [
+    "add0010"
+   ]
   },
   {
    "title": "Wicked: The Life and Times of the Wicked Witch of the West",
@@ -1298,7 +1313,10 @@
    ],
    "readCount": 1,
    "rating": 3.5,
-   "isbn13": "9780241983003"
+   "isbn13": "9780241983003",
+   "books": [
+    "add0011"
+   ]
   },
   {
    "title": "Harry Potter and the Goblet of Fire",
@@ -1441,7 +1459,10 @@
     ]
    ],
    "readCount": 1,
-   "rating": 4.0
+   "rating": 4.0,
+   "books": [
+    "add0003"
+   ]
   },
   {
    "title": "Taiwan Travelogue",
@@ -3120,7 +3141,10 @@
     ]
    ],
    "readCount": 2,
-   "rating": 4.0
+   "rating": 4.0,
+   "books": [
+    "add0007"
+   ]
   },
   {
    "title": "The Shadow of What Was Lost",
@@ -3484,7 +3508,10 @@
    ],
    "readCount": 2,
    "rating": 5.0,
-   "isbn13": "9781473687417"
+   "isbn13": "9781473687417",
+   "books": [
+    "add0002"
+   ]
   },
   {
    "title": "Death of a Salesman",
@@ -3957,7 +3984,10 @@
    "owned": "No",
    "status": "read",
    "readCount": 1,
-   "rating": 3.0
+   "rating": 3.0,
+   "books": [
+    "add0009"
+   ]
   },
   {
    "title": "Turtles All the Way Down",
@@ -4206,7 +4236,10 @@
    "added": "2026-03-14",
    "owned": "No",
    "status": "reading",
-   "isbn13": "9781718178441"
+   "isbn13": "9781718178441",
+   "books": [
+    "add0001"
+   ]
   },
   {
    "title": "A Good Girl's Guide to Murder",
@@ -4690,7 +4723,10 @@
    ],
    "readCount": 1,
    "rating": 2.5,
-   "isbn13": "9781805220589"
+   "isbn13": "9781805220589",
+   "books": [
+    "add0004"
+   ]
   },
   {
    "title": "The Voyage of the Dawn Treader",

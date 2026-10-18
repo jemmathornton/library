@@ -48,6 +48,9 @@ def build():
                 b[f] = v
     gone = {x['id'] for x in load('removed.json', [])}   # duplicates she has said aren't real copies
     books = [b for b in books if b['id'] not in gone]
+    moves = load('shelf-moves.json', {})   # shelves she chose for books Libib has on no genre shelf
+    for b in books:
+        b['shelf'] = moves.get(b['id'], b['shelf'])
     bought = {x['wish'] for x in load('bought.json', [])}   # to-buy books she has since added to a shelf
     wish = [w for w in wish if w['id'] not in bought]
     fixes = load('name-fixes.json', {'names': {}, 'remove': [], 'roles': {}, 'books': {}, 'surnames': {}})

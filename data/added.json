@@ -1,0 +1,171 @@
+[
+ {
+  "id": "add0001",
+  "title": "A Degree of Love",
+  "authors": [
+   {
+    "name": "Jane Andrews"
+   }
+  ],
+  "shelf": "adult-fiction",
+  "isbn13": "9781718178441",
+  "added": "2026-10-18",
+  "copies": 1,
+  "addedHere": true,
+  "why": "She owns it but it was never in Libib (her answer, 18 Oct).",
+  "surname": "Andrews"
+ },
+ {
+  "id": "add0002",
+  "title": "All the Lonely People",
+  "authors": [
+   {
+    "name": "Mike Gayle"
+   }
+  ],
+  "shelf": "adult-fiction",
+  "isbn13": "9781473687417",
+  "added": "2026-10-18",
+  "copies": 1,
+  "addedHere": true,
+  "why": "She owns it but it was never in Libib (her answer, 18 Oct).",
+  "surname": "Gayle"
+ },
+ {
+  "id": "add0003",
+  "title": "An Anthology of New Feminist Translations",
+  "shelf": "adult-fiction",
+  "added": "2026-10-18",
+  "copies": 1,
+  "addedHere": true,
+  "why": "She owns it but it was never in Libib (her answer, 18 Oct)."
+ },
+ {
+  "id": "add0004",
+  "title": "Dengue Boy",
+  "authors": [
+   {
+    "name": "Michel Nieva"
+   },
+   {
+    "name": "Rahul Bery",
+    "role": "Translator"
+   }
+  ],
+  "shelf": "science-fiction",
+  "isbn13": "9781805220589",
+  "added": "2026-10-18",
+  "copies": 1,
+  "addedHere": true,
+  "why": "She owns it but it was never in Libib (her answer, 18 Oct).",
+  "surname": "Nieva"
+ },
+ {
+  "id": "add0005",
+  "title": "The Midnight Train",
+  "authors": [
+   {
+    "name": "Matt Haig"
+   }
+  ],
+  "shelf": "adult-fiction",
+  "isbn13": "9781837262137",
+  "added": "2026-10-18",
+  "copies": 1,
+  "addedHere": true,
+  "why": "She owns it but it was never in Libib (her answer, 18 Oct).",
+  "surname": "Haig"
+ },
+ {
+  "id": "add0006",
+  "title": "Dimension Quest",
+  "authors": [
+   {
+    "name": "Lisa Wright DeGroodt"
+   }
+  ],
+  "shelf": "fantasy",
+  "added": "2026-10-18",
+  "copies": 1,
+  "addedHere": true,
+  "why": "She owns it but it was never in Libib (her answer, 18 Oct).",
+  "surname": "DeGroodt"
+ },
+ {
+  "id": "add0007",
+  "title": "Guardian Quest",
+  "authors": [
+   {
+    "name": "Lisa Wright DeGroodt"
+   }
+  ],
+  "shelf": "fantasy",
+  "added": "2026-10-18",
+  "copies": 1,
+  "addedHere": true,
+  "why": "She owns it but it was never in Libib (her answer, 18 Oct).",
+  "surname": "DeGroodt"
+ },
+ {
+  "id": "add0008",
+  "title": "Rebellion Quest",
+  "authors": [
+   {
+    "name": "Lisa Wright DeGroodt"
+   }
+  ],
+  "shelf": "fantasy",
+  "added": "2026-10-18",
+  "copies": 1,
+  "addedHere": true,
+  "why": "She owns it but it was never in Libib (her answer, 18 Oct).",
+  "surname": "DeGroodt"
+ },
+ {
+  "id": "add0009",
+  "title": "The Hobbit",
+  "authors": [
+   {
+    "name": "J.R.R. Tolkien"
+   }
+  ],
+  "shelf": "fantasy",
+  "added": "2026-10-18",
+  "copies": 1,
+  "addedHere": true,
+  "why": "She owns it but it was never in Libib (her answer, 18 Oct).",
+  "surname": "Tolkien"
+ },
+ {
+  "id": "add0010",
+  "title": "The Callista Ascendancy",
+  "authors": [
+   {
+    "name": "Steve Gay"
+   }
+  ],
+  "shelf": "science-fiction",
+  "isbn13": "9781838217730",
+  "added": "2026-10-18",
+  "copies": 1,
+  "addedHere": true,
+  "why": "She owns it but it was never in Libib (her answer, 18 Oct).",
+  "surname": "Gay"
+ },
+ {
+  "id": "add0011",
+  "title": "Becoming",
+  "authors": [
+   {
+    "name": "Michelle Obama"
+   }
+  ],
+  "shelf": "non-fiction",
+  "isbn13": "9780241983003",
+  "added": "2026-10-18",
+  "copies": 1,
+  "addedHere": true,
+  "why": "She owns it but it was never in Libib (her answer, 18 Oct).",
+  "surname": "Obama"
+ }
+]
