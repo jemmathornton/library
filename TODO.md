@@ -30,4 +30,3 @@
 - **Covers:** 459 of 638 books have one, from Open Library. Google Books refused today (too many requests): run `tools/find_covers.py` again another day for the 109 still untried. About 70 books have no ISBN, so no cover can be looked up for them.
 - Covers are copied into `site/covers/` (`tools/copy_covers.py`, after `find_covers.py`), so they show at once and work offline.
 - Phone layout not done yet (laptop first).
-- No shortcut on the desktop yet.

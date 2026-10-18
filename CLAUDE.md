@@ -18,6 +18,7 @@ A private website of the books in Jemma’s home library: every book she owns, s
 - `imports/libib-<date>/`: her Libib CSV exports as copied in (one per collection).
 - `tools/import_libib.py <folder>` (report; `--apply` writes `data/books.json` and `data/to-buy.json`: genre collections are the library, the old “Jemma’s Library” catch-all only adds books that aren’t on a shelf, “Books to Buy” is the wishlist). Re-importing overwrites `books.json`, so hand edits there would be lost.
 - `tools/find_covers.py` (looks up covers not tried before; `--retry` tries the misses again), `tools/copy_covers.py` (copies them into `site/covers/<isbn>.jpg`, at most 600px tall; the build uses a copy over a link), then `tools/build.py` (writes `site/js/data.js` and stamps fingerprints into index.html).
+- App icon: `tools/make_icons.py` (Lucide’s library in brass on green); shortcuts: `tools/make_shortcuts.ps1` (desktop, Start menu and project folder; opens the site in its own Chrome window).
 
 ## How to work here
 
