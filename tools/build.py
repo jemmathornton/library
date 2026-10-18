@@ -51,7 +51,8 @@ def build():
     editions = load('editions.json', {})   # editions Libib doesn't say (her Illumicrate copies)
     for b in books:
         if b['id'] in editions and not b['id'].startswith('_'):
-            b['title'] += f" ({editions[b['id']]})"
+            if editions[b['id']].lower() not in b['title'].lower():
+                b['title'] += f" ({editions[b['id']]})"
             b['special'] = editions[b['id']]
     moves = load('shelf-moves.json', {})   # shelves she chose for books Libib has on no genre shelf
     for b in books:
