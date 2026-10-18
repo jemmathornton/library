@@ -21,10 +21,10 @@ A private website of the books in Jemma’s home library: every book she owns, s
 - `tools/import_storygraph.py <export.csv>` (report; `--matches` lists every match; `--apply` copies the export into imports/ and writes `data/storygraph.json`).
 - `tools/import_libib.py <folder>` (report; `--apply` writes `data/books.json` and `data/to-buy.json`: genre collections are the library, the old “Jemma’s Library” catch-all only adds books that aren’t on a shelf, “Books to Buy” is the wishlist). Re-importing overwrites `books.json`, so hand edits there would be lost.
 - `tools/find_covers.py` (looks up covers not tried before; `--retry` tries the misses again), `tools/copy_covers.py` (copies them into `site/covers/<isbn>.jpg`, at most 600px tall; the build uses a copy over a link), then `tools/build.py` (writes `site/js/data.js` and stamps fingerprints into index.html).
-- App icon: `tools/make_icons.py` (Lucide’s library in yellow on brown); shortcuts: `tools/make_shortcuts.ps1` (desktop, Start menu and project folder; opens the site in its own Chrome window).
+- App icon: `tools/make_icons.py` (Lucide’s library in yellow on brown). She uses the site as an **installed Chrome app** (sharp taskbar icon, 18 Oct): `tools/serve.py` serves `site/` at http://localhost:8020 (this computer only), started at login by a shortcut in her Startup folder that `tools/make_shortcuts.ps1` makes; Chrome made the app’s own shortcuts when she installed it. `site/manifest.json` and `site/sw.js` are what make it installable.
 
 ## How to work here
 
 - Python 3.13: `C:/Users/Jemma/AppData/Local/Programs/Python/Python313/python.exe`, run with `-X utf8`. Ask before installing anything.
-- Check with the `library` preview (`.claude/launch.json`, port 8011) at 1280px. Opening `site/index.html` straight from the folder works too.
+- Check with the `library` preview (`.claude/launch.json`, port 8011) at 1280px; her app reads the same files through port 8020, so a rebuild shows there at once. Opening `site/index.html` straight from the folder still works too.
 - Git repo: commit after each piece of work (`data.js` included).

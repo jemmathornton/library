@@ -436,4 +436,7 @@ document.addEventListener("change", e => {
   });
 });
 
+// installed as a Chrome app from the local server (sharp taskbar icon); opened straight from the folder it's an ordinary page
+if ("serviceWorker" in navigator && location.protocol.startsWith("http")) navigator.serviceWorker.register("sw.js").catch(() => {});
+
 route();
