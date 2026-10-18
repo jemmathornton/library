@@ -1,0 +1,353 @@
+[
+ {
+  "id": "345fwnbarj",
+  "title": "A Man Called Ove",
+  "authors": [
+   {
+    "name": "Fredrik Backman"
+   }
+  ],
+  "surname": "Backman",
+  "added": "2025-01-12",
+  "copies": 1
+ },
+ {
+  "id": "g3zhrqsbt4",
+  "title": "Mortal Engines (hardback)",
+  "authors": [
+   {
+    "name": "Philip Reeve"
+   }
+  ],
+  "surname": "Reeve",
+  "added": "2025-01-12",
+  "copies": 1
+ },
+ {
+  "id": "0b7i4x0dcu",
+  "title": "A Darkling Plain",
+  "authors": [
+   {
+    "name": "Philip Reeve"
+   }
+  ],
+  "surname": "Reeve",
+  "added": "2025-01-12",
+  "copies": 1
+ },
+ {
+  "id": "8uiqpq6ohq",
+  "title": "Sabriel (hardback)",
+  "authors": [
+   {
+    "name": "Garth Nix"
+   }
+  ],
+  "surname": "Nix",
+  "added": "2025-01-12",
+  "copies": 1
+ },
+ {
+  "id": "yq89z87r71",
+  "title": "Goldenhand (hardback)",
+  "authors": [
+   {
+    "name": "Garth Nix"
+   }
+  ],
+  "surname": "Nix",
+  "added": "2025-01-12",
+  "copies": 1
+ },
+ {
+  "id": "whgdvgxisd",
+  "title": "Clariel (hardback)",
+  "authors": [
+   {
+    "name": "Garth Nix"
+   }
+  ],
+  "surname": "Nix",
+  "added": "2025-01-12",
+  "copies": 1
+ },
+ {
+  "id": "oglwn7z0an",
+  "title": "Terciel & Elinor (hardback)",
+  "authors": [
+   {
+    "name": "Garth Nix"
+   }
+  ],
+  "surname": "Nix",
+  "added": "2025-01-12",
+  "copies": 1
+ },
+ {
+  "id": "akvei6dpsz",
+  "title": "Guards Guards (original paperback)",
+  "authors": [
+   {
+    "name": "Terry Pratchett"
+   }
+  ],
+  "surname": "Pratchett",
+  "added": "2025-01-12",
+  "copies": 1
+ },
+ {
+  "id": "59y4gluv9x",
+  "title": "Men at Arms (original paperback)",
+  "authors": [
+   {
+    "name": "Terry Pratchett"
+   }
+  ],
+  "surname": "Pratchett",
+  "added": "2025-01-12",
+  "copies": 1
+ },
+ {
+  "id": "cpfzj81mmk",
+  "title": "Soul Music (original paperback)",
+  "authors": [
+   {
+    "name": "Terry Pratchett"
+   }
+  ],
+  "surname": "Pratchett",
+  "added": "2025-01-12",
+  "copies": 1
+ },
+ {
+  "id": "tojrmsq93y",
+  "title": "Feat of Clay (original paperback)",
+  "authors": [
+   {
+    "name": "Terry Pratchett"
+   }
+  ],
+  "surname": "Pratchett",
+  "added": "2025-01-12",
+  "copies": 1
+ },
+ {
+  "id": "um17ydugnz",
+  "title": "First Term & Last Term Malory Towers (old)",
+  "authors": [
+   {
+    "name": "Enid Blyton"
+   }
+  ],
+  "surname": "Blyton",
+  "added": "2025-01-12",
+  "copies": 1
+ },
+ {
+  "id": "6dwjpg48dt",
+  "title": "Famous Five old except - Run Away, Caravan, Into Trouble , Into Adventure, Mystery Moor , Billycock Hill, Smugglers Top and Secret Trail",
+  "authors": [
+   {
+    "name": "Enid Blyton"
+   }
+  ],
+  "surname": "Blyton",
+  "added": "2025-01-12",
+  "copies": 1
+ },
+ {
+  "id": "um17riignz",
+  "title": "Secret Seven old except - Win Through, Fireworks, Good Old, and Fun For",
+  "authors": [
+   {
+    "name": "Enid Blyton"
+   }
+  ],
+  "surname": "Blyton",
+  "added": "2025-01-12",
+  "copies": 1
+ },
+ {
+  "id": "q7u0vdywe4",
+  "title": "Adventure old except Queer",
+  "authors": [
+   {
+    "name": "Enid Blyton"
+   }
+  ],
+  "surname": "Blyton",
+  "added": "2025-01-12",
+  "copies": 1
+ },
+ {
+  "id": "mneswvr31h",
+  "title": "Happy Place",
+  "authors": [
+   {
+    "name": "Emily Henry"
+   }
+  ],
+  "surname": "Henry",
+  "added": "2025-01-12",
+  "copies": 1,
+  "maybeOwned": [
+   "umdlqqognz"
+  ]
+ },
+ {
+  "id": "nrtvhgo41p",
+  "title": "Truly Devious series",
+  "authors": [
+   {
+    "name": "Maureen Johnson"
+   }
+  ],
+  "surname": "Johnson",
+  "added": "2025-01-12",
+  "copies": 1
+ },
+ {
+  "id": "py257gtno7",
+  "title": "Pride",
+  "authors": [
+   {
+    "name": "Tim Tate"
+   }
+  ],
+  "surname": "Tate",
+  "added": "2025-01-12",
+  "copies": 1
+ },
+ {
+  "id": "dch78lpu84",
+  "title": "You and Me on Vacation",
+  "authors": [
+   {
+    "name": "Emily Henry"
+   }
+  ],
+  "surname": "Henry",
+  "added": "2025-01-13",
+  "copies": 1
+ },
+ {
+  "id": "0b7l6lldcu",
+  "title": "Night Circus",
+  "authors": [
+   {
+    "name": "Erin Morgenstern"
+   }
+  ],
+  "surname": "Morgenstern",
+  "added": "2025-01-13",
+  "copies": 1
+ },
+ {
+  "id": "mnefmna31h",
+  "title": "Small Things Like These",
+  "authors": [
+   {
+    "name": "Claire Keegan"
+   }
+  ],
+  "surname": "Keegan",
+  "added": "2025-01-13",
+  "copies": 1
+ },
+ {
+  "id": "0b714w3dcu",
+  "title": "Threadneedle",
+  "authors": [
+   {
+    "name": "Cari Thomas"
+   }
+  ],
+  "surname": "Thomas",
+  "added": "2025-01-14",
+  "copies": 1
+ },
+ {
+  "id": "rwobwzhxoz",
+  "title": "Reboot",
+  "authors": [
+   {
+    "name": "Justin Taylor"
+   }
+  ],
+  "surname": "Taylor",
+  "added": "2025-01-16",
+  "copies": 1
+ },
+ {
+  "id": "q7g1ug5we4",
+  "title": "Trebizon except first, second, summer x2 and into fourth",
+  "authors": [
+   {
+    "name": "Anne Digby"
+   }
+  ],
+  "surname": "Digby",
+  "added": "2025-01-25",
+  "copies": 1
+ },
+ {
+  "id": "m4pqdta31h",
+  "title": "Thr Last Hero",
+  "authors": [
+   {
+    "name": "Terry Pratchett"
+   }
+  ],
+  "surname": "Pratchett",
+  "added": "2026-03-08",
+  "copies": 1
+ },
+ {
+  "id": "ay4ig65psz",
+  "title": "The Wee Free Men",
+  "authors": [
+   {
+    "name": "Terry Pratchett"
+   }
+  ],
+  "surname": "Pratchett",
+  "added": "2026-03-08",
+  "copies": 1
+ },
+ {
+  "id": "3knwu6warj",
+  "title": "Snuff",
+  "authors": [
+   {
+    "name": "Terry Pratchett"
+   }
+  ],
+  "surname": "Pratchett",
+  "added": "2026-03-08",
+  "copies": 1
+ },
+ {
+  "id": "7fz9j4dhd6",
+  "title": "Raising Steam",
+  "authors": [
+   {
+    "name": "Terry Pratchett"
+   }
+  ],
+  "surname": "Pratchett",
+  "added": "2026-03-08",
+  "copies": 1
+ },
+ {
+  "id": "2o6cslhtqt",
+  "title": "The Shepherd's Crown",
+  "authors": [
+   {
+    "name": "Terry Pratchett"
+   }
+  ],
+  "surname": "Pratchett",
+  "added": "2026-03-08",
+  "copies": 1
+ }
+]

@@ -1,0 +1,13 @@
+[
+  {"id": "adult-fiction", "name": "Adult Fiction", "libib": "Adult Fiction", "color": "#8E3B46"},
+  {"id": "fantasy", "name": "Fantasy", "libib": "Fantasy", "color": "#5B4A9E"},
+  {"id": "science-fiction", "name": "Science Fiction", "libib": "Science Fiction", "color": "#2B8A86"},
+  {"id": "dystopia", "name": "Dystopia", "libib": "Dystopia", "color": "#5B6670"},
+  {"id": "young-adult", "name": "Young Adult", "libib": "Young Adult", "color": "#B5577A"},
+  {"id": "childrens", "name": "Children’s", "libib": "Children's", "color": "#C27D22"},
+  {"id": "old-book-collection", "name": "Old Book Collection", "libib": "Old Book Collection", "color": "#8C6A3F"},
+  {"id": "non-fiction", "name": "Non-Fiction", "libib": "Non-Fiction", "color": "#2F6E9C"},
+  {"id": "travel", "name": "Travel", "libib": "Travel", "color": "#3C8459"},
+  {"id": "unsorted", "name": "Not on a shelf yet", "libib": null, "color": "#7A7F7C",
+   "note": "Books that were only in Jemma’s Library on Libib and never moved to a genre."}
+]
