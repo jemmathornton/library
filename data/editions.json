@@ -1,4 +1,7 @@
 {
- "_about": "Editions Libib doesn't say (book id -> edition), added to the title by tools/build.py. Cerulean Sea, 18 Oct: 9781529087949 is the UK paperback, so her other copy (9781250357243, Tor's special edition ISBN) is the Illumicrate one.",
- "ls5xd3s7b9": "Illumicrate Edition"
+ "_about": "Her special editions (book id -> edition), which Libib doesn't say: shown under the title and tagged on the cover (her ask, 18 Oct). Covers are the hardback under the jacket (her choice). Cerulean Sea: 9781529087949 is the UK paperback, so 9781250357243 is the Illumicrate one.",
+ "ls5xd3s7b9": "Illumicrate Edition",
+ "add0013": "Illumicrate Edition",
+ "add0014": "Illumicrate Edition",
+ "add0015": "Illumicrate Edition"
 }

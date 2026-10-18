@@ -197,8 +197,10 @@ function cover(b, extra = "", big = false){
   const r = reading(b).rating;
   const strip = r ? `<span class="rated" title="${starsText(r)} stars"><span class="sg-stars" style="--r:${(r / 5 * 100).toFixed(1)}%"><span>★★★★★</span><span aria-hidden="true">★★★★★</span></span></span>` : "";
   // not owned: the cover faded, with a walnut "Not owned" band across it (her choice, 18 Oct; not on a book's own page)
-  const tag = b.notOwned && !big ? `<span class="not-owned">Not owned</span>` : "";
-  return `<div class="cover${b.cover ? "" : " blank"}${tag ? " unowned" : ""} ${extra}" style="--c:${s ? s.color : "#5E3D22"}">${badge}${tag}${strip}${b.cover ? `<img src="${esc(coverSrc(b, big))}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
+  const tag = (b.notOwned && !big ? `<span class="not-owned">Not owned</span>` : "")
+    // a special edition (Illumicrate and the like, data/editions.json): a brass sash across the other top corner (her ask, 18 Oct)
+    + (b.special && !big ? `<span class="special" title="${esc(b.special)}">Special</span>` : "");
+  return `<div class="cover${b.cover ? "" : " blank"}${b.notOwned && !big ? " unowned" : ""} ${extra}" style="--c:${s ? s.color : "#5E3D22"}">${badge}${tag}${strip}${b.cover ? `<img src="${esc(coverSrc(b, big))}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
 }
 // a cover that won't load becomes a title card
 document.addEventListener("error", e => { const img = e.target; if (img.tagName === "IMG" && img.parentNode.classList.contains("cover")) { img.parentNode.classList.add("blank"); img.remove(); } }, true);
@@ -282,7 +284,7 @@ const SORTS = {
   finished: ["Recently read", (a, b) => (finishes(b).sort().pop() || "").localeCompare(finishes(a).sort().pop() || "") || a.sortTitle.localeCompare(b.sortTitle)],
   stars: ["Your stars", (a, b) => (reading(b).rating || 0) - (reading(a).rating || 0) || a.sortAuthor.localeCompare(b.sortAuthor)],
 };
-const FILTERS = {all: ["All", () => true], owned: ["Owned", b => !b.notOwned], notowned: ["Not owned", b => !!b.notOwned], unread: ["Not read", b => !isRead(b) && !isReading(b)], toread: ["To read", isToRead], reading: ["Reading", isReading], read: ["Read", isRead]};
+const FILTERS = {all: ["All", () => true], owned: ["Owned", b => !b.notOwned], notowned: ["Not owned", b => !!b.notOwned], special: ["Special editions", b => !!b.special], unread: ["Not read", b => !isRead(b) && !isReading(b)], toread: ["To read", isToRead], reading: ["Reading", isReading], read: ["Read", isRead]};
 
 function shelfBooks(list, grouped = currentGrouped){
   const f = FILTERS[shelfView.filter][1], shown = list.filter(f).sort(SORTS[shelfView.sort][1]);

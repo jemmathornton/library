@@ -388,3 +388,7 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .cover .not-owned{position:absolute;z-index:1;left:0;right:0;bottom:22%;padding:9px 0;text-align:center;color:#FBF4E6;font:800 11px/1 var(--body);letter-spacing:.24em;text-transform:uppercase;
   background:rgba(42,28,16,.92);border-top:1px solid #C9A25A;border-bottom:1px solid #C9A25A;box-shadow:0 2px 8px rgba(0,0,0,.35)}
 .blist .cover .not-owned,.picked .cover .not-owned{display:none}
+/* special editions: a brass sash across the top-left corner, mirroring Read (her ask, 18 Oct) */
+.cover .special{position:absolute;z-index:1;left:-34px;top:16px;width:120px;transform:rotate(-45deg);text-align:center;padding:4px 0 3px;
+  background:#C9A25A;color:#2A1F16;font:800 9.5px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;box-shadow:0 1px 4px rgba(0,0,0,.35)}
+.blist .cover .special,.series-list .cover .special{display:none}
