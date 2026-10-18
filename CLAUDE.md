@@ -17,7 +17,7 @@ A private website of the books in Jemma’s home library: every book she owns, s
 - `data/`: the source of truth. `shelves.json` (order, names, colours, which Libib collection), `books.json` (one entry per book; `id` is the Libib id; `displayTitle` overrides the shown title), `to-buy.json` (`maybeOwned` = book ids that look like it), `covers.json` (ISBN → cover link, `null` = none found).
 - `imports/libib-<date>/`: her Libib CSV exports as copied in (one per collection).
 - `tools/import_libib.py <folder>` (report; `--apply` writes `data/books.json` and `data/to-buy.json`: genre collections are the library, the old “Jemma’s Library” catch-all only adds books that aren’t on a shelf, “Books to Buy” is the wishlist). Re-importing overwrites `books.json`, so hand edits there would be lost.
-- `tools/find_covers.py` (looks up covers not tried before; `--retry` tries the misses again), then `tools/build.py` (writes `site/js/data.js` and stamps fingerprints into index.html).
+- `tools/find_covers.py` (looks up covers not tried before; `--retry` tries the misses again), `tools/copy_covers.py` (copies them into `site/covers/<isbn>.jpg`, at most 600px tall; the build uses a copy over a link), then `tools/build.py` (writes `site/js/data.js` and stamps fingerprints into index.html).
 
 ## How to work here
 

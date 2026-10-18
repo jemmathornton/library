@@ -66,8 +66,8 @@ const reading = b => ({...(b.status ? {status: b.status} : {}), ...(READ[b.id] |
 const isRead = b => reading(b).status === "read", isReading = b => reading(b).status === "reading";
 
 // ---------- pieces ----------
-// Open Library's large pictures are slow to arrive, so lists use its medium size and only the book page the large one
-const coverSrc = (b, big) => big ? b.cover : b.cover.replace(/-L\.jpg$/, "-M.jpg");
+// covers are copied into covers/; one still only linked from Open Library uses its quicker medium size in lists
+const coverSrc = (b, big) => big || !/^https:/.test(b.cover) ? b.cover : b.cover.replace(/-L\.jpg$/, "-M.jpg");
 function cover(b, extra = "", big = false){
   const s = shelfIndex[b.shelf], st = reading(b).status;
   const badge = st === "read" ? `<span class="badge" title="Read">${ic("check")}</span>` : st === "reading" ? `<span class="badge reading" title="Reading now">${ic("bookmark")}</span>` : "";
