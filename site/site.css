@@ -367,7 +367,7 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .cover .rated.word{font:700 10.5px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;gap:6px}
 .cover .rated.now{color:#fff}
 .cover .rated.now .i{color:#F5C44E;font-size:12px}
-/* TRIAL: the read sash, across the top corner */
+/* read books: a cream sash across the top corner (her choice, 18 Oct) */
 .cover .sash{position:absolute;z-index:1;right:-34px;top:16px;width:120px;transform:rotate(45deg);text-align:center;padding:4px 0 3px;
   background:#FBF4E6;color:#3B2616;font:800 9.5px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;box-shadow:0 1px 4px rgba(0,0,0,.35)}
 .blist .cover .sash,.series-list .cover .sash{display:none}

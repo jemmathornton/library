@@ -144,9 +144,8 @@ function cover(b, extra = "", big = false){
   const s = shelfIndex[b.shelf], st = reading(b).status;
   // read or reading: a tick (or bookmark) in the top corner, walnut and cream (her choice, 18 Oct); her stars, filled to
   // the rating with no number, in a strip across the foot
-  // TRIAL (18 Oct): half the read books show the tick, half a cream "Read" sash across the corner, for her to compare
-  const sash = [...String(b.id)].reduce((n, ch) => n + ch.charCodeAt(0), 0) % 2 === 0;
-  const badge = st === "read" ? (sash ? `<span class="sash" title="Read">Read</span>` : `<span class="badge" title="Read">${ic("check")}</span>`) : st === "reading" ? `<span class="badge reading" title="Reading now">${ic("bookmark")}</span>` : "";
+  // read: a cream "Read" sash across the top corner (her choice, 18 Oct, over a tick)
+  const badge = st === "read" ? `<span class="sash" title="Read">Read</span>` : st === "reading" ? `<span class="badge reading" title="Reading now">${ic("bookmark")}</span>` : "";
   const r = reading(b).rating;
   const strip = r ? `<span class="rated" title="${starsText(r)} stars"><span class="sg-stars" style="--r:${(r / 5 * 100).toFixed(1)}%"><span>★★★★★</span><span aria-hidden="true">★★★★★</span></span></span>` : "";
   return `<div class="cover${b.cover ? "" : " blank"} ${extra}" style="--c:${s ? s.color : "#5E3D22"}">${badge}${strip}${b.cover ? `<img src="${esc(coverSrc(b, big))}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
