@@ -31,7 +31,10 @@ function tidyTitle(raw){
   let t = raw.trim(), bits = [], m;
   while ((m = /\s*\(([^()]*)\)/.exec(t))) { if (m[1].trim()) bits.unshift(m[1].trim()); t = (t.slice(0, m.index) + t.slice(m.index + m[0].length)).trim(); }
   t = t.replace(/\s+Paperback$/i, "").replace(/[\s:;,–-]+$/, "").trim();   // "The Bear and The Nightingale: (Winternight Series)" leaves no colon behind
-  const c = t.indexOf(": ");
+  // "Famous Five: 1: Five On A Treasure Island" -> "Five On A Treasure Island", with "Famous Five 1" underneath
+  const numbered = /^(.+?):\s*(\d+):\s*(.+)$/.exec(t);
+  if (numbered) { bits.unshift(numbered[1] + " " + numbered[2]); t = numbered[3]; }
+  const c = numbered ? -1 : t.indexOf(": ");
   if (c > 0 && !/\d$/.test(t.slice(0, c)) && t.slice(0, c).split(/\s+/).length >= 2) { bits.unshift(t.slice(c + 2)); t = t.slice(0, c); }
   return {t: t || raw, sub: bits.join(" · ")};
 }
@@ -112,6 +115,7 @@ function titleKeys(raw){
   add(parts[0], 1);
   return keys;
 }
+const shelfKey = b => { const h = (seriesOf[b.id] || [])[0]; return h ? sortTitle(h.series.name) + " " + String(h.entry.n).padStart(3, "0") : b.sortTitle; };
 const SERIES = (DATA.series || []).map(s => ({...s, id: slug(s.name), surnames: s.author.toLowerCase().split("|"),
   entries: s.books.map((t, i) => ({n: i + 1, title: t.split("|")[0], keys: new Set(t.split("|").map(tkey)), owned: [], away: [], wish: []}))}));
 const seriesOf = {};   // book id -> [{series, entry}]
@@ -181,7 +185,6 @@ function renderNav(active){
     <div class="nav-group minor">
       ${link("#reading", ic("bookmark"), "Reading", nReading || null)}
       ${link("#to-read", ic("clock"), "To read", readingLog().filter(b => isToRead(b) && !isElsewhere(b)).length || null)}
-      ${link("#series", ic("layers"), "Series", seriesShown().length)}
       ${link("#to-buy", ic("shopping-bag"), "To buy", left)}
       ${link("#authors", ic("users"), "Authors", AUTHORS.length)}
       ${link("#stats", ic("chart"), "Stats")}
@@ -206,7 +209,8 @@ function pageHome(){
 const SHELF_VIEW = {filter: "all", sort: "author"};
 let shelfView = {...SHELF_VIEW};
 const SORTS = {
-  author: ["Author surname", (a, b) => a.sortAuthor.localeCompare(b.sortAuthor) || a.sortTitle.localeCompare(b.sortTitle)],
+  // within an author, a series stays together in reading order, filed where its name falls among the other titles
+  author: ["Author surname", (a, b) => a.sortAuthor.localeCompare(b.sortAuthor) || shelfKey(a).localeCompare(shelfKey(b))],
   title: ["Title A–Z", (a, b) => a.sortTitle.localeCompare(b.sortTitle)],
   added: ["Recently added", (a, b) => (b.added || "").localeCompare(a.added || "")],
   old: ["Oldest first", (a, b) => (a.published || "9999").localeCompare(b.published || "9999")],
@@ -366,38 +370,8 @@ function pageReading(){
         <label class="btn">${ic("upload")}Load a backup<input type="file" id="loadBackup" accept=".json,application/json" hidden></label></div></div></div>`;
 }
 
-// ---------- series pages ----------
-const seriesLine = b => (seriesOf[b.id] || []).map(h => `<a class="in-series" href="#series-${h.series.id}">${ic("layers")}Book ${h.entry.n} of ${esc(h.series.name)}</a>`).join("");
-function seriesCounts(s){
-  const st = s.entries.map(entryState);
-  return {owned: st.filter(x => x.owned).length, read: st.filter(x => x.read).length, total: s.entries.length, st};
-}
-const seriesShown = () => SERIES.filter(s => s.entries.some(e => e.owned.length));
-function pageSeriesList(){
-  const list = seriesShown().sort((a, b) => a.name.replace(/^The /, "").localeCompare(b.name.replace(/^The /, "")));
-  const done = list.filter(s => { const c = seriesCounts(s); return c.read === c.total; }).length;
-  return hero({kicker: "Browse", title: "The <em>series</em>", covers: mixed(list.flatMap(s => s.entries.flatMap(e => e.owned))),
-      text: "Every series on your shelves in reading order: what you own, what you’ve read, and what’s missing.",
-      figures: [[num(list.length), "series"], [num(done), "read all the way through"]]})
-    + `<div class="series-grid">${list.map(s => { const c = seriesCounts(s);
-        return `<a class="series-card" href="#series-${s.id}"><div class="strip">${c.st.map(x => x.book ? cover(x.book) : `<div class="cover gap"></div>`).join("")}</div>
-          <div class="txt"><h3>${esc(s.name)}</h3><div class="by">${esc(s.entries.flatMap(e => e.owned)[0]?.by || "")}</div>
-          <div class="pips">${c.st.map(x => `<i class="${x.read ? "read" : x.owned ? "owned" : x.wish ? "wish" : ""}"></i>`).join("")}</div>
-          <div class="by">${c.owned} of ${c.total} owned · ${c.read} read</div></div></a>`; }).join("")}</div>`
-    + `<div class="note">${ic("info")}<div>Series whose order is sure are here; Trebizon, the Quest books, Legacy of the Stones and Pure Dead aren’t yet.</div></div>`;
-}
-function pageSeries(s){
-  const c = seriesCounts(s);
-  const label = x => x.now ? ["reading", "Reading now"] : x.read && !x.owned ? ["read", "Read, not on your shelves"] : x.read ? ["read", "Read"]
-    : x.owned ? ["owned", "On your shelves, not read"] : x.wish ? ["wish", "On your to-buy list"] : ["missing", "Not on your shelves"];
-  return hero({kicker: `<a href="#series">Series</a>`, title: esc(s.name), covers: s.entries.flatMap(e => e.owned),
-      figures: [[num(c.total), "books"], [num(c.owned), "on your shelves"], [num(c.read), "read"]]})
-    + `<ol class="series-list">${s.entries.map((e, i) => { const x = c.st[i], [cls, words] = label(x), b = x.book;
-        const shelf = e.owned[0] && shelfIndex[e.owned[0].shelf];
-        const inner = `<span class="no">${e.n}</span>${b ? cover(b) : `<div class="cover gap"></div>`}<div><b>${esc(e.title)}</b>
-          <span class="state ${cls}">${words}${shelf ? ` · ${esc(shelf.name)}` : ""}${e.owned.length > 1 ? ` · ${e.owned.length} copies` : ""}</span></div>`;
-        return `<li class="${cls}">${b && (e.owned.length || e.away.length) ? `<a href="${href(b)}">${inner}</a>` : `<div>${inner}</div>`}</li>`; }).join("")}</ol>`;
-}
+// ---------- series, in place on the shelves (her choice, 18 Oct: no page of their own) ----------
+const seriesLine = b => (seriesOf[b.id] || []).map(h => `<span class="in-series">${ic("layers")}Book ${h.entry.n} of ${esc(h.series.name)}</span>`).join("");
 
 // ---------- to read ----------
 let pickFrom = "list", pickShelf = "", picked = null;
@@ -540,11 +514,10 @@ function route(){
   let html, active = "#" + key, title = "Jemma’s Library";
   if (key.startsWith("shelf-") && shelfIndex[key.slice(6)]) { shelfView = {...SHELF_VIEW}; const s = shelfIndex[key.slice(6)]; html = pageShelf(s); title = s.name; }
   else if (key === "shelves") { shelfView = {...SHELF_VIEW}; html = pageAllShelves(); title = "All shelves"; }
-  else if (key.startsWith("series-") && SERIES.find(s => s.id === key.slice(7))) { const s = SERIES.find(x => x.id === key.slice(7)); html = pageSeries(s); active = "#series"; title = s.name; }
   else if (key.startsWith("b-") && bookIndex[key.slice(2)]) { const b = bookIndex[key.slice(2)]; html = pageBook(b); active = "#shelf-" + b.shelf; title = b.t; }
   else if (key.startsWith("r-") && SG.books[+key.slice(2)] && !SG.books[+key.slice(2)].books) { const e = SG.books[+key.slice(2)]; html = pageSgBook(e); active = "#reading"; title = e.t; }
   else if (key.startsWith("a-") && authorIndex[key.slice(2)]) { const a = authorIndex[key.slice(2)]; html = pageAuthor(a); active = "#authors"; title = a.name; }
-  else html = {authors: pageAuthors, reading: pageReading, "to-read": pageToRead, add: pageAdd, series: pageSeriesList, "to-buy": pageToBuy, stats: pageStats}[key]?.() || (active = "#home", pageHome());
+  else html = {authors: pageAuthors, reading: pageReading, "to-read": pageToRead, add: pageAdd, "to-buy": pageToBuy, stats: pageStats}[key]?.() || (active = "#home", pageHome());
   view.innerHTML = html; renderNav(active);
   document.title = title === "Jemma’s Library" ? title : `${curly(title)} · Jemma’s Library`;
   scrollTo(0, 0);
