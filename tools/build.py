@@ -54,7 +54,9 @@ def build():
             continue
         isbn = b.get('isbn13', '')
         # a cover is found by ISBN, or by title for books without one (stored as "id-<id>", tools/find_covers.py)
-        key = isbn if isbn and (covers.get(isbn) or os.path.exists(os.path.join(SITE, 'covers', isbn + '.jpg'))) else 'id-' + str(b.get('id', ''))
+        # (books read elsewhere have no id: theirs is "sg-<title>")
+        own = 'id-' + str(b['id']) if b.get('id') else 'sg-' + re.sub(r'[^a-z0-9]+', '-', b.get('title', '').lower()).strip('-')
+        key = isbn if isbn and (covers.get(isbn) or os.path.exists(os.path.join(SITE, 'covers', isbn + '.jpg'))) else own
         local = os.path.join(SITE, 'covers', key + '.jpg')
         if os.path.exists(local):   # the copy in site/covers (tools/copy_covers.py), fingerprinted so a new copy shows at once
             b['cover'] = f"covers/{key}.jpg?v={hashlib.md5(open(local, 'rb').read()).hexdigest()[:8]}"
