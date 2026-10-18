@@ -21,12 +21,7 @@
 5. **Titles are tidied automatically.** Anything in brackets, and a long subtitle after a colon, moves to a smaller line (e.g. “Harry Potter and the Goblet of Fire: 4/7 (Harry Potter 4)”). The Libib title is still shown on the book page. Is this OK? Any book can get its own title (`displayTitle` in `data/books.json`).
 6. **Author names tidied** (18 Oct, her yes; `data/name-fixes.json`): e.g. Hans Christian Andersen, Florentyna Leow and Nina Mingya Powles (Libib had “LEOW”, “POWLES”), Shirley Barber and Phoebe Gilman added where Libib had no author, Anonymous dropped from The Familiar, Hwang Bo-reum filed under Hwang. Check any you’re not sure of.
 7. **Look:** yellows and browns since 18 Oct (walnut sidebar, cream pages, mustard gold); banners are made of each page’s own covers (her choice, 18 Oct). The shelf colours (now only the dots) are first picks.
-8. **StoryGraph books that may be on your shelves under another title.** Should these count as read?
-   - Wicked: linked to “Wicked: The Wicked Years Vintage Collection” (a boxed set). Right?
-   - The Golden Compass and the His Dark Materials boxed set (read) vs Northern Lights, The Subtle Knife and The Amber Spyglass on Fantasy: not linked
-   - Harry Potter Series Box Set (read): not linked to the Harry Potter books on Fantasy
-   - Fantastic Beasts & Where to Find Them (read): two copies on the shelves (Comic Relief and Illustrated), so not linked
-   - Fun and Games at Malory Towers (read): the Libib copy is spelt “Fund and Games”, so not linked
+8. **StoryGraph links: done** (18 Oct). Northern Lights, The Subtle Knife and The Amber Spyglass count as read (The Golden Compass and the boxed set on StoryGraph, linked by hand in data/storygraph-links.json, British titles shown); both Fantastic Beasts copies read; Fun and Games at Malory Towers spelt right and read. Wicked stays linked to the Wicked Years boxed set.
 9. **Marking books here as well as on StoryGraph.** Books StoryGraph doesn’t know still have Not read / Reading / Read buttons, saved in this browser only. Keep them, or should everything go through StoryGraph?
 
 10. **Series to add** (order not sure): Trebizon, the Quest books (Lisa Wright DeGroodt), Legacy of the Stones, Pure Dead. Tell me the order, or say leave them.
