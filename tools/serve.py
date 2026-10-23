@@ -87,6 +87,8 @@ def add(book):
         with open(bought_path, 'w', encoding='utf-8', newline='\n') as fh:
             json.dump(bought, fh, ensure_ascii=False, indent=1)
             fh.write('\n')
+    if book.get('cover') and urllib.parse.urlparse(book['cover']).scheme != 'https':
+        book['cover'] = ''   # only https links: never a file on this computer
     if book.get('cover'):   # keep its cover like the others
         covers_path = os.path.join(DATA, 'covers.json')
         covers = json.load(open(covers_path, encoding='utf-8')) if os.path.exists(covers_path) else {}
@@ -124,7 +126,18 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def api_ok(self):
         return self.headers.get('X-Library') == '1'
 
+    def host_ok(self):   # only this computer's own names: another site pointing its name at 127.0.0.1 gets nothing
+        port = self.server.server_port
+        return (self.headers.get('Host') or '').lower() in (f'localhost:{port}', f'127.0.0.1:{port}')
+
+    def do_HEAD(self):
+        if not self.host_ok():
+            return self.reply({'error': 'not allowed'}, 403)
+        return super().do_HEAD()
+
     def do_GET(self):
+        if not self.host_ok():
+            return self.reply({'error': 'not allowed'}, 403)
         if not self.path.startswith('/api/'):
             return super().do_GET()
         if not self.api_ok():
@@ -138,7 +151,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.reply({'error': 'unknown'}, 404)
 
     def do_POST(self):
-        if self.path != '/api/books' or not self.api_ok():
+        if self.path != '/api/books' or not self.api_ok() or not self.host_ok():
             return self.reply({'error': 'not allowed'}, 403)
         try:
             book = json.loads(self.rfile.read(int(self.headers.get('Content-Length', 0))) or b'{}')
