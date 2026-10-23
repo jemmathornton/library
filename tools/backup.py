@@ -28,15 +28,19 @@ def git(*args):
 
 
 def main():
-    try:
+    try:   # on its own: if git can't run (not found, the repo busy), the zip still happens
         if git('status', '--porcelain').stdout.strip():
             git('add', '-A')
             r = git('commit', '-q', '-m', f'Weekly backup {date.today().isoformat()}: changes since the last save')
             log('git: saved changes' if r.returncode == 0 else 'git: ' + (r.stderr or r.stdout).strip())
+    except Exception as e:
+        log(f'git failed: {e}')
+    out = os.path.join(DEST, f'HomeLibrary backup {date.today().isoformat()}.zip')
+    part = out + '.part'   # renamed once finished, so a broken zip is never kept as a backup
+    try:
         os.makedirs(DEST, exist_ok=True)
-        out = os.path.join(DEST, f'HomeLibrary backup {date.today().isoformat()}.zip')
         n = 0
-        with zipfile.ZipFile(out, 'w', zipfile.ZIP_DEFLATED) as z:
+        with zipfile.ZipFile(part, 'w', zipfile.ZIP_DEFLATED) as z:
             for here, dirs, files in os.walk(ROOT):
                 dirs[:] = [d for d in dirs if d not in ('.git', '__pycache__', 'logs')]
                 for f in files:
@@ -45,12 +49,19 @@ def main():
                     p = os.path.join(here, f)
                     z.write(p, os.path.join('HomeLibrary', os.path.relpath(p, ROOT)))
                     n += 1
+        with zipfile.ZipFile(part) as z:
+            bad = z.testzip()
+        if bad:
+            raise RuntimeError(f'the zip came out broken ({bad})')
+        os.replace(part, out)
         old = sorted(f for f in os.listdir(DEST) if f.startswith('HomeLibrary backup ') and f.endswith('.zip'))
         for f in old[:-KEEP]:
             os.remove(os.path.join(DEST, f))
         log(f'zipped {n} files to {out} ({os.path.getsize(out) / 1e6:.1f} MB); {min(len(old), KEEP)} backups kept')
     except Exception as e:
         log(f'failed: {e}')
+        if os.path.exists(part):
+            os.remove(part)
         sys.exit(1)
 
 
