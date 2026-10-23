@@ -58,7 +58,9 @@ def add(book):
     if not title or book.get('shelf') not in shelves:
         return {'ok': False, 'error': 'A book needs a title and a shelf.'}
     i13 = isbn13(book.get('isbn', ''))
-    b = {'id': f'add{len(added) + 1:04d}', 'title': title,
+    # the next number after the highest (not the count: a gap, like add0009, would give an id already in use)
+    n = max([int(x['id'][3:]) for x in added if re.fullmatch(r'add\d+', x.get('id', ''))] + [0]) + 1
+    b = {'id': f'add{n:04d}', 'title': title,
          'authors': [{'name': n.strip()} for n in book.get('authors', []) if n.strip()], 'shelf': book['shelf'],
          'isbn13': i13, 'publisher': book.get('publisher', ''), 'published': book.get('published', ''),
          'pages': int(book['pages']) if str(book.get('pages') or '').isdigit() else None,
