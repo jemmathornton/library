@@ -35,6 +35,25 @@ def short_title(s):
     return tkey(re.split(r':\s', s)[0])
 
 
+EDITION = re.compile(r"^(\d+\s*/\s*\d+|(the\s+)?(illustrated|children'?s|special|collector'?s|anniversary)\s+edition)$", re.I)
+
+
+def full_title(s):
+    """The whole title, tidied as short_title() but keeping what comes after a colon, so 'Secret Seven: 10: Puzzle For The
+    Secret Seven' and 'Secret Seven: 1: The Secret Seven' stay two books. A part that only names the edition or the place in
+    the series goes ('Harry Potter and the Goblet of Fire: 4/7', '...: Illustrated Edition' are the Goblet of Fire)."""
+    s = re.sub(r'^\s*\d+\s*[:.]\s*', '', re.sub(r'\(.*?\)', '', s or ''))
+    s = re.sub(r'^\s*(the|a|an)\s+', '', s, flags=re.I)
+    return tkey(' '.join(p for p in re.split(r':\s', s) if not EDITION.match(p.strip())))
+
+
+def series_no(s):
+    """The book's number in its series when the title gives one ('(Harry Potter 4)', '(2)', ': 4/7', 'Book 5'), else ''."""
+    m = (re.search(r'\((?:[^()]*?[\s#])?(\d+)\)', s or '') or re.search(r'(?:^|:\s*)(\d+)\s*(?:/\s*\d+|:)', s or '')
+         or re.search(r'\b(?:book|arc|part|volume|vol\.)\s*(\d+)', s or '', re.I))
+    return str(int(m.group(1))) if m else ''
+
+
 def after_colon(s):
     """'Comic Relief: Quidditch Through the Ages (...)' -> 'quiditchthroughtheages' (another way the title may be written)."""
     parts = re.split(r':\s', re.sub(r'\(.*?\)', '', s or ''), maxsplit=1)
@@ -110,20 +129,30 @@ def main():
     if os.path.exists(removed_path):
         gone = {x['id'] for x in json.load(open(removed_path, encoding='utf-8'))}
         books = [b for b in books if b['id'] not in gone]
-    by_isbn, by_ts, by_t = {}, {}, {}
+    by_isbn, by_full, by_ts, by_t = {}, {}, {}, {}
     for b in books:
         for i in (b.get('isbn13'), isbn13(b.get('isbn10', ''))):
             if i:
                 by_isbn.setdefault(i, b['id'])
-        t = short_title(b.get('displayTitle') or b['title'])
-        by_ts.setdefault(t + '|' + norm(b.get('surname', '')), []).append(b['id'])
-        for k in (t, after_colon(b.get('displayTitle') or b['title'])):
+        bt = b.get('displayTitle') or b['title']
+        by_full.setdefault(full_title(bt) + '|' + norm(b.get('surname', '')), []).append(b)
+        by_ts.setdefault(short_title(bt) + '|' + norm(b.get('surname', '')), set()).add(b['id'])
+        for k in (short_title(bt), full_title(bt), after_colon(bt)):
             if k:
                 by_t.setdefault(k, set()).add(b['id'])
-    group, key_of = {}, {}   # every copy of the same book: same short title and surname
-    for k, ids in by_ts.items():
-        for i in ids:
-            group[i], key_of[i] = ids, k.split('|')[0]
+    # every copy of the same book: same whole title and surname, and the same series number where the titles give
+    # different ones (the part before a colon alone lumped 13 Secret Seven books together)
+    group = {}
+    for k, bs in by_full.items():
+        nos = {b['id']: series_no(b.get('displayTitle') or b['title']) for b in bs}
+        split = len(set(nos.values()) - {''}) > 1
+        for b in bs:
+            group[b['id']] = [x['id'] for x in bs if not split or nos[x['id']] == nos[b['id']]]
+    by_full = {k: group[bs[0]['id']] for k, bs in by_full.items() if len({tuple(group[b['id']]) for b in bs}) == 1}
+
+    def one_book(ids):   # the ids' copies when they are all one book, else None
+        groups = {tuple(group[i]) for i in ids or ()}
+        return list(groups.pop()) if len(groups) == 1 else None
 
     links_path = os.path.join(DATA, 'storygraph-links.json')
     links = {k: v for k, v in json.load(open(links_path, encoding='utf-8')).items() if not k.startswith('_')} if os.path.exists(links_path) else {}
@@ -152,19 +181,18 @@ def main():
         isbn = isbn13(col(r, 'ISBN/UID', 'ISBN'))
         if isbn:
             e['isbn13'] = isbn
-        t = short_title(title)
+        t, ft, sn = short_title(title), full_title(title), surname(authors)
         match, way = None, None
         if title in links:   # linked by hand (data/storygraph-links.json): a boxed set, a US title, a Libib typo
             match, way = [i for i in links[title] if i in known], 'by hand'
         elif isbn and isbn in by_isbn:
-            # her other copies too, but only when StoryGraph's title is that book's ("Veronica Mars: The Thousand-Dollar
-            # Tan Line" must not pull in "Veronica Mars (2): ... Mr. Kiss and Tell")
-            b0 = by_isbn[isbn]
-            match, way = (group[b0] if t == key_of[b0] else [b0]), 'isbn'
-        elif t + '|' + surname(authors) in by_ts:
-            match, way = by_ts[t + '|' + surname(authors)], 'title and author'
-        elif by_t.get(t) and len({tuple(group[i]) for i in by_t[t]}) == 1:   # one book, maybe in several copies
-            match, way = group[next(iter(by_t[t]))], 'title'
+            match, way = group[by_isbn[isbn]], 'isbn'   # her other copies of that book too
+        elif ft + '|' + sn in by_full:
+            match, way = by_full[ft + '|' + sn], 'title and author'
+        elif one_book(by_ts.get(t + '|' + sn)):   # the part before a colon, only when it is one book
+            match, way = one_book(by_ts[t + '|' + sn]), 'title and author'
+        elif one_book(by_t.get(ft) or by_t.get(t)):   # title alone: only when one book has it, maybe in several copies
+            match, way = one_book(by_t.get(ft) or by_t.get(t)), 'title'
         how[way] += 1
         if match:
             e['books'] = match
