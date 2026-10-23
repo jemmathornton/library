@@ -331,12 +331,13 @@ function readingPanel(b){
 }
 
 const MON = MONTHS.map(m => m.slice(0, 3));
-function dateRange([a, b]){   // ['2024-01-02', '2024-01-20'] -> '2 Jan – 20 Jan 2024'
-  const p = d => (/^(\d{4})-(\d{2})-(\d{2})/.exec(d || "") || []).slice(1).map(Number);
+function dateRange([a, b]){   // ['2024-01-02', '2024-01-20'] -> '2 Jan – 20 Jan 2024'; partial dates too ('2024', '2024-09')
+  const p = d => (/^(\d{4})(?:-(\d{2}))?(?:-(\d{2}))?/.exec(d || "") || []).slice(1).map(x => +x || 0);
   const [y1, m1, d1] = p(a), [y2, m2, d2] = p(b);
-  if (!y2) return y1 ? `Started ${d1} ${MON[m1 - 1]} ${y1}` : "";
-  if (!y1 || a === b) return `${d2} ${MON[m2 - 1]} ${y2}`;
-  return `${d1} ${MON[m1 - 1]}${y1 !== y2 ? " " + y1 : ""} – ${d2} ${MON[m2 - 1]} ${y2}`;
+  const when = (y, m, d, withYear = true) => [d || "", m ? MON[m - 1] : "", withYear ? y : ""].filter(Boolean).join(" ");
+  if (!y2) return y1 ? `Started ${when(y1, m1, d1)}` : "";
+  if (!y1 || a === b) return when(y2, m2, d2);
+  return `${when(y1, m1, d1, y1 !== y2 || !m1)} – ${when(y2, m2, d2)}`;
 }
 const starsShown = r => `<span class="sg-stars" style="--r:${(r / 5 * 100).toFixed(1)}%" aria-label="${r} stars"><span>★★★★★</span><span aria-hidden="true">★★★★★</span></span><b class="sg-num">${r}</b>`;
 // her StoryGraph reviews: spoilers stay hidden until clicked

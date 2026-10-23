@@ -81,15 +81,18 @@ def col(row, *names):
 
 
 def dates_read(s):
-    """'2024/01/02-2024/01/20, 2025/03/01-' -> [['2024-01-02', '2024-01-20'], ['2025-03-01', '']]
-    (splitting on the first '-' works because StoryGraph writes dates with '/')."""
+    """'2024/01/02-2024/01/20, 2025/03/01-' -> [['2024-01-02', '2024-01-20'], ['2025-03-01', '']]. Dates can be partial
+    ('2024-2024', '2024/04/29-2024/09'); a date on its own ('2014/01/08') is when she finished."""
+    d = r'\d{4}(?:/\d{1,2}){0,2}'
+    tidy = lambda x: '-'.join(n.zfill(2) for n in x.strip().split('/')) if x and x.strip() else ''
     out = []
     for part in re.split(r',\s*', s or ''):
         part = part.strip()
         if not part:
             continue
-        ends = [d.strip().replace('/', '-') for d in part.split('-', 1)] if re.match(r'^\d{4}/', part) else [part, '']
-        out.append((ends + [''])[:2])
+        m = re.fullmatch(rf'({d})?\s*-\s*({d})?', part)
+        ends = [tidy(m[1]), tidy(m[2])] if m else ['', tidy(part)] if re.fullmatch(d, part) else [part, '']
+        out.append(ends)
     return out
 
 
