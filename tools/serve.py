@@ -25,6 +25,13 @@ SITE, DATA = os.path.join(ROOT, 'site'), os.path.join(ROOT, 'data')
 ADDED = os.path.join(DATA, 'added.json')
 UA = {'User-Agent': "Jemma's Home Library (private)"}
 PYTHON = os.path.join(os.path.dirname(sys.executable), 'python.exe')   # under pythonw, run the build with python
+LOCK = threading.Lock()   # one add or reading import at a time, so two builds never write the site at once
+
+
+def build():
+    """Rebuild the site; the finished process, so its exit code can be checked."""
+    return subprocess.run([PYTHON, '-X', 'utf8', os.path.join(ROOT, 'tools', 'build.py')], cwd=ROOT, capture_output=True,
+                          text=True, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
 
 
 def get_json(url):
@@ -91,8 +98,10 @@ def add(book):
         sys.path.insert(0, os.path.join(ROOT, 'tools'))
         from copy_covers import copy
         copy(key, book['cover'])
-    subprocess.run([PYTHON, '-X', 'utf8', os.path.join(ROOT, 'tools', 'build.py')], cwd=ROOT, capture_output=True,
-                   creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+    r = build()
+    if r.returncode != 0:   # saved, but the page for it doesn't exist yet: say so rather than jump to a missing page
+        sg_log(f"added {b['id']}, but the rebuild failed: {(r.stderr or r.stdout).strip()[-300:]}")
+        return {'ok': False, 'error': 'The book is saved, but the site couldn’t be rebuilt, so it isn’t showing yet. Don’t add it again.'}
     return {'ok': True, 'id': b['id']}
 
 
@@ -133,7 +142,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             return self.reply({'error': 'not allowed'}, 403)
         try:
             book = json.loads(self.rfile.read(int(self.headers.get('Content-Length', 0))) or b'{}')
-            self.reply(add(book))
+            with LOCK:
+                result = add(book)
+            self.reply(result)
         except Exception as e:
             self.reply({'ok': False, 'error': str(e)}, 500)
 
@@ -167,6 +178,27 @@ def newest_export():
     return best
 
 
+def import_export(p, state):
+    """Import a new StoryGraph export and rebuild; the state is saved only once both worked (a failed import isn't tried again)."""
+    r = subprocess.run([PYTHON, '-X', 'utf8', os.path.join(ROOT, 'tools', 'import_storygraph.py'), p, '--apply'],
+                       cwd=ROOT, capture_output=True, text=True, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+    if r.returncode != 0:
+        sg_log(f'import of {os.path.basename(p)} failed: {(r.stderr or r.stdout).strip()[-300:]}')
+        state['mtime'] = os.path.getmtime(p)   # don't retry the same file every 5 minutes
+        with open(SG_STATE, 'w', encoding='utf-8', newline='\n') as fh:
+            json.dump(state, fh, indent=1)
+        return
+    rb = build()
+    if rb.returncode != 0:   # not marked as done, so the next look tries again
+        sg_log(f'imported {os.path.basename(p)}, but the rebuild failed: {(rb.stderr or rb.stdout).strip()[-300:]}')
+        return
+    with open(SG_STATE, 'w', encoding='utf-8', newline='\n') as fh:
+        json.dump({'file': os.path.basename(p), 'mtime': os.path.getmtime(p), 'imported': datetime.now().isoformat(timespec='minutes')}, fh, indent=1)
+        fh.write('\n')
+    summary = next((l for l in r.stdout.splitlines() if l.startswith(('On her shelves', '345', 'StoryGraph')) or 'StoryGraph books' in l), '')
+    sg_log(f'imported {os.path.basename(p)}: {summary}')
+
+
 def watch_reading():
     while True:
         try:
@@ -174,21 +206,8 @@ def watch_reading():
             state = json.load(open(SG_STATE, encoding='utf-8')) if os.path.exists(SG_STATE) else {}
             if p and os.path.getmtime(p) > state.get('mtime', 0):
                 time.sleep(10)   # let a download finish
-                r = subprocess.run([PYTHON, '-X', 'utf8', os.path.join(ROOT, 'tools', 'import_storygraph.py'), p, '--apply'],
-                                   cwd=ROOT, capture_output=True, text=True, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
-                if r.returncode == 0:
-                    subprocess.run([PYTHON, '-X', 'utf8', os.path.join(ROOT, 'tools', 'build.py')], cwd=ROOT, capture_output=True,
-                                   creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
-                    with open(SG_STATE, 'w', encoding='utf-8', newline='\n') as fh:
-                        json.dump({'file': os.path.basename(p), 'mtime': os.path.getmtime(p), 'imported': datetime.now().isoformat(timespec='minutes')}, fh, indent=1)
-                        fh.write('\n')
-                    summary = next((l for l in r.stdout.splitlines() if l.startswith(('On her shelves', '345', 'StoryGraph')) or 'StoryGraph books' in l), '')
-                    sg_log(f'imported {os.path.basename(p)}: {summary}')
-                else:
-                    sg_log(f'import of {os.path.basename(p)} failed: {(r.stderr or r.stdout).strip()[-300:]}')
-                    state['mtime'] = os.path.getmtime(p)   # don't retry the same file every 5 minutes
-                    with open(SG_STATE, 'w', encoding='utf-8', newline='\n') as fh:
-                        json.dump(state, fh, indent=1)
+                with LOCK:
+                    import_export(p, state)
         except Exception as e:
             sg_log(f'watch failed: {e}')
         time.sleep(300)
