@@ -117,6 +117,10 @@ function readingLog(){
 // 100 books in 2025, 18 Oct); one date per finish, even when two StoryGraph editions of a book share it
 const finishes = b => { const r = reading(b), ends = [...new Set((r.dates || []).map(d => d[1]).filter(Boolean))];
   return ends.length ? ends : r.finished ? [r.finished] : []; };
+// "read this year" everywhere: every finish that year, a re-read too
+const finishedIn = y => readingLog().filter(isRead).flatMap(finishes).filter(d => year(d) === y);
+// how many books are read, each book once however many copies (three Philosopher's Stones are one book)
+const booksRead = list => new Set(list.filter(isRead).map(bookKey)).size;
 const starsText = r => String(Math.round(r * 100) / 100);   // decimals, not ½ (her choice, 18 Oct)
 
 // ---------- series (data/series.json, in reading order) ----------
@@ -159,6 +163,7 @@ BOOKS.forEach(b => {
   const edition = (b.special || (/(illustrated|hufflepuff|children's|collector's|centenary|special|anniversary|movie tie-in|illumicrate)[\w' -]*edition/i.exec(b.title) || [])[0] || "")
     .replace(/(^|[\s-])\w/g, c => c.toUpperCase()).replace(/'/g, "’");
   b.t = entry.title; b.sub = `${series.name}, book ${entry.n}${edition ? " · " + edition : ""}`;
+  b.edition = edition;   // the book page says the series in its own line, so only this goes under its title
   b.sortTitle = sortTitle(b.t);
 });
 // All her copies of one book share one reading record: StoryGraph may have linked each copy to a different entry (the
@@ -259,7 +264,7 @@ function pageHome(){
   const log = readingLog(), now = log.filter(isReading), thisYear = String(new Date().getFullYear());
   const lastFinish = b => finishes(b).sort().pop() || "";
   const done = log.filter(isRead).filter(b => lastFinish(b)).sort((a, b) => lastFinish(b).localeCompare(lastFinish(a))).slice(0, 6);
-  const yearReads = log.filter(isRead).flatMap(finishes).filter(d => year(d) === thisYear).length;
+  const yearReads = finishedIn(thisYear).length;
   const toRead = log.filter(b => isToRead(b) && !isElsewhere(b)).length;
   const recent = [...BOOKS].sort((a, b) => (b.added || "").localeCompare(a.added || "")).slice(0, 6);
   const fan = s => { const withCover = s.books.filter(b => b.cover), pick = (withCover.length >= 3 ? withCover : s.books).slice(0, 3); return pick.map(b => cover(b)).join(""); };
@@ -311,14 +316,14 @@ function pageAllShelves(){
   currentList = BOOKS.concat(NOT_OWNED); currentGrouped = true;
   const shelves = SHELVES.filter(s => s.books.length && s.libib).length;
   return hero({kicker: `<a href="#home">Every shelf</a>`, title: "All <em>shelves</em>", covers: mixed(BOOKS), text: "The whole bookcase at once, shelf by shelf, each in author surname order.",
-      figures: [[num(BOOKS.length), "books"], [num(shelves), "shelves"], [num(AUTHORS.length), "authors"], [num(BOOKS.filter(isRead).length), "read"]]})
+      figures: [[num(BOOKS.length), "books"], [num(shelves), "shelves"], [num(AUTHORS.length), "authors"], [num(booksRead(BOOKS)), "read"]]})
     + `<div id="shelfBooks">${shelfBooks(currentList)}</div>`;
 }
 function pageShelf(s){
   currentList = s.books.concat(s.notOwned || []); currentGrouped = false;
   const authors = new Set(s.books.map(b => b.by)).size, pages = s.books.reduce((n, b) => n + (b.pages || 0), 0);
   return hero({kicker: `<a href="#home">Shelf</a>`, title: esc(s.name), color: s.color, text: s.note ? esc(s.note) : "", covers: [...s.books].sort(SORTS.author[1]),
-      figures: [[num(s.books.length), "books"], [num(authors), "authors"], [num(s.books.filter(isRead).length), "read"], ...((s.notOwned || []).length ? [[num(s.notOwned.length), "read but not owned"]] : []), [num(pages), "pages"]]})
+      figures: [[num(s.books.length), "books"], [num(authors), "authors"], [num(booksRead(s.books)), "read"], ...((s.notOwned || []).length ? [[num(s.notOwned.length), "read but not owned"]] : []), [num(pages), "pages"]]})
     + `<div id="shelfBooks">${shelfBooks(currentList)}</div>`;
 }
 
@@ -380,10 +385,10 @@ function pageBook(b){
   const s = shelfIndex[b.shelf], others = (editions[norm(b.title) + "|" + norm(b.surname || "")] || []).filter(x => x !== b);
   const lead = (b.authors || []).find(a => !a.role), au = lead && authorIndex[slug(lead.name)];
   const more = au ? au.books.map(x => x.book).filter(x => x !== b && !others.includes(x)).slice(0, 12) : [];
-  const fact = (k, v) => v ? `<dt>${k}</dt><dd>${v}</dd>` : "";
+  const fact = (k, v) => v ? `<dt>${k}</dt><dd>${v}</dd>` : "", sub = "edition" in b ? b.edition : b.sub;
   return `<header class="hero book-hero" style="--c:${s.color}"><div class="book-top">${cover(b, "", true)}<div>
       <div class="kicker"><i></i><a class="label" href="#shelf-${s.id}">${esc(s.name)}</a></div>
-      <h1>${esc(b.t)}</h1>${b.sub ? `<div class="sub">${esc(b.sub)}</div>` : ""}
+      <h1>${esc(b.t)}</h1>${sub ? `<div class="sub">${esc(sub)}</div>` : ""}
       <div class="authors">${(b.authors || []).map(a => `<span><a href="#a-${slug(a.name)}">${esc(a.name)}</a>${a.role ? ` <small>${esc(a.role)}</small>` : ""}</span>`).join("") || "<span>Unknown author</span>"}</div>
       ${seriesLine(b)}
     </div></div></header>
@@ -415,7 +420,7 @@ function pageAuthor(a){
   const list = a.books.map(x => x.book).sort((x, y) => (x.published || "9999").localeCompare(y.published || "9999"));
   const roles = [...new Set(a.books.map(x => x.role).filter(Boolean))];
   return hero({kicker: `<a href="#authors">Author</a>`, title: esc(a.name), covers: list, text: roles.length ? `Also credited as ${esc(roles.join(", ").toLowerCase())}.` : "",
-      figures: [[num(list.length), list.length === 1 ? "book" : "books"], [num(list.filter(isRead).length), "read"], [num(new Set(list.map(b => b.shelf)).size), "shelves"]]})
+      figures: [[num(list.length), list.length === 1 ? "book" : "books"], [num(booksRead(list)), "read"], [num(new Set(list.map(b => b.shelf)).size), "shelves"]]})
     + sectionHead("Their <em>books</em>", `<span class="more">Oldest first</span>`)
     + `<div class="books">${a.books.slice().sort((x, y) => (x.book.published || "9999").localeCompare(y.book.published || "9999")).map(x => card(x.book, x.role ? x.role : year(x.book.published) || x.book.by)).join("")}</div>`;
 }
@@ -430,7 +435,7 @@ function pageReading(){
   const away = done.filter(isElsewhere).length;
   return hero({kicker: "Your reading", title: "Reading <em>log</em>", covers: now.concat(done),
       text: `Everything you’ve read and are reading. Books you’ve read but don’t own (library books, ebooks, audiobooks) sit on the shelves too, marked Not owned.`,
-      figures: [[num(now.length), "reading now"], [num(done.length), "read"], [num((years[thisYear] || []).length), `finished in ${thisYear}`], [num(next.length), "to read from your shelves"]]})
+      figures: [[num(now.length), "reading now"], [num(done.length), "read"], [num(finishedIn(thisYear).length), `finished in ${thisYear}`], [num(next.length), "to read from your shelves"]]})
     + sectionHead("Reading <em>now</em>") + (now.length ? grid(now) : `<p class="empty">Nothing on the go.</p>`)
     + order.map(y => sectionHead(y === "undated" ? "Read, <em>date not recorded</em>" : `${y} <em>· ${plural(years[y].length, "book")}</em>`) + grid(years[y])).join("")
     + (later.length ? sectionHead("Paused or <em>didn’t finish</em>") + grid(later) : "")
@@ -534,7 +539,7 @@ document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.id
 function readingStats(bars, readYears){
   const done = readingLog().filter(isRead), rated = done.filter(b => reading(b).rating);
   const avg = rated.length ? rated.reduce((n, b) => n + reading(b).rating, 0) / rated.length : 0;
-  const thisYear = String(new Date().getFullYear()), yearEnds = done.flatMap(finishes).filter(d => year(d) === thisYear), inYear = yearEnds;
+  const thisYear = String(new Date().getFullYear()), yearEnds = finishedIn(thisYear), inYear = yearEnds;
   const pagesRead = done.reduce((n, b) => n + (b.pages || 0), 0);
   const months = MON.map((m, i) => ({label: m, n: yearEnds.filter(d => +d.slice(5, 7) === i + 1).length}));
   const mmax = Math.max(1, ...months.map(m => m.n));
@@ -571,7 +576,7 @@ function pageStats(){
   const topPubs = Object.entries(pubs).map(([label, n]) => ({label, n})).sort((a, b) => b.n - a.n).slice(0, 10);
   const dec = {}; BOOKS.forEach(b => { const y = +year(b.published); if (y) { const d = Math.floor(y / 10) * 10; dec[d] = (dec[d] || 0) + 1; } });
   const decs = Object.keys(dec).map(Number).sort(), dmax = Math.max(...Object.values(dec));
-  const readN = BOOKS.filter(isRead).length, perYear = {};
+  const readN = booksRead(BOOKS), titles = new Set(BOOKS.map(bookKey)).size, perYear = {};
   readingLog().filter(isRead).flatMap(finishes).forEach(d => { const y = year(d); if (y) perYear[y] = (perYear[y] || 0) + 1; });
   const readYears = Object.keys(perYear).sort().reverse().map(y => ({label: y, n: perYear[y], href: "#reading"}));
   return hero({kicker: "The numbers", title: "<em>Stats</em>", text: "How the library adds up.", covers: mixed([...BOOKS].reverse())})
@@ -579,7 +584,7 @@ function pageStats(){
         <div class="meter"><b>${num(BOOKS.length)}</b><span>books on the shelves</span></div>
         <div class="meter"><b>${num(pages)}</b><span>pages (${num(withPages.length)} books with a page count)</span></div>
         <div class="meter"><b>${num(Math.round(pages / (withPages.length || 1)))}</b><span>pages in an average book</span></div>
-        <div class="meter"><b>${Math.round(readN / BOOKS.length * 100)}%</b><span>read (${plural(readN, "book")})</span></div>
+        <div class="meter"><b>${Math.round(readN / titles * 100)}%</b><span>read (${plural(readN, "book")})</span></div>
       </div></div>`
     + sectionHead("By <em>shelf</em>") + bars(shelves, shelves[0].n)
     + readingStats(bars, readYears)
