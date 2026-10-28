@@ -493,5 +493,45 @@
   "title": "Voyage of Slaves",
   "from": "https://images-na.ssl-images-amazon.com/images/P/0141315229.01.LZZZZZZZ.jpg",
   "reason": "to-buy: Castaways of the Flying Dutchman 3 (matches her set)"
+ },
+ "9780008487485": {
+  "title": "Kill Joy",
+  "from": "research/2026-10-28-overnight/covers/9780008487485-1.jpg",
+  "reason": "print cover without the Five Survive sticker, matching her other Holly Jacksons (her ISBN is the audiobook)"
+ },
+ "9780755504343": {
+  "title": "As Good As Dead",
+  "from": "research/2026-10-28-overnight/covers/9780755504343-1.jpg",
+  "reason": "flat UK print cover instead of a 3D book picture (her ISBN is the audiobook)"
+ },
+ "9781504763745": {
+  "title": "Murder at the Vicarage",
+  "from": "research/2026-10-28-overnight/covers/9781504763745-1.jpg",
+  "reason": "Queen of Mystery print cover instead of the square audiobook picture"
+ },
+ "9781668239247": {
+  "title": "Scion",
+  "from": "research/2026-10-28-overnight/covers/9781668239247-1.jpg",
+  "reason": "flat front (UK Gollancz, same art and wording) instead of a 3D book picture"
+ },
+ "id-t0gf45c93y": {
+  "title": "Second Term at Trebizon",
+  "from": "research/2026-10-28-overnight/covers/t0gf45c93y-1.jpg",
+  "reason": "Dragon paperback 1981, the same design as her other Trebizons"
+ },
+ "id-kql35p7ysl": {
+  "title": "Summer Term at Trebizon",
+  "from": "research/2026-10-28-overnight/covers/kql35p7ysl-1.jpg",
+  "reason": "Dragon/Granada paperback 1980, the same design as her other Trebizons"
+ },
+ "id-281v2q4tqt": {
+  "title": "The Model Railway Hobby",
+  "from": "research/2026-10-28-overnight/covers/281v2q4tqt-1.jpg",
+  "reason": "period copy: Percival Marshall 1943, red cloth (a photo of a copy)"
+ },
+ "sg-good-girl-bad-blood": {
+  "title": "Good Girl, Bad Blood",
+  "from": "research/2026-10-28-overnight/covers/sg-good-girl-bad-blood-1.jpg",
+  "reason": "UK paperback design, matching the rest of the series (now shows the US one)"
  }
 }

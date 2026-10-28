@@ -75,7 +75,7 @@ const WISH = DATA.toBuy; WISH.forEach(prep);
 
 // trial (28 Oct): proposed covers (data/covers-trial.json) shown only while the switch bottom right is on, for her to judge
 const TRIAL_KEY = "jemmas-library-trial-covers", TRIAL = store.get(TRIAL_KEY, false);
-const TRIALS = [...BOOKS, ...WISH].filter(b => b.coverTrial);
+const TRIALS = [...BOOKS, ...WISH, ...(DATA.storygraph || {books: []}).books.filter(e => !e.books)].filter(b => b.coverTrial);   // read but not owned too
 TRIALS.forEach(b => { b.coverWas = b.cover; if (TRIAL) b.cover = b.coverTrial; });
 
 // ---------- reading ----------
