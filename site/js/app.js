@@ -73,6 +73,11 @@ AUTHORS.forEach(a => { a.sort = ((a.surname || a.name.split(" ").pop()) + " " + 
 AUTHORS.sort((x, y) => x.sort.localeCompare(y.sort));
 const WISH = DATA.toBuy; WISH.forEach(prep);
 
+// trial (28 Oct): proposed covers (data/covers-trial.json) shown only while the switch bottom right is on, for her to judge
+const TRIAL_KEY = "jemmas-library-trial-covers", TRIAL = store.get(TRIAL_KEY, false);
+const TRIALS = [...BOOKS, ...WISH].filter(b => b.coverTrial);
+TRIALS.forEach(b => { b.coverWas = b.cover; if (TRIAL) b.cover = b.coverTrial; });
+
 // ---------- reading ----------
 // StoryGraph is where she tracks her reading (data/storygraph.json, from its export): it wins for every book it knows.
 // A StoryGraph book can cover several copies on the shelves; ones not on the shelves (ebooks, audiobooks, borrowed)
@@ -211,7 +216,7 @@ function cover(b, extra = "", big = false){
   const tag = (b.notOwned && !big ? `<span class="not-owned">Not owned</span>` : "")
     // a special edition (Illumicrate and the like, data/editions.json): a brass sash across the other top corner (her ask, 18 Oct)
     + (b.special && !big ? `<span class="special" title="${esc(b.special)}">Special</span>` : "");
-  return `<div class="cover${b.cover ? "" : " blank"}${b.notOwned && !big ? " unowned" : ""} ${extra}" style="--c:${s ? s.color : "#5E3D22"}">${badge}${tag}${strip}${b.cover ? `<img src="${esc(coverSrc(b, big))}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
+  return `<div class="cover${b.cover ? "" : " blank"}${b.notOwned && !big ? " unowned" : ""}${TRIAL && b.coverTrial ? " trial" : ""} ${extra}" style="--c:${s ? s.color : "#5E3D22"}">${badge}${tag}${strip}${b.cover ? `<img src="${esc(coverSrc(b, big))}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
 }
 // a cover that won't load becomes a title card
 document.addEventListener("error", e => { const img = e.target; if (img.tagName === "IMG" && img.parentNode.classList.contains("cover")) { img.parentNode.classList.add("blank"); img.remove(); } }, true);
@@ -612,6 +617,20 @@ q.addEventListener("input", () => { const v = q.value.trim(); if (v.length >= 2)
 q.addEventListener("keydown", e => { if (e.key === "Escape") { q.value = ""; route(); } });
 document.getElementById("nav").addEventListener("click", () => { if (q.value) q.value = ""; });
 
+// ---------- trial covers: every proposed cover next to the one shown now ----------
+function pageTrialCovers(){
+  const pic = (src, b) => `<div class="cover${src ? "" : " blank"}">${src ? `<img src="${esc(src)}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
+  return `<div class="section-head" style="margin-top:56px"><h2>New <em>covers</em></h2><span class="more">${plural(TRIALS.length, "book")}</span></div>
+    <div class="trial-list">${TRIALS.map(b => `<a class="trial-row" href="${WISH.includes(b) ? "#to-buy" : href(b)}">
+      ${pic(b.coverWas, b)}<span class="arrow">${ic("arrow-right")}</span>${pic(b.coverTrial, b)}
+      <div><h3>${esc(b.t)}</h3><div class="by">${esc(b.by)}${WISH.includes(b) ? " · to buy" : ""}</div><p>${esc(b.coverTrialWhy || "")}</p></div></a>`).join("")}</div>`;
+}
+const trialSwitch = document.createElement("div");
+trialSwitch.className = "trial-switch";
+trialSwitch.innerHTML = `<button type="button" aria-pressed="${TRIAL}">${ic("image")}New covers: <b>${TRIAL ? "on" : "off"}</b></button>${TRIAL ? `<a href="#trial-covers">See all ${TRIALS.length}</a>` : ""}`;
+trialSwitch.querySelector("button").addEventListener("click", () => { store.set(TRIAL_KEY, !TRIAL); location.reload(); });
+document.body.append(trialSwitch);
+
 // ---------- routing ----------
 function route(){
   const key = location.hash.slice(1) || "home", view = document.getElementById("view");
@@ -623,7 +642,7 @@ function route(){
   else if (key.startsWith("b-") && bookIndex[key.slice(2)]) { const b = bookIndex[key.slice(2)]; html = pageBook(b); active = "#shelf-" + b.shelf; title = b.t; }
   else if (key.startsWith("r-") && SG.books[+key.slice(2)] && !SG.books[+key.slice(2)].books) { const e = SG.books[+key.slice(2)]; html = pageSgBook(e); active = e.shelf ? "#shelf-" + e.shelf : "#reading"; title = e.t; }
   else if (key.startsWith("a-") && authorIndex[key.slice(2)]) { const a = authorIndex[key.slice(2)]; html = pageAuthor(a); active = "#authors"; title = a.name; }
-  else html = {authors: pageAuthors, reading: pageReading, "to-read": pageToRead, add: pageAdd, "to-buy": pageToBuy, stats: pageStats}[key]?.() || (active = "#home", pageHome());
+  else html = {authors: pageAuthors, reading: pageReading, "to-read": pageToRead, add: pageAdd, "to-buy": pageToBuy, stats: pageStats, "trial-covers": pageTrialCovers}[key]?.() || (active = "#home", pageHome());
   view.innerHTML = html; renderNav(active);
   document.title = title === "Jemma’s Library" ? title : `${curly(title)} · Jemma’s Library`;
   scrollTo(0, 0);

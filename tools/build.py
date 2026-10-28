@@ -71,13 +71,20 @@ def build():
     for e in sg['books']:
         e['status'] = fixes_r.get(e['title'], e['status'])
     no_cover = {x['id'] for x in load('no-cover.json', {'books': []})['books']}   # old books: no modern reprint covers
+    trial = {k: v for k, v in load('covers-trial.json', {}).items() if not k.startswith('_')}   # proposed covers, shown only with the switch on (28 Oct)
     for b in books + wish + [e for e in sg['books'] if 'books' not in e]:
-        if b.get('id') in no_cover:
-            continue
         isbn = b.get('isbn13', '')
         # a cover is found by ISBN, or by title for books without one (stored as "id-<id>", tools/find_covers.py)
         # (books read elsewhere have no id: theirs is "sg-<title>")
         own = 'id-' + str(b['id']) if b.get('id') else 'sg-' + re.sub(r'[^a-z0-9]+', '-', b.get('title', '').lower()).strip('-')
+        for k in (isbn, own):
+            pic = os.path.join(SITE, 'covers-trial', k + '.jpg')
+            if k in trial and os.path.exists(pic):
+                b['coverTrial'] = f"covers-trial/{k}.jpg?v={hashlib.md5(open(pic, 'rb').read()).hexdigest()[:8]}"
+                b['coverTrialWhy'] = trial[k]['reason']
+                break
+        if b.get('id') in no_cover:
+            continue
         key = isbn if isbn and (covers.get(isbn) or os.path.exists(os.path.join(SITE, 'covers', isbn + '.jpg'))) else own
         local = os.path.join(SITE, 'covers', key + '.jpg')
         if os.path.exists(local):   # the copy in site/covers (tools/copy_covers.py), fingerprinted so a new copy shows at once
