@@ -1,0 +1,29 @@
+From 3a96563c247b7e3df57d46024529294f31e2f295 Mon Sep 17 00:00:00 2001
+From: Jemma <jemma@askwhocasts.com>
+Date: Fri, 23 Oct 2026 23:49:05 +0100
+Subject: [PATCH 1/9] Added books: a new id is the highest add#### + 1, not the
+ count + 1 (with add0009 missing, the next would have reused add0015)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ tools/serve.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/tools/serve.py b/tools/serve.py
+index 4f1427a..75ceb4d 100644
+--- a/tools/serve.py
++++ b/tools/serve.py
+@@ -58,7 +58,9 @@ def add(book):
+     if not title or book.get('shelf') not in shelves:
+         return {'ok': False, 'error': 'A book needs a title and a shelf.'}
+     i13 = isbn13(book.get('isbn', ''))
+-    b = {'id': f'add{len(added) + 1:04d}', 'title': title,
++    # the next number after the highest (not the count: a gap, like add0009, would give an id already in use)
++    n = max([int(x['id'][3:]) for x in added if re.fullmatch(r'add\d+', x.get('id', ''))] + [0]) + 1
++    b = {'id': f'add{n:04d}', 'title': title,
+          'authors': [{'name': n.strip()} for n in book.get('authors', []) if n.strip()], 'shelf': book['shelf'],
+          'isbn13': i13, 'publisher': book.get('publisher', ''), 'published': book.get('published', ''),
+          'pages': int(book['pages']) if str(book.get('pages') or '').isdigit() else None,
+-- 
+2.56.0.windows.2
+

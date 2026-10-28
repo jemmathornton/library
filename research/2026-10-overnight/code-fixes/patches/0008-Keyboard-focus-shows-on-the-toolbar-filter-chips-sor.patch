@@ -1,0 +1,71 @@
+From b08cbb0749ad8ed0e050798d1cd0559a72081414 Mon Sep 17 00:00:00 2001
+From: Jemma <jemma@askwhocasts.com>
+Date: Fri, 23 Oct 2026 23:59:59 +0100
+Subject: [PATCH 8/9] Keyboard focus shows on the toolbar (filter chips, sort
+ menu, covers/list buttons, buttons) in walnut on cream, brass in dark mode;
+ with reduce motion set on her computer nothing slides or swings
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+---
+ site/site.css | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/site/site.css b/site/site.css
+index e16fb78..953afad 100644
+--- a/site/site.css
++++ b/site/site.css
+@@ -5,13 +5,14 @@
+   --paper:#F7F1E4; --surface:#FFFCF6; --ink:#2A1F16; --muted:#75664F; --line:#E7DCC6; --soft:#EFE5D1;
+   --nav:#3B2616; --deep:#3B2616; --deep-2:#5E3D22; --on-deep:#FBF4E6; --on-deep-mute:color-mix(in srgb,#fff 62%,var(--deep));
+   --brass:#E4B23C; --done:#8A4B17; --reading:#B8861A;
++  --focus:var(--deep-2);   /* keyboard focus on cream: walnut (brass is too faint there); brass in dark mode */
+   --display:"Instrument Serif","Iowan Old Style","Palatino Linotype",Georgia,serif;
+   --body:"Manrope","Segoe UI",system-ui,sans-serif;
+   --side:280px; color-scheme:light;
+ }
+ @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+-  --paper:#16110C; --surface:#201911; --ink:#F0E7D8; --muted:#B3A48D; --line:#33291E; --soft:#2A2117; --done:#E0A15A; color-scheme:dark }}
+-:root[data-theme="dark"]{ --paper:#16110C; --surface:#201911; --ink:#F0E7D8; --muted:#B3A48D; --line:#33291E; --soft:#2A2117; --done:#E0A15A; color-scheme:dark }
++  --paper:#16110C; --surface:#201911; --ink:#F0E7D8; --muted:#B3A48D; --line:#33291E; --soft:#2A2117; --done:#E0A15A; --focus:var(--brass); color-scheme:dark }}
++:root[data-theme="dark"]{ --paper:#16110C; --surface:#201911; --ink:#F0E7D8; --muted:#B3A48D; --line:#33291E; --soft:#2A2117; --done:#E0A15A; --focus:var(--brass); color-scheme:dark }
+ 
+ *{box-sizing:border-box}
+ [hidden]{display:none!important}
+@@ -131,7 +132,7 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
+ .chips button{all:unset;cursor:pointer;font-size:13px;font-weight:700;padding:6px 13px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--muted)}
+ .chips button:hover{color:var(--ink)}
+ .chips button.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+-.chips button:focus-visible{outline:2px solid var(--brass)}
++.chips button:focus-visible,.toolbar select:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+ /* the sort menu draws its own small arrow, close to the words (the browser's sat far off to the right) */
+ .toolbar select{appearance:none;-webkit-appearance:none;cursor:pointer;padding:6px 30px 6px 13px;border-radius:99px;border:1px solid var(--line);font-size:13px;font-weight:700;color:var(--ink);
+   background:var(--surface) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2375664F' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 11px center/13px}
+@@ -140,6 +141,7 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
+ .views{display:flex;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+ .views button{all:unset;cursor:pointer;padding:6px 10px;display:flex;color:var(--muted);background:var(--surface)}
+ .views button.on{background:var(--soft);color:var(--ink)}
++.views button:focus-visible{outline:2px solid var(--focus);outline-offset:-2px;border-radius:7px}   /* inside: .views clips anything outside */
+ 
+ /* shelf cards (home) */
+ .shelves{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:22px}
+@@ -251,7 +253,7 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
+ .backup{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px}
+ .btn{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-size:13.5px;font-weight:700}
+ .btn:hover{border-color:var(--ink)}
+-.btn:focus-visible{outline:2px solid var(--brass)}
++.btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+ 
+ /* ---------- StoryGraph reading ---------- */
+ .sg-status{display:flex;align-items:center;gap:10px;font:400 26px/1.1 var(--display);color:var(--ink)}
+@@ -396,3 +398,8 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
+ .cover .sash .i{width:10px;height:10px;stroke-width:2.6;vertical-align:-1.5px;margin-right:4px}
+ /* the sash sits a little further in, so "Reading" and "Paused" with their icon fit inside the corner (18 Oct) */
+ .cover .sash{right:-29px;top:24px;letter-spacing:.13em}
++
++/* her computer set to reduce motion: covers and shelf fans stay still, scrolling jumps */
++@media (prefers-reduced-motion: reduce){
++  *,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
++}
+-- 
+2.56.0.windows.2
+

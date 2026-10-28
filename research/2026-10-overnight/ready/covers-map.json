@@ -1,0 +1,497 @@
+{
+ "9781444979978": {
+  "title": "Heartstopper Volume 5",
+  "from": "cover by ISBN 9781444979978 (cover-audit)",
+  "reason": "current is wrong book: Polish edition of Volume 1 (Chłopak spotyka chłopaka, Tom 1) shown for Volume 5"
+ },
+ "9780140364545": {
+  "title": "Tom's Midnight Garden (Puffin Modern Classics)",
+  "from": "cover by ISBN 9780140364545 (cover-audit)",
+  "reason": "current is wrong book: French Folio Junior edition (Tom et le jardin de minuit)"
+ },
+ "9781848459229": {
+  "title": "The Christmas Cottage",
+  "from": "cover by ISBN 9781848459229 (cover-audit)",
+  "reason": "current is poor quality: pre-release placeholder: Coming October 2024, cover to be revealed"
+ },
+ "9781444715460": {
+  "title": "You Are Here: The Instant Number 1 Sunday Times Bestseller, from the Author of One Day",
+  "from": "cover by ISBN 9781444715460 (cover-audit)",
+  "reason": "current is poor quality: pre-release proof cover: COVER NOT FINAL"
+ },
+ "id-6ubmksc8dt": {
+  "title": "Teddy Bear's Picnic",
+  "from": "cover by ISBN 9780216926615 (cover-audit)",
+  "reason": "current is wrong book: landscape picture-book cover from an Open Library title search; ISBN cover is a different illustration, check it is the same book"
+ },
+ "9780747599876": {
+  "title": "The Tales of Beedle the Bard",
+  "from": "cover by ISBN 9780747599876 (cover-audit)",
+  "reason": "current is poor quality: faded, low-contrast scan"
+ },
+ "9781903155509": {
+  "title": "Doreen",
+  "from": "https://www.kennys.ie/products/full/9781903155509.jpg",
+  "reason": "current is a square endpaper pattern, not the Persephone grey jacket"
+ },
+ "id-yq89z87r71": {
+  "title": "Goldenhand (hardback)",
+  "from": "https://cdn.shopify.com/s/files/1/0601/0883/2974/products/9781471404443_1_c24db975-9028-4784-944d-1a4401d45253_1500x.jpg?v=1648786815",
+  "reason": "to-buy hardback: UK hardback jacket instead of an Open Library title-search match"
+ },
+ "9780008536732": {
+  "title": "How to Kill Men",
+  "from": "https://m.media-amazon.com/images/I/71bT1k34TvL.jpg",
+  "reason": "better copy of the cover"
+ },
+ "id-mntgwag31h": {
+  "title": "Brer Rabbit's a Rascal",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=495",
+  "reason": "period cover: Dean hardback 1965 (first edition), Grace Lodge"
+ },
+ "id-yq0s7pfr71": {
+  "title": "Bimbo and Topsy",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=360",
+  "reason": "period cover: Dean hardback 1969, cover uncredited (needs taking off no-cover.json)"
+ },
+ "id-umsrn8vgnz": {
+  "title": "Book of Brownies",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=182",
+  "reason": "period cover: Dean hardback 1967, cover uncredited"
+ },
+ "id-tol53o093y": {
+  "title": "Brer Rabbit Again",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=494",
+  "reason": "period cover: Dean hardback 1963 (reprinted to 1965), Grace Lodge (needs taking off no-cover.json)"
+ },
+ "id-0bs6kb8dcu": {
+  "title": "Brer Rabbit Book",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=493",
+  "reason": "period cover: Dean hardback 1963, Grace Lodge"
+ },
+ "id-xibkehkjps": {
+  "title": "Captain of Two Schools",
+  "from": "https://www.abebooks.co.uk/Captain-Two-Schools-Hylton-Cleaver-Frederick/31806943113/bd",
+  "reason": "period cover: Frederick Warne hardback 1950"
+ },
+ "id-8u1tifmohq": {
+  "title": "China Fights Back",
+  "from": "https://www.abebooks.co.uk/China-Fights-Back-Agnes-Smedley-Left/32506996301/bd",
+  "reason": "period cover: Left Book Club edition, Victor Gollancz 1938 (limp orange/red) (needs taking off no-cover.json)"
+ },
+ "id-cp5qridmmk": {
+  "title": "Claudine at St Clare's",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=303",
+  "reason": "period cover: Methuen hardback 1944 (first edition), W. Lindsay Cable jacket (needs taking off no-cover.json)"
+ },
+ "id-8u1tiscohq": {
+  "title": "Corridors of Power",
+  "from": "https://www.abebooks.co.uk/first-edition/CORRIDORS-POWER-Snow-C-P-MacMillan/30137966845/bd",
+  "reason": "period cover: Macmillan hardback 1964 (first edition), painted jacket (seller photo at an angle, not a flat scan)"
+ },
+ "id-i1mt5hqlqm": {
+  "title": "Famous Five 9: Five Fall Into Adventure",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=202",
+  "reason": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket (1951 design)"
+ },
+ "id-aktlq1lpsz": {
+  "title": "Fifth Formers at St Clare's",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=304",
+  "reason": "period cover: Methuen hardback 1945, W. Lindsay Cable"
+ },
+ "id-whc2eftisd": {
+  "title": "Five Get Into a Fix",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=210",
+  "reason": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1958 design (needs taking off no-cover.json)"
+ },
+ "id-aktljmbpsz": {
+  "title": "Five Go Adventuring Again",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=195",
+  "reason": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket (1951 design)"
+ },
+ "id-xiuezl2jps": {
+  "title": "Five Go To Mystery Moor",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=206",
+  "reason": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1954 (needs taking off no-cover.json)"
+ },
+ "id-mnvwrmh31h": {
+  "title": "Five Go To Smugglers Top",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=197",
+  "reason": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1945"
+ },
+ "id-v6jcu0o26q": {
+  "title": "Five Go to Billycock Hill",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=209",
+  "reason": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, 1957 design"
+ },
+ "id-py97wjuno7": {
+  "title": "Five Have a Mystery to Solve",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=213",
+  "reason": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1962"
+ },
+ "id-yq0s7kvr71": {
+  "title": "Five Run Away Together",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=196",
+  "reason": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket (1951 design)"
+ },
+ "id-ogh4ago0an": {
+  "title": "Five on a Hike Together",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=203",
+  "reason": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, 1951 design (needs taking off no-cover.json)"
+ },
+ "id-cp5qr4vmmk": {
+  "title": "Five on a Secret Trail",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=208",
+  "reason": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1956 (needs taking off no-cover.json)"
+ },
+ "id-rwdf1zdxoz": {
+  "title": "Fun for the Secret Seven",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=286",
+  "reason": "period cover: Brockhampton Press hardback 1963, Burgess Sharrocks"
+ },
+ "id-hfp8tti19k": {
+  "title": "Good Old Secret Seven",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=283",
+  "reason": "period cover: Brockhampton Press hardback (1960 design), Burgess Sharrocks (needs taking off no-cover.json)"
+ },
+ "id-v6jcumc26q": {
+  "title": "In the Fifth at Malory Towers",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=257",
+  "reason": "period cover: Methuen hardback 1950 (first edition), Stanley Lloyd (her Malory Towers series rule may say otherwise)"
+ },
+ "id-g3fxkyrbt4": {
+  "title": "Look Out Secret Seven",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=285",
+  "reason": "period cover: Brockhampton Press hardback (1962 design), Burgess Sharrocks (needs taking off no-cover.json)"
+ },
+ "id-ogh4anm0an": {
+  "title": "Second Form at Malory Towers",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=254",
+  "reason": "period cover: Methuen hardback (first edition 1947 design), Stanley Lloyd (needs taking off no-cover.json; her Malory Towers series rule may say otherwise)"
+ },
+ "id-4x81ll9kbx": {
+  "title": "Secret Seven Fireworks",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=282",
+  "reason": "period cover: Brockhampton Press hardback (1959 design), Burgess Sharrocks (needs taking off no-cover.json)"
+ },
+ "id-6dlpm4y8dt": {
+  "title": "Summer Term at St Clare's",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=301",
+  "reason": "period cover: Methuen hardback, 1947 redesign, W. Lindsay Cable (needs taking off no-cover.json)"
+ },
+ "id-ogz9lt80an": {
+  "title": "Sunday Times Travel and Holiday Guide",
+  "from": "https://www.abebooks.co.uk/Sunday-Times-Travel-Holiday-Guide-British/32500661883/bd",
+  "reason": "period cover: The Sunday Times 1951, British Isles edition"
+ },
+ "id-umeoydkgnz": {
+  "title": "Tales of Toyland",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=362",
+  "reason": "period cover: Dean hardback 1963 (needs taking off no-cover.json)"
+ },
+ "id-0bs64hqdcu": {
+  "title": "The Mountain of Adventure",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=168",
+  "reason": "period cover: Macmillan hardback 1949 (first edition), Stuart Tresilian"
+ },
+ "id-28iec5ytqt": {
+  "title": "The Mystery of the Invisible Thief",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=225",
+  "reason": "period cover: Methuen hardback 1950 (first edition), Treyer Evans"
+ },
+ "id-7snw9i5hd6": {
+  "title": "The Mystery of the Secret Room",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=220",
+  "reason": "period cover: Methuen hardback, Joseph Abbey jacket (1950 reprint)"
+ },
+ "id-aktlqhipsz": {
+  "title": "The O'Sullivan Twins",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=300",
+  "reason": "period cover: Methuen hardback, 1945 redesign, W. Lindsay Cable (needs taking off no-cover.json)"
+ },
+ "id-baejywscho": {
+  "title": "The Second Form at St Clare's",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=302",
+  "reason": "period cover: Methuen hardback, 1944 first edition design, W. Lindsay Cable (needs taking off no-cover.json)"
+ },
+ "id-lz39v8s7b9": {
+  "title": "The Twins at St Clare's",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=299",
+  "reason": "period cover: Methuen hardback, 1941 design, W. Lindsay Cable (needs taking off no-cover.json)"
+ },
+ "id-py8mlpkno7": {
+  "title": "The Wishing Chair Again",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=320",
+  "reason": "period cover: George Newnes hardback 1950, Hilda McGavin (needs taking off no-cover.json)"
+ },
+ "id-8u7n3pwohq": {
+  "title": "Third Year at Malory Towers",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=255",
+  "reason": "period cover: Methuen hardback (1948 design), Stanley Lloyd (needs taking off no-cover.json; her Malory Towers series rule may say otherwise)"
+ },
+ "id-yq0shzbr71": {
+  "title": "Upper Fourth at Malory Towers",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=256",
+  "reason": "period cover: Methuen hardback (1949 design), Stanley Lloyd (needs taking off no-cover.json; her Malory Towers series rule may say otherwise)"
+ },
+ "id-dcf8ke4u84": {
+  "title": "Well Done Secret Seven",
+  "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=274",
+  "reason": "period cover: Brockhampton Press hardback 1951 (first edition), George Brook (needs taking off no-cover.json)"
+ },
+ "id-akvei6dpsz": {
+  "title": "Guards Guards (original paperback)",
+  "from": "https://www.lspace.de/books/covers/pic_tpggpb.jpg",
+  "reason": "to-buy: Corgi 1990 edition (matches her set)"
+ },
+ "id-59y4gluv9x": {
+  "title": "Men at Arms (original paperback)",
+  "from": "https://www.lspace.de/books/covers/pic_tpmaapb.jpg",
+  "reason": "to-buy: Corgi 1994 edition (matches her set)"
+ },
+ "id-cpfzj81mmk": {
+  "title": "Soul Music (original paperback)",
+  "from": "https://www.lspace.de/books/covers/pic_tpsmpb.jpg",
+  "reason": "to-buy: Corgi 1995 edition (matches her set)"
+ },
+ "id-tojrmsq93y": {
+  "title": "Feat of Clay (original paperback)",
+  "from": "https://www.lspace.de/books/covers/pic_tpdwfocpb.jpg",
+  "reason": "to-buy: Corgi 1997 edition (matches her set)"
+ },
+ "id-ay4ig65psz": {
+  "title": "The Wee Free Men",
+  "from": "https://pictures.abebooks.com/isbn/9780552549059-uk.jpg",
+  "reason": "to-buy: Corgi 2004 edition (matches her set)"
+ },
+ "id-3knwu6warj": {
+  "title": "Snuff",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/0552163368.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Corgi 2012 edition (matches her set)"
+ },
+ "id-7fz9j4dhd6": {
+  "title": "Raising Steam",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/0552170526.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Corgi 2014 edition (matches her set)"
+ },
+ "id-2o6cslhtqt": {
+  "title": "The Shepherd's Crown",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/0552574481.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Corgi 2016 edition (matches her set)"
+ },
+ "9781844280933": {
+  "title": "Point Blanc",
+  "from": "https://pictures.abebooks.com/isbn/9781844280933-uk.jpg",
+  "reason": "to-buy: Alex Rider 2 (matches her set)"
+ },
+ "9781406305722": {
+  "title": "Snakehead",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/1406305723.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Alex Rider 7 (matches her set)"
+ },
+ "9781406322866": {
+  "title": "Crocodile Tears",
+  "from": "https://pictures.abebooks.com/isbn/9781406322866-uk.jpg",
+  "reason": "to-buy: Alex Rider 8 (matches her set)"
+ },
+ "9781406310498": {
+  "title": "Scorpia Rising",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/1406310492.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Alex Rider 9 (no edition in her set’s design)"
+ },
+ "9781423129721": {
+  "title": "The Atlantis Complex",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/1423129725.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Artemis Fowl 7 (close to her set)"
+ },
+ "9781423164944": {
+  "title": "The Last Guardian",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/1423164946.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Artemis Fowl 8 (close to her set)"
+ },
+ "9780786852550": {
+  "title": "The Amulet of Samarkand",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/0786852550.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Bartimaeus 1 (matches her set)"
+ },
+ "9781423101154": {
+  "title": "The Golem’s Eye",
+  "from": "https://covers.openlibrary.org/b/isbn/9781423101154-L.jpg",
+  "reason": "to-buy: Bartimaeus 2 (matches her set)"
+ },
+ "9780385607209": {
+  "title": "The Winter Knights",
+  "from": "https://pictures.abebooks.com/isbn/9780385607209-uk.jpg",
+  "reason": "to-buy: Edge Chronicles 2 (close to her set)"
+ },
+ "9780552551274": {
+  "title": "Clash of the Sky Galleons",
+  "from": "https://pictures.abebooks.com/isbn/9780552551274-uk.jpg",
+  "reason": "to-buy: Edge Chronicles 3 (no edition in her set’s design)"
+ },
+ "9780552545921": {
+  "title": "Beyond the Deepwoods",
+  "from": "https://pictures.abebooks.com/isbn/9780552545921-uk.jpg",
+  "reason": "to-buy: Edge Chronicles 4 (matches her set)"
+ },
+ "9780552546287": {
+  "title": "Stormchaser",
+  "from": "https://pictures.abebooks.com/isbn/9780552546287-uk.jpg",
+  "reason": "to-buy: Edge Chronicles 5 (matches her set)"
+ },
+ "9780552546751": {
+  "title": "Midnight Over Sanctaphrax",
+  "from": "https://pictures.abebooks.com/isbn/9780552546751-uk.jpg",
+  "reason": "to-buy: Edge Chronicles 6 (matches her set)"
+ },
+ "9780552548496": {
+  "title": "Vox",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/0552548499.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Edge Chronicles 8 (matches her set)"
+ },
+ "9780552548502": {
+  "title": "Freeglader",
+  "from": "https://pictures.abebooks.com/isbn/9780552548502-uk.jpg",
+  "reason": "to-buy: Edge Chronicles 9 (matches her set)"
+ },
+ "9780552551281": {
+  "title": "The Immortals",
+  "from": "https://pictures.abebooks.com/isbn/9780552551281-uk.jpg",
+  "reason": "to-buy: Edge Chronicles 10 (no edition in her set’s design)"
+ },
+ "9780552547574": {
+  "title": "Pure Dead Magic",
+  "from": "https://pictures.abebooks.com/isbn/9780552547574-uk.jpg",
+  "reason": "to-buy: Pure Dead 1 (matches her set)"
+ },
+ "9780552572934": {
+  "title": "Pure Dead Wicked",
+  "from": "https://pictures.abebooks.com/isbn/9780552572934-uk.jpg",
+  "reason": "to-buy: Pure Dead 2 (matches her set)"
+ },
+ "9780552550468": {
+  "title": "Deep Trouble",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/0552550469.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Pure Dead 4 (matches her set)"
+ },
+ "9780552550482": {
+  "title": "Deep Fear",
+  "from": "https://pictures.abebooks.com/isbn/9780552550482-uk.jpg",
+  "reason": "to-buy: Pure Dead 6 (matches her set)"
+ },
+ "9781250229861": {
+  "title": "Network Effect",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/1250229863.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Murderbot 5 (matches her set)"
+ },
+ "9781250765376": {
+  "title": "Fugitive Telemetry",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/1250765374.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Murderbot 6 (matches her set)"
+ },
+ "9781250826978": {
+  "title": "System Collapse",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/1250826977.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Murderbot 7 (matches her set)"
+ },
+ "9781444714524": {
+  "title": "The Abduction",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/144471452X.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Theodore Boone 2 (matches her set)"
+ },
+ "9781444728880": {
+  "title": "The Accused",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/1444728881.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Theodore Boone 3 (matches her set)"
+ },
+ "9781444728934": {
+  "title": "The Activist",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/1444728938.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Theodore Boone 4 (close to her set)"
+ },
+ "9781444767674": {
+  "title": "The Fugitive",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/1444767674.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Theodore Boone 5 (close to her set)"
+ },
+ "9781444767711": {
+  "title": "The Scandal",
+  "from": "https://pictures.abebooks.com/isbn/9781444767711-uk.jpg",
+  "reason": "to-buy: Theodore Boone 6 (close to her set)"
+ },
+ "9781529373929": {
+  "title": "The Accomplice",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/1529373921.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Theodore Boone 7 (close to her set)"
+ },
+ "9780007315888": {
+  "title": "Ocean of Blood",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/0007315880.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Saga of Larten Crepsley 2 (matches her set)"
+ },
+ "9780007315918": {
+  "title": "Palace of the Damned",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/0007315910.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Saga of Larten Crepsley 3 (matches her set)"
+ },
+ "9780007315949": {
+  "title": "Brothers to the Death",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/0007315945.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Saga of Larten Crepsley 4 (matches her set)"
+ },
+ "9781841495941": {
+  "title": "The Rogue",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/1841495948.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Traitor Spy 2 (matches her set)"
+ },
+ "9781841495965": {
+  "title": "The Traitor Queen",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/1841495964.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Traitor Spy 3 (matches her set)"
+ },
+ "9781407115177": {
+  "title": "A Web of Air",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/1407115170.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Fever Crumb 2 (close to her set)"
+ },
+ "9781407115214": {
+  "title": "Scrivener’s Moon",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/1407115219.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Fever Crumb 3 (close to her set)"
+ },
+ "9780586013557": {
+  "title": "Foundation and Empire",
+  "from": "https://covers.openlibrary.org/b/id/15214422-L.jpg",
+  "reason": "to-buy: Foundation 2 (matches her set)"
+ },
+ "9780586017135": {
+  "title": "Second Foundation",
+  "from": "https://pictures.abebooks.com/inventory/32165211816.jpg",
+  "reason": "to-buy: Foundation 3 (matches her set)"
+ },
+ "9780241973356": {
+  "title": "Spring",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/024197335X.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Seasonal Quartet 3 (matches her set)"
+ },
+ "9780241973370": {
+  "title": "Summer",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/0241973376.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Seasonal Quartet 4 (matches her set)"
+ },
+ "id-0b7i4x0dcu": {
+  "title": "A Darkling Plain",
+  "from": "https://pictures.abebooks.com/isbn/9780439943468-uk.jpg",
+  "reason": "to-buy: Scholastic Point 2007 edition (matches her set)"
+ },
+ "9780552560252": {
+  "title": "Inheritance",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/0552560251.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Inheritance Cycle 4 (matches her set)"
+ },
+ "9780141315225": {
+  "title": "Voyage of Slaves",
+  "from": "https://images-na.ssl-images-amazon.com/images/P/0141315229.01.LZZZZZZZ.jpg",
+  "reason": "to-buy: Castaways of the Flying Dutchman 3 (matches her set)"
+ }
+}

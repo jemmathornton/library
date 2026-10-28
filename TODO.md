@@ -2,6 +2,8 @@
 
 ## For Jemma to decide
 
+0. **Overnight research (23–24 Oct), waiting for her yes: `research/2026-10-overnight/README.txt`.** In order: the 8 tested code fixes (the next added book would overwrite add0015 until fix 0001 is in); 100 blurbs and 50 detail fixes; 9 replacement covers and 39 period jackets for the Old Book Collection (show behind an on/off switch first); 17 shelf moves and the name fixes (Pamela Cox, Riddell, J. D. Salinger); 64 to-buy entries (Blyton notes split, series gaps). Also for her: reading orders listed below, Raven’s Gate, Paper Towns and the Fantastic Beasts screenplay ISBNs (ebook numbers), scan Katabasis, add The Dance Tree in StoryGraph.
+
 1. **Raven’s Gate** (Anthony Horowitz): she isn’t sure she has read or owns it (18 Oct). On Young Adult, tagged Not owned, until she checks.
 1. **Katabasis**: just bought; tagged Not owned until she scans it in (Add a book, or Libib). Then it needs a line in `data/storygraph-links.json` or a re-import so her reading follows it.
    - A Tale of Time City (Diana Wynne Jones)

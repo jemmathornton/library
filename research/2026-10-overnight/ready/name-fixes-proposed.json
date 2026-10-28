@@ -1,0 +1,109 @@
+{
+ "_about": "Proposed additions to data/name-fixes.json (same keys). \"names\" and \"books\" merge into the existing ones; \"ask\" needs her answer first.",
+ "names": {
+  "J. Salinger": "J. D. Salinger",
+  "David R. Lab": "David R. Lamb",
+  "Sir Arthur C. Clarke CBE": "Arthur C. Clarke",
+  "Stephen Donaldson": "Stephen R. Donaldson",
+  "Cay Horstmann": "Cay S. Horstmann",
+  "DK Eyewitness": "Dorling Kindersley"
+ },
+ "books": {
+  "New Term At Malory Towers": [
+   {
+    "name": "Pamela Cox"
+   },
+   {
+    "name": "Enid Blyton"
+   }
+  ],
+  "Summer Term At Malory Towers": [
+   {
+    "name": "Pamela Cox"
+   },
+   {
+    "name": "Enid Blyton"
+   }
+  ],
+  "Winter Term At Malory Towers": [
+   {
+    "name": "Pamela Cox"
+   },
+   {
+    "name": "Enid Blyton"
+   }
+  ],
+  "Secrets at Malory Towers": [
+   {
+    "name": "Pamela Cox"
+   },
+   {
+    "name": "Enid Blyton"
+   }
+  ],
+  "Fun and Games at Malory Towers": [
+   {
+    "name": "Pamela Cox"
+   },
+   {
+    "name": "Enid Blyton"
+   }
+  ],
+  "Goodbye, Malory Towers": [
+   {
+    "name": "Pamela Cox"
+   },
+   {
+    "name": "Enid Blyton"
+   }
+  ],
+  "Kitty at St Clare's": [
+   {
+    "name": "Pamela Cox"
+   },
+   {
+    "name": "Enid Blyton"
+   }
+  ],
+  "Kitty at St. Clare's": [
+   {
+    "name": "Pamela Cox"
+   },
+   {
+    "name": "Enid Blyton"
+   }
+  ],
+  "Invisible Cities": [
+   {
+    "name": "Italo Calvino"
+   },
+   {
+    "name": "William Weaver",
+    "role": "Translator"
+   }
+  ],
+  "Wild Boar (The Emma Press Novels)": [
+   {
+    "name": "Hannah Lutz"
+   },
+   {
+    "name": "Andy Turner",
+    "role": "Translator"
+   }
+  ],
+  "The Curse Of The Gloamglozer: The Edge Chronicles": [
+   {
+    "name": "Paul Stewart"
+   },
+   {
+    "name": "Chris Riddell"
+   }
+  ]
+ },
+ "ask": {
+  "Invasion Day Series": "Libib has \"L. M. Morgan\" and \"L. C. Morgans\"; Open Library has L. C. Morgans. One name: check the cover.",
+  "The Flying Sorcerers: More Comic Tales of Fantasy": "An anthology edited by Peter Haining (not listed); add him as Editor?",
+  "Book Two / Book Three of the Travelers": "Walter Sorrells is listed first, so they file under Sorrells while Book One files under MacHale.",
+  "DK Eyewitness": "Two guides say \"DK Eyewitness\", three \"Dorling Kindersley\"; the proposal makes them all Dorling Kindersley (which the existing fixes already use)."
+ }
+}

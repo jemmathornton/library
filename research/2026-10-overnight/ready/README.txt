@@ -1,0 +1,439 @@
+Ready-to-apply proposals for Jemma’s Library (made 23 Oct 2026 from the research folders). Nothing in HomeLibrary was changed.
+
+Files: description-fixes.json (id -> text, applies over Libib), detail-fixes.json (id -> pages/published, applies over Libib),
+covers\<key>.jpg + covers-map.json (key = isbn13 or id-<id>, as tools/build.py looks them up; drop into site\covers),
+covers-before-after.jpg (current | proposed), to-buy-additions.json (new to-buy items, ids "buy-…"; "splitFrom" = the note it replaces;
+"note"/"series" are extra fields), to-buy-updates.json (ISBNs for existing to-buy entries), shelf-moves-proposed.json, name-fixes-proposed.json.
+Build changes needed: build.py to read description-fixes.json and detail-fixes.json over Libib; old books with a proposed cover must come off
+no-cover.json (21 of them: yq0s7pfr71, tol53o093y, 8u1tifmohq, cp5qridmmk, whc2eftisd, xiuezl2jps, ogh4ago0an, cp5qr4vmmk, hfp8tti19k, g3fxkyrbt4, ogh4anm0an, 4x81ll9kbx, 6dlpm4y8dt, umeoydkgnz, aktlqhipsz, baejywscho, lz39v8s7b9, py8mlpkno7, 8u7n3pwohq, yq0shzbr71, dcf8ke4u84); to-buy.json is rewritten by a Libib re-import, so additions may belong in their own file.
+
+== Descriptions (100)
+- About a Boy (was “All our books are used but in good condition. All …”) <- Open Library (work)
+- Anita and Me (was “Title: Anita and Me Binding: Paperback Author: Mee…”) <- Open Library (work)
+- How to Stop Time (was “The top ten bestseller from the author of The Midn…”) <- Open Library (work)
+- Mythos: A Retelling of the Myths of Ancient Greece (was “No Marketing Blurb”) <- Open Library (work)
+- Nineteen Minutes (was “Good: A copy that has been read, but remains in cl…”) <- Open Library (work)
+- The Catcher in the Rye (was “Good: A copy that has been read, but remains in cl…”) <- Open Library (work)
+- The Curious Incident of the Dog in the Night-Time: Children' (was “Title: Curious Incident of the Dog in the Night-ti…”) <- Open Library (work)
+- The Forgotten Garden (was empty) <- Open Library (title search: The forgotten garden)
+- The Help (was “Brand New Item, Fast Dispatch”) <- Open Library (work)
+- The Paris Apartment (was “*Special pre-order edition* *Stunning gold foil bo…”) <- Open Library (work)
+- Veronica Mars: The Thousand-Dollar Tan Line (was “[...]”) <- Open Library (work)
+- Winter: from the Man Booker Prize-shortlisted author (Season (was “Brand New!! Re-check ISBN before Purchase”) <- Open Library (work)
+- Airman (was “HardCover. Pub the Date: January. 2008 Pages: 416 …”) <- Open Library (work)
+- Blood Beast (The Demonata, Book 5) (was “Good: A copy that has been read, but remains in cl…”) <- Open Library (work)
+- Harry Potter and the Order of the Phoenix (Book 5) (was “8vo pp. 766 ril, sovrac (hard cover, DJ)”) <- Open Library (work)
+- Harry Potter and the Prisoner of Azkaban (Book 3) Paperback (was “Bloomsbury Edition.”) <- Open Library (work)
+- Harry Potter and the Prisoner of Azkaban: 3/7 (Harry Potter  (was “DIFFERENT OFFER (please see description & picture …”) <- Open Library (work)
+- Hell's Heroes (The Demonata, Book 10) (was “Title: Hell's Heroes Binding: Paperback Author: Da…”) <- Open Library (title search: Hell's heroes)
+- Incompetence (GOLLANCZ S.F.) (was “The new novel from the author of the bestselling C…”) <- Open Library (work)
+- Killers of the Dawn (The Saga of Darren Shan, Book 9) (was “Follows Allies of the night.”) <- Open Library (work)
+- Northern Lights (His Dark Materials) (was “Good: A copy that has been read, but remains in cl…”) <- Open Library (work)
+- Priestess Of The White: Age Of The Five Book One: The Age of (was “1st edition paperback, vg++”) <- Open Library (title search: Priestess of the White (Age of the Five Trilogy, Book 1))
+- The Amazing Maurice and His Educated Rodents (was “this book is in really nice condition”) <- Open Library (work)
+- The Doomspell (Doomspell Trilogy, Book 1) (was “Trade edition paperback, new”) <- Open Library (work)
+- The Novice: Number 2 in series: Black Magician Trilogy, Book (was “paperback, vg++”) <- Open Library (work)
+- The Tales of Beedle the Bard (was “THE TALES OF BEEDLE THE BARD by J.K.ROWLING”) <- Open Library (work)
+- The Thin Executioner (was “A brilliant and brand new story of swords, sand an…”) <- Open Library (title search: The thin executioner)
+- Voice of the Gods (Age of the Five) (was “Revelations abound in the stunning conclusion to t…”) <- Open Library (work)
+- Infernal Devices (Mortal Engines Quartet) (was empty) <- Open Library (title search: Infernal devices (Mortal Engines #3))
+- Predator's Gold (Mortal Engines Quartet) (was “trade 1st edition paperback new condition”) <- Open Library (work)
+- Catching Fire (Hunger Games, Book 2) (was “Brand New Item, Fast Dispatch”) <- Open Library (work)
+- Knife Edge (was “1st Services edition paperback, vg+ Collins White …”) <- Open Library (work)
+- Noughts and Crosses (was “Good: A copy that has been read, but remains in cl…”) <- Open Library (work)
+- Mates, Dates and Cosmic Kisses (was “Good: A copy that has been read, but remains in cl…”) <- Open Library (title search: Mates, dates and cosmic kisses)
+- Mates, Dates and Diamond Destiny (Mates Dates) (Mates Dates) (was empty) <- Open Library (title search: Mates, dates, and diamond destiny (Mates, Dates #11))
+- Brambly Hedge Spring Story (was empty) <- Open Library (title search: Spring Story (Brambly Hedge))
+- Famous Five 12: Five Go Down To The Sea (was empty) <- Open Library (title search: Five go down to the sea)
+- Famous Five 14: Five Have Plenty Of Fun (was empty) <- Open Library (title search: Five Have Plenty of Fun)
+- Famous Five 15: Five On A Secret Trail (Famous Five Centenar (was empty) <- Open Library (title search: Five on a Secret Trail)
+- Famous Five 16: Five Go To Billycock Hill (was empty) <- Open Library (title search: Five Go to Billycock Hill)
+- Famous Five 17: Five Get Into A Fix (was empty) <- Open Library (title search: Five Get into a Fix)
+- Famous Five 18: Five On Finniston Farm (was empty) <- Open Library (title search: Five on Finniston Farm)
+- Famous Five 19: Five Go To Demon's Rocks (was empty) <- Open Library (title search: Five Go to Demon's Rocks)
+- Famous Five 20: Five Have A Mystery To Solve (was empty) <- Open Library (title search: Five Have a Mystery to Solve)
+- Famous Five 21: Five Are Together Again (Famous Five) (was “Famous Five: 21: Five Are Together Again (Famous F…”) <- Open Library (title search: Five Are Together Again)
+- Famous Five 7: Five Go Off To Camp (was “Edition BCA (by arrangement with Hodder Children B…”) <- Open Library (title search: Five Go Off to Camp)
+- Famous Five 8: Five Get Into Trouble (was empty) <- Open Library (title search: Five get into trouble)
+- Secret Seven: 2: Secret Seven Adventure (The Secret Seven Ce (was “A pearl necklace has been stolen and the Secret Se…”) <- Open Library (work)
+- Summer Term at Trebizon (was empty) <- Open Library (title search: Summer Term At Trebizon)
+- Around India in 80 Trains (was “Around India in 80 Trains”) <- Open Library (work)
+- Notes from a Small Island (was “352pages. in8. Broché.”) <- Open Library (work)
+- In the Lives of Puppets (was empty) <- Open Library (title search: In the Lives of Puppets)
+- Somewhere Beyond the Sea (was empty) <- Open Library (title search: Somewhere Beyond the Sea)
+- Under the Whispering Door (was empty) <- Open Library (title search: Under the Whispering Door)
+- How Kyoto Breaks Your Heart (was empty) <- https://inpressbooks.co.uk/products/how-kyoto-breaks-your-heart [high]
+- Mort (was empty) <- https://www.penguin.co.uk/books/328514/mort-by-pratchett-terry/9781804990391 [high]
+- Mother of Learning: ARC 1 (was empty) <- https://wraithmarked.com/products/mother-of-learning-arc-i-paperback [high]
+- Mother of Learning: ARC 2 (was empty) <- https://wraithmarked.com/products/mother-of-learning-arc-ii-paperback [high]
+- The Demonata (4) - Bec (was “Good: A copy that has been read, but remains in cl…”) <- https://www.abebooks.co.uk/9780007231317/x/plp [high]
+- The New Discworld Companion (GOLLANCZ S.F.) (was “The All-New Revised Essential Companion to all thi…”) <- https://www.abebooks.co.uk/9780575075559/x/plp [high]
+- The Quest for Qieta (was empty) <- https://www.juniperbythesea.com/product-page/the-quest-for-qieta-by-tina-wu [high]
+- The Rowan Five and The Whispers of Ashwyke: 1 (was empty) <- https://books.google.co.uk/books?vid=ISBN9781918483185&redir_esc=y [high]
+- The Scent of Magic - Book 2 of the Doomspell Trilogy (was “The Scent of Magic - Book 2 of the Doomspell Trilo…”) <- https://www.cliffmcnish.com/the-scent-of-magic/ [high]
+- The Wizard's Promise (Doomspell Trilogy, Book 3) (was empty) <- https://www.cliffmcnish.com/the-wizard-s-promise/ [high]
+- Girls In Tears (was “Author: Jacqueline WilsonManufacturer: Doubleday C…”) <- https://www.penguin.co.uk/books/327023/girls-in-tears-by-wilson-jacqueline/9780552557436 [medium]
+- Mates, Dates and Great Escapes (Mates, Dates) (Mates, Dates) (was empty) <- https://www.abebooks.co.uk/9781853407598/x/plp [high]
+- Mates, Dates and Mad Mistakes (was empty) <- https://www.abebooks.co.uk/9781853407871/x/plp [high]
+- Mates, Dates and Sleepover Secrets (was empty) <- https://books.google.co.uk/books?vid=ISBN9781853407956&redir_esc=y [medium]
+- Teen Queens and Has-beens (Truth, Dare, Kiss or Promise) (Tr (was empty) <- https://www.abebooks.co.uk/9781853407970/x/plp [medium]
+- Worry Website (was empty) <- https://www.penguin.co.uk/books/327087/the-worry-website-by-wilson-jacqueline/9780440868262 [high]
+- A Treasury of Enid Blyton's School Stories (was empty) <- https://www.abebooks.co.uk/9780340841457/x/plp [medium]
+- Boy Trouble At Trebizon (was empty) <- https://toppsta.com/books/details/225451/boy-trouble-at-trebizon [high]
+- Brambly Hedge Winter Story (was empty) <- https://harpercollins.co.uk/products/winter-story-brambly-hedge-jill-barklem [high]
+- First Term At Trebizon (was empty) <- https://toppsta.com/books/details/217661/first-term-at-trebizon [high]
+- Fourth Year Triumphs at Trebizon (was empty) <- https://toppsta.com/books/details/397685/fourth-year-triumphs-at-trebizon [high]
+- Fun and Games at Malory Towers (was empty) <- https://www.hachette.co.uk/titles/enid-blyton-2/malory-towers-fun-and-games/9781444929966/ [high]
+- Goodbye, Malory Towers (was empty) <- https://www.hachette.co.uk/titles/enid-blyton-2/malory-towers-goodbye-malory-towers/9781444929980/ [high]
+- Hockey Term at Trebizon (was empty) <- https://toppsta.com/books/details/397691/hockey-term-at-trebizon [high]
+- Into the Fourth at Trebizon (was empty) <- https://toppsta.com/books/details/397796/into-the-fourth-at-trebizon [high]
+- Kitty at St. Clare's (was “BRAND NEW, perfect condition.”) <- https://www.hachette.co.uk/titles/enid-blyton-2/kitty-at-st-clares/9781444930047/ [medium]
+- More Trouble at Trebizon (was empty) <- https://toppsta.com/books/details/225449/more-trouble-at-trebizon [high]
+- New Term At Malory Towers (was empty) <- https://www.hachette.co.uk/titles/enid-blyton-2/malory-towers-new-term/9781444929935/ [high]
+- Second Term at Trebizon (was empty) <- https://toppsta.com/books/details/217524/second-term-at-trebizon [high]
+- Secret Letters at Trebizon: No 13 (was empty) <- https://www.abebooks.co.uk/9780140364736/Secret-Letters-Trebizon-Anne-Digby-0140364730/plp [medium]
+- Summer Camp at Trebizon (was empty) <- https://toppsta.com/books/details/352454/summer-camp-at-trebizon [high]
+- Summer Term At Malory Towers (was empty) <- https://www.hachette.co.uk/titles/enid-blyton-2/malory-towers-summer-term/9781444929942/ [high]
+- Teddy Robinson Storybook (Storybook classics) (was empty) <- https://books.google.co.uk/books?vid=ISBN9781856974943&redir_esc=y [medium]
+- The Complete My Naughty Little Sister Storybook (was “The Complete My Naughty Little Sister”) <- https://books.google.co.uk/books?vid=ISBN9780416194470&redir_esc=y [high]
+- The Secret Seven Short Story Collection (was empty) <- https://bdlbooks.com/product/the-secret-seven-short-story-collection/ [medium]
+- The Tennis Term at Trebizon (Puffin Books) (was empty) <- https://toppsta.com/books/details/352450/tennis-term-at-trebizon [high]
+- The Unforgettable Fifth at Trebizon (was empty) <- https://www.abebooks.co.uk/9780952057178/x/plp [medium]
+- What Shall I Make? (What Shall I Do Today?) (was empty) <- https://books.google.co.uk/books?vid=ISBN9780746020302&redir_esc=y [medium]
+- How to Do Just About Everything (was empty) <- https://www.abebooks.co.uk/9780007687763/x/plp [medium]
+- Deep Water (Pure Dead) (was empty) <- https://www.penguin.co.uk/books/327255/deep-water-by-debi-gliori/9780552572989 [high]
+- A Degree of Love (was empty) <- https://books.google.co.uk/books?vid=ISBN9781718178441&redir_esc=y [high]
+- All the Lonely People (was empty) <- https://www.hachette.co.uk/titles/mike-gayle/all-the-lonely-people/9781473687424/ [high]
+- Dimension Quest (was empty) <- https://www.amazon.com/Dimension-Quest-Book-12-ebook/dp/B00B553K2O [medium]
+- Guardian Quest (was empty) <- https://www.amazon.com/dp/B01BS7DVQ8 [medium]
+- Rebellion Quest (was empty) <- https://www.amazon.com/dp/B008QD4AOA [medium]
+- The Callista Ascendancy (was empty) <- https://www.amazon.com/dp/1838217738 [high]
+
+== Descriptions skipped (12)
+- The Call (Zangwill): Open Library text describes a different (scholarly) edition, not her Persephone copy
+- Carpe Jugulum: A Discworld Novel: 23: Open Library text is an encyclopaedia-style summary, not a blurb
+- Harry Potter and the Goblet of Fire: Open Library text is an encyclopaedia-style summary, not a blurb
+- Wintersmith (Discworld Novels): Open Library text is an encyclopaedia-style summary, not a blurb
+- Secret Seven: 11: Secret Seven Fireworks (The Secret Seven Centenary Editions): Open Library text is an encyclopaedia-style summary, not a blurb
+- Secret Seven: 9: Secret Seven Mystery (The Secret Seven Centenary Editions): Open Library text is an encyclopaedia-style summary, not a blurb
+- Witness: no blurb found
+- Teddy Bear's Picnic: low confidence (https://www.abebooks.co.uk/9780216926615/x/plp)
+- The School That Went to Sea: no blurb found
+- Dear Mr. Potter: Letters of Love, Loss and Magic: no blurb found
+- Where In The Zoo Are You?: no blurb found
+- An Anthology of New Feminist Translations: no blurb found
+
+== Page counts (13)
+- Interesting Times: 32 -> 351 (Open Library)
+- Moving Pictures: 32 -> 332 (Open Library)
+- Pyramids: 32 -> 380 (Open Library)
+- Reaper Man: 32 -> 286 (Open Library)
+- Quidditch Through the Ages (Comic Relief, Harry Po: 42 -> 64 (Open Library)
+- Night Watch: (Discworld Novel 29) (Discworld Novel: 732 -> 368 (Open Library)
+- Crossfire: 736 -> 496 (Open Library)
+- Lola Rose: 768 -> 288 (Open Library)
+- The Wonderful Pigs of Jillian Jiggs: 880 -> 40 (Open Library)
+- The Curse Of The Gloamglozer: The Edge Chronicles: 1248 -> 384 (Open Library)
+- Harry Potter - A History of Magic: The Book of the: 800 -> 249 (Open Library)
+- Maskerade: A Discworld Novel: 128 -> 381 (Open Library)
+- Secret Seven: 5: Go Ahead, Secret Seven (The Secre: 96 -> 138 (Open Library)
+
+== Published dates (were missing) (42)
+- Cloud Atlas: published 2005-02-02 (Open Library)
+- If on a Winter's Night a Traveller: published 1998 (Open Library)
+- Something From Tiffanys: published 2011 (Open Library)
+- Abhorsen (The Abhorsen Trilogy): published 2003 (Open Library)
+- Artemis Fowl: The Eternity Code: published 2003 (Open Library)
+- Birth of a Killer: published 2010 (Open Library)
+- Demon Apocalypse: published 2007 (Open Library)
+- Eric: published 2000-05-11 (Open Library)
+- Harry Potter and the Chamber of Secrets: published 1998 (Open Library)
+- Harry Potter and the Deathly Hallows: published 2007 (Open Library)
+- Harry Potter and the Goblet of Fire: published 2001 (Open Library)
+- Interesting Times: published 1995 (Open Library)
+- Jingo: published 1998 (Open Library)
+- Last of the Wilds: published 2007 (Open Library)
+- Lords And Ladies: published 1994-03-01 (Open Library)
+- Monstrous Regiment (Discworld): published 2004 (Open Library)
+- Mort: published 1989 (Open Library)
+- Moving Pictures: published 1991 (Open Library)
+- Pyramids: published 1997 (Open Library)
+- Reaper Man: published 1992 (Open Library)
+- Small Gods: published 1993 (Open Library)
+- The Amazing Maurice and His Educated Rodents: published 2002 (Open Library)
+- The Light Fantastic: published 1986 (Open Library)
+- The Scent of Magic - Book 2 of the Doomspell Trilo: published 2002-07-01 (Open Library)
+- The Subtle Knife: published 1998 (Open Library)
+- The Truth: published 2001 (Open Library)
+- Unseen Academicals: published 2009 (Open Library)
+- Witches Abroad: published 1992 (Open Library)
+- Ark Angel: published 2005-04-01 (Open Library)
+- Ballet Shoes: published 1994-01-27 (Open Library)
+- If I Stay: published 2014 (Open Library)
+- Love Lessons: published 2006-08-01 (Open Library)
+- Scorpia: published 2005-04-01 (Open Library)
+- Worry Website: published 2008-04-15 (Open Library)
+- First Term At Malory Towers: published 2018 (Open Library)
+- Kitty at St. Clare's: published 2013 (Open Library)
+- The Wonderful Pigs of Jillian Jiggs: published 1990-09-26 (Open Library)
+- Third Year At Malory Towers: published 2018 (Open Library)
+- How to Do Just About Everything: published 2003 (Open Library)
+- Notes from a Small Island: published 1996 (Open Library)
+- A Degree of Love: published 2018 (Open Library)
+- Dengue Boy: published 2025 (Open Library)
+
+== Page counts skipped (15)
+- Family of Liars: Libib 32, Open Library has no number
+- Sisterhood 4: Forever in Blue: The Fourth Summer o: Libib 32, Open Library has no number
+- Sondok: Libib 32, Open Library has no number
+- The Sisterhood 2: The Second Summer of the Sisterh: Libib 40, Open Library has no number
+- Hunt Quest: Book 8 In The Quest Series: Libib 42, Open Library has no number
+- Storm Quest: Book 9 in the Quest Series: Libib 42, Open Library has no number
+- Demon Lupus: The Beyond Series Book 2: Bk. 2: Libib 763, Open Library has no number
+- Charm Quest: Book 4 in the Quest Series: 04 (Quest: Libib 766, Open Library has no number
+- Big Java: Libib 1248 is plausible (Open Library 1248)
+- A Promised Land: Libib 768 is plausible (Open Library 751)
+- Fantastic Beasts and Where to Find Them: Illustrat: Libib 800, Open Library has no number
+- Small Gods: Libib 384 is plausible (Open Library 381)
+- Famous Five 19: Five Go To Demon's Rocks: Libib 240 is plausible (Open Library 186)
+- Secret Seven 4: Secret Seven on the Trail (Secret : Libib 480, Open Library has no number
+- Starstruck: Libib 185 is plausible (Open Library 160)
+
+== Covers: wrong or poor (9)
+- 9781444979978.jpg  Heartstopper Volume 5: current is wrong book: Polish edition of Volume 1 (Chłopak spotyka chłopaka, Tom 1) shown for Volume 5
+- 9780140364545.jpg  Tom's Midnight Garden (Puffin Modern Classics): current is wrong book: French Folio Junior edition (Tom et le jardin de minuit)
+- 9781848459229.jpg  The Christmas Cottage: current is poor quality: pre-release placeholder: Coming October 2024, cover to be revealed
+- 9781444715460.jpg  You Are Here: The Instant Number 1 Sunday Times Bestsel: current is poor quality: pre-release proof cover: COVER NOT FINAL
+- id-6ubmksc8dt.jpg  Teddy Bear's Picnic: current is wrong book: landscape picture-book cover from an Open Library title search; ISBN cover is a different illustration, check it is the same book
+- 9780747599876.jpg  The Tales of Beedle the Bard: current is poor quality: faded, low-contrast scan
+- 9781903155509.jpg  Doreen: current is a square endpaper pattern, not the Persephone grey jacket
+- id-yq89z87r71.jpg  Goldenhand (hardback): to-buy hardback: UK hardback jacket instead of an Open Library title-search match
+- 9780008536732.jpg  How to Kill Men: better copy of the cover
+
+== Covers: old books (period) (39)
+- id-mntgwag31h.jpg  Brer Rabbit's a Rascal: period cover: Dean hardback 1965 (first edition), Grace Lodge
+- id-yq0s7pfr71.jpg  Bimbo and Topsy: period cover: Dean hardback 1969, cover uncredited (needs taking off no-cover.json)
+- id-umsrn8vgnz.jpg  Book of Brownies: period cover: Dean hardback 1967, cover uncredited
+- id-tol53o093y.jpg  Brer Rabbit Again: period cover: Dean hardback 1963 (reprinted to 1965), Grace Lodge (needs taking off no-cover.json)
+- id-0bs6kb8dcu.jpg  Brer Rabbit Book: period cover: Dean hardback 1963, Grace Lodge
+- id-xibkehkjps.jpg  Captain of Two Schools: period cover: Frederick Warne hardback 1950
+- id-8u1tifmohq.jpg  China Fights Back: period cover: Left Book Club edition, Victor Gollancz 1938 (limp orange/red) (needs taking off no-cover.json)
+- id-cp5qridmmk.jpg  Claudine at St Clare's: period cover: Methuen hardback 1944 (first edition), W. Lindsay Cable jacket (needs taking off no-cover.json)
+- id-8u1tiscohq.jpg  Corridors of Power: period cover: Macmillan hardback 1964 (first edition), painted jacket (seller photo at an angle, not a flat scan)
+- id-i1mt5hqlqm.jpg  Famous Five 9: Five Fall Into Adventure: period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket (1951 design)
+- id-aktlq1lpsz.jpg  Fifth Formers at St Clare's: period cover: Methuen hardback 1945, W. Lindsay Cable
+- id-whc2eftisd.jpg  Five Get Into a Fix: period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1958 design (needs taking off no-cover.json)
+- id-aktljmbpsz.jpg  Five Go Adventuring Again: period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket (1951 design)
+- id-xiuezl2jps.jpg  Five Go To Mystery Moor: period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1954 (needs taking off no-cover.json)
+- id-mnvwrmh31h.jpg  Five Go To Smugglers Top: period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1945
+- id-v6jcu0o26q.jpg  Five Go to Billycock Hill: period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, 1957 design
+- id-py97wjuno7.jpg  Five Have a Mystery to Solve: period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1962
+- id-yq0s7kvr71.jpg  Five Run Away Together: period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket (1951 design)
+- id-ogh4ago0an.jpg  Five on a Hike Together: period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, 1951 design (needs taking off no-cover.json)
+- id-cp5qr4vmmk.jpg  Five on a Secret Trail: period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1956 (needs taking off no-cover.json)
+- id-rwdf1zdxoz.jpg  Fun for the Secret Seven: period cover: Brockhampton Press hardback 1963, Burgess Sharrocks
+- id-hfp8tti19k.jpg  Good Old Secret Seven: period cover: Brockhampton Press hardback (1960 design), Burgess Sharrocks (needs taking off no-cover.json)
+- id-v6jcumc26q.jpg  In the Fifth at Malory Towers: period cover: Methuen hardback 1950 (first edition), Stanley Lloyd (her Malory Towers series rule may say otherwise)
+- id-g3fxkyrbt4.jpg  Look Out Secret Seven: period cover: Brockhampton Press hardback (1962 design), Burgess Sharrocks (needs taking off no-cover.json)
+- id-ogh4anm0an.jpg  Second Form at Malory Towers: period cover: Methuen hardback (first edition 1947 design), Stanley Lloyd (needs taking off no-cover.json; her Malory Towers series rule may say otherwise)
+- id-4x81ll9kbx.jpg  Secret Seven Fireworks: period cover: Brockhampton Press hardback (1959 design), Burgess Sharrocks (needs taking off no-cover.json)
+- id-6dlpm4y8dt.jpg  Summer Term at St Clare's: period cover: Methuen hardback, 1947 redesign, W. Lindsay Cable (needs taking off no-cover.json)
+- id-ogz9lt80an.jpg  Sunday Times Travel and Holiday Guide: period cover: The Sunday Times 1951, British Isles edition
+- id-umeoydkgnz.jpg  Tales of Toyland: period cover: Dean hardback 1963 (needs taking off no-cover.json)
+- id-0bs64hqdcu.jpg  The Mountain of Adventure: period cover: Macmillan hardback 1949 (first edition), Stuart Tresilian
+- id-28iec5ytqt.jpg  The Mystery of the Invisible Thief: period cover: Methuen hardback 1950 (first edition), Treyer Evans
+- id-7snw9i5hd6.jpg  The Mystery of the Secret Room: period cover: Methuen hardback, Joseph Abbey jacket (1950 reprint)
+- id-aktlqhipsz.jpg  The O'Sullivan Twins: period cover: Methuen hardback, 1945 redesign, W. Lindsay Cable (needs taking off no-cover.json)
+- id-baejywscho.jpg  The Second Form at St Clare's: period cover: Methuen hardback, 1944 first edition design, W. Lindsay Cable (needs taking off no-cover.json)
+- id-lz39v8s7b9.jpg  The Twins at St Clare's: period cover: Methuen hardback, 1941 design, W. Lindsay Cable (needs taking off no-cover.json)
+- id-py8mlpkno7.jpg  The Wishing Chair Again: period cover: George Newnes hardback 1950, Hilda McGavin (needs taking off no-cover.json)
+- id-8u7n3pwohq.jpg  Third Year at Malory Towers: period cover: Methuen hardback (1948 design), Stanley Lloyd (needs taking off no-cover.json; her Malory Towers series rule may say otherwise)
+- id-yq0shzbr71.jpg  Upper Fourth at Malory Towers: period cover: Methuen hardback (1949 design), Stanley Lloyd (needs taking off no-cover.json; her Malory Towers series rule may say otherwise)
+- id-dcf8ke4u84.jpg  Well Done Secret Seven: period cover: Brockhampton Press hardback 1951 (first edition), George Brook (needs taking off no-cover.json)
+
+== Covers: to buy (51)
+- id-akvei6dpsz.jpg  Guards Guards (original paperback): to-buy: Corgi 1990 edition (matches her set)
+- id-59y4gluv9x.jpg  Men at Arms (original paperback): to-buy: Corgi 1994 edition (matches her set)
+- id-cpfzj81mmk.jpg  Soul Music (original paperback): to-buy: Corgi 1995 edition (matches her set)
+- id-tojrmsq93y.jpg  Feat of Clay (original paperback): to-buy: Corgi 1997 edition (matches her set)
+- id-ay4ig65psz.jpg  The Wee Free Men: to-buy: Corgi 2004 edition (matches her set)
+- id-3knwu6warj.jpg  Snuff: to-buy: Corgi 2012 edition (matches her set)
+- id-7fz9j4dhd6.jpg  Raising Steam: to-buy: Corgi 2014 edition (matches her set)
+- id-2o6cslhtqt.jpg  The Shepherd's Crown: to-buy: Corgi 2016 edition (matches her set)
+- 9781844280933.jpg  Point Blanc: to-buy: Alex Rider 2 (matches her set)
+- 9781406305722.jpg  Snakehead: to-buy: Alex Rider 7 (matches her set)
+- 9781406322866.jpg  Crocodile Tears: to-buy: Alex Rider 8 (matches her set)
+- 9781406310498.jpg  Scorpia Rising: to-buy: Alex Rider 9 (no edition in her set’s design)
+- 9781423129721.jpg  The Atlantis Complex: to-buy: Artemis Fowl 7 (close to her set)
+- 9781423164944.jpg  The Last Guardian: to-buy: Artemis Fowl 8 (close to her set)
+- 9780786852550.jpg  The Amulet of Samarkand: to-buy: Bartimaeus 1 (matches her set)
+- 9781423101154.jpg  The Golem’s Eye: to-buy: Bartimaeus 2 (matches her set)
+- 9780385607209.jpg  The Winter Knights: to-buy: Edge Chronicles 2 (close to her set)
+- 9780552551274.jpg  Clash of the Sky Galleons: to-buy: Edge Chronicles 3 (no edition in her set’s design)
+- 9780552545921.jpg  Beyond the Deepwoods: to-buy: Edge Chronicles 4 (matches her set)
+- 9780552546287.jpg  Stormchaser: to-buy: Edge Chronicles 5 (matches her set)
+- 9780552546751.jpg  Midnight Over Sanctaphrax: to-buy: Edge Chronicles 6 (matches her set)
+- 9780552548496.jpg  Vox: to-buy: Edge Chronicles 8 (matches her set)
+- 9780552548502.jpg  Freeglader: to-buy: Edge Chronicles 9 (matches her set)
+- 9780552551281.jpg  The Immortals: to-buy: Edge Chronicles 10 (no edition in her set’s design)
+- 9780552547574.jpg  Pure Dead Magic: to-buy: Pure Dead 1 (matches her set)
+- 9780552572934.jpg  Pure Dead Wicked: to-buy: Pure Dead 2 (matches her set)
+- 9780552550468.jpg  Deep Trouble: to-buy: Pure Dead 4 (matches her set)
+- 9780552550482.jpg  Deep Fear: to-buy: Pure Dead 6 (matches her set)
+- 9781250229861.jpg  Network Effect: to-buy: Murderbot 5 (matches her set)
+- 9781250765376.jpg  Fugitive Telemetry: to-buy: Murderbot 6 (matches her set)
+- 9781250826978.jpg  System Collapse: to-buy: Murderbot 7 (matches her set)
+- 9781444714524.jpg  The Abduction: to-buy: Theodore Boone 2 (matches her set)
+- 9781444728880.jpg  The Accused: to-buy: Theodore Boone 3 (matches her set)
+- 9781444728934.jpg  The Activist: to-buy: Theodore Boone 4 (close to her set)
+- 9781444767674.jpg  The Fugitive: to-buy: Theodore Boone 5 (close to her set)
+- 9781444767711.jpg  The Scandal: to-buy: Theodore Boone 6 (close to her set)
+- 9781529373929.jpg  The Accomplice: to-buy: Theodore Boone 7 (close to her set)
+- 9780007315888.jpg  Ocean of Blood: to-buy: Saga of Larten Crepsley 2 (matches her set)
+- 9780007315918.jpg  Palace of the Damned: to-buy: Saga of Larten Crepsley 3 (matches her set)
+- 9780007315949.jpg  Brothers to the Death: to-buy: Saga of Larten Crepsley 4 (matches her set)
+- 9781841495941.jpg  The Rogue: to-buy: Traitor Spy 2 (matches her set)
+- 9781841495965.jpg  The Traitor Queen: to-buy: Traitor Spy 3 (matches her set)
+- 9781407115177.jpg  A Web of Air: to-buy: Fever Crumb 2 (close to her set)
+- 9781407115214.jpg  Scrivener’s Moon: to-buy: Fever Crumb 3 (close to her set)
+- 9780586013557.jpg  Foundation and Empire: to-buy: Foundation 2 (matches her set)
+- 9780586017135.jpg  Second Foundation: to-buy: Foundation 3 (matches her set)
+- 9780241973356.jpg  Spring: to-buy: Seasonal Quartet 3 (matches her set)
+- 9780241973370.jpg  Summer: to-buy: Seasonal Quartet 4 (matches her set)
+- id-0b7i4x0dcu.jpg  A Darkling Plain: to-buy: Scholastic Point 2007 edition (matches her set)
+- 9780552560252.jpg  Inheritance: to-buy: Inheritance Cycle 4 (matches her set)
+- 9780141315225.jpg  Voyage of Slaves: to-buy: Castaways of the Flying Dutchman 3 (matches her set)
+
+== To buy: new (series gaps) (42)
+- Alex Rider 2: Point Blanc, 9781844280933 (Walker Books 2005, matches her set)
+- Alex Rider 7: Snakehead, 9781406305722 (Walker Books 2007, matches her set)
+- Alex Rider 8: Crocodile Tears, 9781406322866 (Walker Books 2010, matches her set)
+- Alex Rider 9: Scorpia Rising, 9781406310498 (Walker Books 2011, no edition in her set’s design)
+- Artemis Fowl 7: The Atlantis Complex, 9781423129721 (Disney-Hyperion 2012, close to her set)
+- Artemis Fowl 8: The Last Guardian, 9781423164944 (Disney-Hyperion 2013, close to her set)
+- Bartimaeus 1: The Amulet of Samarkand, 9780786852550 (Hyperion 2004, matches her set)
+- Bartimaeus 2: The Golem’s Eye, 9781423101154 (Miramax/Hyperion 2005, matches her set)
+- Edge Chronicles 2: The Winter Knights, 9780385607209 (Doubleday 2005, close to her set)
+- Edge Chronicles 3: Clash of the Sky Galleons, 9780552551274 (Corgi 2007, no edition in her set’s design)
+- Edge Chronicles 4: Beyond the Deepwoods, 9780552545921 (Corgi 1999, matches her set)
+- Edge Chronicles 5: Stormchaser, 9780552546287 (Corgi 2000, matches her set)
+- Edge Chronicles 6: Midnight Over Sanctaphrax, 9780552546751 (Corgi 2001, matches her set)
+- Edge Chronicles 8: Vox, 9780552548496 (Corgi 2004, matches her set)
+- Edge Chronicles 9: Freeglader, 9780552548502 (Corgi 2005, matches her set)
+- Edge Chronicles 10: The Immortals, 9780552551281 (Corgi 2010, no edition in her set’s design)
+- Pure Dead 1: Pure Dead Magic, 9780552547574 (Corgi 2002, matches her set)
+- Pure Dead 2: Pure Dead Wicked, 9780552572934 (Corgi 2014, matches her set)
+- Pure Dead 4: Deep Trouble, 9780552550468 (Corgi 2005, matches her set)
+- Pure Dead 6: Deep Fear, 9780552550482 (Corgi 2007, matches her set)
+- Murderbot 5: Network Effect, 9781250229861 (Tor.com 2020, matches her set)
+- Murderbot 6: Fugitive Telemetry, 9781250765376 (Tordotcom 2021, matches her set)
+- Murderbot 7: System Collapse, 9781250826978 (Tordotcom 2023, matches her set)
+- Theodore Boone 2: The Abduction, 9781444714524 (Hodder & Stoughton 2011, matches her set)
+- Theodore Boone 3: The Accused, 9781444728880 (Hodder & Stoughton 2012, matches her set)
+- Theodore Boone 4: The Activist, 9781444728934 (Hodder & Stoughton 2013, close to her set)
+- Theodore Boone 5: The Fugitive, 9781444767674 (Hodder & Stoughton 2015, close to her set)
+- Theodore Boone 6: The Scandal, 9781444767711 (Hodder & Stoughton 2016, close to her set)
+- Theodore Boone 7: The Accomplice, 9781529373929 (Hodder & Stoughton 2019, close to her set)
+- Saga of Larten Crepsley 2: Ocean of Blood, 9780007315888 (HarperCollins 2011, matches her set)
+- Saga of Larten Crepsley 3: Palace of the Damned, 9780007315918 (HarperCollins 2011, matches her set)
+- Saga of Larten Crepsley 4: Brothers to the Death, 9780007315949 (HarperCollins 2012, matches her set)
+- Traitor Spy 2: The Rogue, 9781841495941 (Orbit (UK) 2011, matches her set)
+- Traitor Spy 3: The Traitor Queen, 9781841495965 (Orbit (UK) 2012, matches her set)
+- Fever Crumb 2: A Web of Air, 9781407115177 (Scholastic (UK) 2010, close to her set)
+- Fever Crumb 3: Scrivener’s Moon, 9781407115214 (Scholastic (UK) 2011, close to her set)
+- Foundation 2: Foundation and Empire, 9780586013557 (Panther 1970, matches her set)
+- Foundation 3: Second Foundation, 9780586017135 (Panther 1970, matches her set)
+- Seasonal Quartet 3: Spring, 9780241973356 (Penguin 2020, matches her set)
+- Seasonal Quartet 4: Summer, 9780241973370 (Penguin 2021, matches her set)
+- Inheritance Cycle 4: Inheritance, 9780552560252 (Corgi 2012, matches her set)
+- Castaways of the Flying Dutchman 3: Voyage of Slaves, 9780141315225 (Puffin 2007, matches her set)
+
+== To buy: split notes (22)
+- Five on Kirrin Island Again (old)  [from “Famous Five old except - Run Away, Carav…”]
+- Five Go Off to Camp (old)  [from “Famous Five old except - Run Away, Carav…”]
+- Five Have a Wonderful Time (old)  [from “Famous Five old except - Run Away, Carav…”]
+- Five Go Down to the Sea (old)  [from “Famous Five old except - Run Away, Carav…”]
+- Five Have Plenty of Fun (old)  [from “Famous Five old except - Run Away, Carav…”]
+- Five on Finniston Farm (old)  [from “Famous Five old except - Run Away, Carav…”]
+- Five Go to Demon’s Rocks (old)  [from “Famous Five old except - Run Away, Carav…”]
+- Five Are Together Again (old)  [from “Famous Five old except - Run Away, Carav…”]
+- The Secret Seven (old)  [from “Secret Seven old except - Win Through, F…”]
+- Secret Seven Adventure (old)  [from “Secret Seven old except - Win Through, F…”]
+- Secret Seven on the Trail (old)  [from “Secret Seven old except - Win Through, F…”]
+- Good Work Secret Seven (old)  [from “Secret Seven old except - Win Through, F…”]
+- Three Cheers Secret Seven (old)  [from “Secret Seven old except - Win Through, F…”]
+- Secret Seven Mystery (old)  [from “Secret Seven old except - Win Through, F…”]
+- Puzzle for the Secret Seven (old)  [from “Secret Seven old except - Win Through, F…”]
+- Shock for the Secret Seven (old)  [from “Secret Seven old except - Win Through, F…”]
+- The Castle of Adventure (old)  [from “Adventure old except Queer…”]
+- The Valley of Adventure (old)  [from “Adventure old except Queer…”]
+- The Sea of Adventure (old)  [from “Adventure old except Queer…”]
+- The Ship of Adventure (old)  [from “Adventure old except Queer…”]
+- The Circus of Adventure (old)  [from “Adventure old except Queer…”]
+- The River of Adventure (old)  [from “Adventure old except Queer…”]
+
+== To buy: notes to remove once split (3)
+- 6dwjpg48dt “Famous Five old except - Run Away, Caravan, Into Trouble , Into Advent”
+- um17riignz “Secret Seven old except - Win Through, Fireworks, Good Old, and Fun Fo”
+- q7u0vdywe4 “Adventure old except Queer”
+
+== To buy: ISBN for an existing entry (9)
+- Guards Guards (original paperback) <- 9780552134620 (Corgi 1990, matches her set)
+- Men at Arms (original paperback) <- 9780552140287 (Corgi 1994, matches her set)
+- Soul Music (original paperback) <- 9780552140294 (Corgi 1995, matches her set)
+- Feat of Clay (original paperback) <- 9780552142373 (Corgi 1997, matches her set)
+- The Wee Free Men <- 9780552549059 (Corgi 2004, matches her set)
+- Snuff <- 9780552163361 (Corgi 2012, matches her set)
+- Raising Steam <- 9780552170529 (Corgi 2014, matches her set)
+- The Shepherd's Crown <- 9780552574488 (Corgi 2016, matches her set)
+- A Darkling Plain <- 9780439943468 (Scholastic Point 2007, matches her set)
+
+== To buy: skipped (3)
+- Mortal Engines: her entry “Mortal Engines (hardback)” wants a hardback; research found the Scholastic Point paperback 9780439979436
+- Sabriel: her entry “Sabriel (hardback)” wants a hardback; research found the HarperCollins paperback 9780007137312
+- Noughts & Crosses 6 Callback: Not found: no printed edition of Callback in the Penguin 2017 set. It seems to have been a
+
+== Shelf moves (proposed) (18)
+- Madame Bovary: childrens -> adult-fiction (or old-book-collection)
+- Theodore Boone: Theodore Boone 1: science-fiction -> childrens
+- Foundation: 1/3 (The Foundation Series): fantasy -> science-fiction
+- The Restaurant at the End of the Universe: fantasy -> science-fiction
+- Incompetence (GOLLANCZ S.F.): fantasy -> science-fiction
+- The Supernaturalist: fantasy -> science-fiction
+- Only You Can Save Mankind: fantasy -> science-fiction (or childrens, fantasy)
+- The Diary of a Bookseller: adult-fiction -> non-fiction
+- Seven Kinds of People You Find in Bookshops: adult-fiction -> non-fiction
+- How Kyoto Breaks Your Heart: adult-fiction -> non-fiction (or travel)
+- Tiny Moons: adult-fiction -> non-fiction
+- Positively Birmingham 2015: adult-fiction -> non-fiction (or travel)
+- Lonely Planet Best in Travel 2026: non-fiction -> travel
+- Ballet Shoes: young-adult -> childrens
+- White Boots: young-adult -> childrens
+- Holes: young-adult -> childrens
+- Worry Website: young-adult -> childrens
+- Airman, Half-Moon Investigations, The Zombie Survival Guide: not fantasy, but suggested to leave (her call)
+
+== Author names (proposed) (17)
+- J. Salinger -> J. D. Salinger
+- David R. Lab -> David R. Lamb
+- Sir Arthur C. Clarke CBE -> Arthur C. Clarke
+- Stephen Donaldson -> Stephen R. Donaldson
+- Cay Horstmann -> Cay S. Horstmann
+- DK Eyewitness -> Dorling Kindersley
+- New Term At Malory Towers: Pamela Cox, Enid Blyton
+- Summer Term At Malory Towers: Pamela Cox, Enid Blyton
+- Winter Term At Malory Towers: Pamela Cox, Enid Blyton
+- Secrets at Malory Towers: Pamela Cox, Enid Blyton
+- Fun and Games at Malory Towers: Pamela Cox, Enid Blyton
+- Goodbye, Malory Towers: Pamela Cox, Enid Blyton
+- Kitty at St Clare's: Pamela Cox, Enid Blyton
+- Kitty at St. Clare's: Pamela Cox, Enid Blyton
+- Invisible Cities: Italo Calvino, William Weaver (Translator)
+- Wild Boar (The Emma Press Novels): Hannah Lutz, Andy Turner (Translator)
+- The Curse Of The Gloamglozer: The Edge Chronicles: Paul Stewart, Chris Riddell
+
+== Author names (her call) (4)
+- Invasion Day Series: Libib has "L. M. Morgan" and "L. C. Morgans"; Open Library has L. C. Morgans. One name: check the cover.
+- The Flying Sorcerers: More Comic Tales of Fantasy: An anthology edited by Peter Haining (not listed); add him as Editor?
+- Book Two / Book Three of the Travelers: Walter Sorrells is listed first, so they file under Sorrells while Book One files under MacHale.
+- DK Eyewitness: Two guides say "DK Eyewitness", three "Dorling Kindersley"; the proposal makes them all Dorling Kindersley (which the existing fixes already use).

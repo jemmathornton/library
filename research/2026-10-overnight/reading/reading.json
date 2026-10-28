@@ -1,0 +1,7821 @@
+{
+ "series_map": [
+  {
+   "series": "Harry Potter",
+   "pos": 1,
+   "title": "Harry Potter and the Philosopher's Stone",
+   "owned": [
+    "4jim58dkbx",
+    "ob32jh20an",
+    "v8dznjm26q",
+    "xl1n98ojps"
+   ],
+   "status": "read",
+   "sg": [
+    "Harry Potter and the Philosopher's Stone"
+   ]
+  },
+  {
+   "series": "Harry Potter",
+   "pos": 2,
+   "title": "Harry Potter and the Chamber of Secrets",
+   "owned": [
+    "8gmvx77ohq",
+    "8gmvx7tohq",
+    "bpko717cho"
+   ],
+   "status": "read",
+   "sg": [
+    "Harry Potter and the Chamber of Secrets",
+    "Harry Potter and the Chamber of Secrets"
+   ]
+  },
+  {
+   "series": "Harry Potter",
+   "pos": 3,
+   "title": "Harry Potter and the Prisoner of Azkaban",
+   "owned": [
+    "kql3vonysl",
+    "rihptdcxoz"
+   ],
+   "status": "read",
+   "sg": [
+    "Harry Potter and the Prisoner of Azkaban",
+    "Harry Potter and the Prisoner of Azkaban"
+   ]
+  },
+  {
+   "series": "Harry Potter",
+   "pos": 4,
+   "title": "Harry Potter and the Goblet of Fire",
+   "owned": [
+    "0catq15dcu",
+    "dmp9wlru84",
+    "w1fyocdisd"
+   ],
+   "status": "read",
+   "sg": [
+    "Harry Potter and the Goblet of Fire",
+    "Harry Potter and the Goblet of Fire"
+   ]
+  },
+  {
+   "series": "Harry Potter",
+   "pos": 5,
+   "title": "Harry Potter and the Order of the Phoenix",
+   "owned": [
+    "3kxuztparj",
+    "v8dznku26q"
+   ],
+   "status": "read",
+   "sg": [
+    "Harry Potter and the Order of the Phoenix",
+    "Harry Potter and the Order of the Phoenix"
+   ]
+  },
+  {
+   "series": "Harry Potter",
+   "pos": 6,
+   "title": "Harry Potter and the Half-Blood Prince",
+   "owned": [
+    "9dbeyl06rp",
+    "ayjgsexpsz"
+   ],
+   "status": "read",
+   "sg": [
+    "Harry Potter and the Half-Blood Prince",
+    "Harry Potter and the Half-Blood Prince"
+   ]
+  },
+  {
+   "series": "Harry Potter",
+   "pos": 7,
+   "title": "Harry Potter and the Deathly Hallows",
+   "owned": [
+    "j7z46oiqlq",
+    "ls5xdaf7b9"
+   ],
+   "status": "read",
+   "sg": [
+    "Harry Potter and the Deathly Hallows",
+    "Harry Potter and the Deathly Hallows"
+   ]
+  },
+  {
+   "series": "Harry Potter",
+   "pos": 8,
+   "title": "Harry Potter and the Cursed Child",
+   "owned": [
+    "3kxuzv3arj"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Malory Towers",
+   "pos": 1,
+   "title": "First Term at Malory Towers",
+   "owned": [
+    "ls5x0r67b9",
+    "v8dzp1r26q"
+   ],
+   "status": "read",
+   "sg": [
+    "First Term at Malory Towers",
+    "Last Term at Malory Towers"
+   ]
+  },
+  {
+   "series": "Malory Towers",
+   "pos": 2,
+   "title": "Second Form at Malory Towers",
+   "owned": [
+    "e9oh3745u2",
+    "ogh4anm0an"
+   ],
+   "status": "read",
+   "sg": [
+    "Second Form at Malory Towers"
+   ]
+  },
+  {
+   "series": "Malory Towers",
+   "pos": 3,
+   "title": "Third Year at Malory Towers",
+   "owned": [
+    "8u7n3pwohq",
+    "ayjgzuepsz"
+   ],
+   "status": "read",
+   "sg": [
+    "Third Year at Malory Towers"
+   ]
+  },
+  {
+   "series": "Malory Towers",
+   "pos": 4,
+   "title": "Upper Fourth at Malory Towers",
+   "owned": [
+    "izeroy0lqm",
+    "yq0shzbr71"
+   ],
+   "status": "read",
+   "sg": [
+    "Upper Fourth at Malory Towers"
+   ]
+  },
+  {
+   "series": "Malory Towers",
+   "pos": 5,
+   "title": "In the Fifth at Malory Towers",
+   "owned": [
+    "u3n6w9wgnz",
+    "v6jcumc26q"
+   ],
+   "status": "read",
+   "sg": [
+    "In the Fifth at Malory Towers"
+   ]
+  },
+  {
+   "series": "Malory Towers",
+   "pos": 6,
+   "title": "Last Term at Malory Towers",
+   "owned": [
+    "ls5x0r67b9",
+    "v8dzp1r26q"
+   ],
+   "status": "read",
+   "sg": [
+    "First Term at Malory Towers",
+    "Last Term at Malory Towers"
+   ]
+  },
+  {
+   "series": "Malory Towers",
+   "pos": 7,
+   "title": "New Term at Malory Towers",
+   "owned": [
+    "9dbekf36rp",
+    "kql35mwysl"
+   ],
+   "status": "read",
+   "sg": [
+    "Malory Towers: New Term: Book 7",
+    "Winter Term at Malory Towers"
+   ]
+  },
+  {
+   "series": "Malory Towers",
+   "pos": 8,
+   "title": "Summer Term at Malory Towers",
+   "owned": [
+    "8gmvr5gohq"
+   ],
+   "status": "read",
+   "sg": [
+    "Summer Term at Malory Towers"
+   ]
+  },
+  {
+   "series": "Malory Towers",
+   "pos": 9,
+   "title": "Winter Term at Malory Towers",
+   "owned": [
+    "kql35mwysl"
+   ],
+   "status": "read",
+   "sg": [
+    "Winter Term at Malory Towers"
+   ]
+  },
+  {
+   "series": "Malory Towers",
+   "pos": 10,
+   "title": "Fun and Games at Malory Towers",
+   "owned": [
+    "prqbsgqno7"
+   ],
+   "status": "read",
+   "sg": [
+    "Fun and Games at Malory Towers"
+   ]
+  },
+  {
+   "series": "Malory Towers",
+   "pos": 11,
+   "title": "Secrets at Malory Towers",
+   "owned": [
+    "3kxu1djarj"
+   ],
+   "status": "read",
+   "sg": [
+    "Secrets at Malory Towers"
+   ]
+  },
+  {
+   "series": "Malory Towers",
+   "pos": 12,
+   "title": "Goodbye Malory Towers",
+   "owned": [
+    "he2quj919k"
+   ],
+   "status": "read",
+   "sg": [
+    "Goodbye Malory Towers"
+   ]
+  },
+  {
+   "series": "St Clare’s",
+   "pos": 1,
+   "title": "The Twins at St Clare's",
+   "owned": [
+    "ga48i6fbt4",
+    "lz39v8s7b9"
+   ],
+   "status": "read",
+   "sg": [
+    "The Twins at St. Clare's"
+   ]
+  },
+  {
+   "series": "St Clare’s",
+   "pos": 2,
+   "title": "The O'Sullivan Twins",
+   "owned": [
+    "2ousnzltqt",
+    "aktlqhipsz"
+   ],
+   "status": "read",
+   "sg": [
+    "The O'Sullivan Twins"
+   ]
+  },
+  {
+   "series": "St Clare’s",
+   "pos": 3,
+   "title": "Summer Term at St Clare's",
+   "owned": [
+    "6dlpm4y8dt",
+    "dmp9qtfu84"
+   ],
+   "status": "read",
+   "sg": [
+    "Summer Term at St Clare's"
+   ]
+  },
+  {
+   "series": "St Clare’s",
+   "pos": 4,
+   "title": "The Second Form at St Clare's",
+   "owned": [
+    "baejywscho",
+    "w1fy8kpisd"
+   ],
+   "status": "read",
+   "sg": [
+    "The Second Form at St Clare's"
+   ]
+  },
+  {
+   "series": "St Clare’s",
+   "pos": 5,
+   "title": "The Third Form at St Clare's",
+   "owned": [
+    "6uc5yee8dt",
+    "m4rdhda31h"
+   ],
+   "status": "read",
+   "sg": [
+    "The Sixth Form at St. Clare's",
+    "The Third Form at St. Clare's"
+   ]
+  },
+  {
+   "series": "St Clare’s",
+   "pos": 6,
+   "title": "Kitty at St Clare's",
+   "owned": [
+    "xl1ntp4jps"
+   ],
+   "status": "read",
+   "sg": [
+    "Kitty at St. Clare's"
+   ]
+  },
+  {
+   "series": "St Clare’s",
+   "pos": 7,
+   "title": "Claudine at St Clare's",
+   "owned": [
+    "6uc5ye78dt",
+    "cp5qridmmk"
+   ],
+   "status": "read",
+   "sg": [
+    "Claudine at St Clare's"
+   ]
+  },
+  {
+   "series": "St Clare’s",
+   "pos": 8,
+   "title": "Fifth Formers at St Clare's",
+   "owned": [
+    "aktlq1lpsz",
+    "bpkol86cho"
+   ],
+   "status": "read",
+   "sg": [
+    "Fifth Formers of St Clare's"
+   ]
+  },
+  {
+   "series": "St Clare’s",
+   "pos": 9,
+   "title": "The Sixth Form at St Clare's",
+   "owned": [
+    "6uc5yee8dt",
+    "m4rdhda31h"
+   ],
+   "status": "read",
+   "sg": [
+    "The Sixth Form at St. Clare's",
+    "The Third Form at St. Clare's"
+   ]
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 1,
+   "title": "Five on a Treasure Island",
+   "owned": [
+    "i1mtejklqm"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 2,
+   "title": "Five Go Adventuring Again",
+   "owned": [
+    "aktljmbpsz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 3,
+   "title": "Five Run Away Together",
+   "owned": [
+    "yq0s7kvr71"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 4,
+   "title": "Five Go to Smuggler's Top",
+   "owned": [
+    "mnvwrmh31h"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 5,
+   "title": "Five Go Off in a Caravan",
+   "owned": [
+    "v6jcdvv26q"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 6,
+   "title": "Five on Kirrin Island Again",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 7,
+   "title": "Five Go Off to Camp",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 8,
+   "title": "Five Get into Trouble",
+   "owned": [
+    "aktlqn3psz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 9,
+   "title": "Five Fall into Adventure",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 10,
+   "title": "Five on a Hike Together",
+   "owned": [
+    "ogh4ago0an"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 11,
+   "title": "Five Have a Wonderful Time",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 12,
+   "title": "Five Go Down to the Sea",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 13,
+   "title": "Five Go to Mystery Moor",
+   "owned": [
+    "xiuezl2jps"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 14,
+   "title": "Five Have Plenty of Fun",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 15,
+   "title": "Five on a Secret Trail",
+   "owned": [
+    "cp5qr4vmmk"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 16,
+   "title": "Five Go to Billycock Hill",
+   "owned": [
+    "v6jcu0o26q"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 17,
+   "title": "Five Get into a Fix",
+   "owned": [
+    "whc2eftisd"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 18,
+   "title": "Five on Finniston Farm",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 19,
+   "title": "Five Go to Demon's Rocks",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 20,
+   "title": "Five Have a Mystery to Solve",
+   "owned": [
+    "py97wjuno7"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Famous Five",
+   "pos": 21,
+   "title": "Five Are Together Again",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Secret Seven",
+   "pos": 1,
+   "title": "The Secret Seven",
+   "owned": [
+    "2ousns7tqt",
+    "5601a1fv9x",
+    "6uc5y5h8dt",
+    "8gmvrv2ohq",
+    "ayjgzg5psz",
+    "ga48i8ebt4",
+    "izerordlqm",
+    "j7z4949qlq",
+    "ob32x2w0an",
+    "qhsk6knwe4",
+    "u3n6w6ignz",
+    "v8dzpzx26q",
+    "w1fy8ynisd",
+    "xl1ntnkjps"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Secret Seven",
+   "pos": 2,
+   "title": "Secret Seven Adventure",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Secret Seven",
+   "pos": 3,
+   "title": "Well Done, Secret Seven",
+   "owned": [
+    "dcf8ke4u84"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Secret Seven",
+   "pos": 4,
+   "title": "Secret Seven on the Trail",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Secret Seven",
+   "pos": 5,
+   "title": "Go Ahead, Secret Seven",
+   "owned": [
+    "cp5qrytmmk"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Secret Seven",
+   "pos": 6,
+   "title": "Good Work, Secret Seven",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Secret Seven",
+   "pos": 7,
+   "title": "Secret Seven Win Through",
+   "owned": [
+    "g3fxkkybt4"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Secret Seven",
+   "pos": 8,
+   "title": "Three Cheers, Secret Seven",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Secret Seven",
+   "pos": 9,
+   "title": "Secret Seven Mystery",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Secret Seven",
+   "pos": 10,
+   "title": "Puzzle for the Secret Seven",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Secret Seven",
+   "pos": 11,
+   "title": "Secret Seven Fireworks",
+   "owned": [
+    "4x81ll9kbx"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Secret Seven",
+   "pos": 12,
+   "title": "Good Old Secret Seven",
+   "owned": [
+    "hfp8tti19k"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Secret Seven",
+   "pos": 13,
+   "title": "Shock for the Secret Seven",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Secret Seven",
+   "pos": 14,
+   "title": "Look Out, Secret Seven",
+   "owned": [
+    "g3fxkyrbt4"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Secret Seven",
+   "pos": 15,
+   "title": "Fun for the Secret Seven",
+   "owned": [
+    "rwdf1zdxoz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Adventure Series",
+   "pos": 1,
+   "title": "The Island of Adventure",
+   "owned": [
+    "6dh2aia8dt",
+    "yw7avajr71"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Adventure Series",
+   "pos": 2,
+   "title": "The Castle of Adventure",
+   "owned": [
+    "ob32x2g0an"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Adventure Series",
+   "pos": 3,
+   "title": "The Valley of Adventure",
+   "owned": [
+    "cny070nmmk"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Adventure Series",
+   "pos": 4,
+   "title": "The Sea of Adventure",
+   "owned": [
+    "kql353iysl"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Adventure Series",
+   "pos": 5,
+   "title": "The Mountain of Adventure",
+   "owned": [
+    "0bs64hqdcu",
+    "t0gf4fg93y"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Adventure Series",
+   "pos": 6,
+   "title": "The Ship of Adventure",
+   "owned": [
+    "he2quq619k"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Adventure Series",
+   "pos": 7,
+   "title": "The Circus of Adventure",
+   "owned": [
+    "9dbekea6rp"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Adventure Series",
+   "pos": 8,
+   "title": "The River of Adventure",
+   "owned": [
+    "nxwcfc141p"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Wishing Chair",
+   "pos": 1,
+   "title": "Adventures of the Wishing Chair",
+   "owned": [
+    "59qsgeiv9x"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Wishing Chair",
+   "pos": 2,
+   "title": "The Wishing Chair Again",
+   "owned": [
+    "py8mlpkno7"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 1,
+   "title": "The Colour of Magic",
+   "owned": [
+    "m4rd1st31h"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 2,
+   "title": "The Light Fantastic",
+   "owned": [
+    "8gmvxqeohq"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 3,
+   "title": "Equal Rites",
+   "owned": [
+    "t0gfkrf93y"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 4,
+   "title": "Mort",
+   "owned": [
+    "rihpt6dxoz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 5,
+   "title": "Sourcery",
+   "owned": [
+    "8uiqpviohq",
+    "9dbeyxt6rp"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 6,
+   "title": "Wyrd Sisters",
+   "owned": [
+    "ls5xdbh7b9"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 7,
+   "title": "Pyramids",
+   "owned": [
+    "ga48l1xbt4"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 8,
+   "title": "Guards! Guards!",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 9,
+   "title": "Eric",
+   "owned": [
+    "ft873nde5y"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 10,
+   "title": "Moving Pictures",
+   "owned": [
+    "ayjgs5jpsz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 11,
+   "title": "Reaper Man",
+   "owned": [
+    "izer0gslqm"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 12,
+   "title": "Witches Abroad",
+   "owned": [
+    "j7z460lqlq"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 13,
+   "title": "Small Gods",
+   "owned": [
+    "rihpt8uxoz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 14,
+   "title": "Lords and Ladies",
+   "owned": [
+    "5601pkrv9x"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 15,
+   "title": "Men at Arms",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 16,
+   "title": "Soul Music",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 17,
+   "title": "Interesting Times",
+   "owned": [
+    "bpko7zhcho"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 18,
+   "title": "Maskerade",
+   "owned": [
+    "w1fyou8isd"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 19,
+   "title": "Feet of Clay",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 20,
+   "title": "Hogfather",
+   "owned": [
+    "6uc5rqn8dt"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 21,
+   "title": "Jingo",
+   "owned": [
+    "ob32jie0an"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 22,
+   "title": "The Last Continent",
+   "owned": [
+    "t0gfkxe93y"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 23,
+   "title": "Carpe Jugulum",
+   "owned": [
+    "3kxuzecarj"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 24,
+   "title": "The Fifth Elephant",
+   "owned": [
+    "nxwcetk41p"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 25,
+   "title": "The Truth",
+   "owned": [
+    "izer0bflqm"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 26,
+   "title": "Thief of Time",
+   "owned": [
+    "ga48lzjbt4"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 27,
+   "title": "The Last Hero",
+   "owned": [
+    "bpko7fzcho"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 28,
+   "title": "The Amazing Maurice and His Educated Rodents",
+   "owned": [
+    "e9ohakd5u2"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 29,
+   "title": "Night Watch",
+   "owned": [
+    "2ous4xntqt"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 30,
+   "title": "The Wee Free Men",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 31,
+   "title": "Monstrous Regiment",
+   "owned": [
+    "v8dznrb26q"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 32,
+   "title": "A Hat Full of Sky",
+   "owned": [
+    "qhsk8uowe4"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 33,
+   "title": "Going Postal",
+   "owned": [
+    "bpko7s1cho"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 34,
+   "title": "Thud!",
+   "owned": [
+    "rihptogxoz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 35,
+   "title": "Wintersmith",
+   "owned": [
+    "yw7a28cr71"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 36,
+   "title": "Making Money",
+   "owned": [
+    "cny0hfommk"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 37,
+   "title": "Unseen Academicals",
+   "owned": [
+    "kql3v6aysl"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 38,
+   "title": "I Shall Wear Midnight",
+   "owned": [
+    "3kxuz5marj"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 39,
+   "title": "Snuff",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 40,
+   "title": "Raising Steam",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Discworld",
+   "pos": 41,
+   "title": "The Shepherd's Crown",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Science of Discworld",
+   "pos": 1,
+   "title": "The Science of Discworld",
+   "owned": [
+    "9dbeyw86rp",
+    "j7z46uhqlq",
+    "ls5xdmz7b9"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Science of Discworld",
+   "pos": 2,
+   "title": "The Science of Discworld II: The Globe",
+   "owned": [
+    "9dbeyw86rp",
+    "j7z46uhqlq"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Science of Discworld",
+   "pos": 3,
+   "title": "The Science of Discworld III: Darwin's Watch",
+   "owned": [
+    "9dbeyw86rp",
+    "j7z46uhqlq"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Science of Discworld",
+   "pos": 4,
+   "title": "The Science of Discworld IV: Judgement Day",
+   "owned": [
+    "9dbeyw86rp",
+    "j7z46uhqlq"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Saga of Darren Shan",
+   "pos": 1,
+   "title": "Cirque du Freak",
+   "owned": [
+    "v8dznn026q"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Saga of Darren Shan",
+   "pos": 2,
+   "title": "The Vampire's Assistant",
+   "owned": [
+    "v8dznn026q"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Saga of Darren Shan",
+   "pos": 3,
+   "title": "Tunnels of Blood",
+   "owned": [
+    "v8dznn026q"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Saga of Darren Shan",
+   "pos": 4,
+   "title": "Vampire Mountain",
+   "owned": [
+    "8gmvxxsohq"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Saga of Darren Shan",
+   "pos": 5,
+   "title": "Trials of Death",
+   "owned": [
+    "yw7a22dr71"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Saga of Darren Shan",
+   "pos": 6,
+   "title": "The Vampire Prince",
+   "owned": [
+    "0catqqhdcu"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Saga of Darren Shan",
+   "pos": 7,
+   "title": "Hunters of the Dusk",
+   "owned": [
+    "rihpttoxoz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Saga of Darren Shan",
+   "pos": 8,
+   "title": "Allies of the Night",
+   "owned": [
+    "t0gfkkz93y"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Saga of Darren Shan",
+   "pos": 9,
+   "title": "Killers of the Dawn",
+   "owned": [
+    "6uc5rry8dt"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Saga of Darren Shan",
+   "pos": 10,
+   "title": "The Lake of Souls",
+   "owned": [
+    "dmp9wwku84"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Saga of Darren Shan",
+   "pos": 11,
+   "title": "Lord of the Shadows",
+   "owned": [
+    "qhsk88twe4"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Saga of Darren Shan",
+   "pos": 12,
+   "title": "Sons of Destiny",
+   "owned": [
+    "xl1n996jps"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Demonata",
+   "pos": 1,
+   "title": "Lord Loss",
+   "owned": [
+    "9dbeyyv6rp"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Demonata",
+   "pos": 2,
+   "title": "Demon Thief",
+   "owned": [
+    "7fvjuu7hd6"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Demonata",
+   "pos": 3,
+   "title": "Slawter",
+   "owned": [
+    "izer0d1lqm"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Demonata",
+   "pos": 4,
+   "title": "Bec",
+   "owned": [
+    "ayjgsfrpsz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Demonata",
+   "pos": 5,
+   "title": "Blood Beast",
+   "owned": [
+    "e9ohap85u2"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Demonata",
+   "pos": 6,
+   "title": "Demon Apocalypse",
+   "owned": [
+    "v8dzn4d26q"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Demonata",
+   "pos": 7,
+   "title": "Death's Shadow",
+   "owned": [
+    "6uc5rxa8dt"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Demonata",
+   "pos": 8,
+   "title": "Wolf Island",
+   "owned": [
+    "dmp9wiyu84"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Demonata",
+   "pos": 9,
+   "title": "Dark Calling",
+   "owned": [
+    "4jim5v9kbx"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Demonata",
+   "pos": 10,
+   "title": "Hell's Heroes",
+   "owned": [
+    "bpko7hlcho"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Mates, Dates",
+   "pos": 1,
+   "title": "Mates, Dates and Inflatable Bras",
+   "owned": [
+    "prqbfx5no7"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Mates, Dates",
+   "pos": 2,
+   "title": "Mates, Dates and Cosmic Kisses",
+   "owned": [
+    "he2qg5319k"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Mates, Dates",
+   "pos": 3,
+   "title": "Mates, Dates and Portobello Princesses",
+   "owned": [
+    "ls5xdfa7b9"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Mates, Dates",
+   "pos": 4,
+   "title": "Mates, Dates and Sleepover Secrets",
+   "owned": [
+    "7fvjuenhd6"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Mates, Dates",
+   "pos": 5,
+   "title": "Mates, Dates and Sole Survivors",
+   "owned": [
+    "j7z46hmqlq"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Mates, Dates",
+   "pos": 6,
+   "title": "Mates, Dates and Mad Mistakes",
+   "owned": [
+    "u3n6iavgnz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Mates, Dates",
+   "pos": 7,
+   "title": "Mates, Dates and Pulling Power",
+   "owned": [
+    "ayjgsrupsz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Mates, Dates",
+   "pos": 8,
+   "title": "Mates, Dates and Tempting Trouble",
+   "owned": [
+    "ft87391e5y"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Mates, Dates",
+   "pos": 9,
+   "title": "Mates, Dates and Great Escapes",
+   "owned": [
+    "6uc5rg98dt"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Mates, Dates",
+   "pos": 10,
+   "title": "Mates, Dates and Chocolate Cheats",
+   "owned": [
+    "dmp9w3du84"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Mates, Dates",
+   "pos": 11,
+   "title": "Mates, Dates and Diamond Destiny",
+   "owned": [
+    "w1fyos7isd"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Mates, Dates",
+   "pos": 12,
+   "title": "Mates, Dates and Sizzling Summers",
+   "owned": [
+    "qhsk8z7we4"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Heartstopper",
+   "pos": 1,
+   "title": "Heartstopper Volume 1",
+   "owned": [
+    "5601p0uv9x",
+    "8gmvxmmohq",
+    "dmp9wpgu84",
+    "ga48lnubt4",
+    "w1fyofhisd"
+   ],
+   "status": "read",
+   "sg": [
+    "Heartstopper Volume 1",
+    "Heartstopper Volume 2"
+   ]
+  },
+  {
+   "series": "Heartstopper",
+   "pos": 2,
+   "title": "Heartstopper Volume 2",
+   "owned": [
+    "5601p0uv9x",
+    "8gmvxmmohq",
+    "dmp9wpgu84",
+    "ga48lnubt4",
+    "w1fyofhisd"
+   ],
+   "status": "read",
+   "sg": [
+    "Heartstopper Volume 1",
+    "Heartstopper Volume 2"
+   ]
+  },
+  {
+   "series": "Heartstopper",
+   "pos": 3,
+   "title": "Heartstopper Volume 3",
+   "owned": [
+    "5601p0uv9x",
+    "8gmvxmmohq",
+    "dmp9wpgu84",
+    "ga48lnubt4",
+    "w1fyofhisd"
+   ],
+   "status": "read",
+   "sg": [
+    "Heartstopper Volume 1",
+    "Heartstopper Volume 2"
+   ]
+  },
+  {
+   "series": "Heartstopper",
+   "pos": 4,
+   "title": "Heartstopper Volume 4",
+   "owned": [
+    "5601p0uv9x",
+    "8gmvxmmohq",
+    "dmp9wpgu84",
+    "ga48lnubt4",
+    "w1fyofhisd"
+   ],
+   "status": "read",
+   "sg": [
+    "Heartstopper Volume 1",
+    "Heartstopper Volume 2"
+   ]
+  },
+  {
+   "series": "Heartstopper",
+   "pos": 5,
+   "title": "Heartstopper Volume 5",
+   "owned": [
+    "5601p0uv9x",
+    "8gmvxmmohq",
+    "dmp9wpgu84",
+    "ga48lnubt4",
+    "w1fyofhisd"
+   ],
+   "status": "read",
+   "sg": [
+    "Heartstopper Volume 1",
+    "Heartstopper Volume 2"
+   ]
+  },
+  {
+   "series": "Pendragon",
+   "pos": 1,
+   "title": "The Merchant of Death",
+   "owned": [
+    "ob32jy70an"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Pendragon",
+   "pos": 2,
+   "title": "The Lost City of Faar",
+   "owned": [
+    "8gmvxkhohq"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Pendragon",
+   "pos": 3,
+   "title": "The Never War",
+   "owned": [
+    "prqbf10no7"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Pendragon",
+   "pos": 4,
+   "title": "The Reality Bug",
+   "owned": [
+    "nxwcezc41p"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Pendragon",
+   "pos": 5,
+   "title": "Black Water",
+   "owned": [
+    "u3n6ijdgnz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Pendragon",
+   "pos": 6,
+   "title": "The Rivers of Zadaa",
+   "owned": [
+    "izer06ilqm"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Pendragon",
+   "pos": 7,
+   "title": "The Quillan Games",
+   "owned": [
+    "ayjgs14psz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Pendragon",
+   "pos": 8,
+   "title": "The Pilgrims of Rayne",
+   "owned": [
+    "v8dzna826q"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Pendragon",
+   "pos": 9,
+   "title": "Raven Rise",
+   "owned": [
+    "ft873c9e5y"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Pendragon",
+   "pos": 10,
+   "title": "The Soldiers of Halla",
+   "owned": [
+    "e9ohamt5u2"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Artemis Fowl",
+   "pos": 1,
+   "title": "Artemis Fowl",
+   "owned": [
+    "7fvju6jhd6",
+    "m4rd1wz31h",
+    "t0gfk3i93y"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Artemis Fowl",
+   "pos": 2,
+   "title": "The Arctic Incident",
+   "owned": [
+    "8gmvxnlohq"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Artemis Fowl",
+   "pos": 3,
+   "title": "The Eternity Code",
+   "owned": [
+    "7fvju6jhd6",
+    "m4rd1wz31h",
+    "t0gfk3i93y"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Artemis Fowl",
+   "pos": 4,
+   "title": "The Opal Deception",
+   "owned": [
+    "he2qg8y19k"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Artemis Fowl",
+   "pos": 5,
+   "title": "The Lost Colony",
+   "owned": [
+    "nxwcehg41p"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Artemis Fowl",
+   "pos": 6,
+   "title": "The Time Paradox",
+   "owned": [
+    "7fvju6jhd6",
+    "m4rd1wz31h",
+    "t0gfk3i93y"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Artemis Fowl",
+   "pos": 7,
+   "title": "The Atlantis Complex",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Artemis Fowl",
+   "pos": 8,
+   "title": "The Last Guardian",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Black Magician",
+   "pos": 1,
+   "title": "The Magicians' Guild",
+   "owned": [
+    "6uc5r4n8dt"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Black Magician",
+   "pos": 2,
+   "title": "The Novice",
+   "owned": [
+    "0catqridcu"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Black Magician",
+   "pos": 3,
+   "title": "The High Lord",
+   "owned": [
+    "xl1n9v2jps"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Traitor Spy",
+   "pos": 1,
+   "title": "The Ambassador's Mission",
+   "owned": [
+    "rihptf2xoz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Traitor Spy",
+   "pos": 2,
+   "title": "The Rogue",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Traitor Spy",
+   "pos": 3,
+   "title": "The Traitor Queen",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Age of the Five",
+   "pos": 1,
+   "title": "Priestess of the White",
+   "owned": [
+    "xl1n9e5jps"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Age of the Five",
+   "pos": 2,
+   "title": "Last of the Wilds",
+   "owned": [
+    "6uc5rpa8dt"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Age of the Five",
+   "pos": 3,
+   "title": "Voice of the Gods",
+   "owned": [
+    "qhsk8vfwe4"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Girls",
+   "pos": 1,
+   "title": "Girls in Love",
+   "owned": [
+    "he2qgtn19k"
+   ],
+   "status": "read",
+   "sg": [
+    "Girls in Love"
+   ]
+  },
+  {
+   "series": "Girls",
+   "pos": 2,
+   "title": "Girls Under Pressure",
+   "owned": [
+    "j7z46spqlq"
+   ],
+   "status": "read",
+   "sg": [
+    "Girls Under Pressure"
+   ]
+  },
+  {
+   "series": "Girls",
+   "pos": 3,
+   "title": "Girls Out Late",
+   "owned": [
+    "ls5xdv47b9"
+   ],
+   "status": "read",
+   "sg": [
+    "Girls Out Late"
+   ]
+  },
+  {
+   "series": "Girls",
+   "pos": 4,
+   "title": "Girls in Tears",
+   "owned": [
+    "u3n6i49gnz"
+   ],
+   "status": "read",
+   "sg": [
+    "Girls In Tears"
+   ]
+  },
+  {
+   "series": "The Adventure Zone",
+   "pos": 1,
+   "title": "Here There Be Gerblins",
+   "owned": [
+    "0catqxldcu",
+    "5601p3pv9x",
+    "6uc5rk48dt",
+    "rihptv6xoz",
+    "w1fyo6visd"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Adventure Zone",
+   "pos": 2,
+   "title": "Murder on the Rockport Limited",
+   "owned": [
+    "0catqxldcu",
+    "5601p3pv9x",
+    "6uc5rk48dt",
+    "rihptv6xoz",
+    "w1fyo6visd"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Adventure Zone",
+   "pos": 3,
+   "title": "Petals to the Metal",
+   "owned": [
+    "0catqxldcu",
+    "5601p3pv9x",
+    "6uc5rk48dt",
+    "rihptv6xoz",
+    "w1fyo6visd"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Adventure Zone",
+   "pos": 4,
+   "title": "The Crystal Kingdom",
+   "owned": [
+    "0catqxldcu",
+    "5601p3pv9x",
+    "6uc5rk48dt",
+    "rihptv6xoz",
+    "w1fyo6visd"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Adventure Zone",
+   "pos": 5,
+   "title": "The Eleventh Hour",
+   "owned": [
+    "0catqxldcu",
+    "5601p3pv9x",
+    "6uc5rk48dt",
+    "rihptv6xoz",
+    "w1fyo6visd"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Noughts & Crosses",
+   "pos": 1,
+   "title": "Noughts & Crosses",
+   "owned": [
+    "j7z49x0qlq"
+   ],
+   "status": "read",
+   "sg": [
+    "Noughts & Crosses"
+   ]
+  },
+  {
+   "series": "Noughts & Crosses",
+   "pos": 2,
+   "title": "Knife Edge",
+   "owned": [
+    "nxwcfpe41p"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Noughts & Crosses",
+   "pos": 3,
+   "title": "Checkmate",
+   "owned": [
+    "3kxu1m7arj"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Noughts & Crosses",
+   "pos": 4,
+   "title": "Double Cross",
+   "owned": [
+    "kql3541ysl"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Noughts & Crosses",
+   "pos": 5,
+   "title": "Crossfire",
+   "owned": [
+    "ob32x830an"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Noughts & Crosses",
+   "pos": 6,
+   "title": "Callback",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Alex Rider",
+   "pos": 1,
+   "title": "Stormbreaker",
+   "owned": [
+    "kql3vi2ysl"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Alex Rider",
+   "pos": 2,
+   "title": "Point Blanc",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Alex Rider",
+   "pos": 3,
+   "title": "Skeleton Key",
+   "owned": [
+    "t0gfkur93y"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Alex Rider",
+   "pos": 4,
+   "title": "Eagle Strike",
+   "owned": [
+    "prqbfjvno7"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Alex Rider",
+   "pos": 5,
+   "title": "Scorpia",
+   "owned": [
+    "3kxuzr5arj"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Alex Rider",
+   "pos": 6,
+   "title": "Ark Angel",
+   "owned": [
+    "9dbeygi6rp"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Alex Rider",
+   "pos": 7,
+   "title": "Snakehead",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Alex Rider",
+   "pos": 8,
+   "title": "Crocodile Tears",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Alex Rider",
+   "pos": 9,
+   "title": "Scorpia Rising",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Simon Snow",
+   "pos": 1,
+   "title": "Carry On",
+   "owned": [
+    "v8dznde26q"
+   ],
+   "status": "read",
+   "sg": [
+    "Carry On"
+   ]
+  },
+  {
+   "series": "Simon Snow",
+   "pos": 2,
+   "title": "Wayward Son",
+   "owned": [
+    "6uc5rmo8dt"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Simon Snow",
+   "pos": 3,
+   "title": "Any Way the Wind Blows",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Neapolitan Novels",
+   "pos": 1,
+   "title": "My Brilliant Friend",
+   "owned": [
+    "yqc2clqr71"
+   ],
+   "status": "read",
+   "sg": [
+    "My Brilliant Friend"
+   ]
+  },
+  {
+   "series": "The Neapolitan Novels",
+   "pos": 2,
+   "title": "The Story of a New Name",
+   "owned": [
+    "0b5q53udcu"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Neapolitan Novels",
+   "pos": 3,
+   "title": "Those Who Leave and Those Who Stay",
+   "owned": [
+    "xi3937kjps"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Neapolitan Novels",
+   "pos": 4,
+   "title": "The Story of the Lost Child",
+   "owned": [
+    "q7p8p1nwe4"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Wicked Years",
+   "pos": 1,
+   "title": "Wicked",
+   "owned": [
+    "8gmvxy1ohq"
+   ],
+   "status": "read",
+   "sg": [
+    "Wicked: The Life and Times of the Wicked Witch of the West"
+   ]
+  },
+  {
+   "series": "The Wicked Years",
+   "pos": 2,
+   "title": "Son of a Witch",
+   "owned": [
+    "kql3veuysl"
+   ],
+   "status": "to-read",
+   "sg": [
+    "Son of a Witch"
+   ]
+  },
+  {
+   "series": "The Wicked Years",
+   "pos": 3,
+   "title": "A Lion Among Men",
+   "owned": [
+    "prqbfzdno7"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Wicked Years",
+   "pos": 4,
+   "title": "Out of Oz",
+   "owned": [
+    "nxwcesm41p"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Murderbot Diaries",
+   "pos": 1,
+   "title": "All Systems Red",
+   "owned": [
+    "ob32jg40an"
+   ],
+   "status": "to-read",
+   "sg": [
+    "All Systems Red"
+   ]
+  },
+  {
+   "series": "The Murderbot Diaries",
+   "pos": 2,
+   "title": "Artificial Condition",
+   "owned": [
+    "kql3vjeysl"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Murderbot Diaries",
+   "pos": 3,
+   "title": "Rogue Protocol",
+   "owned": [
+    "t0gfko493y"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Murderbot Diaries",
+   "pos": 4,
+   "title": "Exit Strategy",
+   "owned": [
+    "prqbfyfno7"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Murderbot Diaries",
+   "pos": 5,
+   "title": "Network Effect",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Murderbot Diaries",
+   "pos": 6,
+   "title": "Fugitive Telemetry",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Murderbot Diaries",
+   "pos": 7,
+   "title": "System Collapse",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Bobiverse",
+   "pos": 1,
+   "title": "We Are Legion (We Are Bob)",
+   "owned": [
+    "6uc5rd08dt"
+   ],
+   "status": "read",
+   "sg": [
+    "We Are Legion (We Are Bob)",
+    "We Are Legion (We Are Bob)"
+   ]
+  },
+  {
+   "series": "Bobiverse",
+   "pos": 2,
+   "title": "For We Are Many",
+   "owned": [
+    "dmp9wb8u84"
+   ],
+   "status": "read",
+   "sg": [
+    "For We Are Many",
+    "For We Are Many"
+   ]
+  },
+  {
+   "series": "Bobiverse",
+   "pos": 3,
+   "title": "All These Worlds",
+   "owned": [
+    "xl1n9iljps"
+   ],
+   "status": "read",
+   "sg": [
+    "All These Worlds",
+    "All These Worlds"
+   ]
+  },
+  {
+   "series": "Bobiverse",
+   "pos": 4,
+   "title": "Heaven's River",
+   "owned": [
+    "8gmvxuuohq"
+   ],
+   "status": "read",
+   "sg": [
+    "Heaven's River",
+    "Heaven's River"
+   ]
+  },
+  {
+   "series": "Bobiverse",
+   "pos": 5,
+   "title": "Not Till We Are Lost",
+   "owned": [],
+   "status": "to-read",
+   "sg": [
+    "Not Till We Are Lost"
+   ]
+  },
+  {
+   "series": "Uglies",
+   "pos": 1,
+   "title": "Uglies",
+   "owned": [
+    "8gmvr68ohq"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Uglies",
+   "pos": 2,
+   "title": "Pretties",
+   "owned": [
+    "5601a5tv9x"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Uglies",
+   "pos": 3,
+   "title": "Specials",
+   "owned": [
+    "4jime4xkbx"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Uglies",
+   "pos": 4,
+   "title": "Extras",
+   "owned": [
+    "0catj0mdcu"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Little Blue Envelopes",
+   "pos": 1,
+   "title": "13 Little Blue Envelopes",
+   "owned": [
+    "rwckf9zxoz"
+   ],
+   "status": "read",
+   "sg": [
+    "13 Little Blue Envelopes"
+   ]
+  },
+  {
+   "series": "Little Blue Envelopes",
+   "pos": 2,
+   "title": "The Last Little Blue Envelope",
+   "owned": [
+    "u3n6ip2gnz"
+   ],
+   "status": "to-read",
+   "sg": [
+    "The Last Little Blue Envelope"
+   ]
+  },
+  {
+   "series": "The Sisterhood of the Traveling Pants",
+   "pos": 1,
+   "title": "The Sisterhood of the Traveling Pants",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "The Sisterhood of the Traveling Pants"
+   ]
+  },
+  {
+   "series": "The Sisterhood of the Traveling Pants",
+   "pos": 2,
+   "title": "The Second Summer of the Sisterhood",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Sisterhood of the Traveling Pants",
+   "pos": 3,
+   "title": "Girls in Pants",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Sisterhood of the Traveling Pants",
+   "pos": 4,
+   "title": "Forever in Blue",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Brambly Hedge",
+   "pos": 1,
+   "title": "Spring Story",
+   "owned": [
+    "t0ubnhx93y"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Brambly Hedge",
+   "pos": 2,
+   "title": "Summer Story",
+   "owned": [
+    "hevtdyp19k"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Brambly Hedge",
+   "pos": 3,
+   "title": "Autumn Story",
+   "owned": [
+    "u3p4qvtgnz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Brambly Hedge",
+   "pos": 4,
+   "title": "Winter Story",
+   "owned": [
+    "e980mwz5u2"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Shades of Magic",
+   "pos": 1,
+   "title": "A Darker Shade of Magic",
+   "owned": [
+    "ft2xvs5e5y"
+   ],
+   "status": "read",
+   "sg": [
+    "A Darker Shade of Magic"
+   ]
+  },
+  {
+   "series": "Shades of Magic",
+   "pos": 2,
+   "title": "A Gathering of Shadows",
+   "owned": [
+    "iz1ahwjlqm"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Shades of Magic",
+   "pos": 3,
+   "title": "A Conjuring of Light",
+   "owned": [
+    "569qtecv9x"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Licanius",
+   "pos": 1,
+   "title": "The Shadow of What Was Lost",
+   "owned": [
+    "3kxuzl8arj"
+   ],
+   "status": "read",
+   "sg": [
+    "The Shadow of What Was Lost"
+   ]
+  },
+  {
+   "series": "Licanius",
+   "pos": 2,
+   "title": "An Echo of Things to Come",
+   "owned": [
+    "8gmvx47ohq"
+   ],
+   "status": "read",
+   "sg": [
+    "An Echo of Things to Come"
+   ]
+  },
+  {
+   "series": "Licanius",
+   "pos": 3,
+   "title": "The Light of All That Falls",
+   "owned": [
+    "yw7a2f6r71"
+   ],
+   "status": "read",
+   "sg": [
+    "The Light of All That Falls"
+   ]
+  },
+  {
+   "series": "The Inheritance Cycle",
+   "pos": 1,
+   "title": "Eragon",
+   "owned": [
+    "qhsk862we4"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Inheritance Cycle",
+   "pos": 2,
+   "title": "Eldest",
+   "owned": [
+    "bpko7lwcho"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Inheritance Cycle",
+   "pos": 3,
+   "title": "Brisingr",
+   "owned": [
+    "8gmvxrrohq"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Inheritance Cycle",
+   "pos": 4,
+   "title": "Inheritance",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Wind on Fire",
+   "pos": 1,
+   "title": "The Wind Singer",
+   "owned": [
+    "v8dznpo26q"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Wind on Fire",
+   "pos": 2,
+   "title": "Slaves of the Mastery",
+   "owned": [
+    "ayjgszkpsz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Wind on Fire",
+   "pos": 3,
+   "title": "Firesong",
+   "owned": [
+    "ga48li4bt4"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "His Dark Materials",
+   "pos": 1,
+   "title": "Northern Lights",
+   "owned": [
+    "ob32j7v0an"
+   ],
+   "status": "read",
+   "sg": [
+    "His Dark Materials 3-Book Mass Market Paperback Boxed Set",
+    "The Golden Compass"
+   ]
+  },
+  {
+   "series": "His Dark Materials",
+   "pos": 2,
+   "title": "The Subtle Knife",
+   "owned": [
+    "8gmvxl2ohq"
+   ],
+   "status": "read",
+   "sg": [
+    "His Dark Materials 3-Book Mass Market Paperback Boxed Set"
+   ]
+  },
+  {
+   "series": "His Dark Materials",
+   "pos": 3,
+   "title": "The Amber Spyglass",
+   "owned": [
+    "t0gfkqv93y"
+   ],
+   "status": "read",
+   "sg": [
+    "His Dark Materials 3-Book Mass Market Paperback Boxed Set"
+   ]
+  },
+  {
+   "series": "Winternight",
+   "pos": 1,
+   "title": "The Bear and the Nightingale",
+   "owned": [
+    "izer02jlqm"
+   ],
+   "status": "read",
+   "sg": [
+    "The Bear and the Nightingale"
+   ]
+  },
+  {
+   "series": "Winternight",
+   "pos": 2,
+   "title": "The Girl in the Tower",
+   "owned": [
+    "e9ohaue5u2"
+   ],
+   "status": "read",
+   "sg": [
+    "The Girl in The Tower"
+   ]
+  },
+  {
+   "series": "Winternight",
+   "pos": 3,
+   "title": "The Winter of the Witch",
+   "owned": [
+    "ga48lx3bt4"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Doomspell Trilogy",
+   "pos": 1,
+   "title": "The Doomspell",
+   "owned": [
+    "izer0o7lqm"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Doomspell Trilogy",
+   "pos": 2,
+   "title": "The Scent of Magic",
+   "owned": [
+    "u3n6iqugnz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Doomspell Trilogy",
+   "pos": 3,
+   "title": "The Wizard's Promise",
+   "owned": [
+    "ls5xdoq7b9"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Mortal Engines",
+   "pos": 1,
+   "title": "Mortal Engines",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "Mortal Engines"
+   ]
+  },
+  {
+   "series": "Mortal Engines",
+   "pos": 2,
+   "title": "Predator's Gold",
+   "owned": [
+    "v8dzn9h26q"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Mortal Engines",
+   "pos": 3,
+   "title": "Infernal Devices",
+   "owned": [
+    "6uc5r0v8dt"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Mortal Engines",
+   "pos": 4,
+   "title": "A Darkling Plain",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Fever Crumb",
+   "pos": 1,
+   "title": "Fever Crumb",
+   "owned": [
+    "ob32jus0an"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Fever Crumb",
+   "pos": 2,
+   "title": "A Web of Air",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Fever Crumb",
+   "pos": 3,
+   "title": "Scrivener's Moon",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Hunger Games",
+   "pos": 1,
+   "title": "The Hunger Games",
+   "owned": [
+    "2ousnvstqt"
+   ],
+   "status": "read",
+   "sg": [
+    "The Hunger Games"
+   ]
+  },
+  {
+   "series": "The Hunger Games",
+   "pos": 2,
+   "title": "Catching Fire",
+   "owned": [
+    "v8dzp5i26q"
+   ],
+   "status": "read",
+   "sg": [
+    "Catching Fire"
+   ]
+  },
+  {
+   "series": "The Hunger Games",
+   "pos": 3,
+   "title": "Mockingjay",
+   "owned": [
+    "6uc5y9f8dt"
+   ],
+   "status": "read",
+   "sg": [
+    "Mockingjay"
+   ]
+  },
+  {
+   "series": "The Study Series",
+   "pos": 1,
+   "title": "Poison Study",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Study Series",
+   "pos": 2,
+   "title": "Magic Study",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Study Series",
+   "pos": 3,
+   "title": "Fire Study",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Bartimaeus",
+   "pos": 1,
+   "title": "The Amulet of Samarkand",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Bartimaeus",
+   "pos": 2,
+   "title": "The Golem's Eye",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Bartimaeus",
+   "pos": 3,
+   "title": "Ptolemy's Gate",
+   "owned": [
+    "8us6grnohq"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Old Kingdom",
+   "pos": 1,
+   "title": "Sabriel",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Old Kingdom",
+   "pos": 2,
+   "title": "Lirael",
+   "owned": [
+    "6uc5rym8dt"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Old Kingdom",
+   "pos": 3,
+   "title": "Abhorsen",
+   "owned": [
+    "w1fyo82isd"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Tyrant Philosophers",
+   "pos": 1,
+   "title": "City of Last Chances",
+   "owned": [
+    "obgzuo80an"
+   ],
+   "status": "read",
+   "sg": [
+    "City of Last Chances"
+   ]
+  },
+  {
+   "series": "The Tyrant Philosophers",
+   "pos": 2,
+   "title": "House of Open Wounds",
+   "owned": [
+    "569qt5mv9x"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Tyrant Philosophers",
+   "pos": 3,
+   "title": "Days of Shattered Faith",
+   "owned": [
+    "4xayzqckbx"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "DallerGut Dream Department Store",
+   "pos": 1,
+   "title": "DallerGut Dream Department Store",
+   "owned": [
+    "6uc5yjn8dt"
+   ],
+   "status": "read",
+   "sg": [
+    "DallerGut Dream Department Store"
+   ]
+  },
+  {
+   "series": "DallerGut Dream Department Store",
+   "pos": 2,
+   "title": "Return to the DallerGut Dream Department Store",
+   "owned": [
+    "dmcm8hru84"
+   ],
+   "status": "read",
+   "sg": [
+    "Return to the DallerGut Dream Department Store"
+   ]
+  },
+  {
+   "series": "Morisaki Bookshop",
+   "pos": 1,
+   "title": "Days at the Morisaki Bookshop",
+   "owned": [
+    "8gmvrilohq"
+   ],
+   "status": "read",
+   "sg": [
+    "Days at the Morisaki Bookshop"
+   ]
+  },
+  {
+   "series": "Morisaki Bookshop",
+   "pos": 2,
+   "title": "More Days at the Morisaki Bookshop",
+   "owned": [
+    "8gmvrilohq"
+   ],
+   "status": "read",
+   "sg": [
+    "Days at the Morisaki Bookshop"
+   ]
+  },
+  {
+   "series": "Trebizon",
+   "pos": 1,
+   "title": "First Term at Trebizon",
+   "owned": [
+    "yw7avnwr71"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Trebizon",
+   "pos": 2,
+   "title": "Second Term at Trebizon",
+   "owned": [
+    "t0gf45c93y"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Trebizon",
+   "pos": 3,
+   "title": "Summer Term at Trebizon",
+   "owned": [
+    "kql35p7ysl"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Trebizon",
+   "pos": 4,
+   "title": "Boy Trouble at Trebizon",
+   "owned": [
+    "prqbsmlno7"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Trebizon",
+   "pos": 5,
+   "title": "More Trouble at Trebizon",
+   "owned": [
+    "9dbekvn6rp"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Trebizon",
+   "pos": 6,
+   "title": "The Tennis Term at Trebizon",
+   "owned": [
+    "cny07opmmk"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Trebizon",
+   "pos": 7,
+   "title": "Summer Camp at Trebizon",
+   "owned": [
+    "nxwcf3s41p"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Trebizon",
+   "pos": 8,
+   "title": "Into the Fourth at Trebizon",
+   "owned": [
+    "u3n6wo7gnz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Trebizon",
+   "pos": 9,
+   "title": "The Hockey Term at Trebizon",
+   "owned": [
+    "yw7av3xr71"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Trebizon",
+   "pos": 10,
+   "title": "Fourth Year Triumphs at Trebizon",
+   "owned": [
+    "0catjvodcu"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Trebizon",
+   "pos": 11,
+   "title": "The Ghostly Term at Trebizon",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Trebizon",
+   "pos": 12,
+   "title": "Fifth Year Friendships at Trebizon",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Trebizon",
+   "pos": 13,
+   "title": "Secret Letters at Trebizon",
+   "owned": [
+    "rihp23kxoz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Trebizon",
+   "pos": 14,
+   "title": "The Unforgettable Fifth at Trebizon",
+   "owned": [
+    "5601a7zv9x"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Quest Series",
+   "pos": 1,
+   "title": "Oracle Quest",
+   "owned": [
+    "9dbeyk56rp"
+   ],
+   "status": "read",
+   "sg": [
+    "Oracle Quest"
+   ]
+  },
+  {
+   "series": "The Quest Series",
+   "pos": 2,
+   "title": "Relic Quest",
+   "owned": [
+    "ls5xd0w7b9"
+   ],
+   "status": "read",
+   "sg": [
+    "Relic Quest"
+   ]
+  },
+  {
+   "series": "The Quest Series",
+   "pos": 3,
+   "title": "Barrier Quest",
+   "owned": [
+    "j7z469jqlq"
+   ],
+   "status": "read",
+   "sg": [
+    "Barrier Quest"
+   ]
+  },
+  {
+   "series": "The Quest Series",
+   "pos": 4,
+   "title": "Charm Quest",
+   "owned": [
+    "izer00hlqm"
+   ],
+   "status": "read",
+   "sg": [
+    "Charm Quest"
+   ]
+  },
+  {
+   "series": "The Quest Series",
+   "pos": 5,
+   "title": "Land Quest",
+   "owned": [
+    "xl1n9t9jps"
+   ],
+   "status": "read",
+   "sg": [
+    "Land Quest"
+   ]
+  },
+  {
+   "series": "The Quest Series",
+   "pos": 6,
+   "title": "Wizard Quest",
+   "owned": [
+    "rihpt28xoz"
+   ],
+   "status": "read",
+   "sg": [
+    "Wizard Quest"
+   ]
+  },
+  {
+   "series": "The Quest Series",
+   "pos": 7,
+   "title": "Seer Quest",
+   "owned": [
+    "m4rd1h531h"
+   ],
+   "status": "read",
+   "sg": [
+    "Seer Quest"
+   ]
+  },
+  {
+   "series": "The Quest Series",
+   "pos": 8,
+   "title": "Hunt Quest",
+   "owned": [
+    "cny0h72mmk"
+   ],
+   "status": "read",
+   "sg": [
+    "Hunt Quest"
+   ]
+  },
+  {
+   "series": "The Quest Series",
+   "pos": 9,
+   "title": "Storm Quest",
+   "owned": [
+    "kql3v5gysl"
+   ],
+   "status": "read",
+   "sg": [
+    "Storm Quest"
+   ]
+  },
+  {
+   "series": "The Quest Series",
+   "pos": 10,
+   "title": "Healer Quest",
+   "owned": [
+    "3kxuz1darj"
+   ],
+   "status": "read",
+   "sg": [
+    "Healer Quest"
+   ]
+  },
+  {
+   "series": "The Quest Series",
+   "pos": 11,
+   "title": "Rebellion Quest",
+   "owned": [
+    "add0008"
+   ],
+   "status": "read",
+   "sg": [
+    "Rebellion Quest"
+   ]
+  },
+  {
+   "series": "The Quest Series",
+   "pos": 12,
+   "title": "Dimension Quest",
+   "owned": [
+    "add0006"
+   ],
+   "status": "read",
+   "sg": [
+    "Dimension Quest"
+   ]
+  },
+  {
+   "series": "The Quest Series",
+   "pos": 13,
+   "title": "Guardian Quest",
+   "owned": [
+    "add0007"
+   ],
+   "status": "read",
+   "sg": [
+    "Guardian Quest"
+   ]
+  },
+  {
+   "series": "Legacy of the Stones",
+   "pos": 1,
+   "title": "Song of Echoes",
+   "owned": [
+    "jlpxj0iqlq"
+   ],
+   "status": "read",
+   "sg": [
+    "Song of Echoes"
+   ]
+  },
+  {
+   "series": "Legacy of the Stones",
+   "pos": 2,
+   "title": "Age of Shadows",
+   "owned": [
+    "og58oif0an"
+   ],
+   "status": "read",
+   "sg": [
+    "Age of Shadows"
+   ]
+  },
+  {
+   "series": "Legacy of the Stones",
+   "pos": 3,
+   "title": "Sea of Souls",
+   "owned": [
+    "i1j1o6glqm"
+   ],
+   "status": "read",
+   "sg": [
+    "Sea of Souls"
+   ]
+  },
+  {
+   "series": "Legacy of the Stones",
+   "pos": 4,
+   "title": "Crown of Sorrows",
+   "owned": [
+    "0b6bjrgdcu"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Legacy of the Stones",
+   "pos": 5,
+   "title": "Realm of Mortals",
+   "owned": [
+    "rw4w2vqxoz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Pure Dead",
+   "pos": 1,
+   "title": "Pure Dead Magic",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Pure Dead",
+   "pos": 2,
+   "title": "Pure Dead Wicked",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Pure Dead",
+   "pos": 3,
+   "title": "Pure Dead Brilliant",
+   "owned": [
+    "lz4wi8q7b9"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Pure Dead",
+   "pos": 4,
+   "title": "Deep Trouble",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Pure Dead",
+   "pos": 5,
+   "title": "Deep Water",
+   "owned": [
+    "kjgn45bysl"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Pure Dead",
+   "pos": 6,
+   "title": "Deep Fear",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Truth, Dare, Kiss or Promise",
+   "pos": 1,
+   "title": "White Lies and Barefaced Truths",
+   "owned": [
+    "6uc5rbg8dt"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Truth, Dare, Kiss or Promise",
+   "pos": 2,
+   "title": "The Princess of Pop",
+   "owned": [
+    "5601podv9x"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Truth, Dare, Kiss or Promise",
+   "pos": 3,
+   "title": "Teen Queens and Has-Beens",
+   "owned": [
+    "4jim5w7kbx"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Truth, Dare, Kiss or Promise",
+   "pos": 4,
+   "title": "Starstruck",
+   "owned": [
+    "rihpt7sxoz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Truth, Dare, Kiss or Promise",
+   "pos": 5,
+   "title": "Double Dare",
+   "owned": [
+    "0catq3kdcu"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Truth, Dare, Kiss or Promise",
+   "pos": 6,
+   "title": "Midsummer Meltdown",
+   "owned": [
+    "ob32jmr0an"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Truth, Dare, Kiss or Promise",
+   "pos": 7,
+   "title": "Love Lottery",
+   "owned": [
+    "cny0hk7mmk"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Truth, Dare, Kiss or Promise",
+   "pos": 8,
+   "title": "All Mates Together",
+   "owned": [
+    "8gmvxcxohq"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Veronica Mars",
+   "pos": 1,
+   "title": "The Thousand-Dollar Tan Line",
+   "owned": [
+    "2ousnx4tqt",
+    "w1fy8g0isd"
+   ],
+   "status": "read",
+   "sg": [
+    "The Thousand-Dollar Tan Line"
+   ]
+  },
+  {
+   "series": "Veronica Mars",
+   "pos": 2,
+   "title": "Mr. Kiss and Tell",
+   "owned": [
+    "2ousnx4tqt",
+    "w1fy8g0isd"
+   ],
+   "status": "read",
+   "sg": [
+    "The Thousand-Dollar Tan Line"
+   ]
+  },
+  {
+   "series": "The Beyond Series",
+   "pos": 1,
+   "title": "Didikai Witch",
+   "owned": [
+    "v8dzn3626q"
+   ],
+   "status": "read",
+   "sg": [
+    "Didikai Witch"
+   ]
+  },
+  {
+   "series": "The Beyond Series",
+   "pos": 2,
+   "title": "Demon Lupus",
+   "owned": [
+    "6uc5r4b8dt"
+   ],
+   "status": "read",
+   "sg": [
+    "Demon Lupus"
+   ]
+  },
+  {
+   "series": "Sam Linnifer",
+   "pos": 1,
+   "title": "Waywalkers",
+   "owned": [
+    "ob32jaj0an"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Sam Linnifer",
+   "pos": 2,
+   "title": "Timekeepers",
+   "owned": [
+    "yw7a2hvr71"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Pendragon: Before the War",
+   "pos": 1,
+   "title": "Book One of the Travelers",
+   "owned": [
+    "dmp9wjnu84",
+    "ob32j1n0an"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Pendragon: Before the War",
+   "pos": 2,
+   "title": "Book Two of the Travelers",
+   "owned": [
+    "dmp9wjnu84",
+    "ob32j1n0an"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Pendragon: Before the War",
+   "pos": 3,
+   "title": "Book Three of the Travelers",
+   "owned": [
+    "e9ohaxb5u2"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Twilight",
+   "pos": 1,
+   "title": "Twilight",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "Twilight"
+   ]
+  },
+  {
+   "series": "Twilight",
+   "pos": 2,
+   "title": "New Moon",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "New Moon"
+   ]
+  },
+  {
+   "series": "Twilight",
+   "pos": 3,
+   "title": "Eclipse",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "Eclipse"
+   ]
+  },
+  {
+   "series": "Twilight",
+   "pos": 4,
+   "title": "Breaking Dawn",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "Breaking Dawn"
+   ]
+  },
+  {
+   "series": "A Good Girl's Guide to Murder",
+   "pos": 1,
+   "title": "A Good Girl's Guide to Murder",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "A Good Girl's Guide to Murder"
+   ]
+  },
+  {
+   "series": "A Good Girl's Guide to Murder",
+   "pos": 2,
+   "title": "Good Girl, Bad Blood",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "Good Girl, Bad Blood"
+   ]
+  },
+  {
+   "series": "A Good Girl's Guide to Murder",
+   "pos": 3,
+   "title": "As Good As Dead",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "As Good As Dead"
+   ]
+  },
+  {
+   "series": "A Good Girl's Guide to Murder",
+   "pos": 4,
+   "title": "Kill Joy",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "Kill Joy"
+   ]
+  },
+  {
+   "series": "The Chronicles of Narnia",
+   "pos": 1,
+   "title": "The Magician's Nephew",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "The Magician's Nephew"
+   ]
+  },
+  {
+   "series": "The Chronicles of Narnia",
+   "pos": 2,
+   "title": "The Lion, the Witch and the Wardrobe",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "The Lion, the Witch and the Wardrobe"
+   ]
+  },
+  {
+   "series": "The Chronicles of Narnia",
+   "pos": 3,
+   "title": "The Horse and His Boy",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "The Horse and His Boy"
+   ]
+  },
+  {
+   "series": "The Chronicles of Narnia",
+   "pos": 4,
+   "title": "Prince Caspian",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "Prince Caspian"
+   ]
+  },
+  {
+   "series": "The Chronicles of Narnia",
+   "pos": 5,
+   "title": "The Voyage of the Dawn Treader",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "The Voyage of the Dawn Treader"
+   ]
+  },
+  {
+   "series": "The Chronicles of Narnia",
+   "pos": 6,
+   "title": "The Silver Chair",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "The Silver Chair"
+   ]
+  },
+  {
+   "series": "The Chronicles of Narnia",
+   "pos": 7,
+   "title": "The Last Battle",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "The Last Battle"
+   ]
+  },
+  {
+   "series": "Kitty Collins",
+   "pos": 1,
+   "title": "How to Kill Men and Get Away With It",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "How to Kill Men and Get Away With It"
+   ]
+  },
+  {
+   "series": "Kitty Collins",
+   "pos": 2,
+   "title": "I Bet You'd Look Good in a Coffin",
+   "owned": [],
+   "status": "reading",
+   "sg": [
+    "I Bet You'd Look Good in a Coffin"
+   ]
+  },
+  {
+   "series": "Kitty Collins",
+   "pos": 3,
+   "title": "To All the Men I've Killed Before",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Miss Marple",
+   "pos": 1,
+   "title": "The Murder at the Vicarage",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "Murder at the Vicarage",
+    "The Murder at the Vicarage"
+   ]
+  },
+  {
+   "series": "Miss Marple",
+   "pos": 2,
+   "title": "The Body in the Library",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "The Body in the Library"
+   ]
+  },
+  {
+   "series": "Miss Marple",
+   "pos": 3,
+   "title": "The Moving Finger",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "The Moving Finger"
+   ]
+  },
+  {
+   "series": "Miss Marple",
+   "pos": 4,
+   "title": "A Murder Is Announced",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Miss Marple",
+   "pos": 5,
+   "title": "They Do It with Mirrors",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Miss Marple",
+   "pos": 6,
+   "title": "A Pocket Full of Rye",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Miss Marple",
+   "pos": 7,
+   "title": "4.50 from Paddington",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Miss Marple",
+   "pos": 8,
+   "title": "The Mirror Crack'd from Side to Side",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Miss Marple",
+   "pos": 9,
+   "title": "A Caribbean Mystery",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Miss Marple",
+   "pos": 10,
+   "title": "At Bertram's Hotel",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Miss Marple",
+   "pos": 11,
+   "title": "Nemesis",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Miss Marple",
+   "pos": 12,
+   "title": "Sleeping Murder",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Notes from a Small Island",
+   "pos": 1,
+   "title": "Notes from a Small Island",
+   "owned": [
+    "ga48la0bt4"
+   ],
+   "status": "to-read",
+   "sg": [
+    "Notes from a Small Island"
+   ]
+  },
+  {
+   "series": "Notes from a Small Island",
+   "pos": 2,
+   "title": "The Road to Little Dribbling",
+   "owned": [
+    "lzrmyxs7b9"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Natural Human Saga",
+   "pos": 1,
+   "title": "The Callista Alignment",
+   "owned": [
+    "9dbeyox6rp"
+   ],
+   "status": "read",
+   "sg": [
+    "The Callista Alignment"
+   ]
+  },
+  {
+   "series": "The Natural Human Saga",
+   "pos": 2,
+   "title": "The Callista Ascendancy",
+   "owned": [
+    "add0010"
+   ],
+   "status": "read",
+   "sg": [
+    "The Callista Ascendancy"
+   ]
+  },
+  {
+   "series": "Castaways of the Flying Dutchman",
+   "pos": 1,
+   "title": "Castaways of the Flying Dutchman",
+   "owned": [
+    "9dbeyps6rp"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Castaways of the Flying Dutchman",
+   "pos": 2,
+   "title": "The Angel's Command",
+   "owned": [
+    "ls5xd6x7b9"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Castaways of the Flying Dutchman",
+   "pos": 3,
+   "title": "Voyage of Slaves",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Before the Coffee Gets Cold",
+   "pos": 1,
+   "title": "Before the Coffee Gets Cold",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "Before the Coffee Gets Cold"
+   ]
+  },
+  {
+   "series": "Before the Coffee Gets Cold",
+   "pos": 2,
+   "title": "Tales from the Cafe",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "Tales from the Café"
+   ]
+  },
+  {
+   "series": "Before the Coffee Gets Cold",
+   "pos": 3,
+   "title": "Before Your Memory Fades",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Before the Coffee Gets Cold",
+   "pos": 4,
+   "title": "Before We Say Goodbye",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Before the Coffee Gets Cold",
+   "pos": 5,
+   "title": "Before We Forget Kindness",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Cerulean Chronicles",
+   "pos": 1,
+   "title": "The House in the Cerulean Sea",
+   "owned": [
+    "7fvju9xhd6",
+    "ls5xd3s7b9"
+   ],
+   "status": "read",
+   "sg": [
+    "The House in the Cerulean Sea"
+   ]
+  },
+  {
+   "series": "The Cerulean Chronicles",
+   "pos": 2,
+   "title": "Somewhere Beyond the Sea",
+   "owned": [
+    "add0014",
+    "izer0m5lqm"
+   ],
+   "status": "read",
+   "sg": [
+    "Somewhere Beyond the Sea"
+   ]
+  },
+  {
+   "series": "Mother of Learning",
+   "pos": 1,
+   "title": "Mother of Learning: Arc 1",
+   "owned": [
+    "ob32jko0an",
+    "u3n6ix0gnz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Mother of Learning",
+   "pos": 2,
+   "title": "Mother of Learning: Arc 2",
+   "owned": [
+    "ob32jko0an",
+    "u3n6ix0gnz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Mother of Learning",
+   "pos": 3,
+   "title": "Mother of Learning: Arc 3",
+   "owned": [
+    "ob32jko0an",
+    "u3n6ix0gnz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "We Were Liars",
+   "pos": 1,
+   "title": "We Were Liars",
+   "owned": [
+    "v8dznu526q"
+   ],
+   "status": "read",
+   "sg": [
+    "We Were Liars"
+   ]
+  },
+  {
+   "series": "We Were Liars",
+   "pos": 2,
+   "title": "Family of Liars",
+   "owned": [
+    "ft873ofe5y"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Shetland Witch",
+   "pos": 1,
+   "title": "The Shetland Witch",
+   "owned": [
+    "2ous4agtqt"
+   ],
+   "status": "read",
+   "sg": [
+    "The Shetland Witch: Or, Atropos Wants Her Shears Back"
+   ]
+  },
+  {
+   "series": "The Shetland Witch",
+   "pos": 2,
+   "title": "Stories from the Shetland Witch",
+   "owned": [
+    "qhsk8t5we4"
+   ],
+   "status": "read",
+   "sg": [
+    "Stories From The Shetland Witch: In Achaea &amp; Mrs Sinclair and the Feather Haa"
+   ]
+  },
+  {
+   "series": "Seasonal Quartet",
+   "pos": 1,
+   "title": "Autumn",
+   "owned": [
+    "he2qumh19k"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Seasonal Quartet",
+   "pos": 2,
+   "title": "Winter",
+   "owned": [
+    "7fvjdmfhd6"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Seasonal Quartet",
+   "pos": 3,
+   "title": "Spring",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Seasonal Quartet",
+   "pos": 4,
+   "title": "Summer",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Quest for Qieta",
+   "pos": 1,
+   "title": "The Quest for Qieta",
+   "owned": [
+    "qhzf6i9we4"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Quest for Qieta",
+   "pos": 2,
+   "title": "Memories of the Kurai",
+   "owned": [
+    "2odgpvctqt"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Hogwarts Library",
+   "pos": 1,
+   "title": "Fantastic Beasts and Where to Find Them",
+   "owned": [
+    "2ous4qktqt",
+    "ls5xdul7b9"
+   ],
+   "status": "read",
+   "sg": [
+    "Fantastic Beasts & Where to Find Them"
+   ]
+  },
+  {
+   "series": "Hogwarts Library",
+   "pos": 2,
+   "title": "Quidditch Through the Ages",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "Quidditch Through the Ages"
+   ]
+  },
+  {
+   "series": "Hogwarts Library",
+   "pos": 3,
+   "title": "The Tales of Beedle the Bard",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "The Tales of Beedle the Bard"
+   ]
+  },
+  {
+   "series": "Fantastic Beasts Screenplays",
+   "pos": 1,
+   "title": "Fantastic Beasts and Where to Find Them: The Original Screenplay",
+   "owned": [
+    "2ous4qktqt",
+    "ls5xdul7b9"
+   ],
+   "status": "read",
+   "sg": [
+    "Fantastic Beasts & Where to Find Them"
+   ]
+  },
+  {
+   "series": "Fantastic Beasts Screenplays",
+   "pos": 2,
+   "title": "Fantastic Beasts: The Crimes of Grindelwald",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Fantastic Beasts Screenplays",
+   "pos": 3,
+   "title": "Fantastic Beasts: The Secrets of Dumbledore",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Edge Chronicles",
+   "pos": 1,
+   "title": "The Curse of the Gloamglozer",
+   "owned": [
+    "ft873rce5y"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Edge Chronicles",
+   "pos": 2,
+   "title": "The Winter Knights",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Edge Chronicles",
+   "pos": 3,
+   "title": "Clash of the Sky Galleons",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Edge Chronicles",
+   "pos": 4,
+   "title": "Beyond the Deepwoods",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Edge Chronicles",
+   "pos": 5,
+   "title": "Stormchaser",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Edge Chronicles",
+   "pos": 6,
+   "title": "Midnight Over Sanctaphrax",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Edge Chronicles",
+   "pos": 7,
+   "title": "The Last of the Sky Pirates",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Edge Chronicles",
+   "pos": 8,
+   "title": "Vox",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Edge Chronicles",
+   "pos": 9,
+   "title": "Freeglader",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Edge Chronicles",
+   "pos": 10,
+   "title": "The Immortals",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Foundation",
+   "pos": 1,
+   "title": "Foundation",
+   "owned": [
+    "u3n6iy8gnz"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Foundation",
+   "pos": 2,
+   "title": "Foundation and Empire",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Foundation",
+   "pos": 3,
+   "title": "Second Foundation",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Theodore Boone",
+   "pos": 1,
+   "title": "Theodore Boone: Kid Lawyer",
+   "owned": [
+    "ls5xdzm7b9"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Theodore Boone",
+   "pos": 2,
+   "title": "Theodore Boone: The Abduction",
+   "owned": [
+    "ls5xdzm7b9"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Theodore Boone",
+   "pos": 3,
+   "title": "Theodore Boone: The Accused",
+   "owned": [
+    "ls5xdzm7b9"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Theodore Boone",
+   "pos": 4,
+   "title": "Theodore Boone: The Activist",
+   "owned": [
+    "ls5xdzm7b9"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Theodore Boone",
+   "pos": 5,
+   "title": "Theodore Boone: The Fugitive",
+   "owned": [
+    "ls5xdzm7b9"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Theodore Boone",
+   "pos": 6,
+   "title": "Theodore Boone: The Scandal",
+   "owned": [
+    "ls5xdzm7b9"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Theodore Boone",
+   "pos": 7,
+   "title": "Theodore Boone: The Accomplice",
+   "owned": [
+    "ls5xdzm7b9"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Chronicles of Thomas Covenant",
+   "pos": 1,
+   "title": "Lord Foul's Bane",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Chronicles of Thomas Covenant",
+   "pos": 2,
+   "title": "The Illearth War",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Chronicles of Thomas Covenant",
+   "pos": 3,
+   "title": "The Power That Preserves",
+   "owned": [
+    "28vkpx3tqt"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Saga of Larten Crepsley",
+   "pos": 1,
+   "title": "Birth of a Killer",
+   "owned": [
+    "0catqw1dcu"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Saga of Larten Crepsley",
+   "pos": 2,
+   "title": "Ocean of Blood",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Saga of Larten Crepsley",
+   "pos": 3,
+   "title": "Palace of the Damned",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "The Saga of Larten Crepsley",
+   "pos": 4,
+   "title": "Brothers to the Death",
+   "owned": [],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Hierarchy",
+   "pos": 1,
+   "title": "The Will of the Many",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "The Will of the Many"
+   ]
+  },
+  {
+   "series": "Hierarchy",
+   "pos": 2,
+   "title": "The Strength of the Few",
+   "owned": [],
+   "status": "to-read",
+   "sg": [
+    "The Strength of the Few"
+   ]
+  },
+  {
+   "series": "The Hedge Witch Series",
+   "pos": 1,
+   "title": "Bringing Down the Flowers",
+   "owned": [
+    "qhsk6jrwe4"
+   ],
+   "status": "read",
+   "sg": [
+    "Bringing Down the Flowers"
+   ]
+  },
+  {
+   "series": "The Hedge Witch Series",
+   "pos": 2,
+   "title": "The Parsley Bed",
+   "owned": [
+    "4jxoalbkbx"
+   ],
+   "status": "read",
+   "sg": [
+    "The Parsley Bed"
+   ]
+  },
+  {
+   "series": "Solitaire",
+   "pos": 1,
+   "title": "Solitaire",
+   "owned": [
+    "yw7a275r71"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Solitaire",
+   "pos": 2,
+   "title": "Nick and Charlie",
+   "owned": [
+    "nxwcewo41p"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "Solitaire",
+   "pos": 3,
+   "title": "This Winter",
+   "owned": [
+    "prqbfq2no7"
+   ],
+   "status": null,
+   "sg": []
+  },
+  {
+   "series": "A Story for Every Day",
+   "pos": 1,
+   "title": "A Story for Every Day of Summer",
+   "owned": [
+    "cny07f0mmk"
+   ],
+   "status": "read",
+   "sg": [
+    "A Story for Every Day of Summer"
+   ]
+  },
+  {
+   "series": "A Story for Every Day",
+   "pos": 2,
+   "title": "A Story for Every Day of Autumn",
+   "owned": [
+    "j7z4907qlq"
+   ],
+   "status": "read",
+   "sg": [
+    "A Story For Every Day of Autumn"
+   ]
+  },
+  {
+   "series": "A Story for Every Day",
+   "pos": 3,
+   "title": "A Story for Every Day of Winter",
+   "owned": [],
+   "status": "read",
+   "sg": [
+    "A Story for Every Day of Winter"
+   ]
+  },
+  {
+   "series": "A Story for Every Day",
+   "pos": 4,
+   "title": "A Story for Every Day of Spring",
+   "owned": [
+    "ls5x0b17b9"
+   ],
+   "status": "read",
+   "sg": [
+    "A Story for Every Day of Spring"
+   ]
+  }
+ ],
+ "1_unlinked_possible_matches": [
+  {
+   "storygraph": "Harry Potter Series Box Set (J.K. Rowling)",
+   "status": "read",
+   "owned": "her Harry Potter 1-7 copies (already linked through their single-book entries)",
+   "confidence": "high",
+   "note": "Box-set entry for the same reads; duplicates the single-book entries rather than a missing link."
+  }
+ ],
+ "1_unlinked_counts": {
+  "to-read": 83,
+  "read": 59,
+  "stopped": 3,
+  "reading": 2,
+  "paused": 2
+ },
+ "2_to_read_not_owned": [
+  {
+   "title": "Truly Devious",
+   "author": "Maureen Johnson",
+   "added": "2024-04-29",
+   "format": "hardcover",
+   "why": [
+    "on to-buy list (\"Truly Devious series\")",
+    "owns 4 by this author",
+    "has read 1 by this author"
+   ]
+  },
+  {
+   "title": "Tales Told in Oz",
+   "author": "Gregory Maguire",
+   "added": "2025-01-03",
+   "format": "paperback",
+   "why": [
+    "Wicked Years companion; she owns all four Wicked Years",
+    "owns 4 by this author",
+    "has read 1 by this author (avg 4.0 stars)"
+   ]
+  },
+  {
+   "title": "Not Till We Are Lost",
+   "author": "Dennis E. Taylor",
+   "added": "2025-01-03",
+   "format": "digital",
+   "why": [
+    "Bobiverse 5: she owns and has read books 1-4",
+    "owns 4 by this author",
+    "has read 8 by this author (avg 4.7 stars)"
+   ]
+  },
+  {
+   "title": "The Strength of the Few",
+   "author": "James Islington",
+   "added": "2025-11-18",
+   "format": "hardcover",
+   "why": [
+    "Hierarchy 2: she read The Will of the Many (book 1, not owned)",
+    "owns 3 by this author",
+    "has read 4 by this author (avg 4.8 stars)"
+   ]
+  },
+  {
+   "title": "Compulsory",
+   "author": "Martha Wells",
+   "added": "2025-01-30",
+   "format": "digital",
+   "why": [
+    "Murderbot short story; she owns Murderbot 1-4",
+    "owns 4 by this author"
+   ]
+  },
+  {
+   "title": "Home: Habitat, Range, Niche, Territory",
+   "author": "Martha Wells",
+   "added": "2025-01-30",
+   "format": "digital",
+   "why": [
+    "Murderbot novella; she owns Murderbot 1-4",
+    "owns 4 by this author"
+   ]
+  },
+  {
+   "title": "Half His Age",
+   "author": "Jennette McCurdy",
+   "added": "2025-11-03",
+   "format": "hardcover",
+   "why": [
+    "owns 1 by this author",
+    "has read 1 by this author (avg 5.0 stars)"
+   ]
+  },
+  {
+   "title": "The Mirror of Her Dreams",
+   "author": "Stephen R. Donaldson",
+   "added": "2025-12-11",
+   "format": "paperback",
+   "why": [
+    "Donaldson; she owns Thomas Covenant",
+    "owns 1 by this author"
+   ]
+  },
+  {
+   "title": "Scion",
+   "author": "James Islington",
+   "added": "2026-04-19",
+   "format": "hardcover",
+   "why": [
+    "owns 3 by this author",
+    "has read 4 by this author (avg 4.8 stars)"
+   ]
+  },
+  {
+   "title": "Pride: The Unlikely Story of the True Heroes of the Miner's Strike",
+   "author": "Tim Tate",
+   "added": "2024-04-29",
+   "format": "paperback",
+   "why": [
+    "on to-buy list (\"Pride\")"
+   ]
+  },
+  {
+   "title": "10 Minutes 38 Seconds in This Strange World",
+   "author": "Elif Shafak",
+   "added": "2025-03-14",
+   "format": "hardcover",
+   "why": [
+    "owns 1 by this author"
+   ]
+  },
+  {
+   "title": "Kindred",
+   "author": "Octavia E. Butler",
+   "added": "2025-04-10",
+   "format": "paperback",
+   "why": [
+    "has read 1 by this author (avg 4.5 stars)"
+   ]
+  },
+  {
+   "title": "The Night Circus",
+   "author": "Erin Morgenstern",
+   "added": "2025-04-10",
+   "format": "hardcover",
+   "why": [
+    "on to-buy list (\"Night Circus\")"
+   ]
+  },
+  {
+   "title": "Stone Hunger",
+   "author": "N.K. Jemisin",
+   "added": "2025-04-16",
+   "format": "digital",
+   "why": [
+    "Jemisin; The Fifth Season is also on her to-read"
+   ]
+  },
+  {
+   "title": "The Adventures of Amina Al-Sirafi",
+   "author": "Shannon Chakraborty",
+   "added": "2026-04-19",
+   "format": "hardcover",
+   "why": [
+    "has read 1 by this author (avg 4.0 stars)"
+   ]
+  },
+  {
+   "title": "The Book Thief",
+   "author": "Markus Zusak",
+   "added": "2013-01-25",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "Les Misérables",
+   "author": "Victor Hugo",
+   "added": "2013-01-25",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "Numbers",
+   "author": "Rachel Ward",
+   "added": "2013-01-25",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "Anna Karenina",
+   "author": "Leo Tolstoy",
+   "added": "2013-01-25",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "Death of a Salesman",
+   "author": "Arthur Miller",
+   "added": "2013-01-25",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "The Princess Bride",
+   "author": "William Goldman",
+   "added": "2013-01-25",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "Zami: A New Spelling of My Name",
+   "author": "Audre Lorde",
+   "added": "2025-02-01",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "A Magical Girl Retires",
+   "author": "Park Seolyeon",
+   "added": "2025-03-11",
+   "format": "digital",
+   "why": []
+  },
+  {
+   "title": "The Priory of the Orange Tree",
+   "author": "Samantha Shannon",
+   "added": "2025-03-16",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "Legends & Lattes",
+   "author": "Travis Baldree",
+   "added": "2025-03-20",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "The Favorites",
+   "author": "Layne Fargo",
+   "added": "2025-03-20",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "Martyr!",
+   "author": "Kaveh Akbar",
+   "added": "2025-03-28",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "Blood Over Bright Haven",
+   "author": "M.L. Wang",
+   "added": "2025-04-05",
+   "format": "digital",
+   "why": []
+  },
+  {
+   "title": "The Sword of Kaigen",
+   "author": "M.L. Wang",
+   "added": "2025-04-05",
+   "format": "digital",
+   "why": []
+  },
+  {
+   "title": "Just Last Night",
+   "author": "Mhairi McFarlane",
+   "added": "2025-04-06",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "The Power",
+   "author": "Naomi Alderman",
+   "added": "2025-04-06",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "The Ministry of Time",
+   "author": "Kaliane Bradley",
+   "added": "2025-04-06",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "I Who Have Never Known Men",
+   "author": "Jacqueline Harpman",
+   "added": "2025-04-07",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "The Remarkable Retirement of Edna Fisher",
+   "author": "E.M. Anderson",
+   "added": "2025-04-10",
+   "format": "digital",
+   "why": []
+  },
+  {
+   "title": "The Long Way to a Small, Angry Planet",
+   "author": "Becky Chambers",
+   "added": "2025-04-10",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "Phantasma",
+   "author": "Kaylie Smith",
+   "added": "2025-04-10",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "The Fifth Season",
+   "author": "N.K. Jemisin",
+   "added": "2025-04-16",
+   "format": "digital",
+   "why": []
+  },
+  {
+   "title": "Piranesi",
+   "author": "Susanna Clarke",
+   "added": "2025-04-28",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "The Tainted Cup",
+   "author": "Robert Jackson Bennett",
+   "added": "2025-05-05",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "Cane River",
+   "author": "Lalita Tademy",
+   "added": "2025-05-08",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "The Silence of the Girls",
+   "author": "Pat Barker",
+   "added": "2025-05-08",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "The Bandit Queens",
+   "author": "Parini Shroff",
+   "added": "2025-05-12",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "Kaikeyi",
+   "author": "Vaishnavi Patel",
+   "added": "2025-05-12",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "Where Foxes Say Goodnight",
+   "author": "Sam Burns",
+   "added": "2025-05-12",
+   "format": "digital",
+   "why": []
+  },
+  {
+   "title": "The National Telepathy",
+   "author": "Roque Larraquy",
+   "added": "2025-05-27",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "The Jasmine Throne",
+   "author": "Tasha Suri",
+   "added": "2025-05-28",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "Last Night at the Telegraph Club",
+   "author": "Malinda Lo",
+   "added": "2025-06-02",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "Universality",
+   "author": "Natasha Brown",
+   "added": "2025-06-02",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "Real Life",
+   "author": "Brandon Taylor",
+   "added": "2025-06-02",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "When the Cranes Fly South",
+   "author": "Lisa Ridzén",
+   "added": "2025-08-27",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "The God of the Woods",
+   "author": "Liz Moore",
+   "added": "2025-09-04",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "In the Company of Witches",
+   "author": "Auralee Wallace",
+   "added": "2025-09-05",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "The Conductors",
+   "author": "Nicole Glover",
+   "added": "2025-09-07",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "The Kamogawa Food Detectives",
+   "author": "Hisashi Kashiwai",
+   "added": "2025-09-10",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "The Raven Scholar",
+   "author": "Antonia Hodgson",
+   "added": "2025-09-20",
+   "format": "digital",
+   "why": []
+  },
+  {
+   "title": "Titanium Noir",
+   "author": "Nick Harkaway",
+   "added": "2025-10-09",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "The Women",
+   "author": "Kristin Hannah",
+   "added": "2025-11-01",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "A Little Life",
+   "author": "Hanya Yanagihara",
+   "added": "2025-11-10",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "Sunburn",
+   "author": "Chloe Michelle Howarth",
+   "added": "2025-11-16",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "Earthlings",
+   "author": "Sayaka Murata",
+   "added": "2025-12-08",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "The Three-Body Problem",
+   "author": "Cixin Liu",
+   "added": "2025-12-11",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "Burn the Sea",
+   "author": "Mona Tewari",
+   "added": "2025-12-28",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "The Whisper of Stars",
+   "author": "Nick Jones",
+   "added": "2026-01-02",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "To Cage a Wild Bird",
+   "author": "Brooke Fast",
+   "added": "2026-01-29",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "Wild Dark Shore",
+   "author": "Charlotte McConaghy",
+   "added": "2026-03-26",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "The Keeper of Magical Things",
+   "author": "Julie Leong",
+   "added": "2026-04-03",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "The Kiss of Deception",
+   "author": "Mary E. Pearson",
+   "added": "2026-04-03",
+   "format": "digital",
+   "why": []
+  },
+  {
+   "title": "Rejection",
+   "author": "Tony Tulathimutte",
+   "added": "2026-04-19",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "The Last Contract of Isako",
+   "author": "Fonda Lee",
+   "added": "2026-04-19",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "We Dance Upon Demons",
+   "author": "Vaishnavi Patel",
+   "added": "2026-05-02",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "The Legend of Meneka",
+   "author": "Kritika H. Rao",
+   "added": "2026-05-02",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "Capitalists Must Starve",
+   "author": "Park Seolyeon",
+   "added": "2026-05-02",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "The Blighted Stars",
+   "author": "Megan E. O'Keefe",
+   "added": "2026-05-05",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "The Lion Women of Tehran",
+   "author": "Marjan Kamali",
+   "added": "2026-05-15",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "Legendborn",
+   "author": "Tracy Deonn",
+   "added": "2026-05-15",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "Taiwan Travelogue",
+   "author": "Yáng Shuāng-zǐ",
+   "added": "2026-05-16",
+   "format": "digital",
+   "why": []
+  },
+  {
+   "title": "The Right Move",
+   "author": "Liz Tomforde",
+   "added": "2026-05-28",
+   "format": "digital",
+   "why": []
+  },
+  {
+   "title": "Sweetpea",
+   "author": "C.J. Skuse",
+   "added": "2026-07-30",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "One Dark Window",
+   "author": "Rachel Gillig",
+   "added": "2026-07-30",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "Convenience Store Woman",
+   "author": "Sayaka Murata",
+   "added": "2026-07-30",
+   "format": "paperback",
+   "why": []
+  },
+  {
+   "title": "The Seven Sisters",
+   "author": "Lucinda Riley",
+   "added": "2026-09-03",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "Black Cake",
+   "author": "Charmaine Wilkerson",
+   "added": "2026-09-03",
+   "format": "hardcover",
+   "why": []
+  },
+  {
+   "title": "A Town Called Solace",
+   "author": "Mary Lawson",
+   "added": "2026-10-07",
+   "format": "hardcover",
+   "why": []
+  }
+ ],
+ "2_owned_to_read": [
+  {
+   "title": "The Paris Apartment",
+   "author": "Lucy Foley"
+  },
+  {
+   "title": "Happy Place",
+   "author": "Emily Henry"
+  },
+  {
+   "title": "All Systems Red",
+   "author": "Martha Wells"
+  },
+  {
+   "title": "A Visit From the Goon Squad",
+   "author": "Jennifer Egan"
+  },
+  {
+   "title": "The Island of Missing Trees",
+   "author": "Elif Shafak"
+  },
+  {
+   "title": "Girl, Woman, Other",
+   "author": "Bernardine Evaristo"
+  },
+  {
+   "title": "The Last Little Blue Envelope",
+   "author": "Maureen Johnson"
+  },
+  {
+   "title": "If I Stay",
+   "author": "Gayle Forman"
+  },
+  {
+   "title": "Notes from a Small Island",
+   "author": "Bill Bryson"
+  },
+  {
+   "title": "Son of a Witch",
+   "author": "Gregory Maguire"
+  },
+  {
+   "title": "The Bee Sting",
+   "author": "Paul Murray"
+  },
+  {
+   "title": "The Help",
+   "author": "Kathryn Stockett"
+  }
+ ],
+ "3_series_gaps": [
+  {
+   "series": "Harry Potter",
+   "pos": 8,
+   "title": "Harry Potter and the Cursed Child",
+   "ids": [
+    "3kxuzv3arj"
+   ],
+   "reason": "earlier books read: 1, 2, 3, 4, 5, 6, 7",
+   "strength": "some"
+  },
+  {
+   "series": "Noughts & Crosses",
+   "pos": 2,
+   "title": "Knife Edge",
+   "ids": [
+    "nxwcfpe41p"
+   ],
+   "reason": "earlier books read: 1",
+   "strength": "some"
+  },
+  {
+   "series": "Noughts & Crosses",
+   "pos": 3,
+   "title": "Checkmate",
+   "ids": [
+    "3kxu1m7arj"
+   ],
+   "reason": "earlier books read: 1",
+   "strength": "some"
+  },
+  {
+   "series": "Noughts & Crosses",
+   "pos": 4,
+   "title": "Double Cross",
+   "ids": [
+    "kql3541ysl"
+   ],
+   "reason": "earlier books read: 1",
+   "strength": "some"
+  },
+  {
+   "series": "Noughts & Crosses",
+   "pos": 5,
+   "title": "Crossfire",
+   "ids": [
+    "ob32x830an"
+   ],
+   "reason": "earlier books read: 1",
+   "strength": "some"
+  },
+  {
+   "series": "Simon Snow",
+   "pos": 2,
+   "title": "Wayward Son",
+   "ids": [
+    "6uc5rmo8dt"
+   ],
+   "reason": "earlier books read: 1",
+   "strength": "some"
+  },
+  {
+   "series": "The Neapolitan Novels",
+   "pos": 2,
+   "title": "The Story of a New Name",
+   "ids": [
+    "0b5q53udcu"
+   ],
+   "reason": "earlier books read: 1",
+   "strength": "some"
+  },
+  {
+   "series": "The Neapolitan Novels",
+   "pos": 3,
+   "title": "Those Who Leave and Those Who Stay",
+   "ids": [
+    "xi3937kjps"
+   ],
+   "reason": "earlier books read: 1",
+   "strength": "some"
+  },
+  {
+   "series": "The Neapolitan Novels",
+   "pos": 4,
+   "title": "The Story of the Lost Child",
+   "ids": [
+    "q7p8p1nwe4"
+   ],
+   "reason": "earlier books read: 1",
+   "strength": "some"
+  },
+  {
+   "series": "The Wicked Years",
+   "pos": 3,
+   "title": "A Lion Among Men",
+   "ids": [
+    "prqbfzdno7"
+   ],
+   "reason": "earlier books read: 1",
+   "strength": "some"
+  },
+  {
+   "series": "The Wicked Years",
+   "pos": 4,
+   "title": "Out of Oz",
+   "ids": [
+    "nxwcesm41p"
+   ],
+   "reason": "earlier books read: 1",
+   "strength": "some"
+  },
+  {
+   "series": "Shades of Magic",
+   "pos": 2,
+   "title": "A Gathering of Shadows",
+   "ids": [
+    "iz1ahwjlqm"
+   ],
+   "reason": "earlier books read: 1",
+   "strength": "some"
+  },
+  {
+   "series": "Shades of Magic",
+   "pos": 3,
+   "title": "A Conjuring of Light",
+   "ids": [
+    "569qtecv9x"
+   ],
+   "reason": "earlier books read: 1",
+   "strength": "some"
+  },
+  {
+   "series": "Winternight",
+   "pos": 3,
+   "title": "The Winter of the Witch",
+   "ids": [
+    "ga48lx3bt4"
+   ],
+   "reason": "earlier books read: 1, 2",
+   "strength": "some"
+  },
+  {
+   "series": "Mortal Engines",
+   "pos": 2,
+   "title": "Predator's Gold",
+   "ids": [
+    "v8dzn9h26q"
+   ],
+   "reason": "earlier books read: 1",
+   "strength": "some"
+  },
+  {
+   "series": "Mortal Engines",
+   "pos": 3,
+   "title": "Infernal Devices",
+   "ids": [
+    "6uc5r0v8dt"
+   ],
+   "reason": "earlier books read: 1",
+   "strength": "some"
+  },
+  {
+   "series": "The Tyrant Philosophers",
+   "pos": 2,
+   "title": "House of Open Wounds",
+   "ids": [
+    "569qt5mv9x"
+   ],
+   "reason": "earlier books read: 1",
+   "strength": "some"
+  },
+  {
+   "series": "The Tyrant Philosophers",
+   "pos": 3,
+   "title": "Days of Shattered Faith",
+   "ids": [
+    "4xayzqckbx"
+   ],
+   "reason": "earlier books read: 1",
+   "strength": "some"
+  },
+  {
+   "series": "Legacy of the Stones",
+   "pos": 4,
+   "title": "Crown of Sorrows",
+   "ids": [
+    "0b6bjrgdcu"
+   ],
+   "reason": "earlier books read: 1, 2, 3",
+   "strength": "some"
+  },
+  {
+   "series": "Legacy of the Stones",
+   "pos": 5,
+   "title": "Realm of Mortals",
+   "ids": [
+    "rw4w2vqxoz"
+   ],
+   "reason": "earlier books read: 1, 2, 3",
+   "strength": "some"
+  },
+  {
+   "series": "We Were Liars",
+   "pos": 2,
+   "title": "Family of Liars",
+   "ids": [
+    "ft873ofe5y"
+   ],
+   "reason": "earlier books read: 1",
+   "strength": "some"
+  }
+ ],
+ "3_owned_series_nothing_read": [
+  {
+   "series": "The Famous Five",
+   "owned": 12,
+   "of": 21
+  },
+  {
+   "series": "The Secret Seven",
+   "owned": 8,
+   "of": 15
+  },
+  {
+   "series": "The Adventure Series",
+   "owned": 8,
+   "of": 8
+  },
+  {
+   "series": "The Wishing Chair",
+   "owned": 2,
+   "of": 2
+  },
+  {
+   "series": "Discworld",
+   "owned": 33,
+   "of": 41
+  },
+  {
+   "series": "The Science of Discworld",
+   "owned": 4,
+   "of": 4
+  },
+  {
+   "series": "The Saga of Darren Shan",
+   "owned": 12,
+   "of": 12
+  },
+  {
+   "series": "The Demonata",
+   "owned": 10,
+   "of": 10
+  },
+  {
+   "series": "Mates, Dates",
+   "owned": 12,
+   "of": 12
+  },
+  {
+   "series": "Pendragon",
+   "owned": 10,
+   "of": 10
+  },
+  {
+   "series": "Artemis Fowl",
+   "owned": 6,
+   "of": 8
+  },
+  {
+   "series": "The Black Magician",
+   "owned": 3,
+   "of": 3
+  },
+  {
+   "series": "Traitor Spy",
+   "owned": 1,
+   "of": 3
+  },
+  {
+   "series": "Age of the Five",
+   "owned": 3,
+   "of": 3
+  },
+  {
+   "series": "The Adventure Zone",
+   "owned": 5,
+   "of": 5
+  },
+  {
+   "series": "Alex Rider",
+   "owned": 5,
+   "of": 9
+  },
+  {
+   "series": "Uglies",
+   "owned": 4,
+   "of": 4
+  },
+  {
+   "series": "Brambly Hedge",
+   "owned": 4,
+   "of": 4
+  },
+  {
+   "series": "The Inheritance Cycle",
+   "owned": 3,
+   "of": 4
+  },
+  {
+   "series": "The Wind on Fire",
+   "owned": 3,
+   "of": 3
+  },
+  {
+   "series": "The Doomspell Trilogy",
+   "owned": 3,
+   "of": 3
+  },
+  {
+   "series": "Fever Crumb",
+   "owned": 1,
+   "of": 3
+  },
+  {
+   "series": "Bartimaeus",
+   "owned": 1,
+   "of": 3
+  },
+  {
+   "series": "The Old Kingdom",
+   "owned": 2,
+   "of": 3
+  },
+  {
+   "series": "Trebizon",
+   "owned": 12,
+   "of": 14
+  },
+  {
+   "series": "Pure Dead",
+   "owned": 2,
+   "of": 6
+  },
+  {
+   "series": "Truth, Dare, Kiss or Promise",
+   "owned": 8,
+   "of": 8
+  },
+  {
+   "series": "Sam Linnifer",
+   "owned": 2,
+   "of": 2
+  },
+  {
+   "series": "Pendragon: Before the War",
+   "owned": 3,
+   "of": 3
+  },
+  {
+   "series": "Castaways of the Flying Dutchman",
+   "owned": 2,
+   "of": 3
+  },
+  {
+   "series": "Mother of Learning",
+   "owned": 3,
+   "of": 3
+  },
+  {
+   "series": "Seasonal Quartet",
+   "owned": 2,
+   "of": 4
+  },
+  {
+   "series": "The Quest for Qieta",
+   "owned": 2,
+   "of": 2
+  },
+  {
+   "series": "The Edge Chronicles",
+   "owned": 1,
+   "of": 10
+  },
+  {
+   "series": "Foundation",
+   "owned": 1,
+   "of": 3
+  },
+  {
+   "series": "Theodore Boone",
+   "owned": 7,
+   "of": 7
+  },
+  {
+   "series": "The Chronicles of Thomas Covenant",
+   "owned": 1,
+   "of": 3
+  },
+  {
+   "series": "The Saga of Larten Crepsley",
+   "owned": 1,
+   "of": 4
+  },
+  {
+   "series": "Solitaire",
+   "owned": 3,
+   "of": 3
+  }
+ ],
+ "3_childhood_shelves_no_record": [
+  {
+   "title": "Famous Five 10: Five On A Hike Together",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "w1fy8r4isd",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 11: Five Have a Wonderful Time",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "e9oh31y5u2",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 12: Five Go Down To The Sea",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "8gmvr2tohq",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 13: Five Go To Mystery Moor",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "m4rdhgn31h",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 14: Five Have Plenty Of Fun",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "ga48io5bt4",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 15: Five On A Secret Trail (Famous Five Centenary Editions)",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "ob32xti0an",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 16: Five Go To Billycock Hill",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "6uc5yv18dt",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 17: Five Get Into A Fix",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "bpkol0ocho",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 18: Five On Finniston Farm",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "j7z49k6qlq",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 19: Five Go To Demon's Rocks",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "2ousnfhtqt",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 20: Five Have A Mystery To Solve",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "4jime34kbx",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 21: Five Are Together Again (Famous Five)",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "u3n6w8lgnz",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 2: Five Go Adventuring Again",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "m4rdhup31h",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 3: Five Run Away Together",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "0catj9udcu",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 4: Five Go To Smuggler's Top",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "8gmvr2cohq",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 5: Five Go Off In A Caravan: Book 5",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "3kxu1gwarj",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 6: Five on Kirrin Island Again",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "9dbek5p6rp",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 7: Five Go Off To Camp",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "t0gf4eb93y",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 8: Five Get Into Trouble",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "nxwcfmz41p",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 9: Five Fall Into Adventure",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "7fvjdqdhd6",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five: 1: Five On A Treasure Island",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "rihp2prxoz",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Secret Seven 12: Good Old Secret Seven",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "6uc5y558dt",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Secret Seven 4: Secret Seven on the Trail (Secret Seven Centenary Editions)",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "ob32x2w0an",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Secret Seven: 10: Puzzle For The Secret Seven (The Secret Seven Centenary Editions)",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "2ousns7tqt",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Secret Seven: 11: Secret Seven Fireworks (The Secret Seven Centenary Editions)",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "w1fy8ynisd",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Secret Seven: 13: Shock For The Secret Seven (The Secret Seven Centenary Editions)",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "8gmvrv2ohq",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Secret Seven: 14: Look Out, Secret Seven (The Secret Seven Centenary Editions)",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "xl1ntnkjps",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Secret Seven: 15: Fun For The Secret Seven (The Secret Seven Centenary Editions)",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "5601a1fv9x",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Secret Seven: 1: The Secret Seven (The Secret Seven Centenary Editions)",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "j7z4949qlq",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Secret Seven: 2: Secret Seven Adventure (The Secret Seven Centenary Editions)",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "u3n6w6ignz",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Secret Seven: 3: Well Done, Secret Seven",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "izerordlqm",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Secret Seven: 5: Go Ahead, Secret Seven (The Secret Seven Centenary Editions)",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "ayjgzg5psz",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Secret Seven: 6: Good Work, Secret Seven (The Secret Seven Centenary Editions)",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "v8dzpzx26q",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Secret Seven: 7: Secret Seven Win Through (The Secret Seven Centenary Editions)",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "ga48i8ebt4",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Secret Seven: 8: Three Cheers, Secret Seven (The Secret Seven Centenary Editions)",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "6uc5y5h8dt",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Secret Seven: 9: Secret Seven Mystery (The Secret Seven Centenary Editions)",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "qhsk6knwe4",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "The Castle Of Adventure",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "ob32x2g0an",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "The Circus Of Adventure (Adventure (MacMillan))",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "9dbekea6rp",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "The Island of Adventure (Adventure (MacMillan))",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "yw7avajr71",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "The Mountain of Adventure (Adventure (MacMillan))",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "t0gf4fg93y",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "The River of Adventure (Adventure (MacMillan))",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "nxwcfc141p",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "The Sea of Adventure (Adventure Series [3])",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "kql353iysl",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "The Secret Seven Short Story Collection",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "4jimemnkbx",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "The Ship of Adventure",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "he2quq619k",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "The Valley of Adventure (Adventure (MacMillan))",
+   "author": "Enid Blyton",
+   "shelf": "childrens",
+   "id": "cny070nmmk",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Adventures of the Wishing Chair",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "59qsgeiv9x",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Beer Rabbit's a Rascal",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "mntgwag31h",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Bimbo and Topsy",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "yq0s7pfr71",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Book of Brownies",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "umsrn8vgnz",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Brer Rabbit Again",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "tol53o093y",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Brer Rabbit Book",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "0bs6kb8dcu",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Famous Five 9: Five Fall Into Adventure",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "i1mt5hqlqm",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Fifth Formers at St Clare's",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "aktlq1lpsz",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Five Get Into a Fix",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "whc2eftisd",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Five Get Into Trouble",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "aktlqn3psz",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Five Go Adventuring Again",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "aktljmbpsz",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Five Go Off in a Caravan",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "v6jcdvv26q",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Five Go to Billycock Hill",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "v6jcu0o26q",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Five Go To Mystery Moor",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "xiuezl2jps",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Five Go To Smugglers Top",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "mnvwrmh31h",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Five Have a Mystery to Solve",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "py97wjuno7",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Five on a Hike Together",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "ogh4ago0an",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Five on a Secret Trail",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "cp5qr4vmmk",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Five on a Treasure Island",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "i1mtejklqm",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Five Run Away Together",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "yq0s7kvr71",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Fun for the Secret Seven",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "rwdf1zdxoz",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Go Ahead Secret Seven",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "cp5qrytmmk",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Good Old Secret Seven",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "hfp8tti19k",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Look Out Secret Seven",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "g3fxkyrbt4",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Secret Seven Fireworks",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "4x81ll9kbx",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Tales of Toyland",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "umeoydkgnz",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "The Island of Adventure",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "6dh2aia8dt",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "The Mountain of Adventure",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "0bs64hqdcu",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "The Mystery of the Invisible Thief",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "28iec5ytqt",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "The Mystery of the Secret Room",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "7snw9i5hd6",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "The Queer Adventure",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "hfp82qm19k",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "The Secret Seven Win Through",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "g3fxkkybt4",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "The Wishing Chair Again",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "py8mlpkno7",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Well Done Secret Seven",
+   "author": "Enid Blyton",
+   "shelf": "old-book-collection",
+   "id": "dcf8ke4u84",
+   "readOthersByAuthor": 16
+  },
+  {
+   "title": "Lola Rose",
+   "author": "Jacqueline Wilson",
+   "shelf": "young-adult",
+   "id": "t0gfkbj93y",
+   "readOthersByAuthor": 6
+  },
+  {
+   "title": "Love Lessons",
+   "author": "Jacqueline Wilson",
+   "shelf": "young-adult",
+   "id": "kql3v79ysl",
+   "readOthersByAuthor": 6
+  },
+  {
+   "title": "Worry Website",
+   "author": "Jacqueline Wilson",
+   "shelf": "young-adult",
+   "id": "3kxuzj2arj",
+   "readOthersByAuthor": 6
+  },
+  {
+   "title": "Heartstopper Volume 3",
+   "author": "Alice Oseman",
+   "shelf": "young-adult",
+   "id": "w1fyofhisd",
+   "readOthersByAuthor": 2
+  },
+  {
+   "title": "Heartstopper Volume 4",
+   "author": "Alice Oseman",
+   "shelf": "young-adult",
+   "id": "8gmvxmmohq",
+   "readOthersByAuthor": 2
+  },
+  {
+   "title": "Heartstopper Volume 5",
+   "author": "Alice Oseman",
+   "shelf": "young-adult",
+   "id": "5601p0uv9x",
+   "readOthersByAuthor": 2
+  },
+  {
+   "title": "I Was Born for This",
+   "author": "Alice Oseman",
+   "shelf": "young-adult",
+   "id": "3kxuzxvarj",
+   "readOthersByAuthor": 2
+  },
+  {
+   "title": "Loveless",
+   "author": "Alice Oseman",
+   "shelf": "young-adult",
+   "id": "90zyzua6rp",
+   "readOthersByAuthor": 2
+  },
+  {
+   "title": "Nick and Charlie (A Solitaire novella)",
+   "author": "Alice Oseman",
+   "shelf": "young-adult",
+   "id": "nxwcewo41p",
+   "readOthersByAuthor": 2
+  },
+  {
+   "title": "Radio Silence",
+   "author": "Alice Oseman",
+   "shelf": "young-adult",
+   "id": "cny0hyhmmk",
+   "readOthersByAuthor": 2
+  },
+  {
+   "title": "Solitaire",
+   "author": "Alice Oseman",
+   "shelf": "young-adult",
+   "id": "yw7a275r71",
+   "readOthersByAuthor": 2
+  },
+  {
+   "title": "This Winter (A Solitaire novella)",
+   "author": "Alice Oseman",
+   "shelf": "young-adult",
+   "id": "prqbfq2no7",
+   "readOthersByAuthor": 2
+  },
+  {
+   "title": "Eleanor & Park",
+   "author": "Rainbow Rowell",
+   "shelf": "young-adult",
+   "id": "8gmvx33ohq",
+   "readOthersByAuthor": 2
+  },
+  {
+   "title": "Outward Escape",
+   "author": "Rainbow Rowell",
+   "shelf": "young-adult",
+   "id": "w1fyoe1isd",
+   "readOthersByAuthor": 2
+  },
+  {
+   "title": "Sisterhood 3: Girls in Pants: The Third Summer of the Sisterhood",
+   "author": "Ann Brashares",
+   "shelf": "young-adult",
+   "id": "2ous4botqt",
+   "readOthersByAuthor": 1
+  },
+  {
+   "title": "Sisterhood 4: Forever in Blue: The Fourth Summer of the Sisterhood",
+   "author": "Ann Brashares",
+   "shelf": "young-adult",
+   "id": "6uc5r308dt",
+   "readOthersByAuthor": 1
+  },
+  {
+   "title": "The Sisterhood 2: The Second Summer of the Sisterhood",
+   "author": "Ann Brashares",
+   "shelf": "young-adult",
+   "id": "qhsk8ezwe4",
+   "readOthersByAuthor": 1
+  },
+  {
+   "title": "Ark Angel",
+   "author": "Anthony Horowitz",
+   "shelf": "young-adult",
+   "id": "9dbeygi6rp",
+   "readOthersByAuthor": 1
+  },
+  {
+   "title": "Eagle Strike",
+   "author": "Anthony Horowitz",
+   "shelf": "young-adult",
+   "id": "prqbfjvno7",
+   "readOthersByAuthor": 1
+  },
+  {
+   "title": "Scorpia",
+   "author": "Anthony Horowitz",
+   "shelf": "young-adult",
+   "id": "3kxuzr5arj",
+   "readOthersByAuthor": 1
+  },
+  {
+   "title": "Skeleton Key",
+   "author": "Anthony Horowitz",
+   "shelf": "young-adult",
+   "id": "t0gfkur93y",
+   "readOthersByAuthor": 1
+  },
+  {
+   "title": "Stormbreaker",
+   "author": "Anthony Horowitz",
+   "shelf": "young-adult",
+   "id": "kql3vi2ysl",
+   "readOthersByAuthor": 1
+  },
+  {
+   "title": "Devilish",
+   "author": "Maureen Johnson",
+   "shelf": "young-adult",
+   "id": "e9oha815u2",
+   "readOthersByAuthor": 1
+  },
+  {
+   "title": "Suite Scarlett",
+   "author": "Maureen Johnson",
+   "shelf": "young-adult",
+   "id": "ls5xdep7b9",
+   "readOthersByAuthor": 1
+  },
+  {
+   "title": "Miss Spider's Tea Party",
+   "author": "",
+   "shelf": "childrens",
+   "id": "w1fy8xkisd",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Tale of Martha B. Rabbit",
+   "author": "",
+   "shelf": "childrens",
+   "id": "dmp9q8vu84",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "The Wonderful Pigs of Jillian Jiggs",
+   "author": "",
+   "shelf": "childrens",
+   "id": "0catj8bdcu",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Boy Trouble At Trebizon",
+   "author": "Anne Digby",
+   "shelf": "childrens",
+   "id": "prqbsmlno7",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "First Term At Trebizon",
+   "author": "Anne Digby",
+   "shelf": "childrens",
+   "id": "yw7avnwr71",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Fourth Year Triumphs at Trebizon",
+   "author": "Anne Digby",
+   "shelf": "childrens",
+   "id": "0catjvodcu",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Hockey Term at Trebizon",
+   "author": "Anne Digby",
+   "shelf": "childrens",
+   "id": "yw7av3xr71",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Into the Fourth at Trebizon",
+   "author": "Anne Digby",
+   "shelf": "childrens",
+   "id": "u3n6wo7gnz",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "More Trouble at Trebizon",
+   "author": "Anne Digby",
+   "shelf": "childrens",
+   "id": "9dbekvn6rp",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Second Term at Trebizon",
+   "author": "Anne Digby",
+   "shelf": "childrens",
+   "id": "t0gf45c93y",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Secret Letters at Trebizon: No 13",
+   "author": "Anne Digby",
+   "shelf": "childrens",
+   "id": "rihp23kxoz",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Summer Camp at Trebizon",
+   "author": "Anne Digby",
+   "shelf": "childrens",
+   "id": "nxwcf3s41p",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Summer Term at Trebizon",
+   "author": "Anne Digby",
+   "shelf": "childrens",
+   "id": "kql35p7ysl",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "The Tennis Term at Trebizon (Puffin Books)",
+   "author": "Anne Digby",
+   "shelf": "childrens",
+   "id": "cny07opmmk",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "The Unforgettable Fifth at Trebizon",
+   "author": "Anne Digby",
+   "shelf": "childrens",
+   "id": "5601a7zv9x",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "The Complete My Naughty Little Sister Storybook",
+   "author": "Dorothy Edwards",
+   "shelf": "childrens",
+   "id": "ga48i0vbt4",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Madame Bovary",
+   "author": "Gustave Flaubert",
+   "shelf": "childrens",
+   "id": "ob32x9l0an",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Autumn Story Bramley Hedge",
+   "author": "Jill Barklem",
+   "shelf": "childrens",
+   "id": "u3p4qvtgnz",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Brambly Hedge Winter Story",
+   "author": "Jill Barklem",
+   "shelf": "childrens",
+   "id": "e980mwz5u2",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Summer Story (Brambly Hedge)",
+   "author": "Jill Barklem",
+   "shelf": "childrens",
+   "id": "hevtdyp19k",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Brambly Hedge Spring Story",
+   "author": "Jill. Barklem",
+   "shelf": "childrens",
+   "id": "t0ubnhx93y",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Teddy Bear's Picnic",
+   "author": "Jimmy Kennedy",
+   "shelf": "childrens",
+   "id": "6ubmksc8dt",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Teddy Robinson Storybook (Storybook classics)",
+   "author": "Joan G. Robinson",
+   "shelf": "childrens",
+   "id": "gankwvubt4",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Alice's Adventures Under Ground",
+   "author": "Lewis Carroll",
+   "shelf": "childrens",
+   "id": "8gmvre5ohq",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "The School That Went to Sea",
+   "author": "Martin Waddell",
+   "shelf": "childrens",
+   "id": "4jimepykbx",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "A Treasury of Enid Blyton's School Stories",
+   "author": "Norman Wright, Mary Cadogan",
+   "shelf": "childrens",
+   "id": "xl1ntkrjps",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Tom's Midnight Garden (Puffin Modern Classics)",
+   "author": "Philippa Pearce",
+   "shelf": "childrens",
+   "id": "pygtuayno7",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "What Shall I Make? (What Shall I Do Today?)",
+   "author": "Ray Gibson",
+   "shelf": "childrens",
+   "id": "qhsk6rkwe4",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Harvard Classics Reading Guide",
+   "author": "",
+   "shelf": "old-book-collection",
+   "id": "28iexpltqt",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Philips' Universal Atlas",
+   "author": "",
+   "shelf": "old-book-collection",
+   "id": "v6wfrst26q",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Sunday Times Travel and Holiday Guide",
+   "author": "",
+   "shelf": "old-book-collection",
+   "id": "ogz9lt80an",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "China Fights Back",
+   "author": "Agnes Smedley",
+   "shelf": "old-book-collection",
+   "id": "8u1tifmohq",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Journal",
+   "author": "André Gide",
+   "shelf": "old-book-collection",
+   "id": "0bs67wgdcu",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "The New School at Scawdale",
+   "author": "Angela Brazil",
+   "shelf": "old-book-collection",
+   "id": "xibke74jps",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "The Secret of Border Castle",
+   "author": "Angela Brazil",
+   "shelf": "old-book-collection",
+   "id": "i1ajtfdlqm",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Black Beauty",
+   "author": "Anna Sewell",
+   "shelf": "old-book-collection",
+   "id": "jlcyduuqlq",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Corridors of Power",
+   "author": "C. P. Snow",
+   "shelf": "old-book-collection",
+   "id": "8u1tiscohq",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "A Tale of Two Cities",
+   "author": "Charles Dickins",
+   "shelf": "old-book-collection",
+   "id": "7snw62uhd6",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Bleak House",
+   "author": "Charles Dickins",
+   "shelf": "old-book-collection",
+   "id": "mntgwj431h",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Practical Railway Working",
+   "author": "Charles Travis, David R. Lab, John A. Jenkinson",
+   "shelf": "old-book-collection",
+   "id": "28iex5gtqt",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "The Common People",
+   "author": "G.D.H. Cole",
+   "shelf": "old-book-collection",
+   "id": "jlcy5z6qlq",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Andersans Fairy Tales",
+   "author": "Hans Christian Anders a",
+   "shelf": "old-book-collection",
+   "id": "hfp82xb19k",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Captain of Two Schools",
+   "author": "Hylton Cleaver",
+   "shelf": "old-book-collection",
+   "id": "xibkehkjps",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Heidi",
+   "author": "Johanna Spyn",
+   "shelf": "old-book-collection",
+   "id": "6dh2w1u8dt",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "A Madcap",
+   "author": "L. T. Meade",
+   "shelf": "old-book-collection",
+   "id": "cp2uffxmmk",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "A World of Girls",
+   "author": "L. T. Meade",
+   "shelf": "old-book-collection",
+   "id": "28iexxftqt",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "The Model Railway Hobby",
+   "author": "M. H. Binstea",
+   "shelf": "old-book-collection",
+   "id": "281v2q4tqt",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Canadian North",
+   "author": "Malcolm MacDonald",
+   "shelf": "old-book-collection",
+   "id": "i1ajbublqm",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "The Adventures of Huckleberry Finn",
+   "author": "Mark Twain",
+   "shelf": "old-book-collection",
+   "id": "wh3xgysisd",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Just William",
+   "author": "Richmal Crompton",
+   "shelf": "old-book-collection",
+   "id": "8u1tnmtohq",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "The Complete Oxford Shakespeare",
+   "author": "William Shakespeare",
+   "shelf": "old-book-collection",
+   "id": "tol5ji493y",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Timekeepers: Number 2 in series (Sam Linnifer)",
+   "author": "Catherine Webb",
+   "shelf": "young-adult",
+   "id": "yw7a2hvr71",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Waywalkers: Number 1 in series (Sam Linnifer)",
+   "author": "Catherine Webb",
+   "shelf": "young-adult",
+   "id": "ob32jaj0an",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "All Mates Together",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "8gmvxcxohq",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Double Dare",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "0catq3kdcu",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Love Lottery",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "cny0hk7mmk",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Mates, Dates and Chocolate Cheats",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "dmp9w3du84",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Mates, Dates and Cosmic Kisses",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "he2qg5319k",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Mates, Dates and Diamond Destiny (Mates Dates) (Mates Dates)",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "w1fyos7isd",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Mates, Dates and Great Escapes (Mates, Dates) (Mates, Dates)",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "6uc5rg98dt",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Mates, Dates and Inflatable Bras",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "prqbfx5no7",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Mates, Dates and Mad Mistakes",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "u3n6iavgnz",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Mates, Dates and Portobello Princesses (Mates, Dates) (Mates, Dates)",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "ls5xdfa7b9",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Mates, Dates and Pulling Power",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "ayjgsrupsz",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Mates, Dates and Sizzling Summers (Mates Dates) (Mates Dates)",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "qhsk8z7we4",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Mates, Dates and Sleepover Secrets",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "7fvjuenhd6",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Mates, Dates and Sole Survivors (Truth Dare Kiss Or Promise) (Truth Dare Kiss Or Promise)",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "j7z46hmqlq",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Mates, Dates and Tempting Trouble",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "ft87391e5y",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Midsummer Meltdown",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "ob32jmr0an",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Pop Princess (Truth, Dare, Kiss or Promise) (Truth, Dare, Kiss or Promise)",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "5601podv9x",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Starstruck",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "rihpt7sxoz",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Teen Queens and Has-beens (Truth, Dare, Kiss or Promise) (Truth, Dare, Kiss or Promise)",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "4jim5w7kbx",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "White Lies and Barefaced Truths (Truth, Dare, Kiss or Promise) (Truth, Dare, Kiss or Promise)",
+   "author": "Cathy Hopkins",
+   "shelf": "young-adult",
+   "id": "6uc5rbg8dt",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Ballet Shoes",
+   "author": "Noel Streatfeild",
+   "shelf": "young-adult",
+   "id": "m4rd1x731h",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Collins Modern Classics - White Boots",
+   "author": "Noel Streatfeild",
+   "shelf": "young-adult",
+   "id": "rihpt1exoz",
+   "readOthersByAuthor": 0
+  },
+  {
+   "title": "Sondok",
+   "author": "Sheri Holman",
+   "shelf": "young-adult",
+   "id": "8gmvxaaohq",
+   "readOthersByAuthor": 0
+  }
+ ],
+ "3_owned_no_record_total": 431,
+ "3_owned_total": 642,
+ "4_oddities": {
+  "read_no_dates": [
+   "His Dark Materials 3-Book Mass Market Paperback Boxed Set (Philip Pullman) (added 2013-01-25)",
+   "The Hunger Games (Suzanne Collins) (added 2013-01-25)",
+   "Mockingjay (Suzanne Collins) (added 2013-01-25)",
+   "Prince Caspian (C.S. Lewis) (added 2013-01-25)",
+   "Harry, a History: The True Story of a Boy Wizard, His Fans, and Life Inside the Harry Potter Phenomenon (Melissa Anelli) (added 2013-01-25)",
+   "Harry Potter and the Deathly Hallows (J.K. Rowling) (added 2013-01-25)",
+   "Harry Potter and the Prisoner of Azkaban (J.K. Rowling) (added 2023-07-03)",
+   "Worm (Wildbow) (added 2023-07-03)",
+   "Twilight (Stephenie Meyer) (added 2013-01-25)",
+   "The Silver Chair (C.S. Lewis) (added 2013-01-25)",
+   "Harry Potter and the Half-Blood Prince (J.K. Rowling) (added 2023-07-03)",
+   "Raven's Gate (Anthony Horowitz) (added 2013-01-25)",
+   "Paper Towns (John Green) (added 2024-04-29)",
+   "13 Little Blue Envelopes (Maureen Johnson) (added 2024-04-29)",
+   "For We Are Many (Dennis E. Taylor) (added 2020-09-07)",
+   "Harry Potter and the Goblet of Fire (J.K. Rowling) (added 2023-07-03)",
+   "Eclipse (Stephenie Meyer) (added 2013-01-25)",
+   "Heaven's River (Dennis E. Taylor) (added 2020-09-07)",
+   "Murder at the Vicarage (Agatha Christie) (added 2025-04-16)",
+   "The Tales of Beedle the Bard (J.K. Rowling) (added 2013-01-25)",
+   "Breaking Dawn (Stephenie Meyer) (added 2013-01-25)",
+   "New Moon (Stephenie Meyer) (added 2013-01-25)",
+   "We Are Legion (We Are Bob) (Dennis E. Taylor) (added 2020-09-07)",
+   "The Loner (Josephine Cox) (added 2013-01-25)",
+   "The Host (Stephenie Meyer) (added 2013-01-25)",
+   "Looking for Alaska (John Green) (added 2024-04-29)",
+   "The Magician's Nephew (C.S. Lewis) (added 2013-01-25)",
+   "Noughts & Crosses (Malorie Blackman) (added 2013-01-25)",
+   "Charlotte's Web (E.B. White) (added 2013-01-25)",
+   "An Abundance of Katherines (John Green) (added 2024-04-29)",
+   "The Curious Incident of the Dog in the Night-Time (Mark Haddon) (added 2013-01-25)",
+   "Quidditch Through the Ages (Kennilworthy Whisp, J.K. Rowling) (added 2013-01-25)",
+   "Harry Potter Series Box Set (J.K. Rowling) (added 2013-01-25)",
+   "All These Worlds (Dennis E. Taylor) (added 2025-01-03)",
+   "Heaven's River (Dennis E. Taylor) (added 2025-01-03)",
+   "Catching Fire (Suzanne Collins) (added 2013-01-25)",
+   "Pride and Prejudice (Jane Austen) (added 2013-01-25)",
+   "Catch-22 (Joseph Heller) (added 2013-01-25)",
+   "Fantastic Beasts & Where to Find Them (Newt Scamander, J.K. Rowling) (added 2013-01-25)",
+   "Harry Potter and the Deathly Hallows (J.K. Rowling) (added 2023-07-03)",
+   "To Kill a Mockingbird (Harper Lee) (added 2013-01-25)",
+   "The Martian (Andy Weir) (added 2025-01-03)",
+   "Holes (Louis Sachar) (added 2013-01-25)",
+   "Harry Potter and the Order of the Phoenix (J.K. Rowling) (added 2013-01-25)",
+   "Worm (Wildbow) (added 2020-09-07)",
+   "All These Worlds (Dennis E. Taylor) (added 2020-09-07)",
+   "Harry Potter and the Philosopher's Stone (J.K. Rowling) (added 2023-07-03)",
+   "Harry Potter and the Half-Blood Prince (J.K. Rowling) (added 2013-01-25)",
+   "Carry On (Rainbow Rowell) (added 2025-01-15)",
+   "The Chronicles of Narnia (C.S. Lewis) (added 2013-01-25)",
+   "The Sisterhood of the Traveling Pants (Ann Brashares) (added 2013-01-25)",
+   "Mortal Engines (Philip Reeve) (added 2013-01-25)",
+   "The Hobbit, or There and Back Again (J.R.R. Tolkien) (added 2013-01-25)",
+   "Harry Potter and the Goblet of Fire (J.K. Rowling) (added 2013-01-25)",
+   "Paper Towns (John Green) (added 2013-01-25)",
+   "One Day (David Nicholls) (added 2013-01-25)",
+   "For We Are Many (Dennis E. Taylor) (added 2025-01-03)",
+   "The Horse and His Boy (C.S. Lewis) (added 2013-01-25)",
+   "The Voyage of the Dawn Treader (C.S. Lewis) (added 2013-01-25)",
+   "Harry Potter and the Prisoner of Azkaban (J.K. Rowling) (added 2013-01-25)",
+   "Harry Potter and the Chamber of Secrets (J.K. Rowling) (added 2013-01-25)",
+   "Harry Potter and the Chamber of Secrets (J.K. Rowling) (added 2023-07-03)",
+   "We Are Legion (We Are Bob) (Dennis E. Taylor) (added 2025-01-03)",
+   "The Golden Compass (Philip Pullman) (added 2013-01-25)",
+   "Harry Potter and the Order of the Phoenix (J.K. Rowling) (added 2023-07-03)",
+   "The Lion, the Witch and the Wardrobe (C.S. Lewis) (added 2013-01-25)",
+   "Will Grayson, Will Grayson (John Green, David Levithan) (added 2024-04-29)",
+   "The Last Battle (C.S. Lewis) (added 2013-01-25)"
+  ],
+  "readcount_vs_date_ranges": [
+   "Dimension Quest (Lisa Wright DeGroodt): read count 2, 1 date range(s)",
+   "Rebellion Quest (Lisa Wright DeGroodt): read count 2, 1 date range(s)",
+   "Barrier Quest (Lisa Wright DeGroodt): read count 2, 1 date range(s)",
+   "Girls in Love (Jacqueline Wilson): read count 2, 1 date range(s)",
+   "Hunt Quest (Lisa Wright DeGroodt): read count 2, 1 date range(s)",
+   "Storm Quest (Lisa Wright DeGroodt): read count 2, 1 date range(s)",
+   "Seer Quest (Lisa Wright DeGroodt): read count 2, 1 date range(s)",
+   "Guardian Quest (Lisa Wright DeGroodt): read count 2, 1 date range(s)",
+   "All the Lonely People (Mike Gayle): read count 2, 1 date range(s)",
+   "Wizard Quest (Lisa Wright DeGroodt): read count 2, 1 date range(s)",
+   "Oracle Quest (Lisa Wright DeGroodt): read count 2, 1 date range(s)",
+   "Healer Quest (Lisa Wright DeGroodt): read count 2, 1 date range(s)",
+   "Charm Quest (Lisa Wright DeGroodt): read count 2, 1 date range(s)",
+   "Relic Quest (Lisa Wright DeGroodt): read count 2, 1 date range(s)",
+   "Land Quest (Lisa Wright DeGroodt): read count 2, 1 date range(s)"
+  ],
+  "read_unrated_count": [
+   41
+  ],
+  "duplicate_entries": [
+   "Harry Potter and the Deathly Hallows [read, hardcover, None, 5.0] / Harry Potter and the Deathly Hallows [read, hardcover, None, ]",
+   "Harry Potter and the Prisoner of Azkaban [read, paperback, None, ] / Harry Potter and the Prisoner of Azkaban [read, paperback, None, 5.0]",
+   "Worm [read, digital, None, 5.0] / Worm [read, digital, None, 5.0]",
+   "Harry Potter and the Half-Blood Prince [read, hardcover, None, ] / Harry Potter and the Half-Blood Prince [read, paperback, None, 5.0]",
+   "Paper Towns [read, paperback, None, ] / Paper Towns [read, hardcover, None, 3.0]",
+   "For We Are Many [read, digital, None, ] / For We Are Many [read, digital, None, 4.5]",
+   "Harry Potter and the Goblet of Fire [read, paperback, None, ] / Harry Potter and the Goblet of Fire [read, digital, None, 4.0]",
+   "Heaven's River [read, audio, None, ] / Heaven's River [read, digital, None, ]",
+   "Murder at the Vicarage [read, hardcover, None, ] / The Murder at the Vicarage [read, audio, [['2025-04-27', '2025-05-05']], 4.0]",
+   "We Are Legion (We Are Bob) [read, digital, None, 5.0] / We Are Legion (We Are Bob) [read, digital, None, ]",
+   "All These Worlds [read, digital, None, ] / All These Worlds [read, digital, None, 4.5]",
+   "Harry Potter and the Order of the Phoenix [read, paperback, None, 4.0] / Harry Potter and the Order of the Phoenix [read, paperback, None, ]",
+   "Harry Potter and the Chamber of Secrets [read, digital, None, 4.0] / Harry Potter and the Chamber of Secrets [read, hardcover, None, ]"
+  ],
+  "owned_book_linked_from_several_entries": [
+   "Northern Lights (His Dark Materials) [ob32j7v0an] <- His Dark Materials 3-Book Mass Market Paperback Boxed Set (read) | The Golden Compass (read)",
+   "Harry Potter and the Deathly Hallows [j7z46oiqlq] <- Harry Potter and the Deathly Hallows (read) | Harry Potter and the Deathly Hallows (read)",
+   "Harry Potter and the Deathly Hallows: 7/7 (Harry Potter 7) [ls5xdaf7b9] <- Harry Potter and the Deathly Hallows (read) | Harry Potter and the Deathly Hallows (read)",
+   "Harry Potter and the Half-Blood Prince (Harry Potter 6) [9dbeyl06rp] <- Harry Potter and the Half-Blood Prince (read) | Harry Potter and the Half-Blood Prince (read)",
+   "Harry Potter and the Half-blood Prince: Children's Edition (Harry Potter 6) [ayjgsexpsz] <- Harry Potter and the Half-Blood Prince (read) | Harry Potter and the Half-Blood Prince (read)",
+   "Paper Towns [7fvjuvkhd6] <- Paper Towns (read) | Paper Towns (read)",
+   "For We Are Many: Volume 2 (Bobiverse) [dmp9wb8u84] <- For We Are Many (read) | For We Are Many (read)",
+   "Harry Potter and the Goblet of Fire [dmp9wlru84] <- Harry Potter and the Goblet of Fire (read) | Harry Potter and the Goblet of Fire (read)",
+   "Harry Potter and the Goblet of Fire [w1fyocdisd] <- Harry Potter and the Goblet of Fire (read) | Harry Potter and the Goblet of Fire (read)",
+   "Harry Potter and the Goblet of Fire: 4/7 (Harry Potter 4) [0catq15dcu] <- Harry Potter and the Goblet of Fire (read) | Harry Potter and the Goblet of Fire (read)",
+   "Heaven's River [8gmvxuuohq] <- Heaven's River (read) | Heaven's River (read)",
+   "We Are Legion (We Are Bob): Volume 1 (Bobiverse) [6uc5rd08dt] <- We Are Legion (We Are Bob) (read) | We Are Legion (We Are Bob) (read)",
+   "All These Worlds: Volume 3 (Bobiverse) [xl1n9iljps] <- All These Worlds (read) | All These Worlds (read)",
+   "Harry Potter and the Order of the Phoenix [3kxuztparj] <- Harry Potter and the Order of the Phoenix (read) | Harry Potter and the Order of the Phoenix (read)",
+   "Harry Potter and the Order of the Phoenix (Book 5) [v8dznku26q] <- Harry Potter and the Order of the Phoenix (read) | Harry Potter and the Order of the Phoenix (read)",
+   "Harry Potter and the Chamber of Secrets [bpko717cho] <- Harry Potter and the Chamber of Secrets (read) | Harry Potter and the Chamber of Secrets (read)",
+   "Harry Potter and the Chamber of Secrets [8gmvx7tohq] <- Harry Potter and the Chamber of Secrets (read) | Harry Potter and the Chamber of Secrets (read)",
+   "Harry Potter and the Chamber of Secrets: Illustrated Edition (Harry Potter Illustrated Editi) [8gmvx77ohq] <- Harry Potter and the Chamber of Secrets (read) | Harry Potter and the Chamber of Secrets (read)"
+  ],
+  "libib_status_vs_storygraph": [
+   "A Story for Every Day of Winter: Libib 'reading', StoryGraph 'read'"
+  ],
+  "year_only_dates_imported_as_start": [
+   "Turtles All the Way Down, Fangirl, Welcome to the Hyunam-dong Bookshop, Tomorrow and Tomorrow and Tomorrow, The Callista Alignment, Tiny Moons: StoryGraph has year-only \"2024-2024\"; import stores it as a start date \"2024-2024\" with no finish"
+  ],
+  "single_date_reads": [
+   "The Casual Vacancy 2014-01-08, Life of Pi 2013-01-15, The Fault in Our Stars 2013-01-17: one date only (StoryGraph gives no range), imported as a start with no finish"
+  ]
+ },
+ "5_profile": {
+  "counts": {
+   "read": 241,
+   "to-read": 95,
+   "stopped": 4,
+   "reading": 3,
+   "paused": 2
+  },
+  "read_per_year": {
+   "2013": 2,
+   "2014": 1,
+   "2024": 8,
+   "2025": 92,
+   "2026": 70,
+   "undated": 68
+  },
+  "formats_by_year": {
+   "2013": {
+    "paperback": 2
+   },
+   "2014": {
+    "hardcover": 1
+   },
+   "2024": {
+    "digital": 1,
+    "hardcover": 4,
+    "paperback": 3
+   },
+   "2025": {
+    "hardcover": 20,
+    "paperback": 60,
+    "audio": 8,
+    "digital": 4
+   },
+   "2026": {
+    "paperback": 37,
+    "hardcover": 10,
+    "audio": 17,
+    "digital": 6
+   },
+   "undated": {
+    "paperback": 27,
+    "hardcover": 25,
+    "digital": 14,
+    "audio": 2
+   }
+  },
+  "ratings": {
+   "n": 200,
+   "avg": 3.91,
+   "dist": {
+    "1.0": 5,
+    "2.0": 2,
+    "2.5": 5,
+    "3.0": 21,
+    "3.5": 36,
+    "4.0": 66,
+    "4.5": 34,
+    "4.75": 2,
+    "5.0": 29
+   }
+  },
+  "moods": [
+   [
+    "emotional",
+    55
+   ],
+   [
+    "mysterious",
+    35
+   ],
+   [
+    "lighthearted",
+    24
+   ],
+   [
+    "dark",
+    24
+   ],
+   [
+    "reflective",
+    24
+   ],
+   [
+    "adventurous",
+    20
+   ],
+   [
+    "sad",
+    19
+   ],
+   [
+    "inspiring",
+    18
+   ],
+   [
+    "tense",
+    17
+   ],
+   [
+    "challenging",
+    16
+   ],
+   [
+    "funny",
+    9
+   ],
+   [
+    "hopeful",
+    8
+   ],
+   [
+    "relaxing",
+    8
+   ],
+   [
+    "informative",
+    8
+   ]
+  ],
+  "mood_tagged_books": 91,
+  "pace": [
+   [
+    "medium",
+    61
+   ],
+   [
+    "slow",
+    26
+   ],
+   [
+    "fast",
+    9
+   ]
+  ],
+  "avg_rating_by_mood": {
+   "adventurous": [
+    4.41,
+    20
+   ],
+   "inspiring": [
+    4.36,
+    18
+   ],
+   "informative": [
+    4.31,
+    8
+   ],
+   "tense": [
+    4.29,
+    17
+   ],
+   "hopeful": [
+    4.25,
+    8
+   ],
+   "sad": [
+    4.21,
+    19
+   ],
+   "challenging": [
+    4.19,
+    16
+   ],
+   "dark": [
+    4.1,
+    24
+   ],
+   "emotional": [
+    4.1,
+    55
+   ],
+   "relaxing": [
+    4.09,
+    8
+   ],
+   "mysterious": [
+    4.06,
+    35
+   ],
+   "reflective": [
+    4.02,
+    24
+   ],
+   "lighthearted": [
+    3.75,
+    24
+   ],
+   "funny": [
+    3.72,
+    9
+   ]
+  },
+  "avg_rating_by_pace": {
+   "medium": [
+    3.98,
+    61
+   ],
+   "fast": [
+    4.28,
+    9
+   ],
+   "slow": [
+    3.75,
+    26
+   ]
+  },
+  "read_by_shelf": {
+   "adult-fiction": {
+    "n": 81,
+    "rated": 76,
+    "avg_rating": 3.78
+   },
+   "fantasy": {
+    "n": 64,
+    "rated": 57,
+    "avg_rating": 4.0
+   },
+   "childrens": {
+    "n": 29,
+    "rated": 8,
+    "avg_rating": 4.0
+   },
+   "young-adult": {
+    "n": 26,
+    "rated": 24,
+    "avg_rating": 3.73
+   },
+   "science-fiction": {
+    "n": 19,
+    "rated": 14,
+    "avg_rating": 4.32
+   },
+   "non-fiction": {
+    "n": 13,
+    "rated": 13,
+    "avg_rating": 4.04
+   },
+   "dystopia": {
+    "n": 6,
+    "rated": 5,
+    "avg_rating": 4.0
+   },
+   "not placed": {
+    "n": 2,
+    "rated": 2,
+    "avg_rating": 4.5
+   },
+   "travel": {
+    "n": 1,
+    "rated": 1,
+    "avg_rating": 3.5
+   }
+  },
+  "most_read_authors": [
+   [
+    "Enid Blyton / Pamela Cox",
+    21
+   ],
+   [
+    "J.K. Rowling",
+    16
+   ],
+   [
+    "Lisa Wright DeGroodt",
+    13
+   ],
+   [
+    "C.S. Lewis",
+    8
+   ],
+   [
+    "John Green",
+    8
+   ],
+   [
+    "Dennis E. Taylor",
+    8
+   ],
+   [
+    "Jacqueline Wilson",
+    6
+   ],
+   [
+    "Stephenie Meyer",
+    5
+   ],
+   [
+    "Mike Gayle",
+    4
+   ],
+   [
+    "Holly Jackson",
+    4
+   ],
+   [
+    "Fran Neatherway",
+    4
+   ],
+   [
+    "Agatha Christie",
+    4
+   ],
+   [
+    "James Islington",
+    4
+   ],
+   [
+    "TJ Klune",
+    4
+   ],
+   [
+    "Suzanne Collins",
+    3
+   ]
+  ],
+  "top_rated_authors": [
+   [
+    "Wildbow",
+    5.0,
+    2
+   ],
+   [
+    "Mike Gayle",
+    4.75,
+    4
+   ],
+   [
+    "James Islington",
+    4.75,
+    4
+   ],
+   [
+    "TJ Klune",
+    4.75,
+    4
+   ],
+   [
+    "Andy Weir",
+    4.75,
+    2
+   ],
+   [
+    "J.K. Rowling",
+    4.67,
+    9
+   ],
+   [
+    "Dennis E. Taylor",
+    4.67,
+    3
+   ],
+   [
+    "Matt Haig",
+    4.5,
+    3
+   ],
+   [
+    "V.E. Schwab",
+    4.5,
+    2
+   ],
+   [
+    "Denise Critchley",
+    4.5,
+    2
+   ],
+   [
+    "John Green",
+    4.21,
+    7
+   ],
+   [
+    "Lisa Wright DeGroodt",
+    4.19,
+    13
+   ],
+   [
+    "R.E. Palmer",
+    4.17,
+    3
+   ],
+   [
+    "Taylor Jenkins Reid",
+    4.17,
+    3
+   ],
+   [
+    "C.S. Lewis",
+    4.12,
+    8
+   ]
+  ],
+  "five_star": [
+   "Harry, a History: The True Story of a Boy Wizard, His Fans, and Life Inside the Harry Potter Phenomenon (Melissa Anelli)",
+   "Harry Potter and the Deathly Hallows (J.K. Rowling)",
+   "Worm (Wildbow)",
+   "The Midnight Train (Matt Haig)",
+   "The Tales of Beedle the Bard (J.K. Rowling)",
+   "We Are Legion (We Are Bob) (Dennis E. Taylor)",
+   "The House in the Cerulean Sea (TJ Klune)",
+   "The Magician's Nephew (C.S. Lewis)",
+   "Noughts & Crosses (Malorie Blackman)",
+   "An Abundance of Katherines (John Green)",
+   "I'm Glad My Mom Died (Jennette McCurdy)",
+   "Harry Potter Series Box Set (J.K. Rowling)",
+   "The Martian (Andy Weir)",
+   "Worm (Wildbow)",
+   "All the Lonely People (Mike Gayle)",
+   "Harry Potter and the Philosopher's Stone (J.K. Rowling)",
+   "Harry Potter and the Half-Blood Prince (J.K. Rowling)",
+   "In the Lives of Puppets (TJ Klune)",
+   "The Will of the Many (James Islington)",
+   "Half a World Away (Mike Gayle)",
+   "The Fault in Our Stars (John Green)",
+   "Welcome to the Hyunam-dong Bookshop (Hwang Bo-Reum)",
+   "Everything is Tuberculosis (John Green)",
+   "The Horse and His Boy (C.S. Lewis)",
+   "Harry Potter and the Prisoner of Azkaban (J.K. Rowling)",
+   "The Lion, the Witch and the Wardrobe (C.S. Lewis)",
+   "Daisy Jones & The Six (Taylor Jenkins Reid)",
+   "The Light of All That Falls (James Islington)",
+   "The Seven Husbands of Evelyn Hugo (Taylor Jenkins Reid)"
+  ],
+  "lowest_rated": [
+   "Cross the Line (Simone Soltani) 2.5",
+   "Twilight (Stephenie Meyer) 1.0",
+   "Eclipse (Stephenie Meyer) 1.0",
+   "After I Do (Taylor Jenkins Reid) 2.5",
+   "Breaking Dawn (Stephenie Meyer) 1.0",
+   "New Moon (Stephenie Meyer) 1.0",
+   "Think Again (Jacqueline Wilson) 2.5",
+   "Pride and Prejudice (Jane Austen) 1.0",
+   "A Fate Inked In Blood (Danielle L. Jensen) 2.0",
+   "A/S/L (Jeanne Thornton) 2.0",
+   "Lessons in Chemistry (Bonnie Garmus) 2.5",
+   "Dengue Boy (Michel Nieva, Rahul Bery) 2.5"
+  ],
+  "stopped_paused_reading": [
+   "Wolfsong (TJ Klune) - stopped",
+   "A Place in the World (Bill Gaythwaite) - reading",
+   "Assistant to the Villain (Hannah Nicole Maehrer) - stopped",
+   "I Bet You'd Look Good in a Coffin (Katy Brent) - reading",
+   "Sapiens: A Brief History of Humankind (Yuval Noah Harari) - stopped",
+   "A Degree of Love (Jane Andrews) - reading",
+   "Hooked (Asako Yuzuki) - stopped",
+   "Ward (J.C. McCrae, Wildbow) - paused",
+   "The Secret History (Donna Tartt) - paused"
+  ],
+  "pages_of_read_owned": {
+   "n": 160,
+   "avg": 303,
+   "median": 304
+  },
+  "recent_2025_on": {
+   "n": 230,
+   "shelves": [
+    [
+     "adult-fiction",
+     75
+    ],
+    [
+     "fantasy",
+     64
+    ],
+    [
+     "childrens",
+     29
+    ],
+    [
+     "young-adult",
+     23
+    ],
+    [
+     "science-fiction",
+     18
+    ],
+    [
+     "non-fiction",
+     13
+    ],
+    [
+     "dystopia",
+     6
+    ],
+    [
+     "not placed",
+     2
+    ]
+   ],
+   "formats": [
+    [
+     "paperback",
+     124
+    ],
+    [
+     "hardcover",
+     55
+    ],
+    [
+     "audio",
+     27
+    ],
+    [
+     "digital",
+     24
+    ]
+   ],
+   "avg_rating": 3.9,
+   "top": [
+    "Hope Street (Mike Gayle) 4.5",
+    "Dimension Quest (Lisa Wright DeGroodt) 4.5",
+    "Harry, a History: The True Story of a Boy Wizard, His Fans, and Life Inside the Harry Potter Phenomenon (Melissa Anelli) 5.0",
+    "Orbital (Samantha Harvey) 4.5",
+    "Harry Potter and the Deathly Hallows (J.K. Rowling) 5.0",
+    "Didikai Witch (Alison Kershaw) 4.5",
+    "Worm (Wildbow) 5.0",
+    "The Midnight Train (Matt Haig) 5.0",
+    "Project Hail Mary (Andy Weir) 4.5",
+    "What You Are Looking For is in the Library (Michiko Aoyama) 4.5",
+    "Dawn (Octavia E. Butler) 4.5",
+    "Barrier Quest (Lisa Wright DeGroodt) 4.5",
+    "Age of Shadows (R.E. Palmer) 4.5",
+    "The Tales of Beedle the Bard (J.K. Rowling) 5.0",
+    "Business as Usual (Jane Oliver) 4.5",
+    "An Echo of Things to Come (James Islington) 4.5",
+    "We Are Legion (We Are Bob) (Dennis E. Taylor) 5.0",
+    "Somewhere Beyond the Sea (TJ Klune) 4.5",
+    "Yesteryear (Caro Claire Burke) 4.5",
+    "The Invisible Life of Addie LaRue (V.E. Schwab) 4.5",
+    "The House in the Cerulean Sea (TJ Klune) 5.0",
+    "The Magician's Nephew (C.S. Lewis) 5.0",
+    "Noughts & Crosses (Malorie Blackman) 5.0",
+    "An Abundance of Katherines (John Green) 5.0",
+    "I'm Glad My Mom Died (Jennette McCurdy) 5.0",
+    "Cloud Atlas (David Mitchell) 4.5",
+    "Harry Potter Series Box Set (J.K. Rowling) 5.0",
+    "Blue Sisters (Coco Mellors) 4.5",
+    "Dust Settles North (Deena ElGenaidi) 4.5",
+    "The Museum of Ordinary People (Mike Gayle) 4.5",
+    "Seer Quest (Lisa Wright DeGroodt) 4.5",
+    "The Shadow of What Was Lost (James Islington) 4.5",
+    "Under the Whispering Door (TJ Klune) 4.5",
+    "The Martian (Andy Weir) 5.0",
+    "Unseen: How I Lost My Vision But Found My Voice (Molly Burke) 4.5",
+    "Worm (Wildbow) 5.0",
+    "All These Worlds (Dennis E. Taylor) 4.5",
+    "All the Lonely People (Mike Gayle) 5.0",
+    "Harry Potter and the Philosopher's Stone (J.K. Rowling) 5.0",
+    "Harry Potter and the Half-Blood Prince (J.K. Rowling) 5.0",
+    "A Promised Land (Barack Obama) 4.5",
+    "Oracle Quest (Lisa Wright DeGroodt) 4.75",
+    "In the Lives of Puppets (TJ Klune) 5.0",
+    "The Will of the Many (James Islington) 5.0",
+    "Half a World Away (Mike Gayle) 5.0",
+    "A Good Girl's Guide to Murder (Holly Jackson) 4.5",
+    "A Darker Shade of Magic (V.E. Schwab) 4.5",
+    "Bringing Down the Flowers (Denise Critchley) 4.5",
+    "Everything is Tuberculosis (John Green) 5.0",
+    "For We Are Many (Dennis E. Taylor) 4.5",
+    "The Horse and His Boy (C.S. Lewis) 5.0",
+    "Homegoing (Yaa Gyasi) 4.5",
+    "Harry Potter and the Prisoner of Azkaban (J.K. Rowling) 5.0",
+    "The Midnight Library (Matt Haig) 4.5",
+    "The Lion, the Witch and the Wardrobe (C.S. Lewis) 5.0",
+    "The Parsley Bed (Denise Critchley) 4.5",
+    "Daisy Jones & The Six (Taylor Jenkins Reid) 5.0",
+    "Land Quest (Lisa Wright DeGroodt) 4.75",
+    "The Light of All That Falls (James Islington) 5.0",
+    "The Seven Husbands of Evelyn Hugo (Taylor Jenkins Reid) 5.0"
+   ]
+  },
+  "character_questions_avg_rating": {
+   "Character- or Plot-Driven?": {
+    "A mix": [
+     4.03,
+     26
+    ],
+    "Character": [
+     3.93,
+     38
+    ],
+    "Plot": [
+     3.9,
+     20
+    ],
+    "N/A": [
+     3.0,
+     3
+    ]
+   },
+   "Strong Character Development?": {
+    "Yes": [
+     4.2,
+     37
+    ],
+    "No": [
+     3.27,
+     11
+    ],
+    "It's complicated": [
+     3.86,
+     35
+    ],
+    "N/A": [
+     3.75,
+     4
+    ]
+   },
+   "Loveable Characters?": {
+    "It's complicated": [
+     3.89,
+     41
+    ],
+    "Yes": [
+     4.22,
+     36
+    ],
+    "No": [
+     2.88,
+     8
+    ],
+    "N/A": [
+     3.5,
+     2
+    ]
+   },
+   "Diverse Characters?": {
+    "Yes": [
+     4.11,
+     35
+    ],
+    "No": [
+     3.71,
+     37
+    ],
+    "It's complicated": [
+     3.96,
+     12
+    ],
+    "N/A": [
+     4.25,
+     2
+    ]
+   },
+   "Flawed Characters?": {
+    "Yes": [
+     3.74,
+     33
+    ],
+    "No": [
+     3.94,
+     18
+    ],
+    "It's complicated": [
+     4.11,
+     33
+    ],
+    "N/A": [
+     3.75,
+     2
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,1285 @@
+[
+ {
+  "id": "cp2uffxmmk",
+  "title": "A Madcap",
+  "year": null,
+  "likely_edition": "Edwardian/1920s UK cloth (Chambers or Cassell reprint); no year on record",
+  "candidate_files": [
+   "cands/cp2uffxmmk_abe_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.abebooks.co.uk/Madcap-Meade-Lillie-Thomas-Cassell/2083732533/bd"
+  ],
+  "other_candidates": [],
+  "current_cover": "https://covers.openlibrary.org/b/id/7933116-L.jpg",
+  "current_looks_wrong": true,
+  "confidence": "low",
+  "note": "Current picture is a US Mershon title page, not a cover. Cassell 1920 boards offered; check her copy's publisher."
+ },
+ {
+  "id": "7snw62uhd6",
+  "title": "A Tale of Two Cities",
+  "year": null,
+  "likely_edition": "Chapman & Hall Household Edition (1870s) is what is shown; no year on record",
+  "candidate_files": [],
+  "source_urls": [],
+  "other_candidates": [],
+  "current_cover": "https://i.pinimg.com/originals/62/15/12/621512be7b44eb331bedfbe06b36995e.jpg",
+  "current_looks_wrong": false,
+  "confidence": "low",
+  "note": "Current is a Victorian Chapman & Hall binding, right for the period; confirm her publisher."
+ },
+ {
+  "id": "28iexxftqt",
+  "title": "A World of Girls",
+  "year": null,
+  "likely_edition": "Cassell decorated cloth (c.1900s); no year on record",
+  "candidate_files": [],
+  "source_urls": [],
+  "other_candidates": [],
+  "current_cover": "https://covers.openlibrary.org/b/id/7073336-L.jpg",
+  "current_looks_wrong": false,
+  "confidence": "low",
+  "note": "Current is decorated cloth from the period; keep unless her copy differs."
+ },
+ {
+  "id": "59qsgeiv9x",
+  "title": "Adventures of the Wishing Chair",
+  "year": "1964",
+  "likely_edition": "George Newnes hardback, Hilda McGavin jacket (Newnes design used until Dean took over in 1971)",
+  "candidate_files": [
+   "cands/59qsgeiv9x_ebs319_1942_1.jpg",
+   "cands/59qsgeiv9x_ebs319_x1939_3.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=319",
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=319"
+  ],
+  "other_candidates": [
+   "cands/59qsgeiv9x_ebs319_1937_2.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "medium",
+  "note": "A 1964 copy predates the 1971 Dean edition, so a Newnes jacket fits."
+ },
+ {
+  "id": "hfp82xb19k",
+  "title": "Andersans Fairy Tales",
+  "year": null,
+  "likely_edition": "Unknown; no year on record",
+  "candidate_files": [],
+  "source_urls": [],
+  "other_candidates": [],
+  "current_cover": "https://i.pinimg.com/originals/96/3c/ae/963caea68cd90b48a9c45ebd88e537c2.jpg",
+  "current_looks_wrong": false,
+  "confidence": "low",
+  "note": "Current is an angled shelf photo of an old copy; nothing better without her edition details."
+ },
+ {
+  "id": "mntgwag31h",
+  "title": "Beer Rabbit's a Rascal",
+  "year": "1965",
+  "likely_edition": "Dean hardback 1965 (first edition), Grace Lodge",
+  "candidate_files": [
+   "cands/mntgwag31h_ebs495_1965_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=495"
+  ],
+  "other_candidates": [
+   "cands/mntgwag31h_ebs2003_1965_2.jpg"
+  ],
+  "current_cover": "https://i.pinimg.com/originals/96/59/a8/9659a8e038f793c432a6a7cd9d71e31f.jpg",
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Current is the same Dean design but an angled photo; candidate is flat."
+ },
+ {
+  "id": "yq0s7pfr71",
+  "title": "Bimbo and Topsy",
+  "year": "1969",
+  "likely_edition": "Dean hardback 1969, cover uncredited",
+  "candidate_files": [
+   "cands/yq0s7pfr71_ebs360_1969_1.jpg",
+   "cands/yq0s7pfr71_ebs2012_1969_4.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=360",
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=2012"
+  ],
+  "other_candidates": [
+   "cands/yq0s7pfr71_ebs360_1943_2.jpg",
+   "cands/yq0s7pfr71_ebs360_1971_3.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Year matches Dean 1969 exactly."
+ },
+ {
+  "id": "jlcyduuqlq",
+  "title": "Black Beauty",
+  "year": null,
+  "likely_edition": "Unknown; no year or publisher on record",
+  "candidate_files": [],
+  "source_urls": [],
+  "other_candidates": [
+   "cands/jlcyduuqlq_abe_1.jpg",
+   "cands/jlcyduuqlq_abe_2.jpg",
+   "cands/jlcyduuqlq_abe_3.jpg",
+   "cands/jlcyduuqlq_abe_4.jpg",
+   "cands/jlcyduuqlq_abe_5.jpg",
+   "cands/jlcyduuqlq_abe_6.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "low",
+  "note": "Only US editions found; keep title card until she gives year/publisher."
+ },
+ {
+  "id": "mntgwj431h",
+  "title": "Bleak House",
+  "year": "1869",
+  "likely_edition": "Chapman & Hall, c.1869 (Charles Dickens Edition or library set)",
+  "candidate_files": [
+   "cands/mntgwj431h_abe_1.jpg",
+   "cands/mntgwj431h_abe_3.jpg"
+  ],
+  "source_urls": [
+   "https://www.abebooks.co.uk/Works-Charles-Dickens-Volumes-Illustrated-New/32498801645/bd",
+   "https://www.abebooks.co.uk/Life-Adventures-Martin-Chuzzlewit-Bleak-House/32164307297/bd"
+  ],
+  "other_candidates": [
+   "cands/mntgwj431h_abe_2.jpg",
+   "cands/mntgwj431h_abe_4.jpg",
+   "cands/mntgwj431h_abe_5.jpg"
+  ],
+  "current_cover": "https://i.pinimg.com/736x/74/53/62/745362dd2f024b2e61e9f721159bdd41.jpg",
+  "current_looks_wrong": true,
+  "confidence": "low",
+  "note": "Current is a scanned frontispiece engraving with a modern caption strip, not a cover. Candidates are only set photos."
+ },
+ {
+  "id": "umsrn8vgnz",
+  "title": "Book of Brownies",
+  "year": "1967",
+  "likely_edition": "Dean hardback 1967, cover uncredited",
+  "candidate_files": [
+   "cands/umsrn8vgnz_ebs182_1967_1.jpg",
+   "cands/umsrn8vgnz_ebs2004_1967_4.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=182",
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=2004"
+  ],
+  "other_candidates": [
+   "cands/umsrn8vgnz_ebs182_1926_2.jpg",
+   "cands/umsrn8vgnz_ebs182_1968_3.jpg"
+  ],
+  "current_cover": "https://i.etsystatic.com/22632140/r/il/621f60/6130233184/il_fullxfull.6130233184_kdm6.jpg",
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Current is the same Dean design but an angled table photo; flat candidate is better."
+ },
+ {
+  "id": "tol53o093y",
+  "title": "Brer Rabbit Again",
+  "year": "1965",
+  "likely_edition": "Dean hardback 1963 (reprinted to 1965), Grace Lodge",
+  "candidate_files": [
+   "cands/tol53o093y_ebs494_1963_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=494"
+  ],
+  "other_candidates": [
+   "cands/tol53o093y_ebs1998_1963_2.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "id": "0bs6kb8dcu",
+  "title": "Brer Rabbit Book",
+  "year": "1965",
+  "likely_edition": "Dean hardback 1963, Grace Lodge",
+  "candidate_files": [
+   "cands/0bs6kb8dcu_ebs493_1963_3.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=493"
+  ],
+  "other_candidates": [
+   "cands/0bs6kb8dcu_ebs386_1948_1.jpg",
+   "cands/0bs6kb8dcu_ebs386_x1948_2.jpg",
+   "cands/0bs6kb8dcu_ebs1997_1963_4.jpg"
+  ],
+  "current_cover": "https://covers.openlibrary.org/b/id/14608011-L.jpg",
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Current already shows the Dean design."
+ },
+ {
+  "id": "i1ajbublqm",
+  "title": "Canadian North",
+  "year": "1948",
+  "likely_edition": "OUP (Humphrey Milford) red cloth, 1945; 1948 may be the Travel Book Club printing",
+  "candidate_files": [
+   "cands/i1ajbublqm_abe_2.jpg"
+  ],
+  "source_urls": [
+   "https://www.abebooks.co.uk/Canadian-north-Malcolm-MacDonald-1901-1981-London/31941356137/bd"
+  ],
+  "other_candidates": [
+   "cands/i1ajbublqm_abe_1.jpg",
+   "cands/i1ajbublqm_abe_3.jpg",
+   "cands/i1ajbublqm_abe_4.jpg"
+  ],
+  "current_cover": "https://covers.openlibrary.org/b/id/14923671-L.jpg",
+  "current_looks_wrong": true,
+  "confidence": "medium",
+  "note": "Current is a title page, not a cover. No 1948 Travel Book Club image found."
+ },
+ {
+  "id": "xibkehkjps",
+  "title": "Captain of Two Schools",
+  "year": "1950",
+  "likely_edition": "Frederick Warne hardback 1950",
+  "candidate_files": [
+   "cands/xibkehkjps_abe_1.jpg",
+   "cands/xibkehkjps_abe_2.jpg"
+  ],
+  "source_urls": [
+   "https://www.abebooks.co.uk/Captain-Two-Schools-Hylton-Cleaver-Frederick/31806943113/bd",
+   "https://www.abebooks.co.uk/Captain-Two-Schools-Hylton-Cleaver-Frederick/32116826161/bd"
+  ],
+  "other_candidates": [],
+  "current_cover": "https://d2pk39vnfxxys4.cloudfront.net/content/images/thumbs/0011119_captain-of-two-schools_300.jpeg",
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Current red boards are right; candidate 1 is the 1950 Warne jacket if she has it."
+ },
+ {
+  "id": "8u1tifmohq",
+  "title": "China Fights Back",
+  "year": "1938",
+  "likely_edition": "Left Book Club edition, Victor Gollancz 1938 (limp orange/red)",
+  "candidate_files": [
+   "cands/8u1tifmohq_abe_3.jpg",
+   "cands/8u1tifmohq_abe_2.jpg"
+  ],
+  "source_urls": [
+   "https://www.abebooks.co.uk/China-Fights-Back-Agnes-Smedley-Left/32506996301/bd",
+   "https://www.abebooks.co.uk/China-Fights-Back-Agnes-Smedley-Left/32501463117/bd"
+  ],
+  "other_candidates": [
+   "cands/8u1tifmohq_abe_1.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "id": "cp5qridmmk",
+  "title": "Claudine at St Clare's",
+  "year": "1944",
+  "likely_edition": "Methuen hardback 1944 (first edition), W. Lindsay Cable jacket",
+  "candidate_files": [
+   "cands/cp5qridmmk_ebs303_1944_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=303"
+  ],
+  "other_candidates": [],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "id": "8u1tiscohq",
+  "title": "Corridors of Power",
+  "year": "1964",
+  "likely_edition": "Macmillan hardback 1964 (first edition), painted jacket",
+  "candidate_files": [
+   "cands/8u1tiscohq_abe_4.jpg",
+   "cands/8u1tiscohq_abe_5.jpg",
+   "cands/8u1tiscohq_abe_2.jpg"
+  ],
+  "source_urls": [
+   "https://www.abebooks.co.uk/first-edition/CORRIDORS-POWER-Snow-C-P-MacMillan/30137966845/bd",
+   "https://www.abebooks.co.uk/first-edition/Corridors-Power-C-P-Snow-Macmillan/31847460438/bd",
+   "https://www.abebooks.co.uk/first-edition/Corridors-Power-Snow-C.P-London-Macmillan/31354345548/bd"
+  ],
+  "other_candidates": [
+   "cands/8u1tiscohq_abe_1.jpg",
+   "cands/8u1tiscohq_abe_3.jpg"
+  ],
+  "current_cover": "https://covers.openlibrary.org/b/id/5541327-L.jpg",
+  "current_looks_wrong": true,
+  "confidence": "high",
+  "note": "Current is a later Penguin paperback (1966 or after), not her 1964 Macmillan."
+ },
+ {
+  "id": "i1mt5hqlqm",
+  "title": "Famous Five 9: Five Fall Into Adventure",
+  "year": "1962",
+  "likely_edition": "Hodder & Stoughton hardback, Eileen Soper dust jacket (1951 design)",
+  "candidate_files": [
+   "cands/i1mt5hqlqm_ebs202_1951_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=202"
+  ],
+  "other_candidates": [
+   "cands/i1mt5hqlqm_ebs202_1950_2.jpg",
+   "cands/i1mt5hqlqm_ebs202_x1965_3.jpg"
+  ],
+  "current_cover": "https://i.pinimg.com/originals/b9/f5/20/b9f5203902feb860383d00bbc8ec2bd4.jpg",
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Current is the right jacket."
+ },
+ {
+  "id": "aktlq1lpsz",
+  "title": "Fifth Formers at St Clare's",
+  "year": "1945",
+  "likely_edition": "Methuen hardback 1945, W. Lindsay Cable",
+  "candidate_files": [
+   "cands/aktlq1lpsz_ebs304_1945_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=304"
+  ],
+  "other_candidates": [],
+  "current_cover": "https://pictures.abebooks.com/inventory/7390378094.jpg",
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Current Methuen boards are right; candidate is the jacket."
+ },
+ {
+  "id": "aktlqn3psz",
+  "title": "Five Get Into Trouble",
+  "year": "1965",
+  "likely_edition": "Hodder & Stoughton hardback, Eileen Soper dust jacket (1950s-60s reprints)",
+  "candidate_files": [
+   "cands/aktlqn3psz_ebs201_1951_1.jpg",
+   "cands/aktlqn3psz_ebs201_x1960_4.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=201",
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=201"
+  ],
+  "other_candidates": [
+   "cands/aktlqn3psz_ebs201_1949_2.jpg",
+   "cands/aktlqn3psz_ebs201_1968_3.jpg"
+  ],
+  "current_cover": "https://covers.openlibrary.org/b/id/14599583-L.jpg",
+  "current_looks_wrong": false,
+  "confidence": "medium",
+  "note": "Two Soper jacket designs were both in print around 1960; current red boards are right for the period."
+ },
+ {
+  "id": "whc2eftisd",
+  "title": "Five Get Into a Fix",
+  "year": "1962",
+  "likely_edition": "Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1958 design",
+  "candidate_files": [
+   "cands/whc2eftisd_ebs210_1958_1.jpg",
+   "cands/whc2eftisd_ebs210_x1958_3.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=210",
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=210"
+  ],
+  "other_candidates": [
+   "cands/whc2eftisd_ebs210_x1958_2.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "id": "aktljmbpsz",
+  "title": "Five Go Adventuring Again",
+  "year": "1955",
+  "likely_edition": "Hodder & Stoughton hardback, Eileen Soper dust jacket (1951 design)",
+  "candidate_files": [
+   "cands/aktljmbpsz_ebs195_1951_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=195"
+  ],
+  "other_candidates": [
+   "cands/aktljmbpsz_ebs195_1943_2.jpg"
+  ],
+  "current_cover": "https://covers.openlibrary.org/b/id/14601324-L.jpg",
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Current boards fine."
+ },
+ {
+  "id": "v6jcdvv26q",
+  "title": "Five Go Off in a Caravan",
+  "year": null,
+  "likely_edition": "Hodder & Stoughton hardback, Eileen Soper dust jacket",
+  "candidate_files": [
+   "cands/v6jcdvv26q_ebs198_1946_1.jpg",
+   "cands/v6jcdvv26q_ebs198_1951_2.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=198",
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=198"
+  ],
+  "other_candidates": [
+   "cands/v6jcdvv26q_ebs198_x1957_3.jpg"
+  ],
+  "current_cover": "https://covers.openlibrary.org/b/id/14608017-L.jpg",
+  "current_looks_wrong": false,
+  "confidence": "low",
+  "note": "No year on record; current boards fine."
+ },
+ {
+  "id": "xiuezl2jps",
+  "title": "Five Go To Mystery Moor",
+  "year": "1954",
+  "likely_edition": "Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1954",
+  "candidate_files": [
+   "cands/xiuezl2jps_ebs206_1954_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=206"
+  ],
+  "other_candidates": [
+   "cands/xiuezl2jps_ebs206_x1954_2.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "id": "mnvwrmh31h",
+  "title": "Five Go To Smugglers Top",
+  "year": "1945",
+  "likely_edition": "Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1945",
+  "candidate_files": [
+   "cands/mnvwrmh31h_ebs197_1945_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=197"
+  ],
+  "other_candidates": [],
+  "current_cover": "https://covers.openlibrary.org/b/id/14599541-L.jpg",
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Current boards fine."
+ },
+ {
+  "id": "v6jcu0o26q",
+  "title": "Five Go to Billycock Hill",
+  "year": "1959",
+  "likely_edition": "Hodder & Stoughton hardback, Eileen Soper dust jacket, 1957 design",
+  "candidate_files": [
+   "cands/v6jcu0o26q_ebs209_1957_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=209"
+  ],
+  "other_candidates": [
+   "cands/v6jcu0o26q_ebs209_x1957_2.jpg"
+  ],
+  "current_cover": "https://covers.openlibrary.org/b/id/14603667-L.jpg",
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Current boards fine."
+ },
+ {
+  "id": "py97wjuno7",
+  "title": "Five Have a Mystery to Solve",
+  "year": "1962",
+  "likely_edition": "Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1962",
+  "candidate_files": [
+   "cands/py97wjuno7_ebs213_1962_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=213"
+  ],
+  "other_candidates": [
+   "cands/py97wjuno7_ebs213_x1962_2.jpg"
+  ],
+  "current_cover": "https://covers.openlibrary.org/b/id/14605143-L.jpg",
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Current boards fine."
+ },
+ {
+  "id": "yq0s7kvr71",
+  "title": "Five Run Away Together",
+  "year": "1963",
+  "likely_edition": "Hodder & Stoughton hardback, Eileen Soper dust jacket (1951 design)",
+  "candidate_files": [
+   "cands/yq0s7kvr71_ebs196_1951_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=196"
+  ],
+  "other_candidates": [
+   "cands/yq0s7kvr71_ebs196_1944_2.jpg",
+   "cands/yq0s7kvr71_ebs196_x1952_3.jpg"
+  ],
+  "current_cover": "https://covers.openlibrary.org/b/id/14605167-L.jpg",
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Current is the right jacket."
+ },
+ {
+  "id": "ogh4ago0an",
+  "title": "Five on a Hike Together",
+  "year": "1952",
+  "likely_edition": "Hodder & Stoughton hardback, Eileen Soper dust jacket, 1951 design",
+  "candidate_files": [
+   "cands/ogh4ago0an_ebs203_1951_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=203"
+  ],
+  "other_candidates": [
+   "cands/ogh4ago0an_ebs203_x1951_2.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "id": "cp5qr4vmmk",
+  "title": "Five on a Secret Trail",
+  "year": "1956",
+  "likely_edition": "Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1956",
+  "candidate_files": [
+   "cands/cp5qr4vmmk_ebs208_1956_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=208"
+  ],
+  "other_candidates": [
+   "cands/cp5qr4vmmk_ebs208_x1956_2.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "id": "i1mtejklqm",
+  "title": "Five on a Treasure Island",
+  "year": "1951",
+  "likely_edition": "Hodder & Stoughton hardback, Eileen Soper dust jacket (1951 redesigned jacket)",
+  "candidate_files": [
+   "cands/i1mtejklqm_ebs194_1951_1.jpg",
+   "cands/i1mtejklqm_ebs194_1942_2.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=194",
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=194"
+  ],
+  "other_candidates": [],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "medium",
+  "note": "1951 copy: the 1951 redesign (first file) or the original 1942 design (second)."
+ },
+ {
+  "id": "rwdf1zdxoz",
+  "title": "Fun for the Secret Seven",
+  "year": "1965",
+  "likely_edition": "Brockhampton Press hardback 1963, Burgess Sharrocks",
+  "candidate_files": [
+   "cands/rwdf1zdxoz_ebs286_1963_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=286"
+  ],
+  "other_candidates": [
+   "cands/rwdf1zdxoz_ebs286_x1963_2.jpg",
+   "cands/rwdf1zdxoz_ebs286_x1963_3.jpg"
+  ],
+  "current_cover": "https://covers.openlibrary.org/b/id/14601508-L.jpg",
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Current is right."
+ },
+ {
+  "id": "cp5qrytmmk",
+  "title": "Go Ahead Secret Seven",
+  "year": null,
+  "likely_edition": "Brockhampton Press hardback (first edition 1953), Bruno Kay",
+  "candidate_files": [
+   "cands/cp5qrytmmk_ebs276_1953_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=276"
+  ],
+  "other_candidates": [
+   "cands/cp5qrytmmk_ebs276_1969_2.jpg",
+   "cands/cp5qrytmmk_ebs276_x1953_3.jpg",
+   "cands/cp5qrytmmk_ebs276_x1953_4.jpg"
+  ],
+  "current_cover": "https://covers.openlibrary.org/b/id/14602684-L.jpg",
+  "current_looks_wrong": false,
+  "confidence": "medium",
+  "note": "No year on record; current is cloth boards from the period."
+ },
+ {
+  "id": "hfp8tti19k",
+  "title": "Good Old Secret Seven",
+  "year": "1966",
+  "likely_edition": "Brockhampton Press hardback (1960 design), Burgess Sharrocks",
+  "candidate_files": [
+   "cands/hfp8tti19k_ebs283_1960_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=283"
+  ],
+  "other_candidates": [
+   "cands/hfp8tti19k_ebs283_x1960_2.jpg",
+   "cands/hfp8tti19k_ebs283_x1960_3.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "id": "28iexpltqt",
+  "title": "Harvard Classics Reading Guide",
+  "year": "1930",
+  "likely_edition": "P. F. Collier & Son, New York, 1930",
+  "candidate_files": [
+   "cands/28iexpltqt_abe_2.jpg"
+  ],
+  "source_urls": [
+   "https://www.abebooks.co.uk/first-edition/Harvard-Classics-Fifteen-Minutes-Day-Reading/31945692032/bd"
+  ],
+  "other_candidates": [
+   "cands/28iexpltqt_abe_1.jpg",
+   "cands/28iexpltqt_abe_3.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "medium",
+  "note": "Has no cover entry and isn't in no-cover.json."
+ },
+ {
+  "id": "6dh2w1u8dt",
+  "title": "Heidi",
+  "year": "1945",
+  "likely_edition": "Possibly Macdonald Illustrated Junior Library 1945 (William Sharp)",
+  "candidate_files": [
+   "cands/6dh2w1u8dt_abe_3.jpg",
+   "cands/6dh2w1u8dt_abe_6.jpg"
+  ],
+  "source_urls": [
+   "https://www.abebooks.co.uk/HEIDI-Johanna-Spyri-MACDONALD/32538927619/bd",
+   "https://www.abebooks.co.uk/HEIDI-Spyri-Johanna-Illustrated-William-Sharp/22422193708/bd"
+  ],
+  "other_candidates": [
+   "cands/6dh2w1u8dt_abe_1.jpg",
+   "cands/6dh2w1u8dt_abe_2.jpg",
+   "cands/6dh2w1u8dt_abe_4.jpg",
+   "cands/6dh2w1u8dt_abe_5.jpg",
+   "cands/6dh2w1u8dt_abeA_1.jpg",
+   "cands/6dh2w1u8dt_abeA_2.jpg",
+   "cands/6dh2w1u8dt_abeA_3.jpg",
+   "cands/6dh2w1u8dt_abeA_4.jpg",
+   "cands/6dh2w1u8dt_abeA_5.jpg",
+   "cands/6dh2w1u8dt_abeA_6.jpg"
+  ],
+  "current_cover": "https://pictures.abebooks.com/inventory/22676100275.jpg",
+  "current_looks_wrong": false,
+  "confidence": "low",
+  "note": "Current jacket is old (not modern) but publisher unknown; only switch if her copy is the Macdonald one."
+ },
+ {
+  "id": "v6jcumc26q",
+  "title": "In the Fifth at Malory Towers",
+  "year": "1950",
+  "likely_edition": "Methuen hardback 1950 (first edition), Stanley Lloyd",
+  "candidate_files": [
+   "cands/v6jcumc26q_ebs257_1950_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=257"
+  ],
+  "other_candidates": [
+   "cands/v6jcumc26q_ebs257_x1950_2.jpg"
+  ],
+  "current_cover": "https://covers.openlibrary.org/b/id/14596264-L.jpg",
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Current boards fine. Her series rule (Malory Towers painted Hodder for all 12) would give these old copies a modern cover; she needs to say which rule wins."
+ },
+ {
+  "id": "0bs67wgdcu",
+  "title": "Journal",
+  "year": "1951",
+  "likely_edition": "Secker & Warburg 1951, The Journals of André Gide vol. IV (Justin O'Brien)",
+  "candidate_files": [
+   "cands/0bs67wgdcu_abe_1.jpg",
+   "cands/0bs67wgdcu_abeA_5.jpg"
+  ],
+  "source_urls": [
+   "https://www.abebooks.co.uk/first-edition/Journals-Andr%C3%A9-Gide-Volume-IV-1939-1949/22513694170/bd",
+   "https://www.abebooks.co.uk/first-edition/journals-Andr%C3%A9-Gide-translated-French-annotated/31713396304/bd"
+  ],
+  "other_candidates": [
+   "cands/0bs67wgdcu_abeA_1.jpg",
+   "cands/0bs67wgdcu_abeA_2.jpg",
+   "cands/0bs67wgdcu_abeA_3.jpg",
+   "cands/0bs67wgdcu_abeA_4.jpg",
+   "cands/0bs67wgdcu_abeA_6.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "medium",
+  "note": "Check which volume she has."
+ },
+ {
+  "id": "8u1tnmtohq",
+  "title": "Just William",
+  "year": "1924",
+  "likely_edition": "George Newnes 1924 (9th impression), red cloth",
+  "candidate_files": [
+   "cands/8u1tnmtohq_abeA_2.jpg"
+  ],
+  "source_urls": [
+   "https://www.abebooks.co.uk/first-edition/William-Crompton-Richmal-London-Newnes-1922/31989564086/bd"
+  ],
+  "other_candidates": [
+   "cands/8u1tnmtohq_abe_1.jpg",
+   "cands/8u1tnmtohq_abeA_1.jpg",
+   "cands/8u1tnmtohq_abeA_3.jpg",
+   "cands/8u1tnmtohq_abeA_4.jpg",
+   "cands/8u1tnmtohq_abeA_5.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "low",
+  "note": "Jackets of this date are very rare; only cloth photos found."
+ },
+ {
+  "id": "g3fxkyrbt4",
+  "title": "Look Out Secret Seven",
+  "year": "1967",
+  "likely_edition": "Brockhampton Press hardback (1962 design), Burgess Sharrocks",
+  "candidate_files": [
+   "cands/g3fxkyrbt4_ebs285_1962_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=285"
+  ],
+  "other_candidates": [
+   "cands/g3fxkyrbt4_ebs285_x1962_2.jpg",
+   "cands/g3fxkyrbt4_ebs285_x1962_3.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "id": "v6wfrst26q",
+  "title": "Philips' Universal Atlas",
+  "year": null,
+  "likely_edition": "George Philip & Son; no year on record",
+  "candidate_files": [],
+  "source_urls": [],
+  "other_candidates": [],
+  "current_cover": "https://covers.openlibrary.org/b/id/13082349-L.jpg",
+  "current_looks_wrong": false,
+  "confidence": "low",
+  "note": "Current is black cloth from the period; fine."
+ },
+ {
+  "id": "28iex5gtqt",
+  "title": "Practical Railway Working",
+  "year": "1915",
+  "likely_edition": "Unknown 1915 railway manual",
+  "candidate_files": [],
+  "source_urls": [],
+  "other_candidates": [
+   "cands/28iex5gtqt_abeA_1.jpg",
+   "cands/28iex5gtqt_abeA_2.jpg",
+   "cands/28iex5gtqt_abeA_3.jpg",
+   "cands/28iex5gtqt_abeA_4.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "low",
+  "note": "Nothing matching found; keep title card. Has no cover entry and isn't in no-cover.json."
+ },
+ {
+  "id": "ogh4anm0an",
+  "title": "Second Form at Malory Towers",
+  "year": "1950",
+  "likely_edition": "Methuen hardback (first edition 1947 design), Stanley Lloyd",
+  "candidate_files": [
+   "cands/ogh4anm0an_ebs254_1947_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=254"
+  ],
+  "other_candidates": [
+   "cands/ogh4anm0an_ebs254_x1947_2.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Her series rule (Malory Towers painted Hodder for all 12) would give these old copies a modern cover; she needs to say which rule wins."
+ },
+ {
+  "id": "4x81ll9kbx",
+  "title": "Secret Seven Fireworks",
+  "year": "1965",
+  "likely_edition": "Brockhampton Press hardback (1959 design), Burgess Sharrocks",
+  "candidate_files": [
+   "cands/4x81ll9kbx_ebs282_1959_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=282"
+  ],
+  "other_candidates": [
+   "cands/4x81ll9kbx_ebs282_x1959_2.jpg",
+   "cands/4x81ll9kbx_ebs282_x1959_3.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "id": "6dlpm4y8dt",
+  "title": "Summer Term at St Clare's",
+  "year": "1950",
+  "likely_edition": "Methuen hardback, 1947 redesign, W. Lindsay Cable",
+  "candidate_files": [
+   "cands/6dlpm4y8dt_ebs301_1947_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=301"
+  ],
+  "other_candidates": [
+   "cands/6dlpm4y8dt_ebs301_1943_2.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "id": "ogz9lt80an",
+  "title": "Sunday Times Travel and Holiday Guide",
+  "year": "1951",
+  "likely_edition": "The Sunday Times 1951, British Isles edition",
+  "candidate_files": [
+   "cands/ogz9lt80an_abe_2.jpg"
+  ],
+  "source_urls": [
+   "https://www.abebooks.co.uk/Sunday-Times-Travel-Holiday-Guide-British/32500661883/bd"
+  ],
+  "other_candidates": [
+   "cands/ogz9lt80an_abe_1.jpg",
+   "cands/ogz9lt80an_abe_3.jpg",
+   "cands/ogz9lt80an_abe_4.jpg"
+  ],
+  "current_cover": "https://m.media-amazon.com/images/I/51tKeTpblSL.jpg",
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Current is right; candidate is a cleaner flat scan."
+ },
+ {
+  "id": "umeoydkgnz",
+  "title": "Tales of Toyland",
+  "year": "1963",
+  "likely_edition": "Dean hardback 1963",
+  "candidate_files": [
+   "cands/umeoydkgnz_ebs362_1963_1.jpg",
+   "cands/umeoydkgnz_ebs2001_1963_4.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=362",
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=2001"
+  ],
+  "other_candidates": [
+   "cands/umeoydkgnz_ebs362_1944_2.jpg",
+   "cands/umeoydkgnz_ebs362_x1944_3.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "id": "wh3xgysisd",
+  "title": "The Adventures of Huckleberry Finn",
+  "year": "1940",
+  "likely_edition": "Unknown 1940 edition (UK publisher not recorded)",
+  "candidate_files": [],
+  "source_urls": [],
+  "other_candidates": [
+   "cands/wh3xgysisd_abe_1.jpg",
+   "cands/wh3xgysisd_abe_2.jpg",
+   "cands/wh3xgysisd_abe_3.jpg",
+   "cands/wh3xgysisd_abe_4.jpg",
+   "cands/wh3xgysisd_abeA_1.jpg",
+   "cands/wh3xgysisd_abeA_2.jpg",
+   "cands/wh3xgysisd_abeA_3.jpg",
+   "cands/wh3xgysisd_abeA_4.jpg",
+   "cands/wh3xgysisd_abeA_5.jpg",
+   "cands/wh3xgysisd_abeA_6.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "low",
+  "note": "Only US 1940 editions found (Heritage, McLoughlin, Whitman); keep title card."
+ },
+ {
+  "id": "jlcy5z6qlq",
+  "title": "The Common People",
+  "year": "1946",
+  "likely_edition": "Methuen 1946 (Cole & Postgate)",
+  "candidate_files": [],
+  "source_urls": [],
+  "other_candidates": [],
+  "current_cover": "https://covers.openlibrary.org/b/id/9316478-L.jpg",
+  "current_looks_wrong": false,
+  "confidence": "medium",
+  "note": "Current cloth from the period is fine."
+ },
+ {
+  "id": "tol5ji493y",
+  "title": "The Complete Oxford Shakespeare",
+  "year": "1987",
+  "likely_edition": "OUP / BCA 1987 one-volume hardback",
+  "candidate_files": [
+   "cands/tol5ji493y_abe_3.jpg",
+   "cands/tol5ji493y_abe_2.jpg"
+  ],
+  "source_urls": [
+   "https://www.abebooks.co.uk/Complete-Oxford-Shakespeare-Histories-Comedies-Tragedies/31448166316/bd",
+   "https://www.abebooks.co.uk/first-edition/WILLIAM-SHAKESPEARE-Complete-Works-Oxford-Stanley/30961883382/bd"
+  ],
+  "other_candidates": [
+   "cands/tol5ji493y_abe_1.jpg",
+   "cands/tol5ji493y_abe_4.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "medium",
+  "note": "1987 is its own edition, so a 1987 cover is allowed. Check one-volume vs three-volume."
+ },
+ {
+  "id": "6dh2aia8dt",
+  "title": "The Island of Adventure",
+  "year": "1944",
+  "likely_edition": "Macmillan hardback 1944 (first edition), Stuart Tresilian",
+  "candidate_files": [
+   "cands/6dh2aia8dt_ebs164_1944_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=164"
+  ],
+  "other_candidates": [
+   "cands/6dh2aia8dt_ebs164_x1944_2.jpg",
+   "cands/6dh2aia8dt_ebs164_x1944_3.jpg"
+  ],
+  "current_cover": "https://covers.openlibrary.org/b/id/14596605-L.jpg",
+  "current_looks_wrong": true,
+  "confidence": "medium",
+  "note": "Current looks like the later Thames reprint jacket (1958), not 1944."
+ },
+ {
+  "id": "281v2q4tqt",
+  "title": "The Model Railway Hobby",
+  "year": "1943",
+  "likely_edition": "Hammant & Morgan booklet, The Model Railway Hobby (electrification notes)",
+  "candidate_files": [
+   "cands/281v2q4tqt_abe_4.jpg"
+  ],
+  "source_urls": [
+   "https://www.abebooks.co.uk/Model-Railway-Hobby-Notes-Electrification-Layouts/31541750895/bd"
+  ],
+  "other_candidates": [
+   "cands/281v2q4tqt_abe_1.jpg",
+   "cands/281v2q4tqt_abe_2.jpg",
+   "cands/281v2q4tqt_abe_3.jpg",
+   "cands/281v2q4tqt_abeA_1.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "medium",
+  "note": "Only a photo of the booklet found. Has no cover entry and isn't in no-cover.json."
+ },
+ {
+  "id": "0bs64hqdcu",
+  "title": "The Mountain of Adventure",
+  "year": "1949",
+  "likely_edition": "Macmillan hardback 1949 (first edition), Stuart Tresilian",
+  "candidate_files": [
+   "cands/0bs64hqdcu_ebs168_1949_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=168"
+  ],
+  "other_candidates": [
+   "cands/0bs64hqdcu_ebs168_x1949_2.jpg",
+   "cands/0bs64hqdcu_ebs168_x1949_3.jpg"
+  ],
+  "current_cover": "https://covers.openlibrary.org/b/id/14605251-L.jpg",
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Current patterned boards may be her copy's boards; jacket offered."
+ },
+ {
+  "id": "28iec5ytqt",
+  "title": "The Mystery of the Invisible Thief",
+  "year": "1950",
+  "likely_edition": "Methuen hardback 1950 (first edition), Treyer Evans",
+  "candidate_files": [
+   "cands/28iec5ytqt_ebs225_1950_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=225"
+  ],
+  "other_candidates": [
+   "cands/28iec5ytqt_ebs225_x1950_2.jpg"
+  ],
+  "current_cover": "https://covers.openlibrary.org/b/id/14601427-L.jpg",
+  "current_looks_wrong": true,
+  "confidence": "high",
+  "note": "Current is the 1964 Armada paperback, not 1950."
+ },
+ {
+  "id": "7snw9i5hd6",
+  "title": "The Mystery of the Secret Room",
+  "year": "1952",
+  "likely_edition": "Methuen hardback, Joseph Abbey jacket (1950 reprint)",
+  "candidate_files": [
+   "cands/7snw9i5hd6_ebs220_1945_1.jpg",
+   "cands/7snw9i5hd6_ebs220_x1950_2.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=220",
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=220"
+  ],
+  "other_candidates": [],
+  "current_cover": "https://covers.openlibrary.org/b/id/14599593-L.jpg",
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Current boards fine."
+ },
+ {
+  "id": "xibke74jps",
+  "title": "The New School at Scawdale",
+  "year": "1940",
+  "likely_edition": "Blackie 1940",
+  "candidate_files": [],
+  "source_urls": [],
+  "other_candidates": [],
+  "current_cover": "https://pictures.abebooks.com/inventory/22680466828.jpg",
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Current Blackie jacket is right."
+ },
+ {
+  "id": "aktlqhipsz",
+  "title": "The O'Sullivan Twins",
+  "year": "1956",
+  "likely_edition": "Methuen hardback, 1945 redesign, W. Lindsay Cable",
+  "candidate_files": [
+   "cands/aktlqhipsz_ebs300_1945_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=300"
+  ],
+  "other_candidates": [
+   "cands/aktlqhipsz_ebs300_1942_2.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "id": "hfp82qm19k",
+  "title": "The Queer Adventure",
+  "year": null,
+  "likely_edition": "Staples Press 1952",
+  "candidate_files": [],
+  "source_urls": [],
+  "other_candidates": [
+   "cands/hfp82qm19k_ebs804_None_1.jpg"
+  ],
+  "current_cover": "https://pictures.abebooks.com/inventory/32322258945.jpg",
+  "current_looks_wrong": false,
+  "confidence": "medium",
+  "note": "Current jacket is the period one; the Society's picture is a different, later printing."
+ },
+ {
+  "id": "baejywscho",
+  "title": "The Second Form at St Clare's",
+  "year": "1945",
+  "likely_edition": "Methuen hardback, 1944 first edition design, W. Lindsay Cable",
+  "candidate_files": [
+   "cands/baejywscho_ebs302_1944_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=302"
+  ],
+  "other_candidates": [
+   "cands/baejywscho_ebs302_1947_2.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "id": "g3fxkkybt4",
+  "title": "The Secret Seven Win Through",
+  "year": null,
+  "likely_edition": "Brockhampton Press hardback (1955), Bruno Kay",
+  "candidate_files": [
+   "cands/g3fxkkybt4_ebs278_1955_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=278"
+  ],
+  "other_candidates": [
+   "cands/g3fxkkybt4_ebs278_1970_2.jpg",
+   "cands/g3fxkkybt4_ebs278_x1955_3.jpg",
+   "cands/g3fxkkybt4_ebs278_x1955_4.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "medium",
+  "note": "No year on record."
+ },
+ {
+  "id": "i1ajtfdlqm",
+  "title": "The Secret of Border Castle",
+  "year": null,
+  "likely_edition": "Blackie",
+  "candidate_files": [],
+  "source_urls": [],
+  "other_candidates": [],
+  "current_cover": "https://pictures.abebooks.com/inventory/30989621933.jpg",
+  "current_looks_wrong": false,
+  "confidence": "medium",
+  "note": "Current Blackie jacket is the period one."
+ },
+ {
+  "id": "lz39v8s7b9",
+  "title": "The Twins at St Clare's",
+  "year": "1943",
+  "likely_edition": "Methuen hardback, 1941 design, W. Lindsay Cable",
+  "candidate_files": [
+   "cands/lz39v8s7b9_ebs299_1941_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=299"
+  ],
+  "other_candidates": [
+   "cands/lz39v8s7b9_ebs299_1945_2.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "The 1945 redesign came later than her 1943 copy."
+ },
+ {
+  "id": "py8mlpkno7",
+  "title": "The Wishing Chair Again",
+  "year": "1963",
+  "likely_edition": "George Newnes hardback 1950, Hilda McGavin",
+  "candidate_files": [
+   "cands/py8mlpkno7_ebs320_1950_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=320"
+  ],
+  "other_candidates": [
+   "cands/py8mlpkno7_ebs320_x1950_2.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": ""
+ },
+ {
+  "id": "8u7n3pwohq",
+  "title": "Third Year at Malory Towers",
+  "year": "1954",
+  "likely_edition": "Methuen hardback (1948 design), Stanley Lloyd",
+  "candidate_files": [
+   "cands/8u7n3pwohq_ebs255_1948_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=255"
+  ],
+  "other_candidates": [
+   "cands/8u7n3pwohq_ebs255_1957_2.jpg",
+   "cands/8u7n3pwohq_ebs255_x1948_3.jpg",
+   "cands/8u7n3pwohq_ebs255_x1957_4.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "The 1957 redesign came later than her 1954 copy. Her series rule (Malory Towers painted Hodder for all 12) would give these old copies a modern cover; she needs to say which rule wins."
+ },
+ {
+  "id": "yq0shzbr71",
+  "title": "Upper Fourth at Malory Towers",
+  "year": "1952",
+  "likely_edition": "Methuen hardback (1949 design), Stanley Lloyd",
+  "candidate_files": [
+   "cands/yq0shzbr71_ebs256_1949_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=256"
+  ],
+  "other_candidates": [
+   "cands/yq0shzbr71_ebs256_x1949_2.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": "Her series rule (Malory Towers painted Hodder for all 12) would give these old copies a modern cover; she needs to say which rule wins."
+ },
+ {
+  "id": "dcf8ke4u84",
+  "title": "Well Done Secret Seven",
+  "year": "1951",
+  "likely_edition": "Brockhampton Press hardback 1951 (first edition), George Brook",
+  "candidate_files": [
+   "cands/dcf8ke4u84_ebs274_1951_1.jpg"
+  ],
+  "source_urls": [
+   "https://www.enidblytonsociety.co.uk/book-details.php?id=274"
+  ],
+  "other_candidates": [
+   "cands/dcf8ke4u84_ebs274_x1951_2.jpg",
+   "cands/dcf8ke4u84_ebs274_x1951_3.jpg"
+  ],
+  "current_cover": null,
+  "current_looks_wrong": false,
+  "confidence": "high",
+  "note": ""
+ }
+]

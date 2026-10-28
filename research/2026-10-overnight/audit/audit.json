@@ -1,0 +1,1646 @@
+{
+ "about": "Audit of HomeLibrary site/js/data.js (642 books, built 2026-10-18) against Open Library, 23 Oct 2026. Google Books could not be used: its anonymous daily quota was exhausted (HTTP 429). Open Library found 516 of 566 ISBNs. Every flag below was checked by hand; Open Library's own errors are listed separately so they aren't acted on.",
+ "isbn": {
+  "confirmedWrong": [],
+  "checkedFine_openLibraryWrong": [
+   {
+    "title": "Army Without Banners",
+    "isbn13": "9781912766789",
+    "note": "Open Library says 'Living Stone' (Handheld Press); a library catalogue (TUM) confirms this ISBN is Army Without Banners, Handheld Classics 36."
+   },
+   {
+    "title": "The Book of Beginnings",
+    "isbn13": "9780008612870",
+    "note": "Open Library says 'Meeting Point'; booksellers confirm The Book of Beginnings, HarperCollins 2023."
+   },
+   {
+    "title": "DK Eyewitness Top 10 Delhi",
+    "isbn13": "9781405370578",
+    "note": "Same book (Top 10 Delhi); only the title wording differs."
+   }
+  ],
+  "worthACheck": [
+   {
+    "id": "7fvjuvkhd6",
+    "title": "Paper Towns",
+    "isbn13": "9781101010938",
+    "note": "978-1-101 is a Penguin US ebook range and the date (2008-10-16) is the US ebook's; not found on Open Library. If she owns a paperback, the ISBN is probably wrong."
+   },
+   {
+    "id": "ls5xdul7b9",
+    "title": "Fantastic Beasts and Where to Find Them: The Original Screenplay",
+    "isbn13": "9781781109601",
+    "note": "This is the Pottermore ebook ISBN (Libib's description says 'ebook edition'). A printed copy will have a Little, Brown/Sphere ISBN (UK hardback probably 9781408708989)."
+   },
+   {
+    "id": "add0011",
+    "title": "Becoming",
+    "isbn13": "9780241983003",
+    "note": "Added by hand; not found on Open Library or by web search. Check against the book."
+   },
+   {
+    "id": "5601pbmv9x",
+    "title": "The Magician's Apprentice",
+    "isbn13": "9780316151337",
+    "note": "Valid Little, Brown number but no record found anywhere; her other Canavans are UK Orbit (978-1-841...)."
+   },
+   {
+    "note": "Not on Open Library but plausible (small presses, self-published, new): 46 others, listed in notFound in this file."
+   }
+  ]
+ },
+ "authors": {
+  "fix": [
+   {
+    "id": "kql359aysl",
+    "title": "The Catcher in the Rye",
+    "now": "J. Salinger",
+    "should": "J. D. Salinger"
+   },
+   {
+    "id": "28iex5gtqt",
+    "title": "Practical Railway Working",
+    "now": "David R. Lab",
+    "should": "David R. Lamb"
+   },
+   {
+    "id": "0catqhedcu",
+    "title": "The Flying Sorcerers",
+    "now": "Sir Arthur C. Clarke CBE",
+    "should": "Arthur C. Clarke",
+    "note": "Also: an anthology edited by Peter Haining; Pratchett, Dahl and Clarke are contributors. Haining isn't listed."
+   },
+   {
+    "id": "u3n6icfgnz",
+    "title": "Invasion Day Series",
+    "now": "L. M. Morgan + L. C. Morgans",
+    "should": "one name (Open Library has L. C. Morgans; check the cover)"
+   },
+   {
+    "title": "New Term, Summer Term, Winter Term, Secrets, Fun and Games at Malory Towers; Goodbye, Malory Towers; Kitty at St Clare's",
+    "now": "Enid Blyton",
+    "should": "Pamela Cox (with Enid Blyton)",
+    "note": "These seven are Pamela Cox's continuations (Open Library: Winter Term = Pamela Cox). Her Third Form and Sixth Form at St Clare's already list Cox + Blyton, so these are inconsistent."
+   }
+  ],
+  "variants": [
+   {
+    "title": "The Power That Preserves",
+    "now": "Stephen Donaldson",
+    "usual": "Stephen R. Donaldson"
+   },
+   {
+    "title": "Big Java",
+    "now": "Cay Horstmann",
+    "usual": "Cay S. Horstmann"
+   },
+   {
+    "title": "Travel guides",
+    "now": "'DK Eyewitness' on two, 'Dorling Kindersley' on three",
+    "usual": "pick one"
+   },
+   {
+    "title": "The Diary of a Bookseller",
+    "now": "Shaun Bythell",
+    "note": "Correct; Open Library's 'Sean' is wrong."
+   },
+   {
+    "title": "Last Chance Bay",
+    "now": "Anne Laurel Carter",
+    "note": "Correct; Open Library shortens it."
+   }
+  ],
+  "rolesWrong": [
+   {
+    "id": "um2i2n7gnz",
+    "title": "Invisible Cities",
+    "name": "William Weaver",
+    "is": "Translator (listed as a co-author)"
+   },
+   {
+    "id": "to2ynr193y",
+    "title": "Wild Boar",
+    "name": "Andy Turner",
+    "is": "Translator from Swedish (listed as a co-author)"
+   },
+   {
+    "title": "The Curse of the Gloamglozer; The Last of the Sky Pirates",
+    "name": "Chris Riddell",
+    "is": "Illustrator (co-creator). On Gloamglozer he is listed first, so the book files under Riddell, not Stewart."
+   },
+   {
+    "title": "Book Two / Book Three of the Travelers",
+    "name": "Walter Sorrells listed first",
+    "is": "Fine (he wrote them) but they file under Sorrells while Book One files under MacHale; her call."
+   },
+   {
+    "title": "Welcome to the Hyunam-Dong Bookshop",
+    "name": "Shanna Tan",
+    "is": "Translator, already listed with role; fine"
+   }
+  ],
+  "checkedFine": "Veronica Mars (Rob Thomas and Jennifer Graham co-wrote them), Discworld companions (Stephen Briggs co-author), Science of Discworld (Ian Stewart and Jack Cohen co-authors), Cursed Child (John Tiffany co-credited for the story), Never Lie (Open Library edition wrongly says B. A. Paris)."
+ },
+ "shelves": [
+  {
+   "id": "ob32x9l0an",
+   "title": "Madame Bovary",
+   "shelf": "Children's",
+   "suggest": "Adult Fiction (or Old Book Collection if it's an old copy)",
+   "why": "Adult literary classic."
+  },
+  {
+   "id": "ls5xdzm7b9",
+   "title": "Theodore Boone (John Grisham)",
+   "shelf": "Science Fiction",
+   "suggest": "Children's",
+   "why": "Children's legal mystery; no science fiction."
+  },
+  {
+   "title": "Foundation (Asimov)",
+   "shelf": "Fantasy",
+   "suggest": "Science Fiction",
+   "why": "Classic science fiction."
+  },
+  {
+   "title": "The Restaurant at the End of the Universe (Adams)",
+   "shelf": "Fantasy",
+   "suggest": "Science Fiction",
+   "why": "Science fiction comedy (Hitchhiker's 2)."
+  },
+  {
+   "title": "Incompetence (Rob Grant)",
+   "shelf": "Fantasy",
+   "suggest": "Science Fiction",
+   "why": "Gollancz SF; subjects: science fiction, humour."
+  },
+  {
+   "title": "The Supernaturalist (Eoin Colfer)",
+   "shelf": "Fantasy",
+   "suggest": "Science Fiction",
+   "why": "Futuristic city, sci-fi."
+  },
+  {
+   "title": "Only You Can Save Mankind (Pratchett)",
+   "shelf": "Fantasy",
+   "suggest": "Science Fiction or Children's",
+   "why": "Space-game story, not Discworld; may be fine kept with Pratchett."
+  },
+  {
+   "title": "The Diary of a Bookseller; Seven Kinds of People You Find in Bookshops (Bythell)",
+   "shelf": "Adult Fiction",
+   "suggest": "Non-Fiction",
+   "why": "Memoir."
+  },
+  {
+   "title": "How Kyoto Breaks Your Heart (Florentyna Leow)",
+   "shelf": "Adult Fiction",
+   "suggest": "Non-Fiction or Travel",
+   "why": "Memoir of life in Kyoto."
+  },
+  {
+   "title": "Tiny Moons (Nina Mingya Powles)",
+   "shelf": "Adult Fiction",
+   "suggest": "Non-Fiction",
+   "why": "Essays about food (its own blurb)."
+  },
+  {
+   "title": "Positively Birmingham 2015",
+   "shelf": "Adult Fiction",
+   "suggest": "Non-Fiction (or Travel)",
+   "why": "Photographs and local history."
+  },
+  {
+   "title": "Lonely Planet Best in Travel 2026",
+   "shelf": "Non-Fiction",
+   "suggest": "Travel",
+   "why": "Travel guide; her other Lonely Planet is on Travel."
+  },
+  {
+   "title": "Ballet Shoes, White Boots (Streatfeild); Holes; The Worry Website",
+   "shelf": "Young Adult",
+   "suggest": "Children's",
+   "why": "Children's/middle-grade books (White Boots' own blurb says 'a children's book'). Lower priority."
+  },
+  {
+   "title": "Airman, Half-Moon Investigations (Colfer); The Zombie Survival Guide",
+   "shelf": "Fantasy",
+   "suggest": "leave or her call",
+   "why": "Not fantasy (adventure, detective, humour), but kept with the author/genre feel; lowest priority."
+  }
+ ],
+ "duplicates": {
+  "newFinds": [
+   {
+    "title": "The Tales of Beedle the Bard",
+    "copies": [
+     "Collector's Edition 9780956010902",
+     "standard 9780747599876"
+    ],
+    "note": "Two editions of the same book (probably on purpose, like the Harry Potter editions)."
+   },
+   {
+    "title": "Fantastic Beasts and Where to Find Them",
+    "copies": [
+     "Comic Relief 2001 9780747554660",
+     "Illustrated Edition 2017 9781408885260"
+    ],
+    "note": "Same work, two editions. (The Screenplay is a different work.)"
+   },
+   {
+    "title": "Enid Blyton old + new copies beyond St Clare's/Malory Towers",
+    "copies": [
+     "Famous Five: 13 titles (1, 2, 3, 4, 5, 8, 9, 10, 13, 15, 16, 17, 20) on both Children's and Old Book Collection",
+     "Secret Seven: 7 titles (3, 5, 7, 11, 12, 14, 15)",
+     "Adventure series: Island and Mountain of Adventure"
+    ],
+    "note": "Same old + new pattern as the known ones; listed in case only St Clare's/Malory Towers were meant."
+   }
+  ],
+  "none": "No ISBN appears twice. No other same-work pairs found."
+ },
+ "years": [
+  {
+   "title": "The Saga of Darren Shan 4–12 (nine books)",
+   "libib": "all 2009-02-05",
+   "note": "The ISBNs are the 2001–2004 first paperbacks; 2009-02-05 is a reissue date. Fine if her copies are the 2009 covers."
+  },
+  {
+   "title": "Foundation",
+   "libib": "1994",
+   "note": "ISBN 0586010807 is the Panther/Grafton paperback (Open Library 1968); 1994 is probably a reprint."
+  },
+  {
+   "title": "The Colour of Magic",
+   "libib": "1985",
+   "note": "Corgi paperback first 1985; Open Library's copy is 1990. Probably fine."
+  },
+  {
+   "title": "Secret Seven Centenary Editions",
+   "libib": "1996",
+   "note": "Fine: Hodder issued them 1996–97 for the 1997 centenary (Open Library's 'first published' dates for these are wrong)."
+  },
+  {
+   "title": "Old Book Collection dates ending -01-01",
+   "libib": "e.g. Claudine at St Clare's 1944, The Twins at St Clare's 1943",
+   "note": "All on or after the first edition; look like her own estimates. Nothing wrong found."
+  },
+  {
+   "title": "No date at all",
+   "libib": "71 books",
+   "note": "Listed in noDate."
+  }
+ ],
+ "noDate": [
+  "Cloud Atlas",
+  "If on a Winter's Night a Traveller",
+  "Something From Tiffanys",
+  "The Forgotten Garden",
+  "Abhorsen (The Abhorsen Trilogy)",
+  "Artemis Fowl: The Eternity Code",
+  "Birth of a Killer",
+  "Demon Apocalypse",
+  "Eric",
+  "Harry Potter and the Chamber of Secrets",
+  "Harry Potter and the Deathly Hallows",
+  "Harry Potter and the Goblet of Fire",
+  "Interesting Times",
+  "Jingo",
+  "Last of the Wilds",
+  "Lords And Ladies",
+  "Monstrous Regiment (Discworld)",
+  "Mort",
+  "Moving Pictures",
+  "Pyramids",
+  "Reaper Man",
+  "Small Gods",
+  "Sourcery (original paperback)",
+  "The Amazing Maurice and His Educated Rodents",
+  "The Light Fantastic",
+  "The Quest for Qieta",
+  "The Scent of Magic - Book 2 of the Doomspell Trilogy",
+  "The Subtle Knife",
+  "The Truth",
+  "Unseen Academicals",
+  "Witches Abroad",
+  "Ark Angel",
+  "Ballet Shoes",
+  "If I Stay",
+  "Love Lessons",
+  "Scorpia",
+  "Worry Website",
+  "First Term At Malory Towers",
+  "Goodbye, Malory Towers",
+  "Kitty at St. Clare's",
+  "Last Term At Malory Towers",
+  "The Wonderful Pigs of Jillian Jiggs",
+  "Third Year At Malory Towers",
+  "Upper Fourth At Malory Towers",
+  "A Madcap",
+  "A Tale of Two Cities",
+  "A World of Girls",
+  "Andersen's Fairy Tales",
+  "Black Beauty",
+  "Five Go Off in a Caravan",
+  "Go Ahead Secret Seven",
+  "Philips' Universal Atlas",
+  "The Queer Adventure",
+  "The Secret of Border Castle",
+  "The Secret Seven Win Through",
+  "How to Do Just About Everything",
+  "Notes from a Small Island",
+  "A Degree of Love",
+  "All the Lonely People",
+  "An Anthology of New Feminist Translations",
+  "Dengue Boy",
+  "The Midnight Train",
+  "Dimension Quest",
+  "Guardian Quest",
+  "Rebellion Quest",
+  "The Callista Ascendancy",
+  "Becoming",
+  "Unseen: How I Lost My Vision But Found My Voice",
+  "In the Lives of Puppets (Illumicrate Edition)",
+  "Somewhere Beyond the Sea (Illumicrate Edition)",
+  "Under the Whispering Door (Illumicrate Edition)"
+ ],
+ "notFound": [
+  {
+   "id": "j7z4907qlq",
+   "title": "A Story for Every Day of Autumn",
+   "isbn13": "9798852873545"
+  },
+  {
+   "id": "ls5x0b17b9",
+   "title": "A Story for Every Day of Spring",
+   "isbn13": "9798883050359"
+  },
+  {
+   "id": "cny07f0mmk",
+   "title": "A Story for Every Day of Summer",
+   "isbn13": "9798387153044"
+  },
+  {
+   "id": "bpkol7lcho",
+   "title": "A Story for Every Day of Winter",
+   "isbn13": "9798865664222"
+  },
+  {
+   "id": "6uc5yjn8dt",
+   "title": "DallerGut Dream Department Store",
+   "isbn13": "9781035412761"
+  },
+  {
+   "id": "w1fy806isd",
+   "title": "Hope Street",
+   "isbn13": "9781399724494"
+  },
+  {
+   "id": "4jimetokbx",
+   "title": "Intermezzo",
+   "isbn13": "9780571365487"
+  },
+  {
+   "id": "6ubmkf08dt",
+   "title": "Labours of Love",
+   "isbn13": "9781399980197"
+  },
+  {
+   "id": "ga48ihxbt4",
+   "title": "On the Greenwich Line",
+   "isbn13": "9781908670953"
+  },
+  {
+   "id": "u3n6w73gnz",
+   "title": "Witness",
+   "isbn13": "9783951967301"
+  },
+  {
+   "id": "og58oif0an",
+   "title": "Age of Shadows (Song of Echoes)",
+   "isbn13": "9781838399528"
+  },
+  {
+   "id": "0b6bjrgdcu",
+   "title": "Crown of Sorrows (Legacy of the Stones)",
+   "isbn13": "9781838399542"
+  },
+  {
+   "id": "6uc5r4b8dt",
+   "title": "Demon Lupus: The Beyond Series Book 2: Bk. 2",
+   "isbn13": "9781425158620"
+  },
+  {
+   "id": "ls5xdul7b9",
+   "title": "Fantastic Beasts and Where to Find Them: The Original Screenplay",
+   "isbn13": "9781781109601"
+  },
+  {
+   "id": "cny0h72mmk",
+   "title": "Hunt Quest: Book 8 In The Quest Series",
+   "isbn13": "9781440128035"
+  },
+  {
+   "id": "xl1n9t9jps",
+   "title": "Land Quest: Book 5 in the Quest Series: 05 (Quest (iUniverse Paperback))",
+   "isbn13": "9780595497225"
+  },
+  {
+   "id": "2odgpvctqt",
+   "title": "Memories of the Kurai (The Quest for Qieta)",
+   "isbn13": "9781739529710"
+  },
+  {
+   "id": "rw4w2vqxoz",
+   "title": "Realm of Mortals (Legacy of the Stones)",
+   "isbn13": "9781838399559"
+  },
+  {
+   "id": "i1j1o6glqm",
+   "title": "Sea of Souls (Legacy of the Stones)",
+   "isbn13": "9781838399535"
+  },
+  {
+   "id": "m4rd1h531h",
+   "title": "Seer Quest: Book 7 in the Quest Series",
+   "isbn13": "9781440104145"
+  },
+  {
+   "id": "qhsk8t5we4",
+   "title": "Stories from The Shetland Witch: In Achaea & Mrs Sinclair and the Feather Haa",
+   "isbn13": "9781068696824"
+  },
+  {
+   "id": "kql3v5gysl",
+   "title": "Storm Quest: Book 9 in the Quest Series",
+   "isbn13": "9781440187186"
+  },
+  {
+   "id": "8gc3y8xohq",
+   "title": "The Dream Maker",
+   "isbn13": "9781068760303"
+  },
+  {
+   "id": "5601pbmv9x",
+   "title": "The Magician's Apprentice",
+   "isbn13": "9780316151337"
+  },
+  {
+   "id": "qhzf6i9we4",
+   "title": "The Quest for Qieta",
+   "isbn13": "9781739529703"
+  },
+  {
+   "id": "gankwdnbt4",
+   "title": "The Rowan Five and The Whispers of Ashwyke: 1",
+   "isbn13": "9781918483185"
+  },
+  {
+   "id": "2ous4agtqt",
+   "title": "The Shetland Witch: Or, Atropos Wants Her Shears Back",
+   "isbn13": "9781068696800"
+  },
+  {
+   "id": "rihpt28xoz",
+   "title": "Wizard Quest: Book 6 in the Quest Series",
+   "isbn13": "9780595530021"
+  },
+  {
+   "id": "9dbeyox6rp",
+   "title": "The Callista Alignment",
+   "isbn13": "9781838217723"
+  },
+  {
+   "id": "qhsk6jrwe4",
+   "title": "Bringing Down the Flowers: ONE (A Spellbinding Dystopian Mystery (the Hedge Witch Series Book 1))",
+   "isbn13": "9781068300929"
+  },
+  {
+   "id": "4jxoalbkbx",
+   "title": "The Parsley Bed",
+   "isbn13": "9781068300943"
+  },
+  {
+   "id": "3kxuzxvarj",
+   "title": "I Was Born for This",
+   "isbn13": "9781338830958"
+  },
+  {
+   "id": "7fvjuvkhd6",
+   "title": "Paper Towns",
+   "isbn13": "9781101010938"
+  },
+  {
+   "id": "8gmvre5ohq",
+   "title": "Alice's Adventures Under Ground",
+   "isbn13": "9789635277940"
+  },
+  {
+   "id": "t0ubnhx93y",
+   "title": "Brambly Hedge Spring Story",
+   "isbn13": "9780583333245"
+  },
+  {
+   "id": "e980mwz5u2",
+   "title": "Brambly Hedge Winter Story",
+   "isbn13": "9780583333238"
+  },
+  {
+   "id": "bpkol0ocho",
+   "title": "Famous Five 17: Five Get Into A Fix",
+   "isbn13": "9780340704271"
+  },
+  {
+   "id": "j7z49k6qlq",
+   "title": "Famous Five 18: Five On Finniston Farm",
+   "isbn13": "9780340704288"
+  },
+  {
+   "id": "5601a1fv9x",
+   "title": "Secret Seven: 15: Fun For The Secret Seven (The Secret Seven Centenary Editions)",
+   "isbn13": "9780340681053"
+  },
+  {
+   "id": "hevtdyp19k",
+   "title": "Summer Story (Brambly Hedge)",
+   "isbn13": "9780583333269"
+  },
+  {
+   "id": "kql35p7ysl",
+   "title": "Summer Term at Trebizon",
+   "isbn13": "9780246114228"
+  },
+  {
+   "id": "8gmvxddohq",
+   "title": "Dear Mr. Potter: Letters of Love, Loss and Magic",
+   "isbn13": "9780615479316"
+  },
+  {
+   "id": "v8dznt726q",
+   "title": "Leading Gracefully: A Women's Guide to Confident, Authentic & Effective Leadership",
+   "isbn13": "9780996984409"
+  },
+  {
+   "id": "f2fjo5ve5y",
+   "title": "Lonely Planet Best in Travel 2026",
+   "isbn13": "9781837587667"
+  },
+  {
+   "id": "ob32jbe0an",
+   "title": "Interrail Ramblings",
+   "isbn13": "9798329799651"
+  },
+  {
+   "id": "f2qfddie5y",
+   "title": "The Most Beautiful Stories of Beatrix Potter",
+   "isbn13": "9789898939630"
+  },
+  {
+   "id": "add0005",
+   "title": "The Midnight Train",
+   "isbn13": "9781837262137"
+  },
+  {
+   "id": "add0010",
+   "title": "The Callista Ascendancy",
+   "isbn13": "9781838217730"
+  },
+  {
+   "id": "add0011",
+   "title": "Becoming",
+   "isbn13": "9780241983003"
+  },
+  {
+   "id": "add0012",
+   "title": "Unseen: How I Lost My Vision But Found My Voice",
+   "isbn13": "9798899731945"
+  }
+ ],
+ "openLibraryAutoFlags": {
+  "authors": [
+   {
+    "id": "bpkolz1cho",
+    "title": "Beautiful World, Where Are You",
+    "libib": "Sally Rooney",
+    "openLibrary": "ROONEY S",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "qhsk608we4",
+    "title": "How Kyoto Breaks Your Heart",
+    "libib": "Florentyna Leow",
+    "openLibrary": "LEOW",
+    "all": [
+     "LEOW"
+    ],
+    "src": "ol-isbn"
+   },
+   {
+    "id": "um2i2n7gnz",
+    "title": "Invisible Cities",
+    "libib": "William Weaver",
+    "openLibrary": "Italo Calvino",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "cny07h9mmk",
+    "title": "Last Chance Bay",
+    "libib": "Anne Laurel Carter",
+    "openLibrary": "Anne Carter",
+    "all": [
+     "Anne Carter"
+    ],
+    "src": "ol-isbn"
+   },
+   {
+    "id": "28h0zajtqt",
+    "title": "Mythos: A Retelling of the Myths of Ancient Greece",
+    "libib": "Stephen Fry",
+    "openLibrary": "S. Fry",
+    "all": [
+     "S. Fry"
+    ],
+    "src": "ol-isbn"
+   },
+   {
+    "id": "kql35t3ysl",
+    "title": "Never Lie",
+    "libib": "Freida McFadden",
+    "openLibrary": "B.A. Paris",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "v654ap926q",
+    "title": "Orbital",
+    "libib": "Samantha Harvey",
+    "openLibrary": "Samantha Harvey - undifferentiated",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "kql359aysl",
+    "title": "The Catcher in the Rye",
+    "libib": "J. Salinger",
+    "openLibrary": "J. D. Salinger",
+    "all": [
+     "J. D. Salinger",
+     "Shao jia yun"
+    ],
+    "src": "ol-isbn"
+   },
+   {
+    "id": "9dbekwo6rp",
+    "title": "The Diary of a Bookseller",
+    "libib": "Shaun Bythell",
+    "openLibrary": "Sean Bythell",
+    "all": [
+     "Sean Bythell"
+    ],
+    "src": "ol-isbn"
+   },
+   {
+    "id": "3kxu1emarj",
+    "title": "The Island of Missing Trees",
+    "libib": "Elif Shafak",
+    "openLibrary": "Elif Şafak",
+    "all": [
+     "Elif Şafak"
+    ],
+    "src": "ol-isbn"
+   },
+   {
+    "id": "ak0ruzspsz",
+    "title": "The Thousand Autumns of Jacob de Zoet",
+    "libib": "David Mitchell",
+    "openLibrary": "David Mitchell - undifferentiated",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "2ousnx4tqt",
+    "title": "Veronica Mars (2): An Original Mystery by Rob Thomas: Mr. Kiss and Tell",
+    "libib": "Jennifer Graham",
+    "openLibrary": "Rob Thomas",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "w1fy8g0isd",
+    "title": "Veronica Mars: The Thousand-Dollar Tan Line",
+    "libib": "Jennifer Graham",
+    "openLibrary": "Rob Thomas",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "rihp2t0xoz",
+    "title": "Welcome to the Hyunam-Dong Bookshop",
+    "libib": "Hwang Bo-reum",
+    "openLibrary": "황보름 / Shanna Tan",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "to2ynr193y",
+    "title": "Wild Boar (The Emma Press Novels)",
+    "libib": "Hannah Lutz",
+    "openLibrary": "Hannah Lutz; Andy Turner",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "to2ynr193y",
+    "title": "Wild Boar (The Emma Press Novels)",
+    "libib": "Andy Turner",
+    "openLibrary": "Hannah Lutz; Andy Turner",
+    "all": [
+     "Hannah Lutz; Andy Turner"
+    ],
+    "src": "ol-isbn"
+   },
+   {
+    "id": "e9ohap85u2",
+    "title": "Blood Beast (The Demonata, Book 5)",
+    "libib": "Darren Shan",
+    "openLibrary": "Shan",
+    "all": [
+     "Shan"
+    ],
+    "src": "ol-isbn"
+   },
+   {
+    "id": "dmp9wjnu84",
+    "title": "Book One of the Travelers",
+    "libib": "Carla Jablonski",
+    "openLibrary": "D. J. MacHale",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "e9ohaxb5u2",
+    "title": "Book Three of the Travelers: Volume 3 (Pendragon: Before the War)",
+    "libib": "Walter Sorrells",
+    "openLibrary": "D. J. MacHale",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "ob32j1n0an",
+    "title": "Book Two of the Travelers: Volume 2 (Pendragon: Before the War)",
+    "libib": "D. J. MacHale",
+    "openLibrary": "Walter Sorrells",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "izer00hlqm",
+    "title": "Charm Quest: Book 4 in the Quest Series: 04 (Quest (iUniverse Paperback))",
+    "libib": "Lisa Wright DeGroodt",
+    "openLibrary": "Lisa DeGroodt",
+    "all": [
+     "Lisa DeGroodt"
+    ],
+    "src": "ol-isbn"
+   },
+   {
+    "id": "6uc5r7r8dt",
+    "title": "Edge Chronicles 7: The Last of the Sky Pirates",
+    "libib": "Paul Stewart",
+    "openLibrary": "Stewart, Paul",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "6uc5r7r8dt",
+    "title": "Edge Chronicles 7: The Last of the Sky Pirates",
+    "libib": "Chris Riddell",
+    "openLibrary": "Stewart, Paul",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "6uc5rly8dt",
+    "title": "Harry Potter - A History of Magic: The Book of the Exhibition",
+    "libib": "J. K. Rowling",
+    "openLibrary": "British Library",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "3kxuzv3arj",
+    "title": "Harry Potter and the Cursed Child: The Official Script Book of the Original West End Production Special Rehearsal Edition (Harry Potter (Hardcover))",
+    "libib": "John Tiffany",
+    "openLibrary": "J. K. Rowling / Jack Thorne",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "6uc5rk48dt",
+    "title": "The Adventure Zone: the Crystal Kingdom",
+    "libib": "Justin McElroy",
+    "openLibrary": "Clint McElroy",
+    "all": [
+     "Clint McElroy",
+     "Carey Pietsch",
+     "Carey Pietsch",
+     "Griffin McElroy",
+     "Travis McElroy"
+    ],
+    "src": "ol-isbn"
+   },
+   {
+    "id": "ft873rce5y",
+    "title": "The Curse Of The Gloamglozer: The Edge Chronicles",
+    "libib": "Chris Riddell",
+    "openLibrary": "Stewart, Paul",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "ft873rce5y",
+    "title": "The Curse Of The Gloamglozer: The Edge Chronicles",
+    "libib": "Paul Stewart",
+    "openLibrary": "Stewart, Paul",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "ga48lsqbt4",
+    "title": "The Discworld Mapp",
+    "libib": "Stephen Briggs",
+    "openLibrary": "Terry Pratchett",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "0catqhedcu",
+    "title": "The Flying Sorcerers: More Comic Tales of Fantasy",
+    "libib": "Roald Dahl",
+    "openLibrary": "Terry Pratchett",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "0catqhedcu",
+    "title": "The Flying Sorcerers: More Comic Tales of Fantasy",
+    "libib": "Sir Arthur C. Clarke CBE",
+    "openLibrary": "Terry Pratchett",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "izer0celqm",
+    "title": "The New Discworld Companion (GOLLANCZ S.F.)",
+    "libib": "Stephen Briggs",
+    "openLibrary": "Terry Pratchett",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "28vkpx3tqt",
+    "title": "The Power That Preserves (Voyager Classics)",
+    "libib": "Stephen Donaldson",
+    "openLibrary": "Stephen R. Donaldson",
+    "all": [
+     "Stephen R. Donaldson"
+    ],
+    "src": "ol-isbn"
+   },
+   {
+    "id": "ls5xdmz7b9",
+    "title": "The Science Of Discworld Revised Edition (Science of Discworld 1)",
+    "libib": "Ian Stewart",
+    "openLibrary": "Terry Pratchett",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "ls5xdmz7b9",
+    "title": "The Science Of Discworld Revised Edition (Science of Discworld 1)",
+    "libib": "Jack Cohen",
+    "openLibrary": "Terry Pratchett",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "ob32j7a0an",
+    "title": "The Wit And Wisdom Of Discworld",
+    "libib": "Stephen Briggs",
+    "openLibrary": "Terry Pratchett",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "6uc5rik8dt",
+    "title": "The Streets of Ankh-Morpork",
+    "libib": "Stephen Briggs",
+    "openLibrary": "Briggs, Stephen.",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "u3n6icfgnz",
+    "title": "Invasion Day Series",
+    "libib": "L. M. Morgan",
+    "openLibrary": "L. C. Morgans",
+    "all": [
+     "L. C. Morgans"
+    ],
+    "src": "ol-isbn"
+   },
+   {
+    "id": "v8dznde26q",
+    "title": "Carry On",
+    "libib": "Rainbow Rowell",
+    "openLibrary": "2014 Jan 01",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "u3n6ip2gnz",
+    "title": "The Last Little Blue Envelope (13 Little Blue Envelopes)",
+    "libib": "Maureen Johnson",
+    "openLibrary": "Maureen Johnson - undifferentiated",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "u3n6wo7gnz",
+    "title": "Into the Fourth at Trebizon",
+    "libib": "Anne Digby",
+    "openLibrary": "Digby, Anne.",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "9dbekvn6rp",
+    "title": "More Trouble at Trebizon",
+    "libib": "Anne Digby",
+    "openLibrary": "Digby, Anne.",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "t0gf45c93y",
+    "title": "Second Term at Trebizon",
+    "libib": "Anne Digby",
+    "openLibrary": "Digby, Anne.",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "6ubmksc8dt",
+    "title": "Teddy Bear's Picnic",
+    "libib": "Jimmy Kennedy",
+    "openLibrary": "Not Stated",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "kql35mwysl",
+    "title": "Winter Term At Malory Towers",
+    "libib": "Enid Blyton",
+    "openLibrary": "Pamela Cox",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "6dh2w1u8dt",
+    "title": "Heidi",
+    "libib": "Johanna Spyri",
+    "openLibrary": "Spyri, Johanna",
+    "src": "ol-search-title",
+    "note": "no name in common"
+   },
+   {
+    "id": "28iex5gtqt",
+    "title": "Practical Railway Working",
+    "libib": "David R. Lab",
+    "openLibrary": "David R. Lamb",
+    "all": [
+     "Charles Travis",
+     "David R. Lamb",
+     "John A. Jenkinson"
+    ],
+    "src": "ol-search-title"
+   },
+   {
+    "id": "ayjgsn8psz",
+    "title": "Big Java",
+    "libib": "Cay Horstmann",
+    "openLibrary": "Cay S. Horstmann",
+    "all": [
+     "Cay S. Horstmann"
+    ],
+    "src": "ol-isbn"
+   },
+   {
+    "id": "izer0znlqm",
+    "title": "Europe",
+    "libib": "Dorling Kindersley",
+    "openLibrary": "DK Publishing",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "u3n6i35gnz",
+    "title": "Eyewitness Travel Guide - USA",
+    "libib": "Dorling Kindersley",
+    "openLibrary": "Collectif",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "qhsk81lwe4",
+    "title": "Great Railway Journeys of the World",
+    "libib": "Ludovic Kennedy",
+    "openLibrary": "Michael Frayn",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "qhsk81lwe4",
+    "title": "Great Railway Journeys of the World",
+    "libib": "Miles Kington",
+    "openLibrary": "Michael Frayn",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "qhsk81lwe4",
+    "title": "Great Railway Journeys of the World",
+    "libib": "Michael Palin",
+    "openLibrary": "Michael Frayn",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "qhsk81lwe4",
+    "title": "Great Railway Journeys of the World",
+    "libib": "Eric Robson",
+    "openLibrary": "Michael Frayn",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "qhsk81lwe4",
+    "title": "Great Railway Journeys of the World",
+    "libib": "Brian Thompson",
+    "openLibrary": "Michael Frayn",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "qhsk81lwe4",
+    "title": "Great Railway Journeys of the World",
+    "libib": "Michael Wood",
+    "openLibrary": "Michael Frayn",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "9dbeydq6rp",
+    "title": "Las Vegas - DK Eyewitness Travel Guide",
+    "libib": "Dorling Kindersley",
+    "openLibrary": "DK Publishing",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   },
+   {
+    "id": "he2qgem19k",
+    "title": "Paris",
+    "libib": "Dorling Kindersley",
+    "openLibrary": "Mike Gerrard / Donna Dailey / DK Publishing",
+    "src": "ol-isbn",
+    "note": "no name in common"
+   }
+  ],
+  "roleIssues": [
+   {
+    "id": "um2i2n7gnz",
+    "title": "Invisible Cities",
+    "name": "William Weaver",
+    "note": "Libib lists as author; Open Library credits only Italo Calvino",
+    "byStatement": ""
+   },
+   {
+    "id": "2ousnx4tqt",
+    "title": "Veronica Mars (2): An Original Mystery by Rob Thomas: Mr. Kiss and Tell",
+    "name": "Jennifer Graham",
+    "note": "Libib lists as author; Open Library credits only Rob Thomas",
+    "byStatement": "Rob Thomas and Jennifer Graham"
+   },
+   {
+    "id": "w1fy8g0isd",
+    "title": "Veronica Mars: The Thousand-Dollar Tan Line",
+    "name": "Jennifer Graham",
+    "note": "Libib lists as author; Open Library credits only Rob Thomas",
+    "byStatement": "Rob Thomas and Jennifer Graham"
+   },
+   {
+    "id": "to2ynr193y",
+    "title": "Wild Boar (The Emma Press Novels)",
+    "name": "Hannah Lutz",
+    "note": "Libib lists as author; Open Library credits only Hannah Lutz; Andy Turner",
+    "byStatement": ""
+   },
+   {
+    "id": "dmp9wjnu84",
+    "title": "Book One of the Travelers",
+    "name": "Carla Jablonski",
+    "note": "Libib lists as author; Open Library credits only D. J. MacHale",
+    "byStatement": ""
+   },
+   {
+    "id": "e9ohaxb5u2",
+    "title": "Book Three of the Travelers: Volume 3 (Pendragon: Before the War)",
+    "name": "Walter Sorrells",
+    "note": "Libib lists as author; Open Library credits only D. J. MacHale",
+    "byStatement": "created by D.J. MacHale ; written by Walter Sorrells"
+   },
+   {
+    "id": "ob32j1n0an",
+    "title": "Book Two of the Travelers: Volume 2 (Pendragon: Before the War)",
+    "name": "D. J. MacHale",
+    "note": "Libib lists as author; Open Library credits only Walter Sorrells",
+    "byStatement": "created by D.J. MacHale ; written by Walter Sorrells"
+   },
+   {
+    "id": "6uc5r7r8dt",
+    "title": "Edge Chronicles 7: The Last of the Sky Pirates",
+    "name": "Paul Stewart, Chris Riddell",
+    "note": "Libib lists as author; Open Library credits only Stewart, Paul",
+    "byStatement": ""
+   },
+   {
+    "id": "ft873rce5y",
+    "title": "The Curse Of The Gloamglozer: The Edge Chronicles",
+    "name": "Chris Riddell, Paul Stewart",
+    "note": "Libib lists as author; Open Library credits only Stewart, Paul",
+    "byStatement": ""
+   },
+   {
+    "id": "ga48lsqbt4",
+    "title": "The Discworld Mapp",
+    "name": "Stephen Briggs",
+    "note": "Libib lists as author; Open Library credits only Terry Pratchett",
+    "byStatement": ""
+   },
+   {
+    "id": "0catqhedcu",
+    "title": "The Flying Sorcerers: More Comic Tales of Fantasy",
+    "name": "Roald Dahl, Sir Arthur C. Clarke CBE",
+    "note": "Libib lists as author; Open Library credits only Terry Pratchett",
+    "byStatement": "edited by Peter Haining."
+   },
+   {
+    "id": "izer0celqm",
+    "title": "The New Discworld Companion (GOLLANCZ S.F.)",
+    "name": "Stephen Briggs",
+    "note": "Libib lists as author; Open Library credits only Terry Pratchett",
+    "byStatement": ""
+   },
+   {
+    "id": "ls5xdmz7b9",
+    "title": "The Science Of Discworld Revised Edition (Science of Discworld 1)",
+    "name": "Ian Stewart, Jack Cohen",
+    "note": "Libib lists as author; Open Library credits only Terry Pratchett",
+    "byStatement": ""
+   },
+   {
+    "id": "ob32j7a0an",
+    "title": "The Wit And Wisdom Of Discworld",
+    "name": "Stephen Briggs",
+    "note": "Libib lists as author; Open Library credits only Terry Pratchett",
+    "byStatement": ""
+   },
+   {
+    "id": "u3n6icfgnz",
+    "title": "Invasion Day Series",
+    "name": "L. M. Morgan",
+    "note": "Libib lists as author; Open Library credits only L. C. Morgans",
+    "byStatement": ""
+   },
+   {
+    "id": "qhsk81lwe4",
+    "title": "Great Railway Journeys of the World",
+    "name": "Ludovic Kennedy, Miles Kington, Michael Palin, Eric Robson, Brian Thompson, Michael Wood",
+    "note": "Libib lists as author; Open Library credits only Michael Frayn",
+    "byStatement": "Michael Frayn ... [et al.]."
+   }
+  ],
+  "years": [
+   {
+    "id": "w1fy8d8isd",
+    "title": "About a Boy",
+    "libib": "1999-03-30",
+    "firstPublished": 2002,
+    "thisIsbn": "1999",
+    "note": "before the first edition"
+   },
+   {
+    "id": "um2i2n7gnz",
+    "title": "Invisible Cities",
+    "libib": "2011-05-05",
+    "firstPublished": 1998,
+    "thisIsbn": "1997",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "yqc2clqr71",
+    "title": "My Brilliant Friend",
+    "libib": "2012-10-11",
+    "firstPublished": null,
+    "thisIsbn": "2015",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "pydxgzrno7",
+    "title": "The Humans",
+    "libib": "2014-04-03",
+    "firstPublished": null,
+    "thisIsbn": "Jul 25, 2001",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "0b5q53udcu",
+    "title": "The Story of a New Name : My Brilliant Friend Book 2 (Neapolitan Novels)",
+    "libib": "2013-09-12",
+    "firstPublished": null,
+    "thisIsbn": "2016",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "ayjgz2ipsz",
+    "title": "The White Horse of Zennor and other stories",
+    "libib": "2001-11-01",
+    "firstPublished": null,
+    "thisIsbn": "September 1, 2004",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "t0gfkkz93y",
+    "title": "Allies of the Night: The Saga of Darren Shan Book 8",
+    "libib": "2009-02-05",
+    "firstPublished": null,
+    "thisIsbn": "November 4, 2002",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "ls5xd6x7b9",
+    "title": "Angel's Command",
+    "libib": "2004-03-30",
+    "firstPublished": null,
+    "thisIsbn": "2008",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "m4rd1wz31h",
+    "title": "Artemis Fowl",
+    "libib": "2006-04-06",
+    "firstPublished": null,
+    "thisIsbn": "2002",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "u3n6iy8gnz",
+    "title": "Foundation: 1/3 (The Foundation Series)",
+    "libib": "1994-03-28",
+    "firstPublished": null,
+    "thisIsbn": "1968",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "bpko7hlcho",
+    "title": "Hell's Heroes (The Demonata, Book 10)",
+    "libib": "2014-06-05",
+    "firstPublished": null,
+    "thisIsbn": "Mar 13, 2010",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "rihpttoxoz",
+    "title": "Hunters of the Dusk (The Saga of Darren Shan, Book 7)",
+    "libib": "2009-02-05",
+    "firstPublished": null,
+    "thisIsbn": "Apr 12, 2002",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "6uc5rry8dt",
+    "title": "Killers of the Dawn (The Saga of Darren Shan, Book 9)",
+    "libib": "2009-02-05",
+    "firstPublished": null,
+    "thisIsbn": "February 2003",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "qhsk88twe4",
+    "title": "Lord of the Shadows (The Saga of Darren Shan, Book 11)",
+    "libib": "2009-02-05",
+    "firstPublished": null,
+    "thisIsbn": "Apr 11, 2004",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "izer0d1lqm",
+    "title": "Slawter (The Demonata, Book 3)",
+    "libib": "2013-09-26",
+    "firstPublished": null,
+    "thisIsbn": "2007",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "xl1n996jps",
+    "title": "Sons of Destiny (The Saga of Darren Shan, Book 12)",
+    "libib": "2009-02-05",
+    "firstPublished": 2004,
+    "thisIsbn": "October 4, 2004",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "m4rd1st31h",
+    "title": "The Colour Of Magic",
+    "libib": "1985-01-18",
+    "firstPublished": null,
+    "thisIsbn": "1990",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "ga48lsqbt4",
+    "title": "The Discworld Mapp",
+    "libib": "1995-11-09",
+    "firstPublished": null,
+    "thisIsbn": "January 1, 2000",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "dmp9wwku84",
+    "title": "The Lake of Souls (Saga of Darren Shan)",
+    "libib": "2009-02-05",
+    "firstPublished": null,
+    "thisIsbn": "October 6, 2003",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "0catqqhdcu",
+    "title": "The Vampire Prince (The Saga of Darren Shan, Book 6)",
+    "libib": "2009-02-05",
+    "firstPublished": null,
+    "thisIsbn": "Apr 12, 2002",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "yw7a22dr71",
+    "title": "Trials of Death (The Saga of Darren Shan, Book 5)",
+    "libib": "2009-02-05",
+    "firstPublished": null,
+    "thisIsbn": "Sep 06, 2001",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "8gmvxxsohq",
+    "title": "Vampire Mountain (The Saga of Darren Shan, Book 4)",
+    "libib": "2009-02-05",
+    "firstPublished": null,
+    "thisIsbn": "Mar 23, 2001",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "v8dzp5i26q",
+    "title": "Catching Fire (Hunger Games, Book 2)",
+    "libib": "2009-09-07",
+    "firstPublished": null,
+    "thisIsbn": "2012?",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "u3n6intgnz",
+    "title": "An Abundance of Katherines",
+    "libib": "2008-10-16",
+    "firstPublished": 2006,
+    "thisIsbn": "2012",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "he2qgtn19k",
+    "title": "Girls In Love",
+    "libib": "2003-09-04",
+    "firstPublished": 2001,
+    "thisIsbn": "1997",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "kql3vi2ysl",
+    "title": "Stormbreaker",
+    "libib": "2005-04-01",
+    "firstPublished": null,
+    "thisIsbn": "2012",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "ob32jaj0an",
+    "title": "Waywalkers: Number 1 in series (Sam Linnifer)",
+    "libib": "2003-11-06",
+    "firstPublished": 2005,
+    "thisIsbn": "August 1, 2005",
+    "note": "before the first edition"
+   },
+   {
+    "id": "yw7avnwr71",
+    "title": "First Term At Trebizon",
+    "libib": "1984-01-01",
+    "firstPublished": null,
+    "thisIsbn": "August 7, 1980",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "w1fy8xkisd",
+    "title": "Miss Spider's Tea Party",
+    "libib": "1999-12-01",
+    "firstPublished": null,
+    "thisIsbn": "1994",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "ob32x2w0an",
+    "title": "Secret Seven 4: Secret Seven on the Trail (Secret Seven Centenary Editions)",
+    "libib": "1996-09-09",
+    "firstPublished": 2002,
+    "thisIsbn": "1996",
+    "note": "before the first edition"
+   },
+   {
+    "id": "2ousns7tqt",
+    "title": "Secret Seven: 10: Puzzle For The Secret Seven (The Secret Seven Centenary Editions)",
+    "libib": "1996-10-07",
+    "firstPublished": 1958,
+    "thisIsbn": "2009",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "w1fy8ynisd",
+    "title": "Secret Seven: 11: Secret Seven Fireworks (The Secret Seven Centenary Editions)",
+    "libib": "1996-10-07",
+    "firstPublished": 2000,
+    "thisIsbn": "1996",
+    "note": "before the first edition"
+   },
+   {
+    "id": "8gmvrv2ohq",
+    "title": "Secret Seven: 13: Shock For The Secret Seven (The Secret Seven Centenary Editions)",
+    "libib": "1996-10-07",
+    "firstPublished": 2001,
+    "thisIsbn": "1996",
+    "note": "before the first edition"
+   },
+   {
+    "id": "u3n6w6ignz",
+    "title": "Secret Seven: 2: Secret Seven Adventure (The Secret Seven Centenary Editions)",
+    "libib": "1996-09-09",
+    "firstPublished": 1998,
+    "thisIsbn": "1996",
+    "note": "before the first edition"
+   },
+   {
+    "id": "ayjgzg5psz",
+    "title": "Secret Seven: 5: Go Ahead, Secret Seven (The Secret Seven Centenary Editions)",
+    "libib": "1996-09-09",
+    "firstPublished": 1998,
+    "thisIsbn": "1996",
+    "note": "before the first edition"
+   },
+   {
+    "id": "v8dzpzx26q",
+    "title": "Secret Seven: 6: Good Work, Secret Seven (The Secret Seven Centenary Editions)",
+    "libib": "1996-09-09",
+    "firstPublished": 1954,
+    "thisIsbn": "2009",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "ga48i8ebt4",
+    "title": "Secret Seven: 7: Secret Seven Win Through (The Secret Seven Centenary Editions)",
+    "libib": "1996-09-09",
+    "firstPublished": 1999,
+    "thisIsbn": "Sep 09, 1996",
+    "note": "before the first edition"
+   },
+   {
+    "id": "6uc5y5h8dt",
+    "title": "Secret Seven: 8: Three Cheers, Secret Seven (The Secret Seven Centenary Editions)",
+    "libib": "1996-10-07",
+    "firstPublished": 2002,
+    "thisIsbn": "1996",
+    "note": "before the first edition"
+   },
+   {
+    "id": "qhsk6knwe4",
+    "title": "Secret Seven: 9: Secret Seven Mystery (The Secret Seven Centenary Editions)",
+    "libib": "1996-09-09",
+    "firstPublished": 2000,
+    "thisIsbn": "Mar 06, 1996",
+    "note": "before the first edition"
+   },
+   {
+    "id": "6ubmksc8dt",
+    "title": "Teddy Bear's Picnic",
+    "libib": "1991-06-01",
+    "firstPublished": null,
+    "thisIsbn": "1950-01-01",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "cny07opmmk",
+    "title": "The Tennis Term at Trebizon (Puffin Books)",
+    "libib": "1988-04-28",
+    "firstPublished": null,
+    "thisIsbn": "January 7, 1982",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "ga48i6fbt4",
+    "title": "The Twins at St.Clare's",
+    "libib": "1996-05-09",
+    "firstPublished": 1990,
+    "thisIsbn": "2000",
+    "note": "differs from this ISBN on Open Library"
+   },
+   {
+    "id": "pygtuayno7",
+    "title": "Tom's Midnight Garden (Puffin Modern Classics)",
+    "libib": "1993-10-28",
+    "firstPublished": 1999,
+    "thisIsbn": "1993",
+    "note": "before the first edition"
+   },
+   {
+    "id": "59qsgeiv9x",
+    "title": "Adventures of the Wishing Chair",
+    "libib": "1964-01-01",
+    "firstPublished": 1971,
+    "thisIsbn": null,
+    "note": "before the first edition"
+   },
+   {
+    "id": "cp5qridmmk",
+    "title": "Claudine at St Clare's",
+    "libib": "1944-01-01",
+    "firstPublished": 1967,
+    "thisIsbn": null,
+    "note": "before the first edition"
+   },
+   {
+    "id": "aktlq1lpsz",
+    "title": "Fifth Formers at St Clare's",
+    "libib": "1945-01-01",
+    "firstPublished": 1991,
+    "thisIsbn": null,
+    "note": "before the first edition"
+   },
+   {
+    "id": "wh3xgysisd",
+    "title": "The Adventures of Huckleberry Finn",
+    "libib": "1940-01-01",
+    "firstPublished": 1960,
+    "thisIsbn": null,
+    "note": "before the first edition"
+   },
+   {
+    "id": "281v2q4tqt",
+    "title": "The Model Railway Hobby",
+    "libib": "1943-01-01",
+    "firstPublished": 1948,
+    "thisIsbn": null,
+    "note": "before the first edition"
+   },
+   {
+    "id": "baejywscho",
+    "title": "The Second Form at St Clare's",
+    "libib": "1945-01-01",
+    "firstPublished": 1963,
+    "thisIsbn": null,
+    "note": "before the first edition"
+   },
+   {
+    "id": "8u7n3pwohq",
+    "title": "Third Year at Malory Towers",
+    "libib": "1954-01-01",
+    "firstPublished": 1966,
+    "thisIsbn": null,
+    "note": "before the first edition"
+   },
+   {
+    "id": "8us8n61ohq",
+    "title": "Where In The Zoo Are You?",
+    "libib": "1996-01-01",
+    "firstPublished": 2020,
+    "thisIsbn": null,
+    "note": "before the first edition"
+   }
+  ]
+ }
+}

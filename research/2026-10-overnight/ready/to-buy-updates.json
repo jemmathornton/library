@@ -1,0 +1,48 @@
+{
+ "_about": "Existing to-buy entries: the edition to look for (ISBN of the matching design). Libib re-imports overwrite to-buy.json, so these may belong in a separate file the build applies.",
+ "akvei6dpsz": {
+  "title": "Guards Guards (original paperback)",
+  "isbn13": "9780552134620",
+  "note": "Corgi 1990, matches her set. Boxed-title first printing (lspace scan). The same ISBN was reprinted with the later big-lettering cover, which is what Amazon/AbeBooks show: check the cover when buying."
+ },
+ "59y4gluv9x": {
+  "title": "Men at Arms (original paperback)",
+  "isbn13": "9780552140287",
+  "note": "Corgi 1994, matches her set. Boxed-title first printing (lspace scan); later printings under the same ISBN have the big-lettering cover."
+ },
+ "cpfzj81mmk": {
+  "title": "Soul Music (original paperback)",
+  "isbn13": "9780552140294",
+  "note": "Corgi 1995, matches her set. Boxed-title first printing (lspace scan); same-ISBN caveat."
+ },
+ "tojrmsq93y": {
+  "title": "Feat of Clay (original paperback)",
+  "isbn13": "9780552142373",
+  "note": "Corgi 1997, matches her set. Boxed-title first printing (lspace scan); same-ISBN caveat."
+ },
+ "ay4ig65psz": {
+  "title": "The Wee Free Men",
+  "isbn13": "9780552549059",
+  "note": "Corgi 2004, matches her set. Big TERRY PRATCHETT lettering, Kidby art, matches The Truth."
+ },
+ "3knwu6warj": {
+  "title": "Snuff",
+  "isbn13": "9780552163361",
+  "note": "Corgi 2012, matches her set. Big-lettering Corgi paperback. 9780552166751 is a different blue-panel version."
+ },
+ "7fz9j4dhd6": {
+  "title": "Raising Steam",
+  "isbn13": "9780552170529",
+  "note": "Corgi 2014, matches her set. Big-lettering paperback. 9780552170468 has a cream title band instead."
+ },
+ "2o6cslhtqt": {
+  "title": "The Shepherd's Crown",
+  "isbn13": "9780552574488",
+  "note": "Corgi 2016, matches her set. Big-lettering paperback; 9780552574471 looks the same."
+ },
+ "0b7i4x0dcu": {
+  "title": "A Darkling Plain",
+  "isbn13": "9780439943468",
+  "note": "Scholastic Point 2007, matches her set. The 2010 reissue (9781407110943) has a different design."
+ }
+}
