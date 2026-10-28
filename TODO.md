@@ -9,7 +9,7 @@
    - **Katabasis**: just bought; tagged Not owned until she scans it in (Add a book, or Libib). Then it needs a line in `data/storygraph-links.json` or a re-import so her reading follows it.
    - **The Dance Tree**: add it in StoryGraph so it shows as read.
    - **Paper Towns** and the **Fantastic Beasts screenplay** have ebook ISBNs; the print ISBN of her copies is needed for the right cover.
-   - **Reading orders I couldn’t confirm online** (18 Oct): The Quest Series 11–13 (Rebellion, Dimension, Guardian; from the books’ own covers), The Hedge Witch Series (Bringing Down the Flowers, then The Parsley Bed), The Quest for Qieta (then Memories of the Kurai), The Shetland Witch (then Stories from…), Solitaire (publication order: Solitaire, Nick and Charlie, This Winter).
+   - **Solitaire reading order** (28 Oct: the others are now confirmed online, `research/2026-10-28-overnight/reading-orders.md`): publication order (Solitaire, Nick and Charlie, This Winter, as now) or story order (This Winter first, set the Christmas before Solitaire)?
 2. **Same title twice, different editions.** Kept as separate books, shown under “Other copies you own”. Say if any shouldn’t be:
    - Harry Potter: several sets (1997 Bloomsbury, the 2014 set, illustrated editions, Hufflepuff edition)
    - Malory Towers and St Clare’s: newer copies on Children’s, old copies on Old Book Collection
