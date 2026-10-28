@@ -2,7 +2,7 @@
 
 ## For Jemma to decide
 
-0. **Overnight research (23–24 Oct): `research/2026-10-overnight/README.txt`.** The 8 code fixes are in (28 Oct, her yes). Still waiting for her yes, in order: 100 blurbs and 50 detail fixes; 9 replacement covers and 39 period jackets for the Old Book Collection (show behind an on/off switch first); 17 shelf moves and the name fixes (Pamela Cox, Riddell, J. D. Salinger); 64 to-buy entries (Blyton notes split, series gaps). The rest of the code review (`code-review/review.md`, items not in the 8 fixes) is unread by her.
+0. **Overnight research (23–24 Oct): `research/2026-10-overnight/README.txt`.** The 8 code fixes are in (28 Oct, her yes). 78 short blurbs and 50 page-count and date fixes are in (28 Oct; `data/description-fixes.json`, `data/detail-fixes.json`). 22 blurbs over 150 words wait in `data/description-fixes-long.json`: she finds long blurbs overwhelming, and 158 of the blurbs already shown are over 150 words too (Beedle Collector’s Edition 2,606), so how long blurbs show is hers to decide. Still waiting for her yes, in order: 9 replacement covers and 39 period jackets for the Old Book Collection (show behind an on/off switch first); 17 shelf moves and the name fixes (Pamela Cox, Riddell, J. D. Salinger); 64 to-buy entries (Blyton notes split, series gaps). The rest of the code review (`code-review/review.md`, items not in the 8 fixes) is unread by her.
 
 1. **Things only she can check:**
    - **Raven’s Gate** (Anthony Horowitz): has she read it, does she own it? (18 Oct.) On Young Adult, tagged Not owned, until she checks.

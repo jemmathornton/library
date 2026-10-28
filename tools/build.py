@@ -46,6 +46,11 @@ def build():
         for f, v in details.get(b['id'], {}).items():
             if not b.get(f):
                 b[f] = v
+    blurbs, put_right = load('description-fixes.json', {}), load('detail-fixes.json', {})   # replace Libib's seller notes and wrong pages/dates
+    for b in books:
+        if b['id'] in blurbs:
+            b['description'] = blurbs[b['id']]
+        b.update(put_right.get(b['id'], {}))
     gone = {x['id'] for x in load('removed.json', [])}   # duplicates she has said aren't real copies
     books = [b for b in books if b['id'] not in gone]
     editions = load('editions.json', {})   # editions Libib doesn't say (her Illumicrate copies)

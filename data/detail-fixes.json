@@ -1,0 +1,158 @@
+{
+ "_about": "Libib values that are wrong or missing, put right: book id -> {pages, publisher, published}. To be applied by tools/build.py over books.json (unlike data/details.json, which only fills gaps).",
+ "bpko7zhcho": {
+  "pages": 351,
+  "published": "1995"
+ },
+ "ayjgs5jpsz": {
+  "pages": 332,
+  "published": "1991"
+ },
+ "ga48l1xbt4": {
+  "pages": 380,
+  "published": "1997"
+ },
+ "izer0gslqm": {
+  "pages": 286,
+  "published": "1992"
+ },
+ "t0gfkys93y": {
+  "pages": 64
+ },
+ "2ous4xntqt": {
+  "pages": 368
+ },
+ "ob32x830an": {
+  "pages": 496
+ },
+ "t0gfkbj93y": {
+  "pages": 288
+ },
+ "0catj8bdcu": {
+  "pages": 40,
+  "published": "1990-09-26"
+ },
+ "ft873rce5y": {
+  "pages": 384
+ },
+ "6uc5rly8dt": {
+  "pages": 249
+ },
+ "w1fyou8isd": {
+  "pages": 381
+ },
+ "ayjgzg5psz": {
+  "pages": 138
+ },
+ "he2quc719k": {
+  "published": "2005-02-02"
+ },
+ "m4rdh1231h": {
+  "published": "1998"
+ },
+ "nxwcf5n41p": {
+  "published": "2011"
+ },
+ "w1fyo82isd": {
+  "published": "2003"
+ },
+ "t0gfk3i93y": {
+  "published": "2003"
+ },
+ "0catqw1dcu": {
+  "published": "2010"
+ },
+ "v8dzn4d26q": {
+  "published": "2007"
+ },
+ "ft873nde5y": {
+  "published": "2000-05-11"
+ },
+ "bpko717cho": {
+  "published": "1998"
+ },
+ "j7z46oiqlq": {
+  "published": "2007"
+ },
+ "dmp9wlru84": {
+  "published": "2001"
+ },
+ "ob32jie0an": {
+  "published": "1998"
+ },
+ "6uc5rpa8dt": {
+  "published": "2007"
+ },
+ "5601pkrv9x": {
+  "published": "1994-03-01"
+ },
+ "v8dznrb26q": {
+  "published": "2004"
+ },
+ "rihpt6dxoz": {
+  "published": "1989"
+ },
+ "rihpt8uxoz": {
+  "published": "1993"
+ },
+ "e9ohakd5u2": {
+  "published": "2002"
+ },
+ "8gmvxqeohq": {
+  "published": "1986"
+ },
+ "u3n6iqugnz": {
+  "published": "2002-07-01"
+ },
+ "8gmvxl2ohq": {
+  "published": "1998"
+ },
+ "izer0bflqm": {
+  "published": "2001"
+ },
+ "kql3v6aysl": {
+  "published": "2009"
+ },
+ "j7z460lqlq": {
+  "published": "1992"
+ },
+ "9dbeygi6rp": {
+  "published": "2005-04-01"
+ },
+ "m4rd1x731h": {
+  "published": "1994-01-27"
+ },
+ "yw7a2ifr71": {
+  "published": "2014"
+ },
+ "kql3v79ysl": {
+  "published": "2006-08-01"
+ },
+ "3kxuzr5arj": {
+  "published": "2005-04-01"
+ },
+ "3kxuzj2arj": {
+  "published": "2008-04-15"
+ },
+ "v8dzp1r26q": {
+  "published": "2018"
+ },
+ "xl1ntp4jps": {
+  "published": "2013"
+ },
+ "ayjgzuepsz": {
+  "published": "2018"
+ },
+ "ga48lc6bt4": {
+  "published": "2003"
+ },
+ "ga48la0bt4": {
+  "published": "1996"
+ },
+ "add0001": {
+  "published": "2018"
+ },
+ "add0004": {
+  "published": "2025"
+ }
+}
