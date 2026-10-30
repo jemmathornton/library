@@ -15,6 +15,13 @@ def load(name, default=None):
     return json.load(open(p, encoding='utf-8')) if os.path.exists(p) else default
 
 
+def shape(path):
+    """A picture's height divided by its width (Pillow reads only the header)."""
+    from PIL import Image
+    with Image.open(path) as im:
+        return round(im.height / im.width, 3)
+
+
 def fix_names(books, fixes):
     """Libib's author names tidied (data/name-fixes.json); the surname the shelves file by follows the tidied first author."""
     for b in books:
@@ -82,6 +89,7 @@ def build():
             if k in trial and os.path.exists(pic):
                 b['coverTrial'] = f"covers-trial/{k}.jpg?v={hashlib.md5(open(pic, 'rb').read()).hexdigest()[:8]}"
                 b['coverTrialWhy'] = trial[k]['reason']
+                b['coverTrialRatio'] = shape(pic)
                 break
         if b.get('id') in no_cover:
             continue
@@ -89,6 +97,7 @@ def build():
         local = os.path.join(SITE, 'covers', key + '.jpg')
         if os.path.exists(local):   # the copy in site/covers (tools/copy_covers.py), fingerprinted so a new copy shows at once
             b['cover'] = f"covers/{key}.jpg?v={hashlib.md5(open(local, 'rb').read()).hexdigest()[:8]}"
+            b['coverRatio'] = shape(local)   # height / width: the site shows the whole cover at its own shape (30 Oct)
         elif covers.get(key):
             b['cover'] = covers[key]['src']
     data = {'built': date.today().isoformat(), 'shelves': load('shelves.json'), 'books': books, 'toBuy': wish, 'storygraph': sg,

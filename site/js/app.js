@@ -76,7 +76,7 @@ const WISH = DATA.toBuy; WISH.forEach(prep);
 // trial (28 Oct): proposed covers (data/covers-trial.json) shown only while the switch bottom right is on, for her to judge
 const TRIAL_KEY = "jemmas-library-trial-covers", TRIAL = store.get(TRIAL_KEY, false);
 const TRIALS = [...BOOKS, ...WISH, ...(DATA.storygraph || {books: []}).books.filter(e => !e.books)].filter(b => b.coverTrial);   // read but not owned too
-TRIALS.forEach(b => { b.coverWas = b.cover; if (TRIAL) b.cover = b.coverTrial; });
+TRIALS.forEach(b => { b.coverWas = b.cover; b.coverRatioWas = b.coverRatio; if (TRIAL) { b.cover = b.coverTrial; b.coverRatio = b.coverTrialRatio; } });
 
 // ---------- reading ----------
 // StoryGraph is where she tracks her reading (data/storygraph.json, from its export): it wins for every book it knows.
@@ -217,13 +217,15 @@ function cover(b, extra = "", big = false){
   const tag = (b.notOwned && !big ? `<span class="not-owned">Not owned</span>` : "")
     // a special edition (Illumicrate and the like, data/editions.json): a brass sash across the other top corner (her ask, 18 Oct)
     + (b.special && !big ? `<span class="special" title="${esc(b.special)}">Special</span>` : "");
-  return `<div class="cover${b.cover ? "" : " blank"}${b.notOwned && !big ? " unowned" : ""}${TRIAL && b.coverTrial ? " trial" : ""} ${extra}" style="--c:${s ? s.color : "#5E3D22"}">${badge}${tag}${strip}${b.cover ? `<img src="${esc(coverSrc(b, big))}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
+  // the whole cover at its own shape, never trimmed to a frame (her ask, 30 Oct); a picture with no known shape keeps the frame
+  const ratio = b.cover && b.coverRatio;
+  return `<div class="cover${b.cover ? "" : " blank"}${ratio ? " fit" : ""}${b.notOwned && !big ? " unowned" : ""}${TRIAL && b.coverTrial ? " trial" : ""} ${extra}" style="--c:${s ? s.color : "#5E3D22"}${ratio ? ";--r:" + ratio : ""}">${badge}${tag}${strip}${b.cover ? `<img src="${esc(coverSrc(b, big))}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
 }
 // a cover that won't load becomes a title card
 document.addEventListener("error", e => { const img = e.target; if (img.tagName === "IMG" && img.parentNode.classList.contains("cover")) { img.parentNode.classList.add("blank"); img.remove(); } }, true);
 
 const href = b => isElsewhere(b) ? "#" + b.id : "#b-" + b.id;
-const card = (b, note) => `<a class="bk" href="${href(b)}">${cover(b)}<h3>${esc(b.t)}</h3><div class="by">${esc(note || b.by)}</div></a>`;
+const card = (b, note) => `<a class="bk" href="${href(b)}"><div class="slot">${cover(b)}</div><h3>${esc(b.t)}</h3><div class="by">${esc(note || b.by)}</div></a>`;
 const grid = (list, cls = "") => list.length ? `<div class="books ${cls}">${list.map(b => card(b)).join("")}</div>` : "";
 function listView(list){
   return `<div class="blist">${list.map(b => { const st = reading(b).status;
@@ -651,7 +653,7 @@ function pageSearch(term){
     + (authors.length ? `<div class="chips" style="margin-bottom:28px">${authors.slice(0, 20).map(a => `<a class="btn" href="#a-${a.id}">${ic("user")}${esc(a.name)} · ${a.books.length}</a>`).join("")}</div>` : "")
     + (books.length ? grid(books) : `<p class="empty">No books match.</p>`)
     + (away.length ? sectionHead("Read or to read, <em>not on your shelves</em>") + grid(away) : "")
-    + (wish.length ? sectionHead("On the <em>to-buy list</em>") + `<div class="books">${wish.map(w => `<a class="bk" href="#to-buy">${cover(w)}<h3>${esc(w.t)}</h3><div class="by">${esc(w.by)}</div></a>`).join("")}</div>` : "");
+    + (wish.length ? sectionHead("On the <em>to-buy list</em>") + `<div class="books">${wish.map(w => `<a class="bk" href="#to-buy"><div class="slot">${cover(w)}</div><h3>${esc(w.t)}</h3><div class="by">${esc(w.by)}</div></a>`).join("")}</div>` : "");
 }
 q.addEventListener("input", () => { const v = q.value.trim(); if (v.length >= 2) { document.getElementById("view").innerHTML = pageSearch(v); scrollTo(0, 0); } else if (!v) route(); });
 q.addEventListener("keydown", e => { if (e.key === "Escape") { q.value = ""; route(); } });
