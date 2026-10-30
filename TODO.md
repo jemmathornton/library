@@ -11,7 +11,7 @@
    - **Photos of her own copies** (30 Oct): St Clare's (below), **Trebizon** (her Dragon/Granada copies only exist online as dim, yellowed scans; 13 and 14 are her Straw Hat editions) and any others she adds. Her photos go in `site/covers/` under each book's cover name, as they are (cropped only to the edges of the book).
    - **St Clare's**: her copies are the box set "The Complete St Clare's Library" (orange spines with Enid Blyton's name; painted covers). Her Libib ISBNs (Mammoth 1996-2000) don't match, so the covers can't be found by ISBN: she'll take photos of her own copies (30 Oct). Fix the ISBNs then too.
    - **The Dance Tree**: add it in StoryGraph so it shows as read.
-   - **Paper Towns** and the **Fantastic Beasts screenplay** have ebook ISBNs; the print ISBN of her copies is needed for the right cover. Screenplay cover now right (UK edition, 30 Oct); still needed: is hers the 2016 hardback (9781408708989) or the 2018 paperback (9780751574951)?
+   - **Paper Towns** and the **Fantastic Beasts screenplay** have ebook ISBNs; the print ISBN of her copies is needed for the right cover. Screenplay cover now right (UK edition, 30 Oct); hers is the 2016 hardback, ISBN put right.
    - **Solitaire reading order** (28 Oct: the others are now confirmed online, `research/2026-10-28-overnight/reading-orders.md`): publication order (Solitaire, Nick and Charlie, This Winter, as now) or story order (This Winter first, set the Christmas before Solitaire)?
 2. **Same title twice, different editions.** Kept as separate books, shown under “Other copies you own”. Say if any shouldn’t be:
    - Harry Potter: several sets (1997 Bloomsbury, the 2014 set, illustrated editions, Hufflepuff edition)
