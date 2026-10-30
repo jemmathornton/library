@@ -7,6 +7,8 @@
 1. **Things only she can check:**
    - **Raven’s Gate** (Anthony Horowitz): has she read it, does she own it? (18 Oct.) On Young Adult, tagged Not owned, until she checks.
    - **Katabasis**: just bought; tagged Not owned until she scans it in (Add a book, or Libib). Then it needs a line in `data/storygraph-links.json` or a re-import so her reading follows it.
+   - **Point Blanc** (Alex Rider 2): she thinks she owns it, but it isn't in her Libib export, StoryGraph or the to-buy list (30 Oct). If she has it, scan it in (phone scanning is a good first test).
+   - **St Clare's**: her copies are the box set "The Complete St Clare's Library" (orange spines with Enid Blyton's name; painted covers). Her Libib ISBNs (Mammoth 1996-2000) don't match, so the covers can't be found by ISBN: she'll take photos of her own copies (30 Oct). Fix the ISBNs then too.
    - **The Dance Tree**: add it in StoryGraph so it shows as read.
    - **Paper Towns** and the **Fantastic Beasts screenplay** have ebook ISBNs; the print ISBN of her copies is needed for the right cover.
    - **Solitaire reading order** (28 Oct: the others are now confirmed online, `research/2026-10-28-overnight/reading-orders.md`): publication order (Solitaire, Nick and Charlie, This Winter, as now) or story order (This Winter first, set the Christmas before Solitaire)?
