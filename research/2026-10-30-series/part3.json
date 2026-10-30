@@ -1,0 +1,523 @@
+{
+  "Pendragon: Before the War": {
+    "status": "complete",
+    "books": [
+      "Book One of the Travelers",
+      "Book Two of the Travelers",
+      "Book Three of the Travelers"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://en.wikipedia.org/wiki/Pendragon:_Journal_of_an_Adventure_through_Time_and_Space"
+    ],
+    "notes": "Three books (2009-2011), co-written with Carla Jablonski / Walter Sorrells. The ten-book main Pendragon series is a separate series."
+  },
+  "Twilight": {
+    "status": "complete",
+    "books": [
+      "Twilight",
+      "New Moon",
+      "Eclipse",
+      "Breaking Dawn"
+    ],
+    "added": [],
+    "extras": [
+      "Midnight Sun (2020; Twilight retold from Edward's side. Goodreads and some shops number it #5, the publisher calls it a companion novel)",
+      "The Short Second Life of Bree Tanner (2010, novella)",
+      "Life and Death: Twilight Reimagined (2015, gender-swapped retelling)",
+      "The Twilight Saga: The Official Illustrated Guide (2011, guide)"
+    ],
+    "sources": [
+      "https://www.goodreads.com/shelf/show/stephenie-meyer",
+      "https://en.wikipedia.org/wiki/The_Twilight_Saga"
+    ],
+    "notes": "Four main novels. Midnight Sun is the one to decide on: a full-length novel, but a retelling of book 1."
+  },
+  "A Good Girl's Guide to Murder": {
+    "status": "complete",
+    "books": [
+      "A Good Girl's Guide to Murder",
+      "Good Girl, Bad Blood",
+      "As Good As Dead",
+      "Kill Joy"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://en.wikipedia.org/wiki/A_Good_Girl%27s_Guide_to_Murder"
+    ],
+    "notes": "Trilogy plus the prequel novella Kill Joy (2021), already in the list in publication order. No further books in the series (Holly Jackson's later books are standalones)."
+  },
+  "The Chronicles of Narnia": {
+    "status": "complete",
+    "books": [
+      "The Magician's Nephew",
+      "The Lion, the Witch and the Wardrobe",
+      "The Horse and His Boy",
+      "Prince Caspian",
+      "The Voyage of the Dawn Treader",
+      "The Silver Chair",
+      "The Last Battle"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://en.wikipedia.org/wiki/The_Chronicles_of_Narnia"
+    ],
+    "notes": "Seven books, in the numbered order of today's editions."
+  },
+  "Kitty Collins": {
+    "status": "complete",
+    "books": [
+      "How to Kill Men and Get Away With It",
+      "I Bet You'd Look Good in a Coffin",
+      "To All the Men I've Killed Before"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://inorderbookseries.com/series/kitty-collins",
+      "https://www.bookishelf.com/?p=28046"
+    ],
+    "notes": "Three books; reviewers describe To All the Men I've Killed Before as the third and final one. The Murder After the Night Before (2024) is a standalone, not in the series."
+  },
+  "Miss Marple": {
+    "status": "complete",
+    "books": [
+      "The Murder at the Vicarage|Murder at the Vicarage",
+      "The Body in the Library",
+      "The Moving Finger",
+      "A Murder Is Announced",
+      "They Do It with Mirrors",
+      "A Pocket Full of Rye",
+      "4.50 from Paddington",
+      "The Mirror Crack'd from Side to Side",
+      "A Caribbean Mystery",
+      "At Bertram's Hotel",
+      "Nemesis",
+      "Sleeping Murder"
+    ],
+    "added": [],
+    "extras": [
+      "The Thirteen Problems (1932, short stories; US title The Tuesday Club Murders; FantasticFiction lists it as #2)",
+      "Miss Marple's Final Cases (1979, short stories)",
+      "Marple: Twelve New Mysteries (2022, new stories by other authors)"
+    ],
+    "sources": [
+      "https://en.wikipedia.org/wiki/Miss_Marple"
+    ],
+    "notes": "All twelve novels, in publication order."
+  },
+  "Notes from a Small Island": {
+    "status": "complete",
+    "books": [
+      "Notes from a Small Island",
+      "The Road to Little Dribbling"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://en.wikipedia.org/wiki/The_Road_to_Little_Dribbling"
+    ],
+    "notes": "The Road to Little Dribbling is subtitled 'More Notes from a Small Island'; there is no third."
+  },
+  "The Natural Human Saga": {
+    "status": "complete",
+    "books": [
+      "The Callista Alignment",
+      "The Callista Ascendancy"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://www.goodreads.com/series/423976-the-natural-human-saga",
+      "https://www.goodreads.com/book/show/214862378"
+    ],
+    "notes": "Steve Gay. Goodreads lists two books (Alignment 2024, Ascendancy 2025). The series is described as ongoing, but no third title was found."
+  },
+  "Castaways of the Flying Dutchman": {
+    "status": "complete",
+    "books": [
+      "Castaways of the Flying Dutchman",
+      "The Angel's Command|Angel's Command",
+      "Voyage of Slaves"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://www.penguinrandomhouse.com/series/C0S/castaways-of-the-flying-dutchman-series/",
+      "https://inorderbookseries.com/series/flying-dutchman"
+    ],
+    "notes": "Three books (2001, 2003, 2006); Brian Jacques died in 2011."
+  },
+  "Before the Coffee Gets Cold": {
+    "status": "changed",
+    "books": [
+      "Before the Coffee Gets Cold",
+      "Tales from the Cafe|Tales from the Café",
+      "Before Your Memory Fades",
+      "Before We Say Goodbye",
+      "Before We Forget Kindness",
+      "Before I Knew I Loved You"
+    ],
+    "added": [
+      "Before I Knew I Loved You"
+    ],
+    "extras": [],
+    "sources": [
+      "https://www.thenile.co.nz/books/toshikazu-kawaguchi/before-i-knew-i-loved-you-before-the-coffee-gets-cold-boo/9781035046300",
+      "https://www.goodreads.com/work/editions/226356913"
+    ],
+    "notes": "Book 6, Before I Knew I Loved You, published by Picador (UK) 26 May 2026; same title in the US (Hanover Square Press)."
+  },
+  "The Cerulean Chronicles": {
+    "status": "complete",
+    "books": [
+      "The House in the Cerulean Sea",
+      "Somewhere Beyond the Sea"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://www.panmacmillan.com/series/cerulean-chronicles/panmac87740",
+      "https://thepopverse.com/literary-tj-klune-most-painful-thing-c2e2-2025"
+    ],
+    "notes": "Two books. A third has been talked about but not officially announced."
+  },
+  "Mother of Learning": {
+    "status": "changed",
+    "books": [
+      "Mother of Learning: Arc 1|Mother of Learning: ARC 1",
+      "Mother of Learning: Arc 2|Mother of Learning: ARC 2",
+      "Mother of Learning: Arc 3|Mother of Learning: ARC 3",
+      "Mother of Learning: Arc 4|Mother of Learning: ARC 4"
+    ],
+    "added": [
+      "Mother of Learning: Arc 4|Mother of Learning: ARC 4"
+    ],
+    "extras": [],
+    "sources": [
+      "https://podiumentertainment.com/titles/2508/sci-fi/mother-of-learning-arc-4",
+      "https://www.bookowlapp.com/book/9781955252393",
+      "https://www.audible.com.au/series/Mother-of-Learning-Audiobooks/B09MZK94VW"
+    ],
+    "notes": "Arc 4 (April 2023, Wraithmarked Creative ebook/print, Podium audio) is the fourth and final book. Added with the same Arc/ARC spellings as the others."
+  },
+  "We Were Liars": {
+    "status": "changed",
+    "books": [
+      "We Were Liars",
+      "Family of Liars",
+      "We Fell Apart"
+    ],
+    "added": [
+      "We Fell Apart"
+    ],
+    "extras": [],
+    "sources": [
+      "https://bookshop.org/p/books/we-fell-apart-a-we-were-liars-novel-e-lockhart/fb4f952b9ca4b6df",
+      "https://paperbarkwords.blog/2026/02/13/e-lockhart-we-fell-apart-interview/"
+    ],
+    "notes": "We Fell Apart (4 Nov 2025) is billed 'A We Were Liars Novel': a companion with new characters in the same world, which the publisher lists as the third book (We Were Liars, Family of Liars, We Fell Apart). Publication order kept; Family of Liars is a prequel. If she'd rather not count a companion novel, drop it."
+  },
+  "The Shetland Witch": {
+    "status": "complete",
+    "books": [
+      "The Shetland Witch|The Shetland Witch: Or, Atropos Wants Her Shears Back",
+      "Stories from the Shetland Witch|Stories from The Shetland Witch: In Achaea & Mrs Sinclair and the Feather Haa"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://sf-encyclopedia.com/entry/macdonald_kate",
+      "https://www.lulu.com/shop/kate-macdonald/stories-from-the-shetland-witch/paperback/product-e74pgjg.html"
+    ],
+    "notes": "Kate Macdonald. One novel plus the novella collection Stories from the Shetland Witch (already in the list). Her second novel, Radical Magic (Sept 2026), is a separate Regency story, not part of this series."
+  },
+  "Seasonal Quartet": {
+    "status": "complete",
+    "books": [
+      "Autumn",
+      "Winter",
+      "Spring",
+      "Summer"
+    ],
+    "added": [],
+    "extras": [
+      "Companion Piece (2022; Ali Smith's follow-up to the quartet, not part of it)"
+    ],
+    "sources": [
+      "https://en.wikipedia.org/wiki/Seasonal_Quartet"
+    ],
+    "notes": "Four books, in publication order."
+  },
+  "The Quest for Qieta": {
+    "status": "complete",
+    "books": [
+      "The Quest for Qieta",
+      "Memories of the Kurai"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://www.goodreads.com/book/show/199047306"
+    ],
+    "notes": "Dr Ting-Wei (Tina) Wu. Two books found (2023, 2024); no third book found."
+  },
+  "Hogwarts Library": {
+    "status": "complete",
+    "books": [
+      "Fantastic Beasts and Where to Find Them",
+      "Quidditch Through the Ages",
+      "The Tales of Beedle the Bard"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://en.wikipedia.org/wiki/Fantastic_Beasts_and_Where_to_Find_Them"
+    ],
+    "notes": "The three Hogwarts Library books."
+  },
+  "Fantastic Beasts Screenplays": {
+    "status": "complete",
+    "books": [
+      "Fantastic Beasts and Where to Find Them: The Original Screenplay",
+      "Fantastic Beasts: The Crimes of Grindelwald",
+      "Fantastic Beasts: The Secrets of Dumbledore"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://en.wikipedia.org/wiki/Fantastic_Beasts"
+    ],
+    "notes": "Three films, three screenplays; no further films made."
+  },
+  "The Edge Chronicles": {
+    "status": "changed",
+    "books": [
+      "The Curse of the Gloamglozer",
+      "The Winter Knights",
+      "Clash of the Sky Galleons",
+      "Beyond the Deepwoods",
+      "Stormchaser",
+      "Midnight Over Sanctaphrax",
+      "The Last of the Sky Pirates",
+      "Vox",
+      "Freeglader",
+      "The Immortals",
+      "The Nameless One",
+      "Doombringer",
+      "The Descenders"
+    ],
+    "added": [
+      "The Nameless One",
+      "Doombringer",
+      "The Descenders"
+    ],
+    "extras": [
+      "Cloud Wolf (2001, World Book Day novella, prequel to the Quint books)",
+      "The Stone Pilot (2006, World Book Day story)",
+      "The Slaughterer's Quest (2006, story)",
+      "The Blooding of Rufus Filatine (2006, story)",
+      "The Lost Barkscrolls (2006, collects the four stories above)",
+      "The Edge Chronicles Maps (2004, companion)",
+      "The Sky Chart: A Book of Quint (2014, digital only)"
+    ],
+    "sources": [
+      "https://en.wikipedia.org/wiki/The_Edge_Chronicles",
+      "https://www.edgechronicles.co.uk/category/books/",
+      "https://www.edgechronicles.co.uk/discover-the-books/the-cade-saga/the-nameless-one/"
+    ],
+    "notes": "The Cade Saga (books 11-13, 2014-2019) is set after The Immortals (Cade is Nate Quarter's nephew), so it goes at the end in both chronological and numbered order."
+  },
+  "Foundation": {
+    "status": "changed",
+    "books": [
+      "Prelude to Foundation",
+      "Forward the Foundation",
+      "Foundation",
+      "Foundation and Empire",
+      "Second Foundation",
+      "Foundation's Edge",
+      "Foundation and Earth"
+    ],
+    "added": [
+      "Prelude to Foundation",
+      "Forward the Foundation",
+      "Foundation's Edge",
+      "Foundation and Earth"
+    ],
+    "extras": [
+      "Second Foundation Trilogy by other authors: Foundation's Fear (Benford), Foundation and Chaos (Bear), Foundation's Triumph (Brin)"
+    ],
+    "sources": [
+      "https://en.wikipedia.org/wiki/Foundation_series",
+      "https://ozgurnevres.com/which-asimov-book-to-read-first/",
+      "https://authorwars.com/books/authors-note-prelude-to-foundation-1004906.html"
+    ],
+    "notes": "Seven Asimov Foundation novels. Prequels placed first, following Asimov's own author's note in Prelude to Foundation (1988), which lists the books in story order because they 'were not written in the order in which (perhaps) they should be read'; Forward the Foundation (1993) came after the note but is set between Prelude and Foundation. Publication order would instead be: Foundation, Foundation and Empire, Second Foundation, Foundation's Edge, Foundation and Earth, Prelude to Foundation, Forward the Foundation."
+  },
+  "Theodore Boone": {
+    "status": "complete",
+    "books": [
+      "Theodore Boone: Kid Lawyer|Theodore Boone: Theodore Boone 1",
+      "Theodore Boone: The Abduction",
+      "Theodore Boone: The Accused",
+      "Theodore Boone: The Activist",
+      "Theodore Boone: The Fugitive",
+      "Theodore Boone: The Scandal",
+      "Theodore Boone: The Accomplice"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://www.readingorderbooks.com/theodore-boone-books-in-order/",
+      "https://bookroo.com/books/series/theodore-boone"
+    ],
+    "notes": "Seven books (2010-2019); no eighth announced."
+  },
+  "The Chronicles of Thomas Covenant": {
+    "status": "changed",
+    "books": [
+      "Lord Foul's Bane",
+      "The Illearth War",
+      "The Power That Preserves",
+      "The Wounded Land",
+      "The One Tree",
+      "White Gold Wielder",
+      "The Runes of the Earth",
+      "Fatal Revenant",
+      "Against All Things Ending",
+      "The Last Dark"
+    ],
+    "added": [
+      "The Wounded Land",
+      "The One Tree",
+      "White Gold Wielder",
+      "The Runes of the Earth",
+      "Fatal Revenant",
+      "Against All Things Ending",
+      "The Last Dark"
+    ],
+    "extras": [
+      "Gilden-Fire (1981, novella; a chapter cut from The Illearth War)"
+    ],
+    "sources": [
+      "https://en.wikipedia.org/wiki/The_Chronicles_of_Thomas_Covenant"
+    ],
+    "notes": "The whole Chronicles are ten books in three sets: First Chronicles (the three already listed), Second Chronicles (1980-83) and Last Chronicles (2004-2013). If she wants this series to mean the First Chronicles trilogy only, the seven additions drop."
+  },
+  "The Saga of Larten Crepsley": {
+    "status": "complete",
+    "books": [
+      "Birth of a Killer",
+      "Ocean of Blood",
+      "Palace of the Damned",
+      "Brothers to the Death"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://en.wikipedia.org/wiki/The_Saga_of_Larten_Crepsley"
+    ],
+    "notes": "Four books (2010-2012)."
+  },
+  "Hierarchy": {
+    "status": "complete",
+    "books": [
+      "The Will of the Many",
+      "The Strength of the Few"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://en.wikipedia.org/wiki/The_Strength_of_the_Few",
+      "https://booksofbrilliance.com/2026/08/11/the-will-of-the-many-book-3-release-date-the-justice-of-one/"
+    ],
+    "notes": "Two books out (2023, Nov 2025). Book 3 is reportedly called The Justice of One (title from Islington's Dec 2025 update, per a fan site and Goodreads); no release date, so not added."
+  },
+  "The Hedge Witch Series": {
+    "status": "complete",
+    "books": [
+      "Bringing Down the Flowers",
+      "The Parsley Bed"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://bookscloud.io/products/bringing-down-the-flowers-paperback"
+    ],
+    "notes": "Denise Critchley (Copper Ink). Two books found: Bringing Down the Flowers (Apr 2025) and The Parsley Bed (Dec 2025, from her own copy's details). Little online about this series; no third book found."
+  },
+  "Solitaire": {
+    "status": "complete",
+    "books": [
+      "Solitaire",
+      "Nick and Charlie",
+      "This Winter"
+    ],
+    "added": [],
+    "extras": [
+      "Heartstopper (graphic-novel spin-off series about Nick and Charlie; a separate series)"
+    ],
+    "sources": [
+      "https://en.wikipedia.org/wiki/Solitaire_(Oseman_novel)"
+    ],
+    "notes": "Publication order kept (her choice pending): Solitaire (2014), Nick and Charlie (2015 novella), This Winter (2015 novella). Goodreads numbers This Winter #0.5 and Nick and Charlie #1.5."
+  },
+  "A Story for Every Day": {
+    "status": "complete",
+    "books": [
+      "A Story for Every Day of Summer",
+      "A Story for Every Day of Autumn",
+      "A Story for Every Day of Winter",
+      "A Story for Every Day of Spring"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://www.abebooks.co.uk/9798883050359/Story-Day-Spring-Year-Band/plp",
+      "https://www.rugbycafewriters.com"
+    ],
+    "notes": "The four seasons are the whole cycle (Spring 'completes a cycle of four seasonal collections'). The group's other anthologies (Get to the Point, Press Pause, Real Lives, Dive into a Story) are not part of this series."
+  },
+  "Discworld extras": {
+    "status": "complete",
+    "books": [
+      "The Streets of Ankh-Morpork",
+      "The Discworld Mapp",
+      "The Pratchett Portfolio",
+      "A Tourist Guide to Lancre",
+      "The New Discworld Companion|The Discworld Companion",
+      "The Art of Discworld",
+      "Where's My Cow?",
+      "The Wit and Wisdom of Discworld"
+    ],
+    "added": [],
+    "extras": [
+      "Death's Domain (1999, map)",
+      "The Compleat Ankh-Morpork City Guide (2012, map/guide)",
+      "The Compleat Discworld Atlas (2015)",
+      "Turtle Recall: The Discworld Companion . . . So Far (2012) and The Ultimate Discworld Companion (2021), later editions of the Companion",
+      "The Science of Discworld I-IV (1999, 2002, 2005, 2013)",
+      "The Unseen University Challenge (1996) and The Wyrdest Link (2002), quiz books",
+      "The Josh Kirby Discworld Portfolio (1993, art)",
+      "Nanny Ogg's Cookbook (1999)",
+      "The Discworld Almanak (2004)",
+      "The Ankh-Morpork Archives Vol. 1 (2019) and Vol. 2 (2020)",
+      "The World of Poo (2012)",
+      "The Nac Mac Feegle's Big Wee Alphabet Book (2022)",
+      "Mr Bunnsy Has an Adventure (2023)",
+      "The Unseen University Cut Out Book (2006)",
+      "The Folklore of Discworld (2008)",
+      "Mrs Bradshaw's Handbook (2014)",
+      "Tiffany Aching's Guide to Being a Witch (2023)",
+      "The Discworld Bestiary (2026)"
+    ],
+    "sources": [
+      "https://en.wikipedia.org/wiki/Discworld"
+    ],
+    "notes": "Added to series.json on 30 Oct after this task began (now position 82). It is an unnumbered group of companions, maps and art books, so there is no main-book order to complete; left unchanged. The extras are the other Discworld companion-type books, in case she wants the group to list more."
+  }
+}

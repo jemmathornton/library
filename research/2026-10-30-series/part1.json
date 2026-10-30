@@ -1,0 +1,665 @@
+{
+  "Harry Potter": {
+    "status": "complete",
+    "books": [
+      "Harry Potter and the Philosopher's Stone|Harry Potter and the Philosopher's Stone - Hufflepuff Edition",
+      "Harry Potter and the Chamber of Secrets",
+      "Harry Potter and the Prisoner of Azkaban",
+      "Harry Potter and the Goblet of Fire",
+      "Harry Potter and the Order of the Phoenix",
+      "Harry Potter and the Half-Blood Prince",
+      "Harry Potter and the Deathly Hallows",
+      "Harry Potter and the Cursed Child"
+    ],
+    "added": [],
+    "extras": [
+      "Short Stories from Hogwarts (three Pottermore Presents ebooks, 2016)",
+      "Hogwarts Library books and Fantastic Beasts screenplays are already their own series in series.json"
+    ],
+    "sources": [
+      "https://en.wikipedia.org/wiki/Harry_Potter"
+    ],
+    "notes": "Seven novels plus Cursed Child as 8 (her earlier choice). Existing entries kept as they are; US title 'Sorcerer's Stone' is not an alternative on book 1, only matters if she has a US copy."
+  },
+  "Malory Towers": {
+    "status": "complete",
+    "books": [
+      "First Term at Malory Towers",
+      "Second Form at Malory Towers|The Second Form at Malory Towers",
+      "Third Year at Malory Towers",
+      "Upper Fourth at Malory Towers",
+      "In the Fifth at Malory Towers",
+      "Last Term at Malory Towers",
+      "New Term at Malory Towers|Malory Towers: New Term",
+      "Summer Term at Malory Towers",
+      "Winter Term at Malory Towers",
+      "Fun and Games at Malory Towers|Fund and Games at Malory Towers",
+      "Secrets at Malory Towers",
+      "Goodbye Malory Towers"
+    ],
+    "added": [],
+    "extras": [
+      "New Class at Malory Towers (2019, four short stories by Patrice Lawrence, Narinder Dhami, Rebecca Westcott and Lucy Mangan; some shops call it #13)"
+    ],
+    "sources": [
+      "https://en.wikipedia.org/wiki/Malory_Towers",
+      "https://www.hachette.com.au/enid-blyton-rebecca-westcott-narinder-dhami-patrice-lawrence-lucy-mangan/malory-towers-new-class-at-malory-towers-four-brand-new-malory-towers"
+    ],
+    "notes": "Blyton's 6 (1946-51) plus Pamela Cox's 6 (2009), in the publisher's order."
+  },
+  "St Clare’s": {
+    "status": "complete",
+    "books": [
+      "The Twins at St Clare's",
+      "The O'Sullivan Twins",
+      "Summer Term at St Clare's",
+      "The Second Form at St Clare's|The Second Format St Clare's",
+      "The Third Form at St Clare's|Enid Blyton's Third Form at St Clare's",
+      "Kitty at St Clare's",
+      "Claudine at St Clare's",
+      "Fifth Formers at St Clare's|Fifth Formers of St Clare's",
+      "The Sixth Form at St Clare's|Enid Blyton's Sixth Form at St Clare's"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://en.wikipedia.org/wiki/St._Clare%27s_(series)"
+    ],
+    "notes": "Blyton's 6 with Pamela Cox's Third Form, Kitty and Sixth Form slotted in by form, as current editions number them."
+  },
+  "The Famous Five": {
+    "status": "complete",
+    "books": [
+      "Five on a Treasure Island",
+      "Five Go Adventuring Again",
+      "Five Run Away Together",
+      "Five Go to Smuggler's Top",
+      "Five Go Off in a Caravan",
+      "Five on Kirrin Island Again",
+      "Five Go Off to Camp",
+      "Five Get into Trouble",
+      "Five Fall into Adventure",
+      "Five on a Hike Together",
+      "Five Have a Wonderful Time",
+      "Five Go Down to the Sea",
+      "Five Go to Mystery Moor",
+      "Five Have Plenty of Fun",
+      "Five on a Secret Trail",
+      "Five Go to Billycock Hill",
+      "Five Get into a Fix",
+      "Five on Finniston Farm",
+      "Five Go to Demon's Rocks",
+      "Five Have a Mystery to Solve",
+      "Five Are Together Again"
+    ],
+    "added": [],
+    "extras": [
+      "The Famous Five Short Story Collection (Blyton's magazine stories, e.g. Five and a Half-Term Adventure)",
+      "Claude Voilier's French continuation (1971-85; some translated into English in the 1980s)",
+      "Bruno Vincent's 'Enid Blyton for Grown-Ups' parodies (Five Go Gluten Free etc.)"
+    ],
+    "sources": [
+      "https://en.wikipedia.org/wiki/The_Famous_Five_(novel_series)"
+    ],
+    "notes": "21 novels, 1942-63."
+  },
+  "The Secret Seven": {
+    "status": "complete",
+    "books": [
+      "The Secret Seven",
+      "Secret Seven Adventure",
+      "Well Done, Secret Seven",
+      "Secret Seven on the Trail",
+      "Go Ahead, Secret Seven",
+      "Good Work, Secret Seven",
+      "Secret Seven Win Through|The Secret Seven Win Through",
+      "Three Cheers, Secret Seven",
+      "Secret Seven Mystery",
+      "Puzzle for the Secret Seven",
+      "Secret Seven Fireworks",
+      "Good Old Secret Seven",
+      "Shock for the Secret Seven",
+      "Look Out, Secret Seven",
+      "Fun for the Secret Seven"
+    ],
+    "added": [],
+    "extras": [
+      "Pamela Butchart's official continuations: Mystery of the Skull (2018) and Mystery of the Theatre Ghost (2019) - unnumbered by the publisher; if added, the author field would need 'Butchart'",
+      "Seven Blyton short stories (At Seaside Cottage, Secret of the Old Mill, The Humbug Adventure, Adventure on the Way Home, An Afternoon with the Secret Seven, Where Are the Secret Seven?, Hurry, Secret Seven, Hurry!), collected as The Secret Seven Short Story Collection",
+      "Evelyne Lallemand's French continuation (1976-84)"
+    ],
+    "sources": [
+      "https://en.wikipedia.org/wiki/The_Secret_Seven",
+      "https://www.hachette.co.uk/titles/pamela-butchart/secret-seven-mystery-of-the-theatre-ghost/9781444941517"
+    ],
+    "notes": "Blyton's 15 novels, 1949-63."
+  },
+  "The Adventure Series": {
+    "status": "complete",
+    "books": [
+      "The Island of Adventure",
+      "The Castle of Adventure",
+      "The Valley of Adventure",
+      "The Sea of Adventure",
+      "The Mountain of Adventure",
+      "The Ship of Adventure",
+      "The Circus of Adventure",
+      "The River of Adventure"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://en.wikipedia.org/wiki/The_Adventure_Series"
+    ],
+    "notes": "Eight novels, 1944-55."
+  },
+  "The Wishing Chair": {
+    "status": "changed",
+    "books": [
+      "Adventures of the Wishing Chair",
+      "The Wishing Chair Again",
+      "More Wishing-Chair Stories|More Wishing Chair Stories"
+    ],
+    "added": [
+      "More Wishing-Chair Stories"
+    ],
+    "extras": [],
+    "sources": [
+      "https://en.wikipedia.org/wiki/The_Wishing-Chair_(series)",
+      "https://wherethewildthingsare.com.au/p/more-wishing-chair-stories-3-the-wishing-chair"
+    ],
+    "notes": "Added book 3, More Wishing-Chair Stories (2000): current editions number it #3, but it is a compilation of chapters cut from the first two books plus Sunny Stories material, so she may prefer to treat it as an extra."
+  },
+  "Discworld": {
+    "status": "complete",
+    "books": [
+      "The Colour of Magic",
+      "The Light Fantastic",
+      "Equal Rites",
+      "Mort",
+      "Sourcery",
+      "Wyrd Sisters",
+      "Pyramids",
+      "Guards! Guards!",
+      "Eric",
+      "Moving Pictures",
+      "Reaper Man",
+      "Witches Abroad",
+      "Small Gods",
+      "Lords and Ladies",
+      "Men at Arms",
+      "Soul Music",
+      "Interesting Times",
+      "Maskerade",
+      "Feet of Clay",
+      "Hogfather",
+      "Jingo",
+      "The Last Continent",
+      "Carpe Jugulum",
+      "The Fifth Elephant",
+      "The Truth",
+      "Thief of Time",
+      "The Last Hero",
+      "The Amazing Maurice and His Educated Rodents",
+      "Night Watch",
+      "The Wee Free Men",
+      "Monstrous Regiment",
+      "A Hat Full of Sky",
+      "Going Postal",
+      "Thud!",
+      "Wintersmith",
+      "Making Money",
+      "Unseen Academicals",
+      "I Shall Wear Midnight",
+      "Snuff",
+      "Raising Steam",
+      "The Shepherd's Crown"
+    ],
+    "added": [],
+    "extras": [
+      "Short stories (Troll Bridge, The Sea and Little Fishes, Theatre of Cruelty, Death and What Comes Next, A Collegiate Casting-Out of Devilish Devices; collected in A Blink of the Screen)",
+      "Children's picture books: Where's My Cow?, The World of Poo",
+      "Companions and maps: The Discworld Companion, Nanny Ogg's Cookbook, The Streets of Ankh-Morpork and the other Mapps, The Compleat Ankh-Morpork, Mrs Bradshaw's Handbook, The Folklore of Discworld"
+    ],
+    "sources": [
+      "https://en.wikipedia.org/wiki/Discworld"
+    ],
+    "notes": "All 41 novels, 1983-2015 (The Last Hero is illustrated but counts as novel 27)."
+  },
+  "The Science of Discworld": {
+    "status": "complete",
+    "books": [
+      "The Science of Discworld|The Science of Discworld Revised Edition",
+      "The Science of Discworld II: The Globe",
+      "The Science of Discworld III: Darwin's Watch|Science of Discworld III: Darwin's Watch",
+      "The Science of Discworld IV: Judgement Day"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://en.wikipedia.org/wiki/The_Science_of_Discworld"
+    ],
+    "notes": "Four books, 1999-2013."
+  },
+  "The Saga of Darren Shan": {
+    "status": "complete",
+    "books": [
+      "Cirque du Freak|Vampire Blood Trilogy",
+      "The Vampire's Assistant|Vampire Blood Trilogy",
+      "Tunnels of Blood|Vampire Blood Trilogy",
+      "Vampire Mountain",
+      "Trials of Death",
+      "The Vampire Prince",
+      "Hunters of the Dusk",
+      "Allies of the Night",
+      "Killers of the Dawn",
+      "The Lake of Souls",
+      "Lord of the Shadows",
+      "Sons of Destiny"
+    ],
+    "added": [],
+    "extras": [
+      "Cirque du Freak manga (Takahiro Arai, 12 volumes)",
+      "Short stories on Darren Shan's website (e.g. Annie's Diary, Shanta Claus, Bride of Sam Grest)",
+      "The Saga of Larten Crepsley is already its own series in series.json"
+    ],
+    "sources": [
+      "https://en.wikipedia.org/wiki/The_Saga_of_Darren_Shan"
+    ],
+    "notes": "12 books, 2000-04. US editions are titled 'Cirque du Freak' + subtitle (e.g. A Living Nightmare); the entries don't carry those, only matters for US copies."
+  },
+  "The Demonata": {
+    "status": "complete",
+    "books": [
+      "Lord Loss",
+      "Demon Thief",
+      "Slawter",
+      "Bec|The Demonata - Bec",
+      "Blood Beast",
+      "Demon Apocalypse|Demon Apocalypes",
+      "Death's Shadow",
+      "Wolf Island|The Demonata - Wolf Island",
+      "Dark Calling",
+      "Hell's Heroes"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://en.wikipedia.org/wiki/The_Demonata"
+    ],
+    "notes": "10 books, 2005-09, in publication order (the storyline order differs: Bec and Demon Thief come first in time)."
+  },
+  "Mates, Dates": {
+    "status": "complete",
+    "books": [
+      "Mates, Dates and Inflatable Bras",
+      "Mates, Dates and Cosmic Kisses",
+      "Mates, Dates and Portobello Princesses",
+      "Mates, Dates and Sleepover Secrets",
+      "Mates, Dates and Sole Survivors",
+      "Mates, Dates and Mad Mistakes",
+      "Mates, Dates and Pulling Power",
+      "Mates, Dates and Tempting Trouble",
+      "Mates, Dates and Great Escapes",
+      "Mates, Dates and Chocolate Cheats",
+      "Mates, Dates and Diamond Destiny",
+      "Mates, Dates and Sizzling Summers"
+    ],
+    "added": [],
+    "extras": [
+      "Mates, Dates and Saving the Planet (2008, guide)",
+      "Mates, Dates and Flirting (2008, guide)",
+      "The Mates, Dates Guide to Life, Love and Looking Luscious (guide)",
+      "Mates, Dates: The Secret Story (companion retelling Lucy and Tony's romance)",
+      "Mates, Dates and You (journal)",
+      "Spin-off: Truth, Dare, Kiss or Promise series (same characters)"
+    ],
+    "sources": [
+      "https://en.wikipedia.org/wiki/Mates,_Dates_series",
+      "https://www.fictiondb.com/title/mates-dates-and-saving-the-planet~cathy-hopkins~811282.htm"
+    ],
+    "notes": "12 novels. Wikipedia numbers the guide books 13-17 but they aren't novels. US titles: Designer Divas (= Portobello Princesses), Sequin Smiles (= Pulling Power)."
+  },
+  "Heartstopper": {
+    "status": "changed",
+    "books": [
+      "Heartstopper Volume 1",
+      "Heartstopper Volume 2",
+      "Heartstopper Volume 3",
+      "Heartstopper Volume 4",
+      "Heartstopper Volume 5",
+      "Heartstopper Volume 6"
+    ],
+    "added": [
+      "Heartstopper Volume 6"
+    ],
+    "extras": [
+      "Nick and Charlie (novella)",
+      "This Winter (novella)",
+      "The Heartstopper Yearbook",
+      "Solitaire is already its own series in series.json"
+    ],
+    "sources": [
+      "https://aliceoseman.com/graphic-novel/heartstopper-volume-six/",
+      "https://www.thepinknews.com/2025/09/24/alice-oseman-confirms-heartstopper-volume-6-release-date-almost-time-to-say-goodbye"
+    ],
+    "notes": "Volume 6, the final volume, came out on 2 July 2026 (Hodder Children's Books)."
+  },
+  "Pendragon": {
+    "status": "complete",
+    "books": [
+      "The Merchant of Death",
+      "The Lost City of Faar",
+      "The Never War",
+      "The Reality Bug",
+      "Black Water",
+      "The Rivers of Zadaa",
+      "The Quillan Games|Quillan Games",
+      "The Pilgrims of Rayne",
+      "Raven Rise|Pendragon: Raven Rise",
+      "The Soldiers of Halla"
+    ],
+    "added": [],
+    "extras": [
+      "Pendragon: Before the War - prequel trilogy (2009) by other writers under D. J. MacHale: Book One/Two/Three of the Travelers",
+      "Pendragon: The Guide to the Territories of Halla (companion)",
+      "The Merchant of Death graphic novel"
+    ],
+    "sources": [
+      "https://en.wikipedia.org/wiki/Pendragon:_Journal_of_an_Adventure_through_Time_and_Space"
+    ],
+    "notes": "10 books, 2001-09."
+  },
+  "Artemis Fowl": {
+    "status": "complete",
+    "books": [
+      "Artemis Fowl",
+      "The Arctic Incident",
+      "The Eternity Code|Artemis Fowl: The Eternity Code",
+      "The Opal Deception",
+      "The Lost Colony|Artemis Fowl and the Lost Colony",
+      "The Time Paradox|The Artemis Fowl: Time Paradox",
+      "The Atlantis Complex",
+      "The Last Guardian"
+    ],
+    "added": [],
+    "extras": [
+      "The Artemis Fowl Files (2004: novellas LEPrecon and The Seventh Dwarf plus extras)",
+      "Graphic-novel adaptations of books 1-6",
+      "The Fowl Twins (separate sequel series: The Fowl Twins, Deny All Charges, Get What They Deserve)"
+    ],
+    "sources": [
+      "https://en.wikipedia.org/wiki/Artemis_Fowl"
+    ],
+    "notes": "8 books, 2001-12."
+  },
+  "The Black Magician": {
+    "status": "changed",
+    "books": [
+      "The Magicians' Guild",
+      "The Novice",
+      "The High Lord",
+      "The Magician's Apprentice"
+    ],
+    "added": [
+      "The Magician's Apprentice"
+    ],
+    "extras": [],
+    "sources": [
+      "https://www.goodreads.com/author_blog_posts/1145538-which-order-should-i-read-your-books-in",
+      "https://trudicanavan.com/books/"
+    ],
+    "notes": "Added The Magician's Apprentice (2009), a full novel set about 600 years before the trilogy. Trudi Canavan calls it a stand-alone that 'can be read at any point', so it goes at the end in publication order. Her call whether it belongs here or stays outside the trilogy."
+  },
+  "Traitor Spy": {
+    "status": "complete",
+    "books": [
+      "The Ambassador's Mission",
+      "The Rogue",
+      "The Traitor Queen"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://www.goodreads.com/author_blog_posts/1145538-which-order-should-i-read-your-books-in",
+      "https://trudicanavan.com/books/"
+    ],
+    "notes": "Trilogy, 2010-12. No later Kyralia books announced."
+  },
+  "Age of the Five": {
+    "status": "complete",
+    "books": [
+      "Priestess of the White",
+      "Last of the Wilds",
+      "Voice of the Gods"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://trudicanavan.com/books/"
+    ],
+    "notes": "Trilogy, 2005-06."
+  },
+  "Girls": {
+    "status": "changed",
+    "books": [
+      "Girls in Love",
+      "Girls Under Pressure",
+      "Girls Out Late",
+      "Girls in Tears",
+      "Think Again"
+    ],
+    "added": [
+      "Think Again"
+    ],
+    "extras": [],
+    "sources": [
+      "https://stylist.co.uk/books/jacqueline-wilson-girls-series-sequel/873886",
+      "https://www.irishexaminer.com/lifestyle/artsandculture/arid-41457217.html"
+    ],
+    "notes": "Added Think Again (Sept 2024): Jacqueline Wilson's first adult novel, a sequel following Ellie, Magda and Nadine near 40. Not numbered by the publisher, so her call whether it counts."
+  },
+  "The Adventure Zone": {
+    "status": "changed",
+    "books": [
+      "Here There Be Gerblins|The Adventure Zone",
+      "Murder on the Rockport Limited|The Adventure Zone: Murder on the Rockport Limited",
+      "Petals to the Metal|The Adventure Zone: Petals to the Metal",
+      "The Crystal Kingdom|The Adventure Zone: the Crystal Kingdom",
+      "The Eleventh Hour|The Adventure Zone: the Eleventh Hour",
+      "The Suffering Game|The Adventure Zone: The Suffering Game",
+      "Story and Song|The Adventure Zone: Story and Song|The Adventure Zone: Story & Song|Story & Song"
+    ],
+    "added": [
+      "The Suffering Game",
+      "Story and Song"
+    ],
+    "extras": [],
+    "sources": [
+      "https://highfivebooks.org/products/the-adventure-zone-the-suffering-game-the-adventure-zone-6",
+      "https://www.comicsbeat.com/preview-get-a-sneak-peek-at-the-adventure-zone-grand-finale/",
+      "https://www.dandelionbookshop.com/items/story-and-song-mhmaq94q2l9qmlrl"
+    ],
+    "notes": "Book 6 The Suffering Game (July 2024) and book 7 Story and Song (14 July 2026, the final volume, covering the Stolen Century and Story and Song arcs)."
+  },
+  "Noughts & Crosses": {
+    "status": "complete",
+    "books": [
+      "Noughts & Crosses|Noughts and Crosses",
+      "Knife Edge",
+      "Checkmate",
+      "Double Cross",
+      "Crossfire",
+      "Endgame"
+    ],
+    "added": [],
+    "extras": [
+      "An Eye for an Eye (2003 World Book Day novella)",
+      "Callum (2012 World Book Day novella)",
+      "Nought Forever (2019 World Book Day novella, prequel to Crossfire)",
+      "Noughts & Crosses graphic novel adaptation"
+    ],
+    "sources": [
+      "https://en.wikipedia.org/wiki/Noughts_%26_Crosses_(novel_series)"
+    ],
+    "notes": "6 novels, 2001-21; Endgame is described as the final book."
+  },
+  "Alex Rider": {
+    "status": "changed",
+    "books": [
+      "Stormbreaker",
+      "Point Blanc",
+      "Skeleton Key",
+      "Eagle Strike",
+      "Scorpia",
+      "Ark Angel",
+      "Snakehead",
+      "Crocodile Tears",
+      "Scorpia Rising",
+      "Russian Roulette",
+      "Never Say Die",
+      "Nightshade",
+      "Nightshade Revenge"
+    ],
+    "added": [
+      "Russian Roulette",
+      "Never Say Die",
+      "Nightshade",
+      "Nightshade Revenge"
+    ],
+    "extras": [
+      "Secret Weapon (2019, seven short stories) - the official site numbers it Mission 12, between Never Say Die and Nightshade; left out as a short-story collection, her call",
+      "Alex Rider: Undercover (World Book Day 2020) and other short stories (A Taste of Death, Incident in Nice, Alex Underground)",
+      "Companions: The Gadgets, The Mission Files; graphic novels of books 1-6"
+    ],
+    "sources": [
+      "https://www.alexrider.com/books/",
+      "https://en.wikipedia.org/wiki/Alex_Rider_(book_series)"
+    ],
+    "notes": "Official order adds Russian Roulette (10, 2013, Yassen's story, a prequel kept where the publisher numbers it), Never Say Die (11, 2017), Nightshade (13, 2020), Nightshade Revenge (14, 2023). No newer Alex Rider novel found as of Oct 2026."
+  },
+  "Simon Snow": {
+    "status": "complete",
+    "books": [
+      "Carry On",
+      "Wayward Son",
+      "Any Way the Wind Blows"
+    ],
+    "added": [],
+    "extras": [
+      "Snow for Christmas (2021 novella)",
+      "Fangirl (2013) - the novel where Simon Snow first appears as a fictional series"
+    ],
+    "sources": [
+      "https://www.rainbowrowell.com/books"
+    ],
+    "notes": "Trilogy, 2015-21."
+  },
+  "The Neapolitan Novels": {
+    "status": "complete",
+    "books": [
+      "My Brilliant Friend",
+      "The Story of a New Name",
+      "Those Who Leave and Those Who Stay",
+      "The Story of the Lost Child|Story of the Lost Child, The"
+    ],
+    "added": [],
+    "extras": [],
+    "sources": [
+      "https://en.wikipedia.org/wiki/Neapolitan_Novels"
+    ],
+    "notes": "Four novels, 2011-14."
+  },
+  "The Wicked Years": {
+    "status": "changed",
+    "books": [
+      "Wicked",
+      "Son of a Witch",
+      "A Lion Among Men",
+      "Out of Oz",
+      "Elphie: A Wicked Childhood|Elphie",
+      "Galinda: A Charmed Childhood|Galinda"
+    ],
+    "added": [
+      "Elphie: A Wicked Childhood",
+      "Galinda: A Charmed Childhood"
+    ],
+    "extras": [
+      "Tales Told in Oz (2012, short collection)",
+      "The Another Day trilogy (separate sequel series about Elphaba's granddaughter Rain): The Brides of Maracoor (2021), The Oracle of Maracoor (2022), The Witch of Maracoor (2023)",
+      "Wicked graphic novels"
+    ],
+    "sources": [
+      "https://www.goodreads.com/series/43509",
+      "https://www.hachette.com.au/gregory-maguire/elphie-a-wicked-childhood",
+      "https://www.broadwayworld.com/article/Gregory-Maguire-Releasing-WICKED-Prequel-Galinda-A-Charmed-Childhood-in-2026-2025112"
+    ],
+    "notes": "Added the two prequel novels in publication order: Elphie (2025) and Galinda (29 Sept 2026). They are set before/within Wicked (Goodreads numbers them #0 and #0.25) but Maguire hasn't given an order, so they go last. Her call whether to move them first."
+  },
+  "The Murderbot Diaries": {
+    "status": "changed",
+    "books": [
+      "All Systems Red",
+      "Artificial Condition",
+      "Rogue Protocol",
+      "Exit Strategy",
+      "Network Effect",
+      "Fugitive Telemetry",
+      "System Collapse",
+      "Platform Decay"
+    ],
+    "added": [
+      "Platform Decay"
+    ],
+    "extras": [
+      "Compulsory (2018 short story; longer edition 2023)",
+      "Home: Habitat, Range, Niche, Territory (2021 short story)",
+      "Rapport: Friendship, Solidarity, Communion, Empathy (2025 short story)"
+    ],
+    "sources": [
+      "https://en.wikipedia.org/wiki/The_Murderbot_Diaries",
+      "https://www.space.com/entertainment/space-books/martha-wells-next-murderbot-diaries-book-is-the-family-roadtrip-from-hell-on-ringworld-interview"
+    ],
+    "notes": "Added book 8, Platform Decay (5 May 2026). Publication order kept; in story order Fugitive Telemetry (6) comes before Network Effect (5)."
+  },
+  "Bobiverse": {
+    "status": "changed",
+    "books": [
+      "We Are Legion (We Are Bob)|We Are Legion",
+      "For We Are Many",
+      "All These Worlds",
+      "Heaven's River",
+      "Not Till We Are Lost",
+      "The Infinite Extent"
+    ],
+    "added": [
+      "The Infinite Extent"
+    ],
+    "extras": [],
+    "sources": [
+      "https://www.barnesandnoble.com/w/the-infinite-extent-dennis-e-taylor/1151461360",
+      "https://bleedingcool.com/tv/bobiverse-author-narrator-discuss-book-6-the-infinite-extent/"
+    ],
+    "notes": "Added book 6, The Infinite Extent: out as an Audible audiobook in Sept/Oct 2026; the print hardcover is due 5 Jan 2027. A book 7 is listed as upcoming with no title."
+  },
+  "Uglies": {
+    "status": "complete",
+    "books": [
+      "Uglies",
+      "Pretties",
+      "Specials|Specials Pa",
+      "Extras|Extras Pa"
+    ],
+    "added": [],
+    "extras": [
+      "Impostors (sequel series in the same world, 2018-22): Impostors, Shatter City, Mirror's Edge, Youngbloods (Youngbloods brings Tally back)",
+      "Bogus to Bubbly: An Insider's Guide to the World of Uglies (2008)",
+      "Graphic novels: Shay's Story, Cutters"
+    ],
+    "sources": [
+      "https://en.wikipedia.org/wiki/Uglies_(novel_series)",
+      "https://www.goodreads.com/series/245337-impostors"
+    ],
+    "notes": "Original four, 2005-07. The Impostors books are their own numbered series, so listed as extras (like Traitor Spy being separate from The Black Magician)."
+  }
+}

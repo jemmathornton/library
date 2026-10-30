@@ -115,7 +115,8 @@
    "author": "Blyton",
    "books": [
     "Adventures of the Wishing Chair",
-    "The Wishing Chair Again"
+    "The Wishing Chair Again",
+    "More Wishing-Chair Stories|More Wishing Chair Stories"
    ]
   },
   {
@@ -235,7 +236,8 @@
     "Heartstopper Volume 2",
     "Heartstopper Volume 3",
     "Heartstopper Volume 4",
-    "Heartstopper Volume 5"
+    "Heartstopper Volume 5",
+    "Heartstopper Volume 6"
    ]
   },
   {
@@ -274,7 +276,8 @@
    "books": [
     "The Magicians' Guild",
     "The Novice",
-    "The High Lord"
+    "The High Lord",
+    "The Magician's Apprentice"
    ]
   },
   {
@@ -302,7 +305,8 @@
     "Girls in Love",
     "Girls Under Pressure",
     "Girls Out Late",
-    "Girls in Tears"
+    "Girls in Tears",
+    "Think Again"
    ]
   },
   {
@@ -313,7 +317,9 @@
     "Murder on the Rockport Limited|The Adventure Zone: Murder on the Rockport Limited",
     "Petals to the Metal|The Adventure Zone: Petals to the Metal",
     "The Crystal Kingdom|The Adventure Zone: the Crystal Kingdom",
-    "The Eleventh Hour|The Adventure Zone: the Eleventh Hour"
+    "The Eleventh Hour|The Adventure Zone: the Eleventh Hour",
+    "The Suffering Game|The Adventure Zone: The Suffering Game",
+    "Story and Song|The Adventure Zone: Story and Song|The Adventure Zone: Story & Song|Story & Song"
    ]
   },
   {
@@ -340,7 +346,11 @@
     "Ark Angel",
     "Snakehead",
     "Crocodile Tears",
-    "Scorpia Rising"
+    "Scorpia Rising",
+    "Russian Roulette",
+    "Never Say Die",
+    "Nightshade",
+    "Nightshade Revenge"
    ]
   },
   {
@@ -369,7 +379,9 @@
     "Wicked",
     "Son of a Witch",
     "A Lion Among Men",
-    "Out of Oz"
+    "Out of Oz",
+    "Elphie: A Wicked Childhood|Elphie",
+    "Galinda: A Charmed Childhood|Galinda"
    ]
   },
   {
@@ -382,7 +394,8 @@
     "Exit Strategy",
     "Network Effect",
     "Fugitive Telemetry",
-    "System Collapse"
+    "System Collapse",
+    "Platform Decay"
    ]
   },
   {
@@ -393,7 +406,8 @@
     "For We Are Many",
     "All These Worlds",
     "Heaven's River",
-    "Not Till We Are Lost"
+    "Not Till We Are Lost",
+    "The Infinite Extent"
    ]
   },
   {
@@ -421,7 +435,8 @@
     "The Sisterhood of the Traveling Pants",
     "The Second Summer of the Sisterhood",
     "Girls in Pants",
-    "Forever in Blue"
+    "Forever in Blue",
+    "Sisterhood Everlasting"
    ]
   },
   {
@@ -431,7 +446,11 @@
     "Spring Story|Brambly Hedge Spring Story",
     "Summer Story",
     "Autumn Story|Autumn Story Bramley Hedge|Autumn Story Brambly Hedge",
-    "Winter Story|Brambly Hedge Winter Story"
+    "Winter Story|Brambly Hedge Winter Story",
+    "The Secret Staircase",
+    "The High Hills",
+    "Sea Story",
+    "Poppy's Babies"
    ]
   },
   {
@@ -523,7 +542,9 @@
    "books": [
     "The Hunger Games",
     "Catching Fire",
-    "Mockingjay"
+    "Mockingjay",
+    "The Ballad of Songbirds and Snakes",
+    "Sunrise on the Reaping"
    ]
   },
   {
@@ -532,7 +553,10 @@
    "books": [
     "Poison Study",
     "Magic Study",
-    "Fire Study"
+    "Fire Study",
+    "Shadow Study",
+    "Night Study",
+    "Dawn Study"
    ]
   },
   {
@@ -541,7 +565,8 @@
    "books": [
     "The Amulet of Samarkand",
     "The Golem's Eye",
-    "Ptolemy's Gate"
+    "Ptolemy's Gate",
+    "The Ring of Solomon"
    ]
   },
   {
@@ -550,7 +575,10 @@
    "books": [
     "Sabriel",
     "Lirael",
-    "Abhorsen"
+    "Abhorsen",
+    "Clariel|Clariel: The Lost Abhorsen",
+    "Goldenhand",
+    "Terciel & Elinor|Terciel and Elinor"
    ]
   },
   {
@@ -559,7 +587,8 @@
    "books": [
     "City of Last Chances",
     "House of Open Wounds",
-    "Days of Shattered Faith"
+    "Days of Shattered Faith",
+    "Pretenders to the Throne of God"
    ]
   },
   {
@@ -667,7 +696,10 @@
    "author": "Kershaw",
    "books": [
     "Didikai Witch",
-    "Demon Lupus"
+    "Demon Lupus",
+    "Vampire Sorceress",
+    "Lycan Lamia",
+    "Lemurian Dimensions"
    ]
   },
   {
@@ -780,7 +812,8 @@
     "Tales from the Cafe|Tales from the Café",
     "Before Your Memory Fades",
     "Before We Say Goodbye",
-    "Before We Forget Kindness"
+    "Before We Forget Kindness",
+    "Before I Knew I Loved You"
    ]
   },
   {
@@ -797,7 +830,8 @@
    "books": [
     "Mother of Learning: Arc 1|Mother of Learning: ARC 1",
     "Mother of Learning: Arc 2|Mother of Learning: ARC 2",
-    "Mother of Learning: Arc 3|Mother of Learning: ARC 3"
+    "Mother of Learning: Arc 3|Mother of Learning: ARC 3",
+    "Mother of Learning: Arc 4|Mother of Learning: ARC 4"
    ]
   },
   {
@@ -805,7 +839,8 @@
    "author": "Lockhart",
    "books": [
     "We Were Liars",
-    "Family of Liars"
+    "Family of Liars",
+    "We Fell Apart"
    ]
   },
   {
@@ -865,7 +900,10 @@
     "The Last of the Sky Pirates",
     "Vox",
     "Freeglader",
-    "The Immortals"
+    "The Immortals",
+    "The Nameless One",
+    "Doombringer",
+    "The Descenders"
    ]
   },
   {
@@ -874,7 +912,11 @@
    "books": [
     "Foundation",
     "Foundation and Empire",
-    "Second Foundation"
+    "Second Foundation",
+    "Foundation's Edge",
+    "Foundation and Earth",
+    "Prelude to Foundation",
+    "Forward the Foundation"
    ]
   },
   {
@@ -896,7 +938,14 @@
    "books": [
     "Lord Foul's Bane",
     "The Illearth War",
-    "The Power That Preserves"
+    "The Power That Preserves",
+    "The Wounded Land",
+    "The One Tree",
+    "White Gold Wielder",
+    "The Runes of the Earth",
+    "Fatal Revenant",
+    "Against All Things Ending",
+    "The Last Dark"
    ]
   },
   {
@@ -957,6 +1006,271 @@
     "The Art of Discworld",
     "Where's My Cow?",
     "The Wit and Wisdom of Discworld"
+   ]
+  },
+  {
+   "name": "The Rowan Five",
+   "author": "greaves",
+   "books": [
+    "The Rowan Five and The Whispers of Ashwyke|The Rowan Five and The Whispers of Ashwyke: 1"
+   ]
+  },
+  {
+   "name": "The Pattern Seekers",
+   "author": "greaves",
+   "books": [
+    "The Wetherford Code|The Wetherford Code: 1 (The Pattern Seekers)"
+   ]
+  },
+  {
+   "name": "The No. 1 Ladies’ Detective Agency",
+   "author": "mccall smith",
+   "books": [
+    "The No. 1 Ladies' Detective Agency",
+    "Tears of the Giraffe",
+    "Morality for Beautiful Girls",
+    "The Kalahari Typing School for Men",
+    "The Full Cupboard of Life",
+    "In the Company of Cheerful Ladies",
+    "Blue Shoes and Happiness",
+    "The Good Husband of Zebra Drive",
+    "The Miracle at Speedy Motors",
+    "Tea Time for the Traditionally Built",
+    "The Double Comfort Safari Club",
+    "The Saturday Big Tent Wedding Party",
+    "The Limpopo Academy of Private Detection",
+    "The Minor Adjustment Beauty Salon",
+    "The Handsome Man's De Luxe Café|The Handsome Man's De Luxe Cafe",
+    "The Woman Who Walked in Sunshine",
+    "Precious and Grace",
+    "The House of Unexpected Sisters",
+    "The Colours of All the Cattle|The Colors of All the Cattle",
+    "To the Land of Long Lost Friends",
+    "How to Raise an Elephant",
+    "The Joy and Light Bus Company",
+    "A Song of Comfortable Chairs",
+    "From a Far and Lovely Country",
+    "The Great Hippopotamus Hotel",
+    "In the Time of Five Pumpkins",
+    "The Big Cats Dance Party"
+   ]
+  },
+  {
+   "name": "Johnny Maxwell",
+   "author": "pratchett",
+   "books": [
+    "Only You Can Save Mankind",
+    "Johnny and the Dead",
+    "Johnny and the Bomb"
+   ]
+  },
+  {
+   "name": "Scarlett",
+   "author": "johnson",
+   "books": [
+    "Suite Scarlett",
+    "Scarlett Fever"
+   ]
+  },
+  {
+   "name": "Truly Devious",
+   "author": "johnson",
+   "books": [
+    "Truly Devious",
+    "The Vanishing Stair",
+    "The Hand on the Wall",
+    "The Box in the Woods",
+    "Nine Liars",
+    "The Velvet Knife"
+   ]
+  },
+  {
+   "name": "The Broken Earth",
+   "author": "jemisin",
+   "books": [
+    "The Fifth Season",
+    "The Obelisk Gate",
+    "The Stone Sky"
+   ]
+  },
+  {
+   "name": "The Daevabad Trilogy",
+   "author": "chakraborty",
+   "books": [
+    "The City of Brass|The City  of Brass",
+    "The Kingdom of Copper",
+    "The Empire of Gold"
+   ]
+  },
+  {
+   "name": "Kosuke Kindaichi",
+   "author": "yokomizo",
+   "books": [
+    "The Honjin Murders",
+    "The Inugami Curse",
+    "The Village of Eight Graves",
+    "Death on Gokumon Island",
+    "The Devil's Flute Murders",
+    "The Little Sparrow Murders",
+    "Murder at the Black Cat Cafe|Murder at the Black Cat Café",
+    "She Walks at Night"
+   ]
+  },
+  {
+   "name": "Lilith’s Brood",
+   "author": "butler",
+   "books": [
+    "Dawn",
+    "Adulthood Rites",
+    "Imago"
+   ]
+  },
+  {
+   "name": "The Hitchhiker’s Guide to the Galaxy",
+   "author": "adams",
+   "books": [
+    "The Hitchhiker's Guide to the Galaxy",
+    "The Restaurant at the End of the Universe",
+    "Life, the Universe and Everything",
+    "So Long, and Thanks for All the Fish",
+    "Mostly Harmless"
+   ]
+  },
+  {
+   "name": "Robert Langdon",
+   "author": "brown",
+   "books": [
+    "Angels & Demons|Angels and Demons",
+    "The Da Vinci Code",
+    "The Lost Symbol",
+    "Inferno",
+    "Origin",
+    "The Secret of Secrets"
+   ]
+  },
+  {
+   "name": "Jack McEvoy",
+   "author": "connelly",
+   "books": [
+    "The Poet",
+    "The Scarecrow",
+    "Fair Warning"
+   ]
+  },
+  {
+   "name": "The Book of Lost Things",
+   "author": "connolly",
+   "books": [
+    "The Book of Lost Things",
+    "The Land of Lost Things"
+   ]
+  },
+  {
+   "name": "The Miniaturist",
+   "author": "burton",
+   "books": [
+    "The Miniaturist",
+    "The House of Fortune"
+   ]
+  },
+  {
+   "name": "If I Stay",
+   "author": "forman",
+   "books": [
+    "If I Stay",
+    "Where She Went"
+   ]
+  },
+  {
+   "name": "Stephen Fry’s Greek Myths",
+   "author": "fry",
+   "books": [
+    "Mythos|Mythos: A Retelling of the Myths of Ancient Greece",
+    "Heroes",
+    "Troy",
+    "Odyssey"
+   ]
+  },
+  {
+   "name": "Dune",
+   "author": "herbert",
+   "books": [
+    "Dune",
+    "Dune Messiah",
+    "Children of Dune",
+    "God Emperor of Dune",
+    "Heretics of Dune",
+    "Chapterhouse: Dune"
+   ]
+  },
+  {
+   "name": "Holes",
+   "author": "sachar",
+   "books": [
+    "Holes",
+    "Small Steps"
+   ]
+  },
+  {
+   "name": "The Diary of a Bookseller",
+   "author": "bythell",
+   "books": [
+    "The Diary of a Bookseller",
+    "Confessions of a Bookseller",
+    "Remainders of the Day",
+    "Return of the Bookseller Diarist"
+   ]
+  },
+  {
+   "name": "Lights Out",
+   "author": "soltani",
+   "books": [
+    "Cross the Line",
+    "Ride with Me",
+    "Crash into You"
+   ]
+  },
+  {
+   "name": "The Power of Five",
+   "author": "horowitz",
+   "books": [
+    "Raven's Gate",
+    "Evil Star",
+    "Nightrise",
+    "Necropolis",
+    "Oblivion"
+   ]
+  },
+  {
+   "name": "The Carls",
+   "author": "green",
+   "books": [
+    "An Absolutely Remarkable Thing",
+    "A Beautifully Foolish Endeavor|A Beautifully Foolish Endeavour"
+   ]
+  },
+  {
+   "name": "Parahumans",
+   "author": "wildbow|mccrae",
+   "books": [
+    "Worm",
+    "Ward"
+   ]
+  },
+  {
+   "name": "The Saga of the Unfated",
+   "author": "jensen",
+   "books": [
+    "A Fate Inked in Blood|A Fate Inked In Blood",
+    "A Curse Carved in Bone"
+   ]
+  },
+  {
+   "name": "Deighton Academy",
+   "author": "cummings",
+   "books": [
+    "The Moon Is a Door|The Moon is a Door",
+    "Star Crossed Curses"
    ]
   }
  ]

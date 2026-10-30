@@ -1,0 +1,510 @@
+{
+ "Little Blue Envelopes": {
+  "status": "complete",
+  "books": [
+   "13 Little Blue Envelopes",
+   "The Last Little Blue Envelope"
+  ],
+  "added": [],
+  "extras": [],
+  "sources": [
+   "https://thriftbooks.com/series/little-blue-envelope/38172",
+   "https://en.wikipedia.org/wiki/Maureen_Johnson"
+  ],
+  "notes": "Two books: 13 Little Blue Envelopes (2005), The Last Little Blue Envelope (2011). Same titles in the UK."
+ },
+ "The Sisterhood of the Traveling Pants": {
+  "status": "changed",
+  "books": [
+   "The Sisterhood of the Traveling Pants",
+   "The Second Summer of the Sisterhood",
+   "Girls in Pants",
+   "Forever in Blue",
+   "Sisterhood Everlasting"
+  ],
+  "added": [
+   "Sisterhood Everlasting"
+  ],
+  "extras": [
+   "3 Willows: The Sisterhood Grows (2009, spin-off with new characters; the original four appear only in passing)"
+  ],
+  "sources": [
+   "https://en.wikipedia.org/wiki/The_Sisterhood_of_the_Traveling_Pants",
+   "https://www.penguinrandomhouse.com/series/STV/the-sisterhood-of-the-traveling-pants"
+  ],
+  "notes": "Book 5, Sisterhood Everlasting (2011), is set about ten years later; same title in the UK and US. UK editions spell the first title 'Travelling'; her existing entry was left as it is."
+ },
+ "Brambly Hedge": {
+  "status": "changed",
+  "books": [
+   "Spring Story|Brambly Hedge Spring Story",
+   "Summer Story",
+   "Autumn Story|Autumn Story Bramley Hedge|Autumn Story Brambly Hedge",
+   "Winter Story|Brambly Hedge Winter Story",
+   "The Secret Staircase",
+   "The High Hills",
+   "Sea Story",
+   "Poppy's Babies"
+  ],
+  "added": [
+   "The Secret Staircase",
+   "The High Hills",
+   "Sea Story",
+   "Poppy's Babies"
+  ],
+  "extras": [
+   "Stories from Brambly Hedge: Wilfred to the Rescue (2005) and Primrose in Charge (2006), by Alan MacDonald, not Jill Barklem",
+   "Collections: The Four Seasons of Brambly Hedge, The Brambly Hedge Treasury, The Complete Brambly Hedge, A Year in Brambly Hedge, Brambly Hedge: The Classic Collection"
+  ],
+  "sources": [
+   "https://en.wikipedia.org/wiki/Brambly_Hedge"
+  ],
+  "notes": "Jill Barklem wrote eight: the four seasons (1980), then The Secret Staircase (1983), The High Hills (1986), Sea Story (1990), Poppy's Babies (1994). Publication order."
+ },
+ "Shades of Magic": {
+  "status": "complete",
+  "books": [
+   "A Darker Shade of Magic",
+   "A Gathering of Shadows",
+   "A Conjuring of Light"
+  ],
+  "added": [],
+  "extras": [
+   "The Fragile Threads of Power (2023): book 1 of Threads of Power, the sequel trilogy (book 2 not yet titled)",
+   "Graphic novels: The Steel Prince, Night of Knives, The Rebel Army"
+  ],
+  "sources": [
+   "https://www.goodreads.com/series/213849-threads-of-power",
+   "https://shadesofmagic.fandom.com/wiki/Threads_of_Power"
+  ],
+  "notes": "The trilogy is complete. Threads of Power is a separate sequel series, listed under extras."
+ },
+ "Licanius": {
+  "status": "complete",
+  "books": [
+   "The Shadow of What Was Lost",
+   "An Echo of Things to Come",
+   "The Light of All That Falls"
+  ],
+  "added": [],
+  "extras": [],
+  "sources": [
+   "https://www.hachette.co.nz/james-islington/the-light-of-all-that-falls-book-3-of-the-licanius-trilogy",
+   "https://www.audible.co.uk/series/The-Licanius-Trilogy-Audiobooks/B00S8QMYIO"
+  ],
+  "notes": "Trilogy; The Light of All That Falls is the last book."
+ },
+ "The Inheritance Cycle": {
+  "status": "complete",
+  "books": [
+   "Eragon",
+   "Eldest",
+   "Brisingr",
+   "Inheritance"
+  ],
+  "added": [],
+  "extras": [
+   "Murtagh (2023): full novel set a year after Inheritance; the publisher sells it as a standalone in 'The World of Eragon', Paolini calls it a direct sequel. A Murtagh sequel is announced, title not yet given",
+   "The Fork, the Witch, and the Worm: Tales from Alagaësia Volume 1 (2018, short stories)",
+   "Eragon's Guide to Alagaësia (2009, companion)"
+  ],
+  "sources": [
+   "https://en.wikipedia.org/wiki/Inheritance_Cycle",
+   "https://reactormag.com/christopher-paolini-returns-to-the-world-of-eragon-with-murtagh/"
+  ],
+  "notes": "The Inheritance Cycle itself is four books. Murtagh is the one to decide on: some shops call it book 5, but Wikipedia and the publisher treat it as a spin-off."
+ },
+ "The Wind on Fire": {
+  "status": "complete",
+  "books": [
+   "The Wind Singer",
+   "Slaves of the Mastery",
+   "Firesong"
+  ],
+  "added": [],
+  "extras": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/Wind_on_Fire"
+  ],
+  "notes": "Trilogy: The Wind Singer (2000), Slaves of the Mastery (2001), Firesong (2002)."
+ },
+ "His Dark Materials": {
+  "status": "complete",
+  "books": [
+   "Northern Lights|The Golden Compass",
+   "The Subtle Knife",
+   "The Amber Spyglass"
+  ],
+  "added": [],
+  "extras": [
+   "Lyra's Oxford (2003), Once Upon a Time in the North (2008), Serpentine (2020): short companion books",
+   "The Book of Dust (separate trilogy): La Belle Sauvage (2017), The Secret Commonwealth (2019), The Rose Field (2025)"
+  ],
+  "sources": [
+   "https://en.wikipedia.org/wiki/His_Dark_Materials",
+   "https://en.wikipedia.org/wiki/The_Book_of_Dust"
+  ],
+  "notes": "The trilogy is complete. The Book of Dust is its own series (prequel and sequel), not added."
+ },
+ "Winternight": {
+  "status": "complete",
+  "books": [
+   "The Bear and the Nightingale",
+   "The Girl in the Tower",
+   "The Winter of the Witch"
+  ],
+  "added": [],
+  "extras": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/Winternight_trilogy"
+  ],
+  "notes": "Trilogy; The Winter of the Witch (2019) is the conclusion."
+ },
+ "The Doomspell Trilogy": {
+  "status": "complete",
+  "books": [
+   "The Doomspell",
+   "The Scent of Magic|The Scent of Magic - Book 2 of the Doomspell Trilogy",
+   "The Wizard's Promise"
+  ],
+  "added": [],
+  "extras": [
+   "The Doomspell Trilogy (omnibus of all three)"
+  ],
+  "sources": [
+   "https://www.risingshadow.net/book/14561-the-doomspell",
+   "https://cdn2.hachette.com.au/cliff-mcnish-geoff-taylor/the-doomspell-trilogy-the-wizards-promise-book-3"
+  ],
+  "notes": "Three books: The Doomspell (2000), The Scent of Magic (2001), The Wizard's Promise (2002)."
+ },
+ "Mortal Engines": {
+  "status": "complete",
+  "books": [
+   "Mortal Engines",
+   "Predator's Gold",
+   "Infernal Devices",
+   "A Darkling Plain"
+  ],
+  "added": [],
+  "extras": [
+   "Night Flights (2018, three short stories)",
+   "Traction City (2011, World Book Day novella)",
+   "Thunder City (2024, standalone Mortal Engines novel set about 110 years before Mortal Engines; a follow-up is reported but not yet titled)",
+   "The Illustrated World of Mortal Engines (2018, companion)"
+  ],
+  "sources": [
+   "https://en.wikipedia.org/wiki/Mortal_Engines_Quartet",
+   "https://thebookseller.com/rights/philip-reeve-thunders-back-to-the-mortal-engines-world-with-new-standalone-for-scholastic"
+  ],
+  "notes": "The quartet is complete (Mortal Engines 2001, Predator's Gold 2003, Infernal Devices 2005, A Darkling Plain 2006). US editions call the series The Hungry City Chronicles; the book titles are the same."
+ },
+ "Fever Crumb": {
+  "status": "complete",
+  "books": [
+   "Fever Crumb",
+   "A Web of Air",
+   "Scrivener's Moon"
+  ],
+  "added": [],
+  "extras": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/Mortal_Engines_Quartet"
+  ],
+  "notes": "Trilogy: Fever Crumb (2009), A Web of Air (2010), Scrivener's Moon (2011). Philip Reeve said in 2020 he did not plan a fourth."
+ },
+ "The Hunger Games": {
+  "status": "changed",
+  "books": [
+   "The Hunger Games",
+   "Catching Fire",
+   "Mockingjay",
+   "The Ballad of Songbirds and Snakes",
+   "Sunrise on the Reaping"
+  ],
+  "added": [
+   "The Ballad of Songbirds and Snakes",
+   "Sunrise on the Reaping"
+  ],
+  "extras": [],
+  "sources": [
+   "https://www.theworks.co.uk/inspiration/book-inspiration/the-hunger-games-books-in-order.html",
+   "https://www.aclib.us/blog/hunger-games-reading-order-guide"
+  ],
+  "notes": "Both are prequels: The Ballad of Songbirds and Snakes (2020, the 10th Games) and Sunrise on the Reaping (2025, the 50th Games). Suzanne Collins has given no official order, so they are in publication order, after the trilogy (the order most guides recommend). Story order would be Ballad, Sunrise, then the trilogy. Same titles in the UK and US."
+ },
+ "The Study Series": {
+  "status": "changed",
+  "books": [
+   "Poison Study",
+   "Magic Study",
+   "Fire Study",
+   "Shadow Study",
+   "Night Study",
+   "Dawn Study"
+  ],
+  "added": [
+   "Shadow Study",
+   "Night Study",
+   "Dawn Study"
+  ],
+  "extras": [
+   "Glass series (Opal's books, same world): Storm Glass, Sea Glass, Spy Glass. Maria V. Snyder's own Chronicles of Ixia numbering puts them between Fire Study and Shadow Study",
+   "Valek companion novels: The Study of Poisons, The Study of Magic, The Study of Fire",
+   "Novellas: Ice Study, Shattered Glass, Wedding Study, The Study of Storms and Magic",
+   "Short stories: Diamond Study, Assassin Study, Power Study, Diaper Study, After Study (collected in The Study Chronicles: Tales of Ixia and Sitia)"
+  ],
+  "sources": [
+   "https://mariavsnyder.com/chronicles-of-ixia-and-sitia/"
+  ],
+  "notes": "Six Study novels. Books 4 to 6 (Shadow, Night, Dawn Study) follow the Glass trilogy in the story; the author's chronological list reads Fire Study, Storm Glass, Sea Glass, Spy Glass, then Shadow Study. Her choice whether to include the Glass books."
+ },
+ "Bartimaeus": {
+  "status": "changed",
+  "books": [
+   "The Amulet of Samarkand",
+   "The Golem's Eye",
+   "Ptolemy's Gate",
+   "The Ring of Solomon"
+  ],
+  "added": [
+   "The Ring of Solomon"
+  ],
+  "extras": [
+   "The Amulet of Samarkand graphic novel (2010)"
+  ],
+  "sources": [
+   "https://en.wikipedia.org/wiki/Bartimaeus_Sequence"
+  ],
+  "notes": "The Ring of Solomon (2010) is a prequel set around 950 BC. No statement from Jonathan Stroud on where to read it, so it goes last (publication order), as Wikipedia and most lists number it."
+ },
+ "The Old Kingdom": {
+  "status": "changed",
+  "books": [
+   "Sabriel",
+   "Lirael",
+   "Abhorsen",
+   "Clariel|Clariel: The Lost Abhorsen",
+   "Goldenhand",
+   "Terciel & Elinor|Terciel and Elinor"
+  ],
+  "added": [
+   "Clariel|Clariel: The Lost Abhorsen",
+   "Goldenhand",
+   "Terciel & Elinor|Terciel and Elinor"
+  ],
+  "extras": [
+   "Across the Wall (2005, short stories, includes the novella Nicholas Sayre and the Creature in the Case)",
+   "The Creature in the Case (2005, World Book Day novella)",
+   "To Hold the Bridge (2015, collection with an Old Kingdom novella)",
+   "Doctor Crake Crosses the Wall (short story)"
+  ],
+  "sources": [
+   "https://www.garthnix.com/books/",
+   "https://www.risingshadow.net/book/65459-terciel-and-elinor"
+  ],
+  "notes": "Garth Nix's own site numbers them Sabriel 1, Lirael 2, Abhorsen 3, Clariel 4, Goldenhand 5, Terciel & Elinor 6, which is also publication order (1995, 2001, 2003, 2014, 2016, 2021). Clariel (set about 600 years earlier) and Terciel & Elinor (Sabriel's parents) are prequels; Goldenhand follows Abhorsen. US titles added as alternatives: Clariel: The Lost Abhorsen, Terciel and Elinor."
+ },
+ "The Tyrant Philosophers": {
+  "status": "changed",
+  "books": [
+   "City of Last Chances",
+   "House of Open Wounds",
+   "Days of Shattered Faith",
+   "Pretenders to the Throne of God"
+  ],
+  "added": [
+   "Pretenders to the Throne of God"
+  ],
+  "extras": [
+   "Lives of Bitter Rain (2025, novella, numbered 2.5)"
+  ],
+  "sources": [
+   "https://www.risingshadow.net/book/79402-pretenders-to-the-throne-of-god",
+   "https://timesbookshop.co.uk/pretenders-to-the-throne-of-god-9781035914975/"
+  ],
+  "notes": "Book 4, Pretenders to the Throne of God, came out 12 Feb 2026 (Head of Zeus). Book 5, The Grave of Perfection, the last of five, is announced for 2027 and not out yet, so not added."
+ },
+ "DallerGut Dream Department Store": {
+  "status": "complete",
+  "books": [
+   "DallerGut Dream Department Store",
+   "Return to the DallerGut Dream Department Store"
+  ],
+  "added": [],
+  "extras": [],
+  "sources": [
+   "https://www.readings.com.au/product/9781335015358/the-dallergut-dream-making-district--miye-lee--2025--9781335015358",
+   "https://library.ltikorea.or.kr/translatedbooks/413375"
+  ],
+  "notes": "Two books (Korean originals 2020 and 2021). The US edition of book 2 is called The Dallergut Dream-Making District (Hanover Square Press, 2025); if she ever has that edition it would need adding as a | alternative to Return to the DallerGut Dream Department Store."
+ },
+ "Morisaki Bookshop": {
+  "status": "complete",
+  "books": [
+   "Days at the Morisaki Bookshop",
+   "More Days at the Morisaki Bookshop"
+  ],
+  "added": [],
+  "extras": [
+   "With Love from the Morisaki Bookshop (2024, hardback omnibus of both books)"
+  ],
+  "sources": [
+   "https://www.fantasticfiction.com/y/satoshi-yagisawa/with-love-from-the-morisaki-bookshop.htm"
+  ],
+  "notes": "Two novels; no third announced."
+ },
+ "Trebizon": {
+  "status": "complete",
+  "books": [
+   "First Term at Trebizon",
+   "Second Term at Trebizon",
+   "Summer Term at Trebizon",
+   "Boy Trouble at Trebizon",
+   "More Trouble at Trebizon",
+   "The Tennis Term at Trebizon",
+   "Summer Camp at Trebizon",
+   "Into the Fourth at Trebizon",
+   "The Hockey Term at Trebizon|Hockey Term at Trebizon",
+   "Fourth Year Triumphs at Trebizon",
+   "The Ghostly Term at Trebizon",
+   "Fifth Year Friendships at Trebizon",
+   "Secret Letters at Trebizon",
+   "The Unforgettable Fifth at Trebizon"
+  ],
+  "added": [],
+  "extras": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/Trebizon"
+  ],
+  "notes": "All 14 of Anne Digby's books, in order (checked 28 Oct too)."
+ },
+ "The Quest Series": {
+  "status": "complete",
+  "books": [
+   "Oracle Quest",
+   "Relic Quest",
+   "Barrier Quest",
+   "Charm Quest",
+   "Land Quest",
+   "Wizard Quest",
+   "Seer Quest",
+   "Hunt Quest",
+   "Storm Quest",
+   "Healer Quest",
+   "Rebellion Quest",
+   "Dimension Quest",
+   "Guardian Quest"
+  ],
+  "added": [],
+  "extras": [],
+  "sources": [
+   "https://www.goodreads.com/series/66801-quest"
+  ],
+  "notes": "13 books (2006 to 2016), matching her list; nothing newer found."
+ },
+ "Legacy of the Stones": {
+  "status": "complete",
+  "books": [
+   "Song of Echoes",
+   "Age of Shadows",
+   "Sea of Souls",
+   "Crown of Sorrows",
+   "Realm of Mortals"
+  ],
+  "added": [],
+  "extras": [
+   "Prequel trilogy set 1,000 years earlier, starting with Verse of the Hidden Flame (2026)"
+  ],
+  "sources": [
+   "https://www.fantasticfiction.com/p/r-e-palmer/song-of-echoes.htm",
+   "https://www.fantasticfiction.com/p/r-e-palmer/realm-of-mortals.htm"
+  ],
+  "notes": "R.E. Palmer's five books (2021 to 2024); Realm of Mortals is the last. Some listings call the series 'Song of Echoes'."
+ },
+ "Pure Dead": {
+  "status": "complete",
+  "books": [
+   "Pure Dead Magic",
+   "Pure Dead Wicked",
+   "Pure Dead Brilliant",
+   "Deep Trouble",
+   "Deep Water",
+   "Deep Fear"
+  ],
+  "added": [],
+  "extras": [],
+  "sources": [
+   "https://www.risingshadow.net/book/18040-deep-trouble",
+   "https://www.penguin.co.uk/books/1005306/deep-water/9780552572989.html",
+   "https://authorwars.com/books/titles/182815/deep-water"
+  ],
+  "notes": "Six books, all there. Books 4 to 6 have different US titles: Pure Dead Trouble (Deep Trouble), Pure Dead Batty (Deep Water), Pure Dead Frozen (Deep Fear). Her entries are the UK titles; the US ones could be added as | alternatives only if she has a US copy."
+ },
+ "Truth, Dare, Kiss or Promise": {
+  "status": "complete",
+  "books": [
+   "White Lies and Barefaced Truths",
+   "The Princess of Pop|Pop Princess",
+   "Teen Queens and Has-Beens",
+   "Starstruck",
+   "Double Dare",
+   "Midsummer Meltdown",
+   "Love Lottery",
+   "All Mates Together"
+  ],
+  "added": [],
+  "extras": [],
+  "sources": [
+   "https://en.wikipedia.org/wiki/Truth,_Dare,_Kiss_or_Promise"
+  ],
+  "notes": "Eight books, in her order. Wikipedia shows later shortened titles for 1 and 3 (White Lies, Teen Queens)."
+ },
+ "Veronica Mars": {
+  "status": "complete",
+  "books": [
+   "The Thousand-Dollar Tan Line|Veronica Mars: The Thousand-Dollar Tan Line",
+   "Mr. Kiss and Tell|Veronica Mars (2): An Original Mystery by Rob Thomas: Mr. Kiss and Tell"
+  ],
+  "added": [],
+  "extras": [],
+  "sources": [
+   "https://www.penguinrandomhouse.com/series/DD4/veronica-mars-series"
+  ],
+  "notes": "Two novels (2014, 2015); no third."
+ },
+ "The Beyond Series": {
+  "status": "changed",
+  "books": [
+   "Didikai Witch",
+   "Demon Lupus",
+   "Vampire Sorceress",
+   "Lycan Lamia",
+   "Lemurian Dimensions"
+  ],
+  "added": [
+   "Vampire Sorceress",
+   "Lycan Lamia",
+   "Lemurian Dimensions"
+  ],
+  "extras": [],
+  "sources": [
+   "https://www.goodreads.com/author/list/1065487.Alison_Kershaw",
+   "https://www.goodreads.com/book/show/30561153-lycan-lamia"
+  ],
+  "notes": "Alison Kershaw, self-published. Goodreads numbers Vampire Sorceress 3 (2014), Lycan Lamia 4 (Feb 2015), Lemurian Dimensions 5 (date not shown). Goodreads is the only source found, so less certain than the rest."
+ },
+ "Sam Linnifer": {
+  "status": "complete",
+  "books": [
+   "Waywalkers",
+   "Timekeepers"
+  ],
+  "added": [],
+  "extras": [],
+  "sources": [
+   "https://www.hachette.co.nz/catherine-webb/timekeepers-number-2-in-series",
+   "https://www.thriftbooks.com/series/sam-linnifer/60918"
+  ],
+  "notes": "Catherine Webb's duology: Waywalkers (2003), Timekeepers (2004)."
+ }
+}
