@@ -1,0 +1,522 @@
+[
+ {
+  "n": 1,
+  "title": "As Good As Dead",
+  "new": "covers-trial/9780755504343.jpg?v=24e02308",
+  "was": "covers/9780755504343.jpg?v=bc253415",
+  "why": "flat UK print cover instead of a 3D book picture (her ISBN is the audiobook)",
+  "kind": "read"
+ },
+ {
+  "n": 2,
+  "title": "Good Girl, Bad Blood",
+  "new": "covers-trial/sg-good-girl-bad-blood.jpg?v=623d2439",
+  "was": "covers/sg-good-girl-bad-blood.jpg?v=45ee98ef",
+  "why": "UK paperback design, matching the rest of the series (now shows the US one)",
+  "kind": "read"
+ },
+ {
+  "n": 3,
+  "title": "How to Kill Men and Get Away With It",
+  "new": "covers-trial/9780008536732.jpg?v=070f78a7",
+  "was": "covers/9780008536732.jpg?v=fc86bcca",
+  "why": "better copy of the cover",
+  "kind": "read"
+ },
+ {
+  "n": 4,
+  "title": "Kill Joy",
+  "new": "covers-trial/9780008487485.jpg?v=1226c892",
+  "was": "covers/9780008487485.jpg?v=4a6e866d",
+  "why": "print cover without the Five Survive sticker, matching her other Holly Jacksons (her ISBN is the audiobook)",
+  "kind": "read"
+ },
+ {
+  "n": 5,
+  "title": "Scion",
+  "new": "covers-trial/9781668239247.jpg?v=54607dd1",
+  "was": "covers/9781668239247.jpg?v=e2afd7f4",
+  "why": "flat front (UK Gollancz, same art and wording) instead of a 3D book picture",
+  "kind": "read"
+ },
+ {
+  "n": 6,
+  "title": "The Murder at the Vicarage",
+  "new": "covers-trial/9781504763745.jpg?v=88385cbf",
+  "was": "covers/9781504763745.jpg?v=b42f74fa",
+  "why": "Queen of Mystery print cover instead of the square audiobook picture",
+  "kind": "read"
+ },
+ {
+  "n": 7,
+  "title": "Doreen",
+  "new": "covers-trial/9781903155509.jpg?v=8abe3a07",
+  "was": "covers/9781903155509.jpg?v=f7cb3af8",
+  "why": "current is a square endpaper pattern, not the Persephone grey jacket",
+  "kind": "book"
+ },
+ {
+  "n": 8,
+  "title": "The Christmas Cottage",
+  "new": "covers-trial/9781848459229.jpg?v=965d5dfa",
+  "was": "covers/9781848459229.jpg?v=c77e3d3c",
+  "why": "current is poor quality: pre-release placeholder: Coming October 2024, cover to be revealed",
+  "kind": "book"
+ },
+ {
+  "n": 9,
+  "title": "You Are Here: The Instant Number 1 Sunday ",
+  "new": "covers-trial/9781444715460.jpg?v=0c8ec089",
+  "was": "covers/9781444715460.jpg?v=277c7830",
+  "why": "current is poor quality: pre-release proof cover: COVER NOT FINAL",
+  "kind": "book"
+ },
+ {
+  "n": 10,
+  "title": "Teddy Bear's Picnic",
+  "new": "covers-trial/id-6ubmksc8dt.jpg?v=66e5c03d",
+  "was": "covers/id-6ubmksc8dt.jpg?v=181ee3bd",
+  "why": "current is wrong book: landscape picture-book cover from an Open Library title search; ISBN cover is a different illustration, check it is the same book",
+  "kind": "book"
+ },
+ {
+  "n": 11,
+  "title": "Tom's Midnight Garden",
+  "new": "covers-trial/9780140364545.jpg?v=63c95a7d",
+  "was": "covers/9780140364545.jpg?v=7abd40fa",
+  "why": "current is wrong book: French Folio Junior edition (Tom et le jardin de minuit)",
+  "kind": "book"
+ },
+ {
+  "n": 12,
+  "title": "The Tales of Beedle the Bard",
+  "new": "covers-trial/9780747599876.jpg?v=1cec02fe",
+  "was": "covers/9780747599876.jpg?v=4c4a4231",
+  "why": "current is poor quality: faded, low-contrast scan",
+  "kind": "book"
+ },
+ {
+  "n": 13,
+  "title": "Heartstopper Volume 5",
+  "new": "covers-trial/9781444979978.jpg?v=7a5ca0eb",
+  "was": "covers/9781444979978.jpg?v=dbb0b0e8",
+  "why": "current is wrong book: Polish edition of Volume 1 (Chłopak spotyka chłopaka, Tom 1) shown for Volume 5",
+  "kind": "book"
+ },
+ {
+  "n": 14,
+  "title": "Bimbo and Topsy",
+  "new": "covers-trial/id-yq0s7pfr71.jpg?v=bf3c4c18",
+  "was": null,
+  "why": "period cover: Dean hardback 1969, cover uncredited (needs taking off no-cover.json)",
+  "kind": "book"
+ },
+ {
+  "n": 15,
+  "title": "Book of Brownies",
+  "new": "covers-trial/id-umsrn8vgnz.jpg?v=1bdc3249",
+  "was": "covers/id-umsrn8vgnz.jpg?v=da0e680a",
+  "why": "period cover: Dean hardback 1967, cover uncredited",
+  "kind": "book"
+ },
+ {
+  "n": 16,
+  "title": "Brer Rabbit Again",
+  "new": "covers-trial/id-tol53o093y.jpg?v=a2b669c5",
+  "was": null,
+  "why": "period cover: Dean hardback 1963 (reprinted to 1965), Grace Lodge (needs taking off no-cover.json)",
+  "kind": "book"
+ },
+ {
+  "n": 17,
+  "title": "Brer Rabbit Book",
+  "new": "covers-trial/id-0bs6kb8dcu.jpg?v=84261743",
+  "was": "covers/id-0bs6kb8dcu.jpg?v=21749546",
+  "why": "period cover: Dean hardback 1963, Grace Lodge",
+  "kind": "book"
+ },
+ {
+  "n": 18,
+  "title": "Brer Rabbit's a Rascal",
+  "new": "covers-trial/id-mntgwag31h.jpg?v=f9333281",
+  "was": "covers/id-mntgwag31h.jpg?v=018a43db",
+  "why": "period cover: Dean hardback 1965 (first edition), Grace Lodge",
+  "kind": "book"
+ },
+ {
+  "n": 19,
+  "title": "Captain of Two Schools",
+  "new": "covers-trial/id-xibkehkjps.jpg?v=01f59ea1",
+  "was": "covers/id-xibkehkjps.jpg?v=c70730e4",
+  "why": "period cover: Frederick Warne hardback 1950",
+  "kind": "book"
+ },
+ {
+  "n": 20,
+  "title": "China Fights Back",
+  "new": "covers-trial/id-8u1tifmohq.jpg?v=d29e39d8",
+  "was": null,
+  "why": "period cover: Left Book Club edition, Victor Gollancz 1938 (limp orange/red) (needs taking off no-cover.json)",
+  "kind": "book"
+ },
+ {
+  "n": 21,
+  "title": "Claudine at St Clare's",
+  "new": "covers-trial/id-cp5qridmmk.jpg?v=833bc1ea",
+  "was": null,
+  "why": "period cover: Methuen hardback 1944 (first edition), W. Lindsay Cable jacket (needs taking off no-cover.json)",
+  "kind": "book"
+ },
+ {
+  "n": 22,
+  "title": "Corridors of Power",
+  "new": "covers-trial/id-8u1tiscohq.jpg?v=71cd3a16",
+  "was": "covers/id-8u1tiscohq.jpg?v=dc59109f",
+  "why": "period cover: Macmillan hardback 1964 (first edition), painted jacket (seller photo at an angle, not a flat scan)",
+  "kind": "book"
+ },
+ {
+  "n": 23,
+  "title": "Famous Five 9: Five Fall Into Adventure",
+  "new": "covers-trial/id-i1mt5hqlqm.jpg?v=94940aec",
+  "was": "covers/id-i1mt5hqlqm.jpg?v=8b67bc37",
+  "why": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket (1951 design)",
+  "kind": "book"
+ },
+ {
+  "n": 24,
+  "title": "Fifth Formers at St Clare's",
+  "new": "covers-trial/id-aktlq1lpsz.jpg?v=6f6f2bc5",
+  "was": "covers/id-aktlq1lpsz.jpg?v=3be4d40c",
+  "why": "period cover: Methuen hardback 1945, W. Lindsay Cable",
+  "kind": "book"
+ },
+ {
+  "n": 25,
+  "title": "Five Get Into a Fix",
+  "new": "covers-trial/id-whc2eftisd.jpg?v=38581bb0",
+  "was": null,
+  "why": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1958 design (needs taking off no-cover.json)",
+  "kind": "book"
+ },
+ {
+  "n": 26,
+  "title": "Five Go Adventuring Again",
+  "new": "covers-trial/id-aktljmbpsz.jpg?v=cac0508a",
+  "was": "covers/id-aktljmbpsz.jpg?v=bf23ced7",
+  "why": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket (1951 design)",
+  "kind": "book"
+ },
+ {
+  "n": 27,
+  "title": "Five Go To Mystery Moor",
+  "new": "covers-trial/id-xiuezl2jps.jpg?v=b5d05f8f",
+  "was": null,
+  "why": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1954 (needs taking off no-cover.json)",
+  "kind": "book"
+ },
+ {
+  "n": 28,
+  "title": "Five Go To Smugglers Top",
+  "new": "covers-trial/id-mnvwrmh31h.jpg?v=800aadca",
+  "was": "covers/id-mnvwrmh31h.jpg?v=59edd424",
+  "why": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1945",
+  "kind": "book"
+ },
+ {
+  "n": 29,
+  "title": "Five Go to Billycock Hill",
+  "new": "covers-trial/id-v6jcu0o26q.jpg?v=15b05d80",
+  "was": "covers/id-v6jcu0o26q.jpg?v=040a36f6",
+  "why": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, 1957 design",
+  "kind": "book"
+ },
+ {
+  "n": 30,
+  "title": "Five Have a Mystery to Solve",
+  "new": "covers-trial/id-py97wjuno7.jpg?v=77ddb74f",
+  "was": "covers/id-py97wjuno7.jpg?v=6029a0a1",
+  "why": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1962",
+  "kind": "book"
+ },
+ {
+  "n": 31,
+  "title": "Five Run Away Together",
+  "new": "covers-trial/id-yq0s7kvr71.jpg?v=2cc18412",
+  "was": "covers/id-yq0s7kvr71.jpg?v=c4ebbb7b",
+  "why": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket (1951 design)",
+  "kind": "book"
+ },
+ {
+  "n": 32,
+  "title": "Five on a Hike Together",
+  "new": "covers-trial/id-ogh4ago0an.jpg?v=9a4a348c",
+  "was": null,
+  "why": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, 1951 design (needs taking off no-cover.json)",
+  "kind": "book"
+ },
+ {
+  "n": 33,
+  "title": "Five on a Secret Trail",
+  "new": "covers-trial/id-cp5qr4vmmk.jpg?v=3083a968",
+  "was": null,
+  "why": "period cover: Hodder & Stoughton hardback, Eileen Soper dust jacket, first edition 1956 (needs taking off no-cover.json)",
+  "kind": "book"
+ },
+ {
+  "n": 34,
+  "title": "Fun for the Secret Seven",
+  "new": "covers-trial/id-rwdf1zdxoz.jpg?v=f9ecdf5b",
+  "was": "covers/id-rwdf1zdxoz.jpg?v=ceddde4d",
+  "why": "period cover: Brockhampton Press hardback 1963, Burgess Sharrocks",
+  "kind": "book"
+ },
+ {
+  "n": 35,
+  "title": "Good Old Secret Seven",
+  "new": "covers-trial/id-hfp8tti19k.jpg?v=218e0751",
+  "was": null,
+  "why": "period cover: Brockhampton Press hardback (1960 design), Burgess Sharrocks (needs taking off no-cover.json)",
+  "kind": "book"
+ },
+ {
+  "n": 36,
+  "title": "In the Fifth at Malory Towers",
+  "new": "covers-trial/id-v6jcumc26q.jpg?v=17c061f1",
+  "was": "covers/id-v6jcumc26q.jpg?v=8e573c80",
+  "why": "period cover: Methuen hardback 1950 (first edition), Stanley Lloyd (her Malory Towers series rule may say otherwise)",
+  "kind": "book"
+ },
+ {
+  "n": 37,
+  "title": "Look Out Secret Seven",
+  "new": "covers-trial/id-g3fxkyrbt4.jpg?v=a83e1d36",
+  "was": null,
+  "why": "period cover: Brockhampton Press hardback (1962 design), Burgess Sharrocks (needs taking off no-cover.json)",
+  "kind": "book"
+ },
+ {
+  "n": 38,
+  "title": "Second Form at Malory Towers",
+  "new": "covers-trial/id-ogh4anm0an.jpg?v=e364fdd8",
+  "was": null,
+  "why": "period cover: Methuen hardback (first edition 1947 design), Stanley Lloyd (needs taking off no-cover.json; her Malory Towers series rule may say otherwise)",
+  "kind": "book"
+ },
+ {
+  "n": 39,
+  "title": "Secret Seven Fireworks",
+  "new": "covers-trial/id-4x81ll9kbx.jpg?v=2e7f8928",
+  "was": null,
+  "why": "period cover: Brockhampton Press hardback (1959 design), Burgess Sharrocks (needs taking off no-cover.json)",
+  "kind": "book"
+ },
+ {
+  "n": 40,
+  "title": "Summer Term at St Clare's",
+  "new": "covers-trial/id-6dlpm4y8dt.jpg?v=ff50cce5",
+  "was": null,
+  "why": "period cover: Methuen hardback, 1947 redesign, W. Lindsay Cable (needs taking off no-cover.json)",
+  "kind": "book"
+ },
+ {
+  "n": 41,
+  "title": "Sunday Times Travel and Holiday Guide",
+  "new": "covers-trial/id-ogz9lt80an.jpg?v=1f7d74ea",
+  "was": "covers/id-ogz9lt80an.jpg?v=3d3d1715",
+  "why": "period cover: The Sunday Times 1951, British Isles edition",
+  "kind": "book"
+ },
+ {
+  "n": 42,
+  "title": "Tales of Toyland",
+  "new": "covers-trial/id-umeoydkgnz.jpg?v=8974a62b",
+  "was": null,
+  "why": "period cover: Dean hardback 1963 (needs taking off no-cover.json)",
+  "kind": "book"
+ },
+ {
+  "n": 43,
+  "title": "The Model Railway Hobby",
+  "new": "covers-trial/id-281v2q4tqt.jpg?v=1e0d6120",
+  "was": null,
+  "why": "period copy: Percival Marshall 1943, red cloth (a photo of a copy)",
+  "kind": "book"
+ },
+ {
+  "n": 44,
+  "title": "The Mountain of Adventure",
+  "new": "covers-trial/id-0bs64hqdcu.jpg?v=4d93d323",
+  "was": "covers/id-0bs64hqdcu.jpg?v=144fbfd2",
+  "why": "period cover: Macmillan hardback 1949 (first edition), Stuart Tresilian",
+  "kind": "book"
+ },
+ {
+  "n": 45,
+  "title": "The Mystery of the Invisible Thief",
+  "new": "covers-trial/id-28iec5ytqt.jpg?v=58337c1b",
+  "was": "covers/id-28iec5ytqt.jpg?v=491a0020",
+  "why": "period cover: Methuen hardback 1950 (first edition), Treyer Evans",
+  "kind": "book"
+ },
+ {
+  "n": 46,
+  "title": "The Mystery of the Secret Room",
+  "new": "covers-trial/id-7snw9i5hd6.jpg?v=e9a23656",
+  "was": "covers/id-7snw9i5hd6.jpg?v=9ef71c6c",
+  "why": "period cover: Methuen hardback, Joseph Abbey jacket (1950 reprint)",
+  "kind": "book"
+ },
+ {
+  "n": 47,
+  "title": "The O'Sullivan Twins",
+  "new": "covers-trial/id-aktlqhipsz.jpg?v=b65f766d",
+  "was": null,
+  "why": "period cover: Methuen hardback, 1945 redesign, W. Lindsay Cable (needs taking off no-cover.json)",
+  "kind": "book"
+ },
+ {
+  "n": 48,
+  "title": "The Second Form at St Clare's",
+  "new": "covers-trial/id-baejywscho.jpg?v=e72ab090",
+  "was": null,
+  "why": "period cover: Methuen hardback, 1944 first edition design, W. Lindsay Cable (needs taking off no-cover.json)",
+  "kind": "book"
+ },
+ {
+  "n": 49,
+  "title": "The Twins at St Clare's",
+  "new": "covers-trial/id-lz39v8s7b9.jpg?v=5f2e4bf8",
+  "was": null,
+  "why": "period cover: Methuen hardback, 1941 design, W. Lindsay Cable (needs taking off no-cover.json)",
+  "kind": "book"
+ },
+ {
+  "n": 50,
+  "title": "The Wishing Chair Again",
+  "new": "covers-trial/id-py8mlpkno7.jpg?v=20567628",
+  "was": null,
+  "why": "period cover: George Newnes hardback 1950, Hilda McGavin (needs taking off no-cover.json)",
+  "kind": "book"
+ },
+ {
+  "n": 51,
+  "title": "Third Year at Malory Towers",
+  "new": "covers-trial/id-8u7n3pwohq.jpg?v=de365fae",
+  "was": null,
+  "why": "period cover: Methuen hardback (1948 design), Stanley Lloyd (needs taking off no-cover.json; her Malory Towers series rule may say otherwise)",
+  "kind": "book"
+ },
+ {
+  "n": 52,
+  "title": "Upper Fourth at Malory Towers",
+  "new": "covers-trial/id-yq0shzbr71.jpg?v=777fb757",
+  "was": null,
+  "why": "period cover: Methuen hardback (1949 design), Stanley Lloyd (needs taking off no-cover.json; her Malory Towers series rule may say otherwise)",
+  "kind": "book"
+ },
+ {
+  "n": 53,
+  "title": "Well Done Secret Seven",
+  "new": "covers-trial/id-dcf8ke4u84.jpg?v=502b623d",
+  "was": null,
+  "why": "period cover: Brockhampton Press hardback 1951 (first edition), George Brook (needs taking off no-cover.json)",
+  "kind": "book"
+ },
+ {
+  "n": 54,
+  "title": "A Darkling Plain",
+  "new": "covers-trial/id-0b7i4x0dcu.jpg?v=139d504e",
+  "was": "covers/id-0b7i4x0dcu.jpg?v=f381eba1",
+  "why": "to-buy: Scholastic Point 2007 edition (matches her set)",
+  "kind": "buy"
+ },
+ {
+  "n": 55,
+  "title": "Feat of Clay",
+  "new": "covers-trial/id-tojrmsq93y.jpg?v=39fb4711",
+  "was": "covers/id-tojrmsq93y.jpg?v=a2712a58",
+  "why": "to-buy: Corgi 1997 edition (matches her set)",
+  "kind": "buy"
+ },
+ {
+  "n": 56,
+  "title": "Goldenhand",
+  "new": "covers-trial/id-yq89z87r71.jpg?v=04958efe",
+  "was": "covers/id-yq89z87r71.jpg?v=3e585a5e",
+  "why": "to-buy hardback: UK hardback jacket instead of an Open Library title-search match",
+  "kind": "buy"
+ },
+ {
+  "n": 57,
+  "title": "Guards Guards",
+  "new": "covers-trial/id-akvei6dpsz.jpg?v=5f94e7f7",
+  "was": "covers/id-akvei6dpsz.jpg?v=fa501bb6",
+  "why": "to-buy: Corgi 1990 edition (matches her set)",
+  "kind": "buy"
+ },
+ {
+  "n": 58,
+  "title": "Men at Arms",
+  "new": "covers-trial/id-59y4gluv9x.jpg?v=69394316",
+  "was": "covers/id-59y4gluv9x.jpg?v=f5bfa161",
+  "why": "to-buy: Corgi 1994 edition (matches her set)",
+  "kind": "buy"
+ },
+ {
+  "n": 59,
+  "title": "Raising Steam",
+  "new": "covers-trial/id-7fz9j4dhd6.jpg?v=6092a113",
+  "was": "covers/id-7fz9j4dhd6.jpg?v=18755e58",
+  "why": "to-buy: Corgi 2014 edition (matches her set)",
+  "kind": "buy"
+ },
+ {
+  "n": 60,
+  "title": "Snuff",
+  "new": "covers-trial/id-3knwu6warj.jpg?v=378103db",
+  "was": "covers/id-3knwu6warj.jpg?v=7fd48208",
+  "why": "to-buy: Corgi 2012 edition (matches her set)",
+  "kind": "buy"
+ },
+ {
+  "n": 61,
+  "title": "Soul Music",
+  "new": "covers-trial/id-cpfzj81mmk.jpg?v=6ebc8178",
+  "was": "covers/id-cpfzj81mmk.jpg?v=71ce5597",
+  "why": "to-buy: Corgi 1995 edition (matches her set)",
+  "kind": "buy"
+ },
+ {
+  "n": 62,
+  "title": "The Shepherd's Crown",
+  "new": "covers-trial/id-2o6cslhtqt.jpg?v=8a50d8d4",
+  "was": "covers/id-2o6cslhtqt.jpg?v=43b054d4",
+  "why": "to-buy: Corgi 2016 edition (matches her set)",
+  "kind": "buy"
+ },
+ {
+  "n": 63,
+  "title": "The Wee Free Men",
+  "new": "covers-trial/id-ay4ig65psz.jpg?v=389f005a",
+  "was": "covers/id-ay4ig65psz.jpg?v=d78f1ba7",
+  "why": "to-buy: Corgi 2004 edition (matches her set)",
+  "kind": "buy"
+ },
+ {
+  "n": 64,
+  "title": "Second Term at Trebizon",
+  "new": "covers-trial/id-t0gf45c93y.jpg?v=2ecb7dce",
+  "was": "covers/9780246114204.jpg?v=55c269a6",
+  "why": "Dragon paperback 1981, the same design as her other Trebizons",
+  "kind": "book"
+ },
+ {
+  "n": 65,
+  "title": "Summer Term at Trebizon",
+  "new": "covers-trial/id-kql35p7ysl.jpg?v=c1659531",
+  "was": "covers/id-kql35p7ysl.jpg?v=ee211839",
+  "why": "Dragon/Granada paperback 1980, the same design as her other Trebizons",
+  "kind": "book"
+ }
+]

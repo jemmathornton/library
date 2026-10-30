@@ -1,49 +1,4 @@
 {
- "9781444979978": {
-  "title": "Heartstopper Volume 5",
-  "from": "cover by ISBN 9781444979978 (cover-audit)",
-  "reason": "current is wrong book: Polish edition of Volume 1 (Chłopak spotyka chłopaka, Tom 1) shown for Volume 5"
- },
- "9780140364545": {
-  "title": "Tom's Midnight Garden (Puffin Modern Classics)",
-  "from": "cover by ISBN 9780140364545 (cover-audit)",
-  "reason": "current is wrong book: French Folio Junior edition (Tom et le jardin de minuit)"
- },
- "9781848459229": {
-  "title": "The Christmas Cottage",
-  "from": "cover by ISBN 9781848459229 (cover-audit)",
-  "reason": "current is poor quality: pre-release placeholder: Coming October 2024, cover to be revealed"
- },
- "9781444715460": {
-  "title": "You Are Here: The Instant Number 1 Sunday Times Bestseller, from the Author of One Day",
-  "from": "cover by ISBN 9781444715460 (cover-audit)",
-  "reason": "current is poor quality: pre-release proof cover: COVER NOT FINAL"
- },
- "id-6ubmksc8dt": {
-  "title": "Teddy Bear's Picnic",
-  "from": "cover by ISBN 9780216926615 (cover-audit)",
-  "reason": "current is wrong book: landscape picture-book cover from an Open Library title search; ISBN cover is a different illustration, check it is the same book"
- },
- "9780747599876": {
-  "title": "The Tales of Beedle the Bard",
-  "from": "cover by ISBN 9780747599876 (cover-audit)",
-  "reason": "current is poor quality: faded, low-contrast scan"
- },
- "9781903155509": {
-  "title": "Doreen",
-  "from": "https://www.kennys.ie/products/full/9781903155509.jpg",
-  "reason": "current is a square endpaper pattern, not the Persephone grey jacket"
- },
- "id-yq89z87r71": {
-  "title": "Goldenhand (hardback)",
-  "from": "https://cdn.shopify.com/s/files/1/0601/0883/2974/products/9781471404443_1_c24db975-9028-4784-944d-1a4401d45253_1500x.jpg?v=1648786815",
-  "reason": "to-buy hardback: UK hardback jacket instead of an Open Library title-search match"
- },
- "9780008536732": {
-  "title": "How to Kill Men",
-  "from": "https://m.media-amazon.com/images/I/71bT1k34TvL.jpg",
-  "reason": "better copy of the cover"
- },
  "id-mntgwag31h": {
   "title": "Brer Rabbit's a Rascal",
   "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=495",
@@ -238,46 +193,6 @@
   "title": "Well Done Secret Seven",
   "from": "https://www.enidblytonsociety.co.uk/book-details.php?id=274",
   "reason": "period cover: Brockhampton Press hardback 1951 (first edition), George Brook (needs taking off no-cover.json)"
- },
- "id-akvei6dpsz": {
-  "title": "Guards Guards (original paperback)",
-  "from": "https://www.lspace.de/books/covers/pic_tpggpb.jpg",
-  "reason": "to-buy: Corgi 1990 edition (matches her set)"
- },
- "id-59y4gluv9x": {
-  "title": "Men at Arms (original paperback)",
-  "from": "https://www.lspace.de/books/covers/pic_tpmaapb.jpg",
-  "reason": "to-buy: Corgi 1994 edition (matches her set)"
- },
- "id-cpfzj81mmk": {
-  "title": "Soul Music (original paperback)",
-  "from": "https://www.lspace.de/books/covers/pic_tpsmpb.jpg",
-  "reason": "to-buy: Corgi 1995 edition (matches her set)"
- },
- "id-tojrmsq93y": {
-  "title": "Feat of Clay (original paperback)",
-  "from": "https://www.lspace.de/books/covers/pic_tpdwfocpb.jpg",
-  "reason": "to-buy: Corgi 1997 edition (matches her set)"
- },
- "id-ay4ig65psz": {
-  "title": "The Wee Free Men",
-  "from": "https://pictures.abebooks.com/isbn/9780552549059-uk.jpg",
-  "reason": "to-buy: Corgi 2004 edition (matches her set)"
- },
- "id-3knwu6warj": {
-  "title": "Snuff",
-  "from": "https://images-na.ssl-images-amazon.com/images/P/0552163368.01.LZZZZZZZ.jpg",
-  "reason": "to-buy: Corgi 2012 edition (matches her set)"
- },
- "id-7fz9j4dhd6": {
-  "title": "Raising Steam",
-  "from": "https://images-na.ssl-images-amazon.com/images/P/0552170526.01.LZZZZZZZ.jpg",
-  "reason": "to-buy: Corgi 2014 edition (matches her set)"
- },
- "id-2o6cslhtqt": {
-  "title": "The Shepherd's Crown",
-  "from": "https://images-na.ssl-images-amazon.com/images/P/0552574481.01.LZZZZZZZ.jpg",
-  "reason": "to-buy: Corgi 2016 edition (matches her set)"
  },
  "9781844280933": {
   "title": "Point Blanc",
@@ -479,11 +394,6 @@
   "from": "https://images-na.ssl-images-amazon.com/images/P/0241973376.01.LZZZZZZZ.jpg",
   "reason": "to-buy: Seasonal Quartet 4 (matches her set)"
  },
- "id-0b7i4x0dcu": {
-  "title": "A Darkling Plain",
-  "from": "https://pictures.abebooks.com/isbn/9780439943468-uk.jpg",
-  "reason": "to-buy: Scholastic Point 2007 edition (matches her set)"
- },
  "9780552560252": {
   "title": "Inheritance",
   "from": "https://images-na.ssl-images-amazon.com/images/P/0552560251.01.LZZZZZZZ.jpg",
@@ -494,44 +404,9 @@
   "from": "https://images-na.ssl-images-amazon.com/images/P/0141315229.01.LZZZZZZZ.jpg",
   "reason": "to-buy: Castaways of the Flying Dutchman 3 (matches her set)"
  },
- "9780008487485": {
-  "title": "Kill Joy",
-  "from": "research/2026-10-28-overnight/covers/9780008487485-1.jpg",
-  "reason": "print cover without the Five Survive sticker, matching her other Holly Jacksons (her ISBN is the audiobook)"
- },
- "9780755504343": {
-  "title": "As Good As Dead",
-  "from": "research/2026-10-28-overnight/covers/9780755504343-1.jpg",
-  "reason": "flat UK print cover instead of a 3D book picture (her ISBN is the audiobook)"
- },
- "9781504763745": {
-  "title": "Murder at the Vicarage",
-  "from": "research/2026-10-28-overnight/covers/9781504763745-1.jpg",
-  "reason": "Queen of Mystery print cover instead of the square audiobook picture"
- },
- "9781668239247": {
-  "title": "Scion",
-  "from": "research/2026-10-28-overnight/covers/9781668239247-1.jpg",
-  "reason": "flat front (UK Gollancz, same art and wording) instead of a 3D book picture"
- },
- "id-t0gf45c93y": {
-  "title": "Second Term at Trebizon",
-  "from": "research/2026-10-28-overnight/covers/t0gf45c93y-1.jpg",
-  "reason": "Dragon paperback 1981, the same design as her other Trebizons"
- },
- "id-kql35p7ysl": {
-  "title": "Summer Term at Trebizon",
-  "from": "research/2026-10-28-overnight/covers/kql35p7ysl-1.jpg",
-  "reason": "Dragon/Granada paperback 1980, the same design as her other Trebizons"
- },
  "id-281v2q4tqt": {
   "title": "The Model Railway Hobby",
   "from": "research/2026-10-28-overnight/covers/281v2q4tqt-1.jpg",
   "reason": "period copy: Percival Marshall 1943, red cloth (a photo of a copy)"
- },
- "sg-good-girl-bad-blood": {
-  "title": "Good Girl, Bad Blood",
-  "from": "research/2026-10-28-overnight/covers/sg-good-girl-bad-blood-1.jpg",
-  "reason": "UK paperback design, matching the rest of the series (now shows the US one)"
  }
 }
