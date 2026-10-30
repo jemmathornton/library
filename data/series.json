@@ -943,6 +943,21 @@
     "A Story for Every Day of Winter",
     "A Story for Every Day of Spring"
    ]
+  },
+  {
+   "name": "Discworld extras",
+   "author": "pratchett|briggs",
+   "unnumbered": true,
+   "books": [
+    "The Streets of Ankh-Morpork",
+    "The Discworld Mapp",
+    "The Pratchett Portfolio",
+    "A Tourist Guide to Lancre",
+    "The New Discworld Companion|The Discworld Companion",
+    "The Art of Discworld",
+    "Where's My Cow?",
+    "The Wit and Wisdom of Discworld"
+   ]
   }
  ]
 }

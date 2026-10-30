@@ -167,7 +167,8 @@ BOOKS.forEach(b => {
   // her special editions (data/editions.json) first, then an edition named in the title
   const edition = (b.special || (/(illustrated|hufflepuff|children's|collector's|centenary|special|anniversary|movie tie-in|illumicrate)[\w' -]*edition/i.exec(b.title) || [])[0] || "")
     .replace(/(^|[\s-])\w/g, c => c.toUpperCase()).replace(/'/g, "’");
-  b.t = entry.title; b.sub = `${series.name}, book ${entry.n}${edition ? " · " + edition : ""}`;
+  // a group with no numbering (series.json "unnumbered", e.g. Discworld extras) just names the group
+  b.t = entry.title; b.sub = `${series.name}${series.unnumbered ? "" : ", book " + entry.n}${edition ? " · " + edition : ""}`;
   b.edition = edition;   // the book page says the series in its own line, so only this goes under its title
   b.sortTitle = sortTitle(b.t);
 });
@@ -448,7 +449,7 @@ function pageReading(){
 }
 
 // ---------- series, in place on the shelves (her choice, 18 Oct: no page of their own) ----------
-const seriesLine = b => (seriesOf[b.id] || []).map(h => `<span class="in-series">${ic("layers")}Book ${h.entry.n} of ${esc(h.series.name)}</span>`).join("");
+const seriesLine = b => (seriesOf[b.id] || []).map(h => `<span class="in-series">${ic("layers")}${h.series.unnumbered ? "Part of" : `Book ${h.entry.n} of`} ${esc(h.series.name)}</span>`).join("");
 
 // ---------- to read ----------
 let pickFrom = "list", pickShelf = "", picked = null;
