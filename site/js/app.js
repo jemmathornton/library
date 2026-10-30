@@ -500,6 +500,7 @@ function pageAdd(){
   const field = (k, label, extra = "") => `<label><span>${label}</span><input id="add-${k}" value="${esc(f[k] || "").replace(/’/g, "'")}" ${extra}></label>`;
   return hero({kicker: "Your shelves", title: "Add a <em>book</em>", text: "Type or scan its ISBN (the barcode number, usually on the back), check the details, pick a shelf."})
     + (!served ? `<div class="note">${ic("info")}<div><b>Open the library from its desktop shortcut to add books.</b> Opened straight from the folder, it can’t save anything.</div></div>` : "")
+    + `<div id="scannedBox">${scannedBox()}</div>`
     + `<div class="add-form" id="addForm">
         <div class="isbn-row">${field("isbn", "ISBN", 'inputmode="numeric" autocomplete="off" placeholder="9780000000000"')}
           <button class="btn pick" type="button" id="addLookup"${served ? "" : " disabled"}>${ic("search")}Look it up</button></div>
@@ -510,8 +511,46 @@ function pageAdd(){
             <div class="two">${field("pages", "Pages", 'inputmode="numeric"')}
               <label><span>Shelf</span><select id="add-shelf"><option value="">Choose a shelf…</option>${SHELVES.filter(s => s.libib).map(s => `<option value="${s.id}"${f.shelf === s.id ? " selected" : ""}>${esc(s.name)}</option>`).join("")}</select></label></div>
             <button class="btn pick" type="button" id="addSave"${served && !f.busy ? "" : " disabled"}>${ic("plus")}${f.busy ? "Adding…" : "Add to the shelf"}</button>
-          </div></div></div>`;
+          </div></div></div>`
+    + (served ? `<details class="scan-setup" id="scanSetup"><summary>Set up phone scanning</summary><ol>
+        <li>Install <b>Binary Eye</b> on your phone (Google Play).</li>
+        <li>In Binary Eye: Settings → Forwarding → turn on <b>Forward scans</b>.</li>
+        <li><b>URL to forward to</b>: type <code id="scanUrl">…</code></li>
+        <li><b>Request type</b>: “GET and simply add content”. Then tap <b>Test URL</b>.</li>
+        <li>Scan a book: it shows up at the top of this page.</li></ol>
+        <p>The phone and this laptop need to be on the home Wi-Fi.</p></details>` : "");
 }
+// scanned on her phone (Binary Eye -> the server's scanned list, 30 Oct): shown above the form while the page is open,
+// checked every few seconds; a new scan fills the form and is looked up by itself if the form is empty
+let scanList = [], scanSeen = null;
+function scannedBox(){
+  if (!scanList.length) return "";
+  return `<div class="scanned"><div class="label">${ic("download")}From your phone</div>${scanList.slice().reverse().map(s => {
+    const owned = s.owned || (BOOKS.find(b => b.isbn13 === s.isbn) || {}).title;
+    return `<div class="scan-row"><div><b>${esc(s.title || "Unknown title")}</b><span>${esc(s.isbn)}${owned ? " · you already have a copy" : ""}</span></div>
+      <button class="btn" type="button" data-scan-use="${esc(s.isbn)}">Use this</button><button class="btn quiet" type="button" data-scan-remove="${esc(s.isbn)}" title="Take it off this list">${ic("x")}</button></div>`;
+  }).join("")}</div>`;
+}
+async function pollScanned(){
+  if (location.hash !== "#add" || !location.protocol.startsWith("http")) { scanSeen = null; return; }
+  try { scanList = await api("api/scanned"); } catch { return; }
+  const box = document.getElementById("scannedBox"); if (box) box.innerHTML = scannedBox();
+  const fresh = scanSeen ? scanList.filter(s => !scanSeen.has(s.isbn)) : [];
+  scanSeen = new Set(scanList.map(s => s.isbn));
+  readAdd();
+  if (fresh.length && !addForm.title && !addForm.busy) useScan(fresh[fresh.length - 1].isbn);
+}
+function useScan(isbn){ const el = document.getElementById("add-isbn"); if (!el) return; el.value = isbn; document.getElementById("addLookup")?.click(); }
+setInterval(pollScanned, 4000);
+document.addEventListener("toggle", async e => { if (e.target.id !== "scanSetup" || !e.target.open) return;   // the address and key, fetched only when opened
+  try { document.getElementById("scanUrl").textContent = (await api("api/scan-setup")).url; } catch { document.getElementById("scanUrl").textContent = "(the library server isn’t answering)"; } }, true);
+addEventListener("hashchange", pollScanned);
+document.addEventListener("click", async e => {
+  const use = e.target.closest("[data-scan-use]"), drop = e.target.closest("[data-scan-remove]");
+  if (use) useScan(use.dataset.scanUse);
+  if (drop) { try { scanList = (await api("api/scanned/remove", {method: "POST", body: JSON.stringify({isbn: drop.dataset.scanRemove})})).left; } catch {}
+    document.getElementById("scannedBox").innerHTML = scannedBox(); }
+});
 const readAdd = () => ["isbn", "title", "authors", "publisher", "published", "pages"].forEach(k => { const el = document.getElementById("add-" + k); if (el) addForm[k] = el.value.trim(); });
 const redrawAdd = () => { const y = scrollY; document.getElementById("view").innerHTML = pageAdd(); scrollTo(0, y); };
 document.addEventListener("click", async e => {
