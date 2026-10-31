@@ -17,7 +17,7 @@ covers = json.load(open(R + 'data/covers.json', encoding='utf-8'))
 for n in nums:
     x = L[n - 1]; key = B[x['id']]['cover'].split('/')[1].split('.jpg')[0]
     shutil.copy(folder + x['id'] + '.jpg', R + 'site/covers/' + key + '.jpg')
-    covers[key] = {'src': x['url'], 'from': 'her pick, Nov: same cover, sharper scan'}
+    covers[key] = {'src': x['url'], 'from': 'her pick, 31 Oct: same cover, sharper scan'}
     print(n, x['title'])
 json.dump(dict(sorted(covers.items())), open(R + 'data/covers.json', 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
 subprocess.run([sys.executable, '-X', 'utf8', R + 'tools/build.py'], check=True)
