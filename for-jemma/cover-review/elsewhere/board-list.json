@@ -1,0 +1,402 @@
+[
+ {
+  "slug": "9780007202300",
+  "title": "Prince Caspian",
+  "authors": "C.S. Lewis",
+  "status": "read",
+  "isbn": "9780007202300",
+  "nowMatchesUK": 0.262,
+  "uk": [
+   {
+    "isbn": "9780007258536",
+    "pub": "HarperCollins Children's Books",
+    "date": "Aug 11, 2008",
+    "file": "9780007202300-9780007258536.jpg"
+   }
+  ]
+ },
+ {
+  "slug": "9780316015844",
+  "title": "Twilight",
+  "authors": "Stephenie Meyer",
+  "status": "read",
+  "isbn": "9780316015844",
+  "nowMatchesUK": 0.837,
+  "uk": [
+   {
+    "isbn": "9780316213172",
+    "pub": "Orbit",
+    "date": "2011",
+    "file": "9780316015844-9780316213172.jpg"
+   },
+   {
+    "isbn": "9780316007450",
+    "pub": "Little, Brown Books for Young Readers",
+    "date": "2007",
+    "file": "9780316015844-9780316007450.jpg"
+   },
+   {
+    "isbn": "9781907410024",
+    "pub": "Little, Brown Book Group Limited",
+    "date": "2009",
+    "file": "9780316015844-9781907410024.jpg"
+   },
+   {
+    "isbn": "9780748132638",
+    "pub": "Little, Brown Book Group Limited",
+    "date": "2011",
+    "file": "9780316015844-9780748132638.jpg"
+   }
+  ]
+ },
+ {
+  "slug": "9781538753712",
+  "title": "Dawn",
+  "authors": "Octavia E. Butler",
+  "status": "read",
+  "isbn": "9781538753712",
+  "nowMatchesUK": -0.171,
+  "uk": [
+   {
+    "isbn": "9780575042681",
+    "pub": "Victor Gollancz",
+    "date": "Jul 01, 1988",
+    "file": "9781538753712-9780575042681.jpg"
+   }
+  ]
+ },
+ {
+  "slug": "9780439680097",
+  "title": "Raven's Gate",
+  "authors": "Anthony Horowitz",
+  "status": "read",
+  "isbn": "9780439680097",
+  "nowMatchesUK": 0.614,
+  "uk": [
+   {
+    "isbn": "9780340941416",
+    "pub": "Hodder Murray",
+    "date": "January 30, 2007",
+    "file": "9780439680097-9780340941416.jpg"
+   },
+   {
+    "isbn": "9780439680097",
+    "pub": "Scholastic Paperbacks",
+    "date": "October 1, 2006",
+    "file": "9780439680097-9780439680097.jpg"
+   },
+   {
+    "isbn": "9780439856294",
+    "pub": "Scholastic",
+    "date": "May 1, 2006",
+    "file": "9780439680097-9780439856294.jpg"
+   }
+  ]
+ },
+ {
+  "slug": "9780099759911",
+  "title": "The Bluest Eye",
+  "authors": "Toni Morrison",
+  "status": "read",
+  "isbn": "9780099759911",
+  "nowMatchesUK": 0.101,
+  "uk": [
+   {
+    "isbn": "9781784876449",
+    "pub": "Penguin Random House",
+    "date": "2021",
+    "file": "9780099759911-9781784876449.jpg"
+   },
+   {
+    "isbn": "9780307278449",
+    "pub": "Vintage International",
+    "date": "2007-05",
+    "file": "9780099759911-9780307278449.jpg"
+   },
+   {
+    "isbn": "9780099759911",
+    "pub": "Vintage",
+    "date": "2015",
+    "file": "9780099759911-9780099759911.jpg"
+   }
+  ]
+ },
+ {
+  "slug": "sg-new-moon",
+  "title": "New Moon",
+  "authors": "Stephenie Meyer",
+  "status": "read",
+  "isbn": "",
+  "nowMatchesUK": 0.849,
+  "uk": [
+   {
+    "isbn": "9780316065221",
+    "pub": "Little, Brown and Company",
+    "date": "2006",
+    "file": "sg-new-moon-9780316065221.jpg"
+   },
+   {
+    "isbn": "9780316032544",
+    "pub": "Little, Brown Books for Young Readers",
+    "date": "Mar 15, 2008",
+    "file": "sg-new-moon-9780316032544.jpg"
+   },
+   {
+    "isbn": "9780316036726",
+    "pub": "Little, Brown and Company",
+    "date": "2008-05",
+    "file": "sg-new-moon-9780316036726.jpg"
+   },
+   {
+    "isbn": "9781904233879",
+    "pub": "Atom",
+    "date": "2009",
+    "file": "sg-new-moon-9781904233879.jpg"
+   },
+   {
+    "isbn": "9780356247809",
+    "pub": "Little, Brown Book Group Limited",
+    "date": "2007",
+    "file": "sg-new-moon-9780356247809.jpg"
+   }
+  ]
+ },
+ {
+  "slug": "9781473224186",
+  "title": "An Absolutely Remarkable Thing",
+  "authors": "Hank Green",
+  "status": "read",
+  "isbn": "9781473224186",
+  "nowMatchesUK": 0.813,
+  "uk": [
+   {
+    "isbn": "9781524745776",
+    "pub": "PENGUIN US",
+    "date": "Jul 27, 2019",
+    "file": "9781473224186-9781524745776.jpg"
+   },
+   {
+    "isbn": "9781524744137",
+    "pub": "PENGUIN US",
+    "date": "Sep 22, 2018",
+    "file": "9781473224186-9781524744137.jpg"
+   },
+   {
+    "isbn": "9781524743468",
+    "pub": "Penguin Publishing Group",
+    "date": "2019",
+    "file": "9781473224186-9781524743468.jpg"
+   }
+  ]
+ },
+ {
+  "slug": "9781504762397",
+  "title": "The Body in the Library",
+  "authors": "Agatha Christie",
+  "status": "read",
+  "isbn": "9781504762397",
+  "nowMatchesUK": 0.702,
+  "uk": [
+   {
+    "isbn": "9780007422173",
+    "pub": "HarperCollins Publishers Limited",
+    "date": "2010",
+    "file": "9781504762397-9780007422173.jpg"
+   },
+   {
+    "isbn": "9780007208449",
+    "pub": "HarperCollins Publishers",
+    "date": "2005",
+    "file": "9781504762397-9780007208449.jpg"
+   },
+   {
+    "isbn": "9780063214019",
+    "pub": "HarperCollins Publishers",
+    "date": "2022",
+    "file": "9781504762397-9780063214019.jpg"
+   },
+   {
+    "isbn": "9780060593490",
+    "pub": "HarperCollins",
+    "date": "2003",
+    "file": "9781504762397-9780060593490.jpg"
+   },
+   {
+    "isbn": "9780008255893",
+    "pub": "HarperCollins Publishers Limited",
+    "date": "2019",
+    "file": "9781504762397-9780008255893.jpg"
+   }
+  ]
+ },
+ {
+  "slug": "9780060082093",
+  "title": "Mortal Engines",
+  "authors": "Philip Reeve",
+  "status": "read",
+  "isbn": "9780060082093",
+  "nowMatchesUK": -0.264,
+  "uk": [
+   {
+    "isbn": "9781760663520",
+    "pub": "Scholastic Australia",
+    "date": "2018",
+    "file": "9780060082093-9781760663520.jpg"
+   }
+  ]
+ },
+ {
+  "slug": "9780593599839",
+  "title": "A Fate Inked In Blood",
+  "authors": "Danielle L. Jensen",
+  "status": "read",
+  "isbn": "9780593599839",
+  "nowMatchesUK": 0.123,
+  "uk": [
+   {
+    "isbn": "9781804947159",
+    "pub": "Penguin Books, Limited",
+    "date": "2024",
+    "file": "9780593599839-9781804947159.jpg"
+   }
+  ]
+ },
+ {
+  "slug": "9780358616382",
+  "title": "Fourteen Days",
+  "authors": "Douglas Preston, Margaret Atwood",
+  "status": "read",
+  "isbn": "9780358616382",
+  "nowMatchesUK": 0.835,
+  "uk": [
+   {
+    "isbn": "9780063280182",
+    "pub": "HarperCollins Publishers",
+    "date": "2025",
+    "file": "9780358616382-9780063280182.jpg"
+   },
+   {
+    "isbn": "9781529926873",
+    "pub": "Penguin Random House",
+    "date": "2025",
+    "file": "9780358616382-9781529926873.jpg"
+   },
+   {
+    "isbn": "9781784745462",
+    "pub": "Penguin Random House",
+    "date": "2024",
+    "file": "9780358616382-9781784745462.jpg"
+   }
+  ]
+ },
+ {
+  "slug": "sg-a-good-girl-s-guide-to-murder",
+  "title": "A Good Girl's Guide to Murder",
+  "authors": "Holly Jackson",
+  "status": "read",
+  "isbn": "",
+  "nowMatchesUK": 0.33,
+  "uk": [
+   {
+    "isbn": "9780008653149",
+    "pub": "HarperCollins Publishers",
+    "date": "October 12, 2023",
+    "file": "sg-a-good-girl-s-guide-to-murder-9780008653149.jpg"
+   }
+  ]
+ },
+ {
+  "slug": "9780593441299",
+  "title": "Great Big Beautiful Life",
+  "authors": "Emily Henry",
+  "status": "read",
+  "isbn": "9780593441299",
+  "nowMatchesUK": 0.251,
+  "uk": [
+   {
+    "isbn": "9780241739860",
+    "pub": "Viking",
+    "date": "April 24, 2025",
+    "file": "9780593441299-9780241739860.jpg"
+   }
+  ]
+ },
+ {
+  "slug": "9780140167771",
+  "title": "The Secret History",
+  "authors": "Donna Tartt",
+  "status": "paused",
+  "isbn": "9780140167771",
+  "nowMatchesUK": 0.279,
+  "uk": [
+   {
+    "isbn": "9780141013053",
+    "pub": "Penguin Books, Limited",
+    "date": "2002",
+    "file": "9780140167771-9780141013053.jpg"
+   },
+   {
+    "isbn": "9780241982884",
+    "pub": "Penguin Books, Limited",
+    "date": "2017",
+    "file": "9780140167771-9780241982884.jpg"
+   },
+   {
+    "isbn": "9780141035215",
+    "pub": "Penguin",
+    "date": "2007",
+    "file": "9780140167771-9780141035215.jpg"
+   }
+  ]
+ },
+ {
+  "slug": "9780440863687",
+  "title": "The Illustrated Mum",
+  "authors": "Jacqueline Wilson",
+  "status": "read",
+  "isbn": "9780440863687",
+  "nowMatchesUK": 0.31,
+  "uk": [
+   {
+    "isbn": "9780385408882",
+    "pub": "Doubleday",
+    "date": "1999-01-01",
+    "file": "9780440863687-9780385408882.jpg"
+   },
+   {
+    "isbn": "9780440868675",
+    "pub": "Corgi Yearling",
+    "date": "2007-01-01",
+    "file": "9780440863687-9780440868675.jpg"
+   },
+   {
+    "isbn": "9780440867814",
+    "pub": "Corgi",
+    "date": "Mar 27, 2007",
+    "file": "9780440863687-9780440867814.jpg"
+   },
+   {
+    "isbn": "9780440863687",
+    "pub": "Corgi Yearling",
+    "date": "2000",
+    "file": "9780440863687-9780440863687.jpg"
+   }
+  ]
+ },
+ {
+  "slug": "9780007202324",
+  "title": "The Last Battle",
+  "authors": "C.S. Lewis",
+  "status": "read",
+  "isbn": "9780007202324",
+  "nowMatchesUK": -0.065,
+  "uk": [
+   {
+    "isbn": "9780007363803",
+    "pub": "HARPER COLLINS PUBLISHERS",
+    "date": "Jul 16, 2010",
+    "file": "9780007202324-9780007363803.jpg"
+   }
+  ]
+ }
+]
