@@ -4,6 +4,17 @@
 
 0. **Overnight research (23–24 Oct): `research/2026-10-overnight/README.txt`.** The 8 code fixes are in (28 Oct, her yes). 78 short blurbs and 50 page-count and date fixes are in (28 Oct; `data/description-fixes.json`, `data/detail-fixes.json`). Praise, review quotes, bestseller and award lines cut from 151 blurbs (28 Oct, her wish; cuts only, no rewording);  A few sentences mixing praise and story are left whole (e.g. Theodore Boone, Sapiens). Longer blurbs are fine (her call, 28 Oct): the held ones were checked and added (praise cut; Northern Lights given the UK blurb, not the US Golden Compass one). The 5 that were only praise have UK publisher blurbs (Amazon UK) or Open Library ones. Still waiting for her yes, in order: 9 replacement covers and 39 period jackets for the Old Book Collection are on the New covers switch (bottom right, “See all” lists them; 28 Oct). She has looked: about half are better, half worse, so she’ll go through them one by one when she has time (then keep only the ones she picks, and turn the switch off); the other 43 proposed covers are for to-buy additions not added yet; 64 to-buy entries (Blyton notes split, series gaps). The rest of the code review (`code-review/review.md`, items not in the 8 fixes) is unread by her.
 
+0a. **Overnight 31 Oct–1 Nov, waiting for her yes:**
+   - **To-buy series books** (42 of the 64 to-buy entries), each series shown with her own copies: `for-jemma/cover-review/to-buy/board-1..4.jpg` and `board-5-fixes.jpg`. Points to settle:
+     - Artemis Fowl 7–8 wait for her photo of books 2–6.
+     - Inheritance 4 is now the US Knopf cover, to match her US 1–3 (she kept those on 31 Oct).
+     - Fever Crumb 2–3: A (UK painted) or B (US Scholastic)? Neither matches her hooded-girl book 1.
+     - Scorpia Rising and Clash of the Sky Galleons were never printed in her sets' designs.
+     - Theodore Boone 4–7 only exist in a later Hodder design.
+   - **Other 22 to-buy entries:** her notes “Famous Five old except…”, “Secret Seven old except…” and “Adventure old except Queer” would each be split into one entry per book (old copies, no covers). Yes or no?
+   - **Books read elsewhere:** UK covers (`for-jemma/cover-review/elsewhere/`).
+   - **App server (31 Oct):** it had stopped because Claude restarted it from its own shell on 30 Oct, so it ended with Claude’s session. It is now restarted through Windows (Explorer) and runs on its own. A scheduled task to restart it if it ever stops was refused by Claude’s safety check. She can allow it, or simply open the Startup shortcut “Jemma's Library server” if the app ever says it can’t connect.
+
 0b. **Covers, 31 Oct (done, her picks):** 3 series fixes (Famous Five 2, Winternight 3, Bartimaeus 3); 33 + 203 sharper scans of the same covers and 23 near matches (`for-jemma/cover-review/sharper*/`, applied with `apply_sharper.py`; 81 Pyramids left out, colours differ); An Abundance of Katherines is the 2006 silhouettes cover she linked (Wikipedia; small but the only clean copy). Seller notes cut from 9 blurbs. Pride and Prejudice: Oxford World's Classics (her pick). His Dark Materials: sharper scans of all three (her pick). No blurb anywhere for Witness, Teddy Bear's Picnic, The School That Went to Sea, Dear Mr. Potter, Where in the Zoo Are You?, the Feminist Translations anthology.
 
 1. **Things only she can check:**
