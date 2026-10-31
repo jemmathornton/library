@@ -33,7 +33,13 @@
   "Sir Terry Pratchett": "Terry Pratchett",
   "M. H. Binstea": "M. H. Binstead",
   "Charles Dickins": "Charles Dickens",
-  "Johanna Spyn": "Johanna Spyri"
+  "Johanna Spyn": "Johanna Spyri",
+  "J. Salinger": "J. D. Salinger",
+  "David R. Lab": "David R. Lamb",
+  "Sir Arthur C. Clarke CBE": "Arthur C. Clarke",
+  "Stephen Donaldson": "Stephen R. Donaldson",
+  "Cay Horstmann": "Cay S. Horstmann",
+  "DK Eyewitness": "Dorling Kindersley"
  },
  "remove": [
   "Anonymous"
@@ -86,6 +92,94 @@
    {
     "name": "Newt Scamander",
     "role": "Writing as"
+   }
+  ],
+  "New Term At Malory Towers": [
+   {
+    "name": "Enid Blyton"
+   },
+   {
+    "name": "Pamela Cox"
+   }
+  ],
+  "Summer Term At Malory Towers": [
+   {
+    "name": "Enid Blyton"
+   },
+   {
+    "name": "Pamela Cox"
+   }
+  ],
+  "Winter Term At Malory Towers": [
+   {
+    "name": "Enid Blyton"
+   },
+   {
+    "name": "Pamela Cox"
+   }
+  ],
+  "Secrets at Malory Towers": [
+   {
+    "name": "Enid Blyton"
+   },
+   {
+    "name": "Pamela Cox"
+   }
+  ],
+  "Fun and Games at Malory Towers": [
+   {
+    "name": "Enid Blyton"
+   },
+   {
+    "name": "Pamela Cox"
+   }
+  ],
+  "Goodbye, Malory Towers": [
+   {
+    "name": "Enid Blyton"
+   },
+   {
+    "name": "Pamela Cox"
+   }
+  ],
+  "Kitty at St. Clare's": [
+   {
+    "name": "Enid Blyton"
+   },
+   {
+    "name": "Pamela Cox"
+   }
+  ],
+  "Kitty at St Clare's": [
+   {
+    "name": "Enid Blyton"
+   },
+   {
+    "name": "Pamela Cox"
+   }
+  ],
+  "Enid Blyton's Sixth Form at St.Clare's": [
+   {
+    "name": "Enid Blyton"
+   },
+   {
+    "name": "Pamela Cox"
+   }
+  ],
+  "Enid Blyton's Third Form at St.Clare's": [
+   {
+    "name": "Enid Blyton"
+   },
+   {
+    "name": "Pamela Cox"
+   }
+  ],
+  "The Curse Of The Gloamglozer: The Edge Chronicles": [
+   {
+    "name": "Paul Stewart"
+   },
+   {
+    "name": "Chris Riddell"
    }
   ]
  },
