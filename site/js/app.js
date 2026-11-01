@@ -571,8 +571,8 @@ async function camOpen(){
   camReader = new ZXing.BrowserMultiFormatReader(hints, 250);
   // the camera is asked for here, not by the reader, so each step can say what's happening (a black box on 1 Nov said nothing)
   msg("Asking for the camera… If a box asks to use it, press Allow (in the app window it’s at the top left).");
-  let stream;
-  try { stream = await navigator.mediaDevices.getUserMedia({video: {width: {ideal: 4096}, height: {ideal: 2160}}})   // the sharpest picture the camera has; }
+  let stream;   // asked for the sharpest picture the camera has
+  try { stream = await navigator.mediaDevices.getUserMedia({video: {width: {ideal: 4096}, height: {ideal: 2160}}}); }
   catch (e) {
     return msg({NotAllowedError: "The camera isn’t allowed for the library. Click the camera sign at the top left of the window, choose Allow, then press Scan with camera again.",
       NotReadableError: "The camera is busy: another app may be using it. Close that app, then try again.",
