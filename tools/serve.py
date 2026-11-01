@@ -28,7 +28,7 @@ first line is StoryGraph's own column list). When there's a newer one than last 
 it into imports/ and brings it in, and the site is rebuilt. Her Downloads file is only read, never changed.
 Last import in data/storygraph-source.json; what happened in logs/reading-updates.log.
 """
-import functools, hmac, http.server, json, os, re, secrets, subprocess, sys, threading, time, urllib.parse, urllib.request
+import functools, hmac, html, http.server, json, os, re, secrets, subprocess, sys, threading, time, urllib.parse, urllib.request
 from datetime import date, datetime
 
 PORT, SCAN_PORT = 8020, 8021
@@ -74,8 +74,10 @@ def waterstones(isbn):
     # a shop-only edition (a signed copy under a sticker code) links to the book's ordinary edition: its ISBN finds sharper covers
     slug = re.search(r'/book/([^/]+)/', r.geturl())
     other = next((m for m in re.findall(rf'href="/book/{re.escape(slug.group(1))}/[^/"]+/(97[89]\d{{10}})"', page) if m != isbn), '') if slug else ''
-    return {'found': True, 'isbn': isbn, 'title': book['name'], 'authors': [p['name'] for p in people if p.get('name')],
-            'publisher': pub.group(1).strip().replace('&#039;', "'").replace('&amp;', '&') if pub else '',
+    cat = re.search(r'"item_category":"([^"]+)"', page)   # the shop's own category, e.g. "Steampunk" (for a suggested shelf)
+    return {'found': True, 'isbn': isbn, 'title': html.unescape(book['name']), 'authors': [re.sub(r'\s+', ' ', html.unescape(p['name'])).strip() for p in people if p.get('name')],
+            'categories': [html.unescape(cat.group(1))] if cat else [],
+            'publisher': html.unescape(pub.group(1).strip()) if pub else '',
             'published': book.get('datePublished', ''), 'pages': book.get('numberOfPages'), 'cover': book.get('image', ''), 'otherIsbn': other}
 
 
@@ -107,9 +109,29 @@ def goodreads(isbn):
     people = people if isinstance(people, list) else [people]
     pub = re.search(r'"publisher":"([^"]+)"', page)
     when = re.search(r'"publicationTime":(\d{9,})', page)
+    genres = list(dict.fromkeys(g.replace('-', ' ') for g in re.findall(r'goodreads\.com/genres/([a-z0-9-]+)', page)))[:8]
     return {'found': True, 'isbn': isbn, 'title': book['name'], 'authors': [re.sub(r'\s+', ' ', p['name']).strip() for p in people if p.get('name')],
             'publisher': pub.group(1) if pub else '', 'published': date.fromtimestamp(int(when.group(1)) / 1000).isoformat() if when else '',
-            'pages': book.get('numberOfPages'), 'cover': book.get('image', '')}
+            'pages': book.get('numberOfPages'), 'cover': book.get('image', ''), 'categories': genres}
+
+
+def waterstones_checked(isbn):
+    """Waterstones, but with three or more 'authors' (it lists illustrators and cover artists too) Goodreads' authors win."""
+    hit = waterstones(isbn)
+    if hit and len(hit['authors']) >= 3:
+        gr = None
+        for n in range(3):   # Goodreads sometimes answers with an empty page
+            try:
+                gr = goodreads(isbn)
+            except Exception:
+                gr = None
+            if gr:
+                break
+            time.sleep(1.5)
+        if gr and gr['authors']:
+            hit['authors'] = list(dict.fromkeys(re.sub(r'^(Mr|Mrs|Ms|Miss|Dr)\.?\s+', '', a) for a in gr['authors']))
+            hit['categories'] = hit.get('categories', []) + gr.get('categories', [])
+    return hit
 
 
 def isbn10(i13):
@@ -166,7 +188,7 @@ def find(isbn):
     except Exception:   # Open Library down or slow: the shops are still asked
         d = None
     if not d:
-        for source, tries in ((waterstones, 1), (goodreads, 3)):   # a new UK book, then a small press's (1 Nov: The Callista Prophecy)
+        for source, tries in ((waterstones_checked, 1), (goodreads, 3)):   # a new UK book, then a small press's (1 Nov: The Callista Prophecy)
             for n in range(tries):   # Goodreads sometimes answers with an empty page; a second ask usually works
                 try:
                     hit = source(isbn)
@@ -180,7 +202,8 @@ def find(isbn):
     c = d.get('cover') or {}
     found = {'found': True, 'isbn': isbn, 'title': (d.get('title', '') + (': ' + d['subtitle'] if d.get('subtitle') else '')).strip(),
              'authors': [a['name'] for a in d.get('authors', [])], 'publisher': ', '.join(p['name'] for p in d.get('publishers', [])),
-             'published': d.get('publish_date', ''), 'pages': d.get('number_of_pages'), 'cover': c.get('large') or c.get('medium') or ''}
+             'published': d.get('publish_date', ''), 'pages': d.get('number_of_pages'), 'cover': c.get('large') or c.get('medium') or '',
+             'categories': [x['name'] for x in d.get('subjects', [])][:10]}
     if not (found['cover'] and found['pages'] and found['published']):   # a half-made new entry: Waterstones fills the gaps
         try:
             ws = waterstones(isbn) or {}
@@ -188,6 +211,7 @@ def find(isbn):
             ws = {}
         for k in ('title', 'authors', 'published', 'pages', 'cover'):
             found[k] = found[k] or ws.get(k) or found[k]
+        found['categories'] = ws.get('categories', []) + found['categories']
         found['publisher'] = ws.get('publisher') or found['publisher']   # the UK shop's publisher over Open Library's guess
     return found
 

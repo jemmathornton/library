@@ -555,7 +555,7 @@ function pageAdd(){
           <div class="add-fields">${field("title", "Title")}${field("authors", "Author(s), with commas between")}
             <div class="two">${field("publisher", "Publisher")}${field("published", "Published")}</div>
             <div class="two">${field("pages", "Pages", 'inputmode="numeric"')}
-              <label><span>Shelf</span><select id="add-shelf"><option value="">Choose a shelf…</option>${SHELVES.filter(s => s.libib).map(s => `<option value="${s.id}"${f.shelf === s.id ? " selected" : ""}>${esc(s.name)}</option>`).join("")}</select></label></div>
+              <label><span>Shelf${f.suggest && f.suggest.shelf !== f.shelf ? ` <button type="button" class="suggest" data-suggest="${f.suggest.shelf}">Suggested: ${esc(shelfIndex[f.suggest.shelf].name)} (${esc(f.suggest.why)}) · Use it</button>` : ""}</span><select id="add-shelf"><option value="">Choose a shelf…</option>${SHELVES.filter(s => s.libib).map(s => `<option value="${s.id}"${f.shelf === s.id ? " selected" : ""}>${esc(s.name)}</option>`).join("")}</select></label></div>
             <label><span>Signed</span><select id="add-signed">${[["", "Not signed"], ["signed", "Signed"], ["to-you", "Signed to you"]].map(([v, t]) => `<option value="${v}"${(f.signed || "") === v ? " selected" : ""}>${t}</option>`).join("")}</select></label>
             <button class="btn pick" type="button" id="addSave"${served && !f.busy ? "" : " disabled"}>${ic("plus")}${f.busy ? "Adding…" : "Add to the shelf"}</button>
           </div></div></div>`
@@ -567,6 +567,27 @@ function pageAdd(){
         <li>Scan a book: it shows up at the top of this page.</li></ol>
         <p>The phone and this laptop need to be on the home Wi-Fi.</p></details>` : "");
 }
+// a suggested shelf for a book just looked up (her ask, 1 Nov): where she already keeps that author, or else from the
+// shop's or Goodreads' category; she chooses, it's never set for her
+const SHELF_WORDS = [["dystopia", /dystop/], ["science-fiction", /science fiction|sci-?fi|space opera|steampunk|cyberpunk|time travel|robot|alien/],
+  ["fantasy", /fantasy|magic|dragon|witch|wizard|fairy|myth/], ["travel", /travel|guide ?book|railway journeys/],
+  ["childrens", /picture book|children|juvenile|ages? \d/], ["young-adult", /young adult|teen/],
+  ["non-fiction", /biograph|memoir|history|essay|self-help|science(?! fiction)|cookery|popular|true crime|nature|politic/],
+  ["adult-fiction", /fiction|novel|romance|crime|thriller|mystery|literary/]];
+function suggestShelf(d){
+  const mine = {};
+  (d.authors || []).forEach(a => (authorIndex[slug(a)] || {books: []}).books.forEach(({book}) => { if (book.shelf && !book.notOwned) mine[book.shelf] = (mine[book.shelf] || 0) + 1; }));
+  const top = Object.entries(mine).sort((a, b) => b[1] - a[1])[0];
+  if (top && shelfIndex[top[0]]) return {shelf: top[0], why: "where your other books by them are"};
+  const cats = (d.categories || []).join(" | ").toLowerCase();
+  const hit = SHELF_WORDS.find(([, re]) => re.test(cats));
+  return hit && shelfIndex[hit[0]] ? {shelf: hit[0], why: (d.categories || []).find(c => hit[1].test(c.toLowerCase())) || "its category"} : null;
+}
+document.addEventListener("click", e => {
+  const s = e.target.closest("[data-suggest]"); if (!s) return;
+  e.preventDefault(); readAdd(); addForm.shelf = s.dataset.suggest; redrawAdd();
+});
+
 // scanned on her phone (Binary Eye -> the server's scanned list, 30 Oct): shown above the form while the page is open,
 // checked every few seconds; a new scan fills the form and is looked up by itself if the form is empty
 let scanList = [], scanSeen = null;
@@ -864,8 +885,9 @@ document.addEventListener("click", async e => {
     readAdd(); if (!addForm.isbn) { addForm.note = "Type the ISBN first."; return redrawAdd(); }
     addForm.note = "Looking it up…"; redrawAdd();
     try { const d = await api("api/lookup?isbn=" + encodeURIComponent(addForm.isbn));
-      if (d.found) Object.assign(addForm, {title: d.title, authors: d.authors.join(", "), publisher: d.publisher, published: d.published, pages: d.pages || "", cover: d.cover, note: "Found it. Check the details and pick a shelf."});
-      else Object.assign(addForm, {title: "", authors: "", publisher: "", published: "", pages: "", cover: "",
+      if (d.found) Object.assign(addForm, {title: d.title, authors: d.authors.join(", "), publisher: d.publisher, published: d.published, pages: d.pages || "", cover: d.cover, note: "Found it. Check the details and pick a shelf.",
+        suggest: suggestShelf(d)});
+      else Object.assign(addForm, {title: "", authors: "", publisher: "", published: "", pages: "", cover: "", suggest: null,
         note: "Open Library, Waterstones and Goodreads don’t know that number yet (new or special editions can take a while). Try the Waterstones price sticker if it has one, or fill in the details yourself."}); }
     catch { addForm.note = "Couldn’t reach Open Library. Fill in the details yourself."; }
     if (camChecked) { camChecked = false; addForm.note = `Read from a picture: check ${addForm.isbn} matches the book. ` + addForm.note; }
