@@ -238,7 +238,11 @@ def straighten(src):
     a = np.asarray(im, dtype=float)
     h, w, _ = a.shape
     border = np.concatenate([a[:6].reshape(-1, 3), a[-6:].reshape(-1, 3), a[:, :6].reshape(-1, 3), a[:, -6:].reshape(-1, 3)])
-    mask = np.sqrt(((a - np.median(border, axis=0)) ** 2).sum(axis=2)) > 60
+    bg = np.median(border, axis=0)
+    # anything clearly unlike the background is book; "clearly" is set by how much the background itself varies, so a
+    # cover edge close to the background's colour (1 Nov: a dark green border on green cloth) isn't cut off
+    noise = np.percentile(np.sqrt(((border - bg) ** 2).sum(axis=1)), 95)
+    mask = np.sqrt(((a - bg) ** 2).sum(axis=2)) > min(60, max(22, noise * 1.6))
     mask = np.asarray(Image.fromarray((mask * 255).astype(np.uint8)).filter(ImageFilter.MedianFilter(9))) > 127
     no = {'ok': False, 'error': 'Couldn’t find the edges of the book in this picture. Try Find another cover.'}
     if not .25 < mask.mean() < .97:
@@ -275,10 +279,13 @@ def straighten(src):
     if W < 80 or H < 80 or not 1 < H / W < 2.2:
         return no
     out = im.transform((W, H), Image.QUAD, (*tl, *bl, *br, *tr), Image.BICUBIC)
-    out = out.crop((3, 3, W - 3, H - 3))   # a hair inside the edges, so no background shows
+    out = out.crop((1, 1, W - 1, H - 1))   # a hair inside the edges, so no background shows
     os.makedirs(STRAIGHT, exist_ok=True)
-    name = hashlib.sha1(data).hexdigest()[:16] + '.jpg'
-    out.save(os.path.join(STRAIGHT, name), 'JPEG', quality=92)
+    jpg = BytesIO()
+    out.save(jpg, 'JPEG', quality=92)
+    name = hashlib.sha1(jpg.getvalue()).hexdigest()[:16] + '.jpg'   # named by the result, so a better redo never shows the old one
+    with open(os.path.join(STRAIGHT, name), 'wb') as fh:
+        fh.write(jpg.getvalue())
     return {'ok': True, 'cover': 'covers/_straightened/' + name}
 
 
