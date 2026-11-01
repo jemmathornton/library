@@ -684,7 +684,7 @@ document.addEventListener("click", async e => {
     addForm.note = "Looking it up…"; redrawAdd();
     try { const d = await api("api/lookup?isbn=" + encodeURIComponent(addForm.isbn));
       if (d.found) Object.assign(addForm, {title: d.title, authors: d.authors.join(", "), publisher: d.publisher, published: d.published, pages: d.pages || "", cover: d.cover, note: "Found it. Check the details and pick a shelf."});
-      else addForm.note = "Open Library doesn’t know that ISBN. Fill in the details yourself."; }
+      else addForm.note = "Neither Open Library nor Waterstones knows that number yet (new or special editions can take a while). Try the Waterstones price sticker if it has one, or fill in the details yourself."; }
     catch { addForm.note = "Couldn’t reach Open Library. Fill in the details yourself."; }
     const have = BOOKS.find(b => b.isbn13 === addForm.isbn);
     if (have) addForm.note = `You already have this one: ${have.t}. Add it again only if it’s a second copy.`;
