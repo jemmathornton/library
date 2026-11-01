@@ -572,7 +572,7 @@ async function camOpen(){
   // the camera is asked for here, not by the reader, so each step can say what's happening (a black box on 1 Nov said nothing)
   msg("Asking for the camera… If a box asks to use it, press Allow (in the app window it’s at the top left).");
   let stream;
-  try { stream = await navigator.mediaDevices.getUserMedia({video: {width: {ideal: 1280}, height: {ideal: 720}}}); }
+  try { stream = await navigator.mediaDevices.getUserMedia({video: {width: {ideal: 4096}, height: {ideal: 2160}}})   // the sharpest picture the camera has; }
   catch (e) {
     return msg({NotAllowedError: "The camera isn’t allowed for the library. Click the camera sign at the top left of the window, choose Allow, then press Scan with camera again.",
       NotReadableError: "The camera is busy: another app may be using it. Close that app, then try again.",
@@ -580,15 +580,30 @@ async function camOpen(){
   }
   if (!camReader) { stream.getTracks().forEach(t => t.stop()); return; }   // closed while the box was asking
   const video = document.getElementById("camVideo");
-  msg("Hold the barcode on the back of the book up to the camera, about a hand’s width away.");
+  video.srcObject = stream; video.play().catch(() => {});
+  msg("Hold the barcode level with the gold line, about 20 to 30 cm from the camera, in good light, and keep it still. If it doesn’t read, try a little nearer or further.");
   setTimeout(() => { if (camReader && !video.videoWidth) msg("The camera is on but sending no picture. Close any other app using it and try again."); }, 5000);
-  try {
-    await camReader.decodeFromStream(stream, video, r => {
-      const text = r && r.getText();
-      if (!text || !isBookNumber(text)) return;
-      camClose(); useScan(text);
-    });
-  } catch (e) { msg(`The barcode reader stopped (${e && e.name}). Type the ISBN instead.`); }
+  // a laptop webcam gives soft pictures close up, so each frame is read three ways: the middle strip (where the gold line is)
+  // and the whole picture with the method made for blurry one-line barcodes, then the middle strip the usual way
+  const reader = new ZXing.MultiFormatReader(); reader.setHints(hints);
+  const canvas = document.createElement("canvas"), ctx = canvas.getContext("2d", {willReadFrequently: true});
+  const tries = [[ZXing.GlobalHistogramBinarizer, .3], [ZXing.GlobalHistogramBinarizer, 0], [ZXing.HybridBinarizer, .3]];
+  let n = 0;
+  const look = () => {
+    if (!camReader) { stream.getTracks().forEach(t => t.stop()); return; }
+    const w = video.videoWidth, h = video.videoHeight;
+    if (w) {
+      const [Bin, edge] = tries[n++ % tries.length], y = Math.round(h * edge), sh = h - 2 * y;
+      canvas.width = w; canvas.height = sh; ctx.drawImage(video, 0, y, w, sh, 0, 0, w, sh);
+      try {
+        const text = reader.decodeWithState(new ZXing.BinaryBitmap(new Bin(new ZXing.HTMLCanvasElementLuminanceSource(canvas)))).getText();
+        if (isBookNumber(text)) { stream.getTracks().forEach(t => t.stop()); camClose(); return useScan(text); }
+      } catch {}   // nothing readable in this frame
+    }
+    setTimeout(look, 80);
+  };
+  camReader.reset = () => stream.getTracks().forEach(t => t.stop());
+  look();
 }
 document.addEventListener("click", e => {
   if (e.target.closest("#camOpen")) camOpen();
