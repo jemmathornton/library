@@ -79,6 +79,39 @@ def waterstones(isbn):
             'published': book.get('datePublished', ''), 'pages': book.get('numberOfPages'), 'cover': book.get('image', ''), 'otherIsbn': other}
 
 
+def goodreads(isbn):
+    """A small press's book no shop lists (1 Nov: The Callista Prophecy, Rook Abbey Press): Goodreads' search sends a known
+    ISBN to the book's page, whose structured data has the title, authors, pages and cover; publisher and date are in its page data.
+    Only taken when the page is for this very ISBN."""
+    import http.cookiejar   # Goodreads sets a cookie on its way to the book page and loops without one
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
+    with opener.open(urllib.request.Request(f'https://www.goodreads.com/search?q={isbn}', headers=UA), timeout=20) as r:
+        url, page = r.geturl(), r.read().decode('utf-8', 'replace')
+    if '/book/show/' not in url:   # a list of results rather than the book itself: its first result
+        first = re.search(r'href="(/book/show/[^"?]+)', page)
+        if not first:
+            return None
+        with opener.open(urllib.request.Request('https://www.goodreads.com' + first.group(1), headers=UA), timeout=20) as r:
+            page = r.read().decode('utf-8', 'replace')
+    book = None
+    for block in re.findall(r'<script type="application/ld\+json">(.*?)</script>', page, re.S):
+        try:
+            data = json.loads(block)
+        except ValueError:
+            continue
+        if isinstance(data, dict) and data.get('@type') == 'Book':
+            book = data
+    if not book or not book.get('name') or re.sub(r'\D', '', str(book.get('isbn', ''))) != isbn:   # this very edition only
+        return None
+    people = book.get('author') or []
+    people = people if isinstance(people, list) else [people]
+    pub = re.search(r'"publisher":"([^"]+)"', page)
+    when = re.search(r'"publicationTime":(\d{9,})', page)
+    return {'found': True, 'isbn': isbn, 'title': book['name'], 'authors': [re.sub(r'\s+', ' ', p['name']).strip() for p in people if p.get('name')],
+            'publisher': pub.group(1) if pub else '', 'published': date.fromtimestamp(int(when.group(1)) / 1000).isoformat() if when else '',
+            'pages': book.get('numberOfPages'), 'cover': book.get('image', '')}
+
+
 def isbn10(i13):
     if not i13.startswith('978'):
         return ''
@@ -128,12 +161,22 @@ def find(isbn):
             return waterstones(isbn) or {'found': False, 'isbn': isbn}
         except Exception:
             return {'found': False, 'isbn': isbn}
-    d = get_json(f'https://openlibrary.org/api/books?format=json&jscmd=data&bibkeys=ISBN:{isbn}').get(f'ISBN:{isbn}')
+    try:
+        d = get_json(f'https://openlibrary.org/api/books?format=json&jscmd=data&bibkeys=ISBN:{isbn}').get(f'ISBN:{isbn}')
+    except Exception:   # Open Library down or slow: the shops are still asked
+        d = None
     if not d:
-        try:
-            return waterstones(isbn) or {'found': False, 'isbn': isbn}
-        except Exception:
-            return {'found': False, 'isbn': isbn}
+        for source, tries in ((waterstones, 1), (goodreads, 3)):   # a new UK book, then a small press's (1 Nov: The Callista Prophecy)
+            for n in range(tries):   # Goodreads sometimes answers with an empty page; a second ask usually works
+                try:
+                    hit = source(isbn)
+                except Exception:
+                    hit = None
+                if hit:
+                    return hit
+                if n + 1 < tries:
+                    time.sleep(1.5)
+        return {'found': False, 'isbn': isbn}
     c = d.get('cover') or {}
     found = {'found': True, 'isbn': isbn, 'title': (d.get('title', '') + (': ' + d['subtitle'] if d.get('subtitle') else '')).strip(),
              'authors': [a['name'] for a in d.get('authors', [])], 'publisher': ', '.join(p['name'] for p in d.get('publishers', [])),
