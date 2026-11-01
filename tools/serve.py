@@ -70,12 +70,57 @@ def waterstones(isbn):
     people = book.get('author') or []
     people = people if isinstance(people, list) else [people]
     pub = re.search(r'Publisher:\s*(?:<[^>]*>\s*)*([^<]+)', page)
+    # a shop-only edition (a signed copy under a sticker code) links to the book's ordinary edition: its ISBN finds sharper covers
+    slug = re.search(r'/book/([^/]+)/', r.geturl())
+    other = next((m for m in re.findall(rf'href="/book/{re.escape(slug.group(1))}/[^/"]+/(97[89]\d{{10}})"', page) if m != isbn), '') if slug else ''
     return {'found': True, 'isbn': isbn, 'title': book['name'], 'authors': [p['name'] for p in people if p.get('name')],
             'publisher': pub.group(1).strip().replace('&#039;', "'").replace('&amp;', '&') if pub else '',
-            'published': book.get('datePublished', ''), 'pages': book.get('numberOfPages'), 'cover': book.get('image', '')}
+            'published': book.get('datePublished', ''), 'pages': book.get('numberOfPages'), 'cover': book.get('image', ''), 'otherIsbn': other}
+
+
+def isbn10(i13):
+    if not i13.startswith('978'):
+        return ''
+    core = i13[3:12]
+    c = (11 - sum((10 - i) * int(d) for i, d in enumerate(core)) % 11) % 11
+    return core + ('X' if c == 10 else str(c))
+
+
+def best_cover(found):
+    """The sharpest whole front cover to be had (her ask, 1 Nov: a Waterstones picture is small and may carry their banner):
+    Amazon, World of Books and Open Library are asked for her ISBN (and the ordinary edition's, for a sticker code), and the
+    largest upright picture wins; the one the lookup found stays if nothing beats it."""
+    from io import BytesIO
+    from PIL import Image
+    urls = [found.get('cover', '')]
+    for i in [found.get('isbn', ''), found.get('otherIsbn', '')]:
+        if re.fullmatch(r'97[89]\d{10}', i or ''):
+            if isbn10(i):
+                urls.append(f'https://images-na.ssl-images-amazon.com/images/P/{isbn10(i)}.01._SCRMZZZZZZ_.jpg')
+            urls += [f'https://image-server.worldofbooks.com/images/{i}.jpg', f'https://covers.openlibrary.org/b/isbn/{i}-L.jpg?default=false']
+    best, best_w = found.get('cover', ''), 0
+    for u in [u for u in urls if u]:
+        try:
+            with urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=15) as r:
+                w, h = Image.open(BytesIO(r.read())).size
+        except Exception:
+            continue
+        if w >= 200 and 1.2 < h / w < 1.8 and w > best_w + 50:   # upright, book-shaped, and clearly larger
+            best, best_w = u, w
+    return best
 
 
 def lookup(isbn):
+    found = find(isbn)
+    if found.get('found'):
+        try:
+            found['cover'] = best_cover(found)
+        except Exception:
+            pass
+    return found
+
+
+def find(isbn):
     isbn = re.sub(r'[^0-9Xx]', '', isbn).upper()
     if re.fullmatch(r'2\d{12}', isbn):   # a Waterstones price sticker (her yes, 1 Nov): it names that exact edition on their site
         try:
