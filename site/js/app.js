@@ -290,11 +290,12 @@ function pageHome(){
     + (now.length ? sectionHead("Reading <em>now</em>", `<a class="more" href="#reading">All your reading</a>`)
         + `<div class="now-row">${now.map(b => { const st = reading(b).started; return `<a class="now-card" href="${href(b)}">${cover(b, "", true)}<div><span class="label">Reading now</span><h3>${esc(b.t)}</h3><div class="by">${esc(b.by)}</div>${st ? `<div class="by">Started ${niceDate(st)}</div>` : ""}</div></a>`; }).join("")}</div>` : "")
     + (done.length ? sectionHead("Just <em>finished</em>") + `<div class="books row">${done.map(b => card(b, `Finished ${shortDate(lastFinish(b))}`)).join("")}</div>` : "")
+    // newest books, straight under what she's just read (her ask, 1 Nov; it was at the foot of the page)
+    + sectionHead("New on the <em>shelves</em>") + `<div class="books row">${recent.map(b => card(b, `Added ${niceDate(b.added)}`)).join("")}</div>`
     + picker()
     + sectionHead("The <em>shelves</em>", `<a class="more" href="#shelves">See them all at once</a>`)
     + `<div class="shelves">${SHELVES.filter(s => s.books.length).map(s => `<a class="shelf-card" href="#shelf-${s.id}" style="--c:${s.color}"><div class="fan">${fan(s)}</div>
-        <div class="txt"><h3>${esc(s.name)}</h3><span>${plural(s.books.length, "book")}</span></div></a>`).join("")}</div>`
-    + sectionHead("New on the <em>shelves</em>") + `<div class="books row">${recent.map(b => card(b, `Added ${niceDate(b.added)}`)).join("")}</div>`;
+        <div class="txt"><h3>${esc(s.name)}</h3><span>${plural(s.books.length, "book")}</span></div></a>`).join("")}</div>`;
 }
 
 // shelves are in author surname order, like a real bookcase (her choice, 18 Oct)
