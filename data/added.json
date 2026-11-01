@@ -213,5 +213,23 @@
   "addedHere": true,
   "surname": "Klune",
   "why": "Her Illumicrate copy; Libib only had her paperback (her answer, 18 Oct)."
+ },
+ {
+  "id": "add0016",
+  "title": "Hollywood, Ending: Signed Edition",
+  "authors": [
+   {
+    "name": "John Green"
+   }
+  ],
+  "shelf": "adult-fiction",
+  "shopCode": "2928377394189",
+  "publisher": "Penguin Random House Children's UK",
+  "published": "2026-09-22",
+  "pages": 291,
+  "added": "2026-11-01",
+  "copies": 1,
+  "addedHere": true,
+  "surname": "Green"
  }
 ]
