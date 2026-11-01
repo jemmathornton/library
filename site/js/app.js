@@ -599,6 +599,7 @@ async function camOpen(){
       try {
         const text = reader.decodeWithState(new ZXing.BinaryBitmap(new Bin(new ZXing.HTMLCanvasElementLuminanceSource(canvas)))).getText();
         if (isBookNumber(text)) { stream.getTracks().forEach(t => t.stop()); camClose(); return useScan(text); }
+        msg(`That’s a shop or price barcode (${text}), not the book’s own. Look for the barcode whose number starts 978.`);
       } catch {}   // nothing readable in this frame
     }
     setTimeout(look, 80);
