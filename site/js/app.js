@@ -842,3 +842,31 @@ if ("serviceWorker" in navigator && location.protocol.startsWith("http")) naviga
 addEventListener("beforeinstallprompt", e => e.preventDefault());
 
 route();
+
+// ---------- capitals on each word in headings, the menu and buttons (her ask, 1 Nov) ----------
+// "New on the Shelves": small words stay lower case unless first or last. Book titles (h3, a book page's h1) are left as published.
+const SMALL_WORDS = new Set(["a", "an", "and", "as", "at", "but", "by", "for", "from", "in", "into", "nor", "of", "on", "or", "per", "the", "to", "via", "with"]);
+function capitalise(root){
+  const nodes = [];
+  root.querySelectorAll("#view h2, #view .hero:not(.book-hero) h1, #nav a, #view .btn, #view .section-head .more, #camPanel .btn").forEach(el => {
+    const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    while (walk.nextNode()) if (!walk.currentNode.parentElement.closest(".n, svg, h3")) nodes.push(walk.currentNode);
+  });
+  // number the words across each element, so "first" and "last" mean the heading's own, not each text piece's
+  const groups = new Map();
+  nodes.forEach(n => { const el = n.parentElement.closest("h1, h2, a, .btn, .more"); (groups.get(el) || groups.set(el, []).get(el)).push(n); });
+  groups.forEach(list => {
+    const total = list.reduce((t, n) => t + (n.textContent.match(/[A-Za-z’'-]+/g) || []).length, 0);
+    let i = 0;
+    list.forEach(n => {
+      const text = n.textContent.replace(/[A-Za-z][A-Za-z’'-]*/g, w => {
+        const k = i++, low = w.toLowerCase();
+        if (k > 0 && k < total - 1 && SMALL_WORDS.has(low)) return low;
+        return w.split("-").map(p => p ? p[0].toUpperCase() + p.slice(1) : p).join("-");
+      });
+      if (text !== n.textContent) n.textContent = text;
+    });
+  });
+}
+new MutationObserver(() => capitalise(document)).observe(document.body, {childList: true, subtree: true});
+capitalise(document);
