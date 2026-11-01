@@ -472,11 +472,15 @@ function pageHistory(){
   const done = log.filter(isRead).sort(byFinish), thisYear = String(new Date().getFullYear()), years = {};
   done.forEach(b => { const ys = [...new Set(finishes(b).map(year).filter(Boolean))]; (ys.length ? ys : ["undated"]).forEach(y => (years[y] ||= []).push(b)); });
   const order = Object.keys(years).filter(y => y !== "undated").sort().reverse().concat(years.undated ? ["undated"] : []);
+  const stopped = log.filter(b => reading(b).status === "stopped");
+  const fold = (title, list) => `<details class="year"><summary><h2>${title}</h2><span class="more">${ic("arrow-right")}</span></summary>${grid(list)}</details>`;
   return hero({kicker: "Your reading", title: "Reading <em>history</em>", covers: done,
       text: "Everything you’ve read, year by year.",
       figures: [[num(done.length), "read"], [num(finishedIn(thisYear).length), `finished in ${thisYear}`], [num(order.filter(y => y !== "undated").length), "years"]]})
     // every year folded to one line; click a year to open it (her choice, 1 Nov)
-    + `<div class="years">${order.map(y => `<details class="year"><summary><h2>${y === "undated" ? "Read, <em>date not recorded</em>" : `${y} <em>· ${plural(years[y].length, "book")}</em>`}</h2><span class="more">${ic("arrow-right")}</span></summary>${grid(years[y])}</details>`).join("")}</div>`;
+    + `<div class="years">${order.map(y => fold(y === "undated" ? "Read, <em>date not recorded</em>" : `${y} <em>· ${plural(years[y].length, "book")}</em>`, years[y])).join("")}`
+    // and, last, the books she stopped (her ask, 1 Nov)
+    + (stopped.length ? fold(`Didn’t finish <em>· ${plural(stopped.length, "book")}</em>`, stopped) : "") + `</div>`;
 }
 
 // ---------- series, in place on the shelves (her choice, 18 Oct: no page of their own) ----------
