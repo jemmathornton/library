@@ -282,5 +282,59 @@
   "copies": 1,
   "addedHere": true,
   "surname": "Pritchard"
+ },
+ {
+  "id": "add0019",
+  "title": "Lycan Lamia: The Beyond Series - Book Four",
+  "authors": [
+   {
+    "name": "Alison Kershaw"
+   }
+  ],
+  "shelf": "fantasy",
+  "isbn13": "9781508430407",
+  "publisher": "CreateSpace Independent Publishing Platform",
+  "published": "2015",
+  "pages": 344,
+  "added": "2026-11-01",
+  "copies": 1,
+  "addedHere": true,
+  "surname": "Kershaw"
+ },
+ {
+  "id": "add0020",
+  "title": "Lemurian Dimensions",
+  "authors": [
+   {
+    "name": "Alison Kershaw"
+   }
+  ],
+  "shelf": "fantasy",
+  "isbn13": "9798310784949",
+  "publisher": "Tuppence Publishing",
+  "published": "2025-05-01",
+  "pages": 443,
+  "added": "2026-11-01",
+  "copies": 1,
+  "addedHere": true,
+  "surname": "Kershaw"
+ },
+ {
+  "id": "add0021",
+  "title": "Vampire Sorceress",
+  "authors": [
+   {
+    "name": "Alison Kershaw"
+   }
+  ],
+  "shelf": "fantasy",
+  "isbn13": "9781849145022",
+  "publisher": "Completelynovel",
+  "published": "2014-09-04",
+  "pages": 381,
+  "added": "2026-11-01",
+  "copies": 1,
+  "addedHere": true,
+  "surname": "Kershaw"
  }
 ]
