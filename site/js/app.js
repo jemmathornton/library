@@ -453,8 +453,8 @@ function pageAuthor(a){
 function pageReading(){
   const log = readingLog(), byFinish = (a, b) => (reading(b).finished || "").localeCompare(reading(a).finished || "");
   const now = log.filter(isReading), done = log.filter(isRead).sort(byFinish), next = BOOKS.filter(b => !isRead(b) && !isReading(b));
-  // paused and didn't-finish are different things (her word, 1 Nov): a break sits above this year's reading, DNFs at the end
-  const paused = log.filter(b => reading(b).status === "paused"), stopped = log.filter(b => reading(b).status === "stopped");
+  // paused and didn't-finish are different things (her word, 1 Nov): a break sits above this year's reading
+  const paused = log.filter(b => reading(b).status === "paused");   // didn't-finish books get no row here (her call, 1 Nov)
   const thisYear = String(new Date().getFullYear()), years = {};
   done.forEach(b => { const ys = [...new Set(finishes(b).map(year).filter(Boolean))]; (ys.length ? ys : ["undated"]).forEach(y => (years[y] ||= []).push(b)); });
   const order = Object.keys(years).filter(y => y !== "undated").sort().reverse().concat(years.undated ? ["undated"] : []);
@@ -466,7 +466,6 @@ function pageReading(){
     + (done.length ? sectionHead("Recently <em>finished</em>", pickButton()) + `<div class="books row">${done.slice(0, 6).map(b => card(b, finishes(b).length ? `Finished ${niceDate(finishes(b).sort().pop())}` : "")).join("")}</div>` : "")
     + (paused.length ? sectionHead("On a <em>break</em>") + grid(paused) : "")
     + order.map(y => sectionHead(y === "undated" ? "Read, <em>date not recorded</em>" : `${y} <em>· ${plural(years[y].length, "book")}</em>`) + grid(years[y])).join("")
-    + (stopped.length ? sectionHead("Didn’t <em>finish</em>") + grid(stopped) : "")
     + `<div class="note">${ic("info")}<div><b>${num(done.length - away)} of the books you’ve read are on your shelves; ${num(away)} aren’t.</b></div></div>`;
 }
 
