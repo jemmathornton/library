@@ -8,6 +8,7 @@
   {"id": "old-book-collection", "name": "Old Book Collection", "libib": "Old Book Collection", "color": "#8C6A3F"},
   {"id": "non-fiction", "name": "Non-Fiction", "libib": "Non-Fiction", "color": "#A4542F"},
   {"id": "travel", "name": "Travel", "libib": "Travel", "color": "#2E7A92"},
+  {"id": "display", "name": "Display", "libib": "Display", "color": "#3F6B4A", "note": "Special, display and decor books she keeps out on show (her ask, 1 Nov)."},
   {"id": "unsorted", "name": "Not on a shelf yet", "libib": null, "color": "#8A8178",
    "note": "Books still waiting for a shelf."}
 ]
