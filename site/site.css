@@ -439,8 +439,8 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .slot{aspect-ratio:2/3;display:flex;align-items:flex-end;justify-content:center}
 .slot .cover{width:100%}
 /* every cover the same height on the shelves (her ask, 1 Nov): a squarer book (a hardback, an A5 book) shows a little
-   wider instead of shorter, up to a quarter wider than the slot; only a very square one (picture books) is shorter */
-.slot .cover.fit{width:min(125%,calc(150% / var(--r)));flex:none}
+   wider instead of shorter, up to an eighth wider than the slot, which still leaves a gap to its neighbours; a squarer one (illustrated editions, picture books) is a little shorter instead of overlapping */
+.slot .cover.fit{width:min(112%,calc(150% / var(--r)));flex:none}
 
 /* scanning with the laptop camera (1 Nov) */
 .cam-panel{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(22,17,12,.72)}
