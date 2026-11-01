@@ -592,7 +592,7 @@ function useScan(isbn){ const el = document.getElementById("add-isbn"); if (!el)
 // scanning with the laptop's own camera (her ask, 1 Nov: no app on her phone). The barcode reader (ZXing, MIT licence,
 // js/zxing.min.js) is loaded the first time. The camera panel sits outside #view, so redrawing the form doesn't stop it.
 // Only a real book number is taken (978/979, 13 digits, right check digit); the rest of a barcode's noise is ignored.
-let camReader = null, camStillFor = null;
+let camReader = null, camStillFor = null, camChecked = false;
 const isBookNumber = s => /^97[89]\d{10}$/.test(s) && [...s].reduce((t, d, i) => t + d * (i % 2 ? 3 : 1), 0) % 10 === 0;
 // a Waterstones price sticker (13 digits starting 2, her yes 1 Nov): the server finds that exact edition on their site
 const isShopCode = s => /^2\d{12}$/.test(s) && [...s].reduce((t, d, i) => t + d * (i % 2 ? 3 : 1), 0) % 10 === 0;
@@ -663,6 +663,74 @@ async function camOpen(){
   camStillFor = () => stillRead(video, () => camReader, ocr, msg);
 }
 
+// deblurring (Richardson-Lucy, Gaussian focus blur), for a webcam that is a little out of focus at book distance
+// (1 Nov: on her own test picture the number was unreadable as taken and read correctly, twice, after this)
+function deblur(src, [sx, sy, sw, sh], sigma, rounds = 20){
+  const w = Math.round(sw), h = Math.round(sh), c = document.createElement("canvas"); c.width = w; c.height = h;
+  const g = c.getContext("2d", {willReadFrequently: true}); g.drawImage(src, sx, sy, sw, sh, 0, 0, w, h);
+  const px = g.getImageData(0, 0, w, h), n = w * h, img = new Float32Array(n);
+  for (let i = 0; i < n; i++) img[i] = (px.data[i * 4] * .3 + px.data[i * 4 + 1] * .59 + px.data[i * 4 + 2] * .11) / 255 + 1e-3;
+  const r = Math.ceil(sigma * 3), k = []; let ks = 0;
+  for (let i = -r; i <= r; i++) { const v = Math.exp(-i * i / (2 * sigma * sigma)); k.push(v); ks += v; }
+  for (let i = 0; i < k.length; i++) k[i] /= ks;
+  const tmp = new Float32Array(n);
+  const blur = (a, out) => {   // separable: rows, then columns, edges held
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { let t = 0; for (let j = -r; j <= r; j++) t += a[y * w + Math.min(w - 1, Math.max(0, x + j))] * k[j + r]; tmp[y * w + x] = t; }
+    for (let y = 0; y < h; y++) for (let x = 0; x < w; x++) { let t = 0; for (let j = -r; j <= r; j++) t += tmp[Math.min(h - 1, Math.max(0, y + j)) * w + x] * k[j + r]; out[y * w + x] = t; }
+  };
+  let est = new Float32Array(n).fill(img.reduce((a, b) => a + b, 0) / n);
+  const conv = new Float32Array(n), rel = new Float32Array(n);
+  for (let it = 0; it < rounds; it++) {
+    blur(est, conv);
+    for (let i = 0; i < n; i++) rel[i] = img[i] / Math.max(conv[i], 1e-6);
+    blur(rel, conv);
+    for (let i = 0; i < n; i++) est[i] *= conv[i];
+  }
+  const sample = Array.from({length: 4000}, () => est[Math.floor(Math.random() * n)]).sort((a, b) => a - b);
+  const lo = sample[40], hi = sample[3960] || 1;
+  for (let i = 0; i < n; i++) { const v = Math.max(0, Math.min(255, (est[i] - lo) / (hi - lo + 1e-6) * 255)); px.data[i * 4] = px.data[i * 4 + 1] = px.data[i * 4 + 2] = v; px.data[i * 4 + 3] = 255; }
+  g.putImageData(px, 0, 0);
+  return c;
+}
+// where the barcode is: the patch with the most side-to-side stripes; the area returned takes in the digits under it and
+// the lone 9 to its left (1 Nov: read tightly like this her number came out right; the whole box drowned it in cover text)
+function findBarcode(src){
+  const W = src.width, H = src.height, sw = 240, sh = Math.round(H * sw / W), c = document.createElement("canvas"); c.width = sw; c.height = sh;
+  const g = c.getContext("2d", {willReadFrequently: true}); g.drawImage(src, 0, 0, sw, sh);
+  const d = g.getImageData(0, 0, sw, sh).data, lum = i => d[i * 4] * .3 + d[i * 4 + 1] * .59 + d[i * 4 + 2] * .11;
+  const e = new Float32Array(sw * sh);
+  for (let y = 1; y < sh - 1; y++) for (let x = 1; x < sw - 1; x++) {
+    const i = y * sw + x, gx = Math.abs(lum(i + 1) - lum(i - 1)), gy = Math.abs(lum(i + sw) - lum(i - sw));
+    e[i] = Math.max(0, gx - gy);   // stripes standing up: strong left-right change, little up-down change
+  }
+  const R = 6, s2 = new Float32Array(sw * sh); let best = 0, bx = 0, by = 0;
+  for (let y = R; y < sh - R; y++) for (let x = R; x < sw - R; x++) {
+    let t = 0; for (let j = -R; j <= R; j++) for (let k = -R; k <= R; k += 2) t += e[(y + j) * sw + x + k];
+    s2[y * sw + x] = t; if (t > best) { best = t; bx = x; by = y; }
+  }
+  if (!best) return null;
+  let x0 = bx, x1 = bx, y0 = by, y1 = by; const th = best * .35;
+  while (x0 > R && s2[by * sw + x0 - 1] > th) x0--; while (x1 < sw - R - 1 && s2[by * sw + x1 + 1] > th) x1++;
+  while (y0 > R && s2[(y0 - 1) * sw + bx] > th) y0--; while (y1 < sh - R - 1 && s2[(y1 + 1) * sw + bx] > th) y1++;
+  // the white label the barcode is printed on: grow the box while the row or column beside it is still mostly light
+  const light = (x, y) => lum(y * sw + x) > 150;
+  const share = (xa, xb, ya, yb) => { let n = 0, t = 0; for (let y = ya; y <= yb; y++) for (let x = xa; x <= xb; x++) { t++; if (light(x, y)) n++; } return t ? n / t : 0; };
+  let lx0 = x0, lx1 = x1, ly0 = y0, ly1 = y1;
+  for (let i = 0; i < 40 && lx0 > 0 && share(lx0 - 1, lx0 - 1, ly0, ly1) > .6; i++) lx0--;
+  for (let i = 0; i < 40 && lx1 < sw - 1 && share(lx1 + 1, lx1 + 1, ly0, ly1) > .6; i++) lx1++;
+  for (let i = 0; i < 40 && ly0 > 0 && share(lx0, lx1, ly0 - 1, ly0 - 1) > .6; i++) ly0--;
+  for (let i = 0; i < 40 && ly1 < sh - 1 && share(lx0, lx1, ly1 + 1, ly1 + 1) > .6; i++) ly1++;
+  const f = W / sw, pad = 1;
+  const X0 = Math.max(0, (lx0 - pad) * f), X1 = Math.min(W, (lx1 + pad) * f), Y0 = Math.max(0, (ly0 - pad) * f), Y1 = Math.min(H, (ly1 + pad) * f);
+  return [X0, Y0, X1 - X0, Y1 - Y0];
+}
+// a book number in text read off a picture: spaces and dashes go, and the lone 9 printed left of the bars may be missed
+function numbersIn(text){
+  const t = text.replace(/[\s-]+/g, ""), out = new Set(t.match(/97[89]\d{10}/g) || []);
+  for (const m of t.match(/7[89]\d{10}/g) || []) out.add("9" + m);
+  return [...out].filter(isBookNumber);
+}
+
 // a still picture after a 3-2-1 countdown, so she can hold the book steady with both hands (her ask, 1 Nov): five
 // frames are taken and each is read much harder than the live picture allows - the barcode at several sizes, and the
 // printed number in the gold box, enlarged and sharpened. A number found here is used at once (the lookup then shows
@@ -690,7 +758,9 @@ async function stillRead(video, open, ocr, msg){
     }
     return c;
   };
-  const done = n => { if (open()) { camClose(); useScan(n); } return true; };
+  // a soft picture can still be misread into another real number (1 Nov: Hollywood, Ending's 858813 as 888438, twice), so
+  // the page asks her to check the number against the book
+  const done = n => { if (open()) { camClose(); camChecked = true; useScan(n); } return true; };
   for (const f of frames) {
     const W = f.width, H = f.height, box = [W * .2, H * .3, W * .6, H * .4];
     for (const [area, sc] of [[box, 1], [box, .6], [[0, 0, W, H], .5], [box, .4], [[0, 0, W, H], 1]])
@@ -702,16 +772,26 @@ async function stillRead(video, open, ocr, msg){
       }
   }
   // the printed number: a soft picture can be misread into another valid number (1 Nov test: 858813 read as 888438),
-  // so a number only counts when two separate readings agree
+  // so a number only counts when two separate readings agree; deblurred pictures are read first
   const w = ocr && await ocr.catch(() => null), seen = {};
+  const count = text => { for (const n of numbersIn(text)) if ((seen[n] = (seen[n] || 0) + 1) >= 2) return n; return ""; };
+  if (w) for (const f of frames.slice(0, 2)) for (const sigma of [2, 2.5]) {
+    if (!open()) return;
+    msg("Sharpening the picture…");
+    const W = f.width, H = f.height, d = deblur(f, findBarcode(f) || [W * .2, H * .3, W * .6, H * .4], sigma);
+    for (const Bin of [ZXing.GlobalHistogramBinarizer, ZXing.HybridBinarizer]) {
+      const r = new ZXing.MultiFormatReader(); r.setHints(hints);
+      try { const t = r.decodeWithState(new ZXing.BinaryBitmap(new Bin(new ZXing.HTMLCanvasElementLuminanceSource(d)))).getText(); if (isBookNumber(t) || isShopCode(t)) return done(t); } catch {}
+    }
+    try { await w.setParameters({tessedit_pageseg_mode: "6"}); const n = count((await w.recognize(d)).data.text); if (n) return done(n); } catch {}
+  }
   if (w) for (const f of frames.slice(0, 3)) {
     const W = f.width, H = f.height, box = [W * .2, H * .3, W * .6, H * .4];
     for (const [sc, psm, sharp] of [[2, "6", true], [1.5, "6", false], [2, "11", true], [1, "6", false]]) {
       if (!open()) return;
       try { await w.setParameters({tessedit_pageseg_mode: psm});
         const text = (await w.recognize(part(f, box, sc, "grayscale(1) contrast(160%)", sharp))).data.text;
-        for (const n of new Set((text.replace(/[\s-]+/g, "").match(/97[89]\d{10}/g) || []).filter(isBookNumber)))
-          if ((seen[n] = (seen[n] || 0) + 1) >= 2) return done(n);
+        const n = count(text); if (n) return done(n);
       } catch {}
     }
   }
@@ -793,6 +873,7 @@ document.addEventListener("click", async e => {
       else Object.assign(addForm, {title: "", authors: "", publisher: "", published: "", pages: "", cover: "",
         note: "Open Library, Waterstones and Goodreads don’t know that number yet (new or special editions can take a while). Try the Waterstones price sticker if it has one, or fill in the details yourself."}); }
     catch { addForm.note = "Couldn’t reach Open Library. Fill in the details yourself."; }
+    if (camChecked) { camChecked = false; addForm.note = `Read from a picture: check ${addForm.isbn} matches the book. ` + addForm.note; }
     const have = BOOKS.find(b => b.isbn13 === addForm.isbn || (b.shopCode && b.shopCode === addForm.isbn));
     if (have) addForm.note = `You already have this one: ${have.t}. Add it again only if it’s a second copy.`;
     return redrawAdd();
