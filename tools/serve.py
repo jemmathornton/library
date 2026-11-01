@@ -6,7 +6,9 @@ can reach it. If it's already running, a second copy just stops.
     pythonw tools/serve.py
 
 Adding a book (the site's "Add a book" page, 18 Oct):
-    GET  /api/lookup?isbn=...   the book's details from Open Library (title, authors, publisher, date, pages, cover)
+    GET  /api/lookup?isbn=...   the book's details from Open Library (title, authors, publisher, date, pages, cover);
+                                Waterstones fills what Open Library hasn't got yet (new books, 1 Nov), and a Waterstones
+                                price-sticker code (13 digits starting 2) is looked up there alone
     POST /api/books             saves it to data/added.json (kept apart from the Libib import, which a re-import
                                 overwrites), copies its cover into site/covers and rebuilds the site
 Both need the header "X-Library: 1", which only the site itself sends: a page from anywhere else can't add books.
@@ -49,15 +51,56 @@ def get_json(url):
         return json.load(r)
 
 
+def waterstones(isbn):
+    """A new UK book Open Library doesn't have yet (1 Nov: Hollywood, Ending, out two months): Waterstones' search sends an
+    ISBN it knows straight to the book's page, whose structured data has the title, author, pages, date and cover."""
+    with urllib.request.urlopen(urllib.request.Request(f'https://www.waterstones.com/books/search/term/{isbn}', headers=UA), timeout=20) as r:
+        if '/book/' not in r.geturl():   # still on the search page: Waterstones doesn't know it either
+            return None
+        page = r.read().decode('utf-8', 'replace')
+    book = None
+    for block in re.findall(r'<script type="application/ld\+json">(.*?)</script>', page, re.S):
+        try:
+            data = json.loads(block)
+        except ValueError:
+            continue
+        book = next((n for n in data.get('@graph', [data]) if n.get('@type') == 'Book'), book)
+    if not book or not book.get('name'):
+        return None
+    people = book.get('author') or []
+    people = people if isinstance(people, list) else [people]
+    pub = re.search(r'Publisher:\s*(?:<[^>]*>\s*)*([^<]+)', page)
+    return {'found': True, 'isbn': isbn, 'title': book['name'], 'authors': [p['name'] for p in people if p.get('name')],
+            'publisher': pub.group(1).strip().replace('&#039;', "'").replace('&amp;', '&') if pub else '',
+            'published': book.get('datePublished', ''), 'pages': book.get('numberOfPages'), 'cover': book.get('image', '')}
+
+
 def lookup(isbn):
     isbn = re.sub(r'[^0-9Xx]', '', isbn).upper()
+    if re.fullmatch(r'2\d{12}', isbn):   # a Waterstones price sticker (her yes, 1 Nov): it names that exact edition on their site
+        try:
+            return waterstones(isbn) or {'found': False, 'isbn': isbn}
+        except Exception:
+            return {'found': False, 'isbn': isbn}
     d = get_json(f'https://openlibrary.org/api/books?format=json&jscmd=data&bibkeys=ISBN:{isbn}').get(f'ISBN:{isbn}')
     if not d:
-        return {'found': False, 'isbn': isbn}
+        try:
+            return waterstones(isbn) or {'found': False, 'isbn': isbn}
+        except Exception:
+            return {'found': False, 'isbn': isbn}
     c = d.get('cover') or {}
-    return {'found': True, 'isbn': isbn, 'title': (d.get('title', '') + (': ' + d['subtitle'] if d.get('subtitle') else '')).strip(),
-            'authors': [a['name'] for a in d.get('authors', [])], 'publisher': ', '.join(p['name'] for p in d.get('publishers', [])),
-            'published': d.get('publish_date', ''), 'pages': d.get('number_of_pages'), 'cover': c.get('large') or c.get('medium') or ''}
+    found = {'found': True, 'isbn': isbn, 'title': (d.get('title', '') + (': ' + d['subtitle'] if d.get('subtitle') else '')).strip(),
+             'authors': [a['name'] for a in d.get('authors', [])], 'publisher': ', '.join(p['name'] for p in d.get('publishers', [])),
+             'published': d.get('publish_date', ''), 'pages': d.get('number_of_pages'), 'cover': c.get('large') or c.get('medium') or ''}
+    if not (found['cover'] and found['pages'] and found['published']):   # a half-made new entry: Waterstones fills the gaps
+        try:
+            ws = waterstones(isbn) or {}
+        except Exception:
+            ws = {}
+        for k in ('title', 'authors', 'published', 'pages', 'cover'):
+            found[k] = found[k] or ws.get(k) or found[k]
+        found['publisher'] = ws.get('publisher') or found['publisher']   # the UK shop's publisher over Open Library's guess
+    return found
 
 
 def isbn13(s):
@@ -126,11 +169,13 @@ def add(book):
     if not title or book.get('shelf') not in shelves:
         return {'ok': False, 'error': 'A book needs a title and a shelf.'}
     i13 = isbn13(book.get('isbn', ''))
+    shop = i13 if i13.startswith('2') else ''   # a Waterstones sticker code is kept, but it isn't an ISBN
+    i13 = '' if shop else i13
     # the next number after the highest (not the count: a gap, like add0009, would give an id already in use)
     n = max([int(x['id'][3:]) for x in added if re.fullmatch(r'add\d+', x.get('id', ''))] + [0]) + 1
     b = {'id': f'add{n:04d}', 'title': title,
          'authors': [{'name': n.strip()} for n in book.get('authors', []) if n.strip()], 'shelf': book['shelf'],
-         'isbn13': i13, 'publisher': book.get('publisher', ''), 'published': book.get('published', ''),
+         'isbn13': i13, 'shopCode': shop, 'publisher': book.get('publisher', ''), 'published': book.get('published', ''),
          'pages': int(book['pages']) if str(book.get('pages') or '').isdigit() else None,
          'description': book.get('description', ''), 'added': date.today().isoformat(), 'copies': 1, 'addedHere': True}
     if b['authors']:
@@ -156,7 +201,7 @@ def add(book):
         covers_path = os.path.join(DATA, 'covers.json')
         covers = json.load(open(covers_path, encoding='utf-8')) if os.path.exists(covers_path) else {}
         key = i13 or 'id-' + b['id']
-        covers[key] = {'src': book['cover'], 'from': 'Open Library (added here)'}
+        covers[key] = {'src': book['cover'], 'from': 'looked up when added (Open Library or Waterstones)'}
         with open(covers_path, 'w', encoding='utf-8', newline='\n') as fh:
             json.dump(dict(sorted(covers.items())), fh, ensure_ascii=False, indent=0)
             fh.write('\n')

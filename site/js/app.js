@@ -551,6 +551,8 @@ function useScan(isbn){ const el = document.getElementById("add-isbn"); if (!el)
 // Only a real book number is taken (978/979, 13 digits, right check digit); the rest of a barcode's noise is ignored.
 let camReader = null;
 const isBookNumber = s => /^97[89]\d{10}$/.test(s) && [...s].reduce((t, d, i) => t + d * (i % 2 ? 3 : 1), 0) % 10 === 0;
+// a Waterstones price sticker (13 digits starting 2, her yes 1 Nov): the server finds that exact edition on their site
+const isShopCode = s => /^2\d{12}$/.test(s) && [...s].reduce((t, d, i) => t + d * (i % 2 ? 3 : 1), 0) % 10 === 0;
 const loadZxing = () => window.ZXing ? Promise.resolve() : new Promise((ok, fail) => {
   const s = document.createElement("script"); s.src = "js/zxing.min.js"; s.onload = ok; s.onerror = fail; document.head.appendChild(s); });
 function camClose(){
@@ -599,8 +601,8 @@ async function camOpen(){
       canvas.width = w; canvas.height = sh; ctx.drawImage(video, 0, y, w, sh, 0, 0, w, sh);
       try {
         const text = reader.decodeWithState(new ZXing.BinaryBitmap(new Bin(new ZXing.HTMLCanvasElementLuminanceSource(canvas)))).getText();
-        if (isBookNumber(text)) { stream.getTracks().forEach(t => t.stop()); camClose(); return useScan(text); }
-        msg(`That’s a shop or price barcode (${text}), not the book’s own. Look for the barcode whose number starts 978.`);
+        if (isBookNumber(text) || isShopCode(text)) { stream.getTracks().forEach(t => t.stop()); camClose(); return useScan(text); }
+        msg(`That barcode (${text}) isn’t a book’s. Look for the one whose number starts 978, or a Waterstones price sticker.`);
       } catch {}   // nothing readable in this frame
     }
     setTimeout(look, 80);
