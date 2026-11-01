@@ -556,7 +556,7 @@ function pageAdd(){
         ${f.note ? `<p class="add-note">${esc(f.note)}</p>` : ""}
         <div class="add-main"><div class="add-cover">${f.cover ? `<div class="cover"><img src="${esc(f.cover)}" alt=""></div>` : `<div class="cover gap"></div>`}
           ${f.title ? `<button type="button" class="btn find-cover" id="findCover">${ic("image")}${f.cover ? "Find another cover" : "Find a cover"}</button>` : ""}
-          ${f.cover && !f.coverWrong ? `<button type="button" class="btn find-cover${f.coverFix ? " on" : ""}" id="fixCover">${ic("crop")}${f.coverFix ? "Marked to straighten" : "Cropped or at an angle"}</button>` : ""}
+          ${f.cover && !f.coverWrong ? `<button type="button" class="btn find-cover${f.coverOriginal ? " on" : ""}" id="fixCover"${f.straightening ? " disabled" : ""}>${ic("crop")}${f.straightening ? "Straightening…" : f.coverOriginal ? "Undo straightening" : "Cropped or at an angle"}</button>` : ""}
           ${f.coverWrong ? `<p class="cover-wrong">${ic("camera")}Marked for a photo of your copy</p>` : ""}</div>
           <div class="add-fields">${field("title", "Title")}${field("authors", "Author(s), with commas between")}
             <div class="two">${field("publisher", "Publisher")}${field("published", "Published")}</div>
@@ -914,12 +914,21 @@ document.addEventListener("click", async e => {
     catch { addForm.coverChoices = []; }
     return redrawAdd();
   }
-  // the right cover, but trimmed oddly or photographed at an angle (her ask, 1 Nov): marked to be straightened or re-cropped
-  // later; a second click takes the mark off
-  if (e.target.closest("#fixCover")) { readAdd(); addForm.coverFix = !addForm.coverFix; return redrawAdd(); }
+  // the right cover, but photographed at an angle or with the background round it (her ask, 1 Nov): the server cuts it
+  // out along the book's edges and pulls it square, and it shows here at once; a second click puts the original back
+  if (e.target.closest("#fixCover")) {
+    readAdd();
+    if (addForm.coverOriginal) { addForm.cover = addForm.coverOriginal; addForm.coverOriginal = null; return redrawAdd(); }
+    addForm.straightening = true; redrawAdd();
+    try { const r = await api("api/straighten?src=" + encodeURIComponent(addForm.cover));
+      if (r.ok) Object.assign(addForm, {coverOriginal: addForm.cover, cover: r.cover});
+      else addForm.note = r.error; }
+    catch { addForm.note = "Couldn’t straighten this cover."; }
+    addForm.straightening = false; return redrawAdd();
+  }
   const pick = e.target.closest("[data-cover-pick]");
-  if (pick) { readAdd(); addForm.cover = addForm.coverChoices[+pick.dataset.coverPick].src; addForm.coverWrong = addForm.coverFix = false; addForm.coverChoices = null; return redrawAdd(); }
-  if (e.target.closest("[data-cover-none]")) { readAdd(); addForm.coverWrong = true; addForm.coverFix = false; addForm.coverChoices = null; return redrawAdd(); }
+  if (pick) { readAdd(); addForm.cover = addForm.coverChoices[+pick.dataset.coverPick].src; addForm.coverWrong = false; addForm.coverOriginal = null; addForm.coverChoices = null; return redrawAdd(); }
+  if (e.target.closest("[data-cover-none]")) { readAdd(); addForm.coverWrong = true; addForm.coverOriginal = null; addForm.coverChoices = null; return redrawAdd(); }
   if (e.target.closest("[data-cover-close]")) { readAdd(); addForm.coverChoices = null; return redrawAdd(); }
 });
 const redrawAdd = () => { const y = scrollY; document.getElementById("view").innerHTML = pageAdd(); scrollTo(0, y); };
@@ -931,9 +940,9 @@ document.addEventListener("click", async e => {
     readAdd(); if (!addForm.isbn) { addForm.note = "Type the ISBN first."; return redrawAdd(); }
     addForm.note = "Looking it up…"; redrawAdd();
     try { const d = await api("api/lookup?isbn=" + encodeURIComponent(addForm.isbn));
-      if (d.found) Object.assign(addForm, {title: d.title, authors: d.authors.join(", "), publisher: d.publisher, published: d.published, pages: d.pages || "", cover: d.cover, coverWrong: false, coverFix: false, coverChoices: null, shelf: "", note: "Found it. Check the details and pick a shelf.",
+      if (d.found) Object.assign(addForm, {title: d.title, authors: d.authors.join(", "), publisher: d.publisher, published: d.published, pages: d.pages || "", cover: d.cover, coverWrong: false, coverOriginal: null, coverChoices: null, shelf: "", note: "Found it. Check the details and pick a shelf.",
         suggest: suggestShelf(d)});
-      else Object.assign(addForm, {title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", suggest: null, coverWrong: false, coverFix: false, coverChoices: null,
+      else Object.assign(addForm, {title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", suggest: null, coverWrong: false, coverOriginal: null, coverChoices: null,
         note: "Open Library, Waterstones and Goodreads don’t know that number yet (new or special editions can take a while). Try the Waterstones price sticker if it has one, or fill in the details yourself."}); }
     catch { addForm.note = "Couldn’t reach Open Library. Fill in the details yourself."; }
     if (camChecked) { camChecked = false; addForm.note = `Read from a picture: check ${addForm.isbn} matches the book. ` + addForm.note; }

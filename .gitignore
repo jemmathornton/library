@@ -3,3 +3,4 @@ __pycache__/
 *.lnk
 logs/
 data/scanned.json
+site/covers/_straightened/

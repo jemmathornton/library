@@ -6,6 +6,7 @@ can reach it. If it's already running, a second copy just stops.
     pythonw tools/serve.py
 
 Adding a book (the site's "Add a book" page, 18 Oct):
+    GET  /api/straighten?src=...   that cover cut out along the book's edges and pulled square, for "Cropped or at an angle"
     GET  /api/covers?isbn=&title=&author=   other covers to choose from (other editions), for "Find another cover"
     GET  /api/lookup?isbn=...   the book's details from Open Library (title, authors, publisher, date, pages, cover);
                                 Waterstones fills what Open Library hasn't got yet (new books, 1 Nov), and a Waterstones
@@ -216,6 +217,71 @@ def other_covers(isbn, title, author):
     return out[:40]
 
 
+STRAIGHT = os.path.join(SITE, 'covers', '_straightened')   # straightened covers waiting to be added (not kept in git)
+STRAIGHT_URL = re.compile(r'covers/_straightened/[0-9a-f]{16}\.jpg')
+
+
+def straighten(src):
+    """"Cropped or at an angle" on the Add page (her ask, 1 Nov): a cover photographed at a slant, or with the table or
+    cloth round it, is cut out along the book's four edges and pulled square. The background is the colour round the
+    picture's border; each edge of the book is a straight line fitted through where the background stops. An edge that
+    runs off the picture keeps the picture's own edge. She sees the result and can undo it."""
+    import hashlib
+    import numpy as np
+    from io import BytesIO
+    from PIL import Image, ImageFilter
+    if urllib.parse.urlparse(src).scheme != 'https':
+        return {'ok': False, 'error': 'Only a cover from the internet can be straightened here.'}
+    with urllib.request.urlopen(urllib.request.Request(src, headers=UA), timeout=20) as r:
+        data = r.read()
+    im = Image.open(BytesIO(data)).convert('RGB')
+    a = np.asarray(im, dtype=float)
+    h, w, _ = a.shape
+    border = np.concatenate([a[:6].reshape(-1, 3), a[-6:].reshape(-1, 3), a[:, :6].reshape(-1, 3), a[:, -6:].reshape(-1, 3)])
+    mask = np.sqrt(((a - np.median(border, axis=0)) ** 2).sum(axis=2)) > 60
+    mask = np.asarray(Image.fromarray((mask * 255).astype(np.uint8)).filter(ImageFilter.MedianFilter(9))) > 127
+    no = {'ok': False, 'error': 'Couldn’t find the edges of the book in this picture. Try Find another cover.'}
+    if not .25 < mask.mean() < .97:
+        return no
+    rows, cols = np.nonzero(mask.any(1))[0], np.nonzero(mask.any(0))[0]
+    y0, y1, x0, x1 = rows[0], rows[-1], cols[0], cols[-1]
+    ry = np.arange(int(y0 + .1 * (y1 - y0)), int(y1 - .1 * (y1 - y0)))
+    cx = np.arange(int(x0 + .1 * (x1 - x0)), int(x1 - .1 * (x1 - x0)))
+    ry, cx = ry[mask[ry].any(1)], cx[mask[:, cx].any(0)]
+
+    def line(t, v, lo, hi):
+        """v = slope * t + offset through the edge points; an edge mostly at the picture's own edge stays there."""
+        if np.mean(v <= lo + 2) > .3:
+            return 0.0, float(lo)
+        if np.mean(v >= hi - 2) > .3:
+            return 0.0, float(hi)
+        k, c = np.polyfit(t, v, 1)
+        for _ in range(2):   # leave out stray points (a thumb, a shadow) and fit again
+            off = np.abs(v - (k * t + c))
+            keep = off <= max(2.5, np.percentile(off, 70))
+            k, c = np.polyfit(t[keep], v[keep], 1)
+        return k, c
+    left = line(ry, np.array([np.argmax(mask[y]) for y in ry], float), 0, w - 1)
+    right = line(ry, np.array([w - 1 - np.argmax(mask[y][::-1]) for y in ry], float), 0, w - 1)
+    top = line(cx, np.array([np.argmax(mask[:, x]) for x in cx], float), 0, h - 1)
+    bottom = line(cx, np.array([h - 1 - np.argmax(mask[::-1, x]) for x in cx], float), 0, h - 1)
+
+    def corner(side, end):   # side: x = k*y + c; end: y = k*x + c
+        x = (side[0] * end[1] + side[1]) / (1 - side[0] * end[0])
+        return x, end[0] * x + end[1]
+    tl, tr, br, bl = corner(left, top), corner(right, top), corner(right, bottom), corner(left, bottom)
+    W = round((np.hypot(tr[0] - tl[0], tr[1] - tl[1]) + np.hypot(br[0] - bl[0], br[1] - bl[1])) / 2)
+    H = round((np.hypot(bl[0] - tl[0], bl[1] - tl[1]) + np.hypot(br[0] - tr[0], br[1] - tr[1])) / 2)
+    if W < 80 or H < 80 or not 1 < H / W < 2.2:
+        return no
+    out = im.transform((W, H), Image.QUAD, (*tl, *bl, *br, *tr), Image.BICUBIC)
+    out = out.crop((3, 3, W - 3, H - 3))   # a hair inside the edges, so no background shows
+    os.makedirs(STRAIGHT, exist_ok=True)
+    name = hashlib.sha1(data).hexdigest()[:16] + '.jpg'
+    out.save(os.path.join(STRAIGHT, name), 'JPEG', quality=92)
+    return {'ok': True, 'cover': 'covers/_straightened/' + name}
+
+
 SERIES_TAIL = re.compile(
     r'\s*(?:'
     r'\([^()]*(?:\b(?:series|saga|trilogy|chronicles|quartet|cycle|book|bk|vol|volume)\b|#\s*\d)[^()]*\)'  # (The Natural Human Saga)
@@ -379,8 +445,6 @@ def add(book):
          'description': book.get('description', ''), 'added': date.today().isoformat(), 'copies': 1, 'addedHere': True}
     if book.get('coverWrong') is True:   # none of the covers found was hers (1 Nov): a photo of her own copy is needed
         b['coverWrong'] = True
-    if book.get('coverFix') is True:     # the right cover, but trimmed oddly or at an angle (1 Nov): to be straightened
-        b['coverFix'] = True
     if b['authors']:
         b['surname'] = b['authors'][0]['name'].split()[-1]
     b = {k: v for k, v in b.items() if v not in ('', None, [])}
@@ -400,9 +464,23 @@ def add(book):
         with open(bought_path, 'w', encoding='utf-8', newline='\n') as fh:
             json.dump(bought, fh, ensure_ascii=False, indent=1)
             fh.write('\n')
-    if book.get('cover') and urllib.parse.urlparse(book['cover']).scheme != 'https':
-        book['cover'] = ''   # only https links: never a file on this computer
-    if book.get('cover'):   # keep its cover like the others
+    straightened = STRAIGHT_URL.fullmatch(book.get('cover') or '')
+    if book.get('cover') and not straightened and urllib.parse.urlparse(book['cover']).scheme != 'https':
+        book['cover'] = ''   # only https links (or a cover straightened here): never any other file on this computer
+    if straightened:   # straightened on the Add page: the straightened picture is her cover; the link is where it came from
+        from PIL import Image
+        key = i13 or 'id-' + b['id']
+        img = Image.open(os.path.join(SITE, *book['cover'].split('/'))).convert('RGB')
+        if img.height > 600:
+            img = img.resize((round(img.width * 600 / img.height), 600), Image.LANCZOS)
+        img.save(os.path.join(SITE, 'covers', key + '.jpg'), 'JPEG', quality=86, optimize=True, progressive=True)
+        covers_path = os.path.join(DATA, 'covers.json')
+        covers = json.load(open(covers_path, encoding='utf-8')) if os.path.exists(covers_path) else {}
+        covers[key] = {'src': book.get('coverOriginal', ''), 'from': 'looked up when added, straightened on the Add page', 'straightened': True}
+        with open(covers_path, 'w', encoding='utf-8', newline='\n') as fh:
+            json.dump(dict(sorted(covers.items())), fh, ensure_ascii=False, indent=0)
+            fh.write('\n')
+    elif book.get('cover'):   # keep its cover like the others
         covers_path = os.path.join(DATA, 'covers.json')
         covers = json.load(open(covers_path, encoding='utf-8')) if os.path.exists(covers_path) else {}
         key = i13 or 'id-' + b['id']
@@ -461,6 +539,11 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 return self.reply(lookup(urllib.parse.parse_qs(u.query).get('isbn', [''])[0]))
             except Exception as e:
                 return self.reply({'found': False, 'error': str(e)})
+        if u.path == '/api/straighten':   # "Cropped or at an angle" on the Add page
+            try:
+                return self.reply(straighten(urllib.parse.parse_qs(u.query).get('src', [''])[0]))
+            except Exception as e:
+                return self.reply({'ok': False, 'error': 'Couldn’t straighten this cover.', 'detail': str(e)})
         if u.path == '/api/covers':   # "Find another cover" on the Add page
             q = urllib.parse.parse_qs(u.query)
             try:

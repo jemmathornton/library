@@ -36,7 +36,8 @@ def main():
     os.makedirs(COVERS, exist_ok=True)
     covers = json.load(open(os.path.join(ROOT, 'data', 'covers.json'), encoding='utf-8'))
     todo = [(i, c['src']) for i, c in covers.items()
-            if c and not i.startswith('_') and ('--all' in sys.argv or not os.path.exists(os.path.join(COVERS, i + '.jpg')))]
+            if c and c.get('src') and not i.startswith('_') and not (c.get('straightened') and os.path.exists(os.path.join(COVERS, i + '.jpg')))
+            and ('--all' in sys.argv or not os.path.exists(os.path.join(COVERS, i + '.jpg')))]
     print(f'{len(todo)} covers to copy')
     problems = []
     with ThreadPoolExecutor(4) as pool:
