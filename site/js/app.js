@@ -555,7 +555,8 @@ function pageAdd(){
           <div class="add-fields">${field("title", "Title")}${field("authors", "Author(s), with commas between")}
             <div class="two">${field("publisher", "Publisher")}${field("published", "Published")}</div>
             <div class="two">${field("pages", "Pages", 'inputmode="numeric"')}
-              <label><span>Shelf${f.suggest && f.suggest.shelf !== f.shelf ? ` <button type="button" class="suggest" data-suggest="${f.suggest.shelf}">Suggested: ${esc(shelfIndex[f.suggest.shelf].name)} (${esc(f.suggest.why)}) · Use it</button>` : ""}</span><select id="add-shelf"><option value="">Choose a shelf…</option>${SHELVES.filter(s => s.libib).map(s => `<option value="${s.id}"${f.shelf === s.id ? " selected" : ""}>${esc(s.name)}</option>`).join("")}</select></label></div>
+              <label><span>Shelf${!f.suggest ? "" : f.suggest.shelf !== f.shelf ? ` <button type="button" class="suggest" data-suggest="${f.suggest.shelf}">Suggested: ${esc(shelfIndex[f.suggest.shelf].name)} (${esc(f.suggest.why)}) · Use it</button>`
+                : ` <span class="suggest">Suggested: ${esc(shelfIndex[f.suggest.shelf].name)} (${esc(f.suggest.why)}) ✓</span>`}</span><select id="add-shelf"><option value="">Choose a shelf…</option>${SHELVES.filter(s => s.libib).map(s => `<option value="${s.id}"${f.shelf === s.id ? " selected" : ""}>${esc(s.name)}</option>`).join("")}</select></label></div>
             <label><span>Signed</span><select id="add-signed">${[["", "Not signed"], ["signed", "Signed"], ["to-you", "Signed to you"]].map(([v, t]) => `<option value="${v}"${(f.signed || "") === v ? " selected" : ""}>${t}</option>`).join("")}</select></label>
             <button class="btn pick" type="button" id="addSave"${served && !f.busy ? "" : " disabled"}>${ic("plus")}${f.busy ? "Adding…" : "Add to the shelf"}</button>
           </div></div></div>`

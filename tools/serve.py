@@ -166,9 +166,29 @@ def best_cover(found):
     return best
 
 
+SERIES_TAIL = re.compile(
+    r'\s*(?:'
+    r'\([^()]*(?:\b(?:series|saga|trilogy|chronicles|quartet|cycle|book|bk|vol|volume)\b|#\s*\d)[^()]*\)'  # (The Natural Human Saga)
+    r'|(?::|\s[\u2013-])\s*(?:the\s+)?[\w\' ]*\b(?:series|saga|trilogy|chronicles|quartet|cycle)\b[^:]*'  # : The Beyond Series - Book Four
+    r'|[:,]\s*(?:book|bk\.?|vol\.?|volume)\s*(?:\d+|one|two|three|four|five|six|seven|eight|nine|ten)\b.*'  # : Bk. 2
+    r')$', re.I)
+
+
+def clean_title(t):
+    """A shop or Goodreads title with the series tacked on (1 Nov: 'The Callista Prophecy (The Natural Human Saga)',
+    'Lycan Lamia: The Beyond Series - Book Four'): just the book's own title; the series shows on the site by itself."""
+    for _ in range(3):
+        new = SERIES_TAIL.sub('', t).strip()
+        if not new or new == t:
+            break
+        t = new
+    return t
+
+
 def lookup(isbn):
     found = find(isbn)
     if found.get('found'):
+        found['title'] = clean_title(found['title'])
         try:
             found['cover'] = best_cover(found)
         except Exception:
