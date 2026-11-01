@@ -1,0 +1,3497 @@
+[
+ {
+  "id": "ob32xqf0an",
+  "title": "The Midnight Library",
+  "isbn": "9781786892737",
+  "key": "9781786892737",
+  "corr": -0.804,
+  "cur": [
+   324,
+   500
+  ],
+  "new": [
+   500,
+   769
+  ]
+ },
+ {
+  "id": "kql3v79ysl",
+  "title": "Love Lessons",
+  "isbn": "9780552553520",
+  "key": "9780552553520",
+  "corr": -0.698,
+  "cur": [
+   326,
+   500
+  ],
+  "new": [
+   500,
+   768
+  ]
+ },
+ {
+  "id": "4jimepykbx",
+  "title": "The School That Went to Sea",
+  "isbn": "9780744526035",
+  "key": "9780744526035",
+  "corr": -0.517,
+  "cur": [
+   313,
+   500
+  ],
+  "new": [
+   500,
+   500
+  ]
+ },
+ {
+  "id": "ob32jko0an",
+  "title": "Mother of Learning: ARC 1",
+  "isbn": "9781955252195",
+  "key": "9781955252195",
+  "corr": -0.469,
+  "cur": [
+   333,
+   500
+  ],
+  "new": [
+   387,
+   559
+  ]
+ },
+ {
+  "id": "0catjvodcu",
+  "title": "Fourth Year Triumphs at Trebizon",
+  "isbn": "9780246118684",
+  "key": "9780246118684",
+  "corr": -0.422,
+  "cur": [
+   312,
+   500
+  ],
+  "new": [
+   333,
+   500
+  ]
+ },
+ {
+  "id": "yw7a2ifr71",
+  "title": "If I Stay",
+  "isbn": "9781909531239",
+  "key": "9781909531239",
+  "corr": -0.364,
+  "cur": [
+   304,
+   500
+  ],
+  "new": [
+   499,
+   773
+  ]
+ },
+ {
+  "id": "ga48lc6bt4",
+  "title": "How to Do Just About Everything",
+  "isbn": "9780007687763",
+  "key": "9780007687763",
+  "corr": -0.276,
+  "cur": [
+   348,
+   500
+  ],
+  "new": [
+   500,
+   365
+  ]
+ },
+ {
+  "id": "xl1n9dujps",
+  "title": "The Pratchett Portfolio: A Compendium of Discworld Characters (GOLLANCZ S.F.)",
+  "isbn": "9780575063488",
+  "key": "9780575063488",
+  "corr": -0.257,
+  "cur": [
+   353,
+   475
+  ],
+  "new": [
+   500,
+   281
+  ]
+ },
+ {
+  "id": "kql35vcysl",
+  "title": "The Perks of Being a Wallflower",
+  "isbn": "9781471116179",
+  "key": "9781471116179",
+  "corr": -0.255,
+  "cur": [
+   328,
+   500
+  ],
+  "new": [
+   387,
+   559
+  ]
+ },
+ {
+  "id": "6dslml58dt",
+  "title": "Beach Read",
+  "isbn": "9780241989524",
+  "key": "9780241989524",
+  "corr": -0.24,
+  "cur": [
+   317,
+   475
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "kql359aysl",
+  "title": "The Catcher in the Rye",
+  "isbn": "9780241950432",
+  "key": "9780241950432",
+  "corr": -0.238,
+  "cur": [
+   329,
+   500
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "7fvju6jhd6",
+  "title": "The Artemis Fowl: Time Paradox",
+  "isbn": "9781423108368",
+  "key": "9781423108368",
+  "corr": -0.238,
+  "cur": [
+   306,
+   500
+  ],
+  "new": [
+   340,
+   500
+  ]
+ },
+ {
+  "id": "5601prjv9x",
+  "title": "Nation",
+  "isbn": "9781407046143",
+  "key": "9781407046143",
+  "corr": -0.232,
+  "cur": [
+   328,
+   500
+  ],
+  "new": [
+   500,
+   810
+  ]
+ },
+ {
+  "id": "xl1ntp4jps",
+  "title": "Kitty at St. Clare's",
+  "isbn": "9781405270250",
+  "key": "9781405270250",
+  "corr": -0.232,
+  "cur": [
+   308,
+   500
+  ],
+  "new": [
+   333,
+   500
+  ]
+ },
+ {
+  "id": "ft873g2e5y",
+  "title": "The Wish List",
+  "isbn": "9780786818631",
+  "key": "9780786818631",
+  "corr": -0.201,
+  "cur": [
+   321,
+   475
+  ],
+  "new": [
+   500,
+   333
+  ]
+ },
+ {
+  "id": "izer0d1lqm",
+  "title": "Slawter (The Demonata, Book 3)",
+  "isbn": "9780007231386",
+  "key": "9780007231386",
+  "corr": -0.2,
+  "cur": [
+   340,
+   550
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "nxwcehg41p",
+  "title": "Artemis Fowl and the Lost Colony",
+  "isbn": "9780141382685",
+  "key": "9780141382685",
+  "corr": -0.197,
+  "cur": [
+   320,
+   500
+  ],
+  "new": [
+   499,
+   771
+  ]
+ },
+ {
+  "id": "j7z460lqlq",
+  "title": "Witches Abroad",
+  "isbn": "9780552134651",
+  "key": "9780552134651",
+  "corr": -0.196,
+  "cur": [
+   296,
+   503
+  ],
+  "new": [
+   499,
+   782
+  ]
+ },
+ {
+  "id": "izer0o7lqm",
+  "title": "The Doomspell (Doomspell Trilogy, Book 1)",
+  "isbn": "9781858818504",
+  "key": "9781858818504",
+  "corr": -0.185,
+  "cur": [
+   315,
+   500
+  ],
+  "new": [
+   500,
+   766
+  ]
+ },
+ {
+  "id": "izer0gslqm",
+  "title": "Reaper Man",
+  "isbn": "9780552134644",
+  "key": "9780552134644",
+  "corr": -0.18,
+  "cur": [
+   299,
+   501
+  ],
+  "new": [
+   500,
+   786
+  ]
+ },
+ {
+  "id": "9dbeyw86rp",
+  "title": "The Science of Discworld II: The Globe: 2",
+  "isbn": "9780091888053",
+  "key": "9780091888053",
+  "corr": -0.18,
+  "cur": [
+   343,
+   475
+  ],
+  "new": [
+   499,
+   827
+  ]
+ },
+ {
+  "id": "bpko7hlcho",
+  "title": "Hell's Heroes (The Demonata, Book 10)",
+  "isbn": "9780007260362",
+  "key": "9780007260362",
+  "corr": -0.159,
+  "cur": [
+   427,
+   648
+  ],
+  "new": [
+   500,
+   763
+  ]
+ },
+ {
+  "id": "8gmvxy1ohq",
+  "title": "Wicked: The Wicked Years Vintage Collection",
+  "isbn": "9781035425914",
+  "key": "9781035425914",
+  "corr": -0.154,
+  "cur": [
+   331,
+   500
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "prqbsmlno7",
+  "title": "Boy Trouble At Trebizon",
+  "isbn": "9780583304306",
+  "key": "9780583304306",
+  "corr": -0.15,
+  "cur": [
+   302,
+   500
+  ],
+  "new": [
+   500,
+   375
+  ]
+ },
+ {
+  "id": "5601a5tv9x",
+  "title": "Pretties",
+  "isbn": "9781471123955",
+  "key": "9781471123955",
+  "corr": -0.141,
+  "cur": [
+   320,
+   500
+  ],
+  "new": [
+   387,
+   559
+  ]
+ },
+ {
+  "id": "m4rdh1231h",
+  "title": "If on a Winter's Night a Traveller",
+  "isbn": "9780099430896",
+  "key": "9780099430896",
+  "corr": -0.135,
+  "cur": [
+   325,
+   500
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "w1fyou8isd",
+  "title": "Maskerade: A Discworld Novel",
+  "isbn": "9780552142366",
+  "key": "9780552142366",
+  "corr": -0.131,
+  "cur": [
+   302,
+   496
+  ],
+  "new": [
+   500,
+   779
+  ]
+ },
+ {
+  "id": "u3n6iqugnz",
+  "title": "The Scent of Magic - Book 2 of the Doomspell Trilogy",
+  "isbn": "9781842550540",
+  "key": "9781842550540",
+  "corr": -0.124,
+  "cur": [
+   317,
+   475
+  ],
+  "new": [
+   500,
+   766
+  ]
+ },
+ {
+  "id": "0catj0mdcu",
+  "title": "Extras Pa",
+  "isbn": "9781471123979",
+  "key": "9781471123979",
+  "corr": -0.112,
+  "cur": [
+   318,
+   500
+  ],
+  "new": [
+   387,
+   559
+  ]
+ },
+ {
+  "id": "7fvjuu7hd6",
+  "title": "Demon Thief (The Demonata, Book 2)",
+  "isbn": "9780007435449",
+  "key": "id-7fvjuu7hd6",
+  "corr": -0.105,
+  "cur": [
+   421,
+   640
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "umdlqqognz",
+  "title": "Happy Place",
+  "isbn": "9780241995365",
+  "key": "9780241995365",
+  "corr": -0.091,
+  "cur": [
+   331,
+   500
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "8gmvr68ohq",
+  "title": "Uglies",
+  "isbn": "9781471123948",
+  "key": "9781471123948",
+  "corr": -0.082,
+  "cur": [
+   332,
+   500
+  ],
+  "new": [
+   387,
+   559
+  ]
+ },
+ {
+  "id": "9dbeyyv6rp",
+  "title": "Lord Loss (The Demonata, Book 1)",
+  "isbn": "9780007435456",
+  "key": "id-9dbeyyv6rp",
+  "corr": -0.079,
+  "cur": [
+   357,
+   550
+  ],
+  "new": [
+   500,
+   770
+  ]
+ },
+ {
+  "id": "cny0hyhmmk",
+  "title": "Radio Silence",
+  "isbn": "9780007559251",
+  "key": "9780007559251",
+  "corr": -0.079,
+  "cur": [
+   326,
+   500
+  ],
+  "new": [
+   500,
+   779
+  ]
+ },
+ {
+  "id": "6uc5r7r8dt",
+  "title": "Edge Chronicles 7: The Last of the Sky Pirates",
+  "isbn": "9780375892776",
+  "key": "9780375892776",
+  "corr": -0.072,
+  "cur": [
+   334,
+   500
+  ],
+  "new": [
+   500,
+   735
+  ]
+ },
+ {
+  "id": "yw7avnwr71",
+  "title": "First Term At Trebizon",
+  "isbn": "9780583304276",
+  "key": "9780583304276",
+  "corr": -0.069,
+  "cur": [
+   312,
+   500
+  ],
+  "new": [
+   500,
+   354
+  ]
+ },
+ {
+  "id": "bpko7zhcho",
+  "title": "Interesting Times",
+  "isbn": "9780552142359",
+  "key": "9780552142359",
+  "corr": -0.066,
+  "cur": [
+   298,
+   497
+  ],
+  "new": [
+   500,
+   779
+  ]
+ },
+ {
+  "id": "ayjgs5jpsz",
+  "title": "Moving Pictures",
+  "isbn": "9780552134637",
+  "key": "9780552134637",
+  "corr": -0.062,
+  "cur": [
+   302,
+   496
+  ],
+  "new": [
+   500,
+   786
+  ]
+ },
+ {
+  "id": "rihptf2xoz",
+  "title": "The Ambassador's Mission",
+  "isbn": "9780316089258",
+  "key": "9780316089258",
+  "corr": -0.059,
+  "cur": [
+   375,
+   500
+  ],
+  "new": [
+   546,
+   480
+  ]
+ },
+ {
+  "id": "m4rd1st31h",
+  "title": "The Colour Of Magic",
+  "isbn": "9780552124751",
+  "key": "9780552124751",
+  "corr": -0.047,
+  "cur": [
+   303,
+   497
+  ],
+  "new": [
+   500,
+   779
+  ]
+ },
+ {
+  "id": "j7z46bzqlq",
+  "title": "The Tales of Beedle the Bard (Collector's Edition)",
+  "isbn": "9780956010902",
+  "key": "9780956010902",
+  "corr": -0.045,
+  "cur": [
+   500,
+   686
+  ],
+  "new": [
+   500,
+   500
+  ]
+ },
+ {
+  "id": "prqbfx5no7",
+  "title": "Mates, Dates and Inflatable Bras",
+  "isbn": "9781853406331",
+  "key": "id-prqbfx5no7",
+  "corr": -0.043,
+  "cur": [
+   322,
+   500
+  ],
+  "new": [
+   375,
+   500
+  ]
+ },
+ {
+  "id": "nxwcesm41p",
+  "title": "Out of Oz",
+  "isbn": "9781035425945",
+  "key": "id-nxwcesm41p",
+  "corr": -0.039,
+  "cur": [
+   432,
+   648
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "q7jba7awe4",
+  "title": "You Are Here: The Instant Number 1 Sunday Times Bestseller, from the Author of One Day",
+  "isbn": "9781444715460",
+  "key": "9781444715460",
+  "corr": -0.032,
+  "cur": [
+   264,
+   400
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "ga48l1xbt4",
+  "title": "Pyramids",
+  "isbn": "9780552134613",
+  "key": "9780552134613",
+  "corr": -0.029,
+  "cur": [
+   301,
+   498
+  ],
+  "new": [
+   500,
+   815
+  ]
+ },
+ {
+  "id": "yw7av3xr71",
+  "title": "Hockey Term at Trebizon",
+  "isbn": "9780583305563",
+  "key": "9780583305563",
+  "corr": -0.019,
+  "cur": [
+   305,
+   500
+  ],
+  "new": [
+   350,
+   500
+  ]
+ },
+ {
+  "id": "rihp2t0xoz",
+  "title": "Welcome to the Hyunam-Dong Bookshop",
+  "isbn": "9781526662286",
+  "key": "9781526662286",
+  "corr": -0.008,
+  "cur": [
+   250,
+   400
+  ],
+  "new": [
+   499,
+   766
+  ]
+ },
+ {
+  "id": "5601podv9x",
+  "title": "Pop Princess (Truth, Dare, Kiss or Promise) (Truth, Dare, Kiss or Promise)",
+  "isbn": "9781853407321",
+  "key": "9781853407321",
+  "corr": -0.002,
+  "cur": [
+   320,
+   500
+  ],
+  "new": [
+   328,
+   500
+  ]
+ },
+ {
+  "id": "9dbeyps6rp",
+  "title": "Castaways of the Flying Dutchman",
+  "isbn": "9780141312118",
+  "key": "9780141312118",
+  "corr": 0.0,
+  "cur": [
+   325,
+   500
+  ],
+  "new": [
+   500,
+   769
+  ]
+ },
+ {
+  "id": "kql3veuysl",
+  "title": "Son of a Witch",
+  "isbn": "9781035425921",
+  "key": "id-kql3veuysl",
+  "corr": 0.01,
+  "cur": [
+   429,
+   648
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "6uc5rbg8dt",
+  "title": "White Lies and Barefaced Truths (Truth, Dare, Kiss or Promise) (Truth, Dare, Kiss or Promise)",
+  "isbn": "9781853407512",
+  "key": "9781853407512",
+  "corr": 0.013,
+  "cur": [
+   321,
+   500
+  ],
+  "new": [
+   327,
+   500
+  ]
+ },
+ {
+  "id": "etijnrn5u2",
+  "title": "The Rough Guide to Japan: Travel Guide with eBook (Rough Guides Main Series)",
+  "isbn": "9781839059797",
+  "key": "id-etijnrn5u2",
+  "corr": 0.021,
+  "cur": [
+   325,
+   500
+  ],
+  "new": [
+   500,
+   766
+  ]
+ },
+ {
+  "id": "4jim5w7kbx",
+  "title": "Teen Queens and Has-beens (Truth, Dare, Kiss or Promise) (Truth, Dare, Kiss or Promise)",
+  "isbn": "9781853407970",
+  "key": "9781853407970",
+  "corr": 0.025,
+  "cur": [
+   261,
+   400
+  ],
+  "new": [
+   327,
+   500
+  ]
+ },
+ {
+  "id": "3kxu153arj",
+  "title": "Positively Birmingham 2015",
+  "isbn": "9780952317982",
+  "key": "9780952317982",
+  "corr": 0.026,
+  "cur": [
+   1063,
+   1500
+  ],
+  "new": [
+   505,
+   500
+  ]
+ },
+ {
+  "id": "6uc5rng8dt",
+  "title": "Airman",
+  "isbn": "9781423107507",
+  "key": "9781423107507",
+  "corr": 0.032,
+  "cur": [
+   333,
+   500
+  ],
+  "new": [
+   500,
+   333
+  ]
+ },
+ {
+  "id": "u3n6iy8gnz",
+  "title": "Foundation: 1/3 (The Foundation Series)",
+  "isbn": "9780586010808",
+  "key": "9780586010808",
+  "corr": 0.035,
+  "cur": [
+   282,
+   471
+  ],
+  "new": [
+   500,
+   800
+  ]
+ },
+ {
+  "id": "0b5kbbwdcu",
+  "title": "Book Lovers",
+  "isbn": "9780241995341",
+  "key": "9780241995341",
+  "corr": 0.041,
+  "cur": [
+   331,
+   500
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "3kxu1m7arj",
+  "title": "Checkmate",
+  "isbn": "9780552551946",
+  "key": "9780552551946",
+  "corr": 0.046,
+  "cur": [
+   326,
+   500
+  ],
+  "new": [
+   321,
+   500
+  ]
+ },
+ {
+  "id": "t0gfkbj93y",
+  "title": "Lola Rose",
+  "isbn": "9780552556132",
+  "key": "9780552556132",
+  "corr": 0.046,
+  "cur": [
+   326,
+   500
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "nxwcfpe41p",
+  "title": "Knife Edge",
+  "isbn": "9780552548922",
+  "key": "9780552548922",
+  "corr": 0.05,
+  "cur": [
+   326,
+   500
+  ],
+  "new": [
+   328,
+   500
+  ]
+ },
+ {
+  "id": "ak0tqt8psz",
+  "title": "Homegoing",
+  "isbn": "9780241975237",
+  "key": "9780241975237",
+  "corr": 0.052,
+  "cur": [
+   318,
+   474
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "8gmvxllohq",
+  "title": "The Art of Discworld (GOLLANCZ S.F.)",
+  "isbn": "9780575077126",
+  "key": "9780575077126",
+  "corr": 0.054,
+  "cur": [
+   400,
+   430
+  ],
+  "new": [
+   500,
+   593
+  ]
+ },
+ {
+  "id": "9dbekea6rp",
+  "title": "The Circus Of Adventure (Adventure (MacMillan))",
+  "isbn": "9780330448345",
+  "key": "9780330448345",
+  "corr": 0.058,
+  "cur": [
+   325,
+   500
+  ],
+  "new": [
+   500,
+   783
+  ]
+ },
+ {
+  "id": "rihpt6dxoz",
+  "title": "Mort",
+  "isbn": "9780552131063",
+  "key": "9780552131063",
+  "corr": 0.06,
+  "cur": [
+   299,
+   502
+  ],
+  "new": [
+   500,
+   779
+  ]
+ },
+ {
+  "id": "u3p4qvtgnz",
+  "title": "Autumn Story Brambly Hedge",
+  "isbn": "9780583333252",
+  "key": "9780583333252",
+  "corr": 0.061,
+  "cur": [
+   390,
+   500
+  ],
+  "new": [
+   350,
+   500
+  ]
+ },
+ {
+  "id": "qhsk8uowe4",
+  "title": "A Hat Full of Sky: (Discworld Novel 32) (Discworld Novels)",
+  "isbn": "9780385607360",
+  "key": "9780385607360",
+  "corr": 0.062,
+  "cur": [
+   326,
+   500
+  ],
+  "new": [
+   500,
+   804
+  ]
+ },
+ {
+  "id": "rwckf9zxoz",
+  "title": "13 Little Blue Envelopes",
+  "isbn": "9780060541439",
+  "key": "9780060541439",
+  "corr": 0.062,
+  "cur": [
+   334,
+   500
+  ],
+  "new": [
+   499,
+   750
+  ]
+ },
+ {
+  "id": "e9oh3po5u2",
+  "title": "Girl, Woman, Other",
+  "isbn": "9780241984994",
+  "key": "9780241984994",
+  "corr": 0.063,
+  "cur": [
+   333,
+   500
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "ls5xd3s7b9",
+  "title": "The House in the Cerulean Sea (Illumicrate Edition)",
+  "isbn": "9781250357243",
+  "key": "9781250357243",
+  "corr": 0.063,
+  "cur": [
+   322,
+   540
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "t0gfkur93y",
+  "title": "Skeleton Key",
+  "isbn": "9781844280940",
+  "key": "9781844280940",
+  "corr": 0.064,
+  "cur": [
+   321,
+   500
+  ],
+  "new": [
+   324,
+   500
+  ]
+ },
+ {
+  "id": "ls5xdoq7b9",
+  "title": "The Wizard's Promise (Doomspell Trilogy, Book 3)",
+  "isbn": "9781858818443",
+  "key": "9781858818443",
+  "corr": 0.08,
+  "cur": [
+   333,
+   500
+  ],
+  "new": [
+   500,
+   766
+  ]
+ },
+ {
+  "id": "6uc5yww8dt",
+  "title": "A/s/l",
+  "isbn": "9781915368768",
+  "key": "9781915368768",
+  "corr": 0.084,
+  "cur": [
+   300,
+   450
+  ],
+  "new": [
+   326,
+   500
+  ]
+ },
+ {
+  "id": "9dbeyxt6rp",
+  "title": "Sourcery",
+  "isbn": "9780552152624",
+  "key": "9780552152624",
+  "corr": 0.084,
+  "cur": [
+   295,
+   501
+  ],
+  "new": [
+   500,
+   779
+  ]
+ },
+ {
+  "id": "ob32jus0an",
+  "title": "Fever Crumb (Mortal Engines Quartet)",
+  "isbn": "9781407102429",
+  "key": "id-ob32jus0an",
+  "corr": 0.089,
+  "cur": [
+   331,
+   500
+  ],
+  "new": [
+   500,
+   714
+  ]
+ },
+ {
+  "id": "v8dzp4u26q",
+  "title": "The Paris Apartment",
+  "isbn": "9780008384982",
+  "key": "9780008384982",
+  "corr": 0.094,
+  "cur": [
+   331,
+   500
+  ],
+  "new": [
+   500,
+   769
+  ]
+ },
+ {
+  "id": "akdesrbpsz",
+  "title": "Reasons to Stay Alive",
+  "isbn": "9781782116820",
+  "key": "9781782116820",
+  "corr": 0.101,
+  "cur": [
+   343,
+   500
+  ],
+  "new": [
+   500,
+   683
+  ]
+ },
+ {
+  "id": "ob32jie0an",
+  "title": "Jingo",
+  "isbn": "9780552145985",
+  "key": "9780552145985",
+  "corr": 0.116,
+  "cur": [
+   300,
+   503
+  ],
+  "new": [
+   500,
+   779
+  ]
+ },
+ {
+  "id": "j7z49x0qlq",
+  "title": "Noughts and Crosses",
+  "isbn": "9780552546324",
+  "key": "9780552546324",
+  "corr": 0.119,
+  "cur": [
+   326,
+   500
+  ],
+  "new": [
+   500,
+   781
+  ]
+ },
+ {
+  "id": "g303ip7bt4",
+  "title": "The Man I Think I Know",
+  "isbn": "9781473608993",
+  "key": "9781473608993",
+  "corr": 0.123,
+  "cur": [
+   260,
+   400
+  ],
+  "new": [
+   500,
+   771
+  ]
+ },
+ {
+  "id": "u3n6wo7gnz",
+  "title": "Into the Fourth at Trebizon",
+  "isbn": "9780246118660",
+  "key": "9780246118660",
+  "corr": 0.125,
+  "cur": [
+   307,
+   500
+  ],
+  "new": [
+   375,
+   500
+  ]
+ },
+ {
+  "id": "59lb993v9x",
+  "title": "How to Stop Time",
+  "isbn": "9781838858476",
+  "key": "9781838858476",
+  "corr": 0.128,
+  "cur": [
+   284,
+   400
+  ],
+  "new": [
+   499,
+   767
+  ]
+ },
+ {
+  "id": "t0gfkxe93y",
+  "title": "The Last Continent: A Discworld Novel: 22",
+  "isbn": "9780552146142",
+  "key": "9780552146142",
+  "corr": 0.13,
+  "cur": [
+   200,
+   342
+  ],
+  "new": [
+   500,
+   779
+  ]
+ },
+ {
+  "id": "4jime59kbx",
+  "title": "Seven Kinds of People You Find in Bookshops",
+  "isbn": "9781805225508",
+  "key": "id-4jime59kbx",
+  "corr": 0.132,
+  "cur": [
+   306,
+   500
+  ],
+  "new": [
+   500,
+   791
+  ]
+ },
+ {
+  "id": "prqbf10no7",
+  "title": "The Never War (Pendragon)",
+  "isbn": "9780743468183",
+  "key": "9780743468183",
+  "corr": 0.144,
+  "cur": [
+   314,
+   500
+  ],
+  "new": [
+   375,
+   500
+  ]
+ },
+ {
+  "id": "kql3541ysl",
+  "title": "Double Cross: Book 4 (Noughts And Crosses)",
+  "isbn": "9780552559607",
+  "key": "9780552559607",
+  "corr": 0.145,
+  "cur": [
+   326,
+   500
+  ],
+  "new": [
+   326,
+   500
+  ]
+ },
+ {
+  "id": "8gmvx0nohq",
+  "title": "Parsnips - Buttered",
+  "isbn": "9781473640412",
+  "key": "id-8gmvx0nohq",
+  "corr": 0.146,
+  "cur": [
+   319,
+   500
+  ],
+  "new": [
+   499,
+   768
+  ]
+ },
+ {
+  "id": "ob32x9l0an",
+  "title": "Madame Bovary",
+  "isbn": "9781795023108",
+  "key": "9781795023108",
+  "corr": 0.154,
+  "cur": [
+   286,
+   500
+  ],
+  "new": [
+   333,
+   500
+  ]
+ },
+ {
+  "id": "ayjgstipsz",
+  "title": "Under the Whispering Door",
+  "isbn": "9781250217394",
+  "key": "9781250217394",
+  "corr": 0.161,
+  "cur": [
+   327,
+   500
+  ],
+  "new": [
+   326,
+   500
+  ]
+ },
+ {
+  "id": "2ous4mdtqt",
+  "title": "The Zombie Survival Guide: Complete Protection from the Living Dead",
+  "isbn": "9781400049622",
+  "key": "9781400049622",
+  "corr": 0.163,
+  "cur": [
+   310,
+   445
+  ],
+  "new": [
+   500,
+   748
+  ]
+ },
+ {
+  "id": "5601pkrv9x",
+  "title": "Lords And Ladies",
+  "isbn": "9780552138918",
+  "key": "9780552138918",
+  "corr": 0.166,
+  "cur": [
+   299,
+   499
+  ],
+  "new": [
+   500,
+   781
+  ]
+ },
+ {
+  "id": "qhsk8ezwe4",
+  "title": "The Sisterhood 2: The Second Summer of the Sisterhood",
+  "isbn": "9780375890246",
+  "key": "9780375890246",
+  "corr": 0.171,
+  "cur": [
+   320,
+   475
+  ],
+  "new": [
+   500,
+   744
+  ]
+ },
+ {
+  "id": "ls5xdmz7b9",
+  "title": "The Science Of Discworld Revised Edition (Science of Discworld 1)",
+  "isbn": "9780091886578",
+  "key": "9780091886578",
+  "corr": 0.187,
+  "cur": [
+   321,
+   500
+  ],
+  "new": [
+   500,
+   803
+  ]
+ },
+ {
+  "id": "yw7a2omr71",
+  "title": "Only You Can Save Mankind",
+  "isbn": "9780552139267",
+  "key": "9780552139267",
+  "corr": 0.189,
+  "cur": [
+   276,
+   475
+  ],
+  "new": [
+   375,
+   500
+  ]
+ },
+ {
+  "id": "lz4wi8q7b9",
+  "title": "Pure Dead Brilliant",
+  "isbn": "9780375814129",
+  "key": "9780375814129",
+  "corr": 0.189,
+  "cur": [
+   1516,
+   2331
+  ],
+  "new": [
+   500,
+   350
+  ]
+ },
+ {
+  "id": "xl1nt80jps",
+  "title": "The No. 1 Ladies' Detective Agency",
+  "isbn": "9780349139555",
+  "key": "9780349139555",
+  "corr": 0.191,
+  "cur": [
+   314,
+   500
+  ],
+  "new": [
+   350,
+   500
+  ]
+ },
+ {
+  "id": "t0gfkrf93y",
+  "title": "Equal Rites: A Discworld Novel",
+  "isbn": "9780552131056",
+  "key": "9780552131056",
+  "corr": 0.191,
+  "cur": [
+   300,
+   502
+  ],
+  "new": [
+   500,
+   779
+  ]
+ },
+ {
+  "id": "8gmvxqeohq",
+  "title": "The Light Fantastic",
+  "isbn": "9780552128483",
+  "key": "9780552128483",
+  "corr": 0.192,
+  "cur": [
+   296,
+   498
+  ],
+  "new": [
+   500,
+   779
+  ]
+ },
+ {
+  "id": "3kxu1emarj",
+  "title": "The Island of Missing Trees",
+  "isbn": "9780241988725",
+  "key": "9780241988725",
+  "corr": 0.197,
+  "cur": [
+   324,
+   500
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "ft873ofe5y",
+  "title": "Family of Liars",
+  "isbn": "9781471413520",
+  "key": "id-ft873ofe5y",
+  "corr": 0.206,
+  "cur": [
+   1677,
+   2540
+  ],
+  "new": [
+   500,
+   769
+  ]
+ },
+ {
+  "id": "m4rd1wz31h",
+  "title": "Artemis Fowl",
+  "isbn": "9780141312125",
+  "key": "9780141312125",
+  "corr": 0.224,
+  "cur": [
+   326,
+   500
+  ],
+  "new": [
+   326,
+   500
+  ]
+ },
+ {
+  "id": "6ubmksc8dt",
+  "title": "Teddy Bear's Picnic",
+  "isbn": "9780216926615",
+  "key": "id-6ubmksc8dt",
+  "corr": 0.225,
+  "cur": [
+   475,
+   427
+  ],
+  "new": [
+   500,
+   497
+  ]
+ },
+ {
+  "id": "3kxuzecarj",
+  "title": "Carpe Jugulum: A Discworld Novel: 23",
+  "isbn": "9780552146159",
+  "key": "9780552146159",
+  "corr": 0.238,
+  "cur": [
+   281,
+   500
+  ],
+  "new": [
+   500,
+   810
+  ]
+ },
+ {
+  "id": "cny07opmmk",
+  "title": "The Tennis Term at Trebizon (Puffin Books)",
+  "isbn": "9780583304337",
+  "key": "9780583304337",
+  "corr": 0.268,
+  "cur": [
+   313,
+   500
+  ],
+  "new": [
+   375,
+   500
+  ]
+ },
+ {
+  "id": "ayjgsjbpsz",
+  "title": "Fangirl",
+  "isbn": "9781250030962",
+  "key": "9781250030962",
+  "corr": 0.275,
+  "cur": [
+   318,
+   500
+  ],
+  "new": [
+   326,
+   500
+  ]
+ },
+ {
+  "id": "he2qg8y19k",
+  "title": "The Opal Deception (Artemis Fowl)",
+  "isbn": "9780141381640",
+  "key": "9780141381640",
+  "corr": 0.279,
+  "cur": [
+   336,
+   500
+  ],
+  "new": [
+   499,
+   783
+  ]
+ },
+ {
+  "id": "3kxu1zgarj",
+  "title": "The Scarecrow",
+  "isbn": "9781409103400",
+  "key": "9781409103400",
+  "corr": 0.282,
+  "cur": [
+   318,
+   500
+  ],
+  "new": [
+   500,
+   764
+  ]
+ },
+ {
+  "id": "um2i2n7gnz",
+  "title": "Invisible Cities",
+  "isbn": "9780099429838",
+  "key": "9780099429838",
+  "corr": 0.285,
+  "cur": [
+   310,
+   475
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "kql356pysl",
+  "title": "The Song of Achilles",
+  "isbn": "9781408891384",
+  "key": "9781408891384",
+  "corr": 0.285,
+  "cur": [
+   326,
+   500
+  ],
+  "new": [
+   500,
+   764
+  ]
+ },
+ {
+  "id": "rihpt8uxoz",
+  "title": "Small Gods",
+  "isbn": "9780552138901",
+  "key": "9780552138901",
+  "corr": 0.295,
+  "cur": [
+   295,
+   494
+  ],
+  "new": [
+   500,
+   780
+  ]
+ },
+ {
+  "id": "ba9eyebcho",
+  "title": "How to Age Disgracefully",
+  "isbn": "9781787637146",
+  "key": "9781787637146",
+  "corr": 0.3,
+  "cur": [
+   332,
+   500
+  ],
+  "new": [
+   500,
+   804
+  ]
+ },
+ {
+  "id": "ob32jqs0an",
+  "title": "The Thin Executioner",
+  "isbn": "9780007315826",
+  "key": "id-ob32jqs0an",
+  "corr": 0.323,
+  "cur": [
+   330,
+   500
+  ],
+  "new": [
+   500,
+   768
+  ]
+ },
+ {
+  "id": "yw7a28cr71",
+  "title": "Wintersmith (Discworld Novels)",
+  "isbn": "9780385609845",
+  "key": "9780385609845",
+  "corr": 0.324,
+  "cur": [
+   326,
+   500
+  ],
+  "new": [
+   500,
+   756
+  ]
+ },
+ {
+  "id": "bpko7lwcho",
+  "title": "Eldest (Inheritance Cycle)",
+  "isbn": "9780375840401",
+  "key": "9780375840401",
+  "corr": 0.339,
+  "cur": [
+   321,
+   500
+  ],
+  "new": [
+   500,
+   752
+  ]
+ },
+ {
+  "id": "ob32jcy0an",
+  "title": "Looking for Alaska",
+  "isbn": "9780142402511",
+  "key": "9780142402511",
+  "corr": 0.351,
+  "cur": [
+   300,
+   451
+  ],
+  "new": [
+   499,
+   750
+  ]
+ },
+ {
+  "id": "8gmvxnlohq",
+  "title": "The Arctic Incident (Artemis Fowl)",
+  "isbn": "9781423124542",
+  "key": "9781423124542",
+  "corr": 0.354,
+  "cur": [
+   305,
+   500
+  ],
+  "new": [
+   340,
+   500
+  ]
+ },
+ {
+  "id": "6uc5rqn8dt",
+  "title": "Hogfather: A Discworld Novel",
+  "isbn": "9780552145428",
+  "key": "9780552145428",
+  "corr": 0.365,
+  "cur": [
+   294,
+   502
+  ],
+  "new": [
+   500,
+   759
+  ]
+ },
+ {
+  "id": "t0gfk3i93y",
+  "title": "Artemis Fowl: The Eternity Code",
+  "isbn": "9780670913527",
+  "key": "9780670913527",
+  "corr": 0.366,
+  "cur": [
+   312,
+   500
+  ],
+  "new": [
+   375,
+   500
+  ]
+ },
+ {
+  "id": "5601anyv9x",
+  "title": "Lessons in Chemistry",
+  "isbn": "9781804990926",
+  "key": "9781804990926",
+  "corr": 0.367,
+  "cur": [
+   320,
+   500
+  ],
+  "new": [
+   500,
+   778
+  ]
+ },
+ {
+  "id": "rihp2prxoz",
+  "title": "Famous Five: 1: Five On A Treasure Island",
+  "isbn": "9780340681060",
+  "key": "9780340681060",
+  "corr": 0.38,
+  "cur": [
+   316,
+   500
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "qhsk862we4",
+  "title": "Eragon: Book One (The Inheritance cycle)",
+  "isbn": "9780552552097",
+  "key": "9780552552097",
+  "corr": 0.386,
+  "cur": [
+   1340,
+   2000
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "u3n6i49gnz",
+  "title": "Girls In Tears",
+  "isbn": "9780385601832",
+  "key": "9780385601832",
+  "corr": 0.417,
+  "cur": [
+   290,
+   500
+  ],
+  "new": [
+   500,
+   783
+  ]
+ },
+ {
+  "id": "kql3v6aysl",
+  "title": "Unseen Academicals",
+  "isbn": "9780385609340",
+  "key": "9780385609340",
+  "corr": 0.418,
+  "cur": [
+   298,
+   500
+  ],
+  "new": [
+   500,
+   768
+  ]
+ },
+ {
+  "id": "xl1ntodjps",
+  "title": "Normal People",
+  "isbn": "9780571334650",
+  "key": "9780571334650",
+  "corr": 0.426,
+  "cur": [
+   226,
+   346
+  ],
+  "new": [
+   499,
+   767
+  ]
+ },
+ {
+  "id": "ls5xdbh7b9",
+  "title": "Wyrd Sisters: A Discworld Novel",
+  "isbn": "9780552134606",
+  "key": "9780552134606",
+  "corr": 0.428,
+  "cur": [
+   303,
+   501
+  ],
+  "new": [
+   500,
+   779
+  ]
+ },
+ {
+  "id": "2ous4botqt",
+  "title": "Sisterhood 3: Girls in Pants: The Third Summer of the Sisterhood",
+  "isbn": "9780375843198",
+  "key": "9780375843198",
+  "corr": 0.457,
+  "cur": [
+   375,
+   500
+  ],
+  "new": [
+   499,
+   750
+  ]
+ },
+ {
+  "id": "v8dznpo26q",
+  "title": "The Wind Singer (The wind on fire)",
+  "isbn": "9780749744717",
+  "key": "9780749744717",
+  "corr": 0.463,
+  "cur": [
+   303,
+   475
+  ],
+  "new": [
+   500,
+   778
+  ]
+ },
+ {
+  "id": "rihpt7sxoz",
+  "title": "Starstruck",
+  "isbn": "9781853407987",
+  "key": "9781853407987",
+  "corr": 0.466,
+  "cur": [
+   318,
+   500
+  ],
+  "new": [
+   325,
+   500
+  ]
+ },
+ {
+  "id": "ls5xdep7b9",
+  "title": "Suite Scarlett",
+  "isbn": "9780545096324",
+  "key": "9780545096324",
+  "corr": 0.524,
+  "cur": [
+   327,
+   500
+  ],
+  "new": [
+   328,
+   500
+  ]
+ },
+ {
+  "id": "kjgn45bysl",
+  "title": "Deep Water (Pure Dead)",
+  "isbn": "9780385606301",
+  "key": "9780385606301",
+  "corr": 0.543,
+  "cur": [
+   760,
+   1168
+  ],
+  "new": [
+   311,
+   500
+  ]
+ },
+ {
+  "id": "gankwvubt4",
+  "title": "Teddy Robinson Storybook (Storybook classics)",
+  "isbn": "9781856974943",
+  "key": "9781856974943",
+  "corr": 0.553,
+  "cur": [
+   314,
+   500
+  ],
+  "new": [
+   312,
+   500
+  ]
+ },
+ {
+  "id": "u3n6wzngnz",
+  "title": "Half a World Away",
+  "isbn": "9781473687370",
+  "key": "9781473687370",
+  "corr": 0.562,
+  "cur": [
+   334,
+   500
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "9dbekvn6rp",
+  "title": "More Trouble at Trebizon",
+  "isbn": "9780246114259",
+  "key": "9780246114259",
+  "corr": 0.572,
+  "cur": [
+   306,
+   500
+  ],
+  "new": [
+   387,
+   559
+  ]
+ },
+ {
+  "id": "6uc5r3m8dt",
+  "title": "The Sisterhood 1: The Sisterhood of the Traveling Pants",
+  "isbn": "9780385729338",
+  "key": "9780385729338",
+  "corr": 0.586,
+  "cur": [
+   322,
+   500
+  ],
+  "new": [
+   500,
+   755
+  ]
+ },
+ {
+  "id": "8uf0y3tohq",
+  "title": "Harry, A History: The True Story of a Boy Wizard, His Fans, and Life Inside the Harry Potter Phenomenon",
+  "isbn": "9781416554950",
+  "key": "9781416554950",
+  "corr": 0.611,
+  "cur": [
+   315,
+   500
+  ],
+  "new": [
+   318,
+   500
+  ]
+ },
+ {
+  "id": "28h0zajtqt",
+  "title": "Mythos: A Retelling of the Myths of Ancient Greece",
+  "isbn": "9781405934138",
+  "key": "9781405934138",
+  "corr": 0.613,
+  "cur": [
+   325,
+   500
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "6uc5y9f8dt",
+  "title": "Mockingjay",
+  "isbn": "9781407109374",
+  "key": "9781407109374",
+  "corr": 0.626,
+  "cur": [
+   314,
+   500
+  ],
+  "new": [
+   500,
+   768
+  ]
+ },
+ {
+  "id": "qhsk81lwe4",
+  "title": "Great Railway Journeys of the World",
+  "isbn": "9780563179030",
+  "key": "9780563179030",
+  "corr": 0.66,
+  "cur": [
+   425,
+   500
+  ],
+  "new": [
+   438,
+   500
+  ]
+ },
+ {
+  "id": "dmcfccnu84",
+  "title": "I'm Glad My Mom Died",
+  "isbn": "9781982185824",
+  "key": "9781982185824",
+  "corr": 0.671,
+  "cur": [
+   333,
+   500
+  ],
+  "new": [
+   500,
+   754
+  ]
+ },
+ {
+  "id": "qhsk8z7we4",
+  "title": "Mates, Dates and Sizzling Summers (Mates Dates) (Mates Dates)",
+  "isbn": "9781853408823",
+  "key": "9781853408823",
+  "corr": 0.674,
+  "cur": [
+   319,
+   500
+  ],
+  "new": [
+   326,
+   500
+  ]
+ },
+ {
+  "id": "3kxuz5marj",
+  "title": "I Shall Wear Midnight: (Discworld Novel 38) (Discworld Novels)",
+  "isbn": "9780385611077",
+  "key": "9780385611077",
+  "corr": 0.684,
+  "cur": [
+   309,
+   500
+  ],
+  "new": [
+   383,
+   500
+  ]
+ },
+ {
+  "id": "7fvjdmfhd6",
+  "title": "Winter: from the Man Booker Prize-shortlisted author (Seasonal)",
+  "isbn": "9780241973332",
+  "key": "9780241973332",
+  "corr": 0.686,
+  "cur": [
+   323,
+   500
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "7fvjuenhd6",
+  "title": "Mates, Dates and Sleepover Secrets",
+  "isbn": "9781853407956",
+  "key": "9781853407956",
+  "corr": 0.694,
+  "cur": [
+   310,
+   475
+  ],
+  "new": [
+   338,
+   500
+  ]
+ },
+ {
+  "id": "qhsk6rkwe4",
+  "title": "What Shall I Make? (What Shall I Do Today?)",
+  "isbn": "9780746020302",
+  "key": "9780746020302",
+  "corr": 0.703,
+  "cur": [
+   367,
+   500
+  ],
+  "new": [
+   500,
+   670
+  ]
+ },
+ {
+  "id": "ls5xdv47b9",
+  "title": "Girls Out Late",
+  "isbn": "9780552551335",
+  "key": "9780552551335",
+  "corr": 0.711,
+  "cur": [
+   318,
+   500
+  ],
+  "new": [
+   500,
+   847
+  ]
+ },
+ {
+  "id": "v8dznu526q",
+  "title": "We Were Liars",
+  "isbn": "9781471403989",
+  "key": "9781471403989",
+  "corr": 0.722,
+  "cur": [
+   326,
+   500
+  ],
+  "new": [
+   500,
+   772
+  ]
+ },
+ {
+  "id": "6uc5yee8dt",
+  "title": "Enid Blyton's Third Form at St.Clare's",
+  "isbn": "9780749742706",
+  "key": "9780749742706",
+  "corr": 0.725,
+  "cur": [
+   305,
+   500
+  ],
+  "new": [
+   500,
+   814
+  ]
+ },
+ {
+  "id": "bpkol86cho",
+  "title": "Fifth Formers of St.Clare's",
+  "isbn": "9780749719142",
+  "key": "9780749719142",
+  "corr": 0.726,
+  "cur": [
+   293,
+   475
+  ],
+  "new": [
+   499,
+   822
+  ]
+ },
+ {
+  "id": "he2qumh19k",
+  "title": "Autumn: Longlisted for the Man Booker Prize 2017 (Seasonal)",
+  "isbn": "9780241973318",
+  "key": "9780241973318",
+  "corr": 0.731,
+  "cur": [
+   321,
+   500
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "v8dzn4d26q",
+  "title": "Demon Apocalypse",
+  "isbn": "9780007231331",
+  "key": "9780007231331",
+  "corr": 0.733,
+  "cur": [
+   306,
+   500
+  ],
+  "new": [
+   500,
+   813
+  ]
+ },
+ {
+  "id": "nxwcfc141p",
+  "title": "The River of Adventure (Adventure (MacMillan))",
+  "isbn": "9780330448383",
+  "key": "9780330448383",
+  "corr": 0.734,
+  "cur": [
+   326,
+   500
+  ],
+  "new": [
+   500,
+   757
+  ]
+ },
+ {
+  "id": "ayjgszkpsz",
+  "title": "Slaves of the Mastery (Wind on Fire)",
+  "isbn": "9780749749019",
+  "key": "9780749749019",
+  "corr": 0.738,
+  "cur": [
+   310,
+   475
+  ],
+  "new": [
+   500,
+   803
+  ]
+ },
+ {
+  "id": "ga48i6fbt4",
+  "title": "The Twins at St.Clare's",
+  "isbn": "9780749719098",
+  "key": "9780749719098",
+  "corr": 0.741,
+  "cur": [
+   296,
+   500
+  ],
+  "new": [
+   500,
+   827
+  ]
+ },
+ {
+  "id": "kql35t3ysl",
+  "title": "Never Lie",
+  "isbn": "9781464221361",
+  "key": "9781464221361",
+  "corr": 0.755,
+  "cur": [
+   313,
+   500
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "yw7a2hvr71",
+  "title": "Timekeepers: Number 2 in series (Sam Linnifer)",
+  "isbn": "9781904233435",
+  "key": "9781904233435",
+  "corr": 0.761,
+  "cur": [
+   310,
+   500
+  ],
+  "new": [
+   500,
+   781
+  ]
+ },
+ {
+  "id": "ayjgzuepsz",
+  "title": "Third Year At Malory Towers",
+  "isbn": "9781444948318",
+  "key": "9781444948318",
+  "corr": 0.779,
+  "cur": [
+   322,
+   500
+  ],
+  "new": [
+   330,
+   500
+  ]
+ },
+ {
+  "id": "prqbf4zno7",
+  "title": "Quiet: The Power of Introverts in a World That Can't Stop Talking",
+  "isbn": "9780307352156",
+  "key": "9780307352156",
+  "corr": 0.78,
+  "cur": [
+   313,
+   499
+  ],
+  "new": [
+   500,
+   810
+  ]
+ },
+ {
+  "id": "ob32jaj0an",
+  "title": "Waywalkers: Number 1 in series (Sam Linnifer)",
+  "isbn": "9781904233213",
+  "key": "9781904233213",
+  "corr": 0.781,
+  "cur": [
+   314,
+   500
+  ],
+  "new": [
+   500,
+   792
+  ]
+ },
+ {
+  "id": "he2qg5319k",
+  "title": "Mates, Dates and Cosmic Kisses",
+  "isbn": "9781853406249",
+  "key": "9781853406249",
+  "corr": 0.783,
+  "cur": [
+   308,
+   475
+  ],
+  "new": [
+   326,
+   500
+  ]
+ },
+ {
+  "id": "bpko7fzcho",
+  "title": "The Last Hero (GOLLANCZ S.F.)",
+  "isbn": "9780575073777",
+  "key": "9780575073777",
+  "corr": 0.784,
+  "cur": [
+   372,
+   475
+  ],
+  "new": [
+   500,
+   581
+  ]
+ },
+ {
+  "id": "ob32jh20an",
+  "title": "Harry Potter and the Philosopher's Stone (Harry Potter 1)",
+  "isbn": "9781408855898",
+  "key": "9781408855898",
+  "corr": 0.785,
+  "cur": [
+   334,
+   500
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "m4rdhzt31h",
+  "title": "The Curious Incident of the Dog in the Night-Time: Children's Edition",
+  "isbn": "9780099456766",
+  "key": "9780099456766",
+  "corr": 0.786,
+  "cur": [
+   330,
+   500
+  ],
+  "new": [
+   321,
+   500
+  ]
+ },
+ {
+  "id": "ls5xdaf7b9",
+  "title": "Harry Potter and the Deathly Hallows: 7/7 (Harry Potter 7)",
+  "isbn": "9781408855959",
+  "key": "9781408855959",
+  "corr": 0.786,
+  "cur": [
+   345,
+   500
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "xi37p9njps",
+  "title": "Where the Crawdads Sing",
+  "isbn": "9781472154668",
+  "key": "9781472154668",
+  "corr": 0.798,
+  "cur": [
+   332,
+   500
+  ],
+  "new": [
+   499,
+   785
+  ]
+ },
+ {
+  "id": "e9ohap85u2",
+  "title": "Blood Beast (The Demonata, Book 5)",
+  "isbn": "9780007231324",
+  "key": "9780007231324",
+  "corr": 0.809,
+  "cur": [
+   332,
+   500
+  ],
+  "new": [
+   500,
+   814
+  ]
+ },
+ {
+  "id": "4jime4xkbx",
+  "title": "Specials Pa",
+  "isbn": "9781471123962",
+  "key": "9781471123962",
+  "corr": 0.814,
+  "cur": [
+   314,
+   500
+  ],
+  "new": [
+   328,
+   499
+  ]
+ },
+ {
+  "id": "ft87m4ge5y",
+  "title": "Anita and Me",
+  "isbn": "9780006548768",
+  "key": "9780006548768",
+  "corr": 0.817,
+  "cur": [
+   328,
+   500
+  ],
+  "new": [
+   500,
+   752
+  ]
+ },
+ {
+  "id": "t0gfkys93y",
+  "title": "Quidditch Through the Ages (Comic Relief, Harry Potter's Schoolbooks)",
+  "isbn": "9780747554714",
+  "key": "9780747554714",
+  "corr": 0.82,
+  "cur": [
+   311,
+   500
+  ],
+  "new": [
+   500,
+   819
+  ]
+ },
+ {
+  "id": "2ousnvstqt",
+  "title": "The Hunger Games",
+  "isbn": "9781407109084",
+  "key": "9781407109084",
+  "corr": 0.825,
+  "cur": [
+   322,
+   500
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "v8dzp1r26q",
+  "title": "First Term At Malory Towers",
+  "isbn": "9781444948295",
+  "key": "9781444948295",
+  "corr": 0.825,
+  "cur": [
+   324,
+   500
+  ],
+  "new": [
+   323,
+   500
+  ]
+ },
+ {
+  "id": "he2quc719k",
+  "title": "Cloud Atlas",
+  "isbn": "9780340822784",
+  "key": "9780340822784",
+  "corr": 0.827,
+  "cur": [
+   328,
+   500
+  ],
+  "new": [
+   500,
+   767
+  ]
+ },
+ {
+  "id": "yqc2clqr71",
+  "title": "My Brilliant Friend",
+  "isbn": "9781609450786",
+  "key": "9781609450786",
+  "corr": 0.827,
+  "cur": [
+   304,
+   500
+  ],
+  "new": [
+   500,
+   779
+  ]
+ },
+ {
+  "id": "0catqridcu",
+  "title": "The Novice: Number 2 in series: Black Magician Trilogy, Book 2",
+  "isbn": "9781841493145",
+  "key": "9781841493145",
+  "corr": 0.834,
+  "cur": [
+   306,
+   475
+  ],
+  "new": [
+   500,
+   785
+  ]
+ },
+ {
+  "id": "xl1n9v2jps",
+  "title": "The High Lord: The Black Magician Trilogy Book Three",
+  "isbn": "9781841493152",
+  "key": "9781841493152",
+  "corr": 0.838,
+  "cur": [
+   289,
+   475
+  ],
+  "new": [
+   500,
+   785
+  ]
+ },
+ {
+  "id": "0catqbpdcu",
+  "title": "Project Hail Mary",
+  "isbn": "9781529157468",
+  "key": "9781529157468",
+  "corr": 0.838,
+  "cur": [
+   326,
+   500
+  ],
+  "new": [
+   500,
+   777
+  ]
+ },
+ {
+  "id": "0catq3kdcu",
+  "title": "Double Dare",
+  "isbn": "9781853407796",
+  "key": "9781853407796",
+  "corr": 0.842,
+  "cur": [
+   255,
+   400
+  ],
+  "new": [
+   323,
+   500
+  ]
+ },
+ {
+  "id": "kql3vwvysl",
+  "title": "Turtles All the Way Down",
+  "isbn": "9780141346045",
+  "key": "9780141346045",
+  "corr": 0.844,
+  "cur": [
+   324,
+   500
+  ],
+  "new": [
+   500,
+   762
+  ]
+ },
+ {
+  "id": "kql352mysl",
+  "title": "Catch-22",
+  "isbn": "9780099477310",
+  "key": "9780099477310",
+  "corr": 0.848,
+  "cur": [
+   323,
+   500
+  ],
+  "new": [
+   500,
+   769
+  ]
+ },
+ {
+  "id": "dmp9w3du84",
+  "title": "Mates, Dates and Chocolate Cheats",
+  "isbn": "9781853407840",
+  "key": "9781853407840",
+  "corr": 0.848,
+  "cur": [
+   321,
+   500
+  ],
+  "new": [
+   331,
+   500
+  ]
+ },
+ {
+  "id": "6uc5r308dt",
+  "title": "Sisterhood 4: Forever in Blue: The Fourth Summer of the Sisterhood",
+  "isbn": "9780375843181",
+  "key": "9780375843181",
+  "corr": 0.853,
+  "cur": [
+   329,
+   500
+  ],
+  "new": [
+   500,
+   757
+  ]
+ },
+ {
+  "id": "t0gfkdy93y",
+  "title": "Will Grayson, Will Grayson",
+  "isbn": "9780141346113",
+  "key": "9780141346113",
+  "corr": 0.86,
+  "cur": [
+   314,
+   500
+  ],
+  "new": [
+   500,
+   770
+  ]
+ },
+ {
+  "id": "u3n6iavgnz",
+  "title": "Mates, Dates and Mad Mistakes",
+  "isbn": "9781853407871",
+  "key": "9781853407871",
+  "corr": 0.865,
+  "cur": [
+   324,
+   500
+  ],
+  "new": [
+   334,
+   500
+  ]
+ },
+ {
+  "id": "w1fy8xkisd",
+  "title": "Miss Spider's Tea Party",
+  "isbn": "9780590477246",
+  "key": "9780590477246",
+  "corr": 0.869,
+  "cur": [
+   500,
+   371
+  ],
+  "new": [
+   664,
+   500
+  ]
+ },
+ {
+  "id": "w1fy8kpisd",
+  "title": "The Second Form at St.Clare's",
+  "isbn": "9780749719128",
+  "key": "9780749719128",
+  "corr": 0.874,
+  "cur": [
+   287,
+   475
+  ],
+  "new": [
+   500,
+   814
+  ]
+ },
+ {
+  "id": "nxwcf3s41p",
+  "title": "Summer Camp at Trebizon",
+  "isbn": "9780583305150",
+  "key": "9780583305150",
+  "corr": 0.887,
+  "cur": [
+   309,
+   500
+  ],
+  "new": [
+   306,
+   500
+  ]
+ },
+ {
+  "id": "w1fyos7isd",
+  "title": "Mates, Dates and Diamond Destiny (Mates Dates) (Mates Dates)",
+  "isbn": "9781853408762",
+  "key": "9781853408762",
+  "corr": 0.888,
+  "cur": [
+   321,
+   500
+  ],
+  "new": [
+   333,
+   500
+  ]
+ },
+ {
+  "id": "j7z46hmqlq",
+  "title": "Mates, Dates and Sole Survivors (Truth Dare Kiss Or Promise) (Truth Dare Kiss Or Promise)",
+  "isbn": "9781853407277",
+  "key": "9781853407277",
+  "corr": 0.89,
+  "cur": [
+   312,
+   475
+  ],
+  "new": [
+   325,
+   500
+  ]
+ },
+ {
+  "id": "6uc5rly8dt",
+  "title": "Harry Potter - A History of Magic: The Book of the Exhibition",
+  "isbn": "9781408890769",
+  "key": "9781408890769",
+  "corr": 0.896,
+  "cur": [
+   425,
+   500
+  ],
+  "new": [
+   500,
+   586
+  ]
+ },
+ {
+  "id": "rihptdcxoz",
+  "title": "Harry Potter and the Prisoner of Azkaban: Illustrated Edition (Harry Potter Illustrated Edtn)",
+  "isbn": "9781408845660",
+  "key": "9781408845660",
+  "corr": 0.898,
+  "cur": [
+   423,
+   500
+  ],
+  "new": [
+   500,
+   591
+  ]
+ },
+ {
+  "id": "w1fyob0isd",
+  "title": "Where's My Cow? (Discworld)",
+  "isbn": "9780385609371",
+  "key": "9780385609371",
+  "corr": 0.9,
+  "cur": [
+   437,
+   500
+  ],
+  "new": [
+   500,
+   547
+  ]
+ },
+ {
+  "id": "6uc5ye78dt",
+  "title": "Claudine at St.Clare's",
+  "isbn": "9780749719135",
+  "key": "9780749719135",
+  "corr": 0.901,
+  "cur": [
+   300,
+   500
+  ],
+  "new": [
+   500,
+   819
+  ]
+ },
+ {
+  "id": "cny070nmmk",
+  "title": "The Valley of Adventure (Adventure (MacMillan))",
+  "isbn": "9780330448352",
+  "key": "9780330448352",
+  "corr": 0.901,
+  "cur": [
+   325,
+   500
+  ],
+  "new": [
+   500,
+   759
+  ]
+ },
+ {
+  "id": "ft87391e5y",
+  "title": "Mates, Dates and Tempting Trouble",
+  "isbn": "9781853407246",
+  "key": "9781853407246",
+  "corr": 0.904,
+  "cur": [
+   319,
+   500
+  ],
+  "new": [
+   326,
+   500
+  ]
+ },
+ {
+  "id": "t0gfkqv93y",
+  "title": "The Amber Spyglass (His Dark Materials)",
+  "isbn": "9780439993586",
+  "key": "9780439993586",
+  "corr": 0.919,
+  "cur": [
+   325,
+   500
+  ],
+  "new": [
+   500,
+   796
+  ]
+ },
+ {
+  "id": "2ous4qktqt",
+  "title": "Fantastic Beasts and Where to Find Them: Illustrated Edition",
+  "isbn": "9781408885260",
+  "key": "9781408885260",
+  "corr": 0.927,
+  "cur": [
+   420,
+   500
+  ],
+  "new": [
+   500,
+   578
+  ]
+ },
+ {
+  "id": "ob32j7v0an",
+  "title": "Northern Lights (His Dark Materials)",
+  "isbn": "9780590660549",
+  "key": "9780590660549",
+  "corr": 0.935,
+  "cur": [
+   322,
+   500
+  ],
+  "new": [
+   500,
+   781
+  ]
+ },
+ {
+  "id": "3kxuzkfarj",
+  "title": "DK Eyewitness Top 10 Travel Guide: Delhi: Eyewitness Travel Guide 2010 (E)",
+  "isbn": "9781405370578",
+  "key": "9781405370578",
+  "corr": 0.949,
+  "cur": [
+   265,
+   500
+  ],
+  "new": [
+   500,
+   937
+  ]
+ },
+ {
+  "id": "8gmvxaaohq",
+  "title": "Sondok",
+  "isbn": "9780439165860",
+  "key": "9780439165860",
+  "corr": 0.953,
+  "cur": [
+   332,
+   475
+  ],
+  "new": [
+   500,
+   722
+  ]
+ },
+ {
+  "id": "nxwcekv41p",
+  "title": "Everything Is Tuberculosis",
+  "isbn": "9798217168422",
+  "key": "9798217168422",
+  "corr": 0.953,
+  "cur": [
+   662,
+   1000
+  ],
+  "new": [
+   500,
+   754
+  ]
+ },
+ {
+  "id": "4jim58dkbx",
+  "title": "Harry Potter and the Philosopher's Stone: Illustrated Edition (Harry Potter Illustrated ed)",
+  "isbn": "9781408845646",
+  "key": "9781408845646",
+  "corr": 0.957,
+  "cur": [
+   425,
+   500
+  ],
+  "new": [
+   500,
+   595
+  ]
+ },
+ {
+  "id": "pym41t5no7",
+  "title": "Mariana",
+  "isbn": "9780953478019",
+  "key": "9780953478019",
+  "corr": 0.959,
+  "cur": [
+   339,
+   475
+  ],
+  "new": [
+   352,
+   500
+  ]
+ },
+ {
+  "id": "he2qgem19k",
+  "title": "Paris",
+  "isbn": "9781405312417",
+  "key": "9781405312417",
+  "corr": 0.964,
+  "cur": [
+   266,
+   500
+  ],
+  "new": [
+   265,
+   500
+  ]
+ },
+ {
+  "id": "cny07h9mmk",
+  "title": "Last Chance Bay",
+  "isbn": "9780143016632",
+  "key": "9780143016632",
+  "corr": 0.992,
+  "cur": [
+   318,
+   500
+  ],
+  "new": [
+   318,
+   500
+  ]
+ },
+ {
+  "id": "j7z46uhqlq",
+  "title": "Science of Discworld III: Darwin's Watch: 3",
+  "isbn": "9780091898243",
+  "key": "9780091898243",
+  "corr": 0.996,
+  "cur": [
+   311,
+   500
+  ],
+  "new": [
+   311,
+   500
+  ]
+ },
+ {
+  "id": "w1fy8d8isd",
+  "title": "About a Boy",
+  "isbn": "9780575400955",
+  "key": "9780575400955",
+  "corr": 0.997,
+  "cur": [
+   303,
+   475
+  ],
+  "new": [
+   323,
+   500
+  ]
+ },
+ {
+  "id": "8gmvx77ohq",
+  "title": "Harry Potter and the Chamber of Secrets: Illustrated Edition (Harry Potter Illustrated Editi)",
+  "isbn": "9781408845653",
+  "key": "9781408845653",
+  "corr": 0.998,
+  "cur": [
+   424,
+   500
+  ],
+  "new": [
+   500,
+   589
+  ]
+ },
+ {
+  "id": "prqbs5mno7",
+  "title": "The Dance Tree",
+  "isbn": "9781529005219",
+  "key": "9781529005219",
+  "corr": 0.999,
+  "cur": [
+   637,
+   1024
+  ],
+  "new": [
+   500,
+   803
+  ]
+ },
+ {
+  "id": "ob32jmr0an",
+  "title": "Midsummer Meltdown",
+  "isbn": "9781853408908",
+  "key": "9781853408908",
+  "corr": 0.999,
+  "cur": [
+   331,
+   500
+  ],
+  "new": [
+   331,
+   500
+  ]
+ },
+ {
+  "id": "6uc5r0o8dt",
+  "title": "Bringing up Your Parents",
+  "isbn": "9781853408465",
+  "key": "9781853408465",
+  "corr": 0.999,
+  "cur": [
+   319,
+   500
+  ],
+  "new": [
+   319,
+   500
+  ]
+ },
+ {
+  "id": "6uc5rxa8dt",
+  "title": "Death's Shadow (The Demonata, Book 7)",
+  "isbn": "9780007260379",
+  "key": "id-6uc5rxa8dt",
+  "corr": 1.0,
+  "cur": [
+   812,
+   1318
+  ],
+  "new": [
+   500,
+   811
+  ]
+ },
+ {
+  "id": "w1fyocdisd",
+  "title": "Harry Potter and the Goblet of Fire (Illustrated Edition)",
+  "isbn": "9781408845677",
+  "key": "9781408845677",
+  "corr": 1.0,
+  "cur": [
+   425,
+   500
+  ],
+  "new": [
+   500,
+   588
+  ]
+ },
+ {
+  "id": "xl1n996jps",
+  "title": "Sons of Destiny (The Saga of Darren Shan, Book 12)",
+  "isbn": "9780007159215",
+  "key": "9780007159215",
+  "corr": 1.0,
+  "cur": [
+   633,
+   969
+  ],
+  "new": [
+   500,
+   765
+  ]
+ },
+ {
+  "id": "0catqhedcu",
+  "title": "The Flying Sorcerers: More Comic Tales of Fantasy",
+  "isbn": "9781857237252",
+  "key": "9781857237252",
+  "corr": 1.0,
+  "cur": [
+   279,
+   475
+  ],
+  "new": [
+   294,
+   500
+  ]
+ },
+ {
+  "id": "ls5xd1c7b9",
+  "title": "Dune",
+  "isbn": "9780450011849",
+  "key": "9780450011849",
+  "corr": 1.0,
+  "cur": [
+   405,
+   650
+  ],
+  "new": [
+   500,
+   802
+  ]
+ },
+ {
+  "id": "8gmvxcxohq",
+  "title": "All Mates Together",
+  "isbn": "9781853408045",
+  "key": "9781853408045",
+  "corr": 1.0,
+  "cur": [
+   325,
+   500
+  ],
+  "new": [
+   325,
+   500
+  ]
+ },
+ {
+  "id": "he2qgtn19k",
+  "title": "Girls In Love",
+  "isbn": "9780552551311",
+  "key": "9780552551311",
+  "corr": 1.0,
+  "cur": [
+   655,
+   1024
+  ],
+  "new": [
+   320,
+   500
+  ]
+ },
+ {
+  "id": "kjbvbwiysl",
+  "title": "Holes",
+  "isbn": "9780747544593",
+  "key": "9780747544593",
+  "corr": 1.0,
+  "cur": [
+   420,
+   673
+  ],
+  "new": [
+   500,
+   801
+  ]
+ },
+ {
+  "id": "6uc5rg98dt",
+  "title": "Mates, Dates and Great Escapes (Mates, Dates) (Mates, Dates)",
+  "isbn": "9781853407598",
+  "key": "9781853407598",
+  "corr": 1.0,
+  "cur": [
+   312,
+   475
+  ],
+  "new": [
+   328,
+   500
+  ]
+ },
+ {
+  "id": "ls5xdfa7b9",
+  "title": "Mates, Dates and Portobello Princesses (Mates, Dates) (Mates, Dates)",
+  "isbn": "9781853406645",
+  "key": "9781853406645",
+  "corr": 1.0,
+  "cur": [
+   311,
+   475
+  ],
+  "new": [
+   328,
+   500
+  ]
+ },
+ {
+  "id": "ayjgsrupsz",
+  "title": "Mates, Dates and Pulling Power",
+  "isbn": "9781853407925",
+  "key": "9781853407925",
+  "corr": 1.0,
+  "cur": [
+   309,
+   475
+  ],
+  "new": [
+   325,
+   500
+  ]
+ },
+ {
+  "id": "u3n6ip2gnz",
+  "title": "The Last Little Blue Envelope (13 Little Blue Envelopes)",
+  "isbn": "9780061976810",
+  "key": "9780061976810",
+  "corr": 1.0,
+  "cur": [
+   431,
+   648
+  ],
+  "new": [
+   500,
+   751
+  ]
+ },
+ {
+  "id": "m4rdhda31h",
+  "title": "Enid Blyton's Sixth Form at St.Clare's",
+  "isbn": "9780749742690",
+  "key": "9780749742690",
+  "corr": 1.0,
+  "cur": [
+   290,
+   475
+  ],
+  "new": [
+   500,
+   819
+  ]
+ },
+ {
+  "id": "prqbsgqno7",
+  "title": "Fun and Games at Malory Towers",
+  "isbn": "9781444948387",
+  "key": "id-prqbsgqno7",
+  "corr": 1.0,
+  "cur": [
+   326,
+   500
+  ],
+  "new": [
+   326,
+   500
+  ]
+ },
+ {
+  "id": "he2quj919k",
+  "title": "Goodbye, Malory Towers",
+  "isbn": "9781444948400",
+  "key": "id-he2quj919k",
+  "corr": 1.0,
+  "cur": [
+   310,
+   500
+  ],
+  "new": [
+   310,
+   500
+  ]
+ },
+ {
+  "id": "u3n6w9wgnz",
+  "title": "In the Fifth At Malory Towers",
+  "isbn": "9781444948332",
+  "key": "9781444948332",
+  "corr": 1.0,
+  "cur": [
+   309,
+   500
+  ],
+  "new": [
+   309,
+   500
+  ]
+ },
+ {
+  "id": "ls5x0r67b9",
+  "title": "Last Term At Malory Towers",
+  "isbn": "9781444948349",
+  "key": "9781444948349",
+  "corr": 1.0,
+  "cur": [
+   327,
+   500
+  ],
+  "new": [
+   327,
+   500
+  ]
+ },
+ {
+  "id": "9dbekf36rp",
+  "title": "New Term At Malory Towers",
+  "isbn": "9781444948356",
+  "key": "id-9dbekf36rp",
+  "corr": 1.0,
+  "cur": [
+   312,
+   500
+  ],
+  "new": [
+   312,
+   500
+  ]
+ },
+ {
+  "id": "dmp9qtfu84",
+  "title": "Summer Term at St.Clare's",
+  "isbn": "9780749719111",
+  "key": "9780749719111",
+  "corr": 1.0,
+  "cur": [
+   290,
+   475
+  ],
+  "new": [
+   499,
+   822
+  ]
+ },
+ {
+  "id": "2ousnzltqt",
+  "title": "The O'Sullivan Twins (St. Clare's)",
+  "isbn": "9780749719104",
+  "key": "9780749719104",
+  "corr": 1.0,
+  "cur": [
+   301,
+   475
+  ],
+  "new": [
+   500,
+   788
+  ]
+ },
+ {
+  "id": "e9oh3745u2",
+  "title": "The Second Form At Malory Towers",
+  "isbn": "9781444948301",
+  "key": "9781444948301",
+  "corr": 1.0,
+  "cur": [
+   325,
+   500
+  ],
+  "new": [
+   325,
+   500
+  ]
+ },
+ {
+  "id": "0catj8bdcu",
+  "title": "The Wonderful Pigs of Jillian Jiggs",
+  "isbn": "9780590748476",
+  "key": "9780590748476",
+  "corr": 1.0,
+  "cur": [
+   471,
+   475
+  ],
+  "new": [
+   495,
+   500
+  ]
+ },
+ {
+  "id": "izeroy0lqm",
+  "title": "Upper Fourth At Malory Towers",
+  "isbn": "9781444948325",
+  "key": "9781444948325",
+  "corr": 1.0,
+  "cur": [
+   318,
+   500
+  ],
+  "new": [
+   318,
+   500
+  ]
+ },
+ {
+  "id": "kql35mwysl",
+  "title": "Winter Term At Malory Towers",
+  "isbn": "9781444948370",
+  "key": "9781444948370",
+  "corr": 1.0,
+  "cur": [
+   319,
+   500
+  ],
+  "new": [
+   319,
+   500
+  ]
+ },
+ {
+  "id": "2ous49etqt",
+  "title": "HTML, XHTML, and CSS: Your Visual Blueprint for Designing Effective Web Pages (Wiley Desktop Editions)",
+  "isbn": "9780470274361",
+  "key": "9780470274361",
+  "corr": 1.0,
+  "cur": [
+   375,
+   500
+  ],
+  "new": [
+   500,
+   620
+  ]
+ }
+]

@@ -1,0 +1,917 @@
+[
+{
+"id": "ob32xqf0an",
+"title": "The Midnight Library",
+"isbn": "9781786892737",
+"key": "9781786892737",
+"corr": -0.804,
+"cur": [
+324,
+500
+],
+"new": [
+500,
+769
+]
+},
+{
+"id": "kql3v79ysl",
+"title": "Love Lessons",
+"isbn": "9780552553520",
+"key": "9780552553520",
+"corr": -0.698,
+"cur": [
+326,
+500
+],
+"new": [
+500,
+768
+]
+},
+{
+"id": "4jimepykbx",
+"title": "The School That Went to Sea",
+"isbn": "9780744526035",
+"key": "9780744526035",
+"corr": -0.517,
+"cur": [
+313,
+500
+],
+"new": [
+500,
+500
+]
+},
+{
+"id": "ga48lc6bt4",
+"title": "How to Do Just About Everything",
+"isbn": "9780007687763",
+"key": "9780007687763",
+"corr": -0.276,
+"cur": [
+348,
+500
+],
+"new": [
+500,
+365
+]
+},
+{
+"id": "kql35vcysl",
+"title": "The Perks of Being a Wallflower",
+"isbn": "9781471116179",
+"key": "9781471116179",
+"corr": -0.255,
+"cur": [
+328,
+500
+],
+"new": [
+387,
+559
+]
+},
+{
+"id": "6dslml58dt",
+"title": "Beach Read",
+"isbn": "9780241989524",
+"key": "9780241989524",
+"corr": -0.24,
+"cur": [
+317,
+475
+],
+"new": [
+500,
+767
+]
+},
+{
+"id": "kql359aysl",
+"title": "The Catcher in the Rye",
+"isbn": "9780241950432",
+"key": "9780241950432",
+"corr": -0.238,
+"cur": [
+329,
+500
+],
+"new": [
+500,
+767
+]
+},
+{
+"id": "5601prjv9x",
+"title": "Nation",
+"isbn": "9781407046143",
+"key": "9781407046143",
+"corr": -0.232,
+"cur": [
+328,
+500
+],
+"new": [
+500,
+810
+]
+},
+{
+"id": "xl1ntp4jps",
+"title": "Kitty at St. Clare's",
+"isbn": "9781405270250",
+"key": "9781405270250",
+"corr": -0.232,
+"cur": [
+308,
+500
+],
+"new": [
+333,
+500
+]
+},
+{
+"id": "ft873g2e5y",
+"title": "The Wish List",
+"isbn": "9780786818631",
+"key": "9780786818631",
+"corr": -0.201,
+"cur": [
+321,
+475
+],
+"new": [
+500,
+333
+]
+},
+{
+"id": "umdlqqognz",
+"title": "Happy Place",
+"isbn": "9780241995365",
+"key": "9780241995365",
+"corr": -0.091,
+"cur": [
+331,
+500
+],
+"new": [
+500,
+767
+]
+},
+{
+"id": "cny0hyhmmk",
+"title": "Radio Silence",
+"isbn": "9780007559251",
+"key": "9780007559251",
+"corr": -0.079,
+"cur": [
+326,
+500
+],
+"new": [
+500,
+779
+]
+},
+{
+"id": "q7jba7awe4",
+"title": "You Are Here: The Instant Number 1 Sunday Times Bestseller, from the Author of One Day",
+"isbn": "9781444715460",
+"key": "9781444715460",
+"corr": -0.032,
+"cur": [
+264,
+400
+],
+"new": [
+500,
+767
+]
+},
+{
+"id": "rihp2t0xoz",
+"title": "Welcome to the Hyunam-Dong Bookshop",
+"isbn": "9781526662286",
+"key": "9781526662286",
+"corr": -0.008,
+"cur": [
+250,
+400
+],
+"new": [
+499,
+766
+]
+},
+{
+"id": "etijnrn5u2",
+"title": "The Rough Guide to Japan: Travel Guide with eBook (Rough Guides Main Series)",
+"isbn": "9781839059797",
+"key": "id-etijnrn5u2",
+"corr": 0.021,
+"cur": [
+325,
+500
+],
+"new": [
+500,
+766
+]
+},
+{
+"id": "3kxu153arj",
+"title": "Positively Birmingham 2015",
+"isbn": "9780952317982",
+"key": "9780952317982",
+"corr": 0.026,
+"cur": [
+1063,
+1500
+],
+"new": [
+505,
+500
+]
+},
+{
+"id": "6uc5rng8dt",
+"title": "Airman",
+"isbn": "9781423107507",
+"key": "9781423107507",
+"corr": 0.032,
+"cur": [
+333,
+500
+],
+"new": [
+500,
+333
+]
+},
+{
+"id": "0b5kbbwdcu",
+"title": "Book Lovers",
+"isbn": "9780241995341",
+"key": "9780241995341",
+"corr": 0.041,
+"cur": [
+331,
+500
+],
+"new": [
+500,
+767
+]
+},
+{
+"id": "t0gfkbj93y",
+"title": "Lola Rose",
+"isbn": "9780552556132",
+"key": "9780552556132",
+"corr": 0.046,
+"cur": [
+326,
+500
+],
+"new": [
+500,
+767
+]
+},
+{
+"id": "ak0tqt8psz",
+"title": "Homegoing",
+"isbn": "9780241975237",
+"key": "9780241975237",
+"corr": 0.052,
+"cur": [
+318,
+474
+],
+"new": [
+500,
+767
+]
+},
+{
+"id": "rihpt6dxoz",
+"title": "Mort",
+"isbn": "9780552131063",
+"key": "9780552131063",
+"corr": 0.06,
+"cur": [
+299,
+502
+],
+"new": [
+500,
+779
+]
+},
+{
+"id": "e9oh3po5u2",
+"title": "Girl, Woman, Other",
+"isbn": "9780241984994",
+"key": "9780241984994",
+"corr": 0.063,
+"cur": [
+333,
+500
+],
+"new": [
+500,
+767
+]
+},
+{
+"id": "6uc5yww8dt",
+"title": "A/s/l",
+"isbn": "9781915368768",
+"key": "9781915368768",
+"corr": 0.084,
+"cur": [
+300,
+450
+],
+"new": [
+326,
+500
+]
+},
+{
+"id": "v8dzp4u26q",
+"title": "The Paris Apartment",
+"isbn": "9780008384982",
+"key": "9780008384982",
+"corr": 0.094,
+"cur": [
+331,
+500
+],
+"new": [
+500,
+769
+]
+},
+{
+"id": "akdesrbpsz",
+"title": "Reasons to Stay Alive",
+"isbn": "9781782116820",
+"key": "9781782116820",
+"corr": 0.101,
+"cur": [
+343,
+500
+],
+"new": [
+500,
+683
+]
+},
+{
+"id": "ob32jie0an",
+"title": "Jingo",
+"isbn": "9780552145985",
+"key": "9780552145985",
+"corr": 0.116,
+"cur": [
+300,
+503
+],
+"new": [
+500,
+779
+]
+},
+{
+"id": "g303ip7bt4",
+"title": "The Man I Think I Know",
+"isbn": "9781473608993",
+"key": "9781473608993",
+"corr": 0.123,
+"cur": [
+260,
+400
+],
+"new": [
+500,
+771
+]
+},
+{
+"id": "59lb993v9x",
+"title": "How to Stop Time",
+"isbn": "9781838858476",
+"key": "9781838858476",
+"corr": 0.128,
+"cur": [
+284,
+400
+],
+"new": [
+499,
+767
+]
+},
+{
+"id": "4jime59kbx",
+"title": "Seven Kinds of People You Find in Bookshops",
+"isbn": "9781805225508",
+"key": "id-4jime59kbx",
+"corr": 0.132,
+"cur": [
+306,
+500
+],
+"new": [
+500,
+791
+]
+},
+{
+"id": "8gmvx0nohq",
+"title": "Parsnips - Buttered",
+"isbn": "9781473640412",
+"key": "id-8gmvx0nohq",
+"corr": 0.146,
+"cur": [
+319,
+500
+],
+"new": [
+499,
+768
+]
+},
+{
+"id": "ob32x9l0an",
+"title": "Madame Bovary",
+"isbn": "9781795023108",
+"key": "9781795023108",
+"corr": 0.154,
+"cur": [
+286,
+500
+],
+"new": [
+333,
+500
+]
+},
+{
+"id": "ayjgstipsz",
+"title": "Under the Whispering Door",
+"isbn": "9781250217394",
+"key": "9781250217394",
+"corr": 0.161,
+"cur": [
+327,
+500
+],
+"new": [
+326,
+500
+]
+},
+{
+"id": "2ous4mdtqt",
+"title": "The Zombie Survival Guide: Complete Protection from the Living Dead",
+"isbn": "9781400049622",
+"key": "9781400049622",
+"corr": 0.163,
+"cur": [
+310,
+445
+],
+"new": [
+500,
+748
+]
+},
+{
+"id": "3kxu1emarj",
+"title": "The Island of Missing Trees",
+"isbn": "9780241988725",
+"key": "9780241988725",
+"corr": 0.197,
+"cur": [
+324,
+500
+],
+"new": [
+500,
+767
+]
+},
+{
+"id": "6ubmksc8dt",
+"title": "Teddy Bear's Picnic",
+"isbn": "9780216926615",
+"key": "id-6ubmksc8dt",
+"corr": 0.225,
+"cur": [
+475,
+427
+],
+"new": [
+500,
+497
+]
+},
+{
+"id": "ayjgsjbpsz",
+"title": "Fangirl",
+"isbn": "9781250030962",
+"key": "9781250030962",
+"corr": 0.275,
+"cur": [
+318,
+500
+],
+"new": [
+326,
+500
+]
+},
+{
+"id": "um2i2n7gnz",
+"title": "Invisible Cities",
+"isbn": "9780099429838",
+"key": "9780099429838",
+"corr": 0.285,
+"cur": [
+310,
+475
+],
+"new": [
+500,
+767
+]
+},
+{
+"id": "kql356pysl",
+"title": "The Song of Achilles",
+"isbn": "9781408891384",
+"key": "9781408891384",
+"corr": 0.285,
+"cur": [
+326,
+500
+],
+"new": [
+500,
+764
+]
+},
+{
+"id": "ba9eyebcho",
+"title": "How to Age Disgracefully",
+"isbn": "9781787637146",
+"key": "9781787637146",
+"corr": 0.3,
+"cur": [
+332,
+500
+],
+"new": [
+500,
+804
+]
+},
+{
+"id": "ob32jqs0an",
+"title": "The Thin Executioner",
+"isbn": "9780007315826",
+"key": "id-ob32jqs0an",
+"corr": 0.323,
+"cur": [
+330,
+500
+],
+"new": [
+500,
+768
+]
+},
+{
+"id": "ob32jcy0an",
+"title": "Looking for Alaska",
+"isbn": "9780142402511",
+"key": "9780142402511",
+"corr": 0.351,
+"cur": [
+300,
+451
+],
+"new": [
+499,
+750
+]
+},
+{
+"id": "5601anyv9x",
+"title": "Lessons in Chemistry",
+"isbn": "9781804990926",
+"key": "9781804990926",
+"corr": 0.367,
+"cur": [
+320,
+500
+],
+"new": [
+500,
+778
+]
+},
+{
+"id": "xl1ntodjps",
+"title": "Normal People",
+"isbn": "9780571334650",
+"key": "9780571334650",
+"corr": 0.426,
+"cur": [
+226,
+346
+],
+"new": [
+499,
+767
+]
+},
+{
+"id": "gankwvubt4",
+"title": "Teddy Robinson Storybook (Storybook classics)",
+"isbn": "9781856974943",
+"key": "9781856974943",
+"corr": 0.553,
+"cur": [
+314,
+500
+],
+"new": [
+312,
+500
+]
+},
+{
+"id": "u3n6wzngnz",
+"title": "Half a World Away",
+"isbn": "9781473687370",
+"key": "9781473687370",
+"corr": 0.562,
+"cur": [
+334,
+500
+],
+"new": [
+500,
+767
+]
+},
+{
+"id": "8uf0y3tohq",
+"title": "Harry, A History: The True Story of a Boy Wizard, His Fans, and Life Inside the Harry Potter Phenomenon",
+"isbn": "9781416554950",
+"key": "9781416554950",
+"corr": 0.611,
+"cur": [
+315,
+500
+],
+"new": [
+318,
+500
+]
+},
+{
+"id": "qhsk81lwe4",
+"title": "Great Railway Journeys of the World",
+"isbn": "9780563179030",
+"key": "9780563179030",
+"corr": 0.66,
+"cur": [
+425,
+500
+],
+"new": [
+438,
+500
+]
+},
+{
+"id": "dmcfccnu84",
+"title": "I'm Glad My Mom Died",
+"isbn": "9781982185824",
+"key": "9781982185824",
+"corr": 0.671,
+"cur": [
+333,
+500
+],
+"new": [
+500,
+754
+]
+},
+{
+"id": "qhsk6rkwe4",
+"title": "What Shall I Make? (What Shall I Do Today?)",
+"isbn": "9780746020302",
+"key": "9780746020302",
+"corr": 0.703,
+"cur": [
+367,
+500
+],
+"new": [
+500,
+670
+]
+},
+{
+"id": "6uc5yee8dt",
+"title": "Enid Blyton's Third Form at St.Clare's",
+"isbn": "9780749742706",
+"key": "9780749742706",
+"corr": 0.725,
+"cur": [
+305,
+500
+],
+"new": [
+500,
+814
+]
+},
+{
+"id": "bpkol86cho",
+"title": "Fifth Formers of St.Clare's",
+"isbn": "9780749719142",
+"key": "9780749719142",
+"corr": 0.726,
+"cur": [
+293,
+475
+],
+"new": [
+499,
+822
+]
+},
+{
+"id": "ga48i6fbt4",
+"title": "The Twins at St.Clare's",
+"isbn": "9780749719098",
+"key": "9780749719098",
+"corr": 0.741,
+"cur": [
+296,
+500
+],
+"new": [
+500,
+827
+]
+},
+{
+"id": "kql35t3ysl",
+"title": "Never Lie",
+"isbn": "9781464221361",
+"key": "9781464221361",
+"corr": 0.755,
+"cur": [
+313,
+500
+],
+"new": [
+500,
+767
+]
+},
+{
+"id": "prqbf4zno7",
+"title": "Quiet: The Power of Introverts in a World That Can't Stop Talking",
+"isbn": "9780307352156",
+"key": "9780307352156",
+"corr": 0.78,
+"cur": [
+313,
+499
+],
+"new": [
+500,
+810
+]
+},
+{
+"id": "m4rdhzt31h",
+"title": "The Curious Incident of the Dog in the Night-Time: Children's Edition",
+"isbn": "9780099456766",
+"key": "9780099456766",
+"corr": 0.786,
+"cur": [
+330,
+500
+],
+"new": [
+321,
+500
+]
+},
+{
+"id": "xi37p9njps",
+"title": "Where the Crawdads Sing",
+"isbn": "9781472154668",
+"key": "9781472154668",
+"corr": 0.798,
+"cur": [
+332,
+500
+],
+"new": [
+499,
+785
+]
+},
+{
+"id": "ft87m4ge5y",
+"title": "Anita and Me",
+"isbn": "9780006548768",
+"key": "9780006548768",
+"corr": 0.817,
+"cur": [
+328,
+500
+],
+"new": [
+500,
+752
+]
+},
+{
+"id": "he2quc719k",
+"title": "Cloud Atlas",
+"isbn": "9780340822784",
+"key": "9780340822784",
+"corr": 0.827,
+"cur": [
+328,
+500
+],
+"new": [
+500,
+767
+]
+},
+{
+"id": "0catqbpdcu",
+"title": "Project Hail Mary",
+"isbn": "9781529157468",
+"key": "9781529157468",
+"corr": 0.838,
+"cur": [
+326,
+500
+],
+"new": [
+500,
+777
+]
+},
+{
+"id": "kql3vwvysl",
+"title": "Turtles All the Way Down",
+"isbn": "9780141346045",
+"key": "9780141346045",
+"corr": 0.844,
+"cur": [
+324,
+500
+],
+"new": [
+500,
+762
+]
+},
+{
+"id": "kql352mysl",
+"title": "Catch-22",
+"isbn": "9780099477310",
+"key": "9780099477310",
+"corr": 0.848,
+"cur": [
+323,
+500
+],
+"new": [
+500,
+769
+]
+}
+]
