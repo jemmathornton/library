@@ -582,7 +582,7 @@ async function camOpen(){
   if (!camReader) { stream.getTracks().forEach(t => t.stop()); return; }   // closed while the box was asking
   const video = document.getElementById("camVideo");
   video.srcObject = stream; video.play().catch(() => {});
-  msg("Hold the barcode level with the gold line, about 20 to 30 cm from the camera, in good light, and keep it still. If it doesn’t read, try a little nearer or further.");
+  msg("Hold the back of the book up to the camera, in good light: it reads the barcode or the printed “ISBN 978…” line. Prop the book up if you can, and try a little nearer or further.");
   setTimeout(() => { if (camReader && !video.videoWidth) msg("The camera is on but sending no picture. Close any other app using it and try again."); }, 5000);
   // a laptop webcam gives soft pictures close up, so each frame is read three ways: the middle strip (where the gold line is)
   // and the whole picture with the method made for blurry one-line barcodes, then the middle strip the usual way
@@ -604,8 +604,43 @@ async function camOpen(){
     }
     setTimeout(look, 80);
   };
-  camReader.reset = () => stream.getTracks().forEach(t => t.stop());
+  let ocr = null;
+  camReader.reset = () => { stream.getTracks().forEach(t => t.stop()); ocr?.then(w => w.terminate()).catch(() => {}); };
   look();
+  readPrinted(video, () => camReader, w => ocr = w);
+}
+
+// her webcam blurs barcode bars but the printed "ISBN 978-…" above them stays nearly readable (1 Nov), so the picture is
+// also read as text (Tesseract, Apache licence, js/ocr/, loaded the first time). A number is only taken when its check digit
+// is right and the same number has been read twice in a row, so a misread digit can't fill in the wrong book.
+function readPrinted(video, open, keep){
+  const base = new URL("js/ocr/", location.href).href;
+  const load = window.Tesseract ? Promise.resolve() : new Promise((ok, fail) => {
+    const s = document.createElement("script"); s.src = base + "tesseract.min.js"; s.onload = ok; s.onerror = fail; document.head.appendChild(s); });
+  const worker = load.then(async () => {
+    const w = await Tesseract.createWorker("eng", 1, {workerPath: base + "worker.min.js", corePath: base, langPath: base, workerBlobURL: false});
+    await w.setParameters({tessedit_char_whitelist: "ISBN0123456789- ", tessedit_pageseg_mode: "11"});
+    return w;
+  });
+  keep(worker);
+  const canvas = document.createElement("canvas"), ctx = canvas.getContext("2d");
+  let last = "";
+  const round = async w => {
+    if (!open()) return;
+    if (video.videoWidth) {
+      const sc = Math.min(1, 1280 / video.videoWidth);
+      canvas.width = video.videoWidth * sc; canvas.height = video.videoHeight * sc;
+      ctx.filter = "grayscale(1) contrast(160%)"; ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      try {
+        const text = (await w.recognize(canvas)).data.text;
+        const found = (text.match(/97[89][\d\s-]{10,20}/g) || []).map(t => t.replace(/\D/g, "").slice(0, 13)).find(isBookNumber) || "";
+        if (found && found === last && open()) { camClose(); return useScan(found); }
+        last = found;
+      } catch {}
+    }
+    setTimeout(() => round(w), 300);
+  };
+  worker.then(round).catch(() => {});   // if the text reader can't load, the barcode reader carries on alone
 }
 document.addEventListener("click", e => {
   if (e.target.closest("#camOpen")) camOpen();
