@@ -721,7 +721,7 @@ document.addEventListener("click", async e => {
   if (drop) { try { scanList = (await api("api/scanned/remove", {method: "POST", body: JSON.stringify({isbn: drop.dataset.scanRemove})})).left; } catch {}
     document.getElementById("scannedBox").innerHTML = scannedBox(); }
 });
-const readAdd = () => ["isbn", "title", "authors", "publisher", "published", "pages"].forEach(k => { const el = document.getElementById("add-" + k); if (el) addForm[k] = el.value.trim(); });
+const readAdd = () => ["isbn", "title", "authors", "publisher", "published", "pages", "shelf", "signed"].forEach(k => { const el = document.getElementById("add-" + k); if (el) addForm[k] = el.value.trim(); });
 const redrawAdd = () => { const y = scrollY; document.getElementById("view").innerHTML = pageAdd(); scrollTo(0, y); };
 document.addEventListener("click", async e => {
   const from = e.target.closest("[data-add-from]");
@@ -732,18 +732,22 @@ document.addEventListener("click", async e => {
     addForm.note = "Looking it up…"; redrawAdd();
     try { const d = await api("api/lookup?isbn=" + encodeURIComponent(addForm.isbn));
       if (d.found) Object.assign(addForm, {title: d.title, authors: d.authors.join(", "), publisher: d.publisher, published: d.published, pages: d.pages || "", cover: d.cover, note: "Found it. Check the details and pick a shelf."});
-      else addForm.note = "Neither Open Library nor Waterstones knows that number yet (new or special editions can take a while). Try the Waterstones price sticker if it has one, or fill in the details yourself."; }
+      else Object.assign(addForm, {title: "", authors: "", publisher: "", published: "", pages: "", cover: "",
+        note: "Open Library, Waterstones and Goodreads don’t know that number yet (new or special editions can take a while). Try the Waterstones price sticker if it has one, or fill in the details yourself."}); }
     catch { addForm.note = "Couldn’t reach Open Library. Fill in the details yourself."; }
-    const have = BOOKS.find(b => b.isbn13 === addForm.isbn);
+    const have = BOOKS.find(b => b.isbn13 === addForm.isbn || (b.shopCode && b.shopCode === addForm.isbn));
     if (have) addForm.note = `You already have this one: ${have.t}. Add it again only if it’s a second copy.`;
     return redrawAdd();
   }
   if (e.target.closest("#addSave")) {
-    readAdd(); addForm.shelf = document.getElementById("add-shelf").value; addForm.signed = document.getElementById("add-signed").value;
+    readAdd();
     if (!addForm.title || !addForm.shelf) { addForm.note = !addForm.title ? "It needs a title." : "Pick a shelf for it."; return redrawAdd(); }
     addForm.busy = true; addForm.note = ""; redrawAdd();
     try { const r = await api("api/books", {method: "POST", body: JSON.stringify({...addForm, authors: addForm.authors.split(",")})});
-      if (r.ok) { addForm = {isbn: "", title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", note: "", busy: false}; location.href = location.pathname + "?v=" + Date.now() + "#b-" + r.id; return; }
+      if (r.ok) {
+        try { sessionStorage.setItem("library-just-added", JSON.stringify({id: r.id, shelf: addForm.shelf})); } catch {}
+        addForm = {isbn: "", title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", note: "", busy: false};
+        location.href = location.pathname + "?v=" + Date.now() + "#add"; return; }
       addForm.note = r.error || "That didn’t save."; }
     catch { addForm.note = "That didn’t save: is the library open from its shortcut?"; }
     addForm.busy = false; redrawAdd();
@@ -895,6 +899,21 @@ if ("serviceWorker" in navigator && location.protocol.startsWith("http")) naviga
 // no "Install as app" offer: her shortcut window already has its own sharp taskbar icon (18 Oct)
 addEventListener("beforeinstallprompt", e => e.preventDefault());
 
+// back on Add a Book after adding (she adds in bulk, 1 Nov): the same shelf is ready for the next book, and the one just
+// added shows in a small note for a few seconds, with a link to it
+(function justAdded(){
+  let a = null;
+  try { a = JSON.parse(sessionStorage.getItem("library-just-added") || "null"); sessionStorage.removeItem("library-just-added"); } catch {}
+  if (!a) return;
+  if (a.shelf) addForm.shelf = a.shelf;
+  const b = bookIndex[a.id]; if (!b) return;
+  const note = document.createElement("div"); note.className = "added-note"; note.setAttribute("role", "status");
+  note.innerHTML = `<a href="${href(b)}">${cover(b)}</a><div><span class="label">${ic("check")}Added to ${esc((shelfIndex[b.shelf] || {}).name || "the shelves")}</span>
+    <a class="t" href="${href(b)}">${esc(b.t)}</a><div class="by">${esc(b.by)}</div></div><button type="button" class="btn quiet" aria-label="Close">${ic("x")}</button>`;
+  note.querySelector("button").onclick = () => note.remove();
+  document.body.appendChild(note);
+  setTimeout(() => note.classList.add("going"), 6500); setTimeout(() => note.remove(), 7000);
+})();
 route();
 
 // ---------- capitals on each word in headings, the menu and buttons (her ask, 1 Nov) ----------
