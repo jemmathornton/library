@@ -556,6 +556,7 @@ function pageAdd(){
         ${f.note ? `<p class="add-note">${esc(f.note)}</p>` : ""}
         <div class="add-main"><div class="add-cover">${f.cover ? `<div class="cover"><img src="${esc(f.cover)}" alt=""></div>` : `<div class="cover gap"></div>`}
           ${f.title ? `<button type="button" class="btn find-cover" id="findCover">${ic("image")}${f.cover ? "Find another cover" : "Find a cover"}</button>` : ""}
+          ${f.coverOriginal ? `<div class="trim-row"><button type="button" class="btn find-cover" data-trim="6"${f.straightening ? " disabled" : ""}>Trim less</button><button type="button" class="btn find-cover" data-trim="-6"${f.straightening ? " disabled" : ""}>Trim more</button></div>` : ""}
           ${f.cover && !f.coverWrong ? `<button type="button" class="btn find-cover${f.coverOriginal ? " on" : ""}" id="fixCover"${f.straightening ? " disabled" : ""}>${ic("crop")}${f.straightening ? "Straightening…" : f.coverOriginal ? "Undo straightening" : "Cropped or at an angle"}</button>` : ""}
           ${f.coverWrong ? `<p class="cover-wrong">${ic("camera")}Marked for a photo of your copy</p>` : ""}</div>
           <div class="add-fields">${field("title", "Title")}${field("authors", "Author(s), with commas between")}
@@ -916,12 +917,15 @@ document.addEventListener("click", async e => {
   }
   // the right cover, but photographed at an angle or with the background round it (her ask, 1 Nov): the server cuts it
   // out along the book's edges and pulls it square, and it shows here at once; a second click puts the original back
-  if (e.target.closest("#fixCover")) {
+  // Trim less / Trim more: straightened again from the original with every edge moved out or in a little
+  const trim = e.target.closest("[data-trim]");
+  if (e.target.closest("#fixCover") || trim) {
     readAdd();
-    if (addForm.coverOriginal) { addForm.cover = addForm.coverOriginal; addForm.coverOriginal = null; return redrawAdd(); }
-    addForm.straightening = true; redrawAdd();
-    try { const r = await api("api/straighten?src=" + encodeURIComponent(addForm.cover));
-      if (r.ok) Object.assign(addForm, {coverOriginal: addForm.cover, cover: r.cover});
+    if (!trim && addForm.coverOriginal) { addForm.cover = addForm.coverOriginal; addForm.coverOriginal = null; return redrawAdd(); }
+    const src = addForm.coverOriginal || addForm.cover, edge = trim ? (addForm.trimEdge || 0) + +trim.dataset.trim : 0;
+    addForm.straightening = true; addForm.note = ""; redrawAdd();
+    try { const r = await api("api/straighten?" + new URLSearchParams({src, edge}));
+      if (r.ok) Object.assign(addForm, {coverOriginal: src, cover: r.cover, trimEdge: edge});
       else addForm.note = r.error; }
     catch { addForm.note = "Couldn’t straighten this cover."; }
     addForm.straightening = false; return redrawAdd();

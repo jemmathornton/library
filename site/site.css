@@ -90,6 +90,10 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .cover{--c:#8A8178;aspect-ratio:2/3;border-radius:4px 7px 7px 4px;overflow:hidden;position:relative;background:var(--soft);
   box-shadow:0 1px 2px rgba(0,0,0,.12),0 8px 22px -10px rgba(0,0,0,.35)}
 .cover img{width:100%;height:100%;object-fit:cover;display:block}
+/* a cover on its own (book page, Add a Book, reading now, the pick, series and to-buy lists) shows whole at its own shape
+   (1 Nov: the fixed 2:3 box cut the top and bottom off any taller cover) */
+:is(.book-top,.add-cover,.now-card,.picked,.series-list,.wish-item) .cover:has(img){aspect-ratio:auto}
+:is(.book-top,.add-cover,.now-card,.picked,.series-list,.wish-item) .cover:has(img) img{height:auto}
 .cover::after{content:"";position:absolute;inset:0 auto 0 0;width:6px;background:linear-gradient(90deg,rgba(0,0,0,.18),rgba(255,255,255,.08) 60%,transparent)}
 .cover.blank{display:flex;flex-direction:column;justify-content:space-between;padding:14% 11% 11%;color:#fff;
   background:radial-gradient(120% 70% at 20% 0%,color-mix(in srgb,var(--c) 60%,#fff 18%),transparent 70%),linear-gradient(160deg,var(--c),color-mix(in srgb,var(--c) 62%,#000))}
@@ -365,6 +369,8 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .btn.find-cover:hover{background:var(--line);border-color:var(--ink)}
 .btn.find-cover .i,.btn.find-cover svg{width:14px;height:14px;flex:none}
 .btn.find-cover.on{border-color:var(--done);color:var(--done)}
+.trim-row{display:flex;gap:6px}
+.trim-row .btn.find-cover{flex:1}
 .cover-wrong{display:flex;align-items:center;gap:6px;margin:8px 0 0;font:600 12.5px var(--body);color:var(--muted)}
 .cover-wrong svg{width:14px;height:14px;flex:none}
 .cover-pick{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}

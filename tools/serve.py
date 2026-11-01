@@ -6,7 +6,7 @@ can reach it. If it's already running, a second copy just stops.
     pythonw tools/serve.py
 
 Adding a book (the site's "Add a book" page, 18 Oct):
-    GET  /api/straighten?src=...   that cover cut out along the book's edges and pulled square, for "Cropped or at an angle"
+    GET  /api/straighten?src=&edge=   that cover cut out along the book's edges and pulled square, for "Cropped or at an angle"
     GET  /api/covers?isbn=&title=&author=   other covers to choose from (other editions), for "Find another cover"
     GET  /api/lookup?isbn=...   the book's details from Open Library (title, authors, publisher, date, pages, cover);
                                 Waterstones fills what Open Library hasn't got yet (new books, 1 Nov), and a Waterstones
@@ -221,11 +221,12 @@ STRAIGHT = os.path.join(SITE, 'covers', '_straightened')   # straightened covers
 STRAIGHT_URL = re.compile(r'covers/_straightened/[0-9a-f]{16}\.jpg')
 
 
-def straighten(src):
+def straighten(src, edge=0):
     """"Cropped or at an angle" on the Add page (her ask, 1 Nov): a cover photographed at a slant, or with the table or
     cloth round it, is cut out along the book's four edges and pulled square. The background is the colour round the
     picture's border; each edge of the book is a straight line fitted through where the background stops. An edge that
-    runs off the picture keeps the picture's own edge. She sees the result and can undo it."""
+    runs off the picture keeps the picture's own edge. She sees the result and can undo it, or trim less or more: edge
+    moves every edge out (more than 0) or in (less than 0) by that many pixels."""
     import hashlib
     import numpy as np
     from io import BytesIO
@@ -270,9 +271,11 @@ def straighten(src):
     top = line(cx, np.array([np.argmax(mask[:, x]) for x in cx], float), 0, h - 1)
     bottom = line(cx, np.array([h - 1 - np.argmax(mask[::-1, x]) for x in cx], float), 0, h - 1)
 
+    left, right, top, bottom = (left[0], left[1] - edge), (right[0], right[1] + edge), (top[0], top[1] - edge), (bottom[0], bottom[1] + edge)
+
     def corner(side, end):   # side: x = k*y + c; end: y = k*x + c
         x = (side[0] * end[1] + side[1]) / (1 - side[0] * end[0])
-        return x, end[0] * x + end[1]
+        return min(max(x, 0), w - 1), min(max(end[0] * x + end[1], 0), h - 1)   # never past the picture itself
     tl, tr, br, bl = corner(left, top), corner(right, top), corner(right, bottom), corner(left, bottom)
     W = round((np.hypot(tr[0] - tl[0], tr[1] - tl[1]) + np.hypot(br[0] - bl[0], br[1] - bl[1])) / 2)
     H = round((np.hypot(bl[0] - tl[0], bl[1] - tl[1]) + np.hypot(br[0] - tr[0], br[1] - tr[1])) / 2)
@@ -548,7 +551,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 return self.reply({'found': False, 'error': str(e)})
         if u.path == '/api/straighten':   # "Cropped or at an angle" on the Add page
             try:
-                return self.reply(straighten(urllib.parse.parse_qs(u.query).get('src', [''])[0]))
+                q = urllib.parse.parse_qs(u.query)
+                edge = int(q.get('edge', ['0'])[0]) if re.fullmatch(r'-?\d{1,2}', q.get('edge', ['0'])[0]) else 0
+                return self.reply(straighten(q.get('src', [''])[0], edge))
             except Exception as e:
                 return self.reply({'ok': False, 'error': 'Couldn’t straighten this cover.', 'detail': str(e)})
         if u.path == '/api/covers':   # "Find another cover" on the Add page
