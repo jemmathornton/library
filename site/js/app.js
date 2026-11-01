@@ -506,7 +506,8 @@ function pageAdd(){
     + `<div id="scannedBox">${scannedBox()}</div>`
     + `<div class="add-form" id="addForm">
         <div class="isbn-row">${field("isbn", "ISBN", 'inputmode="numeric" autocomplete="off" placeholder="9780000000000"')}
-          <button class="btn pick" type="button" id="addLookup"${served ? "" : " disabled"}>${ic("search")}Look it up</button></div>
+          <button class="btn pick" type="button" id="addLookup"${served ? "" : " disabled"}>${ic("search")}Look it up</button>
+          <button class="btn" type="button" id="camOpen"${served ? "" : " disabled"}>${ic("scan-barcode")}Scan with camera</button></div>
         ${f.note ? `<p class="add-note">${esc(f.note)}</p>` : ""}
         <div class="add-main">${f.cover ? `<div class="cover"><img src="${esc(f.cover)}" alt=""></div>` : `<div class="cover gap"></div>`}
           <div class="add-fields">${field("title", "Title")}${field("authors", "Author(s), with commas between")}
@@ -544,6 +545,47 @@ async function pollScanned(){
   if (fresh.length && !addForm.title && !addForm.busy) useScan(fresh[fresh.length - 1].isbn);
 }
 function useScan(isbn){ const el = document.getElementById("add-isbn"); if (!el) return; el.value = isbn; document.getElementById("addLookup")?.click(); }
+
+// scanning with the laptop's own camera (her ask, 1 Nov: no app on her phone). The barcode reader (ZXing, MIT licence,
+// js/zxing.min.js) is loaded the first time. The camera panel sits outside #view, so redrawing the form doesn't stop it.
+// Only a real book number is taken (978/979, 13 digits, right check digit); the rest of a barcode's noise is ignored.
+let camReader = null;
+const isBookNumber = s => /^97[89]\d{10}$/.test(s) && [...s].reduce((t, d, i) => t + d * (i % 2 ? 3 : 1), 0) % 10 === 0;
+const loadZxing = () => window.ZXing ? Promise.resolve() : new Promise((ok, fail) => {
+  const s = document.createElement("script"); s.src = "js/zxing.min.js"; s.onload = ok; s.onerror = fail; document.head.appendChild(s); });
+function camClose(){
+  if (camReader) { camReader.reset(); camReader = null; }
+  document.getElementById("camPanel")?.remove();
+}
+async function camOpen(){
+  camClose();
+  const panel = document.createElement("div"); panel.id = "camPanel"; panel.className = "cam-panel";
+  panel.innerHTML = `<div class="cam-box"><video id="camVideo" muted playsinline></video><div class="cam-aim"></div>
+    <p id="camMsg">Hold the barcode on the back of the book up to the camera, about a hand’s width away.</p>
+    <button class="btn" type="button" id="camStop">${ic("x")}Stop</button></div>`;
+  document.body.appendChild(panel);
+  const msg = t => { const m = document.getElementById("camMsg"); if (m) m.textContent = t; };
+  try { await loadZxing(); }
+  catch { return msg("The barcode reader didn’t load. Type the ISBN instead."); }
+  const hints = new Map([[ZXing.DecodeHintType.POSSIBLE_FORMATS, [ZXing.BarcodeFormat.EAN_13]], [ZXing.DecodeHintType.TRY_HARDER, true]]);
+  camReader = new ZXing.BrowserMultiFormatReader(hints, 250);
+  try {
+    await camReader.decodeFromConstraints({video: {width: {ideal: 1920}, height: {ideal: 1080}}}, "camVideo", r => {
+      const text = r && r.getText();
+      if (!text || !isBookNumber(text)) return;
+      camClose(); useScan(text);
+    });
+  } catch (e) {
+    msg(e && e.name === "NotAllowedError" ? "The camera wasn’t allowed. Allow it in the box at the top of the window, then try again."
+      : "No camera found. Type the ISBN instead.");
+  }
+}
+document.addEventListener("click", e => {
+  if (e.target.closest("#camOpen")) camOpen();
+  if (e.target.closest("#camStop") || e.target.id === "camPanel") camClose();
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape") camClose(); });
+addEventListener("hashchange", camClose);
 setInterval(pollScanned, 4000);
 document.addEventListener("toggle", async e => { if (e.target.id !== "scanSetup" || !e.target.open) return;   // the address and key, fetched only when opened
   try { document.getElementById("scanUrl").textContent = (await api("api/scan-setup")).url; } catch { document.getElementById("scanUrl").textContent = "(the library server isn’t answering)"; } }, true);
@@ -567,6 +609,8 @@ document.addEventListener("click", async e => {
       if (d.found) Object.assign(addForm, {title: d.title, authors: d.authors.join(", "), publisher: d.publisher, published: d.published, pages: d.pages || "", cover: d.cover, note: "Found it. Check the details and pick a shelf."});
       else addForm.note = "Open Library doesn’t know that ISBN. Fill in the details yourself."; }
     catch { addForm.note = "Couldn’t reach Open Library. Fill in the details yourself."; }
+    const have = BOOKS.find(b => b.isbn13 === addForm.isbn);
+    if (have) addForm.note = `You already have this one: ${have.t}. Add it again only if it’s a second copy.`;
     return redrawAdd();
   }
   if (e.target.closest("#addSave")) {

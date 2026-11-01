@@ -439,3 +439,11 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .slot{aspect-ratio:2/3;display:flex;align-items:flex-end;justify-content:center}
 .slot .cover{width:100%}
 .slot .cover.fit{width:min(100%,calc(150% / var(--r)))}
+
+/* scanning with the laptop camera (1 Nov) */
+.cam-panel{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(22,17,12,.72)}
+.cam-box{position:relative;width:min(640px,92vw);padding:16px;border-radius:16px;background:var(--surface);display:grid;gap:12px;justify-items:center;box-shadow:0 20px 60px rgba(0,0,0,.4)}
+.cam-box video{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;background:#000;transform:scaleX(-1)}
+.cam-aim{position:absolute;top:16px;left:16px;right:16px;aspect-ratio:16/9;pointer-events:none;
+  background:linear-gradient(var(--brass),var(--brass)) center/62% 2px no-repeat}
+.cam-box p{margin:0;text-align:center;font-size:14px;font-weight:600;color:var(--muted)}
