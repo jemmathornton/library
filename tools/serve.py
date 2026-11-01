@@ -301,82 +301,26 @@ STRAIGHT_URL = re.compile(r'covers/_straightened/[0-9a-f]{16}\.jpg')
 
 
 def straighten(src, edge=0):
-    """"Cropped or at an angle" on the Add page (her ask, 1 Nov): a cover photographed at a slant, or with the table or
-    cloth round it, is cut out along the book's four edges and pulled square. The background is the colour round the
-    picture's border; each edge of the book is a straight line fitted through where the background stops, and the four
-    corners are pulled square in true perspective (a book whose top is further from the camera than its bottom comes out
-    square too). An edge that runs off the picture is fitted through the part that shows; one wholly off it is the
-    picture's own edge. She sees the result and can undo it, or trim less or more: edge moves every edge out (more than
-    0) or in (less than 0) by that many pixels."""
+    """"Cropped or at an angle" on the Add page (her ask, 1 Nov): the book cut out of the photo and squared up, by
+    tools/straighten.py (how it decides is written there; tested overnight 1-2 Nov on about 500 sellers' photos). When
+    it isn't clearly a photo of a book on a background, the picture is left as it is and she's told. She sees the
+    result and can undo it, or trim less or more: edge moves every side out (more than 0) or in (less than 0)."""
     import hashlib
-    import numpy as np
     from io import BytesIO
-    from PIL import Image, ImageFilter
+    from PIL import Image
+    sys.path.insert(0, os.path.join(ROOT, 'tools'))
+    import straighten as st
     if urllib.parse.urlparse(src).scheme != 'https':
         return {'ok': False, 'error': 'Only a cover from the internet can be straightened here.'}
     with urllib.request.urlopen(urllib.request.Request(src, headers=UA), timeout=20) as r:
         data = r.read()
-    im = Image.open(BytesIO(data)).convert('RGB')
-    # book or background, judged by colour more than brightness (a cloth's folds and shadows change its brightness, not
-    # its colour), and in units of how much the background itself varies: the background is the typical colour round the
-    # picture's border (the middle value, so the book running off one edge doesn't change it), and a pixel is book when
-    # it's well outside that spread (1 Nov: a dark olive cover edge on green cloth was being cut off)
-    lab = np.asarray(im.convert('LAB'), dtype=float)
-    h, w, _ = lab.shape
-    border = np.concatenate([lab[:6].reshape(-1, 3), lab[-6:].reshape(-1, 3), lab[:, :6].reshape(-1, 3), lab[:, -6:].reshape(-1, 3)])
-    med = np.median(border, axis=0)
-    spread = np.median(np.abs(border - med), axis=0) * 1.4826 + np.array([2.0, 1.0, 1.0])
-    z = np.abs(lab - med) / spread
-    mask = np.maximum(z[..., 0] / 2, np.hypot(z[..., 1], z[..., 2])) > 4
-    mask = np.asarray(Image.fromarray((mask * 255).astype(np.uint8)).filter(ImageFilter.MedianFilter(9))) > 127
-    no = {'ok': False, 'error': 'Couldn’t find the edges of the book in this picture. Try Find another cover.'}
-    if not .25 < mask.mean() < .97:
-        return no
-    rows, cols = np.nonzero(mask.any(1))[0], np.nonzero(mask.any(0))[0]
-    y0, y1, x0, x1 = rows[0], rows[-1], cols[0], cols[-1]
-    ry = np.arange(int(y0 + .1 * (y1 - y0)), int(y1 - .1 * (y1 - y0)))
-    cx = np.arange(int(x0 + .1 * (x1 - x0)), int(x1 - .1 * (x1 - x0)))
-    ry, cx = ry[mask[ry].any(1)], cx[mask[:, cx].any(0)]
-
-    def line(t, v, lo, hi):
-        """v = slope * t + offset through the edge points. Points at the picture's own edge are where the book runs off
-        it, so they're left out; an edge that's nearly all off the picture is the picture's edge."""
-        off_pic = (v <= lo + 2) | (v >= hi - 2)
-        if off_pic.mean() > .8 or (~off_pic).sum() < 8:
-            return 0.0, float(lo if np.median(v) < (lo + hi) / 2 else hi)
-        t, v = t[~off_pic], v[~off_pic]
-        k, c = np.polyfit(t, v, 1)
-        for _ in range(2):   # leave out stray points (a thumb, a shadow) and fit again
-            off = np.abs(v - (k * t + c))
-            keep = off <= max(2.5, np.percentile(off, 70))
-            k, c = np.polyfit(t[keep], v[keep], 1)
-        return k, c
-    left = line(ry, np.array([np.argmax(mask[y]) for y in ry], float), 0, w - 1)
-    right = line(ry, np.array([w - 1 - np.argmax(mask[y][::-1]) for y in ry], float), 0, w - 1)
-    top = line(cx, np.array([np.argmax(mask[:, x]) for x in cx], float), 0, h - 1)
-    bottom = line(cx, np.array([h - 1 - np.argmax(mask[::-1, x]) for x in cx], float), 0, h - 1)
-
-    left, right, top, bottom = (left[0], left[1] - edge), (right[0], right[1] + edge), (top[0], top[1] - edge), (bottom[0], bottom[1] + edge)
-
-    def corner(side, end):   # side: x = k*y + c; end: y = k*x + c
-        x = (side[0] * end[1] + side[1]) / (1 - side[0] * end[0])
-        return min(max(x, 0), w - 1), min(max(end[0] * x + end[1], 0), h - 1)   # never past the picture itself
-    tl, tr, br, bl = corner(left, top), corner(right, top), corner(right, bottom), corner(left, bottom)
-    W = round((np.hypot(tr[0] - tl[0], tr[1] - tl[1]) + np.hypot(br[0] - bl[0], br[1] - bl[1])) / 2)
-    H = round((np.hypot(bl[0] - tl[0], bl[1] - tl[1]) + np.hypot(br[0] - tr[0], br[1] - tr[1])) / 2)
-    if W < 80 or H < 80 or not 1 < H / W < 2.2:
-        return no
-    # true perspective: the straightened picture's corners map onto the four found in the photo
-    eq, rhs = [], []
-    for (X, Y), (x, y) in zip([(0, 0), (W, 0), (W, H), (0, H)], [tl, tr, br, bl]):
-        eq += [[X, Y, 1, 0, 0, 0, -x * X, -x * Y], [0, 0, 0, X, Y, 1, -y * X, -y * Y]]
-        rhs += [x, y]
-    out = im.transform((W, H), Image.PERSPECTIVE, tuple(np.linalg.solve(np.array(eq, float), np.array(rhs, float))), Image.BICUBIC)
-    out = out.crop((1, 1, W - 1, H - 1))   # a hair inside the edges, so no background shows
+    out = st.straighten(Image.open(BytesIO(data)), edge)
+    if out is None:
+        return {'ok': False, 'error': 'This picture looks like the cover already (no table or background round it to cut away), so it’s left as it is.'}
     os.makedirs(STRAIGHT, exist_ok=True)
     jpg = BytesIO()
     out.save(jpg, 'JPEG', quality=92)
-    name = hashlib.sha1(jpg.getvalue()).hexdigest()[:16] + '.jpg'   # named by the result, so a better redo never shows the old one
+    name = hashlib.sha1(jpg.getvalue()).hexdigest()[:16] + '.jpg'   # named by the result, so a redo never shows the old one
     with open(os.path.join(STRAIGHT, name), 'wb') as fh:
         fh.write(jpg.getvalue())
     return {'ok': True, 'cover': 'covers/_straightened/' + name}
