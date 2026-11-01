@@ -231,5 +231,23 @@
   "copies": 1,
   "addedHere": true,
   "surname": "Green"
+ },
+ {
+  "id": "add0017",
+  "title": "The Callista Prophecy (The Natural Human Saga)",
+  "authors": [
+   {
+    "name": "Steve Gay"
+   }
+  ],
+  "shelf": "science-fiction",
+  "isbn13": "9781838217754",
+  "publisher": "Rook Abbey Press",
+  "published": "2026-08-28",
+  "pages": 342,
+  "added": "2026-11-01",
+  "copies": 1,
+  "addedHere": true,
+  "surname": "Gay"
  }
 ]
