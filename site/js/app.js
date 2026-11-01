@@ -1008,6 +1008,9 @@ trialSwitch.className = "trial-switch";
 trialSwitch.innerHTML = `<button type="button" aria-pressed="${TRIAL}">${ic("image")}New covers: <b>${TRIAL ? "on" : "off"}</b></button>${TRIAL ? `<a href="#trial-covers">See all ${TRIALS.length}</a>` : ""}`;
 trialSwitch.querySelector("button").addEventListener("click", () => { store.set(TRIAL_KEY, !TRIAL); location.reload(); });
 document.body.append(trialSwitch);
+// the suggested covers are all for the Old Book Collection now, so the switch shows only there (her ask, 1 Nov)
+const trialShown = () => { trialSwitch.hidden = !["#shelf-old-book-collection", "#trial-covers"].includes(location.hash); };
+addEventListener("hashchange", trialShown); trialShown();
 
 // ---------- routing ----------
 function route(){

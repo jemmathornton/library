@@ -533,3 +533,5 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 
 /* Add a Book: the suggested shelf, a small link-like button beside the Shelf label (1 Nov) */
 .add-form label .suggest{margin-left:8px;padding:0;border:0;background:none;font:700 12px var(--body);color:var(--done);cursor:pointer;text-decoration:underline;text-decoration-color:var(--brass);text-underline-offset:3px}
+
+.trial-switch[hidden]{display:none}
