@@ -249,5 +249,38 @@
   "copies": 1,
   "addedHere": true,
   "surname": "Gay"
+ },
+ {
+  "id": "add0018",
+  "title": "The Chronowick Paradox",
+  "authors": [
+   {
+    "name": "Rhiannon Pritchard"
+   },
+   {
+    "name": "Lisa  Conn"
+   },
+   {
+    "name": "Philip Mantom"
+   },
+   {
+    "name": "Emily  Edwards"
+   },
+   {
+    "name": "Greg Cadman"
+   },
+   {
+    "name": "Loz Cadman"
+   }
+  ],
+  "shelf": "science-fiction",
+  "isbn13": "9781836907275",
+  "publisher": "Bookvault Publishing",
+  "published": "2026-07-11",
+  "pages": 320,
+  "added": "2026-11-01",
+  "copies": 1,
+  "addedHere": true,
+  "surname": "Pritchard"
  }
 ]
