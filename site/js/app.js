@@ -592,7 +592,7 @@ function useScan(isbn){ const el = document.getElementById("add-isbn"); if (!el)
 // scanning with the laptop's own camera (her ask, 1 Nov: no app on her phone). The barcode reader (ZXing, MIT licence,
 // js/zxing.min.js) is loaded the first time. The camera panel sits outside #view, so redrawing the form doesn't stop it.
 // Only a real book number is taken (978/979, 13 digits, right check digit); the rest of a barcode's noise is ignored.
-let camReader = null;
+let camReader = null, camStillFor = null;
 const isBookNumber = s => /^97[89]\d{10}$/.test(s) && [...s].reduce((t, d, i) => t + d * (i % 2 ? 3 : 1), 0) % 10 === 0;
 // a Waterstones price sticker (13 digits starting 2, her yes 1 Nov): the server finds that exact edition on their site
 const isShopCode = s => /^2\d{12}$/.test(s) && [...s].reduce((t, d, i) => t + d * (i % 2 ? 3 : 1), 0) % 10 === 0;
@@ -608,7 +608,7 @@ async function camOpen(){
   panel.innerHTML = `<div class="cam-box"><div class="cam-view"><video id="camVideo" muted playsinline></video><div class="cam-aim"></div></div>
     <div class="cam-zoom"><canvas id="camZoom" width="640" height="200"></canvas><span>What the reader sees in the box, close up</span></div>
     <p id="camMsg">Starting the camera…</p>
-    <div class="cam-buttons"><button class="btn" type="button" id="camShot">${ic("download")}Save a test picture</button>
+    <div class="cam-buttons"><button class="btn pick" type="button" id="camStill">${ic("scan-barcode")}Take a picture in 3…</button><button class="btn" type="button" id="camShot">${ic("download")}Save a test picture</button>
     <button class="btn" type="button" id="camStop">${ic("x")}Stop</button></div></div>`;
   document.body.appendChild(panel);
   const msg = t => { const m = document.getElementById("camMsg"); if (m) m.textContent = t; };
@@ -660,6 +660,63 @@ async function camOpen(){
   camReader.reset = () => { stream.getTracks().forEach(t => t.stop()); ocr?.then(w => w.terminate()).catch(() => {}); };
   look();
   readPrinted(video, () => camReader, w => ocr = w);
+  camStillFor = () => stillRead(video, () => camReader, ocr, msg);
+}
+
+// a still picture after a 3-2-1 countdown, so she can hold the book steady with both hands (her ask, 1 Nov): five
+// frames are taken and each is read much harder than the live picture allows - the barcode at several sizes, and the
+// printed number in the gold box, enlarged and sharpened. A number found here is used at once (the lookup then shows
+// the book, which she checks before adding).
+async function stillRead(video, open, ocr, msg){
+  const btn = document.getElementById("camStill"); if (btn) btn.disabled = true;
+  for (const n of ["3", "2", "1"]) { if (!open()) return; msg(`Hold still… ${n}`); await new Promise(r => setTimeout(r, 800)); }
+  const frames = [];
+  for (let i = 0; i < 5 && video.videoWidth; i++) {
+    const c = document.createElement("canvas"); c.width = video.videoWidth; c.height = video.videoHeight; c.getContext("2d").drawImage(video, 0, 0);
+    frames.push(c); await new Promise(r => setTimeout(r, 120));
+  }
+  msg("Reading the picture…");
+  const hints = new Map([[ZXing.DecodeHintType.POSSIBLE_FORMATS, [ZXing.BarcodeFormat.EAN_13]], [ZXing.DecodeHintType.TRY_HARDER, true]]);
+  const part = (src, [sx, sy, sw, sh], sc, filter, sharp) => {
+    const c = document.createElement("canvas"); c.width = Math.round(sw * sc); c.height = Math.round(sh * sc);
+    const g = c.getContext("2d", {willReadFrequently: true}); g.filter = filter; g.drawImage(src, sx, sy, sw, sh, 0, 0, c.width, c.height);
+    if (sharp) {   // a light sharpen (unsharp 3x3) for a slightly soft picture
+      const d = g.getImageData(0, 0, c.width, c.height), o = new Uint8ClampedArray(d.data), w = c.width;
+      for (let y = 1; y < c.height - 1; y++) for (let x = 1; x < w - 1; x++) for (let k = 0; k < 3; k++) {
+        const i = (y * w + x) * 4 + k;
+        d.data[i] = 5 * o[i] - o[i - 4] - o[i + 4] - o[i - w * 4] - o[i + w * 4];
+      }
+      g.putImageData(d, 0, 0);
+    }
+    return c;
+  };
+  const done = n => { if (open()) { camClose(); useScan(n); } return true; };
+  for (const f of frames) {
+    const W = f.width, H = f.height, box = [W * .2, H * .3, W * .6, H * .4];
+    for (const [area, sc] of [[box, 1], [box, .6], [[0, 0, W, H], .5], [box, .4], [[0, 0, W, H], 1]])
+      for (const sharp of [false, true]) for (const Bin of [ZXing.GlobalHistogramBinarizer, ZXing.HybridBinarizer]) {
+        if (!open()) return;
+        const r = new ZXing.MultiFormatReader(); r.setHints(hints);
+        try { const t = r.decodeWithState(new ZXing.BinaryBitmap(new Bin(new ZXing.HTMLCanvasElementLuminanceSource(part(f, area, sc, "grayscale(1)", sharp))))).getText();
+          if (isBookNumber(t) || isShopCode(t)) return done(t); } catch {}
+      }
+  }
+  // the printed number: a soft picture can be misread into another valid number (1 Nov test: 858813 read as 888438),
+  // so a number only counts when two separate readings agree
+  const w = ocr && await ocr.catch(() => null), seen = {};
+  if (w) for (const f of frames.slice(0, 3)) {
+    const W = f.width, H = f.height, box = [W * .2, H * .3, W * .6, H * .4];
+    for (const [sc, psm, sharp] of [[2, "6", true], [1.5, "6", false], [2, "11", true], [1, "6", false]]) {
+      if (!open()) return;
+      try { await w.setParameters({tessedit_pageseg_mode: psm});
+        const text = (await w.recognize(part(f, box, sc, "grayscale(1) contrast(160%)", sharp))).data.text;
+        for (const n of new Set((text.replace(/[\s-]+/g, "").match(/97[89]\d{10}/g) || []).filter(isBookNumber)))
+          if ((seen[n] = (seen[n] || 0) + 1) >= 2) return done(n);
+      } catch {}
+    }
+  }
+  if (open()) msg("Couldn’t read that picture. Try again a little nearer or further, or type the number.");
+  if (btn) btn.disabled = false;
 }
 
 // her webcam blurs barcode bars but the printed "ISBN 978-…" above them stays nearly readable (1 Nov), so the picture is
@@ -702,6 +759,7 @@ function readPrinted(video, open, keep){
 document.addEventListener("click", e => {
   if (e.target.closest("#camOpen")) camOpen();
   if (e.target.closest("#camStop") || e.target.id === "camPanel") camClose();
+  if (e.target.closest("#camStill") && camStillFor) camStillFor();
   if (e.target.closest("#camShot")) {   // one frame, as the camera gives it, to Downloads (1 Nov: to see why her webcam doesn't read)
     const v = document.getElementById("camVideo"); if (!v || !v.videoWidth) return;
     const c = document.createElement("canvas"); c.width = v.videoWidth; c.height = v.videoHeight; c.getContext("2d").drawImage(v, 0, 0);
