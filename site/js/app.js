@@ -676,21 +676,26 @@ function readPrinted(video, open, keep){
   });
   keep(worker);
   const canvas = document.createElement("canvas"), ctx = canvas.getContext("2d");
-  let last = "";
+  let last = "", n = 0;
+  // what she sees in the close-up (the gold box), enlarged twice, is what gets read (1 Nov: she could read the numbers
+  // there, but read across the whole picture they were too small); every other look takes the whole picture too
   const round = async w => {
     if (!open()) return;
-    if (video.videoWidth) {
-      const sc = Math.min(1, 1280 / video.videoWidth);
-      canvas.width = video.videoWidth * sc; canvas.height = video.videoHeight * sc;
-      ctx.filter = "grayscale(1) contrast(160%)"; ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+    const vw = video.videoWidth, vh = video.videoHeight;
+    if (vw) {
+      const box = n++ % 3 < 2, [sx, sy, sw, sh] = box ? [vw * .2, vh * .3, vw * .6, vh * .4] : [0, 0, vw, vh];
+      const sc = box ? 2 : Math.min(1, 1600 / vw);
+      canvas.width = sw * sc; canvas.height = sh * sc;
+      ctx.filter = "grayscale(1) contrast(170%)"; ctx.drawImage(video, sx, sy, sw, sh, 0, 0, canvas.width, canvas.height);
       try {
         const text = (await w.recognize(canvas)).data.text;
-        const found = (text.match(/97[89][\d\s-]{10,20}/g) || []).map(t => t.replace(/\D/g, "").slice(0, 13)).find(isBookNumber) || "";
+        // the number may be printed "ISBN 978-1-83821-775-4" or, under the bars, "9 781838 217754": spaces and dashes go
+        const found = (text.replace(/[\s-]+/g, "").match(/97[89]\d{10}/g) || []).find(isBookNumber) || "";
         if (found && found === last && open()) { camClose(); return useScan(found); }
-        last = found;
+        if (found) last = found;
       } catch {}
     }
-    setTimeout(() => round(w), 300);
+    setTimeout(() => round(w), 150);
   };
   worker.then(round).catch(() => {});   // if the text reader can't load, the barcode reader carries on alone
 }
