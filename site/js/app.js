@@ -282,6 +282,7 @@ function renderNav(active){
 // for what to read next, the shelves, and what's new on them (no closing line: out of place, her call)
 function pageHome(){
   const log = readingLog(), now = log.filter(isReading), thisYear = String(new Date().getFullYear());
+  const paused = log.filter(b => reading(b).status === "paused");
   const lastFinish = b => finishes(b).sort().pop() || "";
   const done = log.filter(isRead).filter(b => lastFinish(b)).sort((a, b) => lastFinish(b).localeCompare(lastFinish(a))).slice(0, 6);
   const yearReads = finishedIn(thisYear).length;
@@ -300,7 +301,9 @@ function pageHome(){
     + picker()
     + sectionHead("The <em>shelves</em>", `<a class="more" href="#shelves">See them all at once</a>`)
     + `<div class="shelves">${SHELVES.filter(s => s.books.length).map(s => `<a class="shelf-card" href="#shelf-${s.id}" style="--c:${s.color}"><div class="fan">${fan(s)}</div>
-        <div class="txt"><h3>${esc(s.name)}</h3><span>${plural(s.books.length, "book")}</span></div></a>`).join("")}</div>`;
+        <div class="txt"><h3>${esc(s.name)}</h3><span>${plural(s.books.length, "book")}</span></div></a>`).join("")}</div>`
+    // books she's taking a break from, out of Reading Now and below the shelves (her ask, 1 Nov)
+    + (paused.length ? sectionHead("On a <em>break</em>") + `<div class="books">${paused.map(b => card(b)).join("")}</div>` : "");
 }
 
 // shelves are in author surname order, like a real bookcase (her choice, 18 Oct)
