@@ -440,7 +440,13 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .slot .cover{width:100%}
 /* every cover the same height on the shelves (her ask, 1 Nov): a squarer book (a hardback, an A5 book) shows a little
    wider instead of shorter, up to an eighth wider than the slot, which still leaves a gap to its neighbours; a squarer one (illustrated editions, picture books) is a little shorter instead of overlapping */
-.slot .cover.fit{width:min(112%,calc(150% / var(--r)));flex:none}
+/* every cover the same height (her ask, 1 Nov): the shelves are rows of cards each as wide as its own cover at one
+   height, so a wider book takes a wider space instead of shrinking or overlapping */
+.books{display:flex;flex-wrap:wrap;align-items:flex-start;--ch:222px}
+.books.row{--ch:180px;flex-wrap:nowrap;overflow:hidden}
+.books .bk{flex:0 0 auto;width:calc(var(--ch) / var(--br, 1.5))}
+.books .slot{aspect-ratio:auto;height:var(--ch)}
+.books .slot .cover,.books .slot .cover.fit{width:100%;height:100%}
 
 /* scanning with the laptop camera (1 Nov) */
 .cam-panel{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(22,17,12,.72)}

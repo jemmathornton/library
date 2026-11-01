@@ -236,7 +236,9 @@ function cover(b, extra = "", big = false){
 document.addEventListener("error", e => { const img = e.target; if (img.tagName === "IMG" && img.parentNode.classList.contains("cover")) { img.parentNode.classList.add("blank"); img.remove(); } }, true);
 
 const href = b => isElsewhere(b) ? "#" + b.id : "#b-" + b.id;
-const card = (b, note) => `<a class="bk" href="${href(b)}"><div class="slot">${cover(b)}</div><h3>${esc(b.t)}</h3><div class="by">${esc(note || b.by)}</div></a>`;
+// each card as wide as its cover at the shelf height, so every cover is the same height and none overlap (her ask, 1 Nov)
+const cardShape = b => `style="--br:${(b.cover && b.coverRatio) || 1.5}"`;
+const card = (b, note) => `<a class="bk" ${cardShape(b)} href="${href(b)}"><div class="slot">${cover(b)}</div><h3>${esc(b.t)}</h3><div class="by">${esc(note || b.by)}</div></a>`;
 const grid = (list, cls = "") => list.length ? `<div class="books ${cls}">${list.map(b => card(b)).join("")}</div>` : "";
 function listView(list){
   return `<div class="blist">${list.map(b => { const st = reading(b).status;
@@ -784,7 +786,7 @@ function pageSearch(term){
     + (authors.length ? `<div class="chips" style="margin-bottom:28px">${authors.slice(0, 20).map(a => `<a class="btn" href="#a-${a.id}">${ic("user")}${esc(a.name)} · ${a.books.length}</a>`).join("")}</div>` : "")
     + (books.length ? grid(books) : `<p class="empty">No books match.</p>`)
     + (away.length ? sectionHead("Read or to read, <em>not on your shelves</em>") + grid(away) : "")
-    + (wish.length ? sectionHead("On the <em>to-buy list</em>") + `<div class="books">${wish.map(w => `<a class="bk" href="#to-buy"><div class="slot">${cover(w)}</div><h3>${esc(w.t)}</h3><div class="by">${esc(w.by)}</div></a>`).join("")}</div>` : "");
+    + (wish.length ? sectionHead("On the <em>to-buy list</em>") + `<div class="books">${wish.map(w => `<a class="bk" ${cardShape(w)} href="#to-buy"><div class="slot">${cover(w)}</div><h3>${esc(w.t)}</h3><div class="by">${esc(w.by)}</div></a>`).join("")}</div>` : "");
 }
 q.addEventListener("input", () => { const v = q.value.trim(); if (v.length >= 2) { document.getElementById("view").innerHTML = pageSearch(v); scrollTo(0, 0); } else if (!v) route(); });
 q.addEventListener("keydown", e => { if (e.key === "Escape") { q.value = ""; route(); } });
