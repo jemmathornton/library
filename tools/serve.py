@@ -6,6 +6,7 @@ can reach it. If it's already running, a second copy just stops.
     pythonw tools/serve.py
 
 Adding a book (the site's "Add a book" page, 18 Oct):
+    GET  /api/covers?isbn=&title=&author=   other covers to choose from (other editions), for "Find another cover"
     GET  /api/lookup?isbn=...   the book's details from Open Library (title, authors, publisher, date, pages, cover);
                                 Waterstones fills what Open Library hasn't got yet (new books, 1 Nov), and a Waterstones
                                 price-sticker code (13 digits starting 2) is looked up there alone
@@ -166,6 +167,55 @@ def best_cover(found):
     return best
 
 
+def other_covers(isbn, title, author):
+    """Covers to choose from on the Add page's "Find another cover" (her ask, 1 Nov: the looked-up one can be the wrong
+    edition, or trimmed oddly): this ISBN at Amazon, World of Books and Open Library, then every English edition of the
+    book Open Library knows, UK ones (published in London, the UK or England) first. She picks; nothing is chosen for her."""
+    out, seen = [], set()
+
+    def put(src, label, uk=False):
+        if src and src not in seen:
+            seen.add(src)
+            out.append({'src': src, 'label': label, 'uk': uk})
+    i = isbn13(isbn)
+    if re.fullmatch(r'97[89]\d{10}', i):
+        if isbn10(i):
+            put(f'https://images-na.ssl-images-amazon.com/images/P/{isbn10(i)}.01._SCRMZZZZZZ_.jpg', 'Amazon, your ISBN')
+        put(f'https://image-server.worldofbooks.com/images/{i}.jpg', 'World of Books, your ISBN')
+        put(f'https://covers.openlibrary.org/b/isbn/{i}-L.jpg?default=false', 'Open Library, your ISBN')
+    works = []
+    if i:
+        try:
+            works = [w['key'] for w in get_json(f'https://openlibrary.org/isbn/{i}.json').get('works', [])]
+        except Exception:
+            pass
+    if not works and title:
+        q = urllib.parse.urlencode({'title': title, 'author': author, 'fields': 'key', 'limit': 2})
+        try:
+            works = [w['key'] for w in get_json('https://openlibrary.org/search.json?' + q).get('docs', [])]
+        except Exception:
+            pass
+    eds = []
+    for w in works[:2]:
+        try:
+            eds += get_json(f'https://openlibrary.org{w}/editions.json?limit=100').get('entries', [])
+        except Exception:
+            pass
+    uk_place = re.compile(r'london|united kingdom|\buk\b|england|great britain|edinburgh|glasgow|oxford|cambridge', re.I)
+    rows = []
+    for e in eds:
+        langs = [x['key'] for x in e.get('languages', [])]
+        cov = [c for c in e.get('covers') or [] if c and c > 0]
+        if not cov or (langs and '/languages/eng' not in langs):
+            continue
+        uk = bool(uk_place.search(' '.join(e.get('publish_places', [])))) or e.get('publish_country', '') in ('enk', 'stk', 'xxk')
+        label = ', '.join(x for x in [(e.get('publishers') or [''])[0], e.get('publish_date', '')] if x) or 'Another edition'
+        rows.append((not uk, f'https://covers.openlibrary.org/b/id/{cov[0]}-L.jpg', label, uk))
+    for _, src, label, uk in sorted(rows, key=lambda r: r[0]):
+        put(src, label, uk)
+    return out[:40]
+
+
 SERIES_TAIL = re.compile(
     r'\s*(?:'
     r'\([^()]*(?:\b(?:series|saga|trilogy|chronicles|quartet|cycle|book|bk|vol|volume)\b|#\s*\d)[^()]*\)'  # (The Natural Human Saga)
@@ -179,6 +229,7 @@ def clean_title(t):
     'Lycan Lamia: The Beyond Series - Book Four'): just the book's own title; the series shows on the site by itself."""
     for _ in range(3):
         new = SERIES_TAIL.sub('', t).strip()
+        new = re.sub(r'\s*\([^()]*\)$', '', new).strip() or new   # any other bracket left on the end ('(Wizard Crystal)')
         if not new or new == t:
             break
         t = new
@@ -326,6 +377,10 @@ def add(book):
          'isbn13': i13, 'shopCode': shop, 'publisher': book.get('publisher', ''), 'published': book.get('published', ''),
          'pages': int(book['pages']) if str(book.get('pages') or '').isdigit() else None,
          'description': book.get('description', ''), 'added': date.today().isoformat(), 'copies': 1, 'addedHere': True}
+    if book.get('coverWrong') is True:   # none of the covers found was hers (1 Nov): a photo of her own copy is needed
+        b['coverWrong'] = True
+    if book.get('coverFix') is True:     # the right cover, but trimmed oddly or at an angle (1 Nov): to be straightened
+        b['coverFix'] = True
     if b['authors']:
         b['surname'] = b['authors'][0]['name'].split()[-1]
     b = {k: v for k, v in b.items() if v not in ('', None, [])}
@@ -406,6 +461,12 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 return self.reply(lookup(urllib.parse.parse_qs(u.query).get('isbn', [''])[0]))
             except Exception as e:
                 return self.reply({'found': False, 'error': str(e)})
+        if u.path == '/api/covers':   # "Find another cover" on the Add page
+            q = urllib.parse.parse_qs(u.query)
+            try:
+                return self.reply({'covers': other_covers(*[q.get(k, [''])[0] for k in ('isbn', 'title', 'author')])})
+            except Exception as e:
+                return self.reply({'covers': [], 'error': str(e)})
         if u.path == '/api/scanned':
             return self.reply(scanned())
         if u.path == '/api/scan-setup':

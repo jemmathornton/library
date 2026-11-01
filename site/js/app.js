@@ -551,7 +551,10 @@ function pageAdd(){
           <button class="btn pick" type="button" id="addLookup"${served ? "" : " disabled"}>${ic("search")}Look it up</button>
           <button class="btn" type="button" id="camOpen"${served ? "" : " disabled"}>${ic("scan-barcode")}Scan with camera</button></div>
         ${f.note ? `<p class="add-note">${esc(f.note)}</p>` : ""}
-        <div class="add-main">${f.cover ? `<div class="cover"><img src="${esc(f.cover)}" alt=""></div>` : `<div class="cover gap"></div>`}
+        <div class="add-main"><div class="add-cover">${f.cover ? `<div class="cover"><img src="${esc(f.cover)}" alt=""></div>` : `<div class="cover gap"></div>`}
+          ${f.title ? `<button type="button" class="btn find-cover" id="findCover">${ic("image")}${f.cover ? "Find another cover" : "Find a cover"}</button>` : ""}
+          ${f.cover && !f.coverWrong ? `<button type="button" class="btn find-cover${f.coverFix ? " on" : ""}" id="fixCover">${ic("crop")}${f.coverFix ? "Marked to straighten" : "Cropped or at an angle"}</button>` : ""}
+          ${f.coverWrong ? `<p class="cover-wrong">${ic("camera")}Marked for a photo of your copy</p>` : ""}</div>
           <div class="add-fields">${field("title", "Title")}${field("authors", "Author(s), with commas between")}
             <div class="two">${field("publisher", "Publisher")}${field("published", "Published")}</div>
             <div class="two">${field("pages", "Pages", 'inputmode="numeric"')}
@@ -559,7 +562,7 @@ function pageAdd(){
                 : ` <span class="suggest">Suggested: ${esc(shelfIndex[f.suggest.shelf].name)} (${esc(f.suggest.why)}) ✓</span>`}</span><select id="add-shelf"><option value="">Choose a shelf…</option>${SHELVES.filter(s => s.libib).map(s => `<option value="${s.id}"${f.shelf === s.id ? " selected" : ""}>${esc(s.name)}</option>`).join("")}</select></label></div>
             <label><span>Signed</span><select id="add-signed">${[["", "Not signed"], ["signed", "Signed"], ["to-you", "Signed to you"]].map(([v, t]) => `<option value="${v}"${(f.signed || "") === v ? " selected" : ""}>${t}</option>`).join("")}</select></label>
             <button class="btn pick" type="button" id="addSave"${served && !f.busy ? "" : " disabled"}>${ic("plus")}${f.busy ? "Adding…" : "Add to the shelf"}</button>
-          </div></div></div>`
+          </div></div>${f.coverChoices ? coverPicker(f) : ""}</div>`
     + (served ? `<details class="scan-setup" id="scanSetup"><summary>Set up phone scanning</summary><ol>
         <li>Install <b>Binary Eye</b> on your phone (Google Play).</li>
         <li>In Binary Eye: Settings → Forwarding → turn on <b>Forward scans</b>.</li>
@@ -580,9 +583,13 @@ function suggestShelf(d){
   (d.authors || []).forEach(a => (authorIndex[slug(a)] || {books: []}).books.forEach(({book}) => { if (book.shelf && !book.notOwned) mine[book.shelf] = (mine[book.shelf] || 0) + 1; }));
   const top = Object.entries(mine).sort((a, b) => b[1] - a[1])[0];
   if (top && shelfIndex[top[0]]) return {shelf: top[0], why: "where your other books by them are"};
-  const cats = (d.categories || []).join(" | ").toLowerCase();
-  const hit = SHELF_WORDS.find(([, re]) => re.test(cats));
-  return hit && shelfIndex[hit[0]] ? {shelf: hit[0], why: (d.categories || []).find(c => hit[1].test(c.toLowerCase())) || "its category"} : null;
+  // the shelf most of its categories point to (one stray category doesn't win); a tie goes to the first in SHELF_WORDS,
+  // and Adult Fiction ("fiction") only when nothing else fits
+  const cats = (d.categories || []).map(c => c.toLowerCase());
+  const votes = SHELF_WORDS.map(([id, re], i) => ({id, re, i, n: cats.filter(c => re.test(c)).length})).filter(v => v.n && shelfIndex[v.id]);
+  const hit = votes.filter(v => v.id !== "adult-fiction").sort((a, b) => b.n - a.n || a.i - b.i)[0] || votes[0];
+  const cat = hit && (d.categories || []).find(c => hit.re.test(c.toLowerCase()));
+  return hit ? {shelf: hit.id, why: !cat || cat.toLowerCase() === shelfIndex[hit.id].name.toLowerCase() ? "its category" : cat} : null;
 }
 document.addEventListener("click", e => {
   const s = e.target.closest("[data-suggest]"); if (!s) return;
@@ -877,6 +884,41 @@ document.addEventListener("click", async e => {
     document.getElementById("scannedBox").innerHTML = scannedBox(); }
 });
 const readAdd = () => ["isbn", "title", "authors", "publisher", "published", "pages", "shelf", "signed"].forEach(k => { const el = document.getElementById("add-" + k); if (el) addForm[k] = el.value.trim(); });
+// "Find another cover" (her ask, 1 Nov): other editions' covers, each shown whole at its own shape (a trimmed or oddly
+// cropped one shows as it is) with its size; she clicks one, or says none is hers and it's marked for a photo of her copy
+function coverPicker(f){
+  if (f.coverChoices === "busy") return `<div class="cover-pick"><p class="add-note">Looking for other covers…</p></div>`;
+  return `<div class="cover-pick"><div class="cover-pick-head"><b>Pick the cover that matches your copy</b>
+      <button type="button" class="btn quiet" data-cover-none>${ic("camera")}None of these: I’ll photograph mine</button>
+      <button type="button" class="btn quiet" data-cover-close>${ic("x")}Close</button></div>
+    ${f.coverChoices.length ? `<div class="cover-grid">${f.coverChoices.map((c, i) => `<button type="button" class="cover-choice${c.src === f.cover ? " on" : ""}" data-cover-pick="${i}" hidden>
+      <img src="${esc(c.src)}" alt=""><span>${esc(c.label)}${c.uk ? " · UK" : ""}</span><span class="size"></span></button>`).join("")}</div>`
+      : `<p class="add-note">No other covers found.</p>`}</div>`;
+}
+// a picture that doesn't load, or is a tiny placeholder (Amazon's blank 1×1), isn't offered; the rest show their size
+document.addEventListener("load", e => {
+  const img = e.target; if (!(img instanceof HTMLImageElement) || !img.closest(".cover-choice")) return;
+  const b = img.closest(".cover-choice");
+  if (img.naturalWidth < 120) return b.remove();
+  b.querySelector(".size").textContent = `${img.naturalWidth} × ${img.naturalHeight}`; b.hidden = false;
+}, true);
+document.addEventListener("error", e => { const b = e.target.closest && e.target.closest(".cover-choice"); if (b) b.remove(); }, true);
+document.addEventListener("click", async e => {
+  if (e.target.closest("#findCover")) {
+    readAdd(); addForm.coverChoices = "busy"; redrawAdd();
+    try { const r = await api("api/covers?" + new URLSearchParams({isbn: addForm.isbn, title: addForm.title, author: addForm.authors.split(",")[0].trim()}));
+      addForm.coverChoices = r.covers || []; }
+    catch { addForm.coverChoices = []; }
+    return redrawAdd();
+  }
+  // the right cover, but trimmed oddly or photographed at an angle (her ask, 1 Nov): marked to be straightened or re-cropped
+  // later; a second click takes the mark off
+  if (e.target.closest("#fixCover")) { readAdd(); addForm.coverFix = !addForm.coverFix; return redrawAdd(); }
+  const pick = e.target.closest("[data-cover-pick]");
+  if (pick) { readAdd(); addForm.cover = addForm.coverChoices[+pick.dataset.coverPick].src; addForm.coverWrong = addForm.coverFix = false; addForm.coverChoices = null; return redrawAdd(); }
+  if (e.target.closest("[data-cover-none]")) { readAdd(); addForm.coverWrong = true; addForm.coverFix = false; addForm.coverChoices = null; return redrawAdd(); }
+  if (e.target.closest("[data-cover-close]")) { readAdd(); addForm.coverChoices = null; return redrawAdd(); }
+});
 const redrawAdd = () => { const y = scrollY; document.getElementById("view").innerHTML = pageAdd(); scrollTo(0, y); };
 document.addEventListener("click", async e => {
   const from = e.target.closest("[data-add-from]");
@@ -886,9 +928,9 @@ document.addEventListener("click", async e => {
     readAdd(); if (!addForm.isbn) { addForm.note = "Type the ISBN first."; return redrawAdd(); }
     addForm.note = "Looking it up…"; redrawAdd();
     try { const d = await api("api/lookup?isbn=" + encodeURIComponent(addForm.isbn));
-      if (d.found) Object.assign(addForm, {title: d.title, authors: d.authors.join(", "), publisher: d.publisher, published: d.published, pages: d.pages || "", cover: d.cover, note: "Found it. Check the details and pick a shelf.",
+      if (d.found) Object.assign(addForm, {title: d.title, authors: d.authors.join(", "), publisher: d.publisher, published: d.published, pages: d.pages || "", cover: d.cover, coverWrong: false, coverFix: false, coverChoices: null, shelf: "", note: "Found it. Check the details and pick a shelf.",
         suggest: suggestShelf(d)});
-      else Object.assign(addForm, {title: "", authors: "", publisher: "", published: "", pages: "", cover: "", suggest: null,
+      else Object.assign(addForm, {title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", suggest: null, coverWrong: false, coverFix: false, coverChoices: null,
         note: "Open Library, Waterstones and Goodreads don’t know that number yet (new or special editions can take a while). Try the Waterstones price sticker if it has one, or fill in the details yourself."}); }
     catch { addForm.note = "Couldn’t reach Open Library. Fill in the details yourself."; }
     if (camChecked) { camChecked = false; addForm.note = `Read from a picture: check ${addForm.isbn} matches the book. ` + addForm.note; }
@@ -902,7 +944,7 @@ document.addEventListener("click", async e => {
     addForm.busy = true; addForm.note = ""; redrawAdd();
     try { const r = await api("api/books", {method: "POST", body: JSON.stringify({...addForm, authors: addForm.authors.split(",")})});
       if (r.ok) {
-        try { sessionStorage.setItem("library-just-added", JSON.stringify({id: r.id, shelf: addForm.shelf})); } catch {}
+        try { sessionStorage.setItem("library-just-added", JSON.stringify({id: r.id})); } catch {}
         addForm = {isbn: "", title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", note: "", busy: false};
         location.href = location.pathname + "?v=" + Date.now() + "#add"; return; }
       addForm.note = r.error || "That didn’t save."; }
@@ -1059,13 +1101,12 @@ if ("serviceWorker" in navigator && location.protocol.startsWith("http")) naviga
 // no "Install as app" offer: her shortcut window already has its own sharp taskbar icon (18 Oct)
 addEventListener("beforeinstallprompt", e => e.preventDefault());
 
-// back on Add a Book after adding (she adds in bulk, 1 Nov): the same shelf is ready for the next book, and the one just
-// added shows in a small note for a few seconds, with a link to it
+// back on Add a Book after adding (she adds in bulk, 1 Nov): the one just added shows in a small note for a few seconds,
+// with a link to it; the shelf starts empty for each book (her ask, 1 Nov)
 (function justAdded(){
   let a = null;
   try { a = JSON.parse(sessionStorage.getItem("library-just-added") || "null"); sessionStorage.removeItem("library-just-added"); } catch {}
   if (!a) return;
-  if (a.shelf) addForm.shelf = a.shelf;
   const b = bookIndex[a.id]; if (!b) return;
   const note = document.createElement("div"); note.className = "added-note"; note.setAttribute("role", "status");
   note.innerHTML = `<a href="${href(b)}">${cover(b)}</a><div><span class="label">${ic("check")}Added to ${esc((shelfIndex[b.shelf] || {}).name || "the shelves")}</span>
