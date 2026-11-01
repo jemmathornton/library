@@ -564,7 +564,9 @@ function pageAdd(){
             <div class="two">${field("pages", "Pages", 'inputmode="numeric"')}
               <label><span>Shelf${!f.suggest ? "" : f.suggest.shelf !== f.shelf ? ` <button type="button" class="suggest" data-suggest="${f.suggest.shelf}">Suggested: ${esc(shelfIndex[f.suggest.shelf].name)} (${esc(f.suggest.why)}) · Use it</button>`
                 : ` <span class="suggest">Suggested: ${esc(shelfIndex[f.suggest.shelf].name)} (${esc(f.suggest.why)}) ✓</span>`}</span><select id="add-shelf"><option value="">Choose a shelf…</option>${SHELVES.filter(s => s.libib).map(s => `<option value="${s.id}"${f.shelf === s.id ? " selected" : ""}>${esc(s.name)}</option>`).join("")}</select></label></div>
-            <label><span>Signed</span><select id="add-signed">${[["", "Not signed"], ["signed", "Signed"], ["to-you", "Signed to you"]].map(([v, t]) => `<option value="${v}"${(f.signed || "") === v ? " selected" : ""}>${t}</option>`).join("")}</select></label>
+            <div class="two"><label><span>Signed</span><select id="add-signed">${[["", "Not signed"], ["signed", "Signed"], ["to-you", "Signed to you"]].map(([v, t]) => `<option value="${v}"${(f.signed || "") === v ? " selected" : ""}>${t}</option>`).join("")}</select></label>
+              ${field("special", "Special edition (empty if not)", `list="add-editions" autocomplete="off" placeholder="e.g. Illumicrate Edition"`)}
+              <datalist id="add-editions">${SPECIAL_EDITIONS().map(x => `<option value="${esc(x)}">`).join("")}</datalist></div>
             <button class="btn pick" type="button" id="addSave"${served && !f.busy ? "" : " disabled"}>${ic("plus")}${f.busy ? "Adding…" : "Add to the shelf"}</button>
           </div></div>${f.coverChoices ? coverPicker(f) : ""}</div>`
     + (served ? `<details class="scan-setup" id="scanSetup"><summary>Set up phone scanning</summary><ol>
@@ -887,7 +889,9 @@ document.addEventListener("click", async e => {
   if (drop) { try { scanList = (await api("api/scanned/remove", {method: "POST", body: JSON.stringify({isbn: drop.dataset.scanRemove})})).left; } catch {}
     document.getElementById("scannedBox").innerHTML = scannedBox(); }
 });
-const readAdd = () => ["isbn", "title", "authors", "publisher", "published", "pages", "shelf", "signed"].forEach(k => { const el = document.getElementById("add-" + k); if (el) addForm[k] = el.value.trim(); });
+// her special editions so far, offered as she types (1 Nov: the Add page had no way to say a copy is special)
+const SPECIAL_EDITIONS = () => [...new Set(BOOKS.map(b => b.special).filter(Boolean))].sort();
+const readAdd = () => ["isbn", "title", "authors", "publisher", "published", "pages", "shelf", "signed", "special"].forEach(k => { const el = document.getElementById("add-" + k); if (el) addForm[k] = el.value.trim(); });
 // "Find another cover" (her ask, 1 Nov): other editions' covers, each shown whole at its own shape (a trimmed or oddly
 // cropped one shows as it is) with its size; she clicks one, or says none is hers and it's marked for a photo of her copy
 function coverPicker(f){

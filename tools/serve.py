@@ -168,10 +168,72 @@ def best_cover(found):
     return best
 
 
+def fetch_text(url, opener=None, tries=2):
+    """A page as text; Goodreads sometimes answers with an empty page or an error, and a second ask usually works."""
+    for n in range(tries):
+        try:
+            with (opener.open if opener else urllib.request.urlopen)(urllib.request.Request(url, headers=UA), timeout=20) as r:
+                text = r.read().decode('utf-8', 'replace')
+            if text:
+                return text
+        except Exception:
+            pass
+        if n + 1 < tries:
+            time.sleep(1.5)
+    return ''
+
+
+def goodreads_editions(isbn, title, author):
+    """Every edition Goodreads lists for the book (its editions page), English only, each cover at full size."""
+    import http.cookiejar
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
+    # her ISBN takes Goodreads straight to the book's page (a list of results has no editions link of the book's own)
+    page = fetch_text('https://www.goodreads.com/search?' + urllib.parse.urlencode({'q': isbn}), opener) if isbn else ''
+    work = re.search(r'/work/editions/(\d+)', page) if 'itemtype="http://schema.org/Book"' not in page else None
+    if not work:   # her ISBN unknown there: by title and author instead
+        # title and surname only: with initials too, Goodreads may jump straight to one book page, which could be a
+        # study guide; a list lets the real book be picked
+        surname, best = (author.split() or [''])[-1].lower(), (-1, '')
+        page = fetch_text('https://www.goodreads.com/search?' + urllib.parse.urlencode({'q': f'{title} {surname}'.strip()}), opener)
+        # the result by her author with the most ratings: the real book, not a study guide or a copy under another name
+        for row in page.split('itemtype="http://schema.org/Book"')[1:]:
+            link = re.search(r'href="(/book/show/[^"?]+)', row)
+            by = ' '.join(re.findall(r'itemprop="name">([^<]+)', row)).lower()
+            n = re.search(r'([\d,]+) ratings?', row)
+            if link and surname and surname in by and (int(n.group(1).replace(',', '')) if n else 0) > best[0]:
+                best = (int(n.group(1).replace(',', '')) if n else 0, link.group(1))
+        if best[1]:
+            page = fetch_text('https://www.goodreads.com' + best[1], opener)
+        # Goodreads' newer results page has no such rows, but lists each result's editions link, best match first
+        work = re.search(r'/work/editions/(\d+)', page)
+    if not work:
+        return []
+    out = []
+    for part in fetch_text(f'https://www.goodreads.com/work/editions/{work.group(1)}?per_page=100', opener).split('class="elementList clearFix"')[1:]:
+        img = re.search(r'<img[^>]+src="(https://i\.gr-assets\.com/[^"]+)"', part)
+        text = html.unescape(re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', part)))
+        if not img or 'nophoto' in img.group(1) or re.search(r'Edition language:\s*(?!English)\w', text):
+            continue
+        when = re.search(r'Published (\w+ (?:\d+\w\w )?\d{4}|\d{4})(?: by (.+?))?\s+(?:Paperback|Hardcover|Mass Market|Kindle|ebook|Audio|Library|Board|Unknown|Author)', text)
+        label = ', '.join(x for x in [(when.group(2) or '').strip(' ,') if when else '', when.group(1) if when else ''] if x) or 'Another edition'
+        out.append((re.sub(r'\._S[XY]\d+_', '', img.group(1)), 'Goodreads: ' + label))
+    return out
+
+
+def abebooks_photos(query):
+    """Sellers' own photos of real copies on AbeBooks UK (of her ISBN, or of the book in any edition): often taken at an
+    angle on a table, which "Cropped or at an angle" can then put right."""
+    page = fetch_text('https://www.abebooks.co.uk/servlet/SearchResults?' + urllib.parse.urlencode({**query, 'sortby': 17}))
+    ids = list(dict.fromkeys(re.findall(r'pictures\.abebooks\.com/inventory/(\d+)\._SL300_\.jpg', page)))
+    return [(f'https://pictures.abebooks.com/inventory/{i}._SL1000_.jpg', 'AbeBooks seller’s photo') for i in ids[:12]]
+
+
 def other_covers(isbn, title, author):
     """Covers to choose from on the Add page's "Find another cover" (her ask, 1 Nov: the looked-up one can be the wrong
-    edition, or trimmed oddly): this ISBN at Amazon, World of Books and Open Library, then every English edition of the
-    book Open Library knows, UK ones (published in London, the UK or England) first. She picks; nothing is chosen for her."""
+    edition, or trimmed oddly): this ISBN at Amazon, World of Books and Open Library; AbeBooks UK sellers' photos of
+    copies of this ISBN; every English edition Goodreads and Open Library list (Open Library's UK ones first); then
+    AbeBooks UK photos of the book in any edition. She picks; nothing is chosen for her."""
+    from concurrent.futures import ThreadPoolExecutor
     out, seen = [], set()
 
     def put(src, label, uk=False):
@@ -179,6 +241,17 @@ def other_covers(isbn, title, author):
             seen.add(src)
             out.append({'src': src, 'label': label, 'uk': uk})
     i = isbn13(isbn)
+    pool = ThreadPoolExecutor(3)
+    def bg(f, *x):   # asked alongside; a site that fails just adds nothing
+        def run():
+            try:
+                return f(*x)
+            except Exception:
+                return []
+        return pool.submit(run)
+    gr = bg(goodreads_editions, i, title, author)
+    abe_mine = bg(abebooks_photos, {'isbn': i}) if i else bg(lambda: [])
+    abe_any = bg(abebooks_photos, {'an': author, 'tn': title}) if title else bg(lambda: [])
     if re.fullmatch(r'97[89]\d{10}', i):
         if isbn10(i):
             put(f'https://images-na.ssl-images-amazon.com/images/P/{isbn10(i)}.01._SCRMZZZZZZ_.jpg', 'Amazon, your ISBN')
@@ -212,9 +285,15 @@ def other_covers(isbn, title, author):
         uk = bool(uk_place.search(' '.join(e.get('publish_places', [])))) or e.get('publish_country', '') in ('enk', 'stk', 'xxk')
         label = ', '.join(x for x in [(e.get('publishers') or [''])[0], e.get('publish_date', '')] if x) or 'Another edition'
         rows.append((not uk, f'https://covers.openlibrary.org/b/id/{cov[0]}-L.jpg', label, uk))
+    for src, label in abe_mine.result():
+        put(src, label + ', your ISBN')
+    for src, label in gr.result():
+        put(src, label)
     for _, src, label, uk in sorted(rows, key=lambda r: r[0]):
         put(src, label, uk)
-    return out[:40]
+    for src, label in abe_any.result():
+        put(src, label)
+    return out[:60]
 
 
 STRAIGHT = os.path.join(SITE, 'covers', '_straightened')   # straightened covers waiting to be added (not kept in git)
@@ -224,9 +303,11 @@ STRAIGHT_URL = re.compile(r'covers/_straightened/[0-9a-f]{16}\.jpg')
 def straighten(src, edge=0):
     """"Cropped or at an angle" on the Add page (her ask, 1 Nov): a cover photographed at a slant, or with the table or
     cloth round it, is cut out along the book's four edges and pulled square. The background is the colour round the
-    picture's border; each edge of the book is a straight line fitted through where the background stops. An edge that
-    runs off the picture keeps the picture's own edge. She sees the result and can undo it, or trim less or more: edge
-    moves every edge out (more than 0) or in (less than 0) by that many pixels."""
+    picture's border; each edge of the book is a straight line fitted through where the background stops, and the four
+    corners are pulled square in true perspective (a book whose top is further from the camera than its bottom comes out
+    square too). An edge that runs off the picture is fitted through the part that shows; one wholly off it is the
+    picture's own edge. She sees the result and can undo it, or trim less or more: edge moves every edge out (more than
+    0) or in (less than 0) by that many pixels."""
     import hashlib
     import numpy as np
     from io import BytesIO
@@ -236,14 +317,17 @@ def straighten(src, edge=0):
     with urllib.request.urlopen(urllib.request.Request(src, headers=UA), timeout=20) as r:
         data = r.read()
     im = Image.open(BytesIO(data)).convert('RGB')
-    a = np.asarray(im, dtype=float)
-    h, w, _ = a.shape
-    border = np.concatenate([a[:6].reshape(-1, 3), a[-6:].reshape(-1, 3), a[:, :6].reshape(-1, 3), a[:, -6:].reshape(-1, 3)])
-    bg = np.median(border, axis=0)
-    # anything clearly unlike the background is book; "clearly" is set by how much the background itself varies, so a
-    # cover edge close to the background's colour (1 Nov: a dark green border on green cloth) isn't cut off
-    noise = np.percentile(np.sqrt(((border - bg) ** 2).sum(axis=1)), 95)
-    mask = np.sqrt(((a - bg) ** 2).sum(axis=2)) > min(60, max(22, noise * 1.6))
+    # book or background, judged by colour more than brightness (a cloth's folds and shadows change its brightness, not
+    # its colour), and in units of how much the background itself varies: the background is the typical colour round the
+    # picture's border (the middle value, so the book running off one edge doesn't change it), and a pixel is book when
+    # it's well outside that spread (1 Nov: a dark olive cover edge on green cloth was being cut off)
+    lab = np.asarray(im.convert('LAB'), dtype=float)
+    h, w, _ = lab.shape
+    border = np.concatenate([lab[:6].reshape(-1, 3), lab[-6:].reshape(-1, 3), lab[:, :6].reshape(-1, 3), lab[:, -6:].reshape(-1, 3)])
+    med = np.median(border, axis=0)
+    spread = np.median(np.abs(border - med), axis=0) * 1.4826 + np.array([2.0, 1.0, 1.0])
+    z = np.abs(lab - med) / spread
+    mask = np.maximum(z[..., 0] / 2, np.hypot(z[..., 1], z[..., 2])) > 4
     mask = np.asarray(Image.fromarray((mask * 255).astype(np.uint8)).filter(ImageFilter.MedianFilter(9))) > 127
     no = {'ok': False, 'error': 'Couldn’t find the edges of the book in this picture. Try Find another cover.'}
     if not .25 < mask.mean() < .97:
@@ -255,11 +339,12 @@ def straighten(src, edge=0):
     ry, cx = ry[mask[ry].any(1)], cx[mask[:, cx].any(0)]
 
     def line(t, v, lo, hi):
-        """v = slope * t + offset through the edge points; an edge mostly at the picture's own edge stays there."""
-        if np.mean(v <= lo + 2) > .3:
-            return 0.0, float(lo)
-        if np.mean(v >= hi - 2) > .3:
-            return 0.0, float(hi)
+        """v = slope * t + offset through the edge points. Points at the picture's own edge are where the book runs off
+        it, so they're left out; an edge that's nearly all off the picture is the picture's edge."""
+        off_pic = (v <= lo + 2) | (v >= hi - 2)
+        if off_pic.mean() > .8 or (~off_pic).sum() < 8:
+            return 0.0, float(lo if np.median(v) < (lo + hi) / 2 else hi)
+        t, v = t[~off_pic], v[~off_pic]
         k, c = np.polyfit(t, v, 1)
         for _ in range(2):   # leave out stray points (a thumb, a shadow) and fit again
             off = np.abs(v - (k * t + c))
@@ -281,7 +366,12 @@ def straighten(src, edge=0):
     H = round((np.hypot(bl[0] - tl[0], bl[1] - tl[1]) + np.hypot(br[0] - tr[0], br[1] - tr[1])) / 2)
     if W < 80 or H < 80 or not 1 < H / W < 2.2:
         return no
-    out = im.transform((W, H), Image.QUAD, (*tl, *bl, *br, *tr), Image.BICUBIC)
+    # true perspective: the straightened picture's corners map onto the four found in the photo
+    eq, rhs = [], []
+    for (X, Y), (x, y) in zip([(0, 0), (W, 0), (W, H), (0, H)], [tl, tr, br, bl]):
+        eq += [[X, Y, 1, 0, 0, 0, -x * X, -x * Y], [0, 0, 0, X, Y, 1, -y * X, -y * Y]]
+        rhs += [x, y]
+    out = im.transform((W, H), Image.PERSPECTIVE, tuple(np.linalg.solve(np.array(eq, float), np.array(rhs, float))), Image.BICUBIC)
     out = out.crop((1, 1, W - 1, H - 1))   # a hair inside the edges, so no background shows
     os.makedirs(STRAIGHT, exist_ok=True)
     jpg = BytesIO()
@@ -461,6 +551,14 @@ def add(book):
     added.append(b)
     if book.get('signed') in ('signed', 'to-you'):
         set_signed(b['id'], book['signed'])
+    special = re.sub(r'\s+', ' ', str(book.get('special') or '')).strip()[:80]
+    if special:   # a special edition (Illumicrate, sprayed edges...): data/editions.json, shown under the title with a sash
+        ed_path = os.path.join(DATA, 'editions.json')
+        eds = json.load(open(ed_path, encoding='utf-8')) if os.path.exists(ed_path) else {}
+        eds[b['id']] = special
+        with open(ed_path, 'w', encoding='utf-8', newline='\n') as fh:
+            json.dump(eds, fh, ensure_ascii=False, indent=1)
+            fh.write('\n')
     with open(ADDED, 'w', encoding='utf-8', newline='\n') as fh:
         json.dump(added, fh, ensure_ascii=False, indent=1)
         fh.write('\n')
