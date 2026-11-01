@@ -288,7 +288,7 @@ function pageHome(){
   const done = log.filter(isRead).filter(b => lastFinish(b)).sort((a, b) => lastFinish(b).localeCompare(lastFinish(a))).slice(0, 6);
   const yearReads = finishedIn(thisYear).length;
   const unreadOwned = BOOKS.filter(b => !isRead(b) && !isReading(b)).length;   // her to-read list is for borrowing, not this site (1 Nov)
-  const recent = [...BOOKS].sort((a, b) => (b.added || "").localeCompare(a.added || "")).slice(0, 6);
+  const recent = [...BOOKS].sort(SORTS.added[1]).slice(0, 6);
   const fan = s => { const withCover = s.books.filter(b => b.cover), pick = (withCover.length >= 3 ? withCover : s.books).slice(0, 3); return pick.map(b => cover(b)).join(""); };
   const shortDate = d => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(d || ""); return m ? `${+m[3]} ${MON[m[2] - 1]}` : ""; };
   return hero({kicker: "Home library", title: "Jemma’s <em>Library</em>", covers: [...BOOKS].sort(SORTS.added[1]),
@@ -307,13 +307,16 @@ function pageHome(){
 }
 
 // shelves are in author surname order, like a real bookcase (her choice, 18 Oct)
+const addedNo = b => /^add\d+$/.test(b.id) ? +b.id.slice(3) : 0;
 const SHELF_VIEW = {filter: "all", sort: "author"};
 let shelfView = {...SHELF_VIEW};
 const SORTS = {
   // within an author, a series stays together in reading order, filed where its name falls among the other titles
   author: ["Author surname", (a, b) => a.sortAuthor.localeCompare(b.sortAuthor) || shelfKey(a).localeCompare(shelfKey(b))],
   title: ["Title A–Z", (a, b) => a.sortTitle.localeCompare(b.sortTitle)],
-  added: ["Recently added", (a, b) => (b.added || "").localeCompare(a.added || "")],
+  // books added on the same day: the one added last comes first (1 Nov: books added here carry only the day, so a day's
+  // books came out oldest first); books added on the site are numbered in the order she added them
+  added: ["Recently added", (a, b) => (b.added || "").localeCompare(a.added || "") || addedNo(b) - addedNo(a)],
   old: ["Oldest first", (a, b) => (a.published || "9999").localeCompare(b.published || "9999")],
   new: ["Newest first", (a, b) => (b.published || "").localeCompare(a.published || "")],
   finished: ["Recently read", (a, b) => (finishes(b).sort().pop() || "").localeCompare(finishes(a).sort().pop() || "") || a.sortTitle.localeCompare(b.sortTitle)],

@@ -336,5 +336,41 @@
   "copies": 1,
   "addedHere": true,
   "surname": "Kershaw"
+ },
+ {
+  "id": "add0022",
+  "title": "Record of a Spaceborn Few",
+  "authors": [
+   {
+    "name": "Becky Chambers"
+   }
+  ],
+  "shelf": "science-fiction",
+  "isbn13": "9781473647640",
+  "publisher": "Hodder & Stoughton",
+  "published": "2018",
+  "pages": 358,
+  "added": "2026-11-01",
+  "copies": 1,
+  "addedHere": true,
+  "surname": "Chambers"
+ },
+ {
+  "id": "add0023",
+  "title": "A Closed and Common Orbit",
+  "authors": [
+   {
+    "name": "Becky Chambers"
+   }
+  ],
+  "shelf": "science-fiction",
+  "isbn13": "9781473621473",
+  "publisher": "Hodder & Stoughton",
+  "published": "2017",
+  "pages": 365,
+  "added": "2026-11-01",
+  "copies": 1,
+  "addedHere": true,
+  "surname": "Chambers"
  }
 ]
