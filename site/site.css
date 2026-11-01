@@ -447,3 +447,4 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .cam-aim{position:absolute;top:16px;left:16px;right:16px;aspect-ratio:16/9;pointer-events:none;
   background:linear-gradient(var(--brass),var(--brass)) center/62% 2px no-repeat}
 .cam-box p{margin:0;text-align:center;font-size:14px;font-weight:600;color:var(--muted)}
+.cam-buttons{display:flex;gap:10px}

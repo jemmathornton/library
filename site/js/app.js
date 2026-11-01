@@ -562,7 +562,8 @@ async function camOpen(){
   const panel = document.createElement("div"); panel.id = "camPanel"; panel.className = "cam-panel";
   panel.innerHTML = `<div class="cam-box"><video id="camVideo" muted playsinline></video><div class="cam-aim"></div>
     <p id="camMsg">Hold the barcode on the back of the book up to the camera, about a hand’s width away.</p>
-    <button class="btn" type="button" id="camStop">${ic("x")}Stop</button></div>`;
+    <div class="cam-buttons"><button class="btn" type="button" id="camShot">${ic("download")}Save a test picture</button>
+    <button class="btn" type="button" id="camStop">${ic("x")}Stop</button></div></div>`;
   document.body.appendChild(panel);
   const msg = t => { const m = document.getElementById("camMsg"); if (m) m.textContent = t; };
   try { await loadZxing(); }
@@ -608,6 +609,12 @@ async function camOpen(){
 document.addEventListener("click", e => {
   if (e.target.closest("#camOpen")) camOpen();
   if (e.target.closest("#camStop") || e.target.id === "camPanel") camClose();
+  if (e.target.closest("#camShot")) {   // one frame, as the camera gives it, to Downloads (1 Nov: to see why her webcam doesn't read)
+    const v = document.getElementById("camVideo"); if (!v || !v.videoWidth) return;
+    const c = document.createElement("canvas"); c.width = v.videoWidth; c.height = v.videoHeight; c.getContext("2d").drawImage(v, 0, 0);
+    const a = document.createElement("a"); a.download = `library-camera-test-${c.width}x${c.height}.png`; a.href = c.toDataURL("image/png"); a.click();
+    const m = document.getElementById("camMsg"); if (m) m.textContent = "Saved to your Downloads.";
+  }
 });
 document.addEventListener("keydown", e => { if (e.key === "Escape") camClose(); });
 addEventListener("hashchange", camClose);
