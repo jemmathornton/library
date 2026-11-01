@@ -475,7 +475,8 @@ function pageHistory(){
   return hero({kicker: "Your reading", title: "Reading <em>history</em>", covers: done,
       text: "Everything you’ve read, year by year.",
       figures: [[num(done.length), "read"], [num(finishedIn(thisYear).length), `finished in ${thisYear}`], [num(order.filter(y => y !== "undated").length), "years"]]})
-    + order.map(y => sectionHead(y === "undated" ? "Read, <em>date not recorded</em>" : `${y} <em>· ${plural(years[y].length, "book")}</em>`) + grid(years[y])).join("");
+    // every year folded to one line; click a year to open it (her choice, 1 Nov)
+    + `<div class="years">${order.map(y => `<details class="year"><summary><h2>${y === "undated" ? "Read, <em>date not recorded</em>" : `${y} <em>· ${plural(years[y].length, "book")}</em>`}</h2><span class="more">${ic("arrow-right")}</span></summary>${grid(years[y])}</details>`).join("")}</div>`;
 }
 
 // ---------- series, in place on the shelves (her choice, 18 Oct: no page of their own) ----------

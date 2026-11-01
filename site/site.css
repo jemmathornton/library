@@ -508,3 +508,16 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .pick-opts{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:16px}
 .pick-opts select{appearance:none;-webkit-appearance:none;cursor:pointer;padding:7px 30px 7px 13px;border-radius:99px;border:1px solid var(--line);font-size:13px;font-weight:700;color:var(--ink);
   background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2375664F' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 11px center/13px}
+
+/* History: each year folded to one line, opened with a click (her choice, 1 Nov) */
+.years{margin-top:40px;border-top:1px solid var(--line)}
+.year{border-bottom:1px solid var(--line)}
+.year summary{list-style:none;cursor:pointer;display:flex;align-items:baseline;justify-content:space-between;gap:16px;padding:16px 0}
+.year summary::-webkit-details-marker{display:none}
+.year summary h2{font-size:28px;line-height:1}
+.year summary h2 em{color:var(--muted)}
+.year summary .more{color:var(--muted)}
+.year summary .more .i{transition:transform .2s}
+.year[open] summary .more .i{transform:rotate(90deg)}
+.year summary:hover h2{text-decoration:underline;text-decoration-color:var(--brass);text-decoration-thickness:1px;text-underline-offset:5px}
+.year .books{padding:6px 0 34px}
