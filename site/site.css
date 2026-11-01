@@ -438,7 +438,9 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .cover.fit{aspect-ratio:1/var(--r)}
 .slot{aspect-ratio:2/3;display:flex;align-items:flex-end;justify-content:center}
 .slot .cover{width:100%}
-.slot .cover.fit{width:min(100%,calc(150% / var(--r)))}
+/* every cover the same height on the shelves (her ask, 1 Nov): a squarer book (a hardback, an A5 book) shows a little
+   wider instead of shorter, up to a quarter wider than the slot; only a very square one (picture books) is shorter */
+.slot .cover.fit{width:min(125%,calc(150% / var(--r)));flex:none}
 
 /* scanning with the laptop camera (1 Nov) */
 .cam-panel{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(22,17,12,.72)}

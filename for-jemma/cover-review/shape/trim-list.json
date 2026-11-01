@@ -1,0 +1,1436 @@
+[
+{
+"kind": "sg",
+"id": "",
+"key": "9780822948766",
+"title": "A Place in the World",
+"shelf": null,
+"ratio": 1.333,
+"isbn": "9780822948766",
+"found": []
+},
+{
+"kind": "book",
+"id": "xl1ntkrjps",
+"key": "9780340841457",
+"title": "A Treasury of Enid Blyton's School Stories",
+"shelf": "childrens",
+"ratio": 1.307,
+"isbn": "9780340841457",
+"found": []
+},
+{
+"kind": "book",
+"id": "add0003",
+"key": "id-add0003",
+"title": "An Anthology of New Feminist Translations",
+"shelf": "adult-fiction",
+"ratio": 1.418,
+"isbn": "",
+"found": []
+},
+{
+"kind": "book",
+"id": "u3p4qvtgnz",
+"key": "9780583333252",
+"title": "Autumn Story Brambly Hedge",
+"shelf": "childrens",
+"ratio": 1.282,
+"isbn": "9780583333252",
+"found": []
+},
+{
+"kind": "book",
+"id": "ayjgsn8psz",
+"key": "9780470105542",
+"title": "Big Java",
+"shelf": "non-fiction",
+"ratio": 1.277,
+"isbn": "9780470105542",
+"found": []
+},
+{
+"kind": "book",
+"id": "t0ubnhx93y",
+"key": "9780583333245",
+"title": "Brambly Hedge Spring Story",
+"shelf": "childrens",
+"ratio": 1.23,
+"isbn": "9780583333245",
+"found": []
+},
+{
+"kind": "book",
+"id": "e980mwz5u2",
+"key": "9780583333238",
+"title": "Brambly Hedge Winter Story",
+"shelf": "childrens",
+"ratio": 1.228,
+"isbn": "9780583333238",
+"found": []
+},
+{
+"kind": "book",
+"id": "og9dylk0an",
+"key": "9781903155509",
+"title": "Doreen",
+"shelf": "adult-fiction",
+"ratio": 1.429,
+"isbn": "9781903155509",
+"found": []
+},
+{
+"kind": "book",
+"id": "2ous4qktqt",
+"key": "9781408885260",
+"title": "Fantastic Beasts and Where to Find Them: Illustrated Edition",
+"shelf": "fantasy",
+"ratio": 1.19,
+"isbn": "9781408885260",
+"found": []
+},
+{
+"kind": "book",
+"id": "ob32jus0an",
+"key": "id-ob32jus0an",
+"title": "Fever Crumb (Mortal Engines Quartet)",
+"shelf": "science-fiction",
+"ratio": 1.429,
+"isbn": "9781407102429",
+"found": []
+},
+{
+"kind": "book",
+"id": "pydfdw7no7",
+"key": "9781446302903",
+"title": "Fifty Railways That Changed the Course of History",
+"shelf": "travel",
+"ratio": 1.374,
+"isbn": "9781446302903",
+"found": []
+},
+{
+"kind": "book",
+"id": "qhsk81lwe4",
+"key": "9780563179030",
+"title": "Great Railway Journeys of the World",
+"shelf": "travel",
+"ratio": 1.176,
+"isbn": "9780563179030",
+"found": []
+},
+{
+"kind": "book",
+"id": "2ous49etqt",
+"key": "9780470274361",
+"title": "HTML, XHTML, and CSS: Your Visual Blueprint for Designing Effective Web Pages (Wiley Desktop Editions)",
+"shelf": "non-fiction",
+"ratio": 1.333,
+"isbn": "9780470274361",
+"found": []
+},
+{
+"kind": "book",
+"id": "ayjgslapsz",
+"key": "9780786293629",
+"title": "Half-Moon Investigations",
+"shelf": "fantasy",
+"ratio": 1.332,
+"isbn": "9780786293629",
+"found": []
+},
+{
+"kind": "book",
+"id": "6uc5rly8dt",
+"key": "9781408890769",
+"title": "Harry Potter - A History of Magic: The Book of the Exhibition",
+"shelf": "fantasy",
+"ratio": 1.176,
+"isbn": "9781408890769",
+"found": []
+},
+{
+"kind": "sg",
+"id": "",
+"key": "9780545044257",
+"title": "Harry Potter Series Box Set",
+"shelf": null,
+"ratio": 1.144,
+"isbn": "9780545044257",
+"found": []
+},
+{
+"kind": "book",
+"id": "8gmvx77ohq",
+"key": "9781408845653",
+"title": "Harry Potter and the Chamber of Secrets: Illustrated Edition (Harry Potter Illustrated Editi)",
+"shelf": "fantasy",
+"ratio": 1.179,
+"isbn": "9781408845653",
+"found": []
+},
+{
+"kind": "book",
+"id": "w1fyocdisd",
+"key": "9781408845677",
+"title": "Harry Potter and the Goblet of Fire (Illustrated Edition)",
+"shelf": "fantasy",
+"ratio": 1.176,
+"isbn": "9781408845677",
+"found": []
+},
+{
+"kind": "book",
+"id": "4jim58dkbx",
+"key": "9781408845646",
+"title": "Harry Potter and the Philosopher's Stone: Illustrated Edition (Harry Potter Illustrated ed)",
+"shelf": "fantasy",
+"ratio": 1.176,
+"isbn": "9781408845646",
+"found": []
+},
+{
+"kind": "book",
+"id": "rihptdcxoz",
+"key": "9781408845660",
+"title": "Harry Potter and the Prisoner of Azkaban: Illustrated Edition (Harry Potter Illustrated Edtn)",
+"shelf": "fantasy",
+"ratio": 1.182,
+"isbn": "9781408845660",
+"found": []
+},
+{
+"kind": "book",
+"id": "ga48lc6bt4",
+"key": "9780007687763",
+"title": "How to Do Just About Everything",
+"shelf": "non-fiction",
+"ratio": 1.437,
+"isbn": "9780007687763",
+"found": []
+},
+{
+"kind": "book",
+"id": "f2fjo5ve5y",
+"key": "9781837587667",
+"title": "Lonely Planet Best in Travel 2026",
+"shelf": "non-fiction",
+"ratio": 1.272,
+"isbn": "9781837587667",
+"found": []
+},
+{
+"kind": "book",
+"id": "ft873the5y",
+"key": "9781837581719",
+"title": "Lonely Planet Flight-Free Europe",
+"shelf": "travel",
+"ratio": 1.263,
+"isbn": "9781837581719",
+"found": []
+},
+{
+"kind": "book",
+"id": "pym41t5no7",
+"key": "9780953478019",
+"title": "Mariana",
+"shelf": "adult-fiction",
+"ratio": 1.401,
+"isbn": "9780953478019",
+"found": []
+},
+{
+"kind": "book",
+"id": "w1fy8xkisd",
+"key": "9780590477246",
+"title": "Miss Spider's Tea Party",
+"shelf": "childrens",
+"ratio": 0.742,
+"isbn": "9780590477246",
+"found": []
+},
+{
+"kind": "sg",
+"id": "",
+"key": "9780545142991",
+"title": "Numbers",
+"shelf": null,
+"ratio": 1.408,
+"isbn": "9780545142991",
+"found": []
+},
+{
+"kind": "book",
+"id": "v654ap926q",
+"key": "9780802163622",
+"title": "Orbital",
+"shelf": "adult-fiction",
+"ratio": 1.443,
+"isbn": "9780802163622",
+"found": []
+},
+{
+"kind": "sg",
+"id": "",
+"key": "9781635575637",
+"title": "Piranesi",
+"shelf": null,
+"ratio": 1.416,
+"isbn": "9781635575637",
+"found": []
+},
+{
+"kind": "book",
+"id": "3kxu153arj",
+"key": "9780952317982",
+"title": "Positively Birmingham 2015",
+"shelf": "adult-fiction",
+"ratio": 0.99,
+"isbn": "9780952317982",
+"found": []
+},
+{
+"kind": "book",
+"id": "akdesrbpsz",
+"key": "9781782116820",
+"title": "Reasons to Stay Alive",
+"shelf": "non-fiction",
+"ratio": 1.366,
+"isbn": "9781782116820",
+"found": []
+},
+{
+"kind": "book",
+"id": "2ous4botqt",
+"key": "9780375843198",
+"title": "Sisterhood 3: Girls in Pants: The Third Summer of the Sisterhood",
+"shelf": "young-adult",
+"ratio": 1.333,
+"isbn": "9780375843198",
+"found": []
+},
+{
+"kind": "wish",
+"id": "mnefmna31h",
+"key": "id-mnefmna31h",
+"title": "Small Things Like These",
+"shelf": null,
+"ratio": 1.305,
+"isbn": "",
+"found": []
+},
+{
+"kind": "book",
+"id": "qhsk82ewe4",
+"key": "9780061240485",
+"title": "Stardust",
+"shelf": "fantasy",
+"ratio": 1.439,
+"isbn": "9780061240485",
+"found": []
+},
+{
+"kind": "book",
+"id": "hevtdyp19k",
+"key": "id-hevtdyp19k",
+"title": "Summer Story (Brambly Hedge)",
+"shelf": "childrens",
+"ratio": 1.222,
+"isbn": "9780583333269",
+"found": []
+},
+{
+"kind": "book",
+"id": "dmp9q8vu84",
+"key": "id-dmp9q8vu84",
+"title": "Tale of Martha B. Rabbit",
+"shelf": "childrens",
+"ratio": 1.41,
+"isbn": "9780681406230",
+"found": []
+},
+{
+"kind": "book",
+"id": "6ubmksc8dt",
+"key": "id-6ubmksc8dt",
+"title": "Teddy Bear's Picnic",
+"shelf": "childrens",
+"ratio": 0.994,
+"isbn": "9780216926615",
+"found": []
+},
+{
+"kind": "book",
+"id": "rihptf2xoz",
+"key": "9780316089258",
+"title": "The Ambassador's Mission",
+"shelf": "fantasy",
+"ratio": 1.333,
+"isbn": "9780316089258",
+"found": []
+},
+{
+"kind": "book",
+"id": "8gmvxllohq",
+"key": "9780575077126",
+"title": "The Art of Discworld (GOLLANCZ S.F.)",
+"shelf": "fantasy",
+"ratio": 1.075,
+"isbn": "9780575077126",
+"found": []
+},
+{
+"kind": "book",
+"id": "badmwepcho",
+"key": "9781910263198",
+"title": "The Call",
+"shelf": "adult-fiction",
+"ratio": 1.348,
+"isbn": "9781910263198",
+"found": []
+},
+{
+"kind": "book",
+"id": "ga48i0vbt4",
+"key": "9780416194470",
+"title": "The Complete My Naughty Little Sister Storybook",
+"shelf": "childrens",
+"ratio": 1.428,
+"isbn": "9780416194470",
+"found": []
+},
+{
+"kind": "book",
+"id": "ayjgssypsz",
+"key": "9780007115440",
+"title": "The Hobbit",
+"shelf": "fantasy",
+"ratio": 1.448,
+"isbn": "9780007115440",
+"found": []
+},
+{
+"kind": "wish",
+"id": "m4pqdta31h",
+"key": "id-m4pqdta31h",
+"title": "The Last Hero",
+"shelf": null,
+"ratio": 1.277,
+"isbn": "",
+"found": []
+},
+{
+"kind": "book",
+"id": "bpko7fzcho",
+"key": "9780575073777",
+"title": "The Last Hero (GOLLANCZ S.F.)",
+"shelf": "fantasy",
+"ratio": 1.277,
+"isbn": "9780575073777",
+"found": []
+},
+{
+"kind": "book",
+"id": "add0005",
+"key": "9781837262137",
+"title": "The Midnight Train",
+"shelf": "adult-fiction",
+"ratio": 1.4,
+"isbn": "9781837262137",
+"found": []
+},
+{
+"kind": "sg",
+"id": "",
+"key": "sg-the-poet-empress",
+"title": "The Poet Empress",
+"shelf": null,
+"ratio": 1.439,
+"isbn": "",
+"found": []
+},
+{
+"kind": "book",
+"id": "xl1n9dujps",
+"key": "9780575063488",
+"title": "The Pratchett Portfolio: A Compendium of Discworld Characters (GOLLANCZ S.F.)",
+"shelf": "fantasy",
+"ratio": 1.346,
+"isbn": "9780575063488",
+"found": []
+},
+{
+"kind": "sg",
+"id": "",
+"key": "9780345418265",
+"title": "The Princess Bride",
+"shelf": null,
+"ratio": 1.19,
+"isbn": "9780345418265",
+"found": []
+},
+{
+"kind": "book",
+"id": "9dbeyw86rp",
+"key": "9780091888053",
+"title": "The Science of Discworld II: The Globe: 2",
+"shelf": "fantasy",
+"ratio": 1.385,
+"isbn": "9780091888053",
+"found": []
+},
+{
+"kind": "sg",
+"id": "",
+"key": "sg-the-sword-of-kaigen",
+"title": "The Sword of Kaigen",
+"shelf": null,
+"ratio": 1.439,
+"isbn": "",
+"found": []
+},
+{
+"kind": "book",
+"id": "3kxuzsgarj",
+"key": "9780747599876",
+"title": "The Tales of Beedle the Bard",
+"shelf": "fantasy",
+"ratio": 1.406,
+"isbn": "9780747599876",
+"found": []
+},
+{
+"kind": "book",
+"id": "j7z46bzqlq",
+"key": "9780956010902",
+"title": "The Tales of Beedle the Bard (Collector's Edition)",
+"shelf": "fantasy",
+"ratio": 1.372,
+"isbn": "9780956010902",
+"found": []
+},
+{
+"kind": "book",
+"id": "ob32j7a0an",
+"key": "9780385611770",
+"title": "The Wit And Wisdom Of Discworld",
+"shelf": "fantasy",
+"ratio": 1.328,
+"isbn": "9780385611770",
+"found": []
+},
+{
+"kind": "book",
+"id": "0catj8bdcu",
+"key": "9780590748476",
+"title": "The Wonderful Pigs of Jillian Jiggs",
+"shelf": "childrens",
+"ratio": 1.008,
+"isbn": "9780590748476",
+"found": []
+},
+{
+"kind": "book",
+"id": "2ous4mdtqt",
+"key": "9781400049622",
+"title": "The Zombie Survival Guide: Complete Protection from the Living Dead",
+"shelf": "fantasy",
+"ratio": 1.435,
+"isbn": "9781400049622",
+"found": []
+},
+{
+"kind": "book",
+"id": "add0015",
+"key": "id-add0015",
+"title": "Under the Whispering Door (Illumicrate Edition)",
+"shelf": "fantasy",
+"ratio": 1.437,
+"isbn": "",
+"found": []
+},
+{
+"kind": "sg",
+"id": "",
+"key": "sg-ward",
+"title": "Ward",
+"shelf": null,
+"ratio": 1.376,
+"isbn": "",
+"found": []
+},
+{
+"kind": "book",
+"id": "qhsk6rkwe4",
+"key": "9780746020302",
+"title": "What Shall I Make? (What Shall I Do Today?)",
+"shelf": "childrens",
+"ratio": 1.362,
+"isbn": "9780746020302",
+"found": []
+},
+{
+"kind": "book",
+"id": "8us8n61ohq",
+"key": "id-8us8n61ohq",
+"title": "Where In The Zoo Are You?",
+"shelf": "childrens",
+"ratio": 1.302,
+"isbn": "",
+"found": []
+},
+{
+"kind": "book",
+"id": "w1fyob0isd",
+"key": "9780385609371",
+"title": "Where's My Cow? (Discworld)",
+"shelf": "fantasy",
+"ratio": 1.144,
+"isbn": "9780385609371",
+"found": []
+},
+{
+"kind": "book",
+"id": "prqbsmlno7",
+"key": "9780583304306",
+"title": "Boy Trouble At Trebizon",
+"shelf": "childrens",
+"ratio": 1.656,
+"isbn": "9780583304306",
+"found": []
+},
+{
+"kind": "book",
+"id": "3kxuzecarj",
+"key": "9780552146159",
+"title": "Carpe Jugulum: A Discworld Novel: 23",
+"shelf": "fantasy",
+"ratio": 1.779,
+"isbn": "9780552146159",
+"found": []
+},
+{
+"kind": "book",
+"id": "6uc5ye78dt",
+"key": "9780749719135",
+"title": "Claudine at St.Clare's",
+"shelf": "childrens",
+"ratio": 1.667,
+"isbn": "9780749719135",
+"found": []
+},
+{
+"kind": "book",
+"id": "ls5xds37b9",
+"key": "9780241615959",
+"title": "DK Eyewitness Japan",
+"shelf": "travel",
+"ratio": 1.719,
+"isbn": "9780241615959",
+"found": []
+},
+{
+"kind": "book",
+"id": "3kxuzkfarj",
+"key": "9781405370578",
+"title": "DK Eyewitness Top 10 Travel Guide: Delhi: Eyewitness Travel Guide 2010 (E)",
+"shelf": "travel",
+"ratio": 1.887,
+"isbn": "9781405370578",
+"found": []
+},
+{
+"kind": "book",
+"id": "6uc5rxa8dt",
+"key": "id-6uc5rxa8dt",
+"title": "Death's Shadow (The Demonata, Book 7)",
+"shelf": "fantasy",
+"ratio": 1.623,
+"isbn": "9780007260379",
+"found": []
+},
+{
+"kind": "book",
+"id": "v8dzn4d26q",
+"key": "9780007231331",
+"title": "Demon Apocalypse",
+"shelf": "fantasy",
+"ratio": 1.634,
+"isbn": "9780007231331",
+"found": []
+},
+{
+"kind": "book",
+"id": "m4rdhda31h",
+"key": "9780749742690",
+"title": "Enid Blyton's Sixth Form at St.Clare's",
+"shelf": "childrens",
+"ratio": 1.638,
+"isbn": "9780749742690",
+"found": []
+},
+{
+"kind": "book",
+"id": "6uc5yee8dt",
+"key": "9780749742706",
+"title": "Enid Blyton's Third Form at St.Clare's",
+"shelf": "childrens",
+"ratio": 1.639,
+"isbn": "9780749742706",
+"found": []
+},
+{
+"kind": "book",
+"id": "t0gfkrf93y",
+"key": "9780552131056",
+"title": "Equal Rites: A Discworld Novel",
+"shelf": "fantasy",
+"ratio": 1.673,
+"isbn": "9780552131056",
+"found": []
+},
+{
+"kind": "book",
+"id": "izer0znlqm",
+"key": "9781405346993",
+"title": "Europe",
+"shelf": "travel",
+"ratio": 1.751,
+"isbn": "9781405346993",
+"found": []
+},
+{
+"kind": "book",
+"id": "u3n6i35gnz",
+"key": "9781405348393",
+"title": "Eyewitness Travel Guide - USA",
+"shelf": "travel",
+"ratio": 1.747,
+"isbn": "9781405348393",
+"found": []
+},
+{
+"kind": "book",
+"id": "8gmvxjfohq",
+"key": "9780747554660",
+"title": "Fantastic Beasts and Where to Find Them (Comic Relief, Harry Potter's Schoolbooks)",
+"shelf": "fantasy",
+"ratio": 1.666,
+"isbn": "9780747554660",
+"found": []
+},
+{
+"kind": "wish",
+"id": "tojrmsq93y",
+"key": "id-tojrmsq93y",
+"title": "Feet of Clay (original paperback)",
+"shelf": null,
+"ratio": 1.683,
+"isbn": "",
+"found": []
+},
+{
+"kind": "book",
+"id": "bpkol86cho",
+"key": "9780749719142",
+"title": "Fifth Formers of St.Clare's",
+"shelf": "childrens",
+"ratio": 1.621,
+"isbn": "9780749719142",
+"found": []
+},
+{
+"kind": "book",
+"id": "u3n6iy8gnz",
+"key": "9780586010808",
+"title": "Foundation: 1/3 (The Foundation Series)",
+"shelf": "fantasy",
+"ratio": 1.67,
+"isbn": "9780586010808",
+"found": [
+{
+"src": "abebooks",
+"url": "https://pictures.abebooks.com/isbn/9780586010808-uk.jpg",
+"file": "u3n6iy8gnz-abebooks.jpg",
+"size": [
+310,
+500
+],
+"ratio": 1.613,
+"corr": 0.908
+}
+]
+},
+{
+"kind": "book",
+"id": "u3n6i49gnz",
+"key": "9780385601832",
+"title": "Girls In Tears",
+"shelf": "young-adult",
+"ratio": 1.724,
+"isbn": "9780385601832",
+"found": []
+},
+{
+"kind": "wish",
+"id": "akvei6dpsz",
+"key": "id-akvei6dpsz",
+"title": "Guards Guards (original paperback)",
+"shelf": null,
+"ratio": 1.666,
+"isbn": "",
+"found": []
+},
+{
+"kind": "book",
+"id": "yw7av3xr71",
+"key": "9780583305563",
+"title": "Hockey Term at Trebizon",
+"shelf": "childrens",
+"ratio": 1.639,
+"isbn": "9780583305563",
+"found": []
+},
+{
+"kind": "book",
+"id": "6uc5rqn8dt",
+"key": "9780552145428",
+"title": "Hogfather: A Discworld Novel",
+"shelf": "fantasy",
+"ratio": 1.707,
+"isbn": "9780552145428",
+"found": []
+},
+{
+"kind": "book",
+"id": "yw7a2ifr71",
+"key": "9781909531239",
+"title": "If I Stay",
+"shelf": "young-adult",
+"ratio": 1.645,
+"isbn": "9781909531239",
+"found": []
+},
+{
+"kind": "book",
+"id": "4jim5zekbx",
+"key": "9780575074491",
+"title": "Incompetence (GOLLANCZ S.F.)",
+"shelf": "fantasy",
+"ratio": 1.622,
+"isbn": "9780575074491",
+"found": []
+},
+{
+"kind": "book",
+"id": "bpko7zhcho",
+"key": "9780552142359",
+"title": "Interesting Times",
+"shelf": "fantasy",
+"ratio": 1.668,
+"isbn": "9780552142359",
+"found": []
+},
+{
+"kind": "book",
+"id": "u3n6wo7gnz",
+"key": "9780246118660",
+"title": "Into the Fourth at Trebizon",
+"shelf": "childrens",
+"ratio": 1.629,
+"isbn": "9780246118660",
+"found": []
+},
+{
+"kind": "book",
+"id": "ob32jie0an",
+"key": "9780552145985",
+"title": "Jingo",
+"shelf": "fantasy",
+"ratio": 1.677,
+"isbn": "9780552145985",
+"found": []
+},
+{
+"kind": "book",
+"id": "xl1ntp4jps",
+"key": "9781405270250",
+"title": "Kitty at St. Clare's",
+"shelf": "childrens",
+"ratio": 1.623,
+"isbn": "9781405270250",
+"found": [
+{
+"src": "amazon-l",
+"url": "https://images-na.ssl-images-amazon.com/images/P/140527025X.01.L.jpg",
+"file": "xl1ntp4jps-amazon-l.jpg",
+"size": [
+311,
+500
+],
+"ratio": 1.608,
+"corr": 0.82
+}
+]
+},
+{
+"kind": "book",
+"id": "9dbeydq6rp",
+"key": "9780241275450",
+"title": "Las Vegas - DK Eyewitness Travel Guide",
+"shelf": "travel",
+"ratio": 1.73,
+"isbn": "9780241275450",
+"found": []
+},
+{
+"kind": "book",
+"id": "6uc5rpa8dt",
+"key": "9781841495163",
+"title": "Last of the Wilds",
+"shelf": "fantasy",
+"ratio": 1.65,
+"isbn": "9781841495163",
+"found": []
+},
+{
+"kind": "sg",
+"id": "",
+"key": "9780449300022",
+"title": "Les Misérables",
+"shelf": null,
+"ratio": 1.639,
+"isbn": "9780449300022",
+"found": []
+},
+{
+"kind": "book",
+"id": "5601pkrv9x",
+"key": "9780552138918",
+"title": "Lords And Ladies",
+"shelf": "fantasy",
+"ratio": 1.669,
+"isbn": "9780552138918",
+"found": []
+},
+{
+"kind": "book",
+"id": "ob32x9l0an",
+"key": "9781795023108",
+"title": "Madame Bovary",
+"shelf": "childrens",
+"ratio": 1.748,
+"isbn": "9781795023108",
+"found": []
+},
+{
+"kind": "book",
+"id": "w1fyou8isd",
+"key": "9780552142366",
+"title": "Maskerade: A Discworld Novel",
+"shelf": "fantasy",
+"ratio": 1.642,
+"isbn": "9780552142366",
+"found": []
+},
+{
+"kind": "wish",
+"id": "59y4gluv9x",
+"key": "id-59y4gluv9x",
+"title": "Men at Arms (original paperback)",
+"shelf": null,
+"ratio": 1.674,
+"isbn": "",
+"found": []
+},
+{
+"kind": "book",
+"id": "v8dznrb26q",
+"key": "9780552149419",
+"title": "Monstrous Regiment (Discworld)",
+"shelf": "fantasy",
+"ratio": 1.678,
+"isbn": "9780552149419",
+"found": []
+},
+{
+"kind": "book",
+"id": "9dbekvn6rp",
+"key": "9780246114259",
+"title": "More Trouble at Trebizon",
+"shelf": "childrens",
+"ratio": 1.634,
+"isbn": "9780246114259",
+"found": []
+},
+{
+"kind": "book",
+"id": "rihpt6dxoz",
+"key": "9780552131063",
+"title": "Mort",
+"shelf": "fantasy",
+"ratio": 1.679,
+"isbn": "9780552131063",
+"found": []
+},
+{
+"kind": "wish",
+"id": "g3zhrqsbt4",
+"key": "id-g3zhrqsbt4",
+"title": "Mortal Engines (hardback)",
+"shelf": null,
+"ratio": 1.623,
+"isbn": "",
+"found": []
+},
+{
+"kind": "book",
+"id": "ayjgs5jpsz",
+"key": "9780552134637",
+"title": "Moving Pictures",
+"shelf": "fantasy",
+"ratio": 1.642,
+"isbn": "9780552134637",
+"found": []
+},
+{
+"kind": "sg",
+"id": "",
+"key": "9781579126254",
+"title": "Murder at the Vicarage",
+"shelf": null,
+"ratio": 1.645,
+"isbn": "9781579126254",
+"found": []
+},
+{
+"kind": "book",
+"id": "yqc2clqr71",
+"key": "9781609450786",
+"title": "My Brilliant Friend",
+"shelf": "adult-fiction",
+"ratio": 1.645,
+"isbn": "9781609450786",
+"found": [
+{
+"src": "amazon-l",
+"url": "https://images-na.ssl-images-amazon.com/images/P/1609450787.01.L.jpg",
+"file": "yqc2clqr71-amazon-l.jpg",
+"size": [
+321,
+500
+],
+"ratio": 1.558,
+"corr": 0.831
+},
+{
+"src": "waterstones",
+"url": "https://cdn.waterstones.com/bookjackets/large/9781/6094/9781609450786.jpg",
+"file": "yqc2clqr71-waterstones.jpg",
+"size": [
+321,
+500
+],
+"ratio": 1.558,
+"corr": 0.83
+},
+{
+"src": "amazon",
+"url": "https://images-na.ssl-images-amazon.com/images/P/1609450787.01._SCRMZZZZZZ_.jpg",
+"file": "yqc2clqr71-amazon.jpg",
+"size": [
+1155,
+1800
+],
+"ratio": 1.558,
+"corr": 0.829
+},
+{
+"src": "wob",
+"url": "https://image-server.worldofbooks.com/images/9781609450786.jpg",
+"file": "yqc2clqr71-wob.jpg",
+"size": [
+500,
+779
+],
+"ratio": 1.558,
+"corr": 0.829
+},
+{
+"src": "abebooks",
+"url": "https://pictures.abebooks.com/isbn/9781609450786-uk.jpg",
+"file": "yqc2clqr71-abebooks.jpg",
+"size": [
+321,
+500
+],
+"ratio": 1.558,
+"corr": 0.817
+}
+]
+},
+{
+"kind": "book",
+"id": "yw7a2omr71",
+"key": "9780552139267",
+"title": "Only You Can Save Mankind",
+"shelf": "fantasy",
+"ratio": 1.721,
+"isbn": "9780552139267",
+"found": []
+},
+{
+"kind": "book",
+"id": "he2qgem19k",
+"key": "9781405312417",
+"title": "Paris",
+"shelf": "travel",
+"ratio": 1.88,
+"isbn": "9781405312417",
+"found": []
+},
+{
+"kind": "book",
+"id": "ga48l1xbt4",
+"key": "9780552134613",
+"title": "Pyramids",
+"shelf": "fantasy",
+"ratio": 1.654,
+"isbn": "9780552134613",
+"found": []
+},
+{
+"kind": "book",
+"id": "izer0gslqm",
+"key": "9780552134644",
+"title": "Reaper Man",
+"shelf": "fantasy",
+"ratio": 1.676,
+"isbn": "9780552134644",
+"found": []
+},
+{
+"kind": "book",
+"id": "e9oha975u2",
+"key": "9781598805802",
+"title": "Road Trip USA Atlantic Coast",
+"shelf": "travel",
+"ratio": 1.78,
+"isbn": "9781598805802",
+"found": []
+},
+{
+"kind": "book",
+"id": "rihpt8uxoz",
+"key": "9780552138901",
+"title": "Small Gods",
+"shelf": "fantasy",
+"ratio": 1.675,
+"isbn": "9780552138901",
+"found": []
+},
+{
+"kind": "wish",
+"id": "cpfzj81mmk",
+"key": "id-cpfzj81mmk",
+"title": "Soul Music (original paperback)",
+"shelf": null,
+"ratio": 1.672,
+"isbn": "",
+"found": []
+},
+{
+"kind": "book",
+"id": "9dbeyxt6rp",
+"key": "9780552152624",
+"title": "Sourcery",
+"shelf": "fantasy",
+"ratio": 1.698,
+"isbn": "9780552152624",
+"found": []
+},
+{
+"kind": "book",
+"id": "8uiqpviohq",
+"key": "id-8uiqpviohq",
+"title": "Sourcery (original paperback)",
+"shelf": "fantasy",
+"ratio": 1.698,
+"isbn": "",
+"found": []
+},
+{
+"kind": "book",
+"id": "j7z46wuqlq",
+"key": "9781405918565",
+"title": "Spectacles",
+"shelf": "non-fiction",
+"ratio": 1.632,
+"isbn": "9781405918565",
+"found": []
+},
+{
+"kind": "book",
+"id": "dmp9qtfu84",
+"key": "9780749719111",
+"title": "Summer Term at St.Clare's",
+"shelf": "childrens",
+"ratio": 1.638,
+"isbn": "9780749719111",
+"found": []
+},
+{
+"kind": "book",
+"id": "e9ohakd5u2",
+"key": "9780552546935",
+"title": "The Amazing Maurice and His Educated Rodents",
+"shelf": "fantasy",
+"ratio": 1.643,
+"isbn": "9780552546935",
+"found": []
+},
+{
+"kind": "book",
+"id": "8gmvxnlohq",
+"key": "9781423124542",
+"title": "The Arctic Incident (Artemis Fowl)",
+"shelf": "fantasy",
+"ratio": 1.639,
+"isbn": "9781423124542",
+"found": []
+},
+{
+"kind": "book",
+"id": "m4rd1st31h",
+"key": "9780552124751",
+"title": "The Colour Of Magic",
+"shelf": "fantasy",
+"ratio": 1.64,
+"isbn": "9780552124751",
+"found": []
+},
+{
+"kind": "book",
+"id": "yw7av2ur71",
+"key": "9780552149518",
+"title": "The Da Vinci Code",
+"shelf": "adult-fiction",
+"ratio": 1.736,
+"isbn": "9780552149518",
+"found": []
+},
+{
+"kind": "book",
+"id": "nxwcetk41p",
+"key": "9780552146166",
+"title": "The Fifth Elephant: A Discworld Novel",
+"shelf": "fantasy",
+"ratio": 1.676,
+"isbn": "9780552146166",
+"found": []
+},
+{
+"kind": "book",
+"id": "0catqhedcu",
+"key": "9781857237252",
+"title": "The Flying Sorcerers: More Comic Tales of Fantasy",
+"shelf": "fantasy",
+"ratio": 1.703,
+"isbn": "9781857237252",
+"found": []
+},
+{
+"kind": "book",
+"id": "xl1n9v2jps",
+"key": "9781841493152",
+"title": "The High Lord: The Black Magician Trilogy Book Three",
+"shelf": "fantasy",
+"ratio": 1.644,
+"isbn": "9781841493152",
+"found": [
+{
+"src": "wob",
+"url": "https://image-server.worldofbooks.com/images/9781841493152.jpg",
+"file": "xl1n9v2jps-wob.jpg",
+"size": [
+500,
+785
+],
+"ratio": 1.57,
+"corr": 0.828
+},
+{
+"src": "amazon-l",
+"url": "https://images-na.ssl-images-amazon.com/images/P/1841493155.01.L.jpg",
+"file": "xl1n9v2jps-amazon-l.jpg",
+"size": [
+414,
+650
+],
+"ratio": 1.57,
+"corr": 0.828
+},
+{
+"src": "waterstones",
+"url": "https://cdn.waterstones.com/bookjackets/large/9781/8414/9781841493152.jpg",
+"file": "xl1n9v2jps-waterstones.jpg",
+"size": [
+254,
+400
+],
+"ratio": 1.575,
+"corr": 0.828
+}
+]
+},
+{
+"kind": "book",
+"id": "ls5xd3s7b9",
+"key": "9781250357243",
+"title": "The House in the Cerulean Sea (Illumicrate Edition)",
+"shelf": "fantasy",
+"ratio": 1.677,
+"isbn": "9781250357243",
+"found": []
+},
+{
+"kind": "book",
+"id": "t0gfkxe93y",
+"key": "9780552146142",
+"title": "The Last Continent: A Discworld Novel: 22",
+"shelf": "fantasy",
+"ratio": 1.71,
+"isbn": "9780552146142",
+"found": []
+},
+{
+"kind": "book",
+"id": "8gmvxqeohq",
+"key": "9780552128483",
+"title": "The Light Fantastic",
+"shelf": "fantasy",
+"ratio": 1.682,
+"isbn": "9780552128483",
+"found": []
+},
+{
+"kind": "book",
+"id": "5601pbmv9x",
+"key": "id-5601pbmv9x",
+"title": "The Magician's Apprentice",
+"shelf": "fantasy",
+"ratio": 1.629,
+"isbn": "9780316151337",
+"found": []
+},
+{
+"kind": "book",
+"id": "6uc5r4n8dt",
+"key": "9781841493138",
+"title": "The Magicians' Guild: Book 1 of the Black Magician (Black Magician Trilogy)",
+"shelf": "fantasy",
+"ratio": 1.652,
+"isbn": "9781841493138",
+"found": []
+},
+{
+"kind": "book",
+"id": "f2qfddie5y",
+"key": "id-f2qfddie5y",
+"title": "The Most Beautiful Stories of Beatrix Potter",
+"shelf": "childrens",
+"ratio": 1.714,
+"isbn": "9789898939630",
+"found": []
+},
+{
+"kind": "book",
+"id": "w1fy8kpisd",
+"key": "9780749719128",
+"title": "The Second Form at St.Clare's",
+"shelf": "childrens",
+"ratio": 1.655,
+"isbn": "9780749719128",
+"found": []
+},
+{
+"kind": "sg",
+"id": "",
+"key": "9780140167771",
+"title": "The Secret History",
+"shelf": null,
+"ratio": 1.655,
+"isbn": "9780140167771",
+"found": []
+},
+{
+"kind": "book",
+"id": "4jimemnkbx",
+"key": "9781444912111",
+"title": "The Secret Seven Short Story Collection",
+"shelf": "childrens",
+"ratio": 1.661,
+"isbn": "9781444912111",
+"found": []
+},
+{
+"kind": "book",
+"id": "izer0bflqm",
+"key": "9780552147682",
+"title": "The Truth",
+"shelf": "fantasy",
+"ratio": 1.678,
+"isbn": "9780552147682",
+"found": []
+},
+{
+"kind": "book",
+"id": "ga48i6fbt4",
+"key": "9780749719098",
+"title": "The Twins at St.Clare's",
+"shelf": "childrens",
+"ratio": 1.689,
+"isbn": "9780749719098",
+"found": []
+},
+{
+"kind": "sg",
+"id": "",
+"key": "9781520088204",
+"title": "To Sir, with Love",
+"shelf": null,
+"ratio": 1.639,
+"isbn": "9781520088204",
+"found": []
+},
+{
+"kind": "book",
+"id": "kql3v6aysl",
+"key": "9780385609340",
+"title": "Unseen Academicals",
+"shelf": "fantasy",
+"ratio": 1.678,
+"isbn": "9780385609340",
+"found": []
+},
+{
+"kind": "book",
+"id": "j7z460lqlq",
+"key": "9780552134651",
+"title": "Witches Abroad",
+"shelf": "fantasy",
+"ratio": 1.699,
+"isbn": "9780552134651",
+"found": []
+},
+{
+"kind": "book",
+"id": "ls5xdbh7b9",
+"key": "9780552134606",
+"title": "Wyrd Sisters: A Discworld Novel",
+"shelf": "fantasy",
+"ratio": 1.653,
+"isbn": "9780552134606",
+"found": []
+}
+]
