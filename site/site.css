@@ -487,3 +487,24 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .shelf-card .txt{padding:11px 13px 13px;gap:8px}
 .shelf-card h3{font-size:20px}
 .shelf-card .txt span{font-size:14.5px}
+
+/* "What should I read next?": a gold button, and a small pop-up (her choice, 1 Nov) */
+.btn.pick-open{background:var(--brass);border-color:var(--brass);color:#2A1F16;font-size:13px;align-self:center}
+.btn.pick-open:hover{background:#EFC659;border-color:#EFC659}
+.btn.pick-open .i{color:#2A1F16}
+.toolbar .pick-open{margin-left:auto}
+.toolbar .pick-open + .count{margin-left:0}
+.pick-panel{position:fixed;inset:0;z-index:45;display:grid;place-items:center;background:rgba(22,17,12,.45)}
+.pick-pop{width:min(620px,92vw);display:grid;grid-template-columns:120px minmax(0,1fr);gap:20px;align-items:start;padding:20px;border-radius:18px;
+  background:var(--surface);box-shadow:0 24px 60px rgba(0,0,0,.45)}
+.pick-pop:not(:has(.pick-book)){grid-template-columns:1fr}
+.pick-book{display:block;text-decoration:none}
+.pick-body .label{font:800 11px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.pick-title{text-decoration:none;color:inherit}
+.pick-title h3{font-size:28px;line-height:1.08;margin:6px 0 4px}
+.pick-title:hover h3{text-decoration:underline;text-decoration-color:var(--brass);text-decoration-thickness:1px;text-underline-offset:5px}
+.pick-body .by{color:var(--muted);font-size:13.5px}
+.pick-body p{margin:10px 0 0;font-size:14px;color:var(--muted)}
+.pick-opts{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:16px}
+.pick-opts select{appearance:none;-webkit-appearance:none;cursor:pointer;padding:7px 30px 7px 13px;border-radius:99px;border:1px solid var(--line);font-size:13px;font-weight:700;color:var(--ink);
+  background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2375664F' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 11px center/13px}

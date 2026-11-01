@@ -295,10 +295,9 @@ function pageHome(){
       figures: [[num(yearReads), `read in ${thisYear}`], [num(BOOKS.length), "books on the shelves"], [num(unreadOwned), "not read yet on your shelves"], [num(AUTHORS.length), "authors"]]})
     + (now.length ? sectionHead("Reading <em>now</em>", `<a class="more" href="#reading">All your reading</a>`)
         + `<div class="now-row">${now.map(b => { const st = reading(b).started; return `<a class="now-card" href="${href(b)}">${cover(b, "", true)}<div><span class="label">Reading now</span><h3>${esc(b.t)}</h3><div class="by">${esc(b.by)}</div>${st ? `<div class="by">Started ${niceDate(st)}</div>` : ""}</div></a>`; }).join("")}</div>` : "")
-    + (done.length ? sectionHead("Just <em>finished</em>") + `<div class="books row">${done.map(b => card(b, `Finished ${shortDate(lastFinish(b))}`)).join("")}</div>` : "")
+    + (done.length ? sectionHead("Just <em>finished</em>", pickButton()) + `<div class="books row">${done.map(b => card(b, `Finished ${shortDate(lastFinish(b))}`)).join("")}</div>` : "")
     // newest books, straight under what she's just read (her ask, 1 Nov; it was at the foot of the page)
-    + sectionHead("New on the <em>shelves</em>") + `<div class="books row">${recent.map(b => card(b, `Added ${niceDate(b.added)}`)).join("")}</div>`
-    + picker()
+    + sectionHead("New on the <em>shelves</em>", done.length ? "" : pickButton()) + `<div class="books row">${recent.map(b => card(b, `Added ${niceDate(b.added)}`)).join("")}</div>`
     + sectionHead("The <em>shelves</em>", `<a class="more" href="#shelves">See them all at once</a>`)
     + `<div class="shelves">${SHELVES.filter(s => s.books.length).map(s => `<a class="shelf-card" href="#shelf-${s.id}" style="--c:${s.color}"><div class="fan">${fan(s)}</div>
         <div class="txt"><h3>${esc(s.name)}</h3><span>${plural(s.books.length, "book")}</span></div></a>`).join("")}</div>`
@@ -332,10 +331,10 @@ function shelfBooks(list, grouped = currentGrouped){
       <div class="chips">${Object.entries(FILTERS).map(([k, [l]]) => `<button type="button" data-filter="${k}" class="${shelfView.filter === k ? "on" : ""}">${l}</button>`).join("")}</div>
       <select id="sort" aria-label="Sort by">${Object.entries(SORTS).map(([k, [l]]) => `<option value="${k}"${shelfView.sort === k ? " selected" : ""}>${l}</option>`).join("")}</select>
       <div class="views"><button type="button" data-view="covers" class="${view === "covers" ? "on" : ""}" aria-label="Covers">${ic("grid")}</button><button type="button" data-view="list" class="${view === "list" ? "on" : ""}" aria-label="List">${ic("list")}</button></div>
-      <span class="count">${plural(shown.length, "book")}</span>
+      ${pickButton(grouped ? "" : currentShelf)}<span class="count">${plural(shown.length, "book")}</span>
     </div>` + body;
 }
-let currentList = [], currentGrouped = false;
+let currentList = [], currentGrouped = false, currentShelf = "";
 function pageAllShelves(){
   currentList = BOOKS.concat(NOT_OWNED); currentGrouped = true;
   const shelves = SHELVES.filter(s => s.books.length && s.libib).length;
@@ -344,7 +343,7 @@ function pageAllShelves(){
     + `<div id="shelfBooks">${shelfBooks(currentList)}</div>`;
 }
 function pageShelf(s){
-  currentList = s.books.concat(s.notOwned || []); currentGrouped = false;
+  currentList = s.books.concat(s.notOwned || []); currentGrouped = false; currentShelf = s.id;
   const authors = new Set(s.books.map(b => b.by)).size, pages = s.books.reduce((n, b) => n + (b.pages || 0), 0);
   return hero({kicker: `<a href="#home">Shelf</a>`, title: esc(s.name), color: s.color, text: s.note ? esc(s.note) : "", covers: [...s.books].sort(SORTS.author[1]),
       figures: [[num(s.books.length), "books"], [num(authors), "authors"], [num(booksRead(s.books)), "read"], ...((s.notOwned || []).length ? [[num(s.notOwned.length), "read but not owned"]] : []), [num(pages), "pages"]]})
@@ -462,7 +461,8 @@ function pageReading(){
   return hero({kicker: "Your reading", title: "Reading <em>log</em>", covers: now.concat(done),
       text: `Everything you’ve read and are reading. Books you’ve read but don’t own (library books, ebooks, audiobooks) sit on the shelves too, marked Not owned.`,
       figures: [[num(now.length), "reading now"], [num(done.length), "read"], [num(finishedIn(thisYear).length), `finished in ${thisYear}`], [num(next.length), "not read yet on your shelves"]]})
-    + sectionHead("Reading <em>now</em>") + (now.length ? grid(now) : `<p class="empty">Nothing on the go.</p>`)
+    + (now.length ? sectionHead("Reading <em>now</em>") + grid(now) : "")
+    + (done.length ? sectionHead("Recently <em>finished</em>", pickButton()) + `<div class="books row">${done.slice(0, 6).map(b => card(b, finishes(b).length ? `Finished ${niceDate(finishes(b).sort().pop())}` : "")).join("")}</div>` : "")
     + order.map(y => sectionHead(y === "undated" ? "Read, <em>date not recorded</em>" : `${y} <em>· ${plural(years[y].length, "book")}</em>`) + grid(years[y])).join("")
     + (later.length ? sectionHead("Paused or <em>didn’t finish</em>") + grid(later) : "")
     + `<div class="note">${ic("info")}<div><b>${num(done.length - away)} of the books you’ve read are on your shelves; ${num(away)} aren’t.</b></div></div>`;
@@ -480,14 +480,34 @@ function pickPool(){
   const seen = new Set();   // one copy of each book
   return pool.filter(b => { const k = norm(b.t) + "|" + (b.surname || ""); if (seen.has(k)) return false; seen.add(k); return true; });
 }
-function picker(){
+// "What should I read next?" (her choice, 1 Nov): a button, not a section, beside Just Finished on the home page and the
+// Reading page, on All Shelves (any shelf, or pick one) and on each shelf (that shelf); it opens a small pop-up
+let pickFixed = false;
+const pickButton = shelf => `<button class="btn pick pick-open" type="button" data-pick-shelf="${shelf || ""}">${ic("sparkle")}${shelf ? "Pick a book from this shelf" : "What should I read next?"}</button>`;
+function pickPanel(){
   const pool = pickPool(), b = picked && pool.includes(picked) ? picked : null;
-  return `<div class="picker" id="picker"><div class="picker-head"><h2>What should I <em>read next?</em></h2>
-      <div class="picker-opts"><select id="pickShelf" aria-label="Shelf"><option value="">Any shelf</option>${SHELVES.filter(s => s.books.length).map(s => `<option value="${s.id}"${pickShelf === s.id ? " selected" : ""}>${esc(s.name)}</option>`).join("")}</select>
-      <button class="btn pick" type="button" id="pickOne">${ic("sparkle")}${b ? "Pick another" : "Pick one"}</button></div></div>
-    ${b ? `<a class="picked" href="${href(b)}">${cover(b)}<div><span class="label">How about…</span><h3>${esc(b.t)}</h3><div class="by">${esc(b.by)} · ${esc(shelfIndex[b.shelf].name)}</div>${b.description ? `<p>${esc(b.description.slice(0, 260))}${b.description.length > 260 ? "…" : ""}</p>` : ""}</div></a>`
-      : `<p class="empty">${pool.length ? `${plural(pool.length, "book")} to choose from.` : "Nothing to pick from there."}</p>`}</div>`;
+  return `<div class="pick-pop" role="dialog" aria-label="What should I read next?">
+    ${b ? `<a class="pick-book" href="${href(b)}">${cover(b)}</a>` : ""}
+    <div class="pick-body">
+      ${b ? `<span class="label">How about…</span><a class="pick-title" href="${href(b)}"><h3>${esc(b.t)}</h3></a>
+        <div class="by">${esc(b.by)} · ${esc(shelfIndex[b.shelf].name)}</div>
+        ${b.description ? `<p>${esc(b.description.slice(0, 220))}${b.description.length > 220 ? "…" : ""}</p>` : ""}`
+        : `<p class="empty">${pool.length ? "" : "Nothing unread there."}</p>`}
+      <div class="pick-opts">
+        ${pickFixed ? "" : `<select id="pickShelf" aria-label="Shelf"><option value="">Any shelf</option>${SHELVES.filter(s => s.books.length).map(s => `<option value="${s.id}"${pickShelf === s.id ? " selected" : ""}>${esc(s.name)}</option>`).join("")}</select>`}
+        <button class="btn pick" type="button" id="pickOne">${ic("sparkle")}Pick another</button>
+        <button class="btn" type="button" id="pickClose">${ic("x")}Close</button>
+      </div>
+    </div></div>`;
 }
+function pickNew(){ const pool = pickPool().filter(b => b !== picked); picked = pool.length ? pool[Math.floor(Math.random() * pool.length)] : null; }
+function pickShow(){
+  let box = document.getElementById("pickPanel");
+  if (!box) { box = document.createElement("div"); box.id = "pickPanel"; box.className = "pick-panel"; document.body.appendChild(box); }
+  box.innerHTML = pickPanel();
+  box.querySelectorAll("img").forEach(i => i.loading = "eager");   // shown at once, not when scrolled to
+}
+const pickHide = () => document.getElementById("pickPanel")?.remove();
 
 function pageToBuy(){
   // found one? "Got it" adds it to a shelf, and it comes off this list by itself (her ask, 18 Oct)
@@ -836,13 +856,18 @@ document.addEventListener("click", e => {
   } else if (t.dataset.jump) { e.preventDefault(); document.getElementById(t.dataset.jump).scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}); }
 });
 document.addEventListener("click", e => { const s = e.target.closest(".spoiler"); if (s) s.classList.toggle("shown"); });
-document.addEventListener("click", e => { if (!e.target.closest("#pickOne")) return;
-  const pool = pickPool().filter(b => b !== picked); picked = pool.length ? pool[Math.floor(Math.random() * pool.length)] : null;
-  document.getElementById("picker").outerHTML = picker(); });
+document.addEventListener("click", e => {
+  const open = e.target.closest(".pick-open");
+  if (open) { pickShelf = open.dataset.pickShelf; pickFixed = !!pickShelf; picked = null; pickNew(); return pickShow(); }
+  if (e.target.closest("#pickOne")) { pickNew(); return pickShow(); }
+  if (e.target.closest("#pickClose") || e.target.id === "pickPanel" || e.target.closest(".pick-book, .pick-title")) pickHide();
+});
+document.addEventListener("keydown", e => { if (e.key === "Escape") pickHide(); });
+addEventListener("hashchange", pickHide);
 document.addEventListener("change", e => {
   const t = e.target;
   if (t.id === "sort") { shelfView.sort = t.value; document.getElementById("shelfBooks").innerHTML = shelfBooks(currentList); }
-  else if (t.id === "pickShelf") { pickShelf = t.value; picked = null; document.getElementById("picker").outerHTML = picker(); }
+  else if (t.id === "pickShelf") { pickShelf = t.value; picked = null; pickNew(); pickShow(); }
 });
 
 // installed as a Chrome app from the local server (sharp taskbar icon); opened straight from the folder it's an ordinary page
