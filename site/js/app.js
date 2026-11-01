@@ -608,7 +608,7 @@ async function camOpen(){
   panel.innerHTML = `<div class="cam-box"><div class="cam-view"><video id="camVideo" muted playsinline></video><div class="cam-aim"></div></div>
     <div class="cam-zoom"><canvas id="camZoom" width="640" height="200"></canvas><span>What the reader sees in the box, close up</span></div>
     <p id="camMsg">Starting the camera…</p>
-    <div class="cam-buttons"><button class="btn pick" type="button" id="camStill">${ic("scan-barcode")}Take a picture in 3…</button><button class="btn" type="button" id="camShot">${ic("download")}Save a test picture</button>
+    <div class="cam-buttons"><button class="btn pick" type="button" id="camStill">${ic("scan-barcode")}Take a picture in 3…</button>
     <button class="btn" type="button" id="camStop">${ic("x")}Stop</button></div></div>`;
   document.body.appendChild(panel);
   const msg = t => { const m = document.getElementById("camMsg"); if (m) m.textContent = t; };
@@ -840,12 +840,7 @@ document.addEventListener("click", e => {
   if (e.target.closest("#camOpen")) camOpen();
   if (e.target.closest("#camStop") || e.target.id === "camPanel") camClose();
   if (e.target.closest("#camStill") && camStillFor) camStillFor();
-  if (e.target.closest("#camShot")) {   // one frame, as the camera gives it, to Downloads (1 Nov: to see why her webcam doesn't read)
-    const v = document.getElementById("camVideo"); if (!v || !v.videoWidth) return;
-    const c = document.createElement("canvas"); c.width = v.videoWidth; c.height = v.videoHeight; c.getContext("2d").drawImage(v, 0, 0);
-    const a = document.createElement("a"); a.download = `library-camera-test-${c.width}x${c.height}.png`; a.href = c.toDataURL("image/png"); a.click();
-    const m = document.getElementById("camMsg"); if (m) m.textContent = "Saved to your Downloads.";
-  }
+
 });
 document.addEventListener("keydown", e => { if (e.key === "Escape") camClose(); });
 addEventListener("hashchange", camClose);
