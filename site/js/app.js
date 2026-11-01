@@ -569,16 +569,26 @@ async function camOpen(){
   catch { return msg("The barcode reader didn’t load. Type the ISBN instead."); }
   const hints = new Map([[ZXing.DecodeHintType.POSSIBLE_FORMATS, [ZXing.BarcodeFormat.EAN_13]], [ZXing.DecodeHintType.TRY_HARDER, true]]);
   camReader = new ZXing.BrowserMultiFormatReader(hints, 250);
+  // the camera is asked for here, not by the reader, so each step can say what's happening (a black box on 1 Nov said nothing)
+  msg("Asking for the camera… If a box asks to use it, press Allow (in the app window it’s at the top left).");
+  let stream;
+  try { stream = await navigator.mediaDevices.getUserMedia({video: {width: {ideal: 1280}, height: {ideal: 720}}}); }
+  catch (e) {
+    return msg({NotAllowedError: "The camera isn’t allowed for the library. Click the camera sign at the top left of the window, choose Allow, then press Scan with camera again.",
+      NotReadableError: "The camera is busy: another app may be using it. Close that app, then try again.",
+      NotFoundError: "No camera found. Type the ISBN instead."}[e && e.name] || `The camera didn’t start (${e && e.name}). Type the ISBN instead.`);
+  }
+  if (!camReader) { stream.getTracks().forEach(t => t.stop()); return; }   // closed while the box was asking
+  const video = document.getElementById("camVideo");
+  msg("Hold the barcode on the back of the book up to the camera, about a hand’s width away.");
+  setTimeout(() => { if (camReader && !video.videoWidth) msg("The camera is on but sending no picture. Close any other app using it and try again."); }, 5000);
   try {
-    await camReader.decodeFromConstraints({video: {width: {ideal: 1920}, height: {ideal: 1080}}}, "camVideo", r => {
+    await camReader.decodeFromStream(stream, video, r => {
       const text = r && r.getText();
       if (!text || !isBookNumber(text)) return;
       camClose(); useScan(text);
     });
-  } catch (e) {
-    msg(e && e.name === "NotAllowedError" ? "The camera wasn’t allowed. Allow it in the box at the top of the window, then try again."
-      : "No camera found. Type the ISBN instead.");
-  }
+  } catch (e) { msg(`The barcode reader stopped (${e && e.name}). Type the ISBN instead.`); }
 }
 document.addEventListener("click", e => {
   if (e.target.closest("#camOpen")) camOpen();
