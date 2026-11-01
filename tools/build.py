@@ -66,6 +66,10 @@ def build():
             if editions[b['id']].lower() not in b['title'].lower():
                 b['title'] += f" ({editions[b['id']]})"
             b['special'] = editions[b['id']]
+    signed = {k: v for k, v in load('signed.json', {}).items() if not k.startswith('_')}   # her signed copies (1 Nov)
+    for b in books:
+        if signed.get(b['id']) in ('signed', 'to-you'):
+            b['signed'] = signed[b['id']]
     moves = load('shelf-moves.json', {})   # shelves she chose for books Libib has on no genre shelf
     for b in books:
         b['shelf'] = moves.get(b['id'], b['shelf'])

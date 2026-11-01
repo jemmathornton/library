@@ -9,6 +9,7 @@ Adding a book (the site's "Add a book" page, 18 Oct):
     GET  /api/lookup?isbn=...   the book's details from Open Library (title, authors, publisher, date, pages, cover);
                                 Waterstones fills what Open Library hasn't got yet (new books, 1 Nov), and a Waterstones
                                 price-sticker code (13 digits starting 2) is looked up there alone
+    POST /api/signed            {id, signed: "signed" | "to-you" | ""}: her signed copies, in data/signed.json (1 Nov)
     POST /api/books             saves it to data/added.json (kept apart from the Libib import, which a re-import
                                 overwrites), copies its cover into site/covers and rebuilds the site
 Both need the header "X-Library: 1", which only the site itself sends: a page from anywhere else can't add books.
@@ -207,6 +208,21 @@ def on_shelves(isbn):
     return ''
 
 
+SIGNED = os.path.join(DATA, 'signed.json')
+
+
+def set_signed(book_id, kind):
+    """Signed or not (her ask, 1 Nov): data/signed.json, book id -> "signed" or "to-you"; anything else takes the mark off."""
+    marks = json.load(open(SIGNED, encoding='utf-8')) if os.path.exists(SIGNED) else {}
+    if kind in ('signed', 'to-you'):
+        marks[book_id] = kind
+    else:
+        marks.pop(book_id, None)
+    with open(SIGNED, 'w', encoding='utf-8', newline='\n') as fh:
+        json.dump(marks, fh, ensure_ascii=False, indent=1)
+        fh.write('\n')
+
+
 def add(book):
     added = json.load(open(ADDED, encoding='utf-8')) if os.path.exists(ADDED) else []
     shelves = {s['id'] for s in json.load(open(os.path.join(DATA, 'shelves.json'), encoding='utf-8'))}
@@ -227,6 +243,8 @@ def add(book):
         b['surname'] = b['authors'][0]['name'].split()[-1]
     b = {k: v for k, v in b.items() if v not in ('', None, [])}
     added.append(b)
+    if book.get('signed') in ('signed', 'to-you'):
+        set_signed(b['id'], book['signed'])
     with open(ADDED, 'w', encoding='utf-8', newline='\n') as fh:
         json.dump(added, fh, ensure_ascii=False, indent=1)
         fh.write('\n')
@@ -308,12 +326,22 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.reply({'error': 'unknown'}, 404)
 
     def do_POST(self):
-        if self.path not in ('/api/books', '/api/scanned/remove') or not self.api_ok() or not self.host_ok():
+        if self.path not in ('/api/books', '/api/scanned/remove', '/api/signed') or not self.api_ok() or not self.host_ok():
             return self.reply({'error': 'not allowed'}, 403)
         try:
             body = json.loads(self.rfile.read(int(self.headers.get('Content-Length', 0))) or b'{}')
             with LOCK:
-                result = add(body) if self.path == '/api/books' else {'ok': True, 'left': scanned(remove=str(body.get('isbn', '')))}
+                if self.path == '/api/books':
+                    result = add(body)
+                elif self.path == '/api/signed':   # a book's page: signed, signed to her, or neither; then the site is rebuilt
+                    known = {b['id'] for b in json.load(open(os.path.join(DATA, 'books.json'), encoding='utf-8'))} |                             {b['id'] for b in (json.load(open(ADDED, encoding='utf-8')) if os.path.exists(ADDED) else [])}
+                    if body.get('id') not in known:
+                        result = {'ok': False, 'error': 'No such book.'}
+                    else:
+                        set_signed(body['id'], body.get('signed', ''))
+                        result = {'ok': build().returncode == 0}
+                else:
+                    result = {'ok': True, 'left': scanned(remove=str(body.get('isbn', '')))}
             self.reply(result)
         except Exception as e:
             self.reply({'ok': False, 'error': str(e)}, 500)

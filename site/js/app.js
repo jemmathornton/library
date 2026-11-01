@@ -200,6 +200,12 @@ function entryState(e){
 // ---------- pieces ----------
 // covers are copied into covers/; one still only linked from Open Library uses its quicker medium size in lists
 const coverSrc = (b, big) => big || !/^https:/.test(b.cover) ? b.cover : b.cover.replace(/-L\.jpg$/, "-M.jpg");
+// her signed copies (data/signed.json, her choice 1 Nov): a brass seal with a pen, bottom right level with the stars;
+// signed to her, a scalloped seal with a big pen and a small person beside it
+const SIGN_PATHS = {signed: '<path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/>',
+  "to-you": '<path d="M18.9 5.7a1.9 1.9 0 0 1 2.7 2.7L10.7 19.3l-3.7 1.1 1.1-3.7z"/><circle cx="6" cy="4.6" r="2.1"/><path d="M2.6 10.8a3.4 3.4 0 0 1 6.8 0"/>'};
+const SIGN_WORDS = {signed: "Signed", "to-you": "Signed to you"};
+const sealMark = kind => `<span class="seal${kind === "to-you" ? " fancy" : ""}" title="${SIGN_WORDS[kind]}"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${SIGN_PATHS[kind]}</svg></span>`;
 function cover(b, extra = "", big = false){
   const s = shelfIndex[b.shelf], st = reading(b).status;
   // read or reading: a tick (or bookmark) in the top corner, walnut and cream (her choice, 18 Oct); her stars, filled to
@@ -216,7 +222,8 @@ function cover(b, extra = "", big = false){
   // not owned: the cover faded, with a walnut "Not owned" band across it (her choice, 18 Oct; not on a book's own page)
   const tag = (b.notOwned && !big ? `<span class="not-owned">Not owned</span>` : "")
     // a special edition (Illumicrate and the like, data/editions.json): a brass sash across the other top corner (her ask, 18 Oct)
-    + (b.special && !big ? `<span class="special" title="${esc(b.special)}">Special</span>` : "");
+    + (b.special && !big ? `<span class="special" title="${esc(b.special)}">Special</span>` : "")
+    + (b.signed ? sealMark(b.signed) : "");
   // the whole cover at its own shape, never trimmed to a frame (her ask, 30 Oct); a picture with no known shape keeps the frame
   const ratio = b.cover && b.coverRatio;
   return `<div class="cover${b.cover ? "" : " blank"}${ratio ? " fit" : ""}${b.notOwned && !big ? " unowned" : ""}${TRIAL && b.coverTrial ? " trial" : ""} ${extra}" style="--c:${s ? s.color : "#5E3D22"}${ratio ? ";--r:" + ratio : ""}">${badge}${tag}${strip}${b.cover ? `<img src="${esc(coverSrc(b, big))}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
@@ -303,7 +310,7 @@ const SORTS = {
   finished: ["Recently read", (a, b) => (finishes(b).sort().pop() || "").localeCompare(finishes(a).sort().pop() || "") || a.sortTitle.localeCompare(b.sortTitle)],
   stars: ["Your stars", (a, b) => (reading(b).rating || 0) - (reading(a).rating || 0) || a.sortAuthor.localeCompare(b.sortAuthor)],
 };
-const FILTERS = {all: ["All", () => true], owned: ["Owned", b => !b.notOwned], notowned: ["Not owned", b => !!b.notOwned], special: ["Special editions", b => !!b.special], unread: ["Not read", b => !isRead(b) && !isReading(b)], toread: ["To read", isToRead], reading: ["Reading", isReading], read: ["Read", isRead]};
+const FILTERS = {all: ["All", () => true], owned: ["Owned", b => !b.notOwned], notowned: ["Not owned", b => !!b.notOwned], special: ["Special editions", b => !!b.special], signed: ["Signed", b => !!b.signed], toyou: ["Signed to you", b => b.signed === "to-you"], unread: ["Not read", b => !isRead(b) && !isReading(b)], toread: ["To read", isToRead], reading: ["Reading", isReading], read: ["Read", isRead]};
 
 function shelfBooks(list, grouped = currentGrouped){
   const f = FILTERS[shelfView.filter][1], shown = list.filter(f).sort(SORTS[shelfView.sort][1]);
@@ -399,6 +406,7 @@ function pageBook(b){
       <h1>${esc(b.t)}</h1>${sub ? `<div class="sub">${esc(sub)}</div>` : ""}
       <div class="authors">${(b.authors || []).map(a => `<span><a href="#a-${slug(a.name)}">${esc(a.name)}</a>${a.role ? ` <small>${esc(a.role)}</small>` : ""}</span>`).join("") || "<span>Unknown author</span>"}</div>
       ${seriesLine(b)}
+      ${b.signed ? `<div class="signed-line">${sealMark(b.signed)}${SIGN_WORDS[b.signed]}</div>` : ""}
     </div></div></header>
     <div class="book-body"><div>
       ${b.description ? `<p class="desc">${esc(b.description)}</p>` : ""}
@@ -412,6 +420,7 @@ function pageBook(b){
         ${fact("Published", niceDate(b.published) || year(b.published))}${fact("Pages", b.pages ? num(b.pages) : "")}
         ${fact("ISBN-13", b.isbn13 || "")}${fact("ISBN-10", b.isbn10 || "")}${fact("Copies", b.copies > 1 ? b.copies : "")}
         ${fact("Added", niceDate(b.added))}${fact("Full title", b.t !== b.title ? esc(b.title) : "")}
+        ${location.protocol.startsWith("http") ? fact("Signed", `<select class="sign-pick" data-sign-id="${b.id}">${[["", "Not signed"], ["signed", "Signed"], ["to-you", "Signed to you"]].map(([v, t]) => `<option value="${v}"${(b.signed || "") === v ? " selected" : ""}>${t}</option>`).join("")}</select>`) : ""}
       </dl></div></aside></div>`;
 }
 
@@ -514,6 +523,7 @@ function pageAdd(){
             <div class="two">${field("publisher", "Publisher")}${field("published", "Published")}</div>
             <div class="two">${field("pages", "Pages", 'inputmode="numeric"')}
               <label><span>Shelf</span><select id="add-shelf"><option value="">Choose a shelf…</option>${SHELVES.filter(s => s.libib).map(s => `<option value="${s.id}"${f.shelf === s.id ? " selected" : ""}>${esc(s.name)}</option>`).join("")}</select></label></div>
+            <label><span>Signed</span><select id="add-signed">${[["", "Not signed"], ["signed", "Signed"], ["to-you", "Signed to you"]].map(([v, t]) => `<option value="${v}"${(f.signed || "") === v ? " selected" : ""}>${t}</option>`).join("")}</select></label>
             <button class="btn pick" type="button" id="addSave"${served && !f.busy ? "" : " disabled"}>${ic("plus")}${f.busy ? "Adding…" : "Add to the shelf"}</button>
           </div></div></div>`
     + (served ? `<details class="scan-setup" id="scanSetup"><summary>Set up phone scanning</summary><ol>
@@ -691,7 +701,7 @@ document.addEventListener("click", async e => {
     return redrawAdd();
   }
   if (e.target.closest("#addSave")) {
-    readAdd(); addForm.shelf = document.getElementById("add-shelf").value;
+    readAdd(); addForm.shelf = document.getElementById("add-shelf").value; addForm.signed = document.getElementById("add-signed").value;
     if (!addForm.title || !addForm.shelf) { addForm.note = !addForm.title ? "It needs a title." : "Pick a shelf for it."; return redrawAdd(); }
     addForm.busy = true; addForm.note = ""; redrawAdd();
     try { const r = await api("api/books", {method: "POST", body: JSON.stringify({...addForm, authors: addForm.authors.split(",")})});
@@ -700,6 +710,13 @@ document.addEventListener("click", async e => {
     catch { addForm.note = "That didn’t save: is the library open from its shortcut?"; }
     addForm.busy = false; redrawAdd();
   }
+});
+document.addEventListener("change", async e => {   // signed or not, from a book's page: saved by the server, then the page reloads
+  const pick = e.target.closest("[data-sign-id]"); if (!pick) return;
+  pick.disabled = true;
+  try { const r = await api("api/signed", {method: "POST", body: JSON.stringify({id: pick.dataset.signId, signed: pick.value})});
+    if (r.ok) return location.reload(); } catch {}
+  pick.disabled = false; alert("That didn’t save: is the library open from its shortcut?");
 });
 document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.id === "add-isbn") document.getElementById("addLookup")?.click(); });
 
