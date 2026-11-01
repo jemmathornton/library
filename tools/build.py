@@ -69,6 +69,11 @@ def build():
     moves = load('shelf-moves.json', {})   # shelves she chose for books Libib has on no genre shelf
     for b in books:
         b['shelf'] = moves.get(b['id'], b['shelf'])
+    # to-buy entries added here (her yes, 1 Nov), kept apart because a Libib re-import rewrites to-buy.json;
+    # an entry with "splitFrom" replaces one of her notes ("Famous Five old except ...") with a book of its own
+    extra = load('to-buy-added.json', [])
+    split = {x['splitFrom'] for x in extra if x.get('splitFrom')}
+    wish = [w for w in wish if w['id'] not in split] + extra
     bought = {x['wish'] for x in load('bought.json', [])}   # to-buy books she has since added to a shelf
     wish = [w for w in wish if w['id'] not in bought]
     fixes = load('name-fixes.json', {'names': {}, 'remove': [], 'roles': {}, 'books': {}, 'surnames': {}})
