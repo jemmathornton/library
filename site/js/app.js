@@ -560,8 +560,9 @@ function camClose(){
 async function camOpen(){
   camClose();
   const panel = document.createElement("div"); panel.id = "camPanel"; panel.className = "cam-panel";
-  panel.innerHTML = `<div class="cam-box"><video id="camVideo" muted playsinline></video><div class="cam-aim"></div>
-    <p id="camMsg">Hold the barcode on the back of the book up to the camera, about a hand’s width away.</p>
+  panel.innerHTML = `<div class="cam-box"><div class="cam-view"><video id="camVideo" muted playsinline></video><div class="cam-aim"></div></div>
+    <div class="cam-zoom"><canvas id="camZoom" width="640" height="200"></canvas><span>What the reader sees in the box, close up</span></div>
+    <p id="camMsg">Starting the camera…</p>
     <div class="cam-buttons"><button class="btn" type="button" id="camShot">${ic("download")}Save a test picture</button>
     <button class="btn" type="button" id="camStop">${ic("x")}Stop</button></div></div>`;
   document.body.appendChild(panel);
@@ -582,7 +583,7 @@ async function camOpen(){
   if (!camReader) { stream.getTracks().forEach(t => t.stop()); return; }   // closed while the box was asking
   const video = document.getElementById("camVideo");
   video.srcObject = stream; video.play().catch(() => {});
-  msg("Hold the back of the book up to the camera, in good light: it reads the barcode or the printed “ISBN 978…” line. Prop the book up if you can, and try a little nearer or further.");
+  msg("Hold the back of the book so the barcode sits inside the gold box. Then move it slowly nearer or further until the numbers in the close-up look sharp, and hold still. Good light helps.");
   setTimeout(() => { if (camReader && !video.videoWidth) msg("The camera is on but sending no picture. Close any other app using it and try again."); }, 5000);
   // a laptop webcam gives soft pictures close up, so each frame is read three ways: the middle strip (where the gold line is)
   // and the whole picture with the method made for blurry one-line barcodes, then the middle strip the usual way
@@ -604,6 +605,12 @@ async function camOpen(){
     }
     setTimeout(look, 80);
   };
+  // the close-up: the middle of the picture (inside the gold box), the right way round, so she can see when it's sharp
+  const zoom = document.getElementById("camZoom"), zctx = zoom.getContext("2d");
+  const showZoom = () => { if (!camReader) return; const w = video.videoWidth, h = video.videoHeight;
+    if (w) zctx.drawImage(video, w * .2, h * .3, w * .6, h * .4, 0, 0, zoom.width, zoom.height);
+    requestAnimationFrame(showZoom); };
+  showZoom();
   let ocr = null;
   camReader.reset = () => { stream.getTracks().forEach(t => t.stop()); ocr?.then(w => w.terminate()).catch(() => {}); };
   look();

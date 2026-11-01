@@ -443,8 +443,11 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 /* scanning with the laptop camera (1 Nov) */
 .cam-panel{position:fixed;inset:0;z-index:50;display:grid;place-items:center;background:rgba(22,17,12,.72)}
 .cam-box{position:relative;width:min(640px,92vw);padding:16px;border-radius:16px;background:var(--surface);display:grid;gap:12px;justify-items:center;box-shadow:0 20px 60px rgba(0,0,0,.4)}
-.cam-box video{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;background:#000;transform:scaleX(-1)}
-.cam-aim{position:absolute;top:16px;left:16px;right:16px;aspect-ratio:16/9;pointer-events:none;
-  background:linear-gradient(var(--brass),var(--brass)) center/62% 2px no-repeat}
+.cam-box video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:10px;background:#000;transform:scaleX(-1)}
+.cam-view{position:relative;width:100%;overflow:hidden;border-radius:10px}
+.cam-aim{position:absolute;left:20%;top:30%;width:60%;height:40%;pointer-events:none;border:3px solid var(--brass);border-radius:8px;box-shadow:0 0 0 999px rgba(0,0,0,.25)}
+.cam-zoom{display:grid;gap:4px;justify-items:center;width:100%}
+.cam-zoom canvas{width:100%;max-width:480px;aspect-ratio:16/5;border-radius:8px;background:#000}
+.cam-zoom span{font-size:12px;font-weight:700;color:var(--muted)}
 .cam-box p{margin:0;text-align:center;font-size:14px;font-weight:600;color:var(--muted)}
 .cam-buttons{display:flex;gap:10px}
