@@ -271,6 +271,7 @@ function renderNav(active){
     </div>
     <div class="nav-group minor">
       ${link("#reading", ic("bookmark"), "Reading", nReading || null)}
+      ${link("#history", ic("clock"), "History")}
       ${link("#to-buy", ic("shopping-bag"), "To buy", left)}
       ${link("#authors", ic("users"), "Authors", AUTHORS.length)}
       ${link("#stats", ic("chart"), "Stats")}
@@ -455,18 +456,26 @@ function pageReading(){
   const now = log.filter(isReading), done = log.filter(isRead).sort(byFinish), next = BOOKS.filter(b => !isRead(b) && !isReading(b));
   // paused and didn't-finish are different things (her word, 1 Nov): a break sits above this year's reading
   const paused = log.filter(b => reading(b).status === "paused");   // didn't-finish books get no row here (her call, 1 Nov)
-  const thisYear = String(new Date().getFullYear()), years = {};
-  done.forEach(b => { const ys = [...new Set(finishes(b).map(year).filter(Boolean))]; (ys.length ? ys : ["undated"]).forEach(y => (years[y] ||= []).push(b)); });
-  const order = Object.keys(years).filter(y => y !== "undated").sort().reverse().concat(years.undated ? ["undated"] : []);
-  const away = done.filter(isElsewhere).length;
+  const thisYear = String(new Date().getFullYear()), away = done.filter(isElsewhere).length;
+  const shortDay = d => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(d || ""); return m ? `${+m[3]} ${MON[m[2] - 1]}` : year(d); };
   return hero({kicker: "Your reading", title: "Reading <em>log</em>", covers: now.concat(done),
-      text: `Everything you’ve read and are reading. Books you’ve read but don’t own (library books, ebooks, audiobooks) sit on the shelves too, marked Not owned.`,
+      text: `What you’re reading, what you’ve just finished, and what you’re taking a break from. Books you’ve read but don’t own (library books, ebooks, audiobooks) sit on the shelves too, marked Not owned.`,
       figures: [[num(now.length), "reading now"], [num(done.length), "read"], [num(finishedIn(thisYear).length), `finished in ${thisYear}`], [num(next.length), "not read yet on your shelves"]]})
     + (now.length ? sectionHead("Reading <em>now</em>") + grid(now) : "")
-    + (done.length ? sectionHead("Recently <em>finished</em>", pickButton()) + `<div class="books row">${done.slice(0, 6).map(b => card(b, finishes(b).length ? `Finished ${niceDate(finishes(b).sort().pop())}` : "")).join("")}</div>` : "")
+    + (done.length ? sectionHead("Recently <em>finished</em>", pickButton()) + `<div class="books row">${done.slice(0, 6).map(b => card(b, finishes(b).length ? `Finished ${shortDay(finishes(b).sort().pop())}` : "")).join("")}</div>` : "")
     + (paused.length ? sectionHead("On a <em>break</em>") + grid(paused) : "")
-    + order.map(y => sectionHead(y === "undated" ? "Read, <em>date not recorded</em>" : `${y} <em>· ${plural(years[y].length, "book")}</em>`) + grid(years[y])).join("")
-    + `<div class="note">${ic("info")}<div><b>${num(done.length - away)} of the books you’ve read are on your shelves; ${num(away)} aren’t.</b></div></div>`;
+    + `<div class="note">${ic("info")}<div><b>${num(done.length - away)} of the books you’ve read are on your shelves; ${num(away)} aren’t.</b> <a href="#history">Everything you’ve read, year by year, is in History.</a></div></div>`;
+}
+// everything she has read, year by year: its own page, apart from what she's reading now (her ask, 1 Nov)
+function pageHistory(){
+  const log = readingLog(), byFinish = (a, b) => (reading(b).finished || "").localeCompare(reading(a).finished || "");
+  const done = log.filter(isRead).sort(byFinish), thisYear = String(new Date().getFullYear()), years = {};
+  done.forEach(b => { const ys = [...new Set(finishes(b).map(year).filter(Boolean))]; (ys.length ? ys : ["undated"]).forEach(y => (years[y] ||= []).push(b)); });
+  const order = Object.keys(years).filter(y => y !== "undated").sort().reverse().concat(years.undated ? ["undated"] : []);
+  return hero({kicker: "Your reading", title: "Reading <em>history</em>", covers: done,
+      text: "Everything you’ve read, year by year.",
+      figures: [[num(done.length), "read"], [num(finishedIn(thisYear).length), `finished in ${thisYear}`], [num(order.filter(y => y !== "undated").length), "years"]]})
+    + order.map(y => sectionHead(y === "undated" ? "Read, <em>date not recorded</em>" : `${y} <em>· ${plural(years[y].length, "book")}</em>`) + grid(years[y])).join("");
 }
 
 // ---------- series, in place on the shelves (her choice, 18 Oct: no page of their own) ----------
@@ -841,7 +850,7 @@ function route(){
   else if (key.startsWith("b-") && bookIndex[key.slice(2)]) { const b = bookIndex[key.slice(2)]; html = pageBook(b); active = "#shelf-" + b.shelf; title = b.t; }
   else if (key.startsWith("r-") && SG.books[+key.slice(2)] && !SG.books[+key.slice(2)].books) { const e = SG.books[+key.slice(2)]; html = pageSgBook(e); active = e.shelf ? "#shelf-" + e.shelf : "#reading"; title = e.t; }
   else if (key.startsWith("a-") && authorIndex[key.slice(2)]) { const a = authorIndex[key.slice(2)]; html = pageAuthor(a); active = "#authors"; title = a.name; }
-  else html = {authors: pageAuthors, reading: pageReading, add: pageAdd, "to-buy": pageToBuy, stats: pageStats, "trial-covers": pageTrialCovers}[key]?.() || (active = "#home", pageHome());
+  else html = {authors: pageAuthors, reading: pageReading, history: pageHistory, add: pageAdd, "to-buy": pageToBuy, stats: pageStats, "trial-covers": pageTrialCovers}[key]?.() || (active = "#home", pageHome());
   view.innerHTML = html; renderNav(active);
   document.title = title === "Jemma’s Library" ? title : `${curly(title)} · Jemma’s Library`;
   scrollTo(0, 0);
