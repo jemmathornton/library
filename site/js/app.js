@@ -150,7 +150,11 @@ const seriesOf = {};   // book id -> [{series, entry}]
   [[BOOKS, "owned"], [ELSEWHERE, "away"], [WISH, "wish"]].forEach(([list, where]) => list.forEach(b => {
     const who = byAuthor(b), keys = titleKeys(b.title);
     let best = 0, hits = [];
+    // a set tied to one edition (her Illumicrate Klunes, 1 Nov) takes only that edition, and those copies leave the
+    // author's ordinary series, so her paperbacks and her Illumicrate copies each sit in their own row
+    const inSet = SERIES.some(s => s.edition && s.edition === b.special && s.surnames.some(n => who.includes(n)));
     SERIES.forEach(s => { if (!s.surnames.some(n => who.includes(n))) return;
+      if (s.edition ? s.edition !== b.special : inSet) return;
       s.entries.forEach(e => e.keys.forEach(k => { const sc = keys.get(k) || 0; if (!sc) return;
         if (sc > best) { best = sc; hits = []; } if (sc === best && !hits.some(h => h.entry === e)) hits.push({series: s, entry: e}); })); });
     hits.forEach(h => h.entry[where].push(b));
@@ -168,7 +172,7 @@ BOOKS.forEach(b => {
   const edition = (b.special || (/(illustrated|hufflepuff|children's|collector's|centenary|special|anniversary|movie tie-in|illumicrate)[\w' -]*edition/i.exec(b.title) || [])[0] || "")
     .replace(/(^|[\s-])\w/g, c => c.toUpperCase()).replace(/'/g, "’");
   // a group with no numbering (series.json "unnumbered", e.g. Discworld extras) just names the group
-  b.t = entry.title; b.sub = `${series.name}${series.unnumbered ? "" : ", book " + entry.n}${edition ? " · " + edition : ""}`;
+  b.t = entry.title; b.sub = `${series.name}${series.unnumbered ? "" : ", book " + entry.n}${edition && !series.edition ? " · " + edition : ""}`;
   b.edition = edition;   // the book page says the series in its own line, so only this goes under its title
   b.sortTitle = sortTitle(b.t);
 });
