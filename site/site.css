@@ -466,3 +466,16 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .signed-line .seal.fancy{width:34px;height:34px;border-radius:0;box-shadow:none;
   clip-path:polygon(50% 0%,61% 11%,75% 7%,79% 21%,93% 25%,89% 39%,100% 50%,89% 61%,93% 75%,79% 79%,75% 93%,61% 89%,50% 100%,39% 89%,25% 93%,21% 79%,7% 75%,11% 61%,0% 50%,11% 39%,7% 25%,21% 21%,25% 7%,39% 11%)}
 .sign-pick{padding:4px 8px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font:inherit;font-size:13.5px;color:var(--ink)}
+
+/* home: smaller shelf cards, five to a row, so all nine fit on two rows at laptop width, none left on its own (her ask, 1 Nov) */
+.shelves{grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}
+@media (max-width:1100px){.shelves{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}}
+.shelf-card .fan{height:118px}
+.shelf-card .fan .cover{width:56px;bottom:-20px}
+.shelf-card .fan .cover:nth-child(1){left:calc(50% - 76px)}
+.shelf-card .fan .cover:nth-child(2){left:calc(50% - 28px);bottom:-9px}
+.shelf-card .fan .cover:nth-child(3){left:calc(50% + 20px)}
+.shelf-card .fan .cover .sash,.shelf-card .fan .cover .rated,.shelf-card .fan .cover .seal{display:none}
+.shelf-card .txt{padding:11px 13px 13px;gap:8px}
+.shelf-card h3{font-size:20px}
+.shelf-card .txt span{font-size:14.5px}
