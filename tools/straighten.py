@@ -116,7 +116,8 @@ def find_outline(im):
         return None
     med, spread, plain = bg
     z = np.abs(lab - med) / spread
-    mask = np.maximum(z[..., 0] / 2, np.hypot(z[..., 1], z[..., 2])) > 4
+    raw_mask = np.maximum(z[..., 0] / 2, np.hypot(z[..., 1], z[..., 2])) > 4
+    mask = raw_mask
     mask = np.asarray(Image.fromarray((mask * 255).astype(np.uint8)).filter(ImageFilter.MedianFilter(9))) > 127
     if not .08 < mask.mean() < .985:
         return None
@@ -136,13 +137,14 @@ def find_outline(im):
     gx, gy = _gradients(small)
     strong = np.percentile(np.concatenate([gx.ravel(), gy.ravel()]), 90)
     support = []
+    found = [k for k, v in edges.items() if v is not None]
     for name, line in edges.items():
         if line is not None:
             upright = name in 'LR'
             edges[name], s = _snap(line, gx if upright else gy, upright, w if upright else h, h if upright else w, strong)
             support.append(s)
-    if not support:
-        return None
+    if len(support) < 2:
+        return None   # one edge alone is a strip cut off, as often a cover's own white space as a background (My Brilliant Friend)
     pts = _corners(edges['L'], edges['R'], edges['T'], edges['B'], w, h)
 
     # is it a book?
@@ -169,6 +171,25 @@ def find_outline(im):
         return None                                 # a printed coloured border (Inheritance, a painted border)
     if margin < .1 and plain == 4 and not neutral:
         return None                                 # a thin printed margin all round (Heartstopper)
+    if med[0] >= 240:
+        # on white, print just outside an edge (a title above a picture) means the "book" is a panel on a white cover
+        # (My Brilliant Friend); a studio photo has nothing but white there
+        c = pts.mean(axis=0)
+        for i, (p, q2) in enumerate(((tl, bl), (tr, br), (tl, tr), (bl, br))):
+            if 'LRTB'[i] not in found:
+                continue
+            n = np.array([q2[1] - p[1], p[0] - q2[0]]); n = n / (np.linalg.norm(n) + 1e-9)
+            if np.dot((p + q2) / 2 - c, n) < 0:
+                n = -n
+            t = np.linspace(.08, .92, 120)[:, None]
+            hits = []
+            for d in range(3, 13):
+                xy = p + (q2 - p) * t + n * d
+                inside = (xy[:, 0] >= 0) & (xy[:, 0] < w) & (xy[:, 1] >= 0) & (xy[:, 1] < h)
+                if inside.mean() > .5:
+                    hits.append(raw_mask[xy[inside, 1].astype(int), xy[inside, 0].astype(int)].mean())
+            if hits and np.mean(hits) > .04:
+                return None
     ok = ((fill >= .9 and outside <= .22)
           or (fill >= .7 and outside <= .1 and sum(s >= .73 for s in support) >= 2)    # a dark cover on a dark cloth
           or (len(support) == 4 and min(support) >= .7 and outside <= .1)            # clear edges all round
