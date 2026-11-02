@@ -22,7 +22,7 @@ Tested overnight 1–2 Nov on about 500 AbeBooks sellers' pictures of books whos
     warp(image, corners) -> the four corners she set pulled square ("Set the corners", 2 Nov)
 """
 import numpy as np
-from PIL import Image, ImageDraw, ImageFilter
+from PIL import Image, ImageDraw, ImageFilter, ImageOps
 
 SIZE = 700                              # the picture is examined at this size (long side); the cut is from the original
 FLOOR = np.array([5.0, 3.0, 3.0])       # least spread allowed for the background (LAB), or every shadow looks like book
@@ -168,7 +168,7 @@ def find_outline(im):
     neutral = (med[0] > 225 or med[0] < 35) and chroma < 10
     if level < .004 and abs(lm - rm) < .012 and med[0] < 245:
         return None                                 # a frame printed on the cover (Katabasis)
-    if chroma > 12 and (spread[0] <= 7 or level < .006):
+    if chroma > 12 and (spread[0] <= 7 or level < .012):
         return None                                 # a printed coloured border (Inheritance, a painted border)
     if margin < .1 and plain == 4 and not neutral:
         return None                                 # a thin printed margin all round (Heartstopper)
@@ -199,7 +199,37 @@ def find_outline(im):
         return None
     if (np.abs(pts - np.array([[0, 0], [w - 1, 0], [w - 1, h - 1], [0, h - 1]])) / np.array([w, h])).max() < .02:
         return None                                 # a sliver at most: not worth changing
-    return pts / sc
+    pts = pts / sc
+    if level > .03 and _worse_level(im, pts):
+        return None                                 # squaring it would turn the lettering crooked: it was flat already (Son of a Witch)
+    return pts
+
+
+def _lean(im, span=10, size=500, step=.25):
+    """How far the picture's lettering and panel edges lean from level, in degrees (rows of print line up best at the
+    right turn). Slanted lettering adds the same to every picture of a cover, so only differences are used."""
+    sc = min(1.0, size / max(im.size))
+    g = ImageOps.grayscale(im.resize((max(1, round(im.width * sc)), max(1, round(im.height * sc))))).filter(ImageFilter.GaussianBlur(1.0))
+    a = np.asarray(g, float)
+    gy = np.abs(np.gradient(a)[0])
+    h, w = a.shape
+    ys, xs = np.mgrid[0:h, 0:w]
+    keep = gy > np.percentile(gy, 85)
+    wv, p, o = gy[keep], (ys - h / 2)[keep], (xs - w / 2)[keep]
+    best, best_d = -1, 0.0
+    for d in np.arange(-span, span + 1e-9, step):
+        t = np.radians(d)
+        proj = p * np.cos(t) + o * np.sin(t)
+        sc2 = (np.bincount(np.round(proj - proj.min()).astype(int), weights=wv) ** 2).sum()
+        if sc2 > best:
+            best, best_d = sc2, float(d)
+    return best_d
+
+
+def _worse_level(im, pts):
+    """Would squaring this outline leave the lettering leaning more than before? Then the outline is wrong: a real
+    photo at an angle comes out more level, a flat cover cut along a slanted line comes out crooked."""
+    return abs(_lean(warp(im, pts))) - abs(_lean(im)) > 1.5
 
 
 def straighten(im, edge=0):
