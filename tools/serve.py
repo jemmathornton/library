@@ -49,6 +49,24 @@ def build():
                           text=True, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
 
 
+def write_json(path, obj, indent=1):
+    """Written to a temporary file beside it, then swapped in (review, 2 Nov): a crash or a full disk mid-write never
+    leaves half a file, which would stop every later build. Windows refuses the swap while the file is being read, so it
+    tries again for a moment."""
+    tmp = f'{path}.{os.getpid()}-{threading.get_ident()}.tmp'
+    with open(tmp, 'w', encoding='utf-8', newline='\n') as fh:
+        json.dump(obj, fh, ensure_ascii=False, indent=indent)
+        fh.write('\n')
+    for n in range(10):
+        try:
+            os.replace(tmp, path)
+            return
+        except PermissionError:
+            if n == 9:
+                raise
+            time.sleep(.2)
+
+
 def get_json(url):
     with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=20) as r:
         return json.load(r)
@@ -109,11 +127,14 @@ def goodreads(isbn):
         return None
     people = book.get('author') or []
     people = people if isinstance(people, list) else [people]
-    pub = re.search(r'"publisher":"([^"]+)"', page)
-    when = re.search(r'"publicationTime":(\d{9,})', page)
+    # the page holds every edition's details: the publisher and date are taken from this ISBN's own (review, 2 Nov)
+    mine = next((m for m in re.findall(r'\{[^{}]*"isbn13":"%s"[^{}]*\}' % isbn, page)), page)
+    pub = re.search(r'"publisher":"((?:[^"\\]|\\.)*)"', mine) or re.search(r'"publisher":"((?:[^"\\]|\\.)*)"', page)
+    when = re.search(r'"publicationTime":(\d{9,})', mine) or re.search(r'"publicationTime":(\d{9,})', page)
+    unesc = lambda x: html.unescape(json.loads(f'"{x}"')) if x else ''   # \u2019 and &amp; as the characters they stand for
     genres = list(dict.fromkeys(g.replace('-', ' ') for g in re.findall(r'goodreads\.com/genres/([a-z0-9-]+)', page)))[:8]
-    return {'found': True, 'isbn': isbn, 'title': book['name'], 'authors': [re.sub(r'\s+', ' ', p['name']).strip() for p in people if p.get('name')],
-            'publisher': pub.group(1) if pub else '', 'published': date.fromtimestamp(int(when.group(1)) / 1000).isoformat() if when else '',
+    return {'found': True, 'isbn': isbn, 'title': html.unescape(book['name']), 'authors': [re.sub(r'\s+', ' ', html.unescape(p['name'])).strip() for p in people if p.get('name')],
+            'publisher': unesc(pub.group(1)) if pub else '', 'published': date.fromtimestamp(int(when.group(1)) / 1000).isoformat() if when else '',
             'pages': book.get('numberOfPages'), 'cover': book.get('image', ''), 'categories': genres}
 
 
@@ -440,9 +461,7 @@ def scanned(new=None, remove=None):
         items = [x for x in items if x['isbn'] not in (remove, (new or {}).get('isbn'))]
         if new:
             items.append(new)
-        with open(SCANNED, 'w', encoding='utf-8', newline='\n') as fh:
-            json.dump(items, fh, ensure_ascii=False, indent=1)
-            fh.write('\n')
+        write_json(SCANNED, items)
     return items
 
 
@@ -466,9 +485,7 @@ def set_signed(book_id, kind):
         marks[book_id] = kind
     else:
         marks.pop(book_id, None)
-    with open(SIGNED, 'w', encoding='utf-8', newline='\n') as fh:
-        json.dump(marks, fh, ensure_ascii=False, indent=1)
-        fh.write('\n')
+    write_json(SIGNED, marks)
 
 
 def add(book):
@@ -493,6 +510,23 @@ def add(book):
         b['surname'] = b['authors'][0]['name'].split()[-1]
     b = {k: v for k, v in b.items() if v not in ('', None, [])}
     added.append(b)
+    write_json(ADDED, added)   # the book is saved from here on
+    try:
+        after_add(book, b, i13)
+        trouble = ''
+    except Exception as e:   # saved all the same (review, 2 Nov: this used to say "That didn't save", and she'd add it twice)
+        trouble = f'{type(e).__name__}: {e}'
+        sg_log(f"added {b['id']}, but something after saving failed: {trouble}")
+    r = build()
+    if r.returncode != 0:   # saved, but the page for it doesn't exist yet: say so rather than jump to a missing page
+        sg_log(f"added {b['id']}, but the rebuild failed: {(r.stderr or r.stdout).strip()[-300:]}")
+        return {'ok': False, 'saved': True, 'error': 'The book is saved, but the site couldn’t be rebuilt, so it isn’t showing yet. Don’t add it again.'}
+    return {'ok': True, 'id': b['id'], 'warning': 'Saved, but its cover or a mark may be missing.' if trouble else ''}
+
+
+def after_add(book, b, i13):
+    """Everything that goes with a new book once it's saved: signed, special edition, off the scanned and to-buy
+    lists, its cover."""
     if book.get('signed') in ('signed', 'to-you'):
         set_signed(b['id'], book['signed'])
     special = re.sub(r'\s+', ' ', str(book.get('special') or '')).strip()[:80]
@@ -500,12 +534,7 @@ def add(book):
         ed_path = os.path.join(DATA, 'editions.json')
         eds = json.load(open(ed_path, encoding='utf-8')) if os.path.exists(ed_path) else {}
         eds[b['id']] = special
-        with open(ed_path, 'w', encoding='utf-8', newline='\n') as fh:
-            json.dump(eds, fh, ensure_ascii=False, indent=1)
-            fh.write('\n')
-    with open(ADDED, 'w', encoding='utf-8', newline='\n') as fh:
-        json.dump(added, fh, ensure_ascii=False, indent=1)
-        fh.write('\n')
+        write_json(ed_path, eds)
     if i13:   # scanned on her phone: it comes off the scanned list now it's on a shelf
         scanned(remove=i13)
     if book.get('fromWish'):   # added from the to-buy list: it comes off the list (data/bought.json, read by the build)
@@ -513,41 +542,31 @@ def add(book):
         bought = json.load(open(bought_path, encoding='utf-8')) if os.path.exists(bought_path) else []
         if book['fromWish'] not in [x['wish'] for x in bought]:
             bought.append({'wish': book['fromWish'], 'book': b['id'], 'date': b['added']})
-        with open(bought_path, 'w', encoding='utf-8', newline='\n') as fh:
-            json.dump(bought, fh, ensure_ascii=False, indent=1)
-            fh.write('\n')
-    straightened = STRAIGHT_URL.fullmatch(book.get('cover') or '')
-    if book.get('cover') and not straightened and urllib.parse.urlparse(book['cover']).scheme != 'https':
-        book['cover'] = ''   # only https links (or a cover straightened here): never any other file on this computer
+        write_json(bought_path, bought)
+    cover = book.get('cover') if isinstance(book.get('cover'), str) else ''   # a shop's picture can come as a list
+    straightened = STRAIGHT_URL.fullmatch(cover)
+    if cover and not straightened and urllib.parse.urlparse(cover).scheme != 'https':
+        cover = ''   # only https links (or a cover straightened here): never any other file on this computer
+    if not cover:
+        return
+    covers_path = os.path.join(DATA, 'covers.json')
+    covers = json.load(open(covers_path, encoding='utf-8')) if os.path.exists(covers_path) else {}
+    key = i13 or 'id-' + b['id']
     if straightened:   # straightened on the Add page: the straightened picture is her cover; the link is where it came from
         from PIL import Image
-        key = i13 or 'id-' + b['id']
-        img = Image.open(os.path.join(SITE, *book['cover'].split('/'))).convert('RGB')
+        img = Image.open(os.path.join(SITE, *cover.split('/'))).convert('RGB')
         if img.height > 600:
             img = img.resize((round(img.width * 600 / img.height), 600), Image.LANCZOS)
         img.save(os.path.join(SITE, 'covers', key + '.jpg'), 'JPEG', quality=86, optimize=True, progressive=True)
-        covers_path = os.path.join(DATA, 'covers.json')
-        covers = json.load(open(covers_path, encoding='utf-8')) if os.path.exists(covers_path) else {}
-        covers[key] = {'src': book.get('coverOriginal', ''), 'from': 'looked up when added, straightened on the Add page', 'straightened': True}
-        with open(covers_path, 'w', encoding='utf-8', newline='\n') as fh:
-            json.dump(dict(sorted(covers.items())), fh, ensure_ascii=False, indent=0)
-            fh.write('\n')
-    elif book.get('cover'):   # keep its cover like the others
-        covers_path = os.path.join(DATA, 'covers.json')
-        covers = json.load(open(covers_path, encoding='utf-8')) if os.path.exists(covers_path) else {}
-        key = i13 or 'id-' + b['id']
-        covers[key] = {'src': book['cover'], 'from': 'looked up when added (Open Library or Waterstones)'}
-        with open(covers_path, 'w', encoding='utf-8', newline='\n') as fh:
-            json.dump(dict(sorted(covers.items())), fh, ensure_ascii=False, indent=0)
-            fh.write('\n')
+        original = book.get('coverOriginal') if isinstance(book.get('coverOriginal'), str) else ''
+        covers[key] = {'src': original, 'from': 'looked up when added, straightened on the Add page', 'straightened': True}
+        write_json(covers_path, dict(sorted(covers.items())), indent=0)
+    else:   # keep its cover like the others
+        covers[key] = {'src': cover, 'from': 'looked up when added (Open Library or Waterstones)'}
+        write_json(covers_path, dict(sorted(covers.items())), indent=0)
         sys.path.insert(0, os.path.join(ROOT, 'tools'))
         from copy_covers import copy
-        copy(key, book['cover'])
-    r = build()
-    if r.returncode != 0:   # saved, but the page for it doesn't exist yet: say so rather than jump to a missing page
-        sg_log(f"added {b['id']}, but the rebuild failed: {(r.stderr or r.stdout).strip()[-300:]}")
-        return {'ok': False, 'error': 'The book is saved, but the site couldn’t be rebuilt, so it isn’t showing yet. Don’t add it again.'}
-    return {'ok': True, 'id': b['id']}
+        copy(key, cover)
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
@@ -605,7 +624,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             except Exception as e:
                 return self.reply({'covers': [], 'error': str(e)})
         if u.path == '/api/scanned':
-            return self.reply(scanned())
+            with LOCK:   # not while a scan is being written
+                return self.reply(scanned())
         if u.path == '/api/scan-setup':
             return self.reply(scan_setup())
         self.reply({'error': 'unknown'}, 404)
@@ -705,16 +725,13 @@ def import_export(p, state):
     if r.returncode != 0:
         sg_log(f'import of {os.path.basename(p)} failed: {(r.stderr or r.stdout).strip()[-300:]}')
         state['mtime'] = os.path.getmtime(p)   # don't retry the same file every 5 minutes
-        with open(SG_STATE, 'w', encoding='utf-8', newline='\n') as fh:
-            json.dump(state, fh, indent=1)
+        write_json(SG_STATE, state)
         return
     rb = build()
     if rb.returncode != 0:   # not marked as done, so the next look tries again
         sg_log(f'imported {os.path.basename(p)}, but the rebuild failed: {(rb.stderr or rb.stdout).strip()[-300:]}')
         return
-    with open(SG_STATE, 'w', encoding='utf-8', newline='\n') as fh:
-        json.dump({'file': os.path.basename(p), 'mtime': os.path.getmtime(p), 'imported': datetime.now().isoformat(timespec='minutes')}, fh, indent=1)
-        fh.write('\n')
+    write_json(SG_STATE, {'file': os.path.basename(p), 'mtime': os.path.getmtime(p), 'imported': datetime.now().isoformat(timespec='minutes')})
     summary = next((l for l in r.stdout.splitlines() if l.startswith(('On her shelves', '345', 'StoryGraph')) or 'StoryGraph books' in l), '')
     sg_log(f'imported {os.path.basename(p)}: {summary}')
 

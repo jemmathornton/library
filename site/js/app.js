@@ -195,11 +195,6 @@ BOOKS.forEach(b => {
 const NOT_OWNED = [];
 ELSEWHERE.forEach(e => { const id = (DATA.elsewhereShelves || {})[e.title]; if (!id || !shelfIndex[id] || isToRead(e)) return;
   e.shelf = id; e.notOwned = true; (shelfIndex[id].notOwned ||= []).push(e); NOT_OWNED.push(e); });
-// where she stands with one book of a series
-function entryState(e){
-  const all = e.owned.concat(e.away), read = all.some(isRead), now = all.some(isReading);
-  return {read, now, owned: e.owned.length > 0, wish: e.wish.length > 0, book: e.owned.find(b => b.cover) || e.owned[0] || e.away[0] || e.wish[0]};
-}
 
 // ---------- pieces ----------
 // covers are copied into covers/; one still only linked from Open Library uses its quicker medium size in lists
@@ -400,7 +395,7 @@ function pageSgBook(e){   // a book from StoryGraph that isn't on her shelves
     </div></div></header>
     <div class="book-body"><div>
       ${reviews(r) || `<p class="desc none">A book you’ve read or mean to read that isn’t on your shelves.</p>`}
-      ${more.length ? sectionHead(`On your shelves by <em>${esc(known[0].name)}</em>`) + grid(more) : ""}
+      ${more.length ? sectionHead(`On your shelves by <em class="keep">${esc(known[0].name)}</em>`) + grid(more) : ""}
     </div><aside style="display:grid;gap:18px">
       ${sgPanel(r)}
       <div class="panel"><h2>Details</h2><dl class="facts">
@@ -409,7 +404,7 @@ function pageSgBook(e){   // a book from StoryGraph that isn't on her shelves
 }
 
 function pageBook(b){
-  const s = shelfIndex[b.shelf], others = (editions[norm(b.title) + "|" + norm(b.surname || "")] || []).filter(x => x !== b);
+  const s = shelfIndex[b.shelf] || {id: b.shelf, name: b.shelf, color: "#5E3D22"}, others = (editions[norm(b.title) + "|" + norm(b.surname || "")] || []).filter(x => x !== b);
   const lead = (b.authors || []).find(a => !a.role), au = lead && authorIndex[slug(lead.name)];
   const more = au ? au.books.map(x => x.book).filter(x => x !== b && !others.includes(x)).slice(0, 12) : [];
   const fact = (k, v) => v ? `<dt>${k}</dt><dd>${v}</dd>` : "", sub = "edition" in b ? b.edition : b.sub;
@@ -424,7 +419,7 @@ function pageBook(b){
       ${b.description ? `<p class="desc">${esc(b.description)}</p>` : ""}
       ${sgFor[b.id] ? reviews(reading(b)) : ""}
       ${others.length ? sectionHead(`Other copies <em>you own</em>`) + grid(others) : ""}
-      ${more.length ? sectionHead(`More by <em>${esc(au.name)}</em>`, au.books.length > more.length + 1 ? `<a class="more" href="#a-${au.id}">All ${au.books.length}</a>` : "") + grid(more) : ""}
+      ${more.length ? sectionHead(`More by <em class="keep">${esc(au.name)}</em>`, au.books.length > more.length + 1 ? `<a class="more" href="#a-${au.id}">All ${au.books.length}</a>` : "") + grid(more) : ""}
     </div><aside style="display:grid;gap:18px">
       ${sgFor[b.id] ? sgPanel(reading(b)) : readingPanel(b)}
       <div class="panel"><h2>Details</h2><dl class="facts">
@@ -448,7 +443,7 @@ function pageAuthors(){
 function pageAuthor(a){
   const list = a.books.map(x => x.book).sort((x, y) => (x.published || "9999").localeCompare(y.published || "9999"));
   const roles = [...new Set(a.books.map(x => x.role).filter(Boolean))];
-  return hero({kicker: `<a href="#authors">Author</a>`, title: esc(a.name), covers: list, text: roles.length ? `Also credited as ${esc(roles.join(", ").toLowerCase())}.` : "",
+  return hero({kicker: `<a href="#authors">Author</a>`, title: `<span class="keep">${esc(a.name)}</span>`, covers: list, text: roles.length ? `Also credited as ${esc(roles.join(", ").toLowerCase())}.` : "",
       figures: [[num(list.length), list.length === 1 ? "book" : "books"], [num(booksRead(list)), "read"], [num(new Set(list.map(b => b.shelf)).size), "shelves"]]})
     + sectionHead("Their <em>books</em>", `<span class="more">Oldest first</span>`)
     + `<div class="books">${a.books.slice().sort((x, y) => (x.book.published || "9999").localeCompare(y.book.published || "9999")).map(x => card(x.book, x.role ? x.role : year(x.book.published) || x.book.by)).join("")}</div>`;
@@ -492,7 +487,7 @@ const seriesLine = b => (seriesOf[b.id] || []).map(h => `<span class="in-series"
 // ---------- to read ----------
 let pickShelf = "", picked = null;   // picks from anything unread on her shelves (her to-read list is for borrowing, 1 Nov)
 function pickPool(){
-  const log = readingLog(), unread = b => !isRead(b) && !isReading(b);
+  const unread = b => !isRead(b) && !isReading(b);
   let pool = BOOKS.filter(unread);
   if (pickShelf) pool = pool.filter(b => b.shelf === pickShelf);
   const seen = new Set();   // one copy of each book
@@ -508,7 +503,7 @@ function pickPanel(){
     ${b ? `<a class="pick-book" href="${href(b)}">${cover(b)}</a>` : ""}
     <div class="pick-body">
       ${b ? `<span class="label">How about…</span><a class="pick-title" href="${href(b)}"><h3>${esc(b.t)}</h3></a>
-        <div class="by">${esc(b.by)} · ${esc(shelfIndex[b.shelf].name)}</div>
+        <div class="by">${esc(b.by)}${shelfIndex[b.shelf] ? ` · ${esc(shelfIndex[b.shelf].name)}` : ""}</div>
         ${b.description ? `<p>${esc(b.description.slice(0, 220))}${b.description.length > 220 ? "…" : ""}</p>` : ""}`
         : `<p class="empty">${pool.length ? "" : "Nothing unread there."}</p>`}
       <div class="pick-opts">
@@ -518,7 +513,10 @@ function pickPanel(){
       </div>
     </div></div>`;
 }
-function pickNew(){ const pool = pickPool().filter(b => b !== picked); picked = pool.length ? pool[Math.floor(Math.random() * pool.length)] : null; }
+function pickNew(){
+  const all = pickPool(), pool = all.filter(b => b !== picked);   // with only one book there, it stays (it showed an empty box)
+  picked = pool.length ? pool[Math.floor(Math.random() * pool.length)] : all[0] || null;
+}
 function pickShow(){
   let box = document.getElementById("pickPanel");
   if (!box) { box = document.createElement("div"); box.id = "pickPanel"; box.className = "pick-panel"; document.body.appendChild(box); }
@@ -639,6 +637,8 @@ function camClose(){
 }
 async function camOpen(){
   camClose();
+  const me = {reset(){}}, mine = () => camReader === me;   // this opening's own (review, 2 Nov: old loops ran on into a new one)
+  camReader = me;
   const panel = document.createElement("div"); panel.id = "camPanel"; panel.className = "cam-panel";
   panel.innerHTML = `<div class="cam-box"><div class="cam-view"><video id="camVideo" muted playsinline></video><div class="cam-aim"></div></div>
     <div class="cam-zoom"><canvas id="camZoom" width="640" height="200"></canvas><span>What the reader sees in the box, close up</span></div>
@@ -648,9 +648,9 @@ async function camOpen(){
   document.body.appendChild(panel);
   const msg = t => { const m = document.getElementById("camMsg"); if (m) m.textContent = t; };
   try { await loadZxing(); }
-  catch { return msg("The barcode reader didn’t load. Type the ISBN instead."); }
+  catch { return mine() && msg("The barcode reader didn’t load. Type the ISBN instead."); }
+  if (!mine()) return;   // closed while the reader was loading
   const hints = new Map([[ZXing.DecodeHintType.POSSIBLE_FORMATS, [ZXing.BarcodeFormat.EAN_13]], [ZXing.DecodeHintType.TRY_HARDER, true]]);
-  camReader = new ZXing.BrowserMultiFormatReader(hints, 250);
   // the camera is asked for here, not by the reader, so each step can say what's happening (a black box on 1 Nov said nothing)
   msg("Asking for the camera… If a box asks to use it, press Allow (in the app window it’s at the top left).");
   let stream;   // asked for the sharpest picture the camera has
@@ -660,11 +660,11 @@ async function camOpen(){
       NotReadableError: "The camera is busy: another app may be using it. Close that app, then try again.",
       NotFoundError: "No camera found. Type the ISBN instead."}[e && e.name] || `The camera didn’t start (${e && e.name}). Type the ISBN instead.`);
   }
-  if (!camReader) { stream.getTracks().forEach(t => t.stop()); return; }   // closed while the box was asking
+  if (!mine()) { stream.getTracks().forEach(t => t.stop()); return; }   // closed while the box was asking
   const video = document.getElementById("camVideo");
   video.srcObject = stream; video.play().catch(() => {});
   msg("Hold the back of the book so the barcode sits inside the gold box. Then move it slowly nearer or further until the numbers in the close-up look sharp, and hold still. Good light helps.");
-  setTimeout(() => { if (camReader && !video.videoWidth) msg("The camera is on but sending no picture. Close any other app using it and try again."); }, 5000);
+  setTimeout(() => { if (mine() && !video.videoWidth) msg("The camera is on but sending no picture. Close any other app using it and try again."); }, 5000);
   // a laptop webcam gives soft pictures close up, so each frame is read three ways: the middle strip (where the gold line is)
   // and the whole picture with the method made for blurry one-line barcodes, then the middle strip the usual way
   const reader = new ZXing.MultiFormatReader(); reader.setHints(hints);
@@ -672,7 +672,7 @@ async function camOpen(){
   const tries = [[ZXing.GlobalHistogramBinarizer, .3], [ZXing.GlobalHistogramBinarizer, 0], [ZXing.HybridBinarizer, .3]];
   let n = 0;
   const look = () => {
-    if (!camReader) { stream.getTracks().forEach(t => t.stop()); return; }
+    if (!mine()) { stream.getTracks().forEach(t => t.stop()); return; }
     const w = video.videoWidth, h = video.videoHeight;
     if (w) {
       const [Bin, edge] = tries[n++ % tries.length], y = Math.round(h * edge), sh = h - 2 * y;
@@ -687,15 +687,15 @@ async function camOpen(){
   };
   // the close-up: the middle of the picture (inside the gold box), the right way round, so she can see when it's sharp
   const zoom = document.getElementById("camZoom"), zctx = zoom.getContext("2d");
-  const showZoom = () => { if (!camReader) return; const w = video.videoWidth, h = video.videoHeight;
+  const showZoom = () => { if (!mine()) return; const w = video.videoWidth, h = video.videoHeight;
     if (w) zctx.drawImage(video, w * .2, h * .3, w * .6, h * .4, 0, 0, zoom.width, zoom.height);
     requestAnimationFrame(showZoom); };
   showZoom();
   let ocr = null;
-  camReader.reset = () => { stream.getTracks().forEach(t => t.stop()); ocr?.then(w => w.terminate()).catch(() => {}); };
+  me.reset = () => { stream.getTracks().forEach(t => t.stop()); ocr?.then(w => w.terminate()).catch(() => {}); };
   look();
-  readPrinted(video, () => camReader, w => ocr = w);
-  camStillFor = () => stillRead(video, () => camReader, ocr, msg);
+  readPrinted(video, () => mine() && me, w => ocr = w);
+  camStillFor = () => stillRead(video, () => mine() && me, ocr, msg);
 }
 
 // deblurring (Richardson-Lucy, Gaussian focus blur), for a webcam that is a little out of focus at book distance
@@ -964,10 +964,10 @@ document.addEventListener("click", async e => {
     addForm.busy = true; addForm.note = ""; redrawAdd();
     try { const r = await api("api/books", {method: "POST", body: JSON.stringify({...addForm, authors: addForm.authors.split(",")})});
       if (r.ok) {
-        try { sessionStorage.setItem("library-just-added", JSON.stringify({id: r.id})); } catch {}
+        try { sessionStorage.setItem("library-just-added", JSON.stringify({id: r.id, warning: r.warning || ""})); } catch {}
         addForm = {isbn: "", title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", note: "", busy: false};
         location.href = location.pathname + "?v=" + Date.now() + "#add"; return; }
-      addForm.note = r.error || "That didn’t save."; }
+      addForm.note = r.error || (r.saved ? "It’s saved, but something went wrong after. Don’t add it again." : "That didn’t save."); }
     catch { addForm.note = "That didn’t save: is the library open from its shortcut?"; }
     addForm.busy = false; redrawAdd();
   }
@@ -1024,7 +1024,7 @@ function pageStats(){
   const decs = Object.keys(dec).map(Number).sort(), dmax = Math.max(...Object.values(dec));
   const readN = booksRead(BOOKS), titles = new Set(BOOKS.map(bookKey)).size, perYear = {};
   readingLog().filter(isRead).flatMap(finishes).forEach(d => { const y = year(d); if (y) perYear[y] = (perYear[y] || 0) + 1; });
-  const readYears = Object.keys(perYear).sort().reverse().map(y => ({label: y, n: perYear[y], href: "#reading"}));
+  const readYears = Object.keys(perYear).sort().reverse().map(y => ({label: y, n: perYear[y], href: "#history"}));
   return hero({kicker: "The numbers", title: "<em>Stats</em>", text: "How the library adds up.", covers: mixed([...BOOKS].reverse())})
     + `<div class="ledger"><div class="ledger-grid">
         <div class="meter"><b>${num(BOOKS.length)}</b><span>books on the shelves</span></div>
@@ -1048,8 +1048,8 @@ function pageSearch(term){
     || (tn.length >= 6 && ((b.isbn13 || "").includes(tn) || (b.isbn10 || "").toLowerCase().includes(tn)));
   const books = BOOKS.filter(hit).sort(SORTS.title[1]), authors = AUTHORS.filter(a => a.name.toLowerCase().includes(t)), wish = WISH.filter(hit);
   const away = ELSEWHERE.filter(hit).sort(SORTS.title[1]);
-  return `<div class="section-head" style="margin-top:56px"><h2>Results for <em>‘${esc(term)}’</em></h2><span class="more">${plural(books.length, "book")}</span></div>`
-    + (authors.length ? `<div class="chips" style="margin-bottom:28px">${authors.slice(0, 20).map(a => `<a class="btn" href="#a-${a.id}">${ic("user")}${esc(a.name)} · ${a.books.length}</a>`).join("")}</div>` : "")
+  return `<div class="section-head" style="margin-top:56px"><h2>Results for <em class="keep">‘${esc(term)}’</em></h2><span class="more">${plural(books.length, "book")}</span></div>`
+    + (authors.length ? `<div class="chips" style="margin-bottom:28px">${authors.slice(0, 20).map(a => `<a class="btn" href="#a-${a.id}">${ic("user")}<span class="keep">${esc(a.name)}</span> · ${a.books.length}</a>`).join("")}</div>` : "")
     + (books.length ? grid(books) : `<p class="empty">No books match.</p>`)
     + (away.length ? sectionHead("Read or to read, <em>not on your shelves</em>") + grid(away) : "")
     + (wish.length ? sectionHead("On the <em>to-buy list</em>") + `<div class="books">${wish.map(w => `<a class="bk" ${cardShape(w)} href="#to-buy"><div class="slot">${cover(w)}</div><h3>${esc(w.t)}</h3><div class="by">${esc(w.by)}</div></a>`).join("")}</div>` : "");
@@ -1087,11 +1087,19 @@ function route(){
   else if (key.startsWith("r-") && SG.books[+key.slice(2)] && !SG.books[+key.slice(2)].books) { const e = SG.books[+key.slice(2)]; html = pageSgBook(e); active = e.shelf ? "#shelf-" + e.shelf : "#reading"; title = e.t; }
   else if (key.startsWith("a-") && authorIndex[key.slice(2)]) { const a = authorIndex[key.slice(2)]; html = pageAuthor(a); active = "#authors"; title = a.name; }
   else html = {authors: pageAuthors, reading: pageReading, history: pageHistory, add: pageAdd, "to-buy": pageToBuy, stats: pageStats, "trial-covers": pageTrialCovers}[key]?.() || (active = "#home", pageHome());
-  view.innerHTML = html; renderNav(active);
+  view.innerHTML = html; renderNav(active); fitRows();
   document.title = title === "Jemma’s Library" ? title : `${curly(title)} · Jemma’s Library`;
   scrollTo(0, 0);
 }
 addEventListener("hashchange", () => { q.value = ""; route(); });
+// a home row shows only the books that fit whole (review, 2 Nov: a wide cover or a narrow window cut the last one in half)
+function fitRows(){
+  document.querySelectorAll(".books.row").forEach(row => {
+    [...row.children].forEach(c => c.hidden = false);
+    [...row.children].forEach(c => c.hidden = c.offsetLeft - row.offsetLeft + c.offsetWidth > row.clientWidth + 1);
+  });
+}
+addEventListener("resize", fitRows);
 
 // ---------- interactions ----------
 document.addEventListener("click", e => {
@@ -1130,7 +1138,7 @@ addEventListener("beforeinstallprompt", e => e.preventDefault());
   const b = bookIndex[a.id]; if (!b) return;
   const note = document.createElement("div"); note.className = "added-note"; note.setAttribute("role", "status");
   note.innerHTML = `<a href="${href(b)}">${cover(b)}</a><div><span class="label">${ic("check")}Added to ${esc((shelfIndex[b.shelf] || {}).name || "the shelves")}</span>
-    <a class="t" href="${href(b)}">${esc(b.t)}</a><div class="by">${esc(b.by)}</div></div><button type="button" class="btn quiet" aria-label="Close">${ic("x")}</button>`;
+    <a class="t" href="${href(b)}">${esc(b.t)}</a><div class="by">${esc(b.by)}</div>${a.warning ? `<div class="by">${esc(a.warning)}</div>` : ""}</div><button type="button" class="btn quiet" aria-label="Close">${ic("x")}</button>`;
   note.querySelector("button").onclick = () => note.remove();
   document.body.appendChild(note);
   setTimeout(() => note.classList.add("going"), 6500); setTimeout(() => note.remove(), 7000);
@@ -1150,11 +1158,14 @@ function capitalise(root){
   const groups = new Map();
   nodes.forEach(n => { const el = n.parentElement.closest("h1, h2, a, .btn, .more"); (groups.get(el) || groups.set(el, []).get(el)).push(n); });
   groups.forEach(list => {
-    const total = list.reduce((t, n) => t + (n.textContent.match(/[A-Za-z’'-]+/g) || []).length, 0);
+    const WORD = /(?<![0-9A-Za-z’'-])[A-Za-z][A-Za-z’'-]*/g;
+    const total = list.reduce((t, n) => t + (n.textContent.match(WORD) || []).length, 0);
     let i = 0;
     list.forEach(n => {
-      const text = n.textContent.replace(/[A-Za-z][A-Za-z’'-]*/g, w => {
+      const keep = n.parentElement.closest(".keep");   // a name or her search term: counted, never changed
+      const text = n.textContent.replace(WORD, w => {
         const k = i++, low = w.toLowerCase();
+        if (keep) return w;
         if (k > 0 && k < total - 1 && SMALL_WORDS.has(low)) return low;
         return w.split("-").map(p => p ? p[0].toUpperCase() + p.slice(1) : p).join("-");
       });
@@ -1162,5 +1173,5 @@ function capitalise(root){
     });
   });
 }
-new MutationObserver(() => capitalise(document)).observe(document.body, {childList: true, subtree: true});
+new MutationObserver(ms => { if (ms.some(m => [...m.addedNodes].some(n => n.nodeType === 1))) capitalise(document); }).observe(document.body, {childList: true, subtree: true});
 capitalise(document);

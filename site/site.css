@@ -92,8 +92,8 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .cover img{width:100%;height:100%;object-fit:cover;display:block}
 /* a cover on its own (book page, Add a Book, reading now, the pick, series and to-buy lists) shows whole at its own shape
    (1 Nov: the fixed 2:3 box cut the top and bottom off any taller cover) */
-:is(.book-top,.add-cover,.now-card,.picked,.series-list,.wish-item) .cover:has(img){aspect-ratio:auto}
-:is(.book-top,.add-cover,.now-card,.picked,.series-list,.wish-item) .cover:has(img) img{height:auto}
+:is(.book-top,.add-cover,.now-card,.wish-item) .cover:has(img){aspect-ratio:auto}
+:is(.book-top,.add-cover,.now-card,.wish-item) .cover:has(img) img{height:auto}
 .cover::after{content:"";position:absolute;inset:0 auto 0 0;width:6px;background:linear-gradient(90deg,rgba(0,0,0,.18),rgba(255,255,255,.08) 60%,transparent)}
 .cover.blank{display:flex;flex-direction:column;justify-content:space-between;padding:14% 11% 11%;color:#fff;
   background:radial-gradient(120% 70% at 20% 0%,color-mix(in srgb,var(--c) 60%,#fff 18%),transparent 70%),linear-gradient(160deg,var(--c),color-mix(in srgb,var(--c) 62%,#000))}
@@ -101,14 +101,9 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .cover:not(.blank) .t,.cover:not(.blank) .a{display:none}
 .cover.blank .t{font:400 clamp(15px,1.7cqw,22px)/1.08 var(--display);overflow:hidden;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;text-wrap:balance}
 .cover.blank .a{font:700 9.5px/1.3 var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.85;border-top:1px solid color-mix(in srgb,var(--brass) 80%,transparent);padding-top:8px}
-.cover .badge{position:absolute;right:7px;top:7px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font-size:13px;z-index:1;
-  background:#3B2616;color:#FBF4E6;box-shadow:0 0 0 1.5px rgba(251,244,230,.85),0 2px 6px rgba(0,0,0,.35)}
-.cover .badge .i{stroke-width:3}
-.cover .badge.reading{color:#FBF4E6}
 
 /* book grids */
-.books{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:30px 22px;container-type:inline-size}
-.books.row{grid-template-columns:repeat(6,minmax(0,1fr))}
+.books{gap:30px 22px;container-type:inline-size}
 .bk{display:grid;gap:10px;text-decoration:none;align-content:start}
 .bk .cover{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
 .bk:hover .cover{transform:translateY(-4px) rotate(-.6deg);box-shadow:0 2px 4px rgba(0,0,0,.12),0 16px 28px -12px rgba(0,0,0,.45)}
@@ -123,7 +118,6 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .blist .cover{width:44px;border-radius:2px 4px 4px 2px;box-shadow:0 1px 3px rgba(0,0,0,.2)}
 .blist .cover.blank{padding:4px}
 .blist .cover.blank .t,.blist .cover.blank .a{display:none}
-.blist .cover .badge{display:none}
 .blist b{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .blist span{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .blist .st{font-size:12.5px;font-weight:700}
@@ -188,20 +182,10 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .facts dd a{text-decoration:none;border-bottom:1px solid var(--line)}
 
 /* reading controls */
-.seg{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid var(--line);border-radius:11px;overflow:hidden}
-.seg button{all:unset;cursor:pointer;text-align:center;padding:9px 6px;font-size:13.5px;font-weight:700;color:var(--muted);display:flex;align-items:center;justify-content:center;gap:6px}
-.seg button+button{border-left:1px solid var(--line)}
-.seg button:hover{color:var(--ink);background:var(--soft)}
-.seg button.on{background:var(--ink);color:var(--paper)}
-.seg button:focus-visible{outline:2px solid var(--brass);outline-offset:-2px}
 .dates{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .dates label{display:grid;gap:4px;font-size:12px;font-weight:700;color:var(--muted)}
 .dates input{padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--paper);font-size:13.5px}
 .stars{display:flex;gap:2px;align-items:center}
-.stars button{all:unset;cursor:pointer;font-size:24px;color:var(--line);display:flex;padding:1px}
-.stars button.on{color:var(--brass)}
-.stars button.on svg{fill:var(--brass)}
-.stars button:focus-visible{outline:2px solid var(--brass)}
 .stars .clear{font-size:12px;font-weight:700;color:var(--muted);margin-left:8px}
 .saved{font-size:12px;color:var(--muted)}
 
@@ -227,12 +211,6 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .wish-item h3{font-size:22px;line-height:1.05}
 .wish-item .by{font-size:13.5px;color:var(--muted)}
 .wish-item .flag{display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:700;color:#8A4B17;background:color-mix(in srgb,var(--brass) 26%,transparent);padding:3px 9px;border-radius:99px;text-decoration:none}
-.wish-item.got{opacity:.55}
-.wish-item.got h3{text-decoration:line-through;text-decoration-thickness:1px}
-.tick{all:unset;cursor:pointer;width:34px;height:34px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;color:transparent;font-size:16px}
-.tick:hover{border-color:var(--done);color:color-mix(in srgb,var(--done) 50%,transparent)}
-.tick.on{background:var(--done);border-color:var(--done);color:#fff}
-.tick:focus-visible{outline:2px solid var(--brass)}
 
 /* ---------- stats ---------- */
 .ledger{margin-top:34px;border-radius:22px;padding:30px clamp(20px,4vw,40px);background:var(--deep);color:var(--on-deep)}
@@ -309,49 +287,17 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .series-card .strip .cover{flex:none;width:62px}
 .series-card .strip .cover.blank .t{font-size:9.5px}
 .series-card .strip .cover.blank .a{display:none}
-.series-card .strip .cover .badge{width:18px;height:18px;font-size:10px;right:4px;top:4px}
 .series-card .strip .cover .rated{display:none}
 .cover.gap{background:transparent;box-shadow:none;border:1.5px dashed color-mix(in srgb,var(--muted) 45%,transparent)}
 .cover.gap::after{display:none}
 .series-card .txt{padding:14px 18px 16px;display:grid;gap:4px}
 .series-card h3{font-size:25px;line-height:1.05}
 .series-card .by{font-size:13px;color:var(--muted)}
-.pips{display:flex;flex-wrap:wrap;gap:3px;margin:6px 0 2px}
-.pips i{width:10px;height:10px;border-radius:3px;background:var(--line)}
-.pips i.owned{background:color-mix(in srgb,var(--brass) 55%,var(--line))}
-.pips i.read{background:var(--done)}
-.pips i.wish{background:transparent;box-shadow:inset 0 0 0 1.5px var(--brass)}
-.series-list{list-style:none;margin:34px 0 0;padding:0;display:grid;gap:8px;max-width:820px}
-.series-list li>a,.series-list li>div{display:grid;grid-template-columns:34px 52px minmax(0,1fr);gap:16px;align-items:center;padding:8px 14px 8px 8px;border-radius:12px;text-decoration:none;background:var(--surface);border:1px solid var(--line)}
-.series-list li>a:hover{border-color:var(--muted)}
-.series-list li.missing>div,.series-list li.wish>div{background:transparent;border-style:dashed}
-.series-list .no{font:400 26px/1 var(--display);color:var(--muted);text-align:center}
-.series-list .cover{width:52px}
-.series-list .cover.blank{padding:5px}
-.series-list .cover.blank .t,.series-list .cover.blank .a,.series-list .cover .rated{display:none}
-.series-list .cover .badge{width:18px;height:18px;font-size:10px;right:3px;top:3px}
-.series-list b{display:block;font:400 21px/1.15 var(--display)}
-.series-list .state{font-size:13px;font-weight:600;color:var(--muted)}
-.series-list .state.read{color:var(--done)}
-.series-list .state.reading{color:var(--reading)}
-.series-list .state.wish{color:var(--brass)}
 
 /* what should I read next? */
-.picker{margin-top:40px;border-radius:20px;padding:24px clamp(18px,3vw,30px);background:var(--surface);border:1px solid var(--line);display:grid;gap:18px}
-.picker-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 24px}
-.picker h2{font-size:34px;line-height:1}
-.picker h2 em{color:var(--muted)}
-.picker-opts{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.picker select{appearance:none;-webkit-appearance:none;cursor:pointer;padding:7px 30px 7px 13px;border-radius:99px;border:1px solid var(--line);font-size:13px;font-weight:700;color:var(--ink);
-  background:var(--paper) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2375664F' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") no-repeat right 11px center/13px}
 .btn.pick{background:var(--deep);color:var(--on-deep);border-color:var(--deep);border-radius:99px}
 .btn.pick .i{color:var(--brass)}
 .btn.pick:hover{background:var(--deep-2)}
-.picked{display:grid;grid-template-columns:110px minmax(0,1fr);gap:22px;align-items:center;text-decoration:none}
-.picked h3{font-size:32px;line-height:1.05;margin-top:6px}
-.picked .by{color:var(--muted);font-size:14px;margin-top:4px}
-.picked p{margin:10px 0 0;font-size:14.5px;color:var(--muted);max-width:70ch}
-.picked:hover h3{text-decoration:underline;text-decoration-color:var(--brass);text-decoration-thickness:1px;text-underline-offset:5px}
 
 /* add a book */
 .add-form{margin-top:36px;max-width:860px;display:grid;gap:22px}
@@ -387,7 +333,6 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .add-fields .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .add-fields .btn{justify-self:start}
 .btn[disabled]{opacity:.5;cursor:default}
-.wish-item .flag.add{color:var(--done);background:color-mix(in srgb,var(--done) 14%,transparent)}
 .cover.blank:has(.rated){padding-bottom:30px}
 .cover .rated.word{font:700 10.5px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;gap:6px}
 .cover .rated.now{color:#fff}
@@ -395,7 +340,7 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 /* read books: a cream sash across the top corner (her choice, 18 Oct) */
 .cover .sash{position:absolute;z-index:1;right:-34px;top:16px;width:120px;transform:rotate(45deg);text-align:center;padding:4px 0 3px;
   background:#FBF4E6;color:#3B2616;font:800 9.5px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;box-shadow:0 1px 4px rgba(0,0,0,.35)}
-.blist .cover .sash,.series-list .cover .sash{display:none}
+.blist .cover .sash{display:none}
 .wish-item .btn.got-it{border-radius:99px;font-size:12.5px;padding:7px 12px;white-space:nowrap}
 .wish-item .btn.got-it .i{color:var(--done)}
 
@@ -412,11 +357,11 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .cover.unowned.blank::before{content:"";position:absolute;inset:0;background:rgba(247,241,228,.5)}
 .cover .not-owned{position:absolute;z-index:1;left:0;right:0;bottom:22%;padding:9px 0;text-align:center;color:#FBF4E6;font:800 11px/1 var(--body);letter-spacing:.24em;text-transform:uppercase;
   background:rgba(42,28,16,.92);border-top:1px solid #C9A25A;border-bottom:1px solid #C9A25A;box-shadow:0 2px 8px rgba(0,0,0,.35)}
-.blist .cover .not-owned,.picked .cover .not-owned{display:none}
+.blist .cover .not-owned{display:none}
 /* special editions: a brass sash across the top-left corner, mirroring Read (her ask, 18 Oct) */
 .cover .special{position:absolute;z-index:1;left:-34px;top:16px;width:120px;transform:rotate(-45deg);text-align:center;padding:4px 0 3px;
   background:#C9A25A;color:#2A1F16;font:800 9.5px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;box-shadow:0 1px 4px rgba(0,0,0,.35)}
-.blist .cover .special,.series-list .cover .special{display:none}
+.blist .cover .special{display:none}
 /* how she read it, on the sash: open book, headphones or tablet (her ask, 18 Oct) */
 .cover .sash .i{width:10px;height:10px;stroke-width:2.6;vertical-align:-1.5px;margin-right:4px}
 /* the sash sits a little further in, so "Reading" and "Paused" with their icon fit inside the corner (18 Oct) */
@@ -466,8 +411,9 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 /* every cover the same height (her ask, 1 Nov): the shelves are rows of cards each as wide as its own cover at one
    height, so a wider book takes a wider space instead of shrinking or overlapping */
 .books{display:flex;flex-wrap:wrap;align-items:flex-start;--ch:222px}
-.books.row{--ch:180px;flex-wrap:nowrap;overflow:hidden}
-.books .bk{flex:0 0 auto;width:calc(var(--ch) / var(--br, 1.5))}
+.books.row{--ch:180px;flex-wrap:nowrap;overflow-x:clip;overflow-y:visible}
+.books.row>[hidden]{display:none}
+.books .bk{flex:0 0 auto;width:calc(var(--ch) / var(--br, 1.5));max-width:100%}
 .books .slot{aspect-ratio:auto;height:var(--ch)}
 .books .slot .cover,.books .slot .cover.fit{width:100%;height:100%}
 
