@@ -556,6 +556,7 @@ function pageAdd(){
           ${f.title ? `<button type="button" class="btn find-cover" id="findCover">${ic("image")}${f.cover ? "Find another cover" : "Find a cover"}</button>` : ""}
           ${f.coverOriginal ? `<div class="trim-row"><button type="button" class="btn find-cover" data-trim="6"${f.straightening ? " disabled" : ""}>Trim less</button><button type="button" class="btn find-cover" data-trim="-6"${f.straightening ? " disabled" : ""}>Trim more</button></div>` : ""}
           ${f.cover && !f.coverWrong ? `<button type="button" class="btn find-cover${f.coverOriginal ? " on" : ""}" id="fixCover"${f.straightening ? " disabled" : ""}>${ic("crop")}${f.straightening ? "Straightening…" : f.coverOriginal ? "Undo straightening" : "Cropped or at an angle"}</button>` : ""}
+          ${f.cover && !f.coverWrong ? `<button type="button" class="btn find-cover${f.corners ? " on" : ""}" id="cornersOpen">${ic("grid")}Set the corners</button>` : ""}
           ${f.coverWrong ? `<p class="cover-wrong">${ic("camera")}Marked for a photo of your copy</p>` : ""}</div>
           <div class="add-fields">${field("title", "Title")}${field("authors", "Author(s), with commas between")}
             <div class="two">${field("publisher", "Publisher")}${field("published", "Published")}</div>
@@ -566,7 +567,7 @@ function pageAdd(){
               ${field("special", "Special edition (empty if not)", `list="add-editions" autocomplete="off" placeholder="e.g. Illumicrate Edition"`)}
               <datalist id="add-editions">${SPECIAL_EDITIONS().map(x => `<option value="${esc(x)}">`).join("")}</datalist></div>
             <button class="btn pick" type="button" id="addSave"${served && !f.busy ? "" : " disabled"}>${ic("plus")}${f.busy ? "Adding…" : "Add to the shelf"}</button>
-          </div></div>${f.coverChoices ? coverPicker(f) : ""}</div>`
+          </div></div>${f.coverChoices ? coverPicker(f) : ""}${f.corners ? cornerEditor(f) : ""}</div>`
     + (served ? `<details class="scan-setup" id="scanSetup"><summary>Set up phone scanning</summary><ol>
         <li>Install <b>Binary Eye</b> on your phone (Google Play).</li>
         <li>In Binary Eye: Settings → Forwarding → turn on <b>Forward scans</b>.</li>
@@ -935,11 +936,97 @@ document.addEventListener("click", async e => {
     addForm.straightening = false; return redrawAdd();
   }
   const pick = e.target.closest("[data-cover-pick]");
-  if (pick) { readAdd(); addForm.cover = addForm.coverChoices[+pick.dataset.coverPick].src; addForm.coverWrong = false; addForm.coverOriginal = null; addForm.coverChoices = null; return redrawAdd(); }
+  if (pick) { readAdd(); addForm.cover = addForm.coverChoices[+pick.dataset.coverPick].src; addForm.coverWrong = false; addForm.coverOriginal = null; addForm.coverChoices = null; addForm.corners = null; return redrawAdd(); }
   if (e.target.closest("[data-cover-none]")) { readAdd(); addForm.coverWrong = true; addForm.coverOriginal = null; addForm.coverChoices = null; return redrawAdd(); }
   if (e.target.closest("[data-cover-close]")) { readAdd(); addForm.coverChoices = null; return redrawAdd(); }
 });
 const redrawAdd = () => { const y = scrollY; document.getElementById("view").innerHTML = pageAdd(); scrollTo(0, y); };
+
+// "Set the corners" (her ask, 2 Nov: Child of the Grove had no picture the automatic straightening could do): the picture
+// with four dots she drags onto the cover's corners. Each moves on its own, so any four-sided shape at any angle can be
+// followed; the server then pulls it square in perspective. The dots start on the book's corners if they can be found.
+// While a dot is held, a magnifier shows the spot close up; a click on the picture brings the nearest dot there.
+function cornerEditor(f){
+  const c = f.corners;
+  if (c === "busy") return `<div class="corner-edit"><p class="add-note">Opening the picture…</p></div>`;
+  return `<div class="corner-edit"><div class="cover-pick-head"><b>Drag the four dots onto the corners of the cover</b>
+      <button type="button" class="btn pick" data-corners-use${f.straightening ? " disabled" : ""}>${ic("crop")}${f.straightening ? "Squaring it up…" : "Use these corners"}</button>
+      <button type="button" class="btn quiet" data-corners-close>${ic("x")}Cancel</button></div>
+    <div class="corner-stage" id="cornerStage"><img id="cornerImg" src="${esc(c.src)}" alt="" draggable="false">
+      <svg class="corner-lines" aria-hidden="true"><polygon></polygon></svg>
+      ${[0, 1, 2, 3].map(i => `<span class="corner-dot" data-dot="${i}" aria-label="${["Top left", "Top right", "Bottom right", "Bottom left"][i]} corner"></span>`).join("")}
+      <div class="corner-loupe" id="cornerLoupe" hidden></div></div></div>`;
+}
+function placeCorners(){
+  const c = addForm.corners, img = document.getElementById("cornerImg"), stage = document.getElementById("cornerStage");
+  if (!c || c === "busy" || !img || !img.clientWidth) return;
+  const k = img.clientWidth / c.width, pts = c.pts.map(([x, y]) => [x * k, y * k]);
+  stage.querySelectorAll(".corner-dot").forEach((d, i) => { d.style.left = pts[i][0] + "px"; d.style.top = pts[i][1] + "px"; });
+  stage.querySelector("polygon").setAttribute("points", pts.map(p => p.join(",")).join(" "));
+}
+document.addEventListener("load", e => { if (e.target.id === "cornerImg") placeCorners(); }, true);
+addEventListener("resize", placeCorners);
+let cornerDrag = null;
+document.addEventListener("pointerdown", e => {
+  const stage = e.target.closest("#cornerStage"); if (!stage || !addForm.corners || addForm.corners === "busy") return;
+  e.preventDefault();
+  const img = document.getElementById("cornerImg"), r = img.getBoundingClientRect(), k = img.clientWidth / addForm.corners.width;
+  const dot = e.target.closest(".corner-dot");
+  let i = dot ? +dot.dataset.dot : -1;
+  if (i < 0) {   // a click on the picture: the nearest dot comes to it
+    const x = (e.clientX - r.left) / k, y = (e.clientY - r.top) / k;
+    i = addForm.corners.pts.map(([px, py], n) => [Math.hypot(px - x, py - y), n]).sort((a, b) => a[0] - b[0])[0][1];
+  }
+  cornerDrag = i; try { stage.setPointerCapture(e.pointerId); } catch {}
+  stage.querySelector(`[data-dot="${i}"]`).classList.add("on");
+  cornerMove(e);
+});
+function cornerMove(e){
+  if (cornerDrag === null) return;
+  const c = addForm.corners, img = document.getElementById("cornerImg"); if (!img) return;
+  const r = img.getBoundingClientRect(), k = img.clientWidth / c.width;
+  const x = Math.min(Math.max(e.clientX - r.left, 0), img.clientWidth), y = Math.min(Math.max(e.clientY - r.top, 0), img.clientHeight);
+  c.pts[cornerDrag] = [x / k, y / k];
+  placeCorners();
+  const loupe = document.getElementById("cornerLoupe"), Z = 4, L = 150;   // four times closer, on the side away from the dot
+  loupe.hidden = false;
+  loupe.style.backgroundImage = `url("${c.src.replace(/"/g, "%22")}")`;
+  loupe.style.backgroundSize = `${img.clientWidth * Z}px ${img.clientHeight * Z}px`;
+  loupe.style.backgroundPosition = `${-(x * Z - L / 2)}px ${-(y * Z - L / 2)}px`;
+  loupe.style.left = (x < img.clientWidth / 2 ? img.clientWidth - L - 8 : 8) + "px";
+}
+document.addEventListener("pointermove", cornerMove);
+document.addEventListener("pointerup", () => {
+  if (cornerDrag === null) return;
+  cornerDrag = null;
+  document.querySelectorAll(".corner-dot.on").forEach(d => d.classList.remove("on"));
+  const loupe = document.getElementById("cornerLoupe"); if (loupe) loupe.hidden = true;
+});
+document.addEventListener("click", async e => {
+  if (e.target.closest("#cornersOpen")) {
+    readAdd();
+    if (addForm.corners) { addForm.corners = null; return redrawAdd(); }
+    const src = addForm.coverOriginal || addForm.cover;
+    addForm.corners = "busy"; addForm.coverChoices = null; addForm.note = ""; redrawAdd();
+    try { const r = await api("api/outline?" + new URLSearchParams({src}));
+      if (r.ok) addForm.corners = {src, width: r.width, height: r.height, pts: r.corners};
+      else { addForm.corners = null; addForm.note = r.error; } }
+    catch { addForm.corners = null; addForm.note = "Couldn’t open this picture."; }
+    redrawAdd();
+    return document.getElementById("cornerStage")?.scrollIntoView({block: "center", behavior: "smooth"});
+  }
+  if (e.target.closest("[data-corners-close]")) { readAdd(); addForm.corners = null; return redrawAdd(); }
+  if (e.target.closest("[data-corners-use]")) {
+    readAdd();
+    const c = addForm.corners;
+    addForm.straightening = true; redrawAdd();
+    try { const r = await api("api/straighten?" + new URLSearchParams({src: c.src, corners: c.pts.flat().map(v => v.toFixed(1)).join(",")}));
+      if (r.ok) Object.assign(addForm, {coverOriginal: c.src, cover: r.cover, trimEdge: 0, corners: null, coverWrong: false});
+      else addForm.note = r.error; }
+    catch { addForm.note = "Couldn’t square it up."; }
+    addForm.straightening = false; redrawAdd(); scrollTo({top: 0, behavior: "smooth"});
+  }
+});
 document.addEventListener("click", async e => {
   const from = e.target.closest("[data-add-from]");
   if (from) { const w = WISH.find(x => x.id === from.dataset.addFrom); addFromWish = true; addForm = {isbn: w.isbn13 || "", title: w.title, authors: w.by === "Unknown author" ? "" : w.by.replace(/ & /g, ", "), publisher: "", published: "", pages: "", cover: "", shelf: "", busy: false, fromWish: w.id,
@@ -948,7 +1035,7 @@ document.addEventListener("click", async e => {
     readAdd(); if (!addForm.isbn) { addForm.note = "Type the ISBN first."; return redrawAdd(); }
     addForm.note = "Looking it up…"; redrawAdd();
     try { const d = await api("api/lookup?isbn=" + encodeURIComponent(addForm.isbn));
-      if (d.found) Object.assign(addForm, {title: d.title, authors: d.authors.join(", "), publisher: d.publisher, published: d.published, pages: d.pages || "", cover: d.cover, coverWrong: false, coverOriginal: null, coverChoices: null, shelf: "", note: "Found it. Check the details and pick a shelf.",
+      if (d.found) Object.assign(addForm, {title: d.title, authors: d.authors.join(", "), publisher: d.publisher, published: d.published, pages: d.pages || "", cover: d.cover, coverWrong: false, coverOriginal: null, coverChoices: null, corners: null, shelf: "", note: "Found it. Check the details and pick a shelf.",
         suggest: suggestShelf(d)});
       else Object.assign(addForm, {title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", suggest: null, coverWrong: false, coverOriginal: null, coverChoices: null,
         note: "Open Library, Waterstones and Goodreads don’t know that number yet (new or special editions can take a while). Try the Waterstones price sticker if it has one, or fill in the details yourself."}); }

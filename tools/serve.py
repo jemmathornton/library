@@ -7,6 +7,7 @@ can reach it. If it's already running, a second copy just stops.
 
 Adding a book (the site's "Add a book" page, 18 Oct):
     GET  /api/straighten?src=&edge=   that cover cut out along the book's edges and pulled square, for "Cropped or at an angle"
+    GET  /api/outline?src=      where "Set the corners" starts its four dots; /api/straighten?src=&corners= uses hers
     GET  /api/covers?isbn=&title=&author=   other covers to choose from (other editions), for "Find another cover"
     GET  /api/lookup?isbn=...   the book's details from Open Library (title, authors, publisher, date, pages, cover);
                                 Waterstones fills what Open Library hasn't got yet (new books, 1 Nov), and a Waterstones
@@ -321,23 +322,32 @@ STRAIGHT = os.path.join(SITE, 'covers', '_straightened')   # straightened covers
 STRAIGHT_URL = re.compile(r'covers/_straightened/[0-9a-f]{16}\.jpg')
 
 
-def straighten(src, edge=0):
-    """"Cropped or at an angle" on the Add page (her ask, 1 Nov): the book cut out of the photo and squared up, by
-    tools/straighten.py (how it decides is written there; tested overnight 1-2 Nov on about 500 sellers' photos). When
-    it isn't clearly a photo of a book on a background, the picture is left as it is and she's told. She sees the
-    result and can undo it, or trim less or more: edge moves every side out (more than 0) or in (less than 0)."""
-    import hashlib
+def picture(src):
+    """A cover picture from the internet (https only: never a file on this computer)."""
     from io import BytesIO
     from PIL import Image
+    if urllib.parse.urlparse(src).scheme != 'https':
+        raise ValueError('Only a cover from the internet can be straightened here.')
+    with urllib.request.urlopen(urllib.request.Request(src, headers=UA), timeout=20) as r:
+        return Image.open(BytesIO(r.read())).convert('RGB')
+
+
+def outline(src):
+    """Where "Set the corners" puts its four dots to start with: the book's corners if they can be found, else the
+    picture's own corners a little in. In the picture's own pixels, with its size."""
     sys.path.insert(0, os.path.join(ROOT, 'tools'))
     import straighten as st
-    if urllib.parse.urlparse(src).scheme != 'https':
-        return {'ok': False, 'error': 'Only a cover from the internet can be straightened here.'}
-    with urllib.request.urlopen(urllib.request.Request(src, headers=UA), timeout=20) as r:
-        data = r.read()
-    out = st.straighten(Image.open(BytesIO(data)), edge)
-    if out is None:
-        return {'ok': False, 'error': 'This picture looks like the cover already (no table or background round it to cut away), so it’s left as it is.'}
+    im = picture(src)
+    w, h = im.size
+    pts = st.find_outline(im)
+    if pts is None:
+        pts = [[w * .03, h * .03], [w * .97, h * .03], [w * .97, h * .97], [w * .03, h * .97]]
+    return {'ok': True, 'width': w, 'height': h, 'corners': [[round(float(x), 1), round(float(y), 1)] for x, y in pts]}
+
+
+def save_straightened(out):
+    import hashlib
+    from io import BytesIO
     os.makedirs(STRAIGHT, exist_ok=True)
     jpg = BytesIO()
     out.save(jpg, 'JPEG', quality=92)
@@ -345,6 +355,33 @@ def straighten(src, edge=0):
     with open(os.path.join(STRAIGHT, name), 'wb') as fh:
         fh.write(jpg.getvalue())
     return {'ok': True, 'cover': 'covers/_straightened/' + name}
+
+
+def straighten_corners(src, corners):
+    """"Set the corners" (her ask, 2 Nov): the four corners she dragged into place (any shape, at any angle) pulled
+    square. corners: x,y for top left, top right, bottom right, bottom left, in the picture's own pixels."""
+    sys.path.insert(0, os.path.join(ROOT, 'tools'))
+    import straighten as st
+    im = picture(src)
+    w, h = im.size
+    v = [float(x) for x in corners.split(',')]
+    if len(v) != 8:
+        raise ValueError('four corners needed')
+    pts = [[min(max(v[i], 0), w - 1), min(max(v[i + 1], 0), h - 1)] for i in range(0, 8, 2)]
+    return save_straightened(st.warp(im, pts))
+
+
+def straighten(src, edge=0):
+    """"Cropped or at an angle" on the Add page (her ask, 1 Nov): the book cut out of the photo and squared up, by
+    tools/straighten.py (how it decides is written there; tested overnight 1-2 Nov on about 500 sellers' photos). When
+    it isn't clearly a photo of a book on a background, the picture is left as it is and she's told. She sees the
+    result and can undo it, or trim less or more: edge moves every side out (more than 0) or in (less than 0)."""
+    sys.path.insert(0, os.path.join(ROOT, 'tools'))
+    import straighten as st
+    out = st.straighten(picture(src), edge)
+    if out is None:
+        return {'ok': False, 'error': 'This picture looks like the cover already (no table or background round it to cut away), so it’s left as it is. Set the corners yourself if it needs cutting.'}
+    return save_straightened(out)
 
 
 SERIES_TAIL = re.compile(
@@ -614,9 +651,16 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             try:
                 q = urllib.parse.parse_qs(u.query)
                 edge = int(q.get('edge', ['0'])[0]) if re.fullmatch(r'-?\d{1,2}', q.get('edge', ['0'])[0]) else 0
+                if q.get('corners'):   # "Set the corners": hers
+                    return self.reply(straighten_corners(q.get('src', [''])[0], q['corners'][0]))
                 return self.reply(straighten(q.get('src', [''])[0], edge))
             except Exception as e:
                 return self.reply({'ok': False, 'error': 'Couldn’t straighten this cover.', 'detail': str(e)})
+        if u.path == '/api/outline':   # "Set the corners": where the dots start
+            try:
+                return self.reply(outline(urllib.parse.parse_qs(u.query).get('src', [''])[0]))
+            except Exception as e:
+                return self.reply({'ok': False, 'error': 'Couldn’t open this picture.', 'detail': str(e)})
         if u.path == '/api/covers':   # "Find another cover" on the Add page
             q = urllib.parse.parse_qs(u.query)
             try:

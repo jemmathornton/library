@@ -316,6 +316,16 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .btn.find-cover .i,.btn.find-cover svg{width:14px;height:14px;flex:none}
 .btn.find-cover.on{border-color:var(--done);color:var(--done)}
 .trim-row{display:flex;gap:6px}
+/* Set the corners (2 Nov) */
+.corner-edit{margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
+.corner-stage{position:relative;display:inline-block;margin-top:6px;touch-action:none;user-select:none;-webkit-user-select:none;cursor:crosshair}
+.corner-stage img{display:block;max-height:560px;max-width:100%;width:auto;height:auto}
+.corner-lines{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;overflow:visible}
+.corner-lines polygon{fill:color-mix(in srgb,var(--brass) 14%,transparent);stroke:var(--brass);stroke-width:2}
+.corner-dot{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;background:var(--brass);border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.55);cursor:grab}
+.corner-dot.on{cursor:grabbing;background:#fff;border-color:var(--brass)}
+.corner-loupe{position:absolute;top:8px;width:150px;height:150px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 12px rgba(0,0,0,.55);background-repeat:no-repeat;background-color:#000;pointer-events:none}
+.corner-loupe::after{content:"";position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px 0 0 -6px;border-radius:50%;border:2px solid var(--brass)}
 .trim-row .btn.find-cover{flex:1}
 .cover-wrong{display:flex;align-items:center;gap:6px;margin:8px 0 0;font:600 12.5px var(--body);color:var(--muted)}
 .cover-wrong svg{width:14px;height:14px;flex:none}

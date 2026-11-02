@@ -19,6 +19,7 @@ Tested overnight 1–2 Nov on about 500 AbeBooks sellers' pictures of books whos
 
     straighten(image, edge=0) -> PIL image, or None when it's best left as it is
     edge moves every side out (more than 0) or in (less than 0) by that many pixels of the original picture.
+    warp(image, corners) -> the four corners she set pulled square ("Set the corners", 2 Nov)
 """
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter
@@ -211,9 +212,15 @@ def straighten(im, edge=0):
         c = pts.mean(axis=0)
         pts = np.array([p + (p - c) / np.linalg.norm(p - c) * edge * 1.414 for p in pts])
         pts[:, 0] = pts[:, 0].clip(0, w - 1); pts[:, 1] = pts[:, 1].clip(0, h - 1)
-    tl, tr, br, bl = pts
-    W = round((np.linalg.norm(tr - tl) + np.linalg.norm(br - bl)) / 2)
-    H = round((np.linalg.norm(bl - tl) + np.linalg.norm(br - tr)) / 2)
+    return warp(im, pts)
+
+
+def warp(im, pts):
+    """The four corners (top left, top right, bottom right, bottom left; any four-sided shape) pulled square in true
+    perspective. Used for the found outline, and for corners she drags into place herself."""
+    tl, tr, br, bl = np.asarray(pts, float)
+    W = max(2, round((np.linalg.norm(tr - tl) + np.linalg.norm(br - bl)) / 2))
+    H = max(2, round((np.linalg.norm(bl - tl) + np.linalg.norm(br - tr)) / 2))
     eq, rhs = [], []
     for (X, Y), (x, y) in zip([(0, 0), (W, 0), (W, H), (0, H)], [tl, tr, br, bl]):
         eq += [[X, Y, 1, 0, 0, 0, -x * X, -x * Y], [0, 0, 0, X, Y, 1, -y * X, -y * Y]]
