@@ -240,19 +240,23 @@ const grid = (list, cls = "") => list.length ? `<div class="books ${cls}">${list
 // author only); then a shelf of the books in no series. A spine opens its book.
 function oldShelves(list){
   const inList = new Set(list), placed = new Set(), shelves = [];
-  const spine = b => `<a class="spine" href="${href(b)}" title="${esc(b.t)}${year(b.published) ? " · " + year(b.published) : ""}" style="background:${b.cloth || "#7A6650"}"><span>${esc(b.t)}</span></a>`;
-  const gap = e => `<span class="spine gap" title="${esc(e.title)}${e.wish.some(w => w.old) ? " · on your list to find" : ""}"><span>${esc(e.title)}</span></span>`;
+  // each spine: the title in gilt, its number in the series at the foot, a gold star at the head for a first edition
+  // (her yes, 6 Nov); pointing at one shows a card with the cover and its details
+  const firstEd = b => /first edition/i.test(b.description || "") && !/reprint|\?/i.test(b.description || "");
+  const pale = c => { const m = /^#(..)(..)(..)$/.exec(c || ""); return m && (.299 * parseInt(m[1], 16) + .587 * parseInt(m[2], 16) + .114 * parseInt(m[3], 16)) > 165; };   // dark lettering on a pale spine
+  const spine = (b, n) => `<a class="spine${pale(b.cloth) ? " pale" : ""}" href="${href(b)}" data-spine="${b.id}" style="background:${b.cloth || "#7A6650"}"><span>${esc(b.t)}</span>${firstEd(b) ? `<i class="ed" aria-label="First edition">★</i>` : ""}${n ? `<i class="no">${n}</i>` : ""}</a>`;
+  const gap = (e, n) => `<span class="spine gap" title="${esc(e.title)}${e.wish.some(w => w.old) ? " · on your list to find" : ""}"><span>${esc(e.title)}</span><i class="no">${n}</i></span>`;
   SERIES.forEach(s => {
     const here = s.entries.map(e => e.owned.filter(b => inList.has(b) && !placed.has(b)));
     if (!here.some(h => h.length)) return;
     const authors = new Set(here.flat().map(b => b.by)), byOf = e => (e.owned[0] || e.wish[0] || {}).by;
     const sur = (here.flat()[0] || {}).sortAuthor || s.author || "", by = (here.flat()[0] || {}).by;
-    shelves.push([s.name + (by ? " – " + by : ""), s.entries.map((e, i) => here[i].length ? here[i].map(b => (placed.add(b), spine(b))).join("") : !byOf(e) || authors.has(byOf(e)) ? gap(e) : "").join(""), sur]);
+    shelves.push([s.name + (by ? " – " + by : ""), s.entries.map((e, i) => here[i].length ? here[i].map(b => (placed.add(b), spine(b, i + 1))).join("") : !byOf(e) || authors.has(byOf(e)) ? gap(e, i + 1) : "").join(""), sur]);
   });
   // by author surname, then series name (her ask, 6 Nov)
   shelves.sort((a, b) => a[2].localeCompare(b[2]) || a[0].replace(/^The /, "").localeCompare(b[0].replace(/^The /, "")));
   const rest = list.filter(b => !placed.has(b)).sort(SORTS.author[1]);
-  if (rest.length) shelves.push([shelves.length ? "Not in a series" : "", rest.map(spine).join("")]);
+  if (rest.length) shelves.push([shelves.length ? "Not in a series" : "", rest.map(b => spine(b)).join("")]);
   return shelves.map(([name, html]) => `<div class="shelf-name">${esc(name) || "&nbsp;"}</div><div class="bookshelf">${html}</div>`).join("");
 }
 function pageOldKind([k, name, color]){
@@ -263,6 +267,19 @@ function pageOldKind([k, name, color]){
       ...(firsts ? [[num(firsts), "first editions"]] : []), ...(toFind ? [[num(toFind), "on your list to find"]] : [])]})
     + (list.length ? oldShelves(list) : `<p class="empty">Nothing here yet.</p>`);
 }
+// the card for a spine pointed at
+document.addEventListener("mouseover", e => {
+  const a = e.target.closest && e.target.closest("[data-spine]"), old = document.getElementById("spineCard");
+  if (!a) { old?.remove(); return; }
+  const b = bookIndex[a.dataset.spine]; if (!b || (old && old.dataset.id === b.id)) return;
+  const c = old || document.body.appendChild(Object.assign(document.createElement("div"), {id: "spineCard", className: "spine-card"}));
+  const note = (b.description || "").length < 90 ? b.description || "" : "", r = a.getBoundingClientRect();
+  c.dataset.id = b.id;
+  c.innerHTML = `${b.cover ? `<img src="${esc(b.cover)}" alt="">` : "<div></div>"}<div><b>${esc(b.t)}</b><div class="by">${esc(b.by)}</div>
+    <dl><dt>Year</dt><dd>${year(b.published) || "Undated"}</dd><dt>Edition</dt><dd>${esc(note) || "—"}</dd><dt>Condition</dt><dd>${esc(b.condition || "") || "—"}</dd></dl></div>`;
+  c.style.left = Math.min(innerWidth - 310, r.right + 10) + "px"; c.style.top = Math.max(10, Math.min(innerHeight - 170, r.top)) + "px";
+});
+addEventListener("hashchange", () => document.getElementById("spineCard")?.remove());
 // the old books to find: the same list as on To Buy (her choice, 5 Nov: in both places)
 function pageOldToFind(){
   const list = WISH.filter(w => w.old).sort((a, b) => a.sortAuthor.localeCompare(b.sortAuthor) || a.sortTitle.localeCompare(b.sortTitle));

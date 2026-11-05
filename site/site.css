@@ -530,9 +530,23 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .views[hidden]{display:none}
 /* old books as shelves of spines (her choice, 6 Nov) */
 .shelf-name{font:700 11px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:26px 0 10px}
-.bookshelf{display:flex;align-items:flex-end;flex-wrap:wrap;gap:3px;padding:18px 18px 0;border-bottom:14px solid #6B4A2B;border-radius:2px;box-shadow:0 10px 12px -8px rgba(0,0,0,.4);background:linear-gradient(#EFE5D1,#E6D8BD)}
-.spine{width:30px;height:150px;border-radius:2px 3px 2px 2px;box-shadow:inset 4px 0 0 rgba(0,0,0,.22),inset -2px 0 0 rgba(255,255,255,.12),0 2px 3px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;flex:none;overflow:hidden;text-decoration:none;transition:transform .2s}
+/* each row of spines stands on its own board (182px a row: 18 above, 150 of spine, 14 of board) */
+.bookshelf{display:flex;align-items:flex-end;flex-wrap:wrap;gap:32px 3px;padding:18px 18px 14px;border-radius:2px;box-shadow:0 10px 12px -8px rgba(0,0,0,.4);
+  background:repeating-linear-gradient(to bottom,#EFE5D1 0,#E6D8BD 168px,#6B4A2B 168px,#5E4126 182px)}
+.spine{position:relative;width:30px;height:150px;border-radius:2px 3px 2px 2px;box-shadow:inset 4px 0 0 rgba(0,0,0,.22),inset -2px 0 0 rgba(255,255,255,.12),0 2px 3px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;flex:none;overflow:hidden;text-decoration:none;transition:transform .2s}
 a.spine:hover{transform:translateY(-6px)}
-.spine span{writing-mode:vertical-rl;text-orientation:sideways;transform:rotate(180deg);font:400 12.5px/1 var(--display);color:#FFF8EA;text-shadow:0 1px 2px rgba(0,0,0,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-height:92%}
+.spine span{writing-mode:vertical-rl;text-orientation:sideways;transform:rotate(180deg);font:400 12.5px/1 var(--display);color:#EFD38A;letter-spacing:.02em;text-shadow:0 1px 2px rgba(0,0,0,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-height:68%}
+.spine .no{position:absolute;bottom:6px;left:0;right:0;text-align:center;font:700 10px var(--body);font-style:normal;color:rgba(255,240,200,.9)}
+.spine .ed{position:absolute;top:5px;left:0;right:0;text-align:center;font-size:11px;font-style:normal;color:#F2CF6B;text-shadow:0 0 3px rgba(0,0,0,.6)}
+.spine.gap .no{color:var(--muted)}
+.spine.pale span{color:#4A3420;text-shadow:none}
+.spine.pale .no{color:rgba(60,40,20,.75)}
+.spine-card{position:fixed;z-index:50;width:290px;display:grid;grid-template-columns:76px 1fr;gap:12px;padding:12px;border-radius:12px;background:var(--surface);border:1px solid var(--line);box-shadow:0 12px 30px rgba(0,0,0,.25);pointer-events:none;font-size:13px}
+.spine-card img{width:76px;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+.spine-card b{display:block;font:400 18px/1.15 var(--display)}
+.spine-card .by{color:var(--muted)}
+.spine-card dl{margin:6px 0 0;display:grid;grid-template-columns:auto 1fr;gap:1px 8px}
+.spine-card dt{color:var(--muted);font-weight:700}
+.spine-card dd{margin:0}
 .spine.gap{background:repeating-linear-gradient(45deg,transparent 0 6px,rgba(140,106,63,.12) 6px 7px);border:1.5px dashed rgba(140,106,63,.55);box-shadow:none}
 .spine.gap span{color:var(--muted);text-shadow:none}

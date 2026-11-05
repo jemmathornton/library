@@ -27,12 +27,24 @@ def swap(tmp, path):
 
 
 def cloth(path):
-    """The colour of a book's cloth or jacket: the average of the middle of its cover picture, as #rrggbb."""
+    """The colour of a book's cloth or jacket for its spine (her yes, 6 Nov: the main colour, not the average): the
+    commonest colour family on the cover (inside a small margin, leaving out paper-white and deep shadow), as #rrggbb."""
     from PIL import Image
     im = Image.open(path).convert('RGB')
     w, h = im.size
-    r, g, bl = im.crop((int(w * .3), int(h * .3), int(w * .7), int(h * .7))).resize((1, 1), Image.BOX).getpixel((0, 0))
-    return f'#{r:02x}{g:02x}{bl:02x}'
+    px = im.crop((int(w * .06), int(h * .06), int(w * .94), int(h * .94))).resize((40, 60)).getdata()
+    bins = {}
+    for r, g, b in px:
+        if (r + g + b) / 3 > 225 or max(r, g, b) < 28:
+            continue
+        k = (r >> 5, g >> 5, b >> 5)
+        n, sr, sg, sb = bins.get(k, (0, 0, 0, 0))
+        bins[k] = (n + 1, sr + r, sg + g, sb + b)
+    if not bins:
+        r, g, b = im.resize((1, 1), Image.BOX).getpixel((0, 0))
+        return f'#{r:02x}{g:02x}{b:02x}'
+    n, sr, sg, sb = max(bins.values())
+    return f'#{sr // n:02x}{sg // n:02x}{sb // n:02x}'
 
 def load(name, default=None):
     p = os.path.join(DATA, name)
