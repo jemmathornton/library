@@ -153,10 +153,13 @@
   "published": "2015"
  },
  "add0001": {
-  "published": "2018"
+  "published": "2018",
+  "publisher": "Independently published"
  },
  "add0004": {
-  "published": "2025"
+  "published": "2025-02-20",
+  "publisher": "Serpent's Tail",
+  "pages": 224
  },
  "qhzf6i9we4": {
   "isbn10": "1739529707",
@@ -173,5 +176,15 @@
  },
  "add0017": {
   "pages": 334
+ },
+ "add0002": {
+  "publisher": "Hodder & Stoughton",
+  "published": "2021-02-04",
+  "pages": 368
+ },
+ "add0005": {
+  "publisher": "Canongate",
+  "published": "2026-05-21",
+  "pages": 304
  }
 }
