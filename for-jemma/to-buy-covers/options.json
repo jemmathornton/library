@@ -1,0 +1,503 @@
+{
+ "buy-first-term-at-malory-towers-old": {
+  "title": "First Term at Malory Towers (old)",
+  "options": [
+   {
+    "letter": "A",
+    "src": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1300285044l/190344.jpg",
+    "label": "Goodreads: Mammoth, January 1st 2000",
+    "uk": false
+   },
+   {
+    "letter": "B",
+    "src": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1407065243l/586494.jpg",
+    "label": "Goodreads: Egmont Books Ltd New Ed, January 1st 2006",
+    "uk": false
+   },
+   {
+    "letter": "C",
+    "src": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347767256l/935794.jpg",
+    "label": "Goodreads: Hodder Children's Books, 2006",
+    "uk": false
+   },
+   {
+    "letter": "D",
+    "src": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1466943473l/30753950.jpg",
+    "label": "Goodreads: Hodder Children's Books, July 1st 2016",
+    "uk": false
+   },
+   {
+    "letter": "E",
+    "src": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1319807445l/539071.jpg",
+    "label": "Goodreads: Armada, 1963",
+    "uk": false
+   },
+   {
+    "letter": "F",
+    "src": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1331988206l/539096.jpg",
+    "label": "Goodreads: Dragon New Ed, 1967",
+    "uk": false
+   },
+   {
+    "letter": "G",
+    "src": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1390000996l/20566977.jpg",
+    "label": "Goodreads: Egmont, December 25th 2013",
+    "uk": false
+   },
+   {
+    "letter": "H",
+    "src": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1464523908l/30312060.jpg",
+    "label": "Goodreads: Hachette Children's Group, April 7th 2016",
+    "uk": false
+   },
+   {
+    "letter": "I",
+    "src": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1327104410l/8874444.jpg",
+    "label": "Goodreads: Dean, 2009",
+    "uk": false
+   },
+   {
+    "letter": "J",
+    "src": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1394365781l/21042531.jpg",
+    "label": "Goodreads: Egmont Books Ltd, January 2nd 2014",
+    "uk": false
+   },
+   {
+    "letter": "K",
+    "src": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1351482947l/935799.jpg",
+    "label": "Goodreads: Dean & Son New edition, 2006",
+    "uk": false
+   },
+   {
+    "letter": "L",
+    "src": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1496917438l/22744916.jpg",
+    "label": "Goodreads: Dragon Books, 1967",
+    "uk": false
+   },
+   {
+    "letter": "M",
+    "src": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1205915311l/1846247.jpg",
+    "label": "Goodreads: Methuen Young Books, August 6th 1990",
+    "uk": false
+   },
+   {
+    "letter": "N",
+    "src": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1530397812l/40678005.jpg",
+    "label": "Goodreads: Hodder Children's Books, July 1st 2016",
+    "uk": false
+   }
+  ]
+ },
+ "buy-last-term-at-malory-towers-old": {
+  "title": "Last Term at Malory Towers (old)",
+  "options": [
+   {
+    "letter": "A",
+    "src": "https://covers.openlibrary.org/b/id/11333358-L.jpg",
+    "label": "Egmont, 2012",
+    "uk": true
+   },
+   {
+    "letter": "B",
+    "src": "https://covers.openlibrary.org/b/id/12362446-L.jpg",
+    "label": "Egmont, 2014",
+    "uk": true
+   },
+   {
+    "letter": "C",
+    "src": "https://covers.openlibrary.org/b/id/10400268-L.jpg",
+    "label": "Hodder Children's Books, 2000",
+    "uk": true
+   },
+   {
+    "letter": "D",
+    "src": "https://covers.openlibrary.org/b/id/12450764-L.jpg",
+    "label": "Dean, 1994",
+    "uk": true
+   },
+   {
+    "letter": "E",
+    "src": "https://covers.openlibrary.org/b/id/14598193-L.jpg",
+    "label": "Dean, 1998",
+    "uk": true
+   },
+   {
+    "letter": "F",
+    "src": "https://covers.openlibrary.org/b/id/10597290-L.jpg",
+    "label": "Dean, 2009",
+    "uk": true
+   },
+   {
+    "letter": "G",
+    "src": "https://covers.openlibrary.org/b/id/14607049-L.jpg",
+    "label": "Dean, 2004",
+    "uk": false
+   },
+   {
+    "letter": "H",
+    "src": "https://covers.openlibrary.org/b/id/13082637-L.jpg",
+    "label": "Hodder, 2019",
+    "uk": false
+   },
+   {
+    "letter": "I",
+    "src": "https://covers.openlibrary.org/b/id/14571392-L.jpg",
+    "label": "Egmont, 2006",
+    "uk": false
+   },
+   {
+    "letter": "J",
+    "src": "https://covers.openlibrary.org/b/id/14572848-L.jpg",
+    "label": "Armada, 1994",
+    "uk": false
+   },
+   {
+    "letter": "K",
+    "src": "https://covers.openlibrary.org/b/id/12390257-L.jpg",
+    "label": "Penguin Books",
+    "uk": false
+   },
+   {
+    "letter": "L",
+    "src": "https://covers.openlibrary.org/b/id/883425-L.jpg",
+    "label": "Hodder Headline Audiobooks, April 1999",
+    "uk": false
+   },
+   {
+    "letter": "M",
+    "src": "https://covers.openlibrary.org/b/id/10642135-L.jpg",
+    "label": "Methuen Children's Books, 1984",
+    "uk": false
+   },
+   {
+    "letter": "N",
+    "src": "https://covers.openlibrary.org/b/id/389803-L.jpg",
+    "label": "Mammoth, February 1994",
+    "uk": false
+   }
+  ]
+ },
+ "buy-the-ghostly-term-at-trebizon": {
+  "title": "The Ghostly Term at Trebizon",
+  "options": [
+   {
+    "letter": "A",
+    "src": "https://covers.openlibrary.org/b/id/10619337-L.jpg",
+    "label": "Puffin, 1990",
+    "uk": true
+   }
+  ]
+ },
+ "buy-fifth-year-friendships-at-trebizon": {
+  "title": "Fifth Year Friendships at Trebizon",
+  "options": [
+   {
+    "letter": "A",
+    "src": "https://covers.openlibrary.org/b/id/14960638-L.jpg",
+    "label": "Puffin, 1990",
+    "uk": true
+   },
+   {
+    "letter": "B",
+    "src": "https://covers.openlibrary.org/b/id/13511860-L.jpg",
+    "label": "Swift Books, May 14, 1991",
+    "uk": false
+   },
+   {
+    "letter": "C",
+    "src": "https://pictures.abebooks.com/inventory/32225340543._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   }
+  ]
+ },
+ "buy-truly-devious": {
+  "title": "Truly Devious",
+  "options": [
+   {
+    "letter": "A",
+    "src": "https://covers.openlibrary.org/b/id/11479695-L.jpg",
+    "label": "Katherine Tegen Books, 2018",
+    "uk": false
+   },
+   {
+    "letter": "B",
+    "src": "https://covers.openlibrary.org/b/id/13296727-L.jpg",
+    "label": "HarperCollins Publishers, 2018",
+    "uk": false
+   },
+   {
+    "letter": "C",
+    "src": "https://covers.openlibrary.org/b/id/10698961-L.jpg",
+    "label": "HarperCollins Publishers and Blackstone Audio, Jan 16, 2018",
+    "uk": false
+   },
+   {
+    "letter": "D",
+    "src": "https://covers.openlibrary.org/b/id/12786408-L.jpg",
+    "label": "Katherine Tegen Books, December 4, 2018",
+    "uk": false
+   },
+   {
+    "letter": "E",
+    "src": "https://covers.openlibrary.org/b/id/9264304-L.jpg",
+    "label": "Wydawnictwo Poradnia K, 2018",
+    "uk": false
+   },
+   {
+    "letter": "F",
+    "src": "https://covers.openlibrary.org/b/id/12786407-L.jpg",
+    "label": "Katherine Tegen Books, 2018",
+    "uk": false
+   },
+   {
+    "letter": "G",
+    "src": "https://covers.openlibrary.org/b/id/11479711-L.jpg",
+    "label": "Katherine Tegen Books, 2019",
+    "uk": false
+   },
+   {
+    "letter": "H",
+    "src": "https://covers.openlibrary.org/b/id/13839653-L.jpg",
+    "label": "HarperCollins Publishers, 2019",
+    "uk": false
+   },
+   {
+    "letter": "I",
+    "src": "https://covers.openlibrary.org/b/id/12786409-L.jpg",
+    "label": "Katherine Tegen Books, 2019",
+    "uk": false
+   },
+   {
+    "letter": "J",
+    "src": "https://covers.openlibrary.org/b/id/8536620-L.jpg",
+    "label": "Katherine Tegen Books, Jan 22, 2019",
+    "uk": false
+   },
+   {
+    "letter": "K",
+    "src": "https://pictures.abebooks.com/inventory/32545981710._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   },
+   {
+    "letter": "L",
+    "src": "https://pictures.abebooks.com/inventory/32454802663._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   },
+   {
+    "letter": "M",
+    "src": "https://pictures.abebooks.com/inventory/32454806461._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   },
+   {
+    "letter": "N",
+    "src": "https://pictures.abebooks.com/inventory/32192046742._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   }
+  ]
+ },
+ "buy-the-vanishing-stair": {
+  "title": "The Vanishing Stair",
+  "options": [
+   {
+    "letter": "A",
+    "src": "https://covers.openlibrary.org/b/id/11479711-L.jpg",
+    "label": "Katherine Tegen Books, 2019",
+    "uk": false
+   },
+   {
+    "letter": "B",
+    "src": "https://covers.openlibrary.org/b/id/13839653-L.jpg",
+    "label": "HarperCollins Publishers, 2019",
+    "uk": false
+   },
+   {
+    "letter": "C",
+    "src": "https://covers.openlibrary.org/b/id/12786409-L.jpg",
+    "label": "Katherine Tegen Books, 2019",
+    "uk": false
+   },
+   {
+    "letter": "D",
+    "src": "https://covers.openlibrary.org/b/id/8536620-L.jpg",
+    "label": "Katherine Tegen Books, Jan 22, 2019",
+    "uk": false
+   },
+   {
+    "letter": "E",
+    "src": "https://covers.openlibrary.org/b/id/13839655-L.jpg",
+    "label": "Harpercollins, Jan 22, 2019",
+    "uk": false
+   },
+   {
+    "letter": "F",
+    "src": "https://pictures.abebooks.com/inventory/32078141396._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   },
+   {
+    "letter": "G",
+    "src": "https://pictures.abebooks.com/inventory/32233322110._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   },
+   {
+    "letter": "H",
+    "src": "https://pictures.abebooks.com/inventory/30565451036._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   }
+  ]
+ },
+ "buy-the-hand-on-the-wall": {
+  "title": "The Hand on the Wall",
+  "options": [
+   {
+    "letter": "A",
+    "src": "https://covers.openlibrary.org/b/id/11479705-L.jpg",
+    "label": "Katherine Tegen Books, 2020",
+    "uk": false
+   },
+   {
+    "letter": "B",
+    "src": "https://covers.openlibrary.org/b/id/9258846-L.jpg",
+    "label": "Katherine Tegen Books, an imprint of HarperCollinsPublishers, 2020",
+    "uk": false
+   },
+   {
+    "letter": "C",
+    "src": "https://covers.openlibrary.org/b/id/13865564-L.jpg",
+    "label": "HarperCollins B and Blackstone Publishing, Jan 21, 2020",
+    "uk": false
+   },
+   {
+    "letter": "D",
+    "src": "https://pictures.abebooks.com/inventory/32454802663._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   },
+   {
+    "letter": "E",
+    "src": "https://pictures.abebooks.com/inventory/32454806461._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   },
+   {
+    "letter": "F",
+    "src": "https://pictures.abebooks.com/inventory/31293908476._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   },
+   {
+    "letter": "G",
+    "src": "https://pictures.abebooks.com/inventory/32233313898._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   },
+   {
+    "letter": "H",
+    "src": "https://pictures.abebooks.com/inventory/30759030384._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   }
+  ]
+ },
+ "buy-the-box-in-the-woods": {
+  "title": "The Box in the Woods",
+  "options": [
+   {
+    "letter": "A",
+    "src": "https://covers.openlibrary.org/b/id/13010590-L.jpg",
+    "label": "HarperCollins Publishers, 2022",
+    "uk": false
+   },
+   {
+    "letter": "B",
+    "src": "https://covers.openlibrary.org/b/id/11337091-L.jpg",
+    "label": "HarperCollins B and Blackstone Publishing, Jun 15, 2021",
+    "uk": false
+   },
+   {
+    "letter": "C",
+    "src": "https://covers.openlibrary.org/b/id/11167128-L.jpg",
+    "label": "Katherine Tegen Books, Jun 15, 2021",
+    "uk": false
+   },
+   {
+    "letter": "D",
+    "src": "https://covers.openlibrary.org/b/id/11167127-L.jpg",
+    "label": "HarperCollins B and Blackstone Publishing, Jun 15, 2021",
+    "uk": false
+   },
+   {
+    "letter": "E",
+    "src": "https://pictures.abebooks.com/inventory/32545981710._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   },
+   {
+    "letter": "F",
+    "src": "https://pictures.abebooks.com/inventory/32192046742._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   },
+   {
+    "letter": "G",
+    "src": "https://pictures.abebooks.com/inventory/31293787891._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   },
+   {
+    "letter": "H",
+    "src": "https://pictures.abebooks.com/inventory/32233322705._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   }
+  ]
+ },
+ "buy-nine-liars": {
+  "title": "Nine Liars",
+  "options": [
+   {
+    "letter": "A",
+    "src": "https://covers.openlibrary.org/b/id/13106996-L.jpg",
+    "label": "HarperCollins Publishers, 2022",
+    "uk": false
+   },
+   {
+    "letter": "B",
+    "src": "https://covers.openlibrary.org/b/id/13117920-L.jpg",
+    "label": "Katherine Tegen Books, Dec 27, 2022",
+    "uk": false
+   },
+   {
+    "letter": "C",
+    "src": "https://pictures.abebooks.com/inventory/32180953367._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   },
+   {
+    "letter": "D",
+    "src": "https://pictures.abebooks.com/inventory/32356834066._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   },
+   {
+    "letter": "E",
+    "src": "https://pictures.abebooks.com/inventory/32233330257._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   },
+   {
+    "letter": "F",
+    "src": "https://pictures.abebooks.com/inventory/32235637352._SL1000_.jpg",
+    "label": "AbeBooks seller’s photo",
+    "uk": false
+   }
+  ]
+ }
+}
