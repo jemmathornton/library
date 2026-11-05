@@ -1,0 +1,41 @@
+Ideas for the old books collection (overnight 5-6 Nov 2026). Mock-ups in for-jemma/collection-ideas/ (made with her real
+books by collection-mock.js, pasted into the page; nothing in the app changed).
+
+Her answers before: uses it for all four (checking while shopping, showing it off, tracking details, filling gaps);
+Old Books to Find in both the Collection and To Buy; only the 66 Old Book Collection books; would like inscriptions.
+
+STRUCTURE: the Collection as several pages under one menu item, with tabs along the top
+  Overview · Shelf · Ledger · Series · To find · Checklist
+
+ 1. Overview (01, 02): figures (66 books, 10 series, oldest dated 1869, 13 first editions, 24 to find), then a card per
+    series with a little row of spines (yours in their cloth colour, gaps dashed), then the books in no series.
+ 2. Shelf of spines (03): every book as a spine on a wooden shelf, cloth colour, title up the spine, gaps as dashed
+    spaces, a shelf per series. For showing it off. (Could hide the gaps for a "just mine" view.)
+ 3. Ledger: what's there now (her choice E).
+ 4. Series pages (04): one page per series, numbered, your copy's year, edition and condition, gaps greyed with
+    "On your list to find", first editions marked.
+ 5. To find (08): the gaps, series by series, as shelves, so you can see what's missing at a glance. Also stays on To Buy.
+ 6. Shop checklist (05): a compact ticks-and-crosses list by series, with your copy's year and printing, so you can spot
+    a better or earlier copy; a box to type a title and see at once whether you have it. Printable.
+ 7. Shelf by year (07): one long shelf in the order the books were printed, decade markers between.
+ 8. Catalogue entry (06): each old book's page as a dealer's description: Year, Edition/impression, Publisher, Binding
+    (e.g. red cloth, gilt lettering), Dust jacket (none, or its own condition, as dealers grade them separately),
+    Condition, Inscription (gift note, owner's name, school prize label, bookplate), Series; space for photos of your
+    copy (cover, spine, inscription).
+
+MORE IDEAS (not mocked)
+ 9. "First edition" picked out automatically from your notes (a small gold label), and a filter for them.
+10. Inscriptions page: every inscription in one place (names, dates, prize labels), with your photos of them.
+11. Dust jacket as its own yes/no and condition, separate from the book's condition.
+12. Spine photos: with your own spine photos, the Shelf view could show the real spines instead of colour.
+13. Search within the collection: by decade, publisher, condition, first editions only.
+14. Condition at a glance on the Overview (how many Fine, Good...), and a "needs care" list (Poor/Fair).
+15. Duplicate guard: when adding an old book you already own, say which printing you have.
+16. Upgrade list: copies you'd like to replace with a better or earlier printing, kept with the To find list.
+17. Illustrator field (many Blytons are known by illustrator: Eileen Soper, Stuart Tresilian).
+18. Publisher view: Hodder, Methuen, Collins, Dean... the old publishers' names grouped.
+19. A printable catalogue (one page per series) to keep with the books or take to a book fair.
+20. "From the collection" on the home page: one old book shown at random each day.
+
+What it would need from her (only for the ideas she picks): binding, dust jacket, publisher, inscription per book
+(a few fields on each old book's page, like Condition now); photos of her copies if she wants them shown.
