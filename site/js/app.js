@@ -235,6 +235,38 @@ const href = b => isElsewhere(b) ? "#" + b.id : "#b-" + b.id;
 const cardShape = b => `style="--br:${(b.cover && b.coverRatio) || 1.5}"`;
 const card = (b, note) => `<a class="bk" ${cardShape(b)} href="${href(b)}"><div class="slot">${cover(b)}</div><h3>${esc(b.t)}</h3><div class="by">${esc(note || b.by)}</div></a>`;
 const grid = (list, cls = "") => list.length ? `<div class="books ${cls}">${list.map(b => card(b)).join("")}</div>` : "";
+// an old-books page (her choice, 6 Nov): each series as a shelf of spines in reading order, the spine in the book's cloth
+// colour with its title up it, a book she has no old copy of as a dashed gap in its place (by the series' original
+// author only); then a shelf of the books in no series. A spine opens its book.
+function oldShelves(list){
+  const inList = new Set(list), placed = new Set(), shelves = [];
+  const spine = b => `<a class="spine" href="${href(b)}" title="${esc(b.t)}${year(b.published) ? " · " + year(b.published) : ""}" style="background:${b.cloth || "#7A6650"}"><span>${esc(b.t)}</span></a>`;
+  const gap = e => `<span class="spine gap" title="${esc(e.title)}${e.wish.some(w => w.old) ? " · on your list to find" : ""}"><span>${esc(e.title)}</span></span>`;
+  SERIES.forEach(s => {
+    const here = s.entries.map(e => e.owned.filter(b => inList.has(b) && !placed.has(b)));
+    if (!here.some(h => h.length)) return;
+    const authors = new Set(here.flat().map(b => b.by)), byOf = e => (e.owned[0] || e.wish[0] || {}).by;
+    shelves.push([s.name, s.entries.map((e, i) => here[i].length ? here[i].map(b => (placed.add(b), spine(b))).join("") : !byOf(e) || authors.has(byOf(e)) ? gap(e) : "").join("")]);
+  });
+  shelves.sort((a, b) => a[0].localeCompare(b[0]));
+  const rest = list.filter(b => !placed.has(b)).sort(SORTS.author[1]);
+  if (rest.length) shelves.push([shelves.length ? "Not in a series" : "", rest.map(spine).join("")]);
+  return shelves.map(([name, html]) => `<div class="shelf-name">${esc(name) || "&nbsp;"}</div><div class="bookshelf">${html}</div>`).join("");
+}
+function pageOldKind([k, name, color]){
+  const list = oldBooks(k), firsts = list.filter(b => /first edition/i.test(b.description || "") && !/reprint|\?/i.test(b.description || "")).length;
+  const dated = list.map(b => +year(b.published)).filter(Boolean), mine = SERIES.filter(s => s.entries.some(e => e.owned.some(b => list.includes(b)))), nSeries = mine.length;
+  const toFind = mine.reduce((n, s) => n + s.entries.filter(e => !e.owned.some(b => list.includes(b)) && e.wish.some(w => w.old)).length, 0);
+  return hero({kicker: "Old books", title: name, figures: [[num(list.length), "books"], ...(nSeries ? [[num(nSeries), "series"]] : []), ...(dated.length ? [[Math.min(...dated), "oldest dated"]] : []),
+      ...(firsts ? [[num(firsts), "first editions"]] : []), ...(toFind ? [[num(toFind), "on your list to find"]] : [])]})
+    + (list.length ? oldShelves(list) : `<p class="empty">Nothing here yet.</p>`);
+}
+// the old books to find: the same list as on To Buy (her choice, 5 Nov: in both places)
+function pageOldToFind(){
+  const list = WISH.filter(w => w.old).sort((a, b) => a.sortAuthor.localeCompare(b.sortAuthor) || a.sortTitle.localeCompare(b.sortTitle));
+  return hero({kicker: "Old books", title: "To <em>find</em>", text: "Old printings to look out for. When you find one, press Got it to put it on a shelf; it comes off this list.", figures: [[num(list.length), "to find"]]})
+    + wishItems(list);
+}
 // the old books' ledger: a line each, cloth colour, title, author, year, her edition notes, condition. In author order
 // it's grouped by series in reading order, the books of a series she has no old copy of in their places, greyed (and
 // marked when they're on her old-books-to-find list); the books in no series follow together, by author
@@ -286,6 +318,9 @@ const sectionHead = (title, more) => `<div class="section-head"><h2>${title}</h2
 // her old books are a collection of their own, not a shelf (her choice, 5 Nov): their own place in the menu, and a ledger
 // that puts year, edition and condition first and the cover last
 const COLLECTION = "old-book-collection";
+// her old books by kind (her choice, 6 Nov; data/old-books-kinds.json, Children's unless listed), each a page of shelves
+const OLD_KINDS = [["childrens", "Children’s", "#B5482F"], ["fiction", "Fiction", "#4F5D47"], ["non-fiction", "Non-Fiction", "#6A5440"]];
+const oldBooks = k => (shelfIndex[COLLECTION] ? shelfIndex[COLLECTION].books : []).filter(b => ((DATA.oldKinds || {})[b.id] || "childrens") === k);
 function renderNav(active){
   const nReading = readingLog().filter(isReading).length, left = WISH.length;
   const link = (href, icon, text, n) => `<a href="${href}" class="${active === href ? "on" : ""}">${icon}${text}${n != null ? `<span class="n">${n}</span>` : ""}</a>`;
@@ -296,8 +331,9 @@ function renderNav(active){
       ${link("#shelves", ic("library"), "All shelves", BOOKS.length)}
       ${SHELVES.filter(s => s.books.length && s.id !== COLLECTION).map(s => link("#shelf-" + s.id, `<span class="dot" style="--c:${s.color}"></span>`, esc(s.name), s.books.length)).join("")}
     </div>
-    ${shelfIndex[COLLECTION] ? `<div class="nav-group"><span class="label">Collection</span>
-      ${link("#shelf-" + COLLECTION, ic("book"), "Old books", shelfIndex[COLLECTION].books.length)}</div>` : ""}
+    ${shelfIndex[COLLECTION] ? `<div class="nav-group"><span class="label">Old books</span>
+      ${OLD_KINDS.map(([k, name, c]) => link("#old-" + k, `<span class="dot" style="--c:${c}"></span>`, name, oldBooks(k).length)).join("")}
+      ${link("#old-to-find", ic("search"), "To find", WISH.filter(w => w.old).length)}</div>` : ""}
     <div class="nav-group minor">
       ${link("#reading", ic("bookmark"), "Reading", nReading || null)}
       ${link("#history", ic("clock"), "History")}
@@ -561,13 +597,14 @@ function pickShow(){
 }
 const pickHide = () => document.getElementById("pickPanel")?.remove();
 
+const wishItems = l => `<div class="wish">${l.map(w => `<div class="wish-item">${cover(w)}<div><h3${w.t.length > 40 ? ' class="long"' : ""}>${esc(w.t)}</h3>${w.sub && !(w.old && /^old$/i.test(w.sub)) ? `<div class="by">${esc(w.sub)}</div>` : ""}<div class="by">${esc(w.by)}</div>
+        ${w.maybeOwned ? `<a class="flag" href="#b-${w.maybeOwned[0]}">${ic("info")}Already on a shelf?</a>` : ""}</div>
+        <a class="btn got-it" href="#add" data-add-from="${w.id}">${ic("check")}Got it</a></div>`).join("")}</div>`;
 function pageToBuy(){
   // found one? "Got it" adds it to a shelf, and it comes off this list by itself (her ask, 18 Oct); old printings to
   // find second-hand are a list of their own below (her ask, 5 Nov)
   const list = [...WISH].sort((a, b) => a.sortAuthor.localeCompare(b.sortAuthor) || a.sortTitle.localeCompare(b.sortTitle));
-  const items = l => `<div class="wish">${l.map(w => `<div class="wish-item">${cover(w)}<div><h3${w.t.length > 40 ? ' class="long"' : ""}>${esc(w.t)}</h3>${w.sub && !(w.old && /^old$/i.test(w.sub)) ? `<div class="by">${esc(w.sub)}</div>` : ""}<div class="by">${esc(w.by)}</div>
-        ${w.maybeOwned ? `<a class="flag" href="#b-${w.maybeOwned[0]}">${ic("info")}Already on a shelf?</a>` : ""}</div>
-        <a class="btn got-it" href="#add" data-add-from="${w.id}">${ic("check")}Got it</a></div>`).join("")}</div>`;
+  const items = wishItems;
   const now = list.filter(w => !w.old), old = list.filter(w => w.old);
   return hero({kicker: "On the lookout", title: "To <em>buy</em>", text: "Books to look out for. When you find one, press Got it to put it on a shelf; it comes off this list.",
       figures: [[num(now.length), "to buy"], [num(old.length), "old books to find"]]})
@@ -1219,6 +1256,8 @@ function route(){
   else if (key === "shelves") { shelfView = {...SHELF_VIEW}; html = pageAllShelves(); title = "All shelves"; }
   else if (key.startsWith("b-") && bookIndex[key.slice(2)]) { const b = bookIndex[key.slice(2)]; html = pageBook(b); active = "#shelf-" + b.shelf; title = b.t; }
   else if (key.startsWith("r-") && SG.books[+key.slice(2)] && !SG.books[+key.slice(2)].books) { const e = SG.books[+key.slice(2)]; html = pageSgBook(e); active = e.shelf ? "#shelf-" + e.shelf : "#reading"; title = e.t; }
+  else if (key === "old-to-find") { html = pageOldToFind(); title = "Old books to find"; }
+  else if (key.startsWith("old-") && OLD_KINDS.some(k => k[0] === key.slice(4))) { const k = OLD_KINDS.find(k => k[0] === key.slice(4)); html = pageOldKind(k); title = "Old books · " + k[1]; }
   else if (key.startsWith("a-") && authorIndex[key.slice(2)]) { const a = authorIndex[key.slice(2)]; html = pageAuthor(a); active = "#authors"; title = a.name; }
   else html = {authors: pageAuthors, reading: pageReading, history: pageHistory, add: pageAdd, "to-buy": pageToBuy, stats: pageStats, "trial-covers": pageTrialCovers}[key]?.() || (active = "#home", pageHome());
   view.innerHTML = html; renderNav(active); fitRows();

@@ -528,3 +528,11 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .oldbooks .chip{display:inline-block;width:12px;height:18px;border-radius:2px 3px 3px 2px;box-shadow:inset 3px 0 0 rgba(0,0,0,.18),0 1px 2px rgba(0,0,0,.25);vertical-align:middle}
 .oldbooks .chip.none{background:transparent;box-shadow:none;border:1px dashed var(--muted)}
 .views[hidden]{display:none}
+/* old books as shelves of spines (her choice, 6 Nov) */
+.shelf-name{font:700 11px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:26px 0 10px}
+.bookshelf{display:flex;align-items:flex-end;flex-wrap:wrap;gap:3px;padding:18px 18px 0;border-bottom:14px solid #6B4A2B;border-radius:2px;box-shadow:0 10px 12px -8px rgba(0,0,0,.4);background:linear-gradient(#EFE5D1,#E6D8BD)}
+.spine{width:30px;height:150px;border-radius:2px 3px 2px 2px;box-shadow:inset 4px 0 0 rgba(0,0,0,.22),inset -2px 0 0 rgba(255,255,255,.12),0 2px 3px rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;flex:none;overflow:hidden;text-decoration:none;transition:transform .2s}
+a.spine:hover{transform:translateY(-6px)}
+.spine span{writing-mode:vertical-rl;text-orientation:sideways;transform:rotate(180deg);font:400 12.5px/1 var(--display);color:#FFF8EA;text-shadow:0 1px 2px rgba(0,0,0,.6);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-height:92%}
+.spine.gap{background:repeating-linear-gradient(45deg,transparent 0 6px,rgba(140,106,63,.12) 6px 7px);border:1.5px dashed rgba(140,106,63,.55);box-shadow:none}
+.spine.gap span{color:var(--muted);text-shadow:none}
