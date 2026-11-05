@@ -95,6 +95,11 @@ def build():
     wish = [w for w in wish if w['id'] not in split] + extra
     bought = {x['wish'] for x in load('bought.json', [])}   # to-buy books she has since added to a shelf
     wish = [w for w in wish if w['id'] not in bought]
+    # old printings to find second-hand go on a list of their own (her ask, 5 Nov)
+    old_ids = set(load('to-buy-old.json', {'ids': []}).get('ids', []))
+    for w in wish:
+        if w['id'] in old_ids or re.search(r'\((old|original paperback)\)', w['title'], re.I):
+            w['old'] = True
     fixes = load('name-fixes.json', {'names': {}, 'remove': [], 'roles': {}, 'books': {}, 'surnames': {}})
     fix_names(books + wish, fixes)
     sg = load('storygraph.json', {'books': []})

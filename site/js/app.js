@@ -526,13 +526,17 @@ function pickShow(){
 const pickHide = () => document.getElementById("pickPanel")?.remove();
 
 function pageToBuy(){
-  // found one? "Got it" adds it to a shelf, and it comes off this list by itself (her ask, 18 Oct)
+  // found one? "Got it" adds it to a shelf, and it comes off this list by itself (her ask, 18 Oct); old printings to
+  // find second-hand are a list of their own below (her ask, 5 Nov)
   const list = [...WISH].sort((a, b) => a.sortAuthor.localeCompare(b.sortAuthor) || a.sortTitle.localeCompare(b.sortTitle));
-  return hero({kicker: "On the lookout", title: "To <em>buy</em>", text: "Books to look out for. When you find one, press Got it to put it on a shelf; it comes off this list.",
-      figures: [[num(WISH.length), "still to find"]]})
-    + `<div class="wish">${list.map(w => `<div class="wish-item">${cover(w)}<div><h3${w.t.length > 40 ? ' class="long"' : ""}>${esc(w.t)}</h3>${w.sub ? `<div class="by">${esc(w.sub)}</div>` : ""}<div class="by">${esc(w.by)}</div>
+  const items = l => `<div class="wish">${l.map(w => `<div class="wish-item">${cover(w)}<div><h3${w.t.length > 40 ? ' class="long"' : ""}>${esc(w.t)}</h3>${w.sub && !(w.old && /^old$/i.test(w.sub)) ? `<div class="by">${esc(w.sub)}</div>` : ""}<div class="by">${esc(w.by)}</div>
         ${w.maybeOwned ? `<a class="flag" href="#b-${w.maybeOwned[0]}">${ic("info")}Already on a shelf?</a>` : ""}</div>
         <a class="btn got-it" href="#add" data-add-from="${w.id}">${ic("check")}Got it</a></div>`).join("")}</div>`;
+  const now = list.filter(w => !w.old), old = list.filter(w => w.old);
+  return hero({kicker: "On the lookout", title: "To <em>buy</em>", text: "Books to look out for. When you find one, press Got it to put it on a shelf; it comes off this list.",
+      figures: [[num(now.length), "to buy"], [num(old.length), "old books to find"]]})
+    + sectionHead("To <em>buy</em>", `<span class="more">${plural(now.length, "book")}</span>`) + items(now)
+    + (old.length ? sectionHead("Old books <em>to find</em>", `<span class="more">${plural(old.length, "book")}</span>`) + items(old) : "");
 }
 
 // ---------- add a book ----------

@@ -374,5 +374,122 @@
   "isbn13": "9780241973370",
   "note": "Penguin 2021, matches her set.",
   "series": "Seasonal Quartet 4"
+ },
+ {
+  "id": "buy-first-term-at-malory-towers-old",
+  "title": "First Term at Malory Towers (old)",
+  "authors": [
+   {
+    "name": "Enid Blyton"
+   }
+  ],
+  "surname": "Blyton",
+  "added": "2026-11-05",
+  "copies": 1,
+  "splitFrom": "um17ydugnz"
+ },
+ {
+  "id": "buy-last-term-at-malory-towers-old",
+  "title": "Last Term at Malory Towers (old)",
+  "authors": [
+   {
+    "name": "Enid Blyton"
+   }
+  ],
+  "surname": "Blyton",
+  "added": "2026-11-05",
+  "copies": 1,
+  "splitFrom": "um17ydugnz"
+ },
+ {
+  "id": "buy-the-ghostly-term-at-trebizon",
+  "title": "The Ghostly Term at Trebizon",
+  "authors": [
+   {
+    "name": "Anne Digby"
+   }
+  ],
+  "surname": "Digby",
+  "added": "2026-11-05",
+  "copies": 1,
+  "splitFrom": "q7g1ug5we4"
+ },
+ {
+  "id": "buy-fifth-year-friendships-at-trebizon",
+  "title": "Fifth Year Friendships at Trebizon",
+  "authors": [
+   {
+    "name": "Anne Digby"
+   }
+  ],
+  "surname": "Digby",
+  "added": "2026-11-05",
+  "copies": 1,
+  "splitFrom": "q7g1ug5we4"
+ },
+ {
+  "id": "buy-truly-devious",
+  "title": "Truly Devious",
+  "authors": [
+   {
+    "name": "Maureen Johnson"
+   }
+  ],
+  "surname": "Johnson",
+  "added": "2026-11-05",
+  "copies": 1,
+  "splitFrom": "nrtvhgo41p"
+ },
+ {
+  "id": "buy-the-vanishing-stair",
+  "title": "The Vanishing Stair",
+  "authors": [
+   {
+    "name": "Maureen Johnson"
+   }
+  ],
+  "surname": "Johnson",
+  "added": "2026-11-05",
+  "copies": 1,
+  "splitFrom": "nrtvhgo41p"
+ },
+ {
+  "id": "buy-the-hand-on-the-wall",
+  "title": "The Hand on the Wall",
+  "authors": [
+   {
+    "name": "Maureen Johnson"
+   }
+  ],
+  "surname": "Johnson",
+  "added": "2026-11-05",
+  "copies": 1,
+  "splitFrom": "nrtvhgo41p"
+ },
+ {
+  "id": "buy-the-box-in-the-woods",
+  "title": "The Box in the Woods",
+  "authors": [
+   {
+    "name": "Maureen Johnson"
+   }
+  ],
+  "surname": "Johnson",
+  "added": "2026-11-05",
+  "copies": 1,
+  "splitFrom": "nrtvhgo41p"
+ },
+ {
+  "id": "buy-nine-liars",
+  "title": "Nine Liars",
+  "authors": [
+   {
+    "name": "Maureen Johnson"
+   }
+  ],
+  "surname": "Johnson",
+  "added": "2026-11-05",
+  "copies": 1,
+  "splitFrom": "nrtvhgo41p"
  }
 ]
