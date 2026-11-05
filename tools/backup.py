@@ -3,7 +3,7 @@
     pythonw tools/backup.py
 
 1. Saves any changes in the project to git (books added on the site since the last save, new covers, a reading import).
-2. Zips the whole library (everything but git's own folder) to Documents\\Library backups\\HomeLibrary backup <date>.zip,
+2. Zips the whole library (everything but git's own folder) to Documents\\HomeLibraryBackups\\HomeLibrary backup <date>.zip,
    like the Sims site's backups, and keeps the newest 8.
 Run every Sunday by the Windows task "Jemma's Library - weekly backup" (tools/make_backup_task.ps1); log in logs/backup.log.
 """
@@ -11,7 +11,7 @@ import os, subprocess, sys, zipfile
 from datetime import date, datetime
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DEST = os.path.join(os.path.expanduser('~'), 'Documents', 'Library backups')
+DEST = os.path.join(os.path.expanduser('~'), 'Documents', 'HomeLibraryBackups')
 KEEP = 8
 LOG = os.path.join(ROOT, 'logs', 'backup.log')
 NO_WINDOW = getattr(subprocess, 'CREATE_NO_WINDOW', 0)
