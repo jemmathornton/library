@@ -237,7 +237,7 @@ const card = (b, note) => `<a class="bk" ${cardShape(b)} href="${href(b)}"><div 
 const grid = (list, cls = "") => list.length ? `<div class="books ${cls}">${list.map(b => card(b)).join("")}</div>` : "";
 // the old books' ledger: a line each, cloth colour, title, author, year, her edition notes, condition. In author order
 // it's grouped by series in reading order, the books of a series she has no old copy of in their places, greyed (and
-// marked when they're on her old-books-to-find list); the books in no series follow by author
+// marked when they're on her old-books-to-find list); the books in no series follow together, by author
 const CONDITIONS = ["Fine", "Very good", "Good", "Fair", "Poor"];
 function ledgerView(list){
   const yr = b => year(b.published) || "—", note = b => (b.description || "").length < 90 ? b.description || "" : "";
@@ -259,10 +259,8 @@ function ledgerView(list){
         : !byOf(e) || authors.has(byOf(e)) ? missing(e, s) : "").join("")]);
     });
     parts.sort((a, b) => a[0].localeCompare(b[0]));
-    const rest = list.filter(b => !placed.has(b));
-    const byAuthor = [];
-    rest.forEach(b => { const last = byAuthor[byAuthor.length - 1]; if (last && last[0] === b.by) last[1].push(b); else byAuthor.push([b.by, [b]]); });
-    body = parts.map(p => p[1]).join("") + byAuthor.map(([a, l]) => head("Not in a series · " + a) + l.map(row).join("")).join("");
+    const rest = list.filter(b => !placed.has(b));   // the rest together, in author order (her ask, 5 Nov)
+    body = parts.map(p => p[1]).join("") + (rest.length ? head("Not in a series") + rest.map(row).join("") : "");
   }
   return `<table class="oldbooks"><tr><th></th><th>Title</th><th>Author</th><th>Year</th><th>Edition (your notes)</th><th>Condition</th></tr>${body}</table>`;
 }
