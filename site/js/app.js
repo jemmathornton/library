@@ -235,6 +235,37 @@ const href = b => isElsewhere(b) ? "#" + b.id : "#b-" + b.id;
 const cardShape = b => `style="--br:${(b.cover && b.coverRatio) || 1.5}"`;
 const card = (b, note) => `<a class="bk" ${cardShape(b)} href="${href(b)}"><div class="slot">${cover(b)}</div><h3>${esc(b.t)}</h3><div class="by">${esc(note || b.by)}</div></a>`;
 const grid = (list, cls = "") => list.length ? `<div class="books ${cls}">${list.map(b => card(b)).join("")}</div>` : "";
+// the old books' ledger: a line each, cloth colour, title, author, year, her edition notes, condition. In author order
+// it's grouped by series in reading order, the books of a series she has no old copy of in their places, greyed (and
+// marked when they're on her old-books-to-find list); the books in no series follow by author
+const CONDITIONS = ["Fine", "Very good", "Good", "Fair", "Poor"];
+function ledgerView(list){
+  const yr = b => year(b.published) || "—", note = b => (b.description || "").length < 90 ? b.description || "" : "";
+  const row = b => `<tr><td>${b.cloth ? `<span class="chip" style="background:${b.cloth}"></span>` : `<span class="chip none"></span>`}</td>
+      <td class="t"><a href="${href(b)}">${esc(b.t)}</a></td><td class="m">${esc(b.by)}</td><td>${yr(b)}</td><td class="m">${esc(note(b)) || "—"}</td><td class="m">${esc(b.condition || "") || "—"}</td></tr>`;
+  const missing = (e, s) => `<tr class="gone"><td><span class="chip none"></span></td><td class="t">${esc(e.title)}</td><td class="m">${esc((e.owned[0] || e.wish[0] || {}).by || "")}</td>
+      <td></td><td class="m">${e.wish.some(w => w.old) ? "On your list to find" : ""}</td><td></td></tr>`;
+  const head = t => `<tr class="group"><td colspan="6">${esc(t)}</td></tr>`;
+  let body;
+  if (shelfView.sort !== "author") body = list.map(row).join("");
+  else {
+    const inList = new Set(list), placed = new Set(), parts = [];
+    SERIES.forEach(s => {
+      const here = s.entries.map(e => e.owned.filter(b => inList.has(b) && !placed.has(b)));
+      if (!here.some(h => h.length)) return;
+      // a gap is only shown when it's by the same author as her old copies (not, say, Pamela Cox's modern Malory Towers)
+      const authors = new Set(here.flat().map(b => b.by)), byOf = e => (e.owned[0] || e.wish[0] || {}).by;
+      parts.push([s.name, head(s.name) + s.entries.map((e, i) => here[i].length ? here[i].map(b => (placed.add(b), row(b))).join("")
+        : !byOf(e) || authors.has(byOf(e)) ? missing(e, s) : "").join("")]);
+    });
+    parts.sort((a, b) => a[0].localeCompare(b[0]));
+    const rest = list.filter(b => !placed.has(b));
+    const byAuthor = [];
+    rest.forEach(b => { const last = byAuthor[byAuthor.length - 1]; if (last && last[0] === b.by) last[1].push(b); else byAuthor.push([b.by, [b]]); });
+    body = parts.map(p => p[1]).join("") + byAuthor.map(([a, l]) => head("Not in a series · " + a) + l.map(row).join("")).join("");
+  }
+  return `<table class="oldbooks"><tr><th></th><th>Title</th><th>Author</th><th>Year</th><th>Edition (your notes)</th><th>Condition</th></tr>${body}</table>`;
+}
 function listView(list){
   return `<div class="blist">${list.map(b => { const st = reading(b).status;
     return `<a href="${href(b)}">${cover(b)}<b>${esc(b.t)}</b><span>${esc(b.by)}</span><span>${esc(b.publisher || "")}</span><span>${year(b.published)}</span>`
@@ -254,6 +285,9 @@ const mixed = list => { const c = list.filter(b => b.cover), step = Math.max(1, 
 const sectionHead = (title, more) => `<div class="section-head"><h2>${title}</h2>${more || ""}</div>`;
 
 // ---------- sidebar ----------
+// her old books are a collection of their own, not a shelf (her choice, 5 Nov): their own place in the menu, and a ledger
+// that puts year, edition and condition first and the cover last
+const COLLECTION = "old-book-collection";
 function renderNav(active){
   const nReading = readingLog().filter(isReading).length, left = WISH.length;
   const link = (href, icon, text, n) => `<a href="${href}" class="${active === href ? "on" : ""}">${icon}${text}${n != null ? `<span class="n">${n}</span>` : ""}</a>`;
@@ -262,8 +296,10 @@ function renderNav(active){
   document.getElementById("nav").innerHTML = `
     <div class="nav-group shelves-nav"><span class="label">Shelves</span>
       ${link("#shelves", ic("library"), "All shelves", BOOKS.length)}
-      ${SHELVES.filter(s => s.books.length).map(s => link("#shelf-" + s.id, `<span class="dot" style="--c:${s.color}"></span>`, esc(s.name), s.books.length)).join("")}
+      ${SHELVES.filter(s => s.books.length && s.id !== COLLECTION).map(s => link("#shelf-" + s.id, `<span class="dot" style="--c:${s.color}"></span>`, esc(s.name), s.books.length)).join("")}
     </div>
+    ${shelfIndex[COLLECTION] ? `<div class="nav-group"><span class="label">Collection</span>
+      ${link("#shelf-" + COLLECTION, ic("book"), "Old books", shelfIndex[COLLECTION].books.length)}</div>` : ""}
     <div class="nav-group minor">
       ${link("#reading", ic("bookmark"), "Reading", nReading || null)}
       ${link("#history", ic("clock"), "History")}
@@ -321,7 +357,8 @@ const FILTERS = {all: ["All", () => true], owned: ["Owned", b => !b.notOwned], n
 
 function shelfBooks(list, grouped = currentGrouped){
   const f = FILTERS[shelfView.filter][1], shown = list.filter(f).sort(SORTS[shelfView.sort][1]);
-  const view = store.get(VIEW_KEY, "covers"), books = l => view === "list" ? listView(l) : grid(l);
+  const ledger = !grouped && currentShelf === COLLECTION;
+  const view = store.get(VIEW_KEY, "covers"), books = l => ledger ? ledgerView(l) : view === "list" ? listView(l) : grid(l);
   // all shelves at once: each shelf in turn, in the same order as the sidebar
   const body = !shown.length ? `<p class="empty">Nothing here yet.</p>` : !grouped ? books(shown)
     : SHELVES.map(s => { const l = shown.filter(b => b.shelf === s.id); return l.length ? `<section class="shelf-part">`
@@ -329,7 +366,7 @@ function shelfBooks(list, grouped = currentGrouped){
   return `<div class="toolbar" id="toolbar">
       <div class="chips">${Object.entries(FILTERS).map(([k, [l]]) => `<button type="button" data-filter="${k}" class="${shelfView.filter === k ? "on" : ""}">${l}</button>`).join("")}</div>
       <select id="sort" aria-label="Sort by">${Object.entries(SORTS).map(([k, [l]]) => `<option value="${k}"${shelfView.sort === k ? " selected" : ""}>${l}</option>`).join("")}</select>
-      <div class="views"><button type="button" data-view="covers" class="${view === "covers" ? "on" : ""}" aria-label="Covers">${ic("grid")}</button><button type="button" data-view="list" class="${view === "list" ? "on" : ""}" aria-label="List">${ic("list")}</button></div>
+      <div class="views"${ledger ? " hidden" : ""}><button type="button" data-view="covers" class="${view === "covers" ? "on" : ""}" aria-label="Covers">${ic("grid")}</button><button type="button" data-view="list" class="${view === "list" ? "on" : ""}" aria-label="List">${ic("list")}</button></div>
       ${pickButton(grouped ? "" : currentShelf)}<span class="count">${plural(shown.length, "book")}</span>
     </div>` + body;
 }
@@ -427,6 +464,7 @@ function pageBook(b){
         ${fact("Published", niceDate(b.published) || year(b.published))}${fact("Pages", b.pages ? num(b.pages) : "")}
         ${fact("ISBN-13", b.isbn13 || "")}${fact("ISBN-10", b.isbn10 || "")}${fact("Copies", b.copies > 1 ? b.copies : "")}
         ${fact("Added", niceDate(b.added))}${fact("Full title", b.t !== b.title ? esc(b.title) : "")}
+        ${location.protocol.startsWith("http") && b.shelf === COLLECTION ? fact("Condition", `<select class="cond-pick" data-cond-id="${b.id}"><option value="">Not set</option>${CONDITIONS.map(c => `<option${b.condition === c ? " selected" : ""}>${c}</option>`).join("")}</select>`) : ""}
         ${location.protocol.startsWith("http") ? fact("Signed", `<select class="sign-pick" data-sign-id="${b.id}">${[["", "Not signed"], ["signed", "Signed"], ["to-you", "Signed to you"]].map(([v, t]) => `<option value="${v}"${(b.signed || "") === v ? " selected" : ""}>${t}</option>`).join("")}</select>`) : ""}
       </dl></div></aside></div>`;
 }
@@ -1062,6 +1100,13 @@ document.addEventListener("click", async e => {
     catch { addForm.note = "That didn’t save: is the library open from its shortcut?"; }
     addForm.busy = false; redrawAdd();
   }
+});
+document.addEventListener("change", async e => {   // an old book's condition, from its page (her ask, 5 Nov): saved, then the page reloads
+  const pick = e.target.closest("[data-cond-id]"); if (!pick) return;
+  pick.disabled = true;
+  try { const r = await api("api/condition", {method: "POST", body: JSON.stringify({id: pick.dataset.condId, condition: pick.value})});
+    if (r.ok) return location.reload(); } catch {}
+  pick.disabled = false; alert("That didn’t save: is the library open from its shortcut?");
 });
 document.addEventListener("change", async e => {   // signed or not, from a book's page: saved by the server, then the page reloads
   const pick = e.target.closest("[data-sign-id]"); if (!pick) return;

@@ -25,6 +25,15 @@ def swap(tmp, path):
             time.sleep(.2)
 
 
+
+def cloth(path):
+    """The colour of a book's cloth or jacket: the average of the middle of its cover picture, as #rrggbb."""
+    from PIL import Image
+    im = Image.open(path).convert('RGB')
+    w, h = im.size
+    r, g, bl = im.crop((int(w * .3), int(h * .3), int(w * .7), int(h * .7))).resize((1, 1), Image.BOX).getpixel((0, 0))
+    return f'#{r:02x}{g:02x}{bl:02x}'
+
 def load(name, default=None):
     p = os.path.join(DATA, name)
     return json.load(open(p, encoding='utf-8')) if os.path.exists(p) else default
@@ -85,6 +94,10 @@ def build():
     for b in books:
         if signed.get(b['id']) in ('signed', 'to-you'):
             b['signed'] = signed[b['id']]
+    condition = {k: v for k, v in load('condition.json', {}).items() if not k.startswith('_')}   # her old books' condition (5 Nov)
+    for b in books:
+        if condition.get(b['id']):
+            b['condition'] = condition[b['id']]
     moves = load('shelf-moves.json', {})   # shelves she chose for books Libib has on no genre shelf
     for b in books:
         b['shelf'] = moves.get(b['id'], b['shelf'])
@@ -127,6 +140,8 @@ def build():
         if os.path.exists(local):   # the copy in site/covers (tools/copy_covers.py), fingerprinted so a new copy shows at once
             b['cover'] = f"covers/{key}.jpg?v={hashlib.md5(open(local, 'rb').read()).hexdigest()[:8]}"
             b['coverRatio'] = shape(local)   # height / width: the site shows the whole cover at its own shape (30 Oct)
+            if b.get('shelf') == 'old-book-collection':   # the old books' ledger shows the cloth colour (5 Nov)
+                b['cloth'] = cloth(local)
         elif covers.get(key):
             b['cover'] = covers[key]['src']
     data = {'built': date.today().isoformat(), 'shelves': load('shelves.json'), 'books': books, 'toBuy': wish, 'storygraph': sg,
