@@ -1012,9 +1012,12 @@ document.addEventListener("error", e => { const b = e.target.closest && e.target
 document.addEventListener("click", async e => {
   if (e.target.closest("#findCover")) {
     readAdd(); addForm.coverChoices = "busy"; redrawAdd();
+    const mine = addForm;
+    let found = [];
     try { const r = await api("api/covers?" + new URLSearchParams({isbn: addForm.isbn, title: addForm.title, author: addForm.authors.split(",")[0].trim()}));
-      addForm.coverChoices = r.covers || []; }
-    catch { addForm.coverChoices = []; }
+      found = r.covers || []; } catch {}
+    if (addForm !== mine || mine.coverChoices !== "busy") return;   // closed, or another book, meanwhile
+    readAdd(); addForm.coverChoices = found;
     return redrawAdd();
   }
   // the right cover, but photographed at an angle or with the background round it (her ask, 1 Nov): the server cuts it
@@ -1023,18 +1026,22 @@ document.addEventListener("click", async e => {
   const trim = e.target.closest("[data-trim]");
   if (e.target.closest("#fixCover") || trim) {
     readAdd();
-    if (!trim && addForm.coverOriginal) { addForm.cover = addForm.coverOriginal; addForm.coverOriginal = null; return redrawAdd(); }
-    const src = addForm.coverOriginal || addForm.cover, edge = trim ? (addForm.trimEdge || 0) + +trim.dataset.trim : 0;
+    if (!trim && addForm.coverOriginal) { addForm.cover = addForm.coverOriginal; addForm.coverOriginal = null; addForm.cornersUsed = null; addForm.trimEdge = 0; return redrawAdd(); }
+    const src = addForm.coverOriginal || addForm.cover, edge = trim ? Math.max(-96, Math.min(96, (addForm.trimEdge || 0) + +trim.dataset.trim)) : 0;
+    const hers = trim ? addForm.cornersUsed : null, mine = addForm, before = addForm.cover;
     addForm.straightening = true; addForm.note = ""; redrawAdd();
-    try { const r = await api("api/straighten?" + new URLSearchParams({src, edge}));
-      if (r.ok) Object.assign(addForm, {coverOriginal: src, cover: r.cover, trimEdge: edge});
-      else addForm.note = r.error; }
-    catch { addForm.note = "Couldn’t straighten this cover."; }
+    let r;
+    try { r = await api("api/straighten?" + new URLSearchParams(hers ? {src, edge, corners: hers} : {src, edge})); }
+    catch { r = {ok: false, error: "Couldn’t straighten this cover."}; }
+    if (addForm !== mine || mine.cover !== before) return;   // another book, or another cover, meanwhile
+    readAdd();
+    if (r.ok) Object.assign(addForm, {coverOriginal: src, cover: r.cover, trimEdge: edge, cornersUsed: hers});
+    else addForm.note = r.error;
     addForm.straightening = false; return redrawAdd();
   }
   const pick = e.target.closest("[data-cover-pick]");
-  if (pick) { readAdd(); addForm.cover = addForm.coverChoices[+pick.dataset.coverPick].src; addForm.coverWrong = false; addForm.coverOriginal = null; addForm.coverChoices = null; addForm.corners = null; return redrawAdd(); }
-  if (e.target.closest("[data-cover-none]")) { readAdd(); addForm.coverWrong = true; addForm.coverOriginal = null; addForm.coverChoices = null; return redrawAdd(); }
+  if (pick) { readAdd(); addForm.cover = addForm.coverChoices[+pick.dataset.coverPick].src; addForm.coverWrong = false; addForm.coverOriginal = null; addForm.coverChoices = null; addForm.corners = null; addForm.cornersUsed = null; addForm.trimEdge = 0; return redrawAdd(); }
+  if (e.target.closest("[data-cover-none]")) { readAdd(); addForm.coverWrong = true; addForm.coverOriginal = null; addForm.coverChoices = null; addForm.corners = null; addForm.cornersUsed = null; addForm.trimEdge = 0; return redrawAdd(); }
   if (e.target.closest("[data-cover-close]")) { readAdd(); addForm.coverChoices = null; return redrawAdd(); }
 });
 const redrawAdd = () => { const y = scrollY; document.getElementById("view").innerHTML = pageAdd(); scrollTo(0, y); };
@@ -1067,7 +1074,8 @@ let cornerDrag = null;
 document.addEventListener("pointerdown", e => {
   const stage = e.target.closest("#cornerStage"); if (!stage || !addForm.corners || addForm.corners === "busy") return;
   e.preventDefault();
-  const img = document.getElementById("cornerImg"), r = img.getBoundingClientRect(), k = img.clientWidth / addForm.corners.width;
+  const img = document.getElementById("cornerImg"); if (!img || !img.clientWidth) return;   // not loaded yet
+  const r = img.getBoundingClientRect(), k = img.clientWidth / addForm.corners.width;
   const dot = e.target.closest(".corner-dot");
   let i = dot ? +dot.dataset.dot : -1;
   if (i < 0) {   // a click on the picture: the nearest dot comes to it
@@ -1080,7 +1088,7 @@ document.addEventListener("pointerdown", e => {
 });
 function cornerMove(e){
   if (cornerDrag === null) return;
-  const c = addForm.corners, img = document.getElementById("cornerImg"); if (!img) return;
+  const c = addForm.corners, img = document.getElementById("cornerImg"); if (!img || !img.clientWidth || !c || c === "busy") return;
   const r = img.getBoundingClientRect(), k = img.clientWidth / c.width;
   const x = Math.min(Math.max(e.clientX - r.left, 0), img.clientWidth), y = Math.min(Math.max(e.clientY - r.top, 0), img.clientHeight);
   c.pts[cornerDrag] = [x / k, y / k];
@@ -1103,38 +1111,43 @@ document.addEventListener("click", async e => {
   if (e.target.closest("#cornersOpen")) {
     readAdd();
     if (addForm.corners) { addForm.corners = null; return redrawAdd(); }
-    const src = addForm.coverOriginal || addForm.cover;
+    const src = addForm.coverOriginal || addForm.cover, mine = addForm;
     addForm.corners = "busy"; addForm.coverChoices = null; addForm.note = ""; redrawAdd();
-    try { const r = await api("api/outline?" + new URLSearchParams({src}));
-      if (r.ok) addForm.corners = {src, width: r.width, height: r.height, pts: r.corners};
-      else { addForm.corners = null; addForm.note = r.error; } }
-    catch { addForm.corners = null; addForm.note = "Couldn’t open this picture."; }
+    let r;
+    try { r = await api("api/outline?" + new URLSearchParams({src})); } catch { r = {ok: false, error: "Couldn’t open this picture."}; }
+    if (addForm !== mine || mine.corners !== "busy" || (mine.coverOriginal || mine.cover) !== src) return;   // cancelled, or another cover, meanwhile
+    readAdd();
+    if (r.ok) addForm.corners = {src, width: r.width, height: r.height, pts: r.corners};
+    else { addForm.corners = null; addForm.note = r.error; }
     redrawAdd();
     return document.getElementById("cornerStage")?.scrollIntoView({block: "center", behavior: "smooth"});
   }
   if (e.target.closest("[data-corners-close]")) { readAdd(); addForm.corners = null; return redrawAdd(); }
   if (e.target.closest("[data-corners-use]")) {
     readAdd();
-    const c = addForm.corners;
+    const c = addForm.corners, mine = addForm; if (!c || c === "busy") return;
+    const used = c.pts.flat().map(v => v.toFixed(1)).join(","); if (!/^[\d.,]+$/.test(used)) return;
     addForm.straightening = true; redrawAdd();
-    try { const r = await api("api/straighten?" + new URLSearchParams({src: c.src, corners: c.pts.flat().map(v => v.toFixed(1)).join(",")}));
-      if (r.ok) Object.assign(addForm, {coverOriginal: c.src, cover: r.cover, trimEdge: 0, corners: null, coverWrong: false});
-      else addForm.note = r.error; }
-    catch { addForm.note = "Couldn’t square it up."; }
+    let r;
+    try { r = await api("api/straighten?" + new URLSearchParams({src: c.src, corners: used})); } catch { r = {ok: false, error: "Couldn’t square it up."}; }
+    if (addForm !== mine || mine.corners !== c) return;   // cancelled, or another book, meanwhile
+    readAdd();
+    if (r.ok) Object.assign(addForm, {coverOriginal: c.src, cover: r.cover, trimEdge: 0, cornersUsed: used, corners: null, coverWrong: false});
+    else addForm.note = r.error;
     addForm.straightening = false; redrawAdd(); scrollTo({top: 0, behavior: "smooth"});
   }
 });
 document.addEventListener("click", async e => {
   const from = e.target.closest("[data-add-from]");
-  if (from) { const w = WISH.find(x => x.id === from.dataset.addFrom); addFromWish = true; addForm = {isbn: w.isbn13 || "", title: w.title, authors: w.by === "Unknown author" ? "" : w.by.replace(/ & /g, ", "), publisher: "", published: "", pages: "", cover: "", shelf: "", busy: false, fromWish: w.id,
+  if (from) { const w = WISH.find(x => x.id === from.dataset.addFrom); addFromWish = true; addForm = {isbn: w.isbn13 || "", title: w.title.replace(/\s*\((old|original paperback)\)$/i, ""), authors: w.by === "Unknown author" ? "" : w.by.replace(/ & /g, ", "), publisher: "", published: "", pages: "", cover: "", shelf: "", busy: false, fromWish: w.id,
     note: "From your to-buy list: type the ISBN of the copy you got and look it up, or just pick a shelf. It comes off the list when you add it."}; return; }
   if (e.target.closest("#addLookup")) {
     readAdd(); if (!addForm.isbn) { addForm.note = "Type the ISBN first."; return redrawAdd(); }
     addForm.note = "Looking it up…"; redrawAdd();
     try { const d = await api("api/lookup?isbn=" + encodeURIComponent(addForm.isbn));
-      if (d.found) Object.assign(addForm, {title: d.title, authors: d.authors.join(", "), publisher: d.publisher, published: d.published, pages: d.pages || "", cover: d.cover, coverWrong: false, coverOriginal: null, coverChoices: null, corners: null, shelf: "", note: "Found it. Check the details and pick a shelf.",
+      if (d.found) Object.assign(addForm, {title: d.title, authors: d.authors.join(", "), publisher: d.publisher, published: d.published, pages: d.pages || "", cover: d.cover, coverWrong: false, coverOriginal: null, coverChoices: null, corners: null, cornersUsed: null, trimEdge: 0, shelf: "", note: "Found it. Check the details and pick a shelf.",
         suggest: suggestShelf(d)});
-      else Object.assign(addForm, {title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", suggest: null, coverWrong: false, coverOriginal: null, coverChoices: null,
+      else Object.assign(addForm, {title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", suggest: null, coverWrong: false, coverOriginal: null, coverChoices: null, corners: null, cornersUsed: null, trimEdge: 0,
         note: "Open Library, Waterstones and Goodreads don’t know that number yet (new or special editions can take a while). Try the Waterstones price sticker if it has one, or fill in the details yourself."}); }
     catch { addForm.note = "Couldn’t reach Open Library. Fill in the details yourself."; }
     if (camChecked) { camChecked = false; addForm.note = `Read from a picture: check ${addForm.isbn} matches the book. ` + addForm.note; }
@@ -1270,7 +1283,7 @@ trialSwitch.innerHTML = `<button type="button" aria-pressed="${TRIAL}">${ic("ima
 trialSwitch.querySelector("button").addEventListener("click", () => { store.set(TRIAL_KEY, !TRIAL); location.reload(); });
 document.body.append(trialSwitch);
 // the suggested covers are all for the Old Book Collection now, so the switch shows only there (her ask, 1 Nov)
-const trialShown = () => { trialSwitch.hidden = !["#shelf-old-book-collection", "#trial-covers"].includes(location.hash); };
+const trialShown = () => { trialSwitch.hidden = !(["#shelf-old-book-collection", "#trial-covers"].includes(location.hash) || /^#old-/.test(location.hash)); };
 addEventListener("hashchange", trialShown); trialShown();
 
 // ---------- routing ----------
@@ -1281,7 +1294,7 @@ function route(){
   addFromWish = false;
   if (key.startsWith("shelf-") && shelfIndex[key.slice(6)]) { shelfView = {...SHELF_VIEW}; const s = shelfIndex[key.slice(6)]; html = pageShelf(s); title = s.name; }
   else if (key === "shelves") { shelfView = {...SHELF_VIEW}; html = pageAllShelves(); title = "All shelves"; }
-  else if (key.startsWith("b-") && bookIndex[key.slice(2)]) { const b = bookIndex[key.slice(2)]; html = pageBook(b); active = "#shelf-" + b.shelf; title = b.t; }
+  else if (key.startsWith("b-") && bookIndex[key.slice(2)]) { const b = bookIndex[key.slice(2)]; html = pageBook(b); active = b.shelf === COLLECTION ? "#old-" + ((DATA.oldKinds || {})[b.id] || "childrens") : "#shelf-" + b.shelf; title = b.t; }
   else if (key.startsWith("r-") && SG.books[+key.slice(2)] && !SG.books[+key.slice(2)].books) { const e = SG.books[+key.slice(2)]; html = pageSgBook(e); active = e.shelf ? "#shelf-" + e.shelf : "#reading"; title = e.t; }
   else if (key === "old-to-find") { html = pageOldToFind(); title = "Old books to find"; }
   else if (key.startsWith("old-") && OLD_KINDS.some(k => k[0] === key.slice(4))) { const k = OLD_KINDS.find(k => k[0] === key.slice(4)); html = pageOldKind(k); title = "Old books · " + k[1]; }

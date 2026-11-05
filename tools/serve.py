@@ -357,17 +357,26 @@ def save_straightened(out):
     return {'ok': True, 'cover': 'covers/_straightened/' + name}
 
 
-def straighten_corners(src, corners):
+def straighten_corners(src, corners, edge=0):
     """"Set the corners" (her ask, 2 Nov): the four corners she dragged into place (any shape, at any angle) pulled
     square. corners: x,y for top left, top right, bottom right, bottom left, in the picture's own pixels."""
     sys.path.insert(0, os.path.join(ROOT, 'tools'))
     import straighten as st
     im = picture(src)
     w, h = im.size
+    import math
     v = [float(x) for x in corners.split(',')]
-    if len(v) != 8:
-        raise ValueError('four corners needed')
-    pts = [[min(max(v[i], 0), w - 1), min(max(v[i + 1], 0), h - 1)] for i in range(0, 8, 2)]
+    if len(v) != 8 or not all(math.isfinite(x) for x in v):
+        return {'ok': False, 'error': 'Those corners didn’t come through. Set them again.'}
+    pts = [[v[i], v[i + 1]] for i in range(0, 8, 2)]
+    turns = [(pts[(i + 1) % 4][0] - pts[i][0]) * (pts[(i + 2) % 4][1] - pts[(i + 1) % 4][1]) -
+             (pts[(i + 1) % 4][1] - pts[i][1]) * (pts[(i + 2) % 4][0] - pts[(i + 1) % 4][0]) for i in range(4)]
+    if not all(t > 0 for t in turns):   # top left, top right, bottom right, bottom left go round clockwise with no crossing
+        return {'ok': False, 'error': 'The dots are crossed or in the wrong order: top left, top right, bottom right, bottom left.'}
+    if edge:   # Trim less / Trim more: every corner moved out (or in) from the middle, as for the automatic outline
+        cx, cy = sum(p[0] for p in pts) / 4, sum(p[1] for p in pts) / 4
+        pts = [[x + (x - cx) / math.hypot(x - cx, y - cy) * edge * 1.414, y + (y - cy) / math.hypot(x - cx, y - cy) * edge * 1.414] for x, y in pts]
+    pts = [[min(max(x, 0), w - 1), min(max(y, 0), h - 1)] for x, y in pts]
     return save_straightened(st.warp(im, pts))
 
 
@@ -625,6 +634,8 @@ def after_add(book, b, i13):
             img = img.resize((round(img.width * 600 / img.height), 600), Image.LANCZOS)
         img.save(os.path.join(SITE, 'covers', key + '.jpg'), 'JPEG', quality=86, optimize=True, progressive=True)
         original = book.get('coverOriginal') if isinstance(book.get('coverOriginal'), str) else ''
+        if urllib.parse.urlparse(original).scheme != 'https':
+            original = ''
         covers[key] = {'src': original, 'from': 'looked up when added, straightened on the Add page', 'straightened': True}
         write_json(covers_path, dict(sorted(covers.items())), indent=0)
     else:   # keep its cover like the others
@@ -681,7 +692,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 q = urllib.parse.parse_qs(u.query)
                 edge = int(q.get('edge', ['0'])[0]) if re.fullmatch(r'-?\d{1,2}', q.get('edge', ['0'])[0]) else 0
                 if q.get('corners'):   # "Set the corners": hers
-                    return self.reply(straighten_corners(q.get('src', [''])[0], q['corners'][0]))
+                    return self.reply(straighten_corners(q.get('src', [''])[0], q['corners'][0], edge))
                 return self.reply(straighten(q.get('src', [''])[0], edge))
             except Exception as e:
                 return self.reply({'ok': False, 'error': 'Couldn’t straighten this cover.', 'detail': str(e)})

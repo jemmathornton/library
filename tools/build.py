@@ -32,9 +32,9 @@ def cloth(path):
     from PIL import Image
     im = Image.open(path).convert('RGB')
     w, h = im.size
-    px = im.crop((int(w * .06), int(h * .06), int(w * .94), int(h * .94))).resize((40, 60)).getdata()
+    raw = im.crop((int(w * .06), int(h * .06), int(w * .94), int(h * .94))).resize((40, 60)).tobytes()
     bins = {}
-    for r, g, b in px:
+    for r, g, b in zip(raw[0::3], raw[1::3], raw[2::3]):
         if (r + g + b) / 3 > 225 or max(r, g, b) < 28:
             continue
         k = (r >> 5, g >> 5, b >> 5)
@@ -157,7 +157,10 @@ def build():
             b['cover'] = f"covers/{key}.jpg?v={hashlib.md5(open(local, 'rb').read()).hexdigest()[:8]}"
             b['coverRatio'] = shape(local)   # height / width: the site shows the whole cover at its own shape (30 Oct)
             if b.get('shelf') == 'old-book-collection':   # the old books' ledger shows the cloth colour (5 Nov)
-                b['cloth'] = cloth(local)
+                try:
+                    b['cloth'] = cloth(local)
+                except Exception:   # a damaged picture: the spine keeps the plain colour
+                    pass
         elif covers.get(key):
             b['cover'] = covers[key]['src']
     data = {'built': date.today().isoformat(), 'shelves': load('shelves.json'), 'books': books, 'toBuy': wish, 'storygraph': sg,

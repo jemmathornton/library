@@ -37,6 +37,7 @@
 4. **Look:** yellows and browns since 18 Oct (walnut sidebar, cream pages, mustard gold); banners are made of each page’s own covers (her choice, 18 Oct). The shelf colours (now only the dots) are first picks.
 5. **Phone scanning: built** (30 Oct, her yes; research in `research/2026-10-28-overnight/adding-books.md`). Her steps: install Binary Eye, then follow “Set up phone scanning” at the bottom of the Add a book page; answer the Windows firewall question with Private networks only (if it asks), and check her home Wi-Fi is set as Private in Windows. Optional: a fixed laptop address in the router (now 192.168.1.115), or the phone link stops if it changes. Not done: the typed-ISBN backup's check-digit warning.
 6. **Feature ideas** (28 Oct, `research/2026-10-28-overnight/feature-ideas.md`): next in your series, her reading year on Stats, a printable to-buy hunting list, a smarter “What should I read next?”, notes on her own copy; nine more.
+8. **To Buy count** (6 Nov review): the sidebar says “To buy 59”, which includes the 30 old books to find; the page itself says 29 to buy and 30 old books to find. Should the sidebar count only the 29 (old ones are counted under Old books › To find)?
 7. **Going online** (parked): her reviews would be public unless hidden; Add a book and the reading import only work on her PC (they use the local server).
 
 ## Open
