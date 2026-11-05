@@ -1,5 +1,5 @@
 {
- "_about": "Series in reading order (18 Oct, her yes). The site finds her copies by title and author surname; a title can have other spellings after a |, as Libib has them. Trebizon, Quest, Legacy of the Stones and Pure Dead looked up online (FantasticFiction, Goodreads, Amazon, Penguin). Twilight, A Good Girl's Guide to Murder (publication order, Kill Joy last) and Narnia (the numbered order of today's editions) added 18 Oct for books she has read but doesn't own. 18 Oct thorough check: Kitty Collins, Miss Marple, Notes from a Small Island, Natural Human Saga, Castaways of the Flying Dutchman, Before the Coffee Gets Cold, Cerulean Chronicles, Mother of Learning, We Were Liars, Shetland Witch, Seasonal Quartet, Quest for Qieta, Hogwarts Library, Fantastic Beasts screenplays, Edge Chronicles (her copy's chronological numbering), Foundation, Theodore Boone, Thomas Covenant, Larten Crepsley, Hierarchy, Hedge Witch, Solitaire (publication order) added; Quest Series 11-13 from the books' own covers; Cursed Child as Harry Potter 8. A Story for Every Day (Cafe Writers of Rugby) added 18 Oct in publication order: Summer, Autumn, Winter, Spring (Spring 'completes the cycle').",
+ "_about": "Series in reading order (18 Oct, her yes). The site finds her copies by title and author surname; a title can have other spellings after a |, as Libib has them. Trebizon, Quest, Legacy of the Stones and Pure Dead looked up online (FantasticFiction, Goodreads, Amazon, Penguin). Twilight, A Good Girl's Guide to Murder (publication order, Kill Joy last) and Narnia (the numbered order of today's editions) added 18 Oct for books she has read but doesn't own. 18 Oct thorough check: Kitty Collins, Miss Marple, Notes from a Small Island, Natural Human Saga, Castaways of the Flying Dutchman, Before the Coffee Gets Cold, Cerulean Chronicles, Mother of Learning, We Were Liars, Shetland Witch, Seasonal Quartet, Quest for Qieta, Hogwarts Library, Fantastic Beasts screenplays, Edge Chronicles (her copy's chronological numbering), Foundation, Theodore Boone, Thomas Covenant, Larten Crepsley, Hierarchy, Hedge Witch, Solitaire (publication order) added; Quest Series 11-13 from the books' own covers; Cursed Child as Harry Potter 8. A Story for Every Day (Cafe Writers of Rugby) added 18 Oct in publication order: Summer, Autumn, Winter, Spring (Spring 'completes the cycle'). 5 Nov: The Five Find-Outers, Brer Rabbit (her three, in the order of her copies' years) Just William and C. P. Snow's Strangers and Brothers added for her old books.",
  "series": [
   {
    "name": "Harry Potter",
@@ -1272,6 +1272,97 @@
    "books": [
     "The Moon Is a Door|The Moon is a Door",
     "Star Crossed Curses"
+   ]
+  },
+  {
+   "name": "The Five Find-Outers",
+   "author": "Blyton",
+   "books": [
+    "The Mystery of the Burnt Cottage",
+    "The Mystery of the Disappearing Cat",
+    "The Mystery of the Secret Room",
+    "The Mystery of the Spiteful Letters",
+    "The Mystery of the Missing Necklace",
+    "The Mystery of the Hidden House",
+    "The Mystery of the Pantomime Cat",
+    "The Mystery of the Invisible Thief",
+    "The Mystery of the Vanished Prince",
+    "The Mystery of the Strange Bundle",
+    "The Mystery of Holly Lane",
+    "The Mystery of Tally-Ho Cottage",
+    "The Mystery of the Missing Man",
+    "The Mystery of the Strange Messages",
+    "The Mystery of Banshee Towers"
+   ]
+  },
+  {
+   "name": "Brer Rabbit",
+   "author": "Blyton",
+   "books": [
+    "Brer Rabbit Book|The Brer Rabbit Book",
+    "Brer Rabbit Again",
+    "Brer Rabbit's a Rascal"
+   ]
+  },
+  {
+   "name": "Just William",
+   "author": "Crompton",
+   "books": [
+    "Just William",
+    "More William",
+    "William Again",
+    "William the Fourth",
+    "Still William",
+    "William the Conqueror",
+    "William the Outlaw",
+    "William in Trouble",
+    "William the Good",
+    "William",
+    "William the Bad",
+    "William's Happy Days",
+    "William's Crowded Hours",
+    "William the Pirate",
+    "William the Rebel",
+    "William the Gangster",
+    "William the Detective",
+    "Sweet William",
+    "William the Showman",
+    "William the Dictator",
+    "William and Air Raid Precautions|William and A.R.P.",
+    "William and the Evacuees",
+    "William Does His Bit",
+    "William Carries On",
+    "William and the Brains Trust",
+    "Just William's Luck",
+    "William the Bold",
+    "William and the Tramp",
+    "William and the Moon Rocket",
+    "William and the Space Animal",
+    "William's Television Show",
+    "William the Explorer",
+    "William's Treasure Trove",
+    "William and the Witch",
+    "William and the Pop Singers",
+    "William and the Masked Ranger",
+    "William the Superman",
+    "William the Lawless"
+   ]
+  },
+  {
+   "name": "Strangers and Brothers",
+   "author": "Snow",
+   "books": [
+    "Strangers and Brothers|George Passant",
+    "The Light and the Dark",
+    "Time of Hope",
+    "The Masters",
+    "The New Men",
+    "Homecomings",
+    "The Conscience of the Rich",
+    "The Affair",
+    "Corridors of Power",
+    "The Sleep of Reason",
+    "Last Things"
    ]
   }
  ]
