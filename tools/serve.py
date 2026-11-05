@@ -539,6 +539,21 @@ def set_condition(book_id, value):
     write_json(CONDITION, marks)
 
 
+INSCRIPTIONS = os.path.join(DATA, 'inscriptions.json')
+
+
+def set_inscription(book_id, text):
+    """An old book's inscription, in her own words (her ask, 5 Nov): data/inscriptions.json, book id -> text (up to
+    1,000 characters); empty clears it."""
+    marks = json.load(open(INSCRIPTIONS, encoding='utf-8')) if os.path.exists(INSCRIPTIONS) else {}
+    text = str(text or '').replace('\r\n', '\n').strip()[:1000]
+    if text:
+        marks[book_id] = text
+    else:
+        marks.pop(book_id, None)
+    write_json(INSCRIPTIONS, marks)
+
+
 def add(book):
     added = json.load(open(ADDED, encoding='utf-8')) if os.path.exists(ADDED) else []
     shelves = {s['id'] for s in json.load(open(os.path.join(DATA, 'shelves.json'), encoding='utf-8'))}
@@ -689,20 +704,23 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.reply({'error': 'unknown'}, 404)
 
     def do_POST(self):
-        if self.path not in ('/api/books', '/api/scanned/remove', '/api/signed', '/api/condition') or not self.api_ok() or not self.host_ok():
+        if self.path not in ('/api/books', '/api/scanned/remove', '/api/signed', '/api/condition', '/api/inscription') or not self.api_ok() or not self.host_ok():
             return self.reply({'error': 'not allowed'}, 403)
         try:
             body = json.loads(self.rfile.read(int(self.headers.get('Content-Length', 0))) or b'{}')
             with LOCK:
                 if self.path == '/api/books':
                     result = add(body)
-                elif self.path == '/api/condition':   # an old book's page: its condition (5 Nov); then the site is rebuilt
+                elif self.path in ('/api/condition', '/api/inscription'):   # an old book's page: condition or inscription (5 Nov); then the site is rebuilt
                     known = {b['id'] for b in json.load(open(os.path.join(DATA, 'books.json'), encoding='utf-8'))} | \
                             {b['id'] for b in (json.load(open(ADDED, encoding='utf-8')) if os.path.exists(ADDED) else [])}
                     if body.get('id') not in known:
                         result = {'ok': False, 'error': 'No such book.'}
                     else:
-                        set_condition(body['id'], body.get('condition', ''))
+                        if self.path == '/api/condition':
+                            set_condition(body['id'], body.get('condition', ''))
+                        else:
+                            set_inscription(body['id'], body.get('inscription', ''))
                         result = {'ok': build().returncode == 0}
                 elif self.path == '/api/signed':   # a book's page: signed, signed to her, or neither; then the site is rebuilt
                     known = {b['id'] for b in json.load(open(os.path.join(DATA, 'books.json'), encoding='utf-8'))} |                             {b['id'] for b in (json.load(open(ADDED, encoding='utf-8')) if os.path.exists(ADDED) else [])}

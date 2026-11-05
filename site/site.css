@@ -452,7 +452,8 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .signed-line .seal .i{width:15px;height:15px;stroke-width:2.3}
 .signed-line .seal.fancy{width:34px;height:34px;border-radius:0;box-shadow:none;
   clip-path:polygon(50% 0%,61% 11%,75% 7%,79% 21%,93% 25%,89% 39%,100% 50%,89% 61%,93% 75%,79% 79%,75% 93%,61% 89%,50% 100%,39% 89%,25% 93%,21% 79%,7% 75%,11% 61%,0% 50%,11% 39%,7% 25%,21% 21%,25% 7%,39% 11%)}
-.sign-pick{padding:4px 8px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font:inherit;font-size:13.5px;color:var(--ink)}
+.inscr-pick{width:100%;box-sizing:border-box;resize:vertical;padding:4px 8px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font:inherit;font-size:13.5px;font-weight:400;color:var(--ink);line-height:1.4}
+.sign-pick,.cond-pick{padding:4px 8px;border-radius:8px;border:1px solid var(--line);background:var(--surface);font:inherit;font-size:13.5px;color:var(--ink)}
 
 /* home: smaller shelf cards, five to a row, so all nine fit on two rows at laptop width, none left on its own (her ask, 1 Nov) */
 .shelves{grid-template-columns:repeat(5,minmax(0,1fr));gap:16px}

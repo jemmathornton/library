@@ -276,7 +276,7 @@ document.addEventListener("mouseover", e => {
   const note = (b.description || "").length < 90 ? b.description || "" : "", r = a.getBoundingClientRect();
   c.dataset.id = b.id;
   c.innerHTML = `${b.cover ? `<img src="${esc(b.cover)}" alt="">` : "<div></div>"}<div><b>${esc(b.t)}</b><div class="by">${esc(b.by)}</div>
-    <dl><dt>Year</dt><dd>${year(b.published) || "Undated"}</dd><dt>Edition</dt><dd>${esc(note) || "—"}</dd><dt>Condition</dt><dd>${esc(b.condition || "") || "—"}</dd></dl></div>`;
+    <dl><dt>Year</dt><dd>${year(b.published) || "Undated"}</dd><dt>Edition</dt><dd>${esc(note) || "—"}</dd><dt>Condition</dt><dd>${esc(b.condition || "") || "—"}</dd>${b.inscription ? `<dt>Inscribed</dt><dd>${esc(b.inscription.length > 70 ? b.inscription.slice(0, 68) + "…" : b.inscription)}</dd>` : ""}</dl></div>`;
   c.style.left = Math.min(innerWidth - 310, r.right + 10) + "px"; c.style.top = Math.max(10, Math.min(innerHeight - 170, r.top)) + "px";
 });
 addEventListener("hashchange", () => document.getElementById("spineCard")?.remove());
@@ -518,6 +518,7 @@ function pageBook(b){
         ${fact("ISBN-13", b.isbn13 || "")}${fact("ISBN-10", b.isbn10 || "")}${fact("Copies", b.copies > 1 ? b.copies : "")}
         ${fact("Added", niceDate(b.added))}${fact("Full title", b.t !== b.title ? esc(b.title) : "")}
         ${location.protocol.startsWith("http") && b.shelf === COLLECTION ? fact("Condition", `<select class="cond-pick" data-cond-id="${b.id}"><option value="">Not set</option>${CONDITIONS.map(c => `<option${b.condition === c ? " selected" : ""}>${c}</option>`).join("")}</select>`) : ""}
+        ${b.shelf !== COLLECTION ? "" : location.protocol.startsWith("http") ? fact("Inscription", `<textarea class="inscr-pick" data-inscr-id="${b.id}" rows="${b.inscription ? 3 : 1}" maxlength="1000" placeholder="None">${esc(b.inscription || "")}</textarea>`) : fact("Inscription", esc(b.inscription || ""))}
         ${location.protocol.startsWith("http") ? fact("Signed", `<select class="sign-pick" data-sign-id="${b.id}">${[["", "Not signed"], ["signed", "Signed"], ["to-you", "Signed to you"]].map(([v, t]) => `<option value="${v}"${(b.signed || "") === v ? " selected" : ""}>${t}</option>`).join("")}</select>`) : ""}
       </dl></div></aside></div>`;
 }
@@ -1161,6 +1162,13 @@ document.addEventListener("change", async e => {   // an old book's condition, f
   try { const r = await api("api/condition", {method: "POST", body: JSON.stringify({id: pick.dataset.condId, condition: pick.value})});
     if (r.ok) return location.reload(); } catch {}
   pick.disabled = false; alert("That didn’t save: is the library open from its shortcut?");
+});
+document.addEventListener("change", async e => {   // an old book's inscription, typed on its page (her ask, 5 Nov): saved when she clicks away, then the page reloads
+  const box = e.target.closest("[data-inscr-id]"); if (!box) return;
+  box.disabled = true;
+  try { const r = await api("api/inscription", {method: "POST", body: JSON.stringify({id: box.dataset.inscrId, inscription: box.value})});
+    if (r.ok) return location.reload(); } catch {}
+  box.disabled = false; alert("That didn’t save: is the library open from its shortcut?");
 });
 document.addEventListener("change", async e => {   // signed or not, from a book's page: saved by the server, then the page reloads
   const pick = e.target.closest("[data-sign-id]"); if (!pick) return;

@@ -110,6 +110,10 @@ def build():
     for b in books:
         if condition.get(b['id']):
             b['condition'] = condition[b['id']]
+    inscription = {k: v for k, v in load('inscriptions.json', {}).items() if not k.startswith('_')}   # her old books' inscriptions (5 Nov)
+    for b in books:
+        if inscription.get(b['id']):
+            b['inscription'] = inscription[b['id']]
     moves = load('shelf-moves.json', {})   # shelves she chose for books Libib has on no genre shelf
     for b in books:
         b['shelf'] = moves.get(b['id'], b['shelf'])
