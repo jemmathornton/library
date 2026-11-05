@@ -246,9 +246,11 @@ function oldShelves(list){
     const here = s.entries.map(e => e.owned.filter(b => inList.has(b) && !placed.has(b)));
     if (!here.some(h => h.length)) return;
     const authors = new Set(here.flat().map(b => b.by)), byOf = e => (e.owned[0] || e.wish[0] || {}).by;
-    shelves.push([s.name, s.entries.map((e, i) => here[i].length ? here[i].map(b => (placed.add(b), spine(b))).join("") : !byOf(e) || authors.has(byOf(e)) ? gap(e) : "").join("")]);
+    const sur = (here.flat()[0] || {}).sortAuthor || s.author || "", by = (here.flat()[0] || {}).by;
+    shelves.push([s.name + (by ? " – " + by : ""), s.entries.map((e, i) => here[i].length ? here[i].map(b => (placed.add(b), spine(b))).join("") : !byOf(e) || authors.has(byOf(e)) ? gap(e) : "").join(""), sur]);
   });
-  shelves.sort((a, b) => a[0].localeCompare(b[0]));
+  // by author surname, then series name (her ask, 6 Nov)
+  shelves.sort((a, b) => a[2].localeCompare(b[2]) || a[0].replace(/^The /, "").localeCompare(b[0].replace(/^The /, "")));
   const rest = list.filter(b => !placed.has(b)).sort(SORTS.author[1]);
   if (rest.length) shelves.push([shelves.length ? "Not in a series" : "", rest.map(spine).join("")]);
   return shelves.map(([name, html]) => `<div class="shelf-name">${esc(name) || "&nbsp;"}</div><div class="bookshelf">${html}</div>`).join("");
@@ -288,9 +290,9 @@ function ledgerView(list){
       // a gap is only shown when it's by the same author as her old copies (not, say, Pamela Cox's modern Malory Towers)
       const authors = new Set(here.flat().map(b => b.by)), byOf = e => (e.owned[0] || e.wish[0] || {}).by;
       parts.push([s.name, head(s.name) + s.entries.map((e, i) => here[i].length ? here[i].map(b => (placed.add(b), row(b))).join("")
-        : !byOf(e) || authors.has(byOf(e)) ? missing(e, s) : "").join("")]);
+        : !byOf(e) || authors.has(byOf(e)) ? missing(e, s) : "").join(""), (here.flat()[0] || {}).sortAuthor || ""]);
     });
-    parts.sort((a, b) => a[0].localeCompare(b[0]));
+    parts.sort((a, b) => a[2].localeCompare(b[2]) || a[0].replace(/^The /, "").localeCompare(b[0].replace(/^The /, "")));   // by author surname (6 Nov)
     const rest = list.filter(b => !placed.has(b));   // the rest together, in author order (her ask, 5 Nov)
     body = parts.map(p => p[1]).join("") + (rest.length ? head("Not in a series") + rest.map(row).join("") : "");
   }
