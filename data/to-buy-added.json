@@ -299,5 +299,80 @@
   "isbn13": "9780375856112",
   "note": "Knopf 2011 (US), to match her US Eragon, Eldest and Brisingr (her yes, 1 Nov).",
   "series": "Inheritance Cycle 4"
+ },
+ {
+  "id": "buy-network-effect",
+  "title": "Network Effect",
+  "authors": [
+   {
+    "name": "Martha Wells"
+   }
+  ],
+  "surname": "Wells",
+  "added": "2026-11-05",
+  "copies": 1,
+  "isbn13": "9781250229861",
+  "note": "Tor.com 2020, matches her set. Hardback; paperback 9781250229854 has the same cover.",
+  "series": "Murderbot 5"
+ },
+ {
+  "id": "buy-fugitive-telemetry",
+  "title": "Fugitive Telemetry",
+  "authors": [
+   {
+    "name": "Martha Wells"
+   }
+  ],
+  "surname": "Wells",
+  "added": "2026-11-05",
+  "copies": 1,
+  "isbn13": "9781250765376",
+  "note": "Tordotcom 2021, matches her set. Hardback",
+  "series": "Murderbot 6"
+ },
+ {
+  "id": "buy-system-collapse",
+  "title": "System Collapse",
+  "authors": [
+   {
+    "name": "Martha Wells"
+   }
+  ],
+  "surname": "Wells",
+  "added": "2026-11-05",
+  "copies": 1,
+  "isbn13": "9781250826978",
+  "note": "Tordotcom 2023, matches her set. Hardback",
+  "series": "Murderbot 7"
+ },
+ {
+  "id": "buy-spring",
+  "title": "Spring",
+  "authors": [
+   {
+    "name": "Ali Smith"
+   }
+  ],
+  "surname": "Smith",
+  "added": "2026-11-05",
+  "copies": 1,
+  "isbn13": "9780241973356",
+  "note": "Penguin 2020, matches her set.",
+  "series": "Seasonal Quartet 3"
+ },
+ {
+  "id": "buy-summer",
+  "title": "Summer",
+  "authors": [
+   {
+    "name": "Ali Smith"
+   }
+  ],
+  "surname": "Smith",
+  "added": "2026-11-05",
+  "copies": 1,
+  "isbn13": "9780241973370",
+  "note": "Penguin 2021, matches her set.",
+  "series": "Seasonal Quartet 4"
  }
 ]
