@@ -28,7 +28,8 @@ def copy(isbn, src):
     img = img.convert('RGB')
     if img.height > TALL:
         img = img.resize((round(img.width * TALL / img.height), TALL), Image.LANCZOS)
-    img.save(out, 'JPEG', quality=86, optimize=True, progressive=True)
+    from safe_write import save_jpeg   # never half a picture (review, 9 Nov)
+    save_jpeg(img, out, quality=86, optimize=True, progressive=True)
     return isbn, None
 
 

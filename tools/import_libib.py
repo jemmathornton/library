@@ -115,9 +115,8 @@ def main():
     if '--apply' in sys.argv:
         books.sort(key=lambda b: ([s['id'] for s in shelves].index(b['shelf']), b['title'].lower()))
         for name, obj in (('books.json', books), ('to-buy.json', wish)):
-            with open(os.path.join(DATA, name), 'w', encoding='utf-8', newline='\n') as fh:
-                json.dump(obj, fh, ensure_ascii=False, indent=1)
-                fh.write('\n')
+            from safe_write import write_json
+            write_json(os.path.join(DATA, name), obj)
         print('Written data/books.json and data/to-buy.json.')
     else:
         print('Report only. Add --apply to write data/.')

@@ -67,7 +67,7 @@ def main():
             break
         links = next((it['volumeInfo'].get('imageLinks') for it in res.get('items', []) if it['volumeInfo'].get('imageLinks')), None)
         if links:
-            src = (links.get('thumbnail') or links.get('smallThumbnail')).replace('http://', 'https://').replace('&edge=curl', '')
+            src = (links.get('thumbnail') or links.get('smallThumbnail') or '').replace('http://', 'https://').replace('&edge=curl', '')
             covers[i] = {'src': src, 'from': 'Google Books'}
         else:
             covers[i] = None
@@ -135,9 +135,9 @@ def main():
             time.sleep(1)
     print(f'Amazon: {found_a}')
 
-    with open(OUT, 'w', encoding='utf-8', newline='\n') as fh:
-        json.dump(dict(sorted(covers.items())), fh, ensure_ascii=False, indent=0)
-        fh.write('\n')
+    from safe_write import write_json
+    fresh = json.load(open(OUT, encoding='utf-8')) if os.path.exists(OUT) else {}   # anything the server saved meanwhile is kept
+    write_json(OUT, dict(sorted({**covers, **{k: v for k, v in fresh.items() if k not in covers or k.startswith('id-add')}}.items())), indent=0)
 
 
 if __name__ == '__main__':

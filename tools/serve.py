@@ -467,6 +467,8 @@ def find(isbn):
 def isbn13(s):
     s = re.sub(r'[^0-9Xx]', '', s or '').upper()
     if len(s) == 10:
+        if not re.fullmatch(r'\d{9}[\dX]', s):
+            return ''
         core = '978' + s[:9]
         return core + str((10 - sum((3 if i % 2 else 1) * int(ch) for i, ch in enumerate(core)) % 10) % 10)
     return s if len(s) == 13 else ''
@@ -573,7 +575,12 @@ def add(book):
     shop = i13 if i13.startswith('2') else ''   # a Waterstones sticker code is kept, but it isn't an ISBN
     i13 = '' if shop else i13
     # the next number after the highest (not the count: a gap, like add0009, would give an id already in use)
-    n = max([int(x['id'][3:]) for x in added if re.fullmatch(r'add\d+', x.get('id', ''))] + [0]) + 1
+    used = [x.get('id', '') for x in added]
+    for name in ('details.json', 'signed.json', 'condition.json', 'inscriptions.json', 'editions.json', 'covers.json', 'detail-fixes.json'):
+        p = os.path.join(DATA, name)
+        if os.path.exists(p):
+            used += [k.removeprefix('id-') for k in json.load(open(p, encoding='utf-8'))]
+    n = max([int(i[3:]) for i in used if re.fullmatch(r'add\d+', i)] + [0]) + 1
     b = {'id': f'add{n:04d}', 'title': title,
          'authors': [{'name': n.strip()} for n in book.get('authors', []) if n.strip()], 'shelf': book['shelf'],
          'isbn13': i13, 'shopCode': shop, 'publisher': book.get('publisher', ''), 'published': book.get('published', ''),
@@ -627,12 +634,15 @@ def after_add(book, b, i13):
     covers_path = os.path.join(DATA, 'covers.json')
     covers = json.load(open(covers_path, encoding='utf-8')) if os.path.exists(covers_path) else {}
     key = i13 or 'id-' + b['id']
+    if i13 and (i13 in covers or os.path.exists(os.path.join(SITE, 'covers', i13 + '.jpg'))):
+        key = 'id-' + b['id']   # another copy already has this ISBN's cover: that one is left alone (review, 9 Nov)
     if straightened:   # straightened on the Add page: the straightened picture is her cover; the link is where it came from
         from PIL import Image
         img = Image.open(os.path.join(SITE, *cover.split('/'))).convert('RGB')
         if img.height > 600:
             img = img.resize((round(img.width * 600 / img.height), 600), Image.LANCZOS)
-        img.save(os.path.join(SITE, 'covers', key + '.jpg'), 'JPEG', quality=86, optimize=True, progressive=True)
+        from safe_write import save_jpeg
+        save_jpeg(img, os.path.join(SITE, 'covers', key + '.jpg'), quality=86, optimize=True, progressive=True)
         original = book.get('coverOriginal') if isinstance(book.get('coverOriginal'), str) else ''
         if urllib.parse.urlparse(original).scheme != 'https':
             original = ''
@@ -718,7 +728,10 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         if self.path not in ('/api/books', '/api/scanned/remove', '/api/signed', '/api/condition', '/api/inscription') or not self.api_ok() or not self.host_ok():
             return self.reply({'error': 'not allowed'}, 403)
         try:
-            body = json.loads(self.rfile.read(int(self.headers.get('Content-Length', 0))) or b'{}')
+            size = int(self.headers.get('Content-Length', 0) or 0)
+            if not 0 <= size <= 1_000_000:
+                return self.reply({'error': 'too big'}, 413)
+            body = json.loads(self.rfile.read(size) or b'{}')
             with LOCK:
                 if self.path == '/api/books':
                     result = add(body)
@@ -806,7 +819,7 @@ def newest_export():
             with open(p, encoding='utf-8-sig') as fh:
                 if not fh.readline().startswith(SG_HEADER):
                     continue
-        except OSError:
+        except (OSError, ValueError):   # unreadable, or not UTF-8 (a bank statement with a £, 9 Nov): not StoryGraph's
             continue
         if best is None or os.path.getmtime(p) > os.path.getmtime(best):
             best = p

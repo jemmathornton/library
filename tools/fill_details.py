@@ -7,6 +7,7 @@ From Open Library: by ISBN, the edition (pages, publisher) and its work (descrip
 title and author for the work's description only (an old copy's pages and publisher are its own, so they stay empty).
 Saved in data/details.json; the build only uses it where the book has nothing of its own.
 """
+from safe_write import write_json
 import json, os, re, sys, time, urllib.parse, urllib.request
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -90,8 +91,8 @@ def main():
         found += bool(d)
         if n % 25 == 0:
             print(f'  {n} done, {found} with something new', flush=True)
-            json.dump(details, open(OUT, 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
-    json.dump(details, open(OUT, 'w', encoding='utf-8', newline='\n'), ensure_ascii=False, indent=1)
+            write_json(OUT, details)
+    write_json(OUT, details)
     print(f'Done: {found} of {len(todo)} got something.')
 
 

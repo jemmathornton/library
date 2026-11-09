@@ -52,10 +52,14 @@ def load(name, default=None):
 
 
 def shape(path):
-    """A picture's height divided by its width (Pillow reads only the header)."""
+    """A picture's height divided by its width (Pillow reads only the header). A damaged picture gives None and the
+    site uses the usual shape (review, 9 Nov: one bad file stopped every build)."""
     from PIL import Image
-    with Image.open(path) as im:
-        return round(im.height / im.width, 3)
+    try:
+        with Image.open(path) as im:
+            return round(im.height / im.width, 3)
+    except Exception:
+        return None
 
 
 def fix_names(books, fixes):
@@ -96,12 +100,6 @@ def build():
         b.update(put_right.get(b['id'], {}))
     gone = {x['id'] for x in load('removed.json', [])}   # duplicates she has said aren't real copies
     books = [b for b in books if b['id'] not in gone]
-    editions = load('editions.json', {})   # editions Libib doesn't say (her Illumicrate copies)
-    for b in books:
-        if b['id'] in editions and not b['id'].startswith('_'):
-            if editions[b['id']].lower() not in b['title'].lower():
-                b['title'] += f" ({editions[b['id']]})"
-            b['special'] = editions[b['id']]
     signed = {k: v for k, v in load('signed.json', {}).items() if not k.startswith('_')}   # her signed copies (1 Nov)
     for b in books:
         if signed.get(b['id']) in ('signed', 'to-you'):
@@ -131,10 +129,18 @@ def build():
             w['old'] = True
     fixes = load('name-fixes.json', {'names': {}, 'remove': [], 'roles': {}, 'books': {}, 'surnames': {}})
     fix_names(books + wish, fixes)
+    editions = load('editions.json', {})   # editions Libib doesn't say (her Illumicrate copies); after the name fixes (9 Nov)
+    for b in books:
+        if b['id'] in editions and not b['id'].startswith('_'):
+            if editions[b['id']].lower() not in b['title'].lower():
+                b['title'] += f" ({editions[b['id']]})"
+            b['special'] = editions[b['id']]
     sg = load('storygraph.json', {'books': []})
     fixes_r = {k: v for k, v in load('reading-fixes.json', {}).items() if not k.startswith('_')}   # statuses she has corrected
     for e in sg['books']:
         e['status'] = fixes_r.get(e['title'], e['status'])
+        if 'books' in e:   # copies she removed drop out (9 Nov); the reading stays with any copy left
+            e['books'] = [i for i in e['books'] if i not in gone]
     no_cover = {x['id'] for x in load('no-cover.json', {'books': []})['books']}   # old books: no modern reprint covers
     trial = {k: v for k, v in load('covers-trial.json', {}).items() if not k.startswith('_')}   # proposed covers, shown only with the switch on (28 Oct)
     for b in books + wish + [e for e in sg['books'] if 'books' not in e]:

@@ -231,9 +231,8 @@ def main():
         os.makedirs(dest, exist_ok=True)
         if os.path.abspath(os.path.dirname(src)) != os.path.abspath(dest):   # re-importing the copy already kept here
             shutil.copy2(src, dest)
-        with open(os.path.join(DATA, 'storygraph.json'), 'w', encoding='utf-8', newline='\n') as fh:
-            json.dump({'imported': today, 'file': os.path.basename(src), 'books': out}, fh, ensure_ascii=False, indent=1)
-            fh.write('\n')
+        from safe_write import write_json
+        write_json(os.path.join(DATA, 'storygraph.json'), {'imported': today, 'file': os.path.basename(src), 'books': out})
         print(f'Copied the export into imports/storygraph-{today}/ and wrote data/storygraph.json.')
     else:
         print('Report only. Add --apply to write data/storygraph.json.')
