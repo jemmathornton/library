@@ -9,7 +9,7 @@ internet to show them; books with no cover get a plain title card drawn by the s
 """
 import json, os, re, sys, time, urllib.parse, urllib.request
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.environ.get('LIBRARY_ROOT') or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # tests run on a copy (9 Nov)
 DATA = os.path.join(ROOT, 'data')
 OUT = os.path.join(DATA, 'covers.json')
 UA = {'User-Agent': "Jemma's Home Library (private prototype)"}

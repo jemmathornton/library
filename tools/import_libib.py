@@ -12,7 +12,7 @@ Same-title books on the shelves are kept apart: they are usually different editi
 """
 import csv, glob, json, os, re, sys
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.environ.get('LIBRARY_ROOT') or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # tests run on a copy (9 Nov)
 DATA = os.path.join(ROOT, 'data')
 CATCH_ALL, WISHLIST = "Jemma's Library", 'Books to Buy'
 

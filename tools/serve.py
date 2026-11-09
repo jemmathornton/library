@@ -35,7 +35,8 @@ import functools, hmac, html, http.server, json, os, re, secrets, subprocess, sy
 from datetime import date, datetime
 
 PORT, SCAN_PORT = 8020, 8021
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.environ.get('LIBRARY_ROOT') or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # tests run on a copy (9 Nov)
+TOOLS = os.path.dirname(os.path.abspath(__file__))
 SITE, DATA = os.path.join(ROOT, 'site'), os.path.join(ROOT, 'data')
 ADDED, SCANNED = os.path.join(DATA, 'added.json'), os.path.join(DATA, 'scanned.json')
 KEY_FILE = os.path.join(os.environ.get('LOCALAPPDATA', os.path.expanduser('~')), 'Jemmas Library', 'scan-key.txt')
@@ -46,7 +47,7 @@ LOCK = threading.Lock()   # one add or reading import at a time, so two builds n
 
 def build():
     """Rebuild the site; the finished process, so its exit code can be checked."""
-    return subprocess.run([PYTHON, '-X', 'utf8', os.path.join(ROOT, 'tools', 'build.py')], cwd=ROOT, capture_output=True,
+    return subprocess.run([PYTHON, '-X', 'utf8', os.path.join(TOOLS, 'build.py')], cwd=ROOT, capture_output=True,
                           text=True, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
 
 
@@ -335,7 +336,7 @@ def picture(src):
 def outline(src):
     """Where "Set the corners" puts its four dots to start with: the book's corners if they can be found, else the
     picture's own corners a little in. In the picture's own pixels, with its size."""
-    sys.path.insert(0, os.path.join(ROOT, 'tools'))
+    sys.path.insert(0, TOOLS)
     import straighten as st
     im = picture(src)
     w, h = im.size
@@ -360,7 +361,7 @@ def save_straightened(out):
 def straighten_corners(src, corners, edge=0):
     """"Set the corners" (her ask, 2 Nov): the four corners she dragged into place (any shape, at any angle) pulled
     square. corners: x,y for top left, top right, bottom right, bottom left, in the picture's own pixels."""
-    sys.path.insert(0, os.path.join(ROOT, 'tools'))
+    sys.path.insert(0, TOOLS)
     import straighten as st
     im = picture(src)
     w, h = im.size
@@ -385,7 +386,7 @@ def straighten(src, edge=0):
     tools/straighten.py (how it decides is written there; tested overnight 1-2 Nov on about 500 sellers' photos). When
     it isn't clearly a photo of a book on a background, the picture is left as it is and she's told. She sees the
     result and can undo it, or trim less or more: edge moves every side out (more than 0) or in (less than 0)."""
-    sys.path.insert(0, os.path.join(ROOT, 'tools'))
+    sys.path.insert(0, TOOLS)
     import straighten as st
     out = st.straighten(picture(src), edge)
     if out is None:
@@ -651,9 +652,11 @@ def after_add(book, b, i13):
     else:   # keep its cover like the others
         covers[key] = {'src': cover, 'from': 'looked up when added (Open Library or Waterstones)'}
         write_json(covers_path, dict(sorted(covers.items())), indent=0)
-        sys.path.insert(0, os.path.join(ROOT, 'tools'))
+        sys.path.insert(0, TOOLS)
         from copy_covers import copy
-        copy(key, cover)
+        _, err = copy(key, cover)
+        if err:   # the link is kept, but the picture didn't come: say so (review, 9 Nov: this was silent)
+            raise RuntimeError(f'cover not copied: {err}')
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
@@ -809,7 +812,7 @@ def sg_log(msg):
 
 
 def newest_export():
-    downloads = os.path.join(os.path.expanduser('~'), 'Downloads')
+    downloads = os.environ.get('LIBRARY_DOWNLOADS') or os.path.join(os.path.expanduser('~'), 'Downloads')
     best = None
     for f in os.listdir(downloads):
         p = os.path.join(downloads, f)
@@ -828,7 +831,7 @@ def newest_export():
 
 def import_export(p, state):
     """Import a new StoryGraph export and rebuild; the state is saved only once both worked (a failed import isn't tried again)."""
-    r = subprocess.run([PYTHON, '-X', 'utf8', os.path.join(ROOT, 'tools', 'import_storygraph.py'), p, '--apply'],
+    r = subprocess.run([PYTHON, '-X', 'utf8', os.path.join(TOOLS, 'import_storygraph.py'), p, '--apply'],
                        cwd=ROOT, capture_output=True, text=True, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
     if r.returncode != 0:
         sg_log(f'import of {os.path.basename(p)} failed: {(r.stderr or r.stdout).strip()[-300:]}')

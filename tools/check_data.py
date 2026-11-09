@@ -6,7 +6,7 @@ file exists; her own fix files (names, details, covers, condition, inscriptions,
 only mention books that exist; nothing on the to-buy list is a book she already owns (same ISBN); series entries
 aren't listed twice; data.js is newer than every data file (else the site shows old data: run tools/build.py)."""
 import glob, json, os, re, sys
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.environ.get('LIBRARY_ROOT') or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # tests run on a copy (9 Nov)
 DATA, SITE = os.path.join(ROOT, 'data'), os.path.join(ROOT, 'site')
 problems = []
 

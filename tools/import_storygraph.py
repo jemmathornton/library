@@ -13,7 +13,7 @@ lists them as read elsewhere. The export is the whole library every time, so a n
 import csv, html, json, os, re, shutil, sys
 from datetime import date
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.environ.get('LIBRARY_ROOT') or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # tests run on a copy (9 Nov)
 DATA = os.path.join(ROOT, 'data')
 STATUS = {'read': 'read', 'currently-reading': 'reading', 'to-read': 'to-read', 'did-not-finish': 'stopped', 'paused': 'paused'}
 

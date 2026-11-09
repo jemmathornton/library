@@ -6,7 +6,7 @@
 import hashlib, json, os, re, time
 from datetime import date
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.environ.get('LIBRARY_ROOT') or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # tests run on a copy (9 Nov)
 DATA, SITE = os.path.join(ROOT, 'data'), os.path.join(ROOT, 'site')
 
 

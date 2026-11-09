@@ -9,7 +9,7 @@ import io, json, os, sys, urllib.request
 from concurrent.futures import ThreadPoolExecutor
 from PIL import Image
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT = os.environ.get('LIBRARY_ROOT') or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # tests run on a copy (9 Nov)
 COVERS = os.path.join(ROOT, 'site', 'covers')
 UA = {'User-Agent': "Jemma's Home Library (private prototype)"}
 TALL = 600

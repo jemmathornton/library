@@ -10,8 +10,8 @@ Run every Sunday by the Windows task "Jemma's Library - weekly backup" (tools/ma
 import os, subprocess, sys, zipfile
 from datetime import date, datetime
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DEST = os.path.join(os.path.expanduser('~'), 'Documents', 'HomeLibraryBackups')
+ROOT = os.environ.get('LIBRARY_ROOT') or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # tests run on a copy (9 Nov)
+DEST = os.environ.get('LIBRARY_BACKUPS') or os.path.join(os.path.expanduser('~'), 'Documents', 'HomeLibraryBackups')
 KEEP = 8
 LOG = os.path.join(ROOT, 'logs', 'backup.log')
 NO_WINDOW = getattr(subprocess, 'CREATE_NO_WINDOW', 0)
