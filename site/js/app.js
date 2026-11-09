@@ -4,6 +4,8 @@ const ic = n => ICONS[n].replace("<svg ", '<svg class="i" aria-hidden="true" ');
 // shown text uses curly apostrophes and quotes; ids and links are untouched
 const curly = s => String(s ?? "").replace(/(^|[\s(\[“"—-])'/g, "$1‘").replace(/'/g, "’");
 const esc = s => curly(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+// for form boxes and their choices: escaped but not curled, so what she typed is saved as she typed it (review, 9 Nov)
+const escRaw = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const slug = s => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/&/g,"and").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");
 const norm = s => String(s).toLowerCase().replace(/\(.*?\)/g, "").replace(/[^a-z0-9]/g, "");
 const num = n => n.toLocaleString("en-GB");
@@ -280,6 +282,8 @@ document.addEventListener("mouseover", e => {
   c.style.left = Math.min(innerWidth - 310, r.right + 10) + "px"; c.style.top = Math.max(10, Math.min(innerHeight - 170, r.top)) + "px";
 });
 addEventListener("hashchange", () => document.getElementById("spineCard")?.remove());
+addEventListener("scroll", () => document.getElementById("spineCard")?.remove(), {passive: true});
+document.documentElement.addEventListener("mouseleave", () => document.getElementById("spineCard")?.remove());
 // the old books to find: the same list as on To Buy (her choice, 5 Nov: in both places)
 function pageOldToFind(){
   const list = WISH.filter(w => w.old).sort((a, b) => a.sortAuthor.localeCompare(b.sortAuthor) || a.sortTitle.localeCompare(b.sortTitle));
@@ -518,7 +522,7 @@ function pageBook(b){
         ${fact("ISBN-13", b.isbn13 || "")}${fact("ISBN-10", b.isbn10 || "")}${fact("Copies", b.copies > 1 ? b.copies : "")}
         ${fact("Added", niceDate(b.added))}${fact("Full title", b.t !== b.title ? esc(b.title) : "")}
         ${location.protocol.startsWith("http") && b.shelf === COLLECTION ? fact("Condition", `<select class="cond-pick" data-cond-id="${b.id}"><option value="">Not set</option>${CONDITIONS.map(c => `<option${b.condition === c ? " selected" : ""}>${c}</option>`).join("")}</select>`) : ""}
-        ${b.shelf !== COLLECTION ? "" : location.protocol.startsWith("http") ? fact("Inscription", `<textarea class="inscr-pick" data-inscr-id="${b.id}" rows="${b.inscription ? 3 : 1}" maxlength="1000" placeholder="None">${esc(b.inscription || "")}</textarea>`) : fact("Inscription", esc(b.inscription || ""))}
+        ${b.shelf !== COLLECTION ? "" : location.protocol.startsWith("http") ? fact("Inscription", `<textarea class="inscr-pick" data-inscr-id="${b.id}" rows="${b.inscription ? 3 : 1}" maxlength="1000" placeholder="None">${escRaw(b.inscription || "")}</textarea>`) : fact("Inscription", esc(b.inscription || ""))}
         ${location.protocol.startsWith("http") ? fact("Signed", `<select class="sign-pick" data-sign-id="${b.id}">${[["", "Not signed"], ["signed", "Signed"], ["to-you", "Signed to you"]].map(([v, t]) => `<option value="${v}"${(b.signed || "") === v ? " selected" : ""}>${t}</option>`).join("")}</select>`) : ""}
       </dl></div></aside></div>`;
 }
@@ -640,7 +644,7 @@ let addForm = {isbn: "", title: "", authors: "", publisher: "", published: "", p
 const api = (path, opts = {}) => fetch(path, {...opts, headers: {"X-Library": "1", "Content-Type": "application/json", ...(opts.headers || {})}}).then(r => r.json());
 function pageAdd(){
   const f = addForm, served = location.protocol.startsWith("http");
-  const field = (k, label, extra = "") => `<label><span>${label}</span><input id="add-${k}" value="${esc(f[k] || "").replace(/’/g, "'")}" ${extra}></label>`;
+  const field = (k, label, extra = "") => `<label><span>${label}</span><input id="add-${k}" value="${escRaw(f[k] || "")}" ${extra}></label>`;
   return hero({kicker: "Your shelves", title: "Add a <em>book</em>", text: "Type or scan its ISBN (the barcode number, usually on the back), check the details, pick a shelf."})
     + (!served ? `<div class="note">${ic("info")}<div><b>Open the library from its desktop shortcut to add books.</b> Opened straight from the folder, it can’t save anything.</div></div>` : "")
     + `<div id="scannedBox">${scannedBox()}</div>`
@@ -662,7 +666,7 @@ function pageAdd(){
                 : ` <span class="suggest">Suggested: ${esc(shelfIndex[f.suggest.shelf].name)} (${esc(f.suggest.why)}) ✓</span>`}</span><select id="add-shelf"><option value="">Choose a shelf…</option>${SHELVES.filter(s => s.libib).map(s => `<option value="${s.id}"${f.shelf === s.id ? " selected" : ""}>${esc(s.name)}</option>`).join("")}</select></label></div>
             <div class="two"><label><span>Signed</span><select id="add-signed">${[["", "Not signed"], ["signed", "Signed"], ["to-you", "Signed to you"]].map(([v, t]) => `<option value="${v}"${(f.signed || "") === v ? " selected" : ""}>${t}</option>`).join("")}</select></label>
               ${field("special", "Special edition (empty if not)", `list="add-editions" autocomplete="off" placeholder="e.g. Illumicrate Edition"`)}
-              <datalist id="add-editions">${SPECIAL_EDITIONS().map(x => `<option value="${esc(x)}">`).join("")}</datalist></div>
+              <datalist id="add-editions">${SPECIAL_EDITIONS().map(x => `<option value="${escRaw(x)}">`).join("")}</datalist></div>
             <button class="btn pick" type="button" id="addSave"${served && !f.busy ? "" : " disabled"}>${ic("plus")}${f.busy ? "Adding…" : "Add to the shelf"}</button>
           </div></div>${f.coverChoices ? coverPicker(f) : ""}${f.corners ? cornerEditor(f) : ""}</div>`
     + (served ? `<details class="scan-setup" id="scanSetup"><summary>Set up phone scanning</summary><ol>
@@ -716,7 +720,7 @@ async function pollScanned(){
   const fresh = scanSeen ? scanList.filter(s => !scanSeen.has(s.isbn)) : [];
   scanSeen = new Set(scanList.map(s => s.isbn));
   readAdd();
-  if (fresh.length && !addForm.title && !addForm.busy) useScan(fresh[fresh.length - 1].isbn);
+  if (fresh.length && !addForm.title && !addForm.busy && !addForm.looking) useScan(fresh[fresh.length - 1].isbn);
 }
 function useScan(isbn){ const el = document.getElementById("add-isbn"); if (!el) return; el.value = isbn; document.getElementById("addLookup")?.click(); }
 
@@ -985,7 +989,7 @@ document.addEventListener("click", async e => {
   const use = e.target.closest("[data-scan-use]"), drop = e.target.closest("[data-scan-remove]");
   if (use) useScan(use.dataset.scanUse);
   if (drop) { try { scanList = (await api("api/scanned/remove", {method: "POST", body: JSON.stringify({isbn: drop.dataset.scanRemove})})).left; } catch {}
-    document.getElementById("scannedBox").innerHTML = scannedBox(); }
+    const box = document.getElementById("scannedBox"); if (box) box.innerHTML = scannedBox(); }
 });
 // her special editions so far, offered as she types (1 Nov: the Add page had no way to say a copy is special)
 const SPECIAL_EDITIONS = () => [...new Set(BOOKS.map(b => b.special).filter(Boolean))].sort();
@@ -1143,11 +1147,19 @@ document.addEventListener("click", async e => {
     note: "From your to-buy list: type the ISBN of the copy you got and look it up, or just pick a shelf. It comes off the list when you add it."}; return; }
   if (e.target.closest("#addLookup")) {
     readAdd(); if (!addForm.isbn) { addForm.note = "Type the ISBN first."; return redrawAdd(); }
-    addForm.note = "Looking it up…"; redrawAdd();
-    try { const d = await api("api/lookup?isbn=" + encodeURIComponent(addForm.isbn));
+    if (addForm.looking) return;
+    const mine = addForm, isbn = addForm.isbn;
+    addForm.looking = true; addForm.note = "Looking it up…"; redrawAdd();
+    let d = null;
+    try { d = await api("api/lookup?isbn=" + encodeURIComponent(isbn)); } catch {}
+    mine.looking = false;
+    if (addForm !== mine) return;   // another book meanwhile (review, 9 Nov)
+    readAdd();
+    if (addForm.isbn !== isbn) { addForm.note = ""; return redrawAdd(); }   // she changed the number while it looked: that one wins
+    try { if (!d) throw 0;
       if (d.found) Object.assign(addForm, {title: d.title, authors: d.authors.join(", "), publisher: d.publisher, published: d.published, pages: d.pages || "", cover: d.cover, coverWrong: false, coverOriginal: null, coverChoices: null, corners: null, cornersUsed: null, trimEdge: 0, shelf: "", note: "Found it. Check the details and pick a shelf.",
         suggest: suggestShelf(d)});
-      else Object.assign(addForm, {title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", suggest: null, coverWrong: false, coverOriginal: null, coverChoices: null, corners: null, cornersUsed: null, trimEdge: 0,
+      else Object.assign(addForm, {title: addForm.fromWish ? addForm.title : "", authors: addForm.fromWish ? addForm.authors : "", publisher: "", published: "", pages: "", cover: "", shelf: "", suggest: null, coverWrong: false, coverOriginal: null, coverChoices: null, corners: null, cornersUsed: null, trimEdge: 0,
         note: "Open Library, Waterstones and Goodreads don’t know that number yet (new or special editions can take a while). Try the Waterstones price sticker if it has one, or fill in the details yourself."}); }
     catch { addForm.note = "Couldn’t reach Open Library. Fill in the details yourself."; }
     if (camChecked) { camChecked = false; addForm.note = `Read from a picture: check ${addForm.isbn} matches the book. ` + addForm.note; }
@@ -1254,8 +1266,9 @@ function pageStats(){
 const q = document.getElementById("q");
 document.getElementById("searchIco").innerHTML = ic("search");
 function pageSearch(term){
-  const t = term.toLowerCase().trim(), tn = t.replace(/[^0-9x]/g, "");
-  const hit = b => b.title.toLowerCase().includes(t) || b.by.toLowerCase().includes(t) || (b.authors || []).some(a => a.name.toLowerCase().includes(t))
+  const plain = s => String(s || "").toLowerCase().replace(/[’‘]/g, "'").replace(/st\.\s*/g, "st ");
+  const t = plain(term).trim(), tn = t.replace(/[^0-9x]/g, "");
+  const hit = b => plain(b.title).includes(t) || plain(b.t).includes(t) || plain(b.sub).includes(t) || b.by.toLowerCase().includes(t) || (b.authors || []).some(a => a.name.toLowerCase().includes(t))
     || (tn.length >= 6 && ((b.isbn13 || "").includes(tn) || (b.isbn10 || "").toLowerCase().includes(tn)));
   const books = BOOKS.filter(hit).sort(SORTS.title[1]), authors = AUTHORS.filter(a => a.name.toLowerCase().includes(t)), wish = WISH.filter(hit);
   const away = ELSEWHERE.filter(hit).sort(SORTS.title[1]);
@@ -1266,8 +1279,12 @@ function pageSearch(term){
     + (wish.length ? sectionHead("On the <em>to-buy list</em>") + `<div class="books">${wish.map(w => `<a class="bk" ${cardShape(w)} href="#to-buy"><div class="slot">${cover(w)}</div><h3>${esc(w.t)}</h3><div class="by">${esc(w.by)}</div></a>`).join("")}</div>` : "");
 }
 q.addEventListener("input", () => { const v = q.value.trim(); if (v.length >= 2) { document.getElementById("view").innerHTML = pageSearch(v); scrollTo(0, 0); } else if (!v) route(); });
-q.addEventListener("keydown", e => { if (e.key === "Escape") { q.value = ""; route(); } });
-document.getElementById("nav").addEventListener("click", () => { if (q.value) q.value = ""; });
+q.addEventListener("keydown", e => { if (e.key === "Escape") { q.value = ""; addFromWish = !!addForm.fromWish; route(); } });
+document.addEventListener("click", e => {   // a sidebar link or the title: the search goes; on the same page it's redrawn (review, 9 Nov)
+  const a = e.target.closest("#nav a, a.brand"); if (!a || !q.value) return;
+  q.value = "";
+  if ((a.getAttribute("href") || "") === (location.hash || "#home")) route();
+});
 
 // ---------- trial covers: every proposed cover next to the one shown now ----------
 function pageTrialCovers(){

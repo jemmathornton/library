@@ -39,6 +39,8 @@
 6. **Feature ideas** (28 Oct, `research/2026-10-28-overnight/feature-ideas.md`): next in your series, her reading year on Stats, a printable to-buy hunting list, a smarter “What should I read next?”, notes on her own copy; nine more.
 7. **Going online** (parked): her reviews would be public unless hidden; Add a book and the reading import only work on her PC (they use the local server).
 8. **To Buy count** (6 Nov review): the sidebar says “To buy 59”, which includes the 30 old books to find; the page itself says 29 to buy and 30 old books to find. Should the sidebar count only the 29 (old ones are counted under Old books › To find)?
+9. **Shelf counts** (9 Nov review): on a shelf page the top figures count each book once and leave out not-owned books (Fantasy: 206 books, 45 read), while the toolbar counts every copy plus read-but-not-owned ones (220 books, Read 64). Should both use one rule?
+10. **Things to know (9 Nov review, not changed):** don't run `find_covers.py` or `fill_details.py` while adding books in the app (now they keep each other's covers, but details can still clash); a Libib re-import doesn't know about books added on the site, so one added in both places shows twice; backups are 466 MB each, eight kept (about 4 GB).
 
 ## Open
 

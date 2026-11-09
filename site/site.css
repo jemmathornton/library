@@ -186,7 +186,6 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .dates label{display:grid;gap:4px;font-size:12px;font-weight:700;color:var(--muted)}
 .dates input{padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--paper);font-size:13.5px}
 .stars{display:flex;gap:2px;align-items:center}
-.stars .clear{font-size:12px;font-weight:700;color:var(--muted);margin-left:8px}
 .saved{font-size:12px;color:var(--muted)}
 
 /* ---------- authors ---------- */
@@ -232,7 +231,6 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .decades b{font-size:12px;font-weight:700}
 
 /* backup */
-.backup{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:12px}
 .btn{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-size:13.5px;font-weight:700}
 .btn:hover{border-color:var(--ink)}
 .btn:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
@@ -280,19 +278,8 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .in-series{display:inline-flex;align-items:center;gap:7px;margin-top:12px;font-size:14px;font-weight:700;color:var(--brass);text-decoration:none}
 .in-series:hover{text-decoration:underline}
 .in-series+.in-series{margin-left:16px}
-.series-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:20px;margin-top:36px}
-.series-card{display:grid;gap:0;text-decoration:none;border-radius:16px;overflow:hidden;background:var(--surface);border:1px solid var(--line);transition:transform .3s,box-shadow .3s}
-.series-card:hover{transform:translateY(-3px);box-shadow:0 14px 30px -18px rgba(0,0,0,.4)}
-.series-card .strip{display:flex;gap:6px;padding:16px 16px 0;overflow:hidden;height:118px;align-items:flex-start;background:var(--soft)}
-.series-card .strip .cover{flex:none;width:62px}
-.series-card .strip .cover.blank .t{font-size:9.5px}
-.series-card .strip .cover.blank .a{display:none}
-.series-card .strip .cover .rated{display:none}
 .cover.gap{background:transparent;box-shadow:none;border:1.5px dashed color-mix(in srgb,var(--muted) 45%,transparent)}
 .cover.gap::after{display:none}
-.series-card .txt{padding:14px 18px 16px;display:grid;gap:4px}
-.series-card h3{font-size:25px;line-height:1.05}
-.series-card .by{font-size:13px;color:var(--muted)}
 
 /* what should I read next? */
 .btn.pick{background:var(--deep);color:var(--on-deep);border-color:var(--deep);border-radius:99px}
