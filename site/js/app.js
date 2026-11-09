@@ -1171,7 +1171,7 @@ document.addEventListener("click", async e => {
     readAdd();
     if (!addForm.title || !addForm.shelf) { addForm.note = !addForm.title ? "It needs a title." : "Pick a shelf for it."; return redrawAdd(); }
     addForm.busy = true; addForm.note = ""; redrawAdd();
-    try { const r = await api("api/books", {method: "POST", body: JSON.stringify({...addForm, authors: addForm.authors.split(",")})});
+    try { const r = await api("api/books", {method: "POST", body: JSON.stringify({...addForm, authors: addForm.authors.split(",").map(a => a.trim()).filter(Boolean)})});
       if (r.ok) {
         try { sessionStorage.setItem("library-just-added", JSON.stringify({id: r.id, warning: r.warning || ""})); } catch {}
         addForm = {isbn: "", title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", note: "", busy: false};
@@ -1304,8 +1304,8 @@ const trialShown = () => { trialSwitch.hidden = !(["#shelf-old-book-collection",
 addEventListener("hashchange", trialShown); trialShown();
 
 // ---------- routing ----------
-function route(){
-  const key = location.hash.slice(1) || "home", view = document.getElementById("view");
+function route(page){   // page: only the tests pass one (they open a thousand pages; the browser limits address changes)
+  const key = page || location.hash.slice(1) || "home", view = document.getElementById("view");
   let html, active = "#" + key, title = "Jemma’s Library";
   if (key === "add" && !addFromWish && addForm.fromWish) addForm = {isbn: "", title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", note: "", busy: false};
   addFromWish = false;

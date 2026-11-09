@@ -1,3 +1,4 @@
+// (The same checks and more run by themselves in the test suite: python -X utf8 tests/run_tests.py e2e)
 // Whole-site check: paste into the browser console with the library open (http://127.0.0.1:8020), or run it from
 // Claude's browser tool. It opens every page (home, every shelf, book, author, reading page, old books, to buy, stats…),
 // follows every in-site link it finds, and lists problems. Expect: {problems: []}. It changes nothing.
@@ -8,7 +9,6 @@
   const problems = [], errs = [], seen = new Set(), wait = ms => new Promise(r => setTimeout(r, ms));
   const onErr = e => errs.push(e.message || String(e.reason)); addEventListener("error", onErr); addEventListener("unhandledrejection", onErr);
   let fellBack = false; const home = window.pageHome; window.pageHome = (...a) => { fellBack = true; return home(...a); };
-  const start = location.hash;
   const routes = ["#home", "#shelves", "#authors", "#reading", "#history", "#add", "#to-buy", "#stats", "#trial-covers", "#old-to-find",
     ...OLD_KINDS.map(k => "#old-" + k[0]), ...DATA.shelves.map(s => "#shelf-" + s.id), ...DATA.books.map(b => "#b-" + b.id),
     ...Object.keys(authorIndex).map(k => "#a-" + k), ...SG.books.map((e, i) => e.books ? null : "#r-" + i).filter(Boolean)];
@@ -16,7 +16,7 @@
   for (const h of routes) {
     if (seen.has(h)) continue; seen.add(h);
     fellBack = false; const before = errs.length;
-    location.hash = h; route(); await wait(0);
+    route(h.slice(1)); await wait(0);   // drawn without changing the address: the browser limits how often a page may
     const v = document.getElementById("view"), text = v.innerText;
     if (fellBack && h !== "#home") problems.push(`${h}: page doesn’t exist (shows Home)`);
     if (errs.length > before) problems.push(`${h}: script error: ${errs.slice(before).join(" / ")}`);
@@ -29,7 +29,7 @@
   // links found on the pages that weren't in the list above
   for (const h of links) {
     if (seen.has(h) || h === "#") continue; seen.add(h);
-    fellBack = false; location.hash = h; route(); await wait(0);
+    fellBack = false; route(h.slice(1)); await wait(0);
     if (fellBack && h !== "#home") problems.push(`link to ${h}: page doesn’t exist (shows Home)`);
   }
   // sidebar counts against the page each one opens
@@ -45,7 +45,7 @@
   const local = [...imgs].filter(s => !/^https?:/.test(s) || s.startsWith(location.origin));
   await Promise.all(local.map(src => new Promise(ok => { const i = new Image(); i.onload = () => ok(); i.onerror = () => { problems.push(`picture missing: ${src}`); ok(); }; i.src = src; })));
   window.pageHome = home; removeEventListener("error", onErr); removeEventListener("unhandledrejection", onErr);
-  location.hash = start || "#home"; route();
+  route();
   const out = {pages: seen.size, pictures: local.length, problems};
   console.log(out); return out;
 })();
