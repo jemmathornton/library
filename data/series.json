@@ -1,5 +1,5 @@
 {
- "_about": "Series in reading order (18 Oct, her yes). The site finds her copies by title and author surname; a title can have other spellings after a |, as Libib has them. Trebizon, Quest, Legacy of the Stones and Pure Dead looked up online (FantasticFiction, Goodreads, Amazon, Penguin). Twilight, A Good Girl's Guide to Murder (publication order, Kill Joy last) and Narnia (the numbered order of today's editions) added 18 Oct for books she has read but doesn't own. 18 Oct thorough check: Kitty Collins, Miss Marple, Notes from a Small Island, Natural Human Saga, Castaways of the Flying Dutchman, Before the Coffee Gets Cold, Cerulean Chronicles, Mother of Learning, We Were Liars, Shetland Witch, Seasonal Quartet, Quest for Qieta, Hogwarts Library, Fantastic Beasts screenplays, Edge Chronicles (her copy's chronological numbering), Foundation, Theodore Boone, Thomas Covenant, Larten Crepsley, Hierarchy, Hedge Witch, Solitaire (publication order) added; Quest Series 11-13 from the books' own covers; Cursed Child as Harry Potter 8. A Story for Every Day (Cafe Writers of Rugby) added 18 Oct in publication order: Summer, Autumn, Winter, Spring (Spring 'completes the cycle'). 5 Nov: The Five Find-Outers, Brer Rabbit (her three, in the order of her copies' years) Just William and C. P. Snow's Strangers and Brothers added for her old books.",
+ "_about": "Series in reading order (18 Oct, her yes). The site finds her copies by title and author surname; a title can have other spellings after a |, as Libib has them. Trebizon, Quest, Legacy of the Stones and Pure Dead looked up online (FantasticFiction, Goodreads, Amazon, Penguin). Twilight, A Good Girl's Guide to Murder (publication order; Kill Joy, a prequel, came out third: moved 11 Nov) and Narnia (the numbered order of today's editions) added 18 Oct for books she has read but doesn't own. 18 Oct thorough check: Kitty Collins, Miss Marple, Notes from a Small Island, Natural Human Saga, Castaways of the Flying Dutchman, Before the Coffee Gets Cold, Cerulean Chronicles, Mother of Learning, We Were Liars, Shetland Witch, Seasonal Quartet, Quest for Qieta, Hogwarts Library, Fantastic Beasts screenplays, Edge Chronicles (her copy's chronological numbering), Foundation, Theodore Boone, Thomas Covenant, Larten Crepsley, Hierarchy, Hedge Witch, Solitaire (publication order) added; Quest Series 11-13 from the books' own covers; Cursed Child as Harry Potter 8. A Story for Every Day (Cafe Writers of Rugby) added 18 Oct in publication order: Summer, Autumn, Winter, Spring (Spring 'completes the cycle'). 5 Nov: The Five Find-Outers, Brer Rabbit (her three, in the order of her copies' years) Just William and C. P. Snow's Strangers and Brothers added for her old books. 11 Nov check against outside sources (research/2026-11-11-series-check.json): Alex Rider gains Secret Weapon (2019, the official 12).",
  "series": [
   {
    "name": "Harry Potter",
@@ -349,6 +349,7 @@
     "Scorpia Rising",
     "Russian Roulette",
     "Never Say Die",
+    "Secret Weapon",
     "Nightshade",
     "Nightshade Revenge"
    ]
@@ -735,8 +736,8 @@
    "books": [
     "A Good Girl's Guide to Murder",
     "Good Girl, Bad Blood",
-    "As Good As Dead",
-    "Kill Joy"
+    "Kill Joy",
+    "As Good As Dead"
    ]
   },
   {

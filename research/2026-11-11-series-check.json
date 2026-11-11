@@ -1,0 +1,242 @@
+[
+ {
+  "series": "Alex Rider",
+  "problems": [
+   {
+    "kind": "missing",
+    "detail": "Secret Weapon (2019, seven stories) is numbered 12 in the official list (alexrider.com 'Missions 1-14'; Wikipedia the same). Without it, Nightshade and Nightshade Revenge show as 12 and 13 instead of 13 and 14. Doesn't affect her copies (she owns 1 and 3-6).",
+    "suggested_fix": "Insert 'Secret Weapon' between Never Say Die and Nightshade (or leave it out if she treats story collections as companions; then the numbering differs from the publisher's).",
+    "source_url": "https://www.alexrider.com/books"
+   },
+   {
+    "kind": "spelling",
+    "detail": "US title of book 2 is 'Point Blank'; UK is 'Point Blanc' (her entry is right).",
+    "suggested_fix": "None, unless she gets a US copy: add '|Point Blank'.",
+    "source_url": "https://en.wikipedia.org/wiki/Alex_Rider_(book_series)"
+   }
+  ]
+ },
+ {
+  "series": "A Good Girl's Guide to Murder",
+  "problems": [
+   {
+    "kind": "order",
+    "detail": "The list's note says publication order with Kill Joy last, but Kill Joy came out first in the UK in spring 2021 (World Book Day), before As Good As Dead (Aug 2021). It is a prequel novella (Goodreads #0.5). She owns none of these.",
+    "suggested_fix": "Either move Kill Joy to 3 (true publication order) or to 1 (story order, prequel); or keep it last and change the note to 'Kill Joy, the prequel novella, at the end'.",
+    "source_url": "https://www.publishersweekly.com/pw/by-topic/childens/childrens-book-news/article/90900-delacorte-announces-holly-jackson-prequel-and-first-standalone.html"
+   }
+  ]
+ },
+ {
+  "series": "Bobiverse",
+  "problems": [
+   {
+    "kind": "upcoming",
+    "detail": "Book 6, The Infinite Extent, is out as an audiobook (2026), but no confirmed print release yet; the earlier check found 5 Jan 2027 for the hardcover. A book 7 is listed with no title.",
+    "suggested_fix": "Keep book 6 but note it may not be in print until 2027.",
+    "source_url": "https://www.audible.com.au/pd/The-Infinite-Extent-Audiobook/B0H8T3DRJY"
+   }
+  ]
+ },
+ {
+  "series": "The Tyrant Philosophers",
+  "problems": [
+   {
+    "kind": "upcoming",
+    "detail": "Book 5 (the last), The Grave of Perfection, is listed for 9 Feb 2027.",
+    "suggested_fix": "Leave off until out.",
+    "source_url": "https://en.wikipedia.org/wiki/Adrian_Tchaikovsky"
+   },
+   {
+    "kind": "companion",
+    "detail": "Lives of Bitter Rain (novella, 14 Oct 2025) is set in the same world; not in the main numbering.",
+    "suggested_fix": "Not in the list; mention only.",
+    "source_url": "https://en.wikipedia.org/wiki/Adrian_Tchaikovsky"
+   }
+  ]
+ },
+ {
+  "series": "Foundation",
+  "problems": [
+   {
+    "kind": "order",
+    "detail": "The list is in publication order (prequels Prelude and Forward 6 and 7). The 30 Oct check noted Asimov's own author's note in Prelude to Foundation, which gives story order (Prelude, Forward, then Foundation...). Both are recognised; just check this is the one she wants, because her copy of Foundation would be book 3 in story order.",
+    "suggested_fix": "Her call; no change needed if publication order is intended.",
+    "source_url": "https://en.wikipedia.org/wiki/Foundation_series"
+   }
+  ]
+ },
+ {
+  "series": "The Sisterhood of the Traveling Pants",
+  "problems": [
+   {
+    "kind": "spelling",
+    "detail": "UK editions are titled 'The Sisterhood of the Travelling Pants' (double l); the list and series name use the US spelling. Her copies still match either way.",
+    "suggested_fix": "Optional: rename the series and book 1 to the UK spelling, keeping '|The Sisterhood of the Traveling Pants' as an alternative.",
+    "source_url": "https://en.wikipedia.org/wiki/The_Sisterhood_of_the_Traveling_Pants_(novel)"
+   }
+  ]
+ },
+ {
+  "series": "The Hitchhiker’s Guide to the Galaxy",
+  "problems": [
+   {
+    "kind": "companion",
+    "detail": "And Another Thing... (Eoin Colfer, 2009) is authorised and often called book 6 ('part six of three'), but it is by another author.",
+    "suggested_fix": "Leave off (the list is Adams's five); mention only.",
+    "source_url": "https://en.wikipedia.org/wiki/And_Another_Thing..._(novel)"
+   }
+  ]
+ },
+ {
+  "series": "The Secret Seven",
+  "problems": [
+   {
+    "kind": "companion",
+    "detail": "She owns The Secret Seven Short Story Collection, which isn't on the series list (short stories, not in Blyton's 15). Pamela Butchart's newer Secret Seven books (2018 on) are also companions.",
+    "suggested_fix": "Leave as is, or add an unnumbered note if she wants it on the shelf with the series.",
+    "source_url": "https://www.enidblytonsociety.co.uk/"
+   }
+  ]
+ },
+ {
+  "series": "Simon Snow",
+  "problems": [
+   {
+    "kind": "companion",
+    "detail": "Fangirl (she owns it) is where Simon Snow began; it's a companion, not numbered in the trilogy.",
+    "suggested_fix": "Mention only.",
+    "source_url": "https://en.wikipedia.org/wiki/Carry_On_(novel)"
+   }
+  ]
+ },
+ {
+  "series": "The Diary of a Bookseller",
+  "problems": [
+   {
+    "kind": "companion",
+    "detail": "Seven Kinds of People You Find in Bookshops (she owns it) is a separate Bythell book, not a diary. Book 4, Return of the Bookseller Diarist, came out 8 Oct 2026 (already listed).",
+    "suggested_fix": "Mention only.",
+    "source_url": "https://www.simonandschuster.co.uk/books/Return-of-the-Bookseller-Diarist/Shaun-Bythell/9781917923989"
+   }
+  ]
+ },
+ {
+  "series": "The Natural Human Saga",
+  "problems": [
+   {
+    "kind": "upcoming",
+    "detail": "Couldn't find The Callista Prophecy (book 3) anywhere online (only books 1 and 2 show). Presumably taken from her own copy; nothing to change if so.",
+    "suggested_fix": "Check her copy; keep as is.",
+    "source_url": "https://www.goodreads.com/book/show/214862378"
+   }
+  ]
+ },
+ {
+  "series": "_checked_fine",
+  "list": [
+   "Harry Potter",
+   "Malory Towers",
+   "St Clare’s",
+   "The Famous Five",
+   "The Adventure Series",
+   "The Wishing Chair",
+   "Discworld",
+   "The Science of Discworld",
+   "The Saga of Darren Shan",
+   "The Demonata",
+   "Mates, Dates",
+   "Heartstopper",
+   "Pendragon",
+   "Artemis Fowl",
+   "The Black Magician",
+   "Traitor Spy",
+   "Age of the Five",
+   "Girls",
+   "The Adventure Zone",
+   "Noughts & Crosses",
+   "The Neapolitan Novels",
+   "The Wicked Years",
+   "The Murderbot Diaries",
+   "Uglies",
+   "Little Blue Envelopes",
+   "Brambly Hedge",
+   "Shades of Magic",
+   "Licanius",
+   "The Inheritance Cycle",
+   "The Wind on Fire",
+   "His Dark Materials",
+   "Winternight",
+   "The Doomspell Trilogy",
+   "Mortal Engines",
+   "Fever Crumb",
+   "The Hunger Games",
+   "The Study Series",
+   "Bartimaeus",
+   "The Old Kingdom",
+   "DallerGut Dream Department Store",
+   "Morisaki Bookshop",
+   "Trebizon",
+   "The Quest Series",
+   "Legacy of the Stones",
+   "Pure Dead",
+   "Truth, Dare, Kiss or Promise",
+   "Veronica Mars",
+   "The Beyond Series",
+   "Sam Linnifer",
+   "Pendragon: Before the War",
+   "Twilight",
+   "The Chronicles of Narnia",
+   "Kitty Collins",
+   "Miss Marple",
+   "Notes from a Small Island",
+   "Castaways of the Flying Dutchman",
+   "Before the Coffee Gets Cold",
+   "The Cerulean Chronicles",
+   "Mother of Learning",
+   "We Were Liars",
+   "The Shetland Witch",
+   "Seasonal Quartet",
+   "The Quest for Qieta",
+   "Hogwarts Library",
+   "Fantastic Beasts Screenplays",
+   "The Edge Chronicles",
+   "Theodore Boone",
+   "The Chronicles of Thomas Covenant",
+   "The Saga of Larten Crepsley",
+   "Hierarchy",
+   "The Hedge Witch Series",
+   "Solitaire",
+   "A Story for Every Day",
+   "Discworld extras",
+   "The Rowan Five",
+   "The Pattern Seekers",
+   "The No. 1 Ladies’ Detective Agency",
+   "Johnny Maxwell",
+   "Scarlett",
+   "Truly Devious",
+   "The Broken Earth",
+   "The Daevabad Trilogy",
+   "Kosuke Kindaichi",
+   "Lilith’s Brood",
+   "Robert Langdon",
+   "Jack McEvoy",
+   "The Book of Lost Things",
+   "The Miniaturist",
+   "If I Stay",
+   "Stephen Fry’s Greek Myths",
+   "Dune",
+   "Holes",
+   "Lights Out",
+   "The Power of Five",
+   "The Carls",
+   "Parahumans",
+   "The Saga of the Unfated",
+   "Deighton Academy",
+   "The Five Find-Outers",
+   "Brer Rabbit",
+   "Just William",
+   "Strangers and Brothers"
+  ]
+ }
+]
