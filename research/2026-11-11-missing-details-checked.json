@@ -1,0 +1,606 @@
+[
+ {
+  "id": "ba9eyebcho",
+  "title": "How to Age Disgracefully",
+  "isbn13": "9781787637146",
+  "values": {
+   "pages": 368
+  },
+  "sources": {
+   "pages": "automatic lookup"
+  },
+  "notes": "Pages kept from the automatic lookup. Blackwell's gives 357 for this ISBN (Transworld/Bantam Press hardback, 20 Jun 2024). Publishers' own counts often include unnumbered pages (see In Memoriam), so 368 may be right; she may want to check the last page number."
+ },
+ {
+  "id": "mn05o0831h",
+  "title": "In Memoriam",
+  "isbn13": "9780241567838",
+  "values": {
+   "pages": 400
+  },
+  "sources": {
+   "pages": "https://www.penguin.co.uk/books/447528/in-memoriam-by-winn-alice/9780241567838"
+  },
+  "notes": "Confirmed: Penguin's own page for this paperback says 400 pages (Blackwell's says 385)."
+ },
+ {
+  "id": "4jimetokbx",
+  "title": "Intermezzo",
+  "isbn13": "9780571365487",
+  "values": {
+   "publisher": "Faber & Faber"
+  },
+  "sources": {
+   "publisher": "https://blackwells.co.uk/bookshop/product/9780571365487"
+  },
+  "notes": "Blackwell's: Faber & Faber, 1st paperback edition, 22 May 2025."
+ },
+ {
+  "id": "8gmvrq5ohq",
+  "title": "The Forgotten Garden",
+  "isbn13": "9780330449601",
+  "values": {
+   "publisher": "Pan Books",
+   "published": "2008-06-06"
+  },
+  "sources": {
+   "publisher": "https://blackwells.co.uk/bookshop/product/9780330449601",
+   "published": "https://blackwells.co.uk/bookshop/product/9780330449601"
+  },
+  "notes": "'Pan Books, Pan' was two publisher entries run together. Blackwell's lists the imprint as Pan Books (Pan Macmillan), paperback original, 6 Jun 2008; Open Library also says 2008."
+ },
+ {
+  "id": "u3n6w73gnz",
+  "title": "Witness",
+  "isbn13": "9783951967301",
+  "values": {},
+  "sources": {},
+  "notes": "No description found anywhere (Amazon UK, Blackwell's, AbeBooks, Goodreads and web searches have no blurb). Amazon UK: self-published by Adam E. Holton, 1 May 2024, 164 pages."
+ },
+ {
+  "id": "q7jba7awe4",
+  "title": "You Are Here: The Instant Number 1 Sunday Times Bestseller, from the Author of One Day",
+  "isbn13": "9781444715460",
+  "values": {
+   "pages": 368
+  },
+  "sources": {
+   "pages": "automatic lookup"
+  },
+  "notes": "Pages kept from the automatic lookup. Blackwell's gives 349 for this ISBN (Sceptre paperback, 3 Jul 2025); Hachette's page gives no count."
+ },
+ {
+  "id": "og58oif0an",
+  "title": "Age of Shadows (Song of Echoes)",
+  "isbn13": "9781838399528",
+  "values": {
+   "pages": 435
+  },
+  "sources": {
+   "pages": "https://www.amazon.co.uk/dp/1838399526"
+  },
+  "notes": "Amazon UK 'Print length' for this ISBN (FrontRunner Publications); Blackwell's doesn't list it and AbeBooks gives no count."
+ },
+ {
+  "id": "0b6bjrgdcu",
+  "title": "Crown of Sorrows (Legacy of the Stones)",
+  "isbn13": "9781838399542",
+  "values": {
+   "pages": 454
+  },
+  "sources": {
+   "pages": "https://www.amazon.co.uk/dp/1838399542"
+  },
+  "notes": "Amazon UK 'Print length' for this ISBN (FrontRunner Publications); Blackwell's doesn't list it and AbeBooks gives no count."
+ },
+ {
+  "id": "569qt5mv9x",
+  "title": "House of Open Wounds",
+  "isbn13": "9781035901364",
+  "values": {
+   "pages": 624
+  },
+  "sources": {
+   "pages": "https://blackwells.co.uk/bookshop/product/9781035901364"
+  },
+  "notes": "Confirmed by Blackwell's (Head of Zeus paperback, 1 Aug 2024)."
+ },
+ {
+  "id": "rw4w2vqxoz",
+  "title": "Realm of Mortals (Legacy of the Stones)",
+  "isbn13": "9781838399559",
+  "values": {
+   "pages": 493
+  },
+  "sources": {
+   "pages": "https://www.amazon.co.uk/dp/1838399550"
+  },
+  "notes": "Amazon UK 'Print length' for this ISBN (FrontRunner Publications); Blackwell's doesn't list it and AbeBooks gives no count."
+ },
+ {
+  "id": "i1j1o6glqm",
+  "title": "Sea of Souls (Legacy of the Stones)",
+  "isbn13": "9781838399535",
+  "values": {
+   "pages": 441
+  },
+  "sources": {
+   "pages": "https://www.amazon.co.uk/dp/1838399534"
+  },
+  "notes": "Amazon UK 'Print length' for this ISBN (FrontRunner Publications); Blackwell's doesn't list it and AbeBooks gives no count."
+ },
+ {
+  "id": "qhsk8t5we4",
+  "title": "Stories from The Shetland Witch: In Achaea & Mrs Sinclair and the Feather Haa",
+  "isbn13": "9781068696824",
+  "values": {
+   "pages": 132
+  },
+  "sources": {
+   "pages": "https://blackwells.co.uk/bookshop/product/9781068696824"
+  },
+  "notes": "Confirmed by Blackwell's (Peachfield Press, 25 Feb 2025)."
+ },
+ {
+  "id": "5601pbmv9x",
+  "title": "The Magician's Apprentice",
+  "isbn13": "9780316151337",
+  "values": {},
+  "sources": {},
+  "notes": "Not found. No shop, Open Library, AbeBooks or Goodreads record exists for 9780316151337 (a Little, Brown/Orbit US number). The UK Orbit paperback is 9781841495903, so she may want to check the ISBN on her copy before a publisher is filled in."
+ },
+ {
+  "id": "qhzf6i9we4",
+  "title": "The Quest for Qieta",
+  "isbn13": "9781739529703",
+  "values": {},
+  "sources": {},
+  "notes": "Not found with confidence. Goodreads (only source) gives 364 pages and 16 Sep 2023, but its publisher field says 'Nielsen Book Services', which is the ISBN agency, not a publisher; the book looks self-published. Best read off the book."
+ },
+ {
+  "id": "2ous4agtqt",
+  "title": "The Shetland Witch: Or, Atropos Wants Her Shears Back",
+  "isbn13": "9781068696800",
+  "values": {
+   "pages": 262
+  },
+  "sources": {
+   "pages": "https://blackwells.co.uk/bookshop/product/9781068696800"
+  },
+  "notes": "Confirmed by Blackwell's (Peachfield Press, 10 Feb 2025)."
+ },
+ {
+  "id": "8gmvxl2ohq",
+  "title": "The Subtle Knife",
+  "isbn13": "9780590112895",
+  "values": {
+   "pages": 341
+  },
+  "sources": {
+   "pages": "https://blackwells.co.uk/bookshop/product/9780590112895"
+  },
+  "notes": "Blackwell's, Amazon UK and AbeBooks sellers all give 341 pages for this Scholastic (Point) paperback, 1998."
+ },
+ {
+  "id": "qhsk6jrwe4",
+  "title": "Bringing Down the Flowers: ONE (A Spellbinding Dystopian Mystery (the Hedge Witch Series Book 1))",
+  "isbn13": "9781068300929",
+  "values": {
+   "pages": 362
+  },
+  "sources": {
+   "pages": "automatic lookup"
+  },
+  "notes": "Kept from the automatic lookup; Blackwell's has no page count (Copper Ink Ltd, 16 Apr 2025)."
+ },
+ {
+  "id": "5601a5tv9x",
+  "title": "Pretties",
+  "isbn13": "9781471123955",
+  "values": {},
+  "sources": {},
+  "notes": "Not found with confidence. Only Goodreads gives a count for this ISBN (293 pages); Blackwell's and Amazon UK give none, and this 2014 Simon & Schuster printing isn't in the Westerfeld UK editions catalogue."
+ },
+ {
+  "id": "8gmvr68ohq",
+  "title": "Uglies",
+  "isbn13": "9781471123948",
+  "values": {},
+  "sources": {},
+  "notes": "Not found with confidence. Only Goodreads gives a count for this ISBN (341 pages); other UK printings run to 425+ pages, so a number can't be borrowed from them."
+ },
+ {
+  "id": "t0ubnhx93y",
+  "title": "Brambly Hedge Spring Story",
+  "isbn13": "9780583333245",
+  "values": {},
+  "sources": {},
+  "notes": "Not found. No listing for this 1995 Ted Smart/Collins hardback gives a page count."
+ },
+ {
+  "id": "e980mwz5u2",
+  "title": "Brambly Hedge Winter Story",
+  "isbn13": "9780583333238",
+  "values": {},
+  "sources": {},
+  "notes": "Not found. No listing for this 1995 Ted Smart/Collins hardback gives a page count."
+ },
+ {
+  "id": "v8dzp1r26q",
+  "title": "First Term At Malory Towers",
+  "isbn13": "9781444948295",
+  "values": {},
+  "sources": {},
+  "notes": "Not found with confidence. Only Goodreads gives a count (181 pages). These 2018 Hodder Children's Books ISBNs come from a set, and no shop lists pages for them."
+ },
+ {
+  "id": "prqbsgqno7",
+  "title": "Fun and Games at Malory Towers",
+  "isbn13": "9781444948387",
+  "values": {},
+  "sources": {},
+  "notes": "Not found. No shop or catalogue lists pages for this 2018 Hodder Children's Books set ISBN."
+ },
+ {
+  "id": "he2quj919k",
+  "title": "Goodbye, Malory Towers",
+  "isbn13": "9781444948400",
+  "values": {
+   "published": "2018"
+  },
+  "sources": {
+   "published": "https://www.abebooks.co.uk/servlet/SearchResults?isbn=9781444948400"
+  },
+  "notes": "AbeBooks sellers and Amazon UK both list Hodder Children's Books, 2018 (Amazon's '1 Jan. 2018' is a placeholder day, so year only)."
+ },
+ {
+  "id": "xl1ntp4jps",
+  "title": "Kitty at St. Clare's",
+  "isbn13": "9781405270250",
+  "values": {
+   "pages": 176
+  },
+  "sources": {
+   "pages": "https://blackwells.co.uk/bookshop/product/9781405270250"
+  },
+  "notes": "Blackwell's (Egmont, 1 Aug 2013)."
+ },
+ {
+  "id": "ls5x0r67b9",
+  "title": "Last Term At Malory Towers",
+  "isbn13": "9781444948349",
+  "values": {
+   "published": "2018"
+  },
+  "sources": {
+   "published": "https://www.abebooks.co.uk/servlet/SearchResults?isbn=9781444948349"
+  },
+  "notes": "AbeBooks sellers and Amazon UK both list Hodder Children's Books, 2018 (Amazon's '1 Jan. 2018' is a placeholder day, so year only)."
+ },
+ {
+  "id": "hevtdyp19k",
+  "title": "Summer Story (Brambly Hedge)",
+  "isbn13": "9780583333269",
+  "values": {},
+  "sources": {},
+  "notes": "Not found with confidence. Pages: no listing gives a count. Publisher: sellers disagree (Goodreads and two AbeBooks sellers say Ted Smart, one says Collins 1997). These are Collins books made for Ted Smart/The Book People, so the name as printed needs checking on her copy."
+ },
+ {
+  "id": "8gmvr5gohq",
+  "title": "Summer Term At Malory Towers",
+  "isbn13": "9781444948363",
+  "values": {},
+  "sources": {},
+  "notes": "Not found. No shop or catalogue lists pages for this 2018 Hodder Children's Books set ISBN."
+ },
+ {
+  "id": "6ubmksc8dt",
+  "title": "Teddy Bear's Picnic",
+  "isbn13": "9780216926615",
+  "values": {
+   "description": "The illustrations of the teddy bears on their annual picnic are full of details of the games and things they have to eat at their picnic. And at the end of the day the tired little teddy bears are taken home to bed - the illustrations portraying the distinct personalities of each teddy bear."
+  },
+  "sources": {
+   "description": "https://blackwells.co.uk/bookshop/product/9780216926615"
+  },
+  "notes": "Blackwell's 'Publisher's Synopsis' for this ISBN (Uplands Books miniature edition, 1989), word for word."
+ },
+ {
+  "id": "4jimepykbx",
+  "title": "The School That Went to Sea",
+  "isbn13": "9780744526035",
+  "values": {},
+  "sources": {},
+  "notes": "No publisher's blurb found (Blackwell's has no synopsis, Goodreads has none, web searches find nothing)."
+ },
+ {
+  "id": "e9oh3745u2",
+  "title": "The Second Form At Malory Towers",
+  "isbn13": "9781444948301",
+  "values": {},
+  "sources": {},
+  "notes": "Not found. No shop or catalogue lists pages for this 2018 Hodder Children's Books set ISBN."
+ },
+ {
+  "id": "izeroy0lqm",
+  "title": "Upper Fourth At Malory Towers",
+  "isbn13": "9781444948325",
+  "values": {
+   "published": "2018"
+  },
+  "sources": {
+   "published": "https://www.abebooks.co.uk/servlet/SearchResults?isbn=9781444948325"
+  },
+  "notes": "AbeBooks sellers and Amazon UK both list Hodder Children's Books, 2018 (Amazon's '1 Jan. 2018' is a placeholder day, so year only)."
+ },
+ {
+  "id": "kql35mwysl",
+  "title": "Winter Term At Malory Towers",
+  "isbn13": "9781444948370",
+  "values": {},
+  "sources": {},
+  "notes": "Not found. No shop or catalogue lists pages for this 2018 Hodder Children's Books set ISBN."
+ },
+ {
+  "id": "8gmvxddohq",
+  "title": "Dear Mr. Potter: Letters of Love, Loss and Magic",
+  "isbn13": "9780615479316",
+  "values": {
+   "description": "Dear Mr. Potter: Letters of Love, Loss, and Magic features hundreds of letters and pictures from Harry Potter fans. Individually, these letters and pictures tell stories of how fans have been impacted and inspired by Harry Potter. Together they serve as proof of what all Potter fans know so well: the Harry Potter series changes lives.\n\nAlong with fans from around the world, Dear Mr. Potter also features letters from Harry Potter actress Evanna Lynch (Luna Lovegood), New York Times-bestselling author John Green, Leaky Cauldron webmistress and author of New York Times-bestseller Harry, A History Melissa Anelli, Andrew Slack of the Harry Potter Alliance, Paul DeGeorge of Harry and the Potters, Andrew Sims and Eric Scull of MuggleNet, and Esther Earl’s mom, Lori."
+  },
+  "sources": {
+   "description": "https://www.goodreads.com/book/show/11534309-dear-mr-potter"
+  },
+  "notes": "Description from the Goodreads record for this ISBN (the only blurb found; it reads as the book's own blurb; italics dropped). Pages not found with confidence: only Goodreads gives one (223); Amazon UK has none."
+ },
+ {
+  "id": "v8dznt726q",
+  "title": "Leading Gracefully: A Women's Guide to Confident, Authentic & Effective Leadership",
+  "isbn13": "9780996984409",
+  "values": {
+   "pages": 200
+  },
+  "sources": {
+   "pages": "https://blackwells.co.uk/bookshop/product/9780996984409"
+  },
+  "notes": "Blackwell's and Amazon UK agree (Highest Path Publishing, Mar 2016)."
+ },
+ {
+  "id": "etijnrn5u2",
+  "title": "The Rough Guide to Japan: Travel Guide with eBook (Rough Guides Main Series)",
+  "isbn13": "9781839059797",
+  "values": {
+   "pages": 816
+  },
+  "sources": {
+   "pages": "https://blackwells.co.uk/bookshop/product/9781839059797"
+  },
+  "notes": "Blackwell's: Rough Guides ninth edition, 1 Feb 2024."
+ },
+ {
+  "id": "add0001",
+  "title": "A Degree of Love",
+  "isbn13": "9781718178441",
+  "values": {},
+  "sources": {},
+  "notes": "Not found with confidence: sources disagree. Amazon UK says 451 pages; an AbeBooks seller's listing says 511 pages (9 x 6 x 1.28 in). Needs a look at the last page."
+ },
+ {
+  "id": "add0010",
+  "title": "The Callista Ascendancy",
+  "isbn13": "9781838217730",
+  "values": {
+   "pages": 366,
+   "publisher": "Rook Abbey Press",
+   "published": "2025-07-29"
+  },
+  "sources": {
+   "pages": "https://www.amazon.co.uk/dp/183821773X",
+   "publisher": "https://www.amazon.co.uk/dp/183821773X",
+   "published": "https://www.amazon.co.uk/dp/183821773X"
+  },
+  "notes": "Amazon UK only (no other shop lists it)."
+ },
+ {
+  "id": "add0011",
+  "title": "Becoming",
+  "isbn13": "9780241983003",
+  "values": {},
+  "sources": {},
+  "notes": "Not filled: Penguin's own site says 9780241983003 is the audio download of Becoming (13 Nov 2018), not a printed book. The Penguin paperback is 9780241982976, so her ISBN probably needs correcting first."
+ },
+ {
+  "id": "add0012",
+  "title": "Unseen: How I Lost My Vision But Found My Voice",
+  "isbn13": "9798899731945",
+  "values": {},
+  "sources": {},
+  "notes": "Not found. 9798899731945 isn't listed anywhere. Molly Burke's Unseen is published by Abrams (14 Oct 2025; hardback 9781419777882, ebook 9798887074573), so hers may be a special or exclusive printing; check the copyright page."
+ },
+ {
+  "id": "add0017",
+  "title": "The Callista Prophecy",
+  "isbn13": "9781838217754",
+  "values": {
+   "description": "A perilous mission, a world on the edge, a prophecy whispered in the stars.\n\nWith the two interstellar civilisations on a collision course, rumours spread of a mysterious phenomenon that is spiriting humans away from border-world slavery. But what, or who, is the Shining Trail?\n\nThree years after the turbulent events that made her famous, Kali still has formidable enemies. Decca’s ruler is convinced that Kali is encouraging the liberation raids, and when she is asked to lead a diplomatic mission to find the truth, the Overlord seizes the chance to destroy her.\n\nBut destiny has a voice. The prophecy of a forgotten people will send Kali to a world of dust and deceit, and what she discovers there will shake the foundations of her life. With her expedition crumbling, and enemies circling, can Kali unravel the enigma of the Shining Trail and find a way home?\n\nRecommended for fans of character driven socio-political sci-fi in the style of Ann Leckie and Adrian Tchaikovsky, this is a story of resilience, justice, and the tenacity of the human spirit.\n\nContent note: Best enjoyed after reading Book 1 and Book 2. Features occasional strong language. Suited for adult and advanced crossover readers."
+  },
+  "sources": {
+   "description": "https://www.amazon.co.uk/dp/1838217759"
+  },
+  "notes": "Amazon UK blurb, word for word. Cut only the opening Kirkus Reviews quote. The 'Recommended for fans' and 'Content note' paragraphs are part of the blurb and kept; she may prefer to drop them."
+ },
+ {
+  "id": "add0018",
+  "title": "The Chronowick Paradox",
+  "isbn13": "9781836907275",
+  "values": {
+   "description": "Time is Complex, But so is Reality\n\nHarton Evermore is a Professor of Science at Gildmere University in Chronowick City’s most elegant district. He is also an inventor, alongside his famous father, Mathias Evermore. Behind closed doors, they are working on an illegal invention that would change the fate of a loved one they had lost. One that could alter their timeline.\n\nOn the evening of the presentation for inventors, a woman called Heidi O’Nell from the dirtier, poorer district of Copperweld breaks into Harton’s office and finds the notes relating to his invention. She blackmails him into inventing the machine for her so that she may travel back in time and kill the president of Chronowick, Nathaniel Thaddeus, in the hopes of restoring balance and equality within Chronowick’s five districts.\n\nTo get on her good side, Harton offers Heidi and her younger sister refuge and a life up in the pristine district of Gildmere whilst teaching her the science needed for their device in exchange for her assistance in constructing it, without his father knowing. He also warns her of the unknown dangers of time paradoxes. But will he help her achieve her goal to save Chronowick from its unfair societal split, or will he betray her and prevent a time paradox from taking place?"
+  },
+  "sources": {
+   "description": "https://www.amazon.co.uk/dp/1836907277"
+  },
+  "notes": "Amazon UK blurb, word for word (Bookvault, 11 Jul 2026, 331 pages)."
+ },
+ {
+  "id": "add0019",
+  "title": "Lycan Lamia",
+  "isbn13": "9781508430407",
+  "values": {
+   "description": "Dawn rises over Danestone Glen following the battle between Christos and his vamp army. Galleano and his rag tag bunch of supers consisting of; werewolf packs from the five continents of The Beyond, a circle of four elemental demons who despise one another, and the Daryavaush paranormal team. Casualties are high and the groups have split and retreated. The four castles of Avalonia seem to have crumbled and the Romanov children are missing. Daryavaush has another nasty shock waiting for them back at the Carmichael Mansion just as a stranger arrives to offer them salvation and protection from the vengeful rogue vampire-witch Kasha. Galleano is at a loss, now doubting his own decisions from centuries ago to present day, he needs to find a cure for Amethyst's sudden 'illness'. Nathaniel and his five packs have suffered the worst losses in centuries and they want revenge. Can the Daryavaush trust their new saviour and find the children of Avalonia before it's too late? Will Galleano save Amethyst's soul and finally find the answers he's so desperately searched for over half a millennia and across the world? Here and now he faces his darkest hour of enlightenment before his own destruction from the Lycan Lamia."
+  },
+  "sources": {
+   "description": "https://blackwells.co.uk/bookshop/product/9781508430407"
+  },
+  "notes": "Blackwell's 'Publisher's Synopsis', word for word (one paragraph there)."
+ },
+ {
+  "id": "add0020",
+  "title": "Lemurian Dimensions",
+  "isbn13": "9798310784949",
+  "values": {
+   "description": "The thrilling fifth and final book in The Beyond Series of urban fantasy books that will forever change the way you think about Ancient Astronaut Theories, South American Mythology and the reason why Supernatural creatures were ever created.\n\nFrom the author of Lycan Lamia, Didikai Witch, Vampire Sorceress and Demon Lupus.\n\nWhat will happen to humans when the Atlanteans invade Earth? Will Elchusian help save the world or will the Scarce Six finally do what they were genetically engineered for?\n\nStephen is a genius! The cleverest person Louisa has ever met, and she should know, as his wife, Stephen has trusted her with his biggest and most brilliant secret invention ever…. A dimension-jumping, timeslip machine. Their lives take a dramatic turn when armed guards raid their home. In a desperate attempt to save Louisa, Stephen thrusts her into the device sending her hurtling to another dimension.\n\nThe Daryavaush, a powerful paranormal investigation team of humans and ‘Supers’—including Witches, Vampires, (Were-Beasts and Shapeshifters), Elemental Demons, a Ghost, and a Hybrid Alien-Human return to save the paranormal world from destruction. Among them is Kate, who can manipulate time and space with her crystal skulls.\n\nStephen instructs Louisa to contact Kate for help, leaving Louisa with many unsettling Did Stephen choose Louisa to be his wife because of her potential inherited abilities? Is Louisa also a Lemurian Dimension Jumper? Who are the Lemurians?"
+  },
+  "sources": {
+   "description": "https://www.goodreads.com/book/show/230831261-lemurian-dimensions"
+  },
+  "notes": "Goodreads record for this ISBN (the author's blurb). Cut only two reader quotes and the 'Nominee for the Writing Global Excellence Award 2025' line. The original really reads 'many unsettling Did Stephen' (a word is missing); left as printed."
+ },
+ {
+  "id": "add0021",
+  "title": "Vampire Sorceress",
+  "isbn13": "9781849145022",
+  "values": {
+   "description": "Michael and Amethyst Romanov are taking a whistle stop tour of Europe. Not for the breath-taking scenery or to sample fine wine and local dishes. Every museum and library is searched and scoured with a fine tooth comb in every country, searching for the true Drukkerebema. The Romany Gypsy prophesies of the Avalonian witches and the birth of their most powerful member has been missing for centuries. The search takes them to Rasnov, a small Citadel high in the Carpathian Mountains of Transylvania. They find some very distant and odd relatives who have many tales of Avalonia across the seas, tales that have been passed from mother to daughter for centuries. Michael is also concerned for Amethysts safety as Avalonia is under attack once more and Amethyst's intuition of them being followed by a reluctant force is soon confirmed. She misses home, but her inquisitive side soon wins the battle and she must decide where her loyalties lie; either in this life or the next death, it matters not to a Vampire Sorceress."
+  },
+  "sources": {
+   "description": "https://www.goodreads.com/book/show/23242096-vampire-sorceress---the-beyond-series---book-three"
+  },
+  "notes": "Goodreads record for this ISBN (CompletelyNovel, 4 Sep 2014, 384 pages); Amazon UK and Blackwell's show no blurb. Word for word, typos included ('Amethysts safety')."
+ },
+ {
+  "id": "add0022",
+  "title": "Record of a Spaceborn Few",
+  "isbn13": "9781473647640",
+  "values": {
+   "description": "From the ground, we stand. From our ship, we live. By the stars, we hope.\n\nThe incredible new novel by Becky Chambers, author of the beloved The Long Way to a Small, Angry Planet.\n\nCenturies after the last humans left Earth, the Exodus Fleet is a living relic, a place many are from but few outsiders have seen. Humanity has finally been accepted into the galactic community, but while this has opened doors for many, those who have not yet left for alien cities fear that their carefully cultivated way of life is under threat.\n\nTessa chose to stay home when her brother Ashby left for the stars, but has to question that decision when her position in the Fleet is threatened.\n\nKip, a reluctant young apprentice, itches for change but doesn’t know where to find it.\n\nSawyer, a lost and lonely newcomer, is just looking for a place to belong.\n\nAnd when a disaster rocks this already fragile community, those Exodans who still call the Fleet their home can no longer avoid the inescapable question:\n\nWhat is the purpose of a ship that has reached its destination?"
+  },
+  "sources": {
+   "description": "https://www.hachette.co.uk/titles/becky-chambers/record-of-a-spaceborn-few/9781473647640/"
+  },
+  "notes": "Hachette UK (publisher) page, word for word. Cut only the '*THE SUNDAY TIMES BESTSELLER AND HUGO AWARD WINNER FOR BEST SERIES*' banner and the PRAISE quotes at the end. Kept the publisher's own 'The incredible new novel by' line."
+ },
+ {
+  "id": "add0023",
+  "title": "A Closed and Common Orbit",
+  "isbn13": "9781473621473",
+  "values": {
+   "description": "A warm, comforting, big-hearted stand-alone set in the same world as the award-winning The Long way to Small Angry Planet.\n\nLovelace was once merely a ship’s artificial intelligence. When she wakes up in an new body, following a total system shut-down and reboot, she has to start over in a synthetic body, in a world where her kind are illegal. She’s never felt so alone.\n\nBut she’s not alone, not really. Pepper, one of the engineers who risked life and limb to reinstall Lovelace, is determined to help her adjust to her new world. Because Pepper knows a thing or two about starting over.\n\nTogether, Pepper and Lovey will discover that, huge as the galaxy may be, it’s anything but empty."
+  },
+  "sources": {
+   "description": "https://www.hachette.co.uk/titles/becky-chambers/a-closed-and-common-orbit/9781473621473/"
+  },
+  "notes": "Hachette UK (publisher) page, word for word, typos included ('an new body', 'The Long way to Small Angry Planet'). Cut only the Daily Mail/Heat/Guardian quotes at the top and the 'READERS LOVE BECKY CHAMBERS' star quotes at the end."
+ },
+ {
+  "id": "add0003",
+  "title": "An Anthology of New Feminist Translations",
+  "isbn13": null,
+  "values": {
+   "publisher": "The Emma Press",
+   "published": "2025"
+  },
+  "sources": {
+   "publisher": "https://feministtranslation.bham.ac.uk/2025/10/an-anthology-of-new-feminist-translations/",
+   "published": "https://feministtranslation.bham.ac.uk/2025/10/an-anthology-of-new-feminist-translations/"
+  },
+  "notes": "University of Birmingham Feminist Translation Network: published by The Emma Press, announced 9 Oct 2025, launched 11 Oct 2025 (given free at the launch; free epub online). No ISBN, page count or publisher's blurb found (the network's post is an announcement, not a blurb)."
+ },
+ {
+  "id": "add0006",
+  "title": "Dimension Quest",
+  "isbn13": null,
+  "values": {},
+  "sources": {},
+  "notes": "Quest #12 by Lisa Wright DeGroodt. Only a Kindle record exists (Goodreads: NBTR Publishing, 21 Dec 2012, 369 pages, no blurb). Nothing for a print copy, so pages, publisher and date of her edition aren't known; no description found."
+ },
+ {
+  "id": "add0007",
+  "title": "Guardian Quest",
+  "isbn13": null,
+  "values": {
+   "description": "The Quests continue…\nAfter the devastating battles of the Sea Dimension, the Protectors are focused on ensuring those most affected by the tragedy of their exile are safe and healing. Yet Evil continues to harass and endanger their lives both in the Land and World. The Land is beset by a serial killer preying on the populace, and does not possess the skills or mindset to capture such a beast. When another Worlder is tapped to join the fight, the Protectors must overcome their fears to ensure the newest member of their group is fully equipped for the endeavor. The newest recruit has a unique-and perhaps dangerous-link to their past that could unravel their cover in the World Dimension.\nThe 13th in the Quest Series, Guardian Quest continues the saga of the Land Dimension, fighting Evil in its purest form, and the Worlders who assist in the battle."
+  },
+  "sources": {
+   "description": "https://www.goodreads.com/book/show/29141663-guardian-quest"
+  },
+  "notes": "Quest #13. Description is the author's blurb on the Goodreads (Kindle) record, word for word. Only the Kindle edition is listed (self-published, 14 Feb 2016, 292 pages), so pages, publisher and date of her print copy aren't known."
+ },
+ {
+  "id": "add0008",
+  "title": "Rebellion Quest",
+  "isbn13": null,
+  "values": {
+   "description": "The Quests Continue!\n\nJanet Noxx, an event planner in upstate New York, is thrilled when superstar Zach Neol chooses her company for his upcoming wedding. Little does she know that her involvement in the celebration will lead to a life-changing adventure. After accidently traveling to the Land, Janet finds herself in the middle of a counterpart dilemma which makes her question relationships back in the World Dimension. Thrust into the middle of the wizarding power struggle erupting throughout the Land, Janet also discovers Void personnel are scrutinizing the Protector interaction in the dimension. With each interaction and intersection between the Dimensions Janet must question her abilities and constantly evaluate her place in the Interdimensional arena.\n\nThe clash between multiple Dimensions culminates in an epic battle between Good & Evil. The outcome of the conflict will ultimately determine the fate of the Protectors and their futures."
+  },
+  "sources": {
+   "description": "https://www.goodreads.com/book/show/15777698-rebellion-quest"
+  },
+  "notes": "Quest #11. Description is the author's blurb on the Goodreads (Kindle) record, word for word ('accidently' as in the original). Only the Kindle edition is listed (NBTR, 21 Jul 2012, 261 pages), so print pages, publisher and date aren't known."
+ },
+ {
+  "id": "add0013",
+  "title": "In the Lives of Puppets",
+  "isbn13": null,
+  "values": {
+   "published": "2024"
+  },
+  "sources": {
+   "published": "https://illumicrate.com/blogs/news/illumicrate-exclusive-in-the-lives-of-puppets-somewhere-beyond-the-sea-by-tj-klune"
+  },
+  "notes": "Illumicrate's announcement (5 Jul 2024): signed Demy hardback set with Somewhere Beyond the Sea, made with Pan Macmillan; on sale 15 Aug 2024, shipped Sep/Oct 2024. The imprint printed on the book isn't stated anywhere (probably Tor, Pan Macmillan's SF imprint; check the spine). No page count published for this edition. Description: the Pan Macmillan blurb on her paperback entry is the same book."
+ },
+ {
+  "id": "add0014",
+  "title": "Somewhere Beyond the Sea",
+  "isbn13": null,
+  "values": {
+   "published": "2024"
+  },
+  "sources": {
+   "published": "https://illumicrate.com/blogs/news/illumicrate-exclusive-in-the-lives-of-puppets-somewhere-beyond-the-sea-by-tj-klune"
+  },
+  "notes": "Same Illumicrate set as In the Lives of Puppets (on sale Aug 2024, shipped Sep/Oct 2024). Imprint and page count not stated anywhere."
+ },
+ {
+  "id": "add0015",
+  "title": "Under the Whispering Door",
+  "isbn13": null,
+  "values": {},
+  "sources": {},
+  "notes": "Not found with confidence. Illumicrate did two runs of its House in the Cerulean Sea & Under the Whispering Door set: the original, and a reprint announced 5 Jul 2024 (shipped autumn 2024). Without knowing which she has, the year can't be given. Imprint and pages not stated anywhere."
+ },
+ {
+  "id": "8us8n61ohq",
+  "title": "Where In The Zoo Are You?",
+  "isbn13": null,
+  "values": {},
+  "sources": {},
+  "notes": "Not found: no author or ISBN, and web searches find no book of this title (1996, 36 pages per her entry). An author or publisher name from the cover would allow another search."
+ },
+ {
+  "id": "8uiqpviohq",
+  "title": "Sourcery (original paperback)",
+  "isbn13": null,
+  "values": {
+   "pages": 269,
+   "publisher": "Corgi Books",
+   "published": "1989"
+  },
+  "sources": {
+   "pages": "https://blackwells.co.uk/bookshop/product/9780552131070",
+   "publisher": "https://blackwells.co.uk/bookshop/product/9780552131070",
+   "published": "https://www.abebooks.co.uk/servlet/SearchResults?isbn=0552131075"
+  },
+  "notes": "Corgi paperback ISBN 0552131075 / 9780552131070. Blackwell's: imprint Corgi Books (Transworld), 1 Jul 1989, 269 pages; AbeBooks sellers also list Corgi 1989 and 269 pages. Later Corgi reprints kept this ISBN, so her copy's printing line may show a later year, but 1989 is the first Corgi paperback."
+ }
+]
