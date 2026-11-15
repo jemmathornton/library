@@ -56,8 +56,13 @@ class Server(unittest.TestCase):
     def test_unknown_post_refused(self):
         self.assertEqual(self.ask('/api/delete-everything', {})[0], 403)
 
-    def test_oversized_request_refused(self):
-        self.assertEqual(self.ask('/api/signed', raw=b'{"id":"' + b'x' * 1_100_000 + b'"}')[0], 413)
+    def test_oversized_request_refused(self):   # refused unread: the answer is 413, or the line is simply cut
+        try:
+            code = self.ask('/api/signed', raw=b'{"id":"' + b'x' * 1_100_000 + b'"}')[0]
+        except (ConnectionError, urllib.error.URLError):
+            code = 413
+        self.assertEqual(code, 413)
+        self.assertNotIn('x' * 50, json.dumps(self.box.read('signed.json', {})))
 
     def test_bad_json_is_an_error_not_a_crash(self):
         code, body = self.ask('/api/signed', raw=b'{not json')

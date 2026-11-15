@@ -65,6 +65,8 @@ def isbn13(s):
     if len(s) == 13 and s.isdigit():
         return s
     if len(s) == 10:
+        if not re.fullmatch(r'\d{9}[\dX]', s):   # an X anywhere but last isn't an ISBN (15 Nov)
+            return ''
         core = '978' + s[:9]
         check = (10 - sum((3 if i % 2 else 1) * int(c) for i, c in enumerate(core)) % 10) % 10
         return core + str(check)

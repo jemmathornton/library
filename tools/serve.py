@@ -37,36 +37,23 @@ from datetime import date, datetime
 PORT, SCAN_PORT = 8020, 8021
 ROOT = os.environ.get('LIBRARY_ROOT') or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # tests run on a copy (9 Nov)
 TOOLS = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, TOOLS)
+MAX_PICTURE = 20_000_000   # a cover picture never needs more (review, 15 Nov: downloads had no limit)
 SITE, DATA = os.path.join(ROOT, 'site'), os.path.join(ROOT, 'data')
 ADDED, SCANNED = os.path.join(DATA, 'added.json'), os.path.join(DATA, 'scanned.json')
 KEY_FILE = os.path.join(os.environ.get('LOCALAPPDATA', os.path.expanduser('~')), 'Jemmas Library', 'scan-key.txt')
-UA = {'User-Agent': "Jemma's Home Library (private)"}
+UA = {'User-Agent': 'HomeLibrary/1.0 (private, personal use)'}   # names no one (review, 15 Nov)
 PYTHON = os.path.join(os.path.dirname(sys.executable), 'python.exe')   # under pythonw, run the build with python
 LOCK = threading.Lock()   # one add or reading import at a time, so two builds never write the site at once
 
 
 def build():
     """Rebuild the site; the finished process, so its exit code can be checked."""
-    return subprocess.run([PYTHON, '-X', 'utf8', os.path.join(TOOLS, 'build.py')], cwd=ROOT, capture_output=True,
+    return subprocess.run([PYTHON, '-X', 'utf8', os.path.join(TOOLS, 'build.py')], cwd=ROOT, capture_output=True, timeout=300,
                           text=True, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
 
 
-def write_json(path, obj, indent=1):
-    """Written to a temporary file beside it, then swapped in (review, 2 Nov): a crash or a full disk mid-write never
-    leaves half a file, which would stop every later build. Windows refuses the swap while the file is being read, so it
-    tries again for a moment."""
-    tmp = f'{path}.{os.getpid()}-{threading.get_ident()}.tmp'
-    with open(tmp, 'w', encoding='utf-8', newline='\n') as fh:
-        json.dump(obj, fh, ensure_ascii=False, indent=indent)
-        fh.write('\n')
-    for n in range(10):
-        try:
-            os.replace(tmp, path)
-            return
-        except PermissionError:
-            if n == 9:
-                raise
-            time.sleep(.2)
+from safe_write import write_json   # one shared writer: temporary file, forced to disk, then swapped in (15 Nov)
 
 
 def get_json(url):
@@ -183,7 +170,7 @@ def best_cover(found):
     for u in [u for u in urls if u]:
         try:
             with urllib.request.urlopen(urllib.request.Request(u, headers=UA), timeout=15) as r:
-                w, h = Image.open(BytesIO(r.read())).size
+                w, h = Image.open(BytesIO(r.read(MAX_PICTURE))).size
         except Exception:
             continue
         if w >= 200 and 1.2 < h / w < 1.8 and w > best_w + 50:   # upright, book-shaped, and clearly larger
@@ -330,7 +317,7 @@ def picture(src):
     if urllib.parse.urlparse(src).scheme != 'https':
         raise ValueError('Only a cover from the internet can be straightened here.')
     with urllib.request.urlopen(urllib.request.Request(src, headers=UA), timeout=20) as r:
-        return Image.open(BytesIO(r.read())).convert('RGB')
+        return Image.open(BytesIO(r.read(MAX_PICTURE))).convert('RGB')
 
 
 def outline(src):
@@ -509,7 +496,7 @@ def scanned(new=None, remove=None):
     if new or remove:
         items = [x for x in items if x['isbn'] not in (remove, (new or {}).get('isbn'))]
         if new:
-            items.append(new)
+            items = (items + [new])[-200:]   # never more than 200 waiting (15 Nov)
         write_json(SCANNED, items)
     return items
 
@@ -564,6 +551,12 @@ def set_inscription(book_id, text):
     else:
         marks.pop(book_id, None)
     write_json(INSCRIPTIONS, marks)
+
+
+def known_ids():
+    """Every book on her shelves: the Libib import and those added here."""
+    return {b['id'] for b in json.load(open(os.path.join(DATA, 'books.json'), encoding='utf-8'))} | \
+           {b['id'] for b in (json.load(open(ADDED, encoding='utf-8')) if os.path.exists(ADDED) else [])}
 
 
 def add(book):
@@ -739,8 +732,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 if self.path == '/api/books':
                     result = add(body)
                 elif self.path in ('/api/condition', '/api/inscription'):   # an old book's page: condition or inscription (5 Nov); then the site is rebuilt
-                    known = {b['id'] for b in json.load(open(os.path.join(DATA, 'books.json'), encoding='utf-8'))} | \
-                            {b['id'] for b in (json.load(open(ADDED, encoding='utf-8')) if os.path.exists(ADDED) else [])}
+                    known = known_ids()
                     if body.get('id') not in known:
                         result = {'ok': False, 'error': 'No such book.'}
                     else:
@@ -750,7 +742,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                             set_inscription(body['id'], body.get('inscription', ''))
                         result = {'ok': build().returncode == 0}
                 elif self.path == '/api/signed':   # a book's page: signed, signed to her, or neither; then the site is rebuilt
-                    known = {b['id'] for b in json.load(open(os.path.join(DATA, 'books.json'), encoding='utf-8'))} |                             {b['id'] for b in (json.load(open(ADDED, encoding='utf-8')) if os.path.exists(ADDED) else [])}
+                    known = known_ids()
                     if body.get('id') not in known:
                         result = {'ok': False, 'error': 'No such book.'}
                     else:
@@ -766,6 +758,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 class ScanHandler(http.server.BaseHTTPRequestHandler):
     """The one door on the home Wi-Fi (port 8021): a scanned book number with the key goes on the list; nothing else."""
     server_version, sys_version = 'Library', ''
+    timeout = 10   # a device that opens a connection and says nothing is let go (15 Nov)
 
     def log_message(self, *args):
         pass
@@ -829,10 +822,29 @@ def newest_export():
     return best
 
 
+def export_rows(p):
+    import csv
+    with open(p, encoding='utf-8-sig', newline='') as fh:
+        return sum(1 for _ in csv.DictReader(fh))
+
+
 def import_export(p, state):
-    """Import a new StoryGraph export and rebuild; the state is saved only once both worked (a failed import isn't tried again)."""
+    """Import a new StoryGraph export and rebuild; the state is saved only once both worked (a failed import isn't tried again).
+    An export with far fewer books than her reading now (cut short, or someone else's) isn't taken (review, 15 Nov), and the
+    reading as it was is kept as data/storygraph.prev.json."""
+    now_path = os.path.join(DATA, 'storygraph.json')
+    have = len(json.load(open(now_path, encoding='utf-8')).get('books', [])) if os.path.exists(now_path) else 0
+    rows = export_rows(p)
+    if have >= 20 and rows < have * .8:
+        sg_log(f'not imported {os.path.basename(p)}: it has {rows} books, her reading has {have} (cut short?)')
+        state['mtime'] = os.path.getmtime(p)
+        write_json(SG_STATE, state)
+        return
+    if os.path.exists(now_path):
+        import shutil
+        shutil.copy2(now_path, os.path.join(DATA, 'storygraph.prev.json'))
     r = subprocess.run([PYTHON, '-X', 'utf8', os.path.join(TOOLS, 'import_storygraph.py'), p, '--apply'],
-                       cwd=ROOT, capture_output=True, text=True, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+                       cwd=ROOT, capture_output=True, text=True, timeout=300, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
     if r.returncode != 0:
         sg_log(f'import of {os.path.basename(p)} failed: {(r.stderr or r.stdout).strip()[-300:]}')
         state['mtime'] = os.path.getmtime(p)   # don't retry the same file every 5 minutes

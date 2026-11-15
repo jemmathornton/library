@@ -138,7 +138,12 @@ def build():
     sg = load('storygraph.json', {'books': []})
     fixes_r = {k: v for k, v in load('reading-fixes.json', {}).items() if not k.startswith('_')}   # statuses she has corrected
     for e in sg['books']:
-        e['status'] = fixes_r.get(e['title'], e['status'])
+        fix = fixes_r.get(e['title'])
+        if isinstance(fix, dict):   # {from, to}: only while StoryGraph still says "from" (15 Nov: a correction outlived her reading)
+            if e['status'] == fix.get('from'):
+                e['status'] = fix['to']
+        elif fix:
+            e['status'] = fix
         if 'books' in e:   # copies she removed drop out (9 Nov); the reading stays with any copy left
             e['books'] = [i for i in e['books'] if i not in gone]
     no_cover = {x['id'] for x in load('no-cover.json', {'books': []})['books']}   # old books: no modern reprint covers
@@ -158,6 +163,8 @@ def build():
         if b.get('id') in no_cover:
             continue
         key = isbn if isbn and (covers.get(isbn) or os.path.exists(os.path.join(SITE, 'covers', isbn + '.jpg'))) else own
+        if b.get('addedHere') and own != key and os.path.exists(os.path.join(SITE, 'covers', own + '.jpg')):
+            key = own   # a copy added on the site with its own cover (a second copy of an ISBN she has): that cover (15 Nov)
         local = os.path.join(SITE, 'covers', key + '.jpg')
         if os.path.exists(local):   # the copy in site/covers (tools/copy_covers.py), fingerprinted so a new copy shows at once
             b['cover'] = f"covers/{key}.jpg?v={hashlib.md5(open(local, 'rb').read()).hexdigest()[:8]}"

@@ -19,6 +19,7 @@ def write_json(path, obj, indent=1):
     with open(tmp, 'w', encoding='utf-8', newline='\n') as fh:
         json.dump(obj, fh, ensure_ascii=False, indent=indent)
         fh.write('\n')
+        fh.flush(); os.fsync(fh.fileno())   # on the disk before the swap: a power cut can't leave an empty file (15 Nov)
     _swap(tmp, path)
 
 

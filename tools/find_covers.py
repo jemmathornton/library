@@ -12,7 +12,7 @@ import json, os, re, sys, time, urllib.parse, urllib.request
 ROOT = os.environ.get('LIBRARY_ROOT') or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # tests run on a copy (9 Nov)
 DATA = os.path.join(ROOT, 'data')
 OUT = os.path.join(DATA, 'covers.json')
-UA = {'User-Agent': "Jemma's Home Library (private prototype)"}
+UA = {'User-Agent': 'HomeLibrary/1.0 (private, personal use)'}   # names no one (review, 15 Nov)
 
 
 def get(url):
@@ -124,7 +124,7 @@ def main():
             url = f'https://images-na.ssl-images-amazon.com/images/P/{i10}.01.LZZZZZZZ.jpg'
             try:
                 with urllib.request.urlopen(urllib.request.Request(url, headers=UA), timeout=30) as r:
-                    img = Image.open(io.BytesIO(r.read()))
+                    img = Image.open(io.BytesIO(r.read(20_000_000)))
                 ok = img.width > 50 and img.height > 50
             except Exception:
                 ok = False

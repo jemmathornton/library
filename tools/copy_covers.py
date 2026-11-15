@@ -11,7 +11,7 @@ from PIL import Image
 
 ROOT = os.environ.get('LIBRARY_ROOT') or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # tests run on a copy (9 Nov)
 COVERS = os.path.join(ROOT, 'site', 'covers')
-UA = {'User-Agent': "Jemma's Home Library (private prototype)"}
+UA = {'User-Agent': 'HomeLibrary/1.0 (private, personal use)'}   # names no one (review, 15 Nov)
 TALL = 600
 
 
@@ -19,7 +19,7 @@ def copy(isbn, src):
     out = os.path.join(COVERS, isbn + '.jpg')
     try:
         with urllib.request.urlopen(urllib.request.Request(src, headers=UA), timeout=60) as r:
-            img = Image.open(io.BytesIO(r.read()))
+            img = Image.open(io.BytesIO(r.read(20_000_000)))
             img.load()
     except Exception as e:
         return isbn, f'failed: {e}'

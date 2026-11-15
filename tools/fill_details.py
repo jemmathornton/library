@@ -13,7 +13,7 @@ import json, os, re, sys, time, urllib.parse, urllib.request
 ROOT = os.environ.get('LIBRARY_ROOT') or os.path.dirname(os.path.dirname(os.path.abspath(__file__)))   # tests run on a copy (9 Nov)
 DATA = os.path.join(ROOT, 'data')
 OUT = os.path.join(DATA, 'details.json')
-UA = {'User-Agent': "Jemma's Home Library (private)"}
+UA = {'User-Agent': 'HomeLibrary/1.0 (private, personal use)'}   # names no one (review, 15 Nov)
 
 
 def get(url):

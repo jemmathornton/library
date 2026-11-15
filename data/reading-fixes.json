@@ -1,7 +1,19 @@
 {
- "_about": "Reading statuses she has corrected, by her reading record's title (18 Oct). Applied by tools/build.py over the import. 1 Nov: three she is taking a break from marked paused (if she picks one up again in StoryGraph, take it off here).",
- "Hooked": "stopped",
- "A Degree of Love": "paused",
- "A Place in the World": "paused",
- "I Bet You'd Look Good in a Coffin": "paused"
+ "_about": "Reading statuses she has corrected, by her reading record's title (18 Oct). Applied by tools/build.py over the import. 1 Nov: three she is taking a break from marked paused (if she picks one up again in StoryGraph, take it off here). 15 Nov: each is {from, to}: applied only while StoryGraph still says \"from\", so when her reading there moves on, the correction stops.",
+ "Hooked": {
+  "from": "paused",
+  "to": "stopped"
+ },
+ "A Degree of Love": {
+  "from": "reading",
+  "to": "paused"
+ },
+ "A Place in the World": {
+  "from": "reading",
+  "to": "paused"
+ },
+ "I Bet You'd Look Good in a Coffin": {
+  "from": "reading",
+  "to": "paused"
+ }
 }

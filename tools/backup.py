@@ -27,7 +27,29 @@ def git(*args):
     return subprocess.run(['git', *args], cwd=ROOT, capture_output=True, text=True, creationflags=NO_WINDOW)
 
 
+# Review, 15 Nov: the zip took so long that Windows stopped the task half-way, and nothing said so. Now: pictures are
+# stored as they are (squeezing a JPEG again only costs time), big downloads not kept in git (for-jemma/*/pictures) are
+# left out, a leftover .part is cleared, the start is logged, and the git history goes in as one file
+# (library-history.bundle; `git clone library-history.bundle HomeLibrary` gives it back).
+SKIP_DIRS = {'.git', '__pycache__', 'logs'}
+STORED = ('.jpg', '.jpeg', '.png', '.webp', '.gif', '.zip', '.exe', '.bundle')   # already squeezed
+
+
+def skipped(rel):
+    """Big downloads not kept in git: full-size seller pictures behind the boards in for-jemma."""
+    parts = rel.replace(os.sep, '/').split('/')
+    return len(parts) >= 3 and parts[0] == 'for-jemma' and parts[2] == 'pictures'
+
+
 def main():
+    log('started')
+    os.makedirs(DEST, exist_ok=True)
+    for f in os.listdir(DEST):   # a run Windows stopped half-way leaves a .part behind: it's no backup
+        if f.startswith('HomeLibrary backup ') and f.endswith('.part'):
+            try:
+                os.remove(os.path.join(DEST, f)); log(f'removed an unfinished {f}')
+            except OSError:
+                pass
     try:   # on its own: if git can't run (not found, the repo busy), the zip still happens
         if git('status', '--porcelain').stdout.strip():
             git('add', '-A')
@@ -37,18 +59,26 @@ def main():
         log(f'git failed: {e}')
     out = os.path.join(DEST, f'HomeLibrary backup {date.today().isoformat()}.zip')
     part = out + '.part'   # renamed once finished, so a broken zip is never kept as a backup
+    bundle = os.path.join(DEST, 'library-history.bundle.tmp')
     try:
-        os.makedirs(DEST, exist_ok=True)
         n = 0
         with zipfile.ZipFile(part, 'w', zipfile.ZIP_DEFLATED) as z:
             for here, dirs, files in os.walk(ROOT):
-                dirs[:] = [d for d in dirs if d not in ('.git', '__pycache__', 'logs')]
+                dirs[:] = [d for d in dirs if d not in SKIP_DIRS and not skipped(os.path.relpath(os.path.join(here, d), ROOT))]
                 for f in files:
-                    if f.endswith('.lnk'):
+                    if f.endswith(('.lnk', '.tmp')):
                         continue
                     p = os.path.join(here, f)
-                    z.write(p, os.path.join('HomeLibrary', os.path.relpath(p, ROOT)))
+                    z.write(p, os.path.join('HomeLibrary', os.path.relpath(p, ROOT)),
+                            zipfile.ZIP_STORED if f.lower().endswith(STORED) else zipfile.ZIP_DEFLATED)
                     n += 1
+            try:   # the whole git history, as one file
+                if git('bundle', 'create', bundle, '--all').returncode == 0:
+                    z.write(bundle, 'library-history.bundle', zipfile.ZIP_STORED)
+                else:
+                    log('git bundle failed: the zip has the files but not their history')
+            except Exception as e:
+                log(f'git bundle failed: {e}')
         with zipfile.ZipFile(part) as z:
             bad = z.testzip()
         if bad:
@@ -63,6 +93,9 @@ def main():
         if os.path.exists(part):
             os.remove(part)
         sys.exit(1)
+    finally:
+        if os.path.exists(bundle):
+            os.remove(bundle)
 
 
 if __name__ == '__main__':
