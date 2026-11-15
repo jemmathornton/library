@@ -29,8 +29,8 @@ def git(*args):
 
 # Review, 15 Nov: the zip took so long that Windows stopped the task half-way, and nothing said so. Now: pictures are
 # stored as they are (squeezing a JPEG again only costs time), big downloads not kept in git (for-jemma/*/pictures) are
-# left out, a leftover .part is cleared, the start is logged, and the git history goes in as one file
-# (library-history.bundle; `git clone library-history.bundle HomeLibrary` gives it back).
+# left out, a leftover .part is cleared, the start is logged, and the git history is kept beside the zips as one file
+# (library-history.bundle, replaced weekly; `git clone library-history.bundle HomeLibrary` gives it back).
 SKIP_DIRS = {'.git', '__pycache__', 'logs'}
 STORED = ('.jpg', '.jpeg', '.png', '.webp', '.gif', '.zip', '.exe', '.bundle')   # already squeezed
 
@@ -72,13 +72,13 @@ def main():
                     z.write(p, os.path.join('HomeLibrary', os.path.relpath(p, ROOT)),
                             zipfile.ZIP_STORED if f.lower().endswith(STORED) else zipfile.ZIP_DEFLATED)
                     n += 1
-            try:   # the whole git history, as one file
-                if git('bundle', 'create', bundle, '--all').returncode == 0:
-                    z.write(bundle, 'library-history.bundle', zipfile.ZIP_STORED)
-                else:
-                    log('git bundle failed: the zip has the files but not their history')
-            except Exception as e:
-                log(f'git bundle failed: {e}')
+        try:   # the whole git history, as one file beside the zips, replaced each week (in every zip it would be 8 copies)
+            if git('bundle', 'create', bundle, '--all').returncode == 0:
+                os.replace(bundle, os.path.join(DEST, 'library-history.bundle'))
+            else:
+                log('git bundle failed: the history file is last week’s')
+        except Exception as e:
+            log(f'git bundle failed: {e}')
         with zipfile.ZipFile(part) as z:
             bad = z.testzip()
         if bad:
