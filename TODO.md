@@ -44,7 +44,7 @@
 11. **From the 15 Nov full review (her call; looks get mock-ups first):**
    - **Firewall (her to do, a Windows setting):** Python's incoming rule is set for Public networks only, the wrong way round: away from home (cafés) the phone-scan door can be reached, and at home it is probably blocked, so phone scanning may not work. Change it to Private only.
    - **A second backup copy off this PC** (OneDrive or a USB stick): today the backups sit on the same disk as the library. The weekly task could also retry if it fails (a change to the Windows task).
-   - **Menu at laptop height:** Reading, History, To Buy, Authors, Stats and Add a book sit below the sidebar's fold at 768px high.
+   - **Menu at laptop height:** decided 15 Nov, fine as it is (her screen fits all but the last link or so; mock-ups in `for-jemma/menu-fit/` if it ever bothers her: B, slightly tighter rows, is the smallest fix).
    - **Green colours?** The Display shelf (#3F6B4A) and the old books' Fiction dot (#4F5D47) are greenish, if green is unwanted.
    - **Filters** show even when they'd find nothing (Fantasy → Special editions).
    - **Old-book shelves:** gaps on the to-find list look the same as other gaps; no key for ★ and dashed spines; cream shelves stay bright in dark mode.
