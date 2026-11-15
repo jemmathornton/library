@@ -11,7 +11,7 @@
   let fellBack = false; const home = window.pageHome; window.pageHome = (...a) => { fellBack = true; return home(...a); };
   const routes = ["#home", "#shelves", "#authors", "#reading", "#history", "#add", "#to-buy", "#stats", "#trial-covers", "#old-to-find",
     ...OLD_KINDS.map(k => "#old-" + k[0]), ...DATA.shelves.map(s => "#shelf-" + s.id), ...DATA.books.map(b => "#b-" + b.id),
-    ...Object.keys(authorIndex).map(k => "#a-" + k), ...SG.books.map((e, i) => e.books ? null : "#r-" + i).filter(Boolean)];
+    ...Object.keys(authorIndex).map(k => "#a-" + k), ...ELSEWHERE.map(e => "#r-" + SG.books.indexOf(e))];
   const links = new Set(), imgs = new Set();
   for (const h of routes) {
     if (seen.has(h)) continue; seen.add(h);

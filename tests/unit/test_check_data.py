@@ -44,6 +44,19 @@ class CheckData(unittest.TestCase):
             code, out = check()
             self.assertIn('run tools/build.py', out)
 
+    def test_catches_blurbs_that_arent_blurbs(self):   # 15 Nov: shop listings and other languages were showing
+        with Sandbox() as box:
+            books = box.read('books.json')
+            a, c = next(b for b in books if b['shelf'] != 'old-book-collection'), [b for b in books if b['shelf'] != 'old-book-collection'][5]
+            fixes = box.read('description-fixes.json', {})
+            fixes[a['id']] = '¡¡LIBRO NUEVO!! NEW BOOK!! Envio desde España entre 24 y 48 horas.'
+            fixes[c['id']] = 'Det er ei historie om to venninner som vokser opp, og den er ei av de beste som er skrevet.'
+            box.write('description-fixes.json', fixes)
+            rebuild()
+            code, out = check()
+            self.assertIn('shop listing', out)
+            self.assertIn('isn’t in English', out)
+
     def test_catches_a_broken_data_file(self):
         with Sandbox() as box:
             open(box.path('data', 'signed.json'), 'w').write('{broken')

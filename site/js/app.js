@@ -2,7 +2,8 @@
 // Reading comes from StoryGraph (data/storygraph.json); the site shows it and never sets it (her choice, 18 Oct: no buttons).
 const ic = n => ICONS[n].replace("<svg ", '<svg class="i" aria-hidden="true" ');
 // shown text uses curly apostrophes and quotes; ids and links are untouched
-const curly = s => String(s ?? "").replace(/(^|[\s(\[“"—-])'/g, "$1‘").replace(/'/g, "’");
+const curly = s => String(s ?? "").replace(/'(?=\d0s\b)/g, "’").replace(/(^|[\s(\[“"—-])'/g, "$1‘").replace(/'/g, "’")
+  .replace(/(^|[\s(\[—-])"/g, "$1“").replace(/"/g, "”");   // double quotes too (review, 15 Nov)
 const esc = s => curly(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 // for form boxes and their choices: escaped but not curled, so what she typed is saved as she typed it (review, 9 Nov)
 const escRaw = s => String(s ?? "").replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -61,7 +62,8 @@ function prep(b){
 }
 BOOKS.forEach(b => {
   prep(b); bookIndex[b.id] = b;
-  (shelfIndex[b.shelf] || shelfIndex.unsorted).books.push(b);
+  if (!shelfIndex[b.shelf]) b.shelf = "unsorted";   // placeholder
+  shelfIndex[b.shelf].books.push(b);
   (b.authors || []).forEach(a => {
     const k = slug(a.name); if (!k) return;
     const au = authorIndex[k] ||= {id: k, name: a.name, books: [], surname: ""};
@@ -128,6 +130,9 @@ const finishes = b => { const r = reading(b), ends = [...new Set((r.dates || [])
 const finishedIn = y => readingLog().filter(isRead).flatMap(finishes).filter(d => year(d) === y);
 // how many books are read, each book once however many copies (three Philosopher's Stones are one book)
 const booksRead = list => new Set(list.filter(isRead).map(bookKey)).size;
+// not read yet: not started at all (a book she didn't finish or is taking a break from isn't waiting to be read)
+const isUnread = b => { const st = reading(b).status; return !st || st === "to-read"; };
+const booksUnread = list => new Set(list.filter(isUnread).map(bookKey)).size;
 const starsText = r => String(Math.round(r * 100) / 100);   // decimals, not ½ (her choice, 18 Oct)
 
 // ---------- series (data/series.json, in reading order) ----------
@@ -219,7 +224,7 @@ function cover(b, extra = "", big = false){
   const badge = st === "read" ? sash("Read", "Read") : st === "reading" ? sash("Reading", "Reading now")
     : st === "stopped" ? sash("DNF", "Didn’t finish") : st === "paused" ? sash("Paused", "Paused") : "";
   const r = reading(b).rating;
-  const strip = r ? `<span class="rated" title="${starsText(r)} stars"><span class="sg-stars" style="--r:${(r / 5 * 100).toFixed(1)}%"><span>★★★★★</span><span aria-hidden="true">★★★★★</span></span></span>` : "";
+  const strip = r ? `<span class="rated" title="${starsText(r)} stars" role="img" aria-label="${starsText(r)} stars"><span class="sg-stars" style="--r:${(r / 5 * 100).toFixed(1)}%" aria-hidden="true"><span>★★★★★</span><span>★★★★★</span></span></span>` : "";
   // not owned: the cover faded, with a walnut "Not owned" band across it (her choice, 18 Oct; not on a book's own page)
   const tag = (b.notOwned && !big ? `<span class="not-owned">Not owned</span>` : "")
     // a special edition (Illumicrate and the like, data/editions.json): a brass sash across the other top corner (her ask, 18 Oct)
@@ -227,7 +232,7 @@ function cover(b, extra = "", big = false){
     + (b.signed ? sealMark(b.signed) : "");
   // the whole cover at its own shape, never trimmed to a frame (her ask, 30 Oct); a picture with no known shape keeps the frame
   const ratio = b.cover && b.coverRatio;
-  return `<div class="cover${b.cover ? "" : " blank"}${ratio ? " fit" : ""}${b.notOwned && !big ? " unowned" : ""}${TRIAL && b.coverTrial ? " trial" : ""} ${extra}" style="--c:${s ? s.color : "#5E3D22"}${ratio ? ";--r:" + ratio : ""}">${badge}${tag}${strip}${b.cover ? `<img src="${esc(coverSrc(b, big))}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
+  return `<div class="cover${b.cover ? "" : " blank"}${ratio ? " fit" : ""}${b.notOwned && !big ? " unowned" : ""}${TRIAL && b.coverTrial ? " trial" : ""} ${extra}" style="--c:${s ? s.color : "#5E3D22"}${ratio ? ";--r:" + ratio : ""}">${badge}${tag}${strip}${b.cover ? `<img src="${escRaw(coverSrc(b, big))}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
 }
 // a cover that won't load becomes a title card
 document.addEventListener("error", e => { const img = e.target; if (img.tagName === "IMG" && img.parentNode.classList.contains("cover")) { img.parentNode.classList.add("blank"); img.remove(); } }, true);
@@ -277,7 +282,7 @@ document.addEventListener("mouseover", e => {
   const c = old || document.body.appendChild(Object.assign(document.createElement("div"), {id: "spineCard", className: "spine-card"}));
   const note = (b.description || "").length < 90 ? b.description || "" : "", r = a.getBoundingClientRect();
   c.dataset.id = b.id;
-  c.innerHTML = `${b.cover ? `<img src="${esc(b.cover)}" alt="">` : "<div></div>"}<div><b>${esc(b.t)}</b><div class="by">${esc(b.by)}</div>
+  c.innerHTML = `${b.cover ? `<img src="${escRaw(b.cover)}" alt="">` : "<div></div>"}<div><b>${esc(b.t)}</b><div class="by">${esc(b.by)}</div>
     <dl><dt>Year</dt><dd>${year(b.published) || "Undated"}</dd><dt>Edition</dt><dd>${esc(note) || "—"}</dd><dt>Condition</dt><dd>${esc(b.condition || "") || "—"}</dd>${b.inscription ? `<dt>Inscribed</dt><dd>${esc(b.inscription.length > 70 ? b.inscription.slice(0, 68) + "…" : b.inscription)}</dd>` : ""}</dl></div>`;
   c.style.left = Math.min(innerWidth - 310, r.right + 10) + "px"; c.style.top = Math.max(10, Math.min(innerHeight - 170, r.top)) + "px";
 });
@@ -328,7 +333,7 @@ function listView(list){
 // are each world's own map); pages with too few covers keep the plain walnut
 function shelfBanner(list){
   const pics = (list || []).filter(b => b.cover).slice(0, 32);
-  return pics.length >= 8 ? `<div class="hero-shelf" aria-hidden="true">${pics.map(b => `<img src="${esc(coverSrc(b))}" alt="">`).join("")}</div>` : "";
+  return pics.length >= 8 ? `<div class="hero-shelf" aria-hidden="true">${pics.map(b => `<img src="${escRaw(coverSrc(b))}" alt="">`).join("")}</div>` : "";
 }
 const hero = (o) => { const bg = shelfBanner(o.covers);
   return `<header class="hero${bg ? " shelved" : ""}">${bg}<div class="kicker">${o.color ? `<span class="dot" style="--c:${o.color}"></span>` : "<i></i>"}<span class="label">${o.kicker}</span></div>
@@ -375,7 +380,7 @@ function pageHome(){
   const lastFinish = b => finishes(b).sort().pop() || "";
   const done = log.filter(isRead).filter(b => lastFinish(b)).sort((a, b) => lastFinish(b).localeCompare(lastFinish(a))).slice(0, 6);
   const yearReads = finishedIn(thisYear).length;
-  const unreadOwned = BOOKS.filter(b => !isRead(b) && !isReading(b)).length;   // her to-read list is for borrowing, not this site (1 Nov)
+  const unreadOwned = booksUnread(BOOKS);   // each book once, like "read" (review, 15 Nov)   // her to-read list is for borrowing, not this site (1 Nov)
   const recent = [...BOOKS].sort(SORTS.added[1]).slice(0, 6);
   const fan = s => { const withCover = s.books.filter(b => b.cover), pick = (withCover.length >= 3 ? withCover : s.books).slice(0, 3); return pick.map(b => cover(b)).join(""); };
   const shortDate = d => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(d || ""); return m ? `${+m[3]} ${MON[m[2] - 1]}` : ""; };
@@ -386,7 +391,7 @@ function pageHome(){
         + `<div class="now-row">${now.map(b => { const st = reading(b).started; return `<a class="now-card" href="${href(b)}">${cover(b, "", true)}<div><span class="label">Reading now</span><h3>${esc(b.t)}</h3><div class="by">${esc(b.by)}</div>${st ? `<div class="by">Started ${niceDate(st)}</div>` : ""}</div></a>`; }).join("")}</div>` : "")
     + (done.length ? sectionHead("Just <em>finished</em>", pickButton()) + `<div class="books row">${done.map(b => card(b, `Finished ${shortDate(lastFinish(b))}`)).join("")}</div>` : "")
     // newest books, straight under what she's just read (her ask, 1 Nov; it was at the foot of the page)
-    + sectionHead("New on the <em>shelves</em>", done.length ? "" : pickButton()) + `<div class="books row">${recent.map(b => card(b, `Added ${niceDate(b.added)}`)).join("")}</div>`
+    + sectionHead("New on the <em>shelves</em>", done.length ? "" : pickButton()) + `<div class="books row">${recent.map(b => card(b, `Added ${shortDate(b.added)}`)).join("")}</div>`
     + sectionHead("The <em>shelves</em>", `<a class="more" href="#shelves">See them all at once</a>`)
     + `<div class="shelves">${SHELVES.filter(s => s.books.length).map(s => `<a class="shelf-card" href="#shelf-${s.id}" style="--c:${s.color}"><div class="fan">${fan(s)}</div>
         <div class="txt"><h3>${esc(s.name)}</h3><span>${plural(s.books.length, "book")}</span></div></a>`).join("")}</div>`
@@ -410,7 +415,7 @@ const SORTS = {
   finished: ["Recently read", (a, b) => (finishes(b).sort().pop() || "").localeCompare(finishes(a).sort().pop() || "") || a.sortTitle.localeCompare(b.sortTitle)],
   stars: ["Your stars", (a, b) => (reading(b).rating || 0) - (reading(a).rating || 0) || a.sortAuthor.localeCompare(b.sortAuthor)],
 };
-const FILTERS = {all: ["All", () => true], owned: ["Owned", b => !b.notOwned], notowned: ["Not owned", b => !!b.notOwned], special: ["Special editions", b => !!b.special], signed: ["Signed", b => !!b.signed], toyou: ["Signed to you", b => b.signed === "to-you"], unread: ["Not read", b => !isRead(b) && !isReading(b)], reading: ["Reading", isReading], read: ["Read", isRead]};
+const FILTERS = {all: ["All", () => true], owned: ["Owned", b => !b.notOwned], notowned: ["Not owned", b => !!b.notOwned], special: ["Special editions", b => !!b.special], signed: ["Signed", b => !!b.signed], toyou: ["Signed to you", b => b.signed === "to-you"], unread: ["Not read", isUnread], reading: ["Reading", isReading], read: ["Read", isRead]};
 
 function shelfBooks(list, grouped = currentGrouped){
   const f = FILTERS[shelfView.filter][1], shown = list.filter(f).sort(SORTS[shelfView.sort][1]);
@@ -460,7 +465,7 @@ function dateRange([a, b]){   // ['2024-01-02', '2024-01-20'] -> '2 Jan – 20 J
   if (!y1 || a === b) return when(y2, m2, d2);
   return `${when(y1, m1, d1, y1 !== y2 || !m1)} – ${when(y2, m2, d2)}`;
 }
-const starsShown = r => `<span class="sg-stars" style="--r:${(r / 5 * 100).toFixed(1)}%" aria-label="${r} stars"><span>★★★★★</span><span aria-hidden="true">★★★★★</span></span><b class="sg-num">${r}</b>`;
+const starsShown = r => `<span class="sg-stars" style="--r:${(r / 5 * 100).toFixed(1)}%" role="img" aria-label="${r} stars"><span aria-hidden="true">★★★★★</span><span aria-hidden="true">★★★★★</span></span><b class="sg-num">${r}</b>`;
 // her StoryGraph reviews: spoilers stay hidden until clicked
 const reviewHtml = t => esc(t).replace(/\[spoiler\]([\s\S]*?)(\[\/spoiler\]|$)/g, '<span class="spoiler" tabindex="0" title="Spoiler: click to show">$1</span>');
 function sgPanel(r){
@@ -497,8 +502,12 @@ function pageSgBook(e){   // a book from StoryGraph that isn't on her shelves
       </dl></div></aside></div>`;
 }
 
+// an old book's description is her own note on the copy ("First edition", "Undated"), shown under Details (review, 15 Nov)
+const oldNote = b => b.shelf === COLLECTION && (b.description || "").length < 90;
+// a blurb whose paragraphs ran together ("…shooting.Set in…") gets its breaks back; the words are untouched
+const blurb = t => esc(t).replace(/([a-z]{2,}[.!?…][”’)]?)(?=[A-Z][a-z])/g, "$1\n\n").split(/\n\s*\n+/).map(p => `<p class="desc">${p.trim()}</p>`).join("");
 function pageBook(b){
-  const s = shelfIndex[b.shelf] || {id: b.shelf, name: b.shelf, color: "#5E3D22"}, others = (editions[norm(b.title) + "|" + norm(b.surname || "")] || []).filter(x => x !== b);
+  const s = shelfIndex[b.shelf] || {id: b.shelf, name: b.shelf, color: "#5E3D22"}, others = BOOKS.filter(x => x !== b && (bookKey(x) === bookKey(b) || (editions[norm(b.title) + "|" + norm(b.surname || "")] || []).includes(x)));
   const lead = (b.authors || []).find(a => !a.role), au = lead && authorIndex[slug(lead.name)];
   const more = au ? au.books.map(x => x.book).filter(x => x !== b && !others.includes(x)).slice(0, 12) : [];
   const fact = (k, v) => v ? `<dt>${k}</dt><dd>${v}</dd>` : "", sub = "edition" in b ? b.edition : b.sub;
@@ -508,9 +517,10 @@ function pageBook(b){
       <div class="authors">${(b.authors || []).map(a => `<span><a href="#a-${slug(a.name)}">${esc(a.name)}</a>${a.role ? ` <small>${esc(a.role)}</small>` : ""}</span>`).join("") || "<span>Unknown author</span>"}</div>
       ${seriesLine(b)}
       ${b.signed ? `<div class="signed-line">${sealMark(b.signed)}${SIGN_WORDS[b.signed]}</div>` : ""}
+      ${b.special && !(sub || "").includes(b.special) ? `<div class="signed-line special-line">${esc(b.special)}</div>` : ""}
     </div></div></header>
     <div class="book-body"><div>
-      ${b.description ? `<p class="desc">${esc(b.description)}</p>` : ""}
+      ${b.description && !oldNote(b) ? blurb(b.description) : ""}
       ${sgFor[b.id] ? reviews(reading(b)) : ""}
       ${others.length ? sectionHead(`Other copies <em>you own</em>`) + grid(others) : ""}
       ${more.length ? sectionHead(`More by <em class="keep">${esc(au.name)}</em>`, au.books.length > more.length + 1 ? `<a class="more" href="#a-${au.id}">All ${au.books.length}</a>` : "") + grid(more) : ""}
@@ -520,10 +530,10 @@ function pageBook(b){
         ${fact("Shelf", `<a href="#shelf-${s.id}">${esc(s.name)}</a>`)}${fact("Publisher", esc(b.publisher || ""))}
         ${fact("Published", niceDate(b.published) || year(b.published))}${fact("Pages", b.pages ? num(b.pages) : "")}
         ${fact("ISBN-13", b.isbn13 || "")}${fact("ISBN-10", b.isbn10 || "")}${fact("Copies", b.copies > 1 ? b.copies : "")}
-        ${fact("Added", niceDate(b.added))}${fact("Full title", b.t !== b.title ? esc(b.title) : "")}
-        ${location.protocol.startsWith("http") && b.shelf === COLLECTION ? fact("Condition", `<select class="cond-pick" data-cond-id="${b.id}"><option value="">Not set</option>${CONDITIONS.map(c => `<option${b.condition === c ? " selected" : ""}>${c}</option>`).join("")}</select>`) : ""}
-        ${b.shelf !== COLLECTION ? "" : location.protocol.startsWith("http") ? fact("Inscription", `<textarea class="inscr-pick" data-inscr-id="${b.id}" rows="${b.inscription ? 3 : 1}" maxlength="1000" placeholder="None">${escRaw(b.inscription || "")}</textarea>`) : fact("Inscription", esc(b.inscription || ""))}
-        ${location.protocol.startsWith("http") ? fact("Signed", `<select class="sign-pick" data-sign-id="${b.id}">${[["", "Not signed"], ["signed", "Signed"], ["to-you", "Signed to you"]].map(([v, t]) => `<option value="${v}"${(b.signed || "") === v ? " selected" : ""}>${t}</option>`).join("")}</select>`) : ""}
+        ${fact("Edition", oldNote(b) ? esc(b.description) : "")}${fact("Added", niceDate(b.added))}${fact("Full title", b.t !== b.title ? esc(b.title) : "")}
+        ${location.protocol.startsWith("http") && b.shelf === COLLECTION ? fact("Condition", `<select class="cond-pick" data-cond-id="${b.id}" aria-label="Condition"><option value="">Not set</option>${CONDITIONS.map(c => `<option${b.condition === c ? " selected" : ""}>${c}</option>`).join("")}</select>`) : ""}
+        ${b.shelf !== COLLECTION ? "" : location.protocol.startsWith("http") ? fact("Inscription", `<textarea class="inscr-pick" data-inscr-id="${b.id}" aria-label="Inscription" rows="${b.inscription ? 3 : 1}" maxlength="1000" placeholder="None">${escRaw(b.inscription || "")}</textarea>`) : fact("Inscription", esc(b.inscription || ""))}
+        ${location.protocol.startsWith("http") ? fact("Signed", `<select class="sign-pick" data-sign-id="${b.id}" aria-label="Signed">${[["", "Not signed"], ["signed", "Signed"], ["to-you", "Signed to you"]].map(([v, t]) => `<option value="${v}"${(b.signed || "") === v ? " selected" : ""}>${t}</option>`).join("")}</select>`) : ""}
       </dl></div></aside></div>`;
 }
 
@@ -540,14 +550,14 @@ function pageAuthor(a){
   const list = a.books.map(x => x.book).sort((x, y) => (x.published || "9999").localeCompare(y.published || "9999"));
   const roles = [...new Set(a.books.map(x => x.role).filter(Boolean))];
   return hero({kicker: `<a href="#authors">Author</a>`, title: `<span class="keep">${esc(a.name)}</span>`, covers: list, text: roles.length ? `Also credited as ${esc(roles.join(", ").toLowerCase())}.` : "",
-      figures: [[num(list.length), list.length === 1 ? "book" : "books"], [num(booksRead(list)), "read"], [num(new Set(list.map(b => b.shelf)).size), "shelves"]]})
+      figures: [[num(list.length), list.length === 1 ? "book" : "books"], [num(booksRead(list)), "read"], (n => [num(n), n === 1 ? "shelf" : "shelves"])(new Set(list.map(b => b.shelf)).size)]})
     + sectionHead("Their <em>books</em>", `<span class="more">Oldest first</span>`)
     + `<div class="books">${a.books.slice().sort((x, y) => (x.book.published || "9999").localeCompare(y.book.published || "9999")).map(x => card(x.book, x.role ? x.role : year(x.book.published) || x.book.by)).join("")}</div>`;
 }
 
 function pageReading(){
   const log = readingLog(), byFinish = (a, b) => (reading(b).finished || "").localeCompare(reading(a).finished || "");
-  const now = log.filter(isReading), done = log.filter(isRead).sort(byFinish), next = BOOKS.filter(b => !isRead(b) && !isReading(b));
+  const now = log.filter(isReading), done = log.filter(isRead).sort(byFinish), next = {length: booksUnread(BOOKS)};
   // paused and didn't-finish are different things (her word, 1 Nov): a break sits above this year's reading
   const paused = log.filter(b => reading(b).status === "paused");   // didn't-finish books get no row here (her call, 1 Nov)
   const thisYear = String(new Date().getFullYear()), away = done.filter(isElsewhere).length;
@@ -583,8 +593,7 @@ const seriesLine = b => (seriesOf[b.id] || []).map(h => `<span class="in-series"
 // ---------- to read ----------
 let pickShelf = "", picked = null;   // picks from anything unread on her shelves (her to-read list is for borrowing, 1 Nov)
 function pickPool(){
-  const unread = b => !isRead(b) && !isReading(b);
-  let pool = BOOKS.filter(unread);
+  let pool = BOOKS.filter(isUnread);
   if (pickShelf) pool = pool.filter(b => b.shelf === pickShelf);
   const seen = new Set();   // one copy of each book
   return pool.filter(b => { const k = norm(b.t) + "|" + (b.surname || ""); if (seen.has(k)) return false; seen.add(k); return true; });
@@ -641,7 +650,8 @@ function pageToBuy(){
 // data/added.json and the site rebuilt. Only works in her app window (served from the server), not from the folder.
 let addFromWish = false;   // the Add page opened from "Got it" keeps its to-buy book; opened any other way it starts empty
 let addForm = {isbn: "", title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", note: "", busy: false};
-const api = (path, opts = {}) => fetch(path, {...opts, headers: {"X-Library": "1", "Content-Type": "application/json", ...(opts.headers || {})}}).then(r => r.json());
+const api = (path, opts = {}) => fetch(path, {...opts, headers: {"X-Library": "1", "Content-Type": "application/json", ...(opts.headers || {})}})
+  .then(r => r.json().catch(() => { throw new Error(`the library server answered ${r.status}`); }));
 function pageAdd(){
   const f = addForm, served = location.protocol.startsWith("http");
   const field = (k, label, extra = "") => `<label><span>${label}</span><input id="add-${k}" value="${escRaw(f[k] || "")}" ${extra}></label>`;
@@ -653,7 +663,7 @@ function pageAdd(){
           <button class="btn pick" type="button" id="addLookup"${served ? "" : " disabled"}>${ic("search")}Look it up</button>
           <button class="btn" type="button" id="camOpen"${served ? "" : " disabled"}>${ic("scan-barcode")}Scan with camera</button></div>
         ${f.note ? `<p class="add-note">${esc(f.note)}</p>` : ""}
-        <div class="add-main"><div class="add-cover">${f.cover ? `<div class="cover"><img src="${esc(f.cover)}" alt=""></div>` : `<div class="cover gap"></div>`}
+        <div class="add-main"><div class="add-cover">${f.cover ? `<div class="cover"><img src="${escRaw(f.cover)}" alt=""></div>` : `<div class="cover gap"></div>`}
           ${f.title ? `<button type="button" class="btn find-cover" id="findCover">${ic("image")}${f.cover ? "Find another cover" : "Find a cover"}</button>` : ""}
           ${f.coverOriginal ? `<div class="trim-row"><button type="button" class="btn find-cover" data-trim="6"${f.straightening ? " disabled" : ""}>Trim less</button><button type="button" class="btn find-cover" data-trim="-6"${f.straightening ? " disabled" : ""}>Trim more</button></div>` : ""}
           ${f.cover && !f.coverWrong ? `<button type="button" class="btn find-cover${f.coverOriginal ? " on" : ""}" id="fixCover"${f.straightening ? " disabled" : ""}>${ic("crop")}${f.straightening ? "Straightening…" : f.coverOriginal ? "Undo straightening" : "Cropped or at an angle"}</button>` : ""}
@@ -735,6 +745,7 @@ const loadZxing = () => window.ZXing ? Promise.resolve() : new Promise((ok, fail
   const s = document.createElement("script"); s.src = "js/zxing.min.js"; s.onload = ok; s.onerror = fail; document.head.appendChild(s); });
 function camClose(){
   if (camReader) { camReader.reset(); camReader = null; }
+  camStillFor = null;
   document.getElementById("camPanel")?.remove();
 }
 async function camOpen(){
@@ -756,7 +767,7 @@ async function camOpen(){
   // the camera is asked for here, not by the reader, so each step can say what's happening (a black box on 1 Nov said nothing)
   msg("Asking for the camera… If a box asks to use it, press Allow (in the app window it’s at the top left).");
   let stream;   // asked for the sharpest picture the camera has
-  try { stream = await navigator.mediaDevices.getUserMedia({video: {width: {ideal: 4096}, height: {ideal: 2160}}}); }
+  try { stream = await navigator.mediaDevices.getUserMedia({video: {width: {ideal: 1920}, height: {ideal: 1080}}}); }
   catch (e) {
     return msg({NotAllowedError: "The camera isn’t allowed for the library. Click the camera sign at the top left of the window, choose Allow, then press Scan with camera again.",
       NotReadableError: "The camera is busy: another app may be using it. Close that app, then try again.",
@@ -803,7 +814,8 @@ async function camOpen(){
 // deblurring (Richardson-Lucy, Gaussian focus blur), for a webcam that is a little out of focus at book distance
 // (1 Nov: on her own test picture the number was unreadable as taken and read correctly, twice, after this)
 function deblur(src, [sx, sy, sw, sh], sigma, rounds = 20){
-  const w = Math.round(sw), h = Math.round(sh), c = document.createElement("canvas"); c.width = w; c.height = h;
+  const sc = Math.min(1, 900 / sw), w = Math.round(sw * sc), h = Math.round(sh * sc), c = document.createElement("canvas"); c.width = w; c.height = h;
+  sigma *= sc;   // at most 900 wide: the same sharpening, a fraction of the work (review, 15 Nov: seconds of frozen page)
   const g = c.getContext("2d", {willReadFrequently: true}); g.drawImage(src, sx, sy, sw, sh, 0, 0, w, h);
   const px = g.getImageData(0, 0, w, h), n = w * h, img = new Float32Array(n);
   for (let i = 0; i < n; i++) img[i] = (px.data[i * 4] * .3 + px.data[i * 4 + 1] * .59 + px.data[i * 4 + 2] * .11) / 255 + 1e-3;
@@ -1002,7 +1014,7 @@ function coverPicker(f){
       <button type="button" class="btn quiet" data-cover-none>${ic("camera")}None of these: I’ll photograph mine</button>
       <button type="button" class="btn quiet" data-cover-close>${ic("x")}Close</button></div>
     ${f.coverChoices.length ? `<div class="cover-grid">${f.coverChoices.map((c, i) => `<button type="button" class="cover-choice${c.src === f.cover ? " on" : ""}" data-cover-pick="${i}" hidden>
-      <img src="${esc(c.src)}" alt=""><span>${esc(c.label)}${c.uk ? " · UK" : ""}</span><span class="size"></span></button>`).join("")}</div>`
+      <img src="${escRaw(c.src)}" alt=""><span>${esc(c.label)}${c.uk ? " · UK" : ""}</span><span class="size"></span></button>`).join("")}</div>`
       : `<p class="add-note">No other covers found.</p>`}</div>`;
 }
 // a picture that doesn't load, or is a tiny placeholder (Amazon's blank 1×1), isn't offered; the rest show their size
@@ -1060,7 +1072,7 @@ function cornerEditor(f){
   return `<div class="corner-edit"><div class="cover-pick-head"><b>Drag the four dots onto the corners of the cover</b>
       <button type="button" class="btn pick" data-corners-use${f.straightening ? " disabled" : ""}>${ic("crop")}${f.straightening ? "Squaring it up…" : "Use these corners"}</button>
       <button type="button" class="btn quiet" data-corners-close>${ic("x")}Cancel</button></div>
-    <div class="corner-stage" id="cornerStage"><img id="cornerImg" src="${esc(c.src)}" alt="" draggable="false">
+    <div class="corner-stage" id="cornerStage"><img id="cornerImg" src="${escRaw(c.src)}" alt="" draggable="false">
       <svg class="corner-lines" aria-hidden="true"><polygon></polygon></svg>
       ${[0, 1, 2, 3].map(i => `<span class="corner-dot" data-dot="${i}" aria-label="${["Top left", "Top right", "Bottom right", "Bottom left"][i]} corner"></span>`).join("")}
       <div class="corner-loupe" id="cornerLoupe" hidden></div></div></div>`;
@@ -1143,7 +1155,7 @@ document.addEventListener("click", async e => {
 });
 document.addEventListener("click", async e => {
   const from = e.target.closest("[data-add-from]");
-  if (from) { const w = WISH.find(x => x.id === from.dataset.addFrom); addFromWish = true; addForm = {isbn: w.isbn13 || "", title: w.title.replace(/\s*\((old|original paperback)\)$/i, ""), authors: w.by === "Unknown author" ? "" : w.by.replace(/ & /g, ", "), publisher: "", published: "", pages: "", cover: "", shelf: "", busy: false, fromWish: w.id,
+  if (from) { const w = WISH.find(x => x.id === from.dataset.addFrom); addFromWish = true; addForm = {isbn: w.isbn13 || "", title: w.title.replace(/\s*\((old|original paperback)\)$/i, ""), authors: (w.authors || []).filter(a => !a.role).map(a => a.name).join(", "), publisher: "", published: "", pages: "", cover: "", shelf: "", busy: false, fromWish: w.id,
     note: "From your to-buy list: type the ISBN of the copy you got and look it up, or just pick a shelf. It comes off the list when you add it."}; return; }
   if (e.target.closest("#addLookup")) {
     readAdd(); if (!addForm.isbn) { addForm.note = "Type the ISBN first."; return redrawAdd(); }
@@ -1244,7 +1256,8 @@ function pageStats(){
   const pubs = {}; BOOKS.forEach(b => { if (b.publisher) { const p = b.publisher.replace(/\s+(Ltd|Limited|PLC|Plc|plc|Inc|LLC|Publishing|Publishers|Books)\.?$/g, "").replace(/,$/, "").trim(); pubs[p] = (pubs[p] || 0) + 1; } });
   const topPubs = Object.entries(pubs).map(([label, n]) => ({label, n})).sort((a, b) => b.n - a.n).slice(0, 10);
   const dec = {}; BOOKS.forEach(b => { const y = +year(b.published); if (y) { const d = Math.floor(y / 10) * 10; dec[d] = (dec[d] || 0) + 1; } });
-  const decs = Object.keys(dec).map(Number).sort(), dmax = Math.max(...Object.values(dec));
+  const dk = Object.keys(dec).map(Number), decs = dk.length ? Array.from({length: (Math.max(...dk) - Math.min(...dk)) / 10 + 1}, (_, i) => Math.min(...dk) + i * 10) : [];
+  decs.forEach(d => dec[d] ||= 0); const dmax = Math.max(1, ...Object.values(dec));
   const readN = booksRead(BOOKS), titles = new Set(BOOKS.map(bookKey)).size, perYear = {};
   readingLog().filter(isRead).flatMap(finishes).forEach(d => { const y = year(d); if (y) perYear[y] = (perYear[y] || 0) + 1; });
   const readYears = Object.keys(perYear).sort().reverse().map(y => ({label: y, n: perYear[y], href: "#history"}));
@@ -1255,11 +1268,11 @@ function pageStats(){
         <div class="meter"><b>${num(Math.round(pages / (withPages.length || 1)))}</b><span>pages in an average book</span></div>
         <div class="meter"><b>${Math.round(readN / titles * 100)}%</b><span>read (${plural(readN, "book")})</span></div>
       </div></div>`
-    + sectionHead("By <em>shelf</em>") + bars(shelves, shelves[0].n)
+    + sectionHead("By <em>shelf</em>") + bars(shelves, shelves[0]?.n || 1)
     + readingStats(bars, readYears)
-    + sectionHead("Most <em>books</em> by", `<span class="more">Written, not illustrated or translated</span>`) + bars(top, top[0].n)
+    + sectionHead("Most <em>books</em> by", `<span class="more">Written, not illustrated or translated</span>`) + bars(top, top[0]?.n || 1)
     + sectionHead("When they were <em>published</em>") + `<div class="decades">${decs.map(d => `<div><b>${dec[d]}</b><i style="height:${(dec[d] / dmax * 100).toFixed(1)}%"></i><span>${d}s</span></div>`).join("")}</div>`
-    + sectionHead("Top <em>publishers</em>") + bars(topPubs, topPubs[0].n);
+    + sectionHead("Top <em>publishers</em>") + bars(topPubs, topPubs[0]?.n || 1);
 }
 
 // ---------- search ----------
@@ -1278,7 +1291,8 @@ function pageSearch(term){
     + (away.length ? sectionHead("Read or to read, <em>not on your shelves</em>") + grid(away) : "")
     + (wish.length ? sectionHead("On the <em>to-buy list</em>") + `<div class="books">${wish.map(w => `<a class="bk" ${cardShape(w)} href="#to-buy"><div class="slot">${cover(w)}</div><h3>${esc(w.t)}</h3><div class="by">${esc(w.by)}</div></a>`).join("")}</div>` : "");
 }
-q.addEventListener("input", () => { const v = q.value.trim(); if (v.length >= 2) { document.getElementById("view").innerHTML = pageSearch(v); scrollTo(0, 0); } else if (!v) route(); });
+q.addEventListener("input", () => { const v = q.value.trim(); if (location.hash === "#add") readAdd();
+  if (v.length >= 2) { document.getElementById("view").innerHTML = pageSearch(v); scrollTo(0, 0); } else { addFromWish = !!addForm.fromWish; route(); } });
 q.addEventListener("keydown", e => { if (e.key === "Escape") { q.value = ""; addFromWish = !!addForm.fromWish; route(); } });
 document.addEventListener("click", e => {   // a sidebar link or the title: the search goes; on the same page it's redrawn (review, 9 Nov)
   const a = e.target.closest("#nav a, a.brand"); if (!a || !q.value) return;
@@ -1288,7 +1302,7 @@ document.addEventListener("click", e => {   // a sidebar link or the title: the 
 
 // ---------- trial covers: every proposed cover next to the one shown now ----------
 function pageTrialCovers(){
-  const pic = (src, b) => `<div class="cover${src ? "" : " blank"}">${src ? `<img src="${esc(src)}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
+  const pic = (src, b) => `<div class="cover${src ? "" : " blank"}">${src ? `<img src="${escRaw(src)}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
   return `<div class="section-head" style="margin-top:56px"><h2>New <em>covers</em></h2><span class="more">${plural(TRIALS.length, "book")}</span></div>
     <div class="trial-list">${TRIALS.map(b => `<a class="trial-row" href="${WISH.includes(b) ? "#to-buy" : href(b)}">
       ${pic(b.coverWas, b)}<span class="arrow">${ic("arrow-right")}</span>${pic(b.coverTrial, b)}
@@ -1312,11 +1326,12 @@ function route(page){   // page: only the tests pass one (they open a thousand p
   if (key.startsWith("shelf-") && shelfIndex[key.slice(6)]) { shelfView = {...SHELF_VIEW}; const s = shelfIndex[key.slice(6)]; html = pageShelf(s); title = s.name; }
   else if (key === "shelves") { shelfView = {...SHELF_VIEW}; html = pageAllShelves(); title = "All shelves"; }
   else if (key.startsWith("b-") && bookIndex[key.slice(2)]) { const b = bookIndex[key.slice(2)]; html = pageBook(b); active = b.shelf === COLLECTION ? "#old-" + ((DATA.oldKinds || {})[b.id] || "childrens") : "#shelf-" + b.shelf; title = b.t; }
-  else if (key.startsWith("r-") && SG.books[+key.slice(2)] && !SG.books[+key.slice(2)].books) { const e = SG.books[+key.slice(2)]; html = pageSgBook(e); active = e.shelf ? "#shelf-" + e.shelf : "#reading"; title = e.t; }
+  else if (key.startsWith("r-") && SG.books[+key.slice(2)] && !SG.books[+key.slice(2)].books && ELSEWHERE.includes(SG.books[+key.slice(2)])) { const e = SG.books[+key.slice(2)]; html = pageSgBook(e); active = e.shelf ? "#shelf-" + e.shelf : "#reading"; title = e.t; }
   else if (key === "old-to-find") { html = pageOldToFind(); title = "Old books to find"; }
   else if (key.startsWith("old-") && OLD_KINDS.some(k => k[0] === key.slice(4))) { const k = OLD_KINDS.find(k => k[0] === key.slice(4)); html = pageOldKind(k); title = "Old books · " + k[1]; }
   else if (key.startsWith("a-") && authorIndex[key.slice(2)]) { const a = authorIndex[key.slice(2)]; html = pageAuthor(a); active = "#authors"; title = a.name; }
-  else html = {authors: pageAuthors, reading: pageReading, history: pageHistory, add: pageAdd, "to-buy": pageToBuy, stats: pageStats, "trial-covers": pageTrialCovers}[key]?.() || (active = "#home", pageHome());
+  else { html = {authors: pageAuthors, reading: pageReading, history: pageHistory, add: pageAdd, "to-buy": pageToBuy, stats: pageStats, "trial-covers": pageTrialCovers}[key]?.() || (active = "#home", pageHome());
+    title = {authors: "Authors", reading: "Reading", history: "History", add: "Add a book", "to-buy": "To buy", stats: "Stats", "trial-covers": "New covers"}[key] || title; }
   view.innerHTML = html; renderNav(active); fitRows();
   document.title = title === "Jemma’s Library" ? title : `${curly(title)} · Jemma’s Library`;
   scrollTo(0, 0);
@@ -1388,7 +1403,7 @@ function capitalise(root){
   const groups = new Map();
   nodes.forEach(n => { const el = n.parentElement.closest("h1, h2, a, .btn, .more"); (groups.get(el) || groups.set(el, []).get(el)).push(n); });
   groups.forEach(list => {
-    const WORD = /(?<![0-9A-Za-z’'-])[A-Za-z][A-Za-z’'-]*/g;
+    const WORD = /(?<![\p{L}\p{N}’'-])\p{L}[\p{L}’'-]*/gu;
     const total = list.reduce((t, n) => t + (n.textContent.match(WORD) || []).length, 0);
     let i = 0;
     list.forEach(n => {

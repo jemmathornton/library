@@ -21,7 +21,10 @@ a{color:inherit}
 button,input,select{font:inherit;color:inherit}
 img{max-width:100%}
 svg.i{width:1em;height:1em;flex:none}
-:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:6px}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:6px}
+.side :focus-visible{outline-color:var(--brass)}
+.skip{position:absolute;left:-999px;top:8px;z-index:100;padding:8px 14px;border-radius:8px;background:var(--surface);color:var(--ink);font-weight:700}
+.skip:focus{left:calc(var(--side) + 12px)}
 h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0;letter-spacing:-.01em}
 em{font-style:italic}
 .label{font:700 11px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
@@ -433,7 +436,7 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .cover .seal.fancy{width:30px;height:30px;right:3px;bottom:2px;border-radius:0;box-shadow:none;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5));
   clip-path:polygon(50% 0%,61% 11%,75% 7%,79% 21%,93% 25%,89% 39%,100% 50%,89% 61%,93% 75%,79% 79%,75% 93%,61% 89%,50% 100%,39% 89%,25% 93%,21% 79%,7% 75%,11% 61%,0% 50%,11% 39%,7% 25%,21% 21%,25% 7%,39% 11%)}
 .blist .cover .seal{display:none}
-.signed-line{display:flex;align-items:center;gap:10px;margin-top:12px;font-weight:700;color:var(--muted)}
+.signed-line{display:flex;align-items:center;gap:10px;margin-top:12px;font-weight:700;color:inherit;opacity:.92}
 .signed-line .seal{position:static;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#2A1F16;
   background:radial-gradient(circle at 35% 30%,#F2D488,#C9A25A 60%,#9C7A36);box-shadow:0 1px 4px rgba(0,0,0,.4)}
 .signed-line .seal .i{width:15px;height:15px;stroke-width:2.3}

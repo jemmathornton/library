@@ -40,6 +40,24 @@ for b in books:
     if not b.get('title'):
         say(f'{b["id"]}: no title')   # no author is fine (atlases, guides, anthologies)
 
+# blurbs that aren't blurbs (review, 15 Nov): a shop's listing, catalogue words, another language, or the title again
+SHOP = re.compile(r'LIBRO NUEVO|NEW BOOK!|Envio|free shipping|shipping (?:to|costs?|included)|ships (?:from|within)|dispatch(?:ed)? (?:from|within)|in stock|'
+                  r"condition: |\bseller'?s? (?:note|comment)|\((?:chi|eng)\)|/ English / | / paperback / ", re.I)
+FOREIGN = {'er', 'og', 'den', 'det', 'som', 'und', 'der', 'die', 'das', 'les', 'une', 'avec', 'pour', 'dans', 'est', 'el', 'los', 'las', 'una', 'para', 'con', 'och', 'het', 'een', 'niet'}
+ENGLISH = {'the', 'and', 'of', 'to', 'a', 'in', 'is', 'her', 'his', 'with', 'for'}
+for b in books:
+    t = (b.get('description') or '').strip()
+    if not t or b.get('shelf') == 'old-book-collection':   # an old book's description is her own note on the copy
+        continue
+    words = re.findall(r"[a-zà-ÿ]+", t.lower())
+    norm = lambda x: re.sub(r'[^a-z0-9]', '', x.lower())
+    if SHOP.search(t):
+        say(f'{b["title"]} ({b["id"]}): the blurb is a shop listing: “{t[:60]}”')
+    elif words and sum(w in FOREIGN for w in words) > 3 * max(1, sum(w in ENGLISH for w in words)):
+        say(f'{b["title"]} ({b["id"]}): the blurb isn’t in English: “{t[:60]}”')
+    elif len(t) < 160 and norm(b['title'])[:25] and norm(t).startswith(norm(b['title'])[:25]):
+        say(f'{b["title"]} ({b["id"]}): the blurb only repeats the title')
+
 # her fix files: keyed by book id (or by "id-<id>" / ISBN for covers)
 isbns = {b.get('isbn13') for b in books if b.get('isbn13')} | {b.get('isbn10') for b in books if b.get('isbn10')}
 known = set(ids) | {'id-' + i for i in ids} | isbns

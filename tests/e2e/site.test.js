@@ -38,7 +38,7 @@
     let fellBack = false; const home = window.pageHome; window.pageHome = (...a) => { fellBack = true; return home(...a); };
     const routes = ["#home", "#shelves", "#authors", "#reading", "#history", "#add", "#to-buy", "#stats", "#trial-covers", "#old-to-find",
       ...OLD_KINDS.map(k => "#old-" + k[0]), ...DATA.shelves.map(s => "#shelf-" + s.id), ...DATA.books.map(b => "#b-" + b.id),
-      ...Object.keys(authorIndex).map(k => "#a-" + k), ...SG.books.map((e, i) => e.books ? null : "#r-" + i).filter(Boolean)];
+      ...Object.keys(authorIndex).map(k => "#a-" + k), ...ELSEWHERE.map(e => "#r-" + SG.books.indexOf(e))];
     const links = new Set();
     try {
       for (const h of routes) {
@@ -233,6 +233,61 @@
     click(document.getElementById("addSave")); await wait(50);
     eq(sent.length, 0); ok(/needs a title/.test(view().innerText));
     fake = null;
+  });
+
+  // ---------- 15 Nov review fixes ----------
+  test("“not read yet” counts each book once and leaves out books she didn’t finish or paused", async () => {
+    await go("#home");
+    const fig = [...view().querySelectorAll(".figures div, .figure, .fig")].map(x => x.innerText).find(t => /not read yet/i.test(t)) || view().innerText;
+    const shown = +((/([\d,]+)\s*\n?\s*not read yet/i.exec(fig) || [])[1] || "").replace(/,/g, "");
+    eq(shown, booksUnread(BOOKS), "home figure:");
+    ok(!BOOKS.some(b => ["stopped", "paused"].includes(reading(b).status) && isUnread(b)), "a DNF or paused book counts as unread");
+  });
+
+  test("double quotes and ’90s are curled in shown text", async () => {
+    eq(curly('He said "hello" in the \'90s'), "He said “hello” in the ’90s");
+    eq(esc('a "b" c'), "a “b” c");
+    eq(escRaw('a "b"'), "a &quot;b&quot;", "form values stay straight:");
+  });
+
+  test("an old book’s own note shows under Details as Edition, not as a blurb", async () => {
+    const b = BOOKS.find(x => x.shelf === COLLECTION && x.description && x.description.length < 90);
+    await go("#b-" + b.id);
+    ok(!view().querySelector("p.desc"), "note shown as a blurb");
+    ok([...view().querySelectorAll(".facts dt")].some(dt => dt.textContent.trim() === "Edition"), "no Edition line");
+  });
+
+  test("a special edition says so on its own page", async () => {
+    const b = BOOKS.find(x => x.special && !(("edition" in x ? x.edition : x.sub) || "").includes(x.special));
+    if (!b) return;
+    await go("#b-" + b.id);
+    ok(view().querySelector(".special-line")?.textContent.includes(curly(b.special)));
+  });
+
+  test("blurbs that ran together get their paragraphs back, words unchanged", async () => {
+    const html = blurb("She left town.Set in a small place, it rains.Mr Smith stays.");
+    eq((html.match(/<p /g) || []).length, 3);
+    ok(!/Mr\n/.test(html));
+  });
+
+  test("ratings are read as words, once", async () => {
+    await go("#shelf-" + BOOKS.find(b => reading(b).rating).shelf);
+    const r = view().querySelector(".rated");
+    ok(r && /stars$/.test(r.getAttribute("aria-label") || ""), "no label");
+    ok(r.querySelector('.sg-stars[aria-hidden="true"]'), "stars not hidden from screen readers");
+  });
+
+  test("every page has its own tab title", async () => {
+    for (const [h, t] of [["#reading", "Reading"], ["#stats", "Stats"], ["#to-buy", "To buy"], ["#add", "Add a book"], ["#authors", "Authors"], ["#history", "History"]]) {
+      await go(h); ok(document.title.startsWith(t), `${h}: ${document.title}`);
+    }
+  });
+
+  test("deleting the search back to one letter shows the page again", async () => {
+    await go("#reading");
+    type(q, "ab"); await wait(0); ok(/Results for/.test(view().innerText));
+    type(q, "a"); await wait(0); ok(!/Results for/.test(view().innerText), "old results still showing");
+    q.value = "";
   });
 
   // ---------- run ----------
