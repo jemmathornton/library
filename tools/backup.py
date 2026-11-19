@@ -2,7 +2,8 @@
 
     pythonw tools/backup.py
 
-1. Saves any changes in the project to git (books added on the site since the last save, new covers, a reading import).
+1. Saves any changes in the project to git (books added on the site since the last save, new covers, a reading import),
+   then sends them to her GitHub copy (19 Nov; see push()).
 2. Zips the whole library (everything but git's own folder) to Documents\\HomeLibraryBackups\\HomeLibrary backup <date>.zip,
    like the Sims site's backups, and keeps the newest 8.
 Run every Sunday by the Windows task "Jemma's Library - weekly backup" (tools/make_backup_task.ps1); log in logs/backup.log.
@@ -24,7 +25,21 @@ def log(msg):
 
 
 def git(*args):
-    return subprocess.run(['git', *args], cwd=ROOT, capture_output=True, text=True, creationflags=NO_WINDOW)
+    return subprocess.run(['git', *args], cwd=ROOT, capture_output=True, text=True, creationflags=NO_WINDOW, timeout=600)
+
+
+GH = os.path.join(os.environ.get('ProgramFiles', r'C:\Program Files'), 'GitHub CLI', 'gh.exe')
+
+
+def push():
+    """3. Sends the week's saves to her GitHub copy (her yes, 19 Nov: https://github.com/jemmathornton/library, public),
+    signed in through the GitHub app on this PC. Skipped when there's no GitHub copy set up; a failure is logged and the
+    zip still happens."""
+    if git('remote', 'get-url', 'origin').returncode != 0:
+        return
+    helper = ['-c', 'credential.helper=', '-c', f"credential.helper=!'{GH.replace(os.sep, '/')}' auth git-credential"] if os.path.exists(GH) else []
+    r = git(*helper, 'push', 'origin', 'HEAD')
+    log('github: pushed' if r.returncode == 0 else 'github push failed: ' + (r.stderr or r.stdout).strip()[-300:])
 
 
 # Review, 15 Nov: the zip took so long that Windows stopped the task half-way, and nothing said so. Now: pictures are
@@ -57,6 +72,10 @@ def main():
             log('git: saved changes' if r.returncode == 0 else 'git: ' + (r.stderr or r.stdout).strip())
     except Exception as e:
         log(f'git failed: {e}')
+    try:
+        push()
+    except Exception as e:
+        log(f'github push failed: {e}')
     out = os.path.join(DEST, f'HomeLibrary backup {date.today().isoformat()}.zip')
     part = out + '.part'   # renamed once finished, so a broken zip is never kept as a backup
     bundle = os.path.join(DEST, 'library-history.bundle.tmp')
