@@ -45,7 +45,7 @@ def book(r, shelf):
     b = {'id': r['id'], 'title': r['title'].strip(), 'authors': creators(r['creators']), 'surname': r['last_name'].strip(), 'shelf': shelf,
          'isbn13': r['ean_isbn13'].strip(), 'isbn10': r['upc_isbn10'].strip(), 'publisher': r['publisher'].strip(),
          'published': r['publish_date'].strip(), 'pages': int(r['length']) if r['length'].strip().isdigit() else None,
-         'description': r['description'].strip(), 'added': r['added'].strip(), 'copies': int(r['copies'] or 1)}
+         'description': r['description'].strip(), 'added': r['added'].strip(), 'copies': int(float(r['copies'] or 1))}
     status = r['status'].strip().lower()
     if status in ('in progress', 'completed', 'abandoned'):
         b['status'] = {'in progress': 'reading', 'completed': 'read', 'abandoned': 'stopped'}[status]
@@ -112,6 +112,12 @@ def main():
     for w in wish:
         if 'maybeOwned' in w:
             print('  to buy but maybe owned:', w['title'])
+    now = json.load(open(os.path.join(DATA, 'books.json'), encoding='utf-8')) if os.path.exists(os.path.join(DATA, 'books.json')) else []
+    emptied = sorted({b['shelf'] for b in now} - {b['shelf'] for b in books} - {'unsorted'})
+    if '--apply' in sys.argv and '--force' not in sys.argv and (len(books) < len(now) * .9 or emptied):
+        sys.exit(f'Not written: this export has {len(books)} books against {len(now)} now'
+                 + (f', and these shelves would be empty: {", ".join(emptied)}' if emptied else '')
+                 + '. Is a collection’s CSV missing from the folder? (--force writes it anyway.)')   # 19 Nov
     if '--apply' in sys.argv:
         books.sort(key=lambda b: ([s['id'] for s in shelves].index(b['shelf']), b['title'].lower()))
         for name, obj in (('books.json', books), ('to-buy.json', wish)):

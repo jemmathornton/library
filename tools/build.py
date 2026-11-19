@@ -136,6 +136,9 @@ def build():
                 b['title'] += f" ({editions[b['id']]})"
             b['special'] = editions[b['id']]
     sg = load('storygraph.json', {'books': []})
+    for e in sg['books']:   # her reading's authors tidied like her shelves' ("J.K. Rowling" -> "J. K. Rowling", 19 Nov)
+        if isinstance(e.get('authors'), str):
+            e['authors'] = ', '.join(fixes['names'].get(n.strip(), n.strip()) for n in e['authors'].split(','))
     fixes_r = {k: v for k, v in load('reading-fixes.json', {}).items() if not k.startswith('_')}   # statuses she has corrected
     for e in sg['books']:
         fix = fixes_r.get(e['title'])

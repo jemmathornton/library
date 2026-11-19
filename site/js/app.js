@@ -33,8 +33,8 @@ const BOOKS = DATA.books, bookIndex = {}, authorIndex = {}, editions = {};
 const TITLE_NOISE = /^(gollancz s\.?\s?f\.?|voyager classics|puffin modern classics|storybook classics|wiley desktop editions|rough guides main series|seasonal|seasonal activity books|offered exclusively by amazon|hardcover|hardback|paperback|e|mira|iuniverse paperback|quest|the emma press novels|a novel|author|one)$/i;
 const BLURB = /booker|bestseller|from the author of|shortlisted|longlisted|a novel for|award|spellbinding/i;
 function tidyTitle(raw){
-  let t = raw.trim().replace(/\s{2,}/g, " ").replace(/\s+(\.{3}\s*)?by\s+[^()]*\(\s*Author\s*\).*$/i, "").replace(/^The(?=[A-Z])/, "The "), bits = [], m;   // Amazon's "... by X ( Author ) ON date"
-  while ((m = /\s*\(([^()]*)\)/.exec(t))) { if (m[1].trim()) bits.unshift(m[1].trim()); t = (t.slice(0, m.index) + t.slice(m.index + m[0].length)).trim(); }
+  let t = raw.trim().replace(/\s{2,}/g, " ").replace(/\s+(\.{3}\s*)?by\s+[^()]*\(\s*Author\s*\).*$/i, "").replace(/^The(?=[A-Z])/, "The "), bits = [], brackets = [], m, colon = null;   // Amazon's "... by X ( Author ) ON date"
+  while ((m = /\s*\(([^()]*)\)/.exec(t))) { if (m[1].trim()) brackets.push({x: m[1].trim(), at: m.index}); t = (t.slice(0, m.index) + t.slice(m.index + m[0].length)).trim(); }
   t = t.replace(/\s+Paperback$/i, "").replace(/[\s:;,–-]+$/, "").trim();   // "The Bear and The Nightingale: (Winternight Series)" leaves no colon behind
   const blurb = /:\s*([^:]+)$/.exec(t);   // "Autumn: Longlisted for the Man Booker Prize 2017": the blurb goes
   if (blurb && BLURB.test(blurb[1])) t = t.slice(0, blurb.index).trim();
@@ -46,7 +46,9 @@ function tidyTitle(raw){
   const numbered = /^(.+?):\s*(\d+):\s*(.+)$/.exec(t);
   if (numbered) { bits.unshift(numbered[1] + " " + numbered[2]); t = numbered[3]; }
   const c = numbered ? -1 : t.indexOf(": ");
-  if (c > 0 && !/\d$/.test(t.slice(0, c)) && t.slice(0, c).split(/\s+/).length >= 2) { bits.unshift(t.slice(c + 2)); t = t.slice(0, c); }
+  if (c > 0 && !/\d$/.test(t.slice(0, c)) && t.slice(0, c).split(/\s+/).length >= 2) { colon = {x: t.slice(c + 2), at: c}; t = t.slice(0, c); }
+  // in the order the title has them (19 Nov: "We Are Legion (We Are Bob): Volume 1 (Bobiverse)" came out backwards)
+  bits = bits.concat(brackets.filter(b => !colon || b.at <= colon.at).map(b => b.x), colon ? [colon.x] : [], brackets.filter(b => colon && b.at > colon.at).map(b => b.x));
   bits = [...new Set(bits.map(x => /^\d+$/.test(x) ? "Book " + x : x.replace(/:\s*Bk\.?\s*\d+$/i, "")))].filter(x => !TITLE_NOISE.test(x) && !BLURB.test(x));
   return {t: t || raw, sub: bits.join(" · ")};
 }
@@ -127,7 +129,7 @@ function readingLog(){
 const finishes = b => { const r = reading(b), ends = [...new Set((r.dates || []).map(d => d[1]).filter(Boolean))];
   return ends.length ? ends : r.finished ? [r.finished] : []; };
 // "read this year" everywhere: every finish that year, a re-read too
-const finishedIn = y => readingLog().filter(isRead).flatMap(finishes).filter(d => year(d) === y);
+const finishedIn = y => readingLog().flatMap(finishes).filter(d => year(d) === y);   // a re-read under way keeps its earlier finish (19 Nov)
 // how many books are read, each book once however many copies (three Philosopher's Stones are one book)
 const booksRead = list => new Set(list.filter(isRead).map(bookKey)).size;
 // not read yet: not started at all (a book she didn't finish or is taking a break from isn't waiting to be read)
@@ -444,7 +446,7 @@ function pageShelf(s){
   currentList = s.books.concat(s.notOwned || []); currentGrouped = false; currentShelf = s.id;
   const authors = new Set(s.books.map(b => b.by)).size, pages = s.books.reduce((n, b) => n + (b.pages || 0), 0);
   return hero({kicker: `<a href="#home">Shelf</a>`, title: esc(s.name), color: s.color, text: s.note ? esc(s.note) : "", covers: [...s.books].sort(SORTS.author[1]),
-      figures: [[num(s.books.length), "books"], [num(authors), "authors"], [num(booksRead(s.books)), "read"], ...((s.notOwned || []).length ? [[num(s.notOwned.length), "read but not owned"]] : []), [num(pages), "pages"]]})
+      figures: [[num(s.books.length), "books"], [num(authors), "authors"], [num(booksRead(s.books)), "read"], ...((s.notOwned || []).filter(isRead).length ? [[num(s.notOwned.filter(isRead).length), "read but not owned"]] : []), [num(pages), "pages"]]})
     + `<div id="shelfBooks">${shelfBooks(currentList)}</div>`;
 }
 
@@ -528,7 +530,7 @@ function pageBook(b){
       ${sgFor[b.id] ? sgPanel(reading(b)) : readingPanel(b)}
       <div class="panel"><h2>Details</h2><dl class="facts">
         ${fact("Shelf", `<a href="#shelf-${s.id}">${esc(s.name)}</a>`)}${fact("Publisher", esc(b.publisher || ""))}
-        ${fact("Published", niceDate(b.published) || year(b.published))}${fact("Pages", b.pages ? num(b.pages) : "")}
+        ${fact("Published", /-01-01/.test(b.published || "") ? year(b.published) : niceDate(b.published) || year(b.published))}${fact("Pages", b.pages ? num(b.pages) : "")}
         ${fact("ISBN-13", b.isbn13 || "")}${fact("ISBN-10", b.isbn10 || "")}${fact("Copies", b.copies > 1 ? b.copies : "")}
         ${fact("Edition", oldNote(b) ? esc(b.description) : "")}${fact("Added", niceDate(b.added))}${fact("Full title", b.t !== b.title ? esc(b.title) : "")}
         ${location.protocol.startsWith("http") && b.shelf === COLLECTION ? fact("Condition", `<select class="cond-pick" data-cond-id="${b.id}" aria-label="Condition"><option value="">Not set</option>${CONDITIONS.map(c => `<option${b.condition === c ? " selected" : ""}>${c}</option>`).join("")}</select>`) : ""}
@@ -573,7 +575,7 @@ function pageReading(){
 // everything she has read, year by year: its own page, apart from what she's reading now (her ask, 1 Nov)
 function pageHistory(){
   const log = readingLog(), byFinish = (a, b) => (reading(b).finished || "").localeCompare(reading(a).finished || "");
-  const done = log.filter(isRead).sort(byFinish), thisYear = String(new Date().getFullYear()), years = {};
+  const done = log.filter(b => isRead(b) || finishes(b).length).sort(byFinish), thisYear = String(new Date().getFullYear()), years = {};
   done.forEach(b => { const ys = [...new Set(finishes(b).map(year).filter(Boolean))]; (ys.length ? ys : ["undated"]).forEach(y => (years[y] ||= []).push(b)); });
   const order = Object.keys(years).filter(y => y !== "undated").sort().reverse().concat(years.undated ? ["undated"] : []);
   const stopped = log.filter(b => reading(b).status === "stopped");
@@ -732,6 +734,11 @@ async function pollScanned(){
   readAdd();
   if (fresh.length && !addForm.title && !addForm.busy && !addForm.looking) useScan(fresh[fresh.length - 1].isbn);
 }
+// any way of typing an ISBN (hyphens, spaces, the old 10-figure kind) as its 13 figures, or ""
+const isbn13Of = s => { s = String(s || "").replace(/[^0-9Xx]/g, "").toUpperCase();
+  if (/^\d{13}$/.test(s)) return s;
+  if (!/^\d{9}[\dX]$/.test(s)) return "";
+  const core = "978" + s.slice(0, 9); return core + (10 - [...core].reduce((t, d, i) => t + (i % 2 ? 3 : 1) * +d, 0) % 10) % 10; };
 function useScan(isbn){ const el = document.getElementById("add-isbn"); if (!el) return; el.value = isbn; document.getElementById("addLookup")?.click(); }
 
 // scanning with the laptop's own camera (her ask, 1 Nov: no app on her phone). The barcode reader (ZXing, MIT licence,
@@ -977,7 +984,7 @@ function readPrinted(video, open, keep){
         const text = (await w.recognize(canvas)).data.text;
         // the number may be printed "ISBN 978-1-83821-775-4" or, under the bars, "9 781838 217754": spaces and dashes go
         const found = (text.replace(/[\s-]+/g, "").match(/97[89]\d{10}/g) || []).find(isBookNumber) || "";
-        if (found && found === last && open()) { camClose(); return useScan(found); }
+        if (found && found === last && open()) { camClose(); camChecked = true; return useScan(found); }
         if (found) last = found;
       } catch {}
     }
@@ -1171,11 +1178,12 @@ document.addEventListener("click", async e => {
     try { if (!d) throw 0;
       if (d.found) Object.assign(addForm, {title: d.title, authors: d.authors.join(", "), publisher: d.publisher, published: d.published, pages: d.pages || "", cover: d.cover, coverWrong: false, coverOriginal: null, coverChoices: null, corners: null, cornersUsed: null, trimEdge: 0, shelf: "", note: "Found it. Check the details and pick a shelf.",
         suggest: suggestShelf(d)});
+      else if (d.error) addForm.note = "The lookup didn’t work this time (the shops may be slow). Try again, or fill in the details yourself.";
       else Object.assign(addForm, {title: addForm.fromWish ? addForm.title : "", authors: addForm.fromWish ? addForm.authors : "", publisher: "", published: "", pages: "", cover: "", shelf: "", suggest: null, coverWrong: false, coverOriginal: null, coverChoices: null, corners: null, cornersUsed: null, trimEdge: 0,
         note: "Open Library, Waterstones and Goodreads don’t know that number yet (new or special editions can take a while). Try the Waterstones price sticker if it has one, or fill in the details yourself."}); }
     catch { addForm.note = "Couldn’t reach Open Library. Fill in the details yourself."; }
     if (camChecked) { camChecked = false; addForm.note = `Read from a picture: check ${addForm.isbn} matches the book. ` + addForm.note; }
-    const have = BOOKS.find(b => b.isbn13 === addForm.isbn || (b.shopCode && b.shopCode === addForm.isbn));
+    const typed = isbn13Of(addForm.isbn), have = BOOKS.find(b => (typed && b.isbn13 === typed) || (b.shopCode && b.shopCode === addForm.isbn));
     if (have) addForm.note = `You already have this one: ${have.t}. Add it again only if it’s a second copy.`;
     return redrawAdd();
   }
@@ -1197,21 +1205,24 @@ document.addEventListener("change", async e => {   // an old book's condition, f
   const pick = e.target.closest("[data-cond-id]"); if (!pick) return;
   pick.disabled = true;
   try { const r = await api("api/condition", {method: "POST", body: JSON.stringify({id: pick.dataset.condId, condition: pick.value})});
-    if (r.ok) return location.reload(); } catch {}
+    if (r.ok) return location.reload();
+    if (r.saved) { alert("Saved, but the site couldn’t be rebuilt, so the page doesn’t show it yet. Don’t change it again; close and reopen the library."); return location.reload(); } } catch {}
   pick.disabled = false; alert("That didn’t save: is the library open from its shortcut?");
 });
 document.addEventListener("change", async e => {   // an old book's inscription, typed on its page (her ask, 5 Nov): saved when she clicks away, then the page reloads
   const box = e.target.closest("[data-inscr-id]"); if (!box) return;
   box.disabled = true;
   try { const r = await api("api/inscription", {method: "POST", body: JSON.stringify({id: box.dataset.inscrId, inscription: box.value})});
-    if (r.ok) return location.reload(); } catch {}
+    if (r.ok) return location.reload();
+    if (r.saved) { alert("Saved, but the site couldn’t be rebuilt, so the page doesn’t show it yet. Don’t change it again; close and reopen the library."); return location.reload(); } } catch {}
   box.disabled = false; alert("That didn’t save: is the library open from its shortcut?");
 });
 document.addEventListener("change", async e => {   // signed or not, from a book's page: saved by the server, then the page reloads
   const pick = e.target.closest("[data-sign-id]"); if (!pick) return;
   pick.disabled = true;
   try { const r = await api("api/signed", {method: "POST", body: JSON.stringify({id: pick.dataset.signId, signed: pick.value})});
-    if (r.ok) return location.reload(); } catch {}
+    if (r.ok) return location.reload();
+    if (r.saved) { alert("Saved, but the site couldn’t be rebuilt, so the page doesn’t show it yet. Don’t change it again; close and reopen the library."); return location.reload(); } } catch {}
   pick.disabled = false; alert("That didn’t save: is the library open from its shortcut?");
 });
 document.addEventListener("keydown", e => { if (e.key === "Enter" && e.target.id === "add-isbn") document.getElementById("addLookup")?.click(); });

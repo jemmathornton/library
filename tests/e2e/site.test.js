@@ -1,305 +1,175 @@
-// Page tests: loaded into the real site (a throwaway copy) in headless Chrome by tests/e2e/test_site.py.
-// Each test drives the page the way she would (clicks, typing, routes) and checks what's on screen. Results go into
-// <pre id="test-results"> as JSON for Python to read. Calls to the server are answered by a fake where a test says so.
-(() => {
-  const tests = [], wait = ms => new Promise(r => setTimeout(r, ms));
-  const test = (name, fn) => tests.push([name, fn]);
-  const eq = (a, b, msg) => { if (JSON.stringify(a) !== JSON.stringify(b)) throw new Error(`${msg || ""} expected ${JSON.stringify(b)}, got ${JSON.stringify(a)}`); };
-  const ok = (v, msg) => { if (!v) throw new Error(msg || "not true"); };
-  const view = () => document.getElementById("view");
-  // the address changes without a hashchange event (a thousand queued ones would fire during later tests);
-  // route() is what the event would call
-  const go = async h => {
-    history.replaceState(null, "", h);
-    if (location.hash !== (h === "#home" && !location.hash ? "" : h)) throw new Error(`the browser didn’t change the address to ${h} (too many changes too fast?)`);
-    route(); await wait(0);
-  };
-  // for the sweeps over every page: the page is drawn without touching the address
-  const show = async h => { route(h.slice(1)); await wait(0); };
-  // a link she clicks: the browser's own navigation, then whatever the hashchange does
-  const follow = async el => { click(el); await wait(30); };
-  const type = (el, v) => { el.value = v; el.dispatchEvent(new Event("input", {bubbles: true})); };
-  const click = el => el.dispatchEvent(new MouseEvent("click", {bubbles: true}));
-  // a fake server for the Add page: answers by path, records what was sent
-  const realFetch = window.fetch.bind(window);
-  let fake = null; const sent = [];
-  window.fetch = (url, opts = {}) => {
-    const path = String(url).replace(location.origin + "/", "").split("?")[0];
-    if (fake && fake[path]) { sent.push([path, String(url), opts.body || null]); return Promise.resolve(fake[path](String(url), opts)).then(v => new Response(JSON.stringify(v))); }
-    return realFetch(url, opts);
-  };
-  const freshAdd = () => { addForm = {isbn: "", title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", note: "", busy: false}; };
-  const until = async (cond, ms = 3000) => { for (let t = 0; t < ms && !cond(); t += 20) await wait(20); ok(cond(), "timed out waiting"); };
+// Page tests on a copy of HER library (tests/e2e/test_site.py; toolkit in harness.js). These are about her data as
+// it is: every page opens, every link and picture works, and every page's figures agree with what the page lists.
+// Tests about how the site behaves (titles, series, search, the Add page…) are in fixture.test.js, on made-up books.
 
-  // ---------- every page ----------
-  test("every page opens with no errors, blanks or leftovers, and every link goes somewhere", async () => {
-    const problems = [], errs = [], seen = new Set();
-    const onErr = e => errs.push(e.message || String(e.reason)); addEventListener("error", onErr);
-    let fellBack = false; const home = window.pageHome; window.pageHome = (...a) => { fellBack = true; return home(...a); };
-    const routes = ["#home", "#shelves", "#authors", "#reading", "#history", "#add", "#to-buy", "#stats", "#trial-covers", "#old-to-find",
-      ...OLD_KINDS.map(k => "#old-" + k[0]), ...DATA.shelves.map(s => "#shelf-" + s.id), ...DATA.books.map(b => "#b-" + b.id),
-      ...Object.keys(authorIndex).map(k => "#a-" + k), ...ELSEWHERE.map(e => "#r-" + SG.books.indexOf(e))];
-    const links = new Set();
-    try {
-      for (const h of routes) {
-        if (seen.has(h)) continue; seen.add(h);
-        fellBack = false; const before = errs.length;
-        await show(h);
-        const text = view().innerText;
-        if (fellBack && h !== "#home") problems.push(`${h}: doesn’t exist`);
-        if (errs.length > before) problems.push(`${h}: ${errs.slice(before).join(" / ")}`);
-        if (text.trim().length < 20) problems.push(`${h}: empty`);
-        const bad = text.match(/\bundefined\b|\bNaN\b|\[object [A-Za-z]+\]/); if (bad) problems.push(`${h}: shows ${bad[0]}`);
-        view().querySelectorAll('a[href^="#"]').forEach(a => links.add(a.getAttribute("href")));
-      }
-      for (const h of links) {
-        if (seen.has(h) || h === "#") continue; seen.add(h);
-        fellBack = false; await show(h);
-        if (fellBack && h !== "#home") problems.push(`link to ${h}: doesn’t exist`);
-      }
-    } finally { window.pageHome = home; removeEventListener("error", onErr); }
-    eq(problems.slice(0, 20), [], `${seen.size} pages:`);
-  });
-
-  test("pictures on the pages load", async () => {
-    const srcs = new Set();
-    for (const h of ["#home", ...DATA.shelves.map(s => "#shelf-" + s.id), "#to-buy", ...OLD_KINDS.map(k => "#old-" + k[0])]) {
-      await show(h); view().querySelectorAll("img[src]").forEach(i => { const s = i.getAttribute("src"); if (!/^https?:/.test(s)) srcs.add(s); });
+// ---------- every page ----------
+test("every page opens with no errors, blanks or leftovers, and every link goes somewhere", async () => {
+  const problems = [], errs = [], seen = new Set();
+  const onErr = e => errs.push(e.message || String(e.reason)); addEventListener("error", onErr);
+  let fellBack = false; const home = window.pageHome; window.pageHome = (...a) => { fellBack = true; return home(...a); };
+  const routes = ["#home", "#shelves", "#authors", "#reading", "#history", "#add", "#to-buy", "#stats", "#trial-covers", "#old-to-find",
+    ...OLD_KINDS.map(k => "#old-" + k[0]), ...DATA.shelves.map(s => "#shelf-" + s.id), ...DATA.books.map(b => "#b-" + b.id),
+    ...Object.keys(authorIndex).map(k => "#a-" + k), ...ELSEWHERE.map(e => "#r-" + SG.books.indexOf(e))];
+  const links = new Set();
+  try {
+    for (const h of routes) {
+      if (seen.has(h)) continue; seen.add(h);
+      fellBack = false; const before = errs.length;
+      await show(h);
+      const text = view().innerText;
+      if (fellBack && h !== "#home") problems.push(`${h}: doesn’t exist`);
+      if (errs.length > before) problems.push(`${h}: ${errs.slice(before).join(" / ")}`);
+      if (text.trim().length < 20) problems.push(`${h}: empty`);
+      const bad = text.match(/\bundefined\b|\bNaN\b|\[object [A-Za-z]+\]/); if (bad) problems.push(`${h}: shows ${bad[0]}`);
+      view().querySelectorAll('a[href^="#"]').forEach(a => links.add(a.getAttribute("href")));
     }
-    const missing = [];
-    await Promise.all([...srcs].map(src => new Promise(done => { const i = new Image(); i.onload = done; i.onerror = () => { missing.push(src); done(); }; i.src = src; })));
-    eq(missing, [], `${srcs.size} pictures:`);
-  });
-
-  test("sidebar counts match the pages they open", async () => {
-    await go("#home");
-    const wrong = [];
-    document.querySelectorAll("#nav a[href^='#shelf-'], #nav a[href^='#old-']").forEach(a => {
-      const n = +(a.querySelector(".n")?.textContent ?? NaN), h = a.getAttribute("href");
-      const real = h.startsWith("#shelf-") ? shelfIndex[h.slice(7)].books.length : h === "#old-to-find" ? WISH.filter(w => w.old).length : oldBooks(h.slice(5)).length;
-      if (n !== real) wrong.push(`${h} says ${n}, has ${real}`);
-    });
-    eq(wrong, []);
-  });
-
-  test("a book page lights up its shelf; an old book lights up its kind", async () => {
-    const b = BOOKS.find(x => x.shelf !== COLLECTION), old = BOOKS.find(x => x.shelf === COLLECTION);
-    await go("#b-" + b.id); eq(document.querySelector("#nav a.on")?.getAttribute("href"), "#shelf-" + b.shelf);
-    await go("#b-" + old.id); ok(/^#old-/.test(document.querySelector("#nav a.on")?.getAttribute("href") || ""), "no old-books kind lit");
-  });
-
-  // ---------- search ----------
-  const searchFor = async v => { type(q, v); await wait(0); return view().innerText; };
-  test("search finds a book by the title the site shows, not only Libib’s", async () => {
-    const b = BOOKS.find(x => x.t && x.t !== x.title && !x.title.toLowerCase().includes(x.t.toLowerCase()) && x.t.length > 6);
-    ok(b, "no book shows a different title");
-    ok((await searchFor(b.t)).includes(b.t), `“${b.t}” not found`);
-    q.value = "";
-  });
-
-  test("search copes with a curly apostrophe", async () => {
-    const b = BOOKS.find(x => x.title.includes("'") && x.title.length > 8);
-    const word = b.title.replace(/'/g, "’");
-    ok(!/No books match/.test(await searchFor(word)), word);
-    q.value = "";
-  });
-
-  test("search by ISBN", async () => {
-    const b = BOOKS.find(x => x.isbn13);
-    ok((await searchFor(b.isbn13)).includes(b.t));
-    q.value = "";
-  });
-
-  test("clicking the page you’re on clears the search", async () => {
-    await go("#reading");
-    await searchFor("the");
-    ok(/Results for/.test(view().innerText));
-    click(document.querySelector('#nav a[href="#reading"]')); await wait(0);
-    eq(q.value, ""); ok(!/Results for/.test(view().innerText), "results still showing");
-  });
-
-  // ---------- old books ----------
-  test("old books: series in author-surname order, numbers on the spines, gaps for missing books", async () => {
-    for (const [k] of OLD_KINDS) {
-      await go("#old-" + k);
-      const heads = [...view().querySelectorAll(".shelf-head, h3, .bookshelf")].length;
-      ok(heads, `#old-${k} has no shelves`);
+    for (const h of links) {
+      if (seen.has(h) || h === "#") continue; seen.add(h);
+      fellBack = false; await show(h);
+      if (fellBack && h !== "#home") problems.push(`link to ${h}: doesn’t exist`);
     }
-    await go("#old-childrens");
-    const names = [...view().querySelectorAll(".shelf-name")].map(n => n.textContent.trim()).filter(n => n.includes(" – "));
-    ok(names.length > 3, "too few series shelves");
-    const surname = n => n.split(" – ")[1].split(/ & |, /)[0].trim().split(" ").pop();
-    const sorted = [...names].sort((a, b) => surname(a).localeCompare(surname(b)));
-    eq(names.map(surname), sorted.map(surname), "series not in author-surname order:");
-    ok(view().querySelector(".spine .no"), "no series numbers");
-    ok(view().querySelector(".spine.gap"), "no gaps for missing books");
-  });
+  } finally { window.pageHome = home; removeEventListener("error", onErr); }
+  eq(problems.slice(0, 20), [], `${seen.size} pages:`);
+});
 
-  test("pointing at a spine shows its card, which goes on scroll", async () => {
-    await go("#old-childrens");
-    const s = view().querySelector("[data-spine]");
-    s.dispatchEvent(new MouseEvent("mouseover", {bubbles: true}));
-    const card = document.getElementById("spineCard");
-    ok(card && card.textContent.includes(bookIndex[s.dataset.spine].t), "no card");
-    dispatchEvent(new Event("scroll")); await wait(0);
-    ok(!document.getElementById("spineCard"), "card stayed");
-  });
+test("pictures on the pages load", async () => {
+  const srcs = new Set();
+  for (const h of ["#home", ...DATA.shelves.map(s => "#shelf-" + s.id), "#to-buy", ...OLD_KINDS.map(k => "#old-" + k[0])]) {
+    await show(h); view().querySelectorAll("img[src]").forEach(i => { const s = i.getAttribute("src"); if (!/^https?:/.test(s)) srcs.add(s); });
+  }
+  // loaded a few at a time, and a failure tried once more: 700 at once can drop one that is there (19 Nov)
+  const load = src => new Promise(done => { const i = new Image(); i.onload = () => done(true); i.onerror = () => done(false); i.src = src; });
+  const missing = [], list = [...srcs];
+  for (let k = 0; k < list.length; k += 40) await Promise.all(list.slice(k, k + 40).map(async src => { if (!(await load(src)) && !(await load(src + (src.includes("?") ? "&" : "?") + "again"))) missing.push(src); }));
+  eq(missing, [], `${srcs.size} pictures:`);
+});
 
-  test("condition and inscription only on old books, inscription shown as typed", async () => {
-    const old = BOOKS.find(x => x.shelf === COLLECTION), other = BOOKS.find(x => x.shelf !== COLLECTION);
-    await go("#b-" + other.id); ok(!view().querySelector("[data-cond-id], [data-inscr-id]"), "picker on a modern book");
-    old.inscription = "To Mary, ‘with love’ & \"best\"";
-    await go("#b-" + old.id);
-    eq(view().querySelector("[data-inscr-id]").value, old.inscription);
-    ok(view().querySelector("[data-cond-id]"));
-    delete old.inscription;
+// ---------- each page's figures (19 Nov): each number right for what it says it counts ----------
+// Copies against books is her open question (TODO 9), so the banner and the toolbar aren't made to agree: the banner's
+// "books" is the copies on the shelf, its "read" each book once, and the toolbar's count is what the list shows.
+test("sidebar counts match the pages they open", async () => {
+  await go("#home");
+  const wrong = [];
+  $$("#nav a[href^='#shelf-'], #nav a[href^='#old-']").forEach(a => {
+    const n = +(a.querySelector(".n")?.textContent ?? NaN), h = a.getAttribute("href");
+    const real = h.startsWith("#shelf-") ? shelfIndex[h.slice(7)].books.length : h === "#old-to-find" ? WISH.filter(w => w.old).length : oldBooks(h.slice(5)).length;
+    if (n !== real) wrong.push(`${h} says ${n}, has ${real}`);
   });
+  eq(navCount("#shelves"), BOOKS.length, "All shelves:");
+  eq(navCount("#to-buy"), WISH.length, "To buy:");
+  eq(navCount("#authors"), AUTHORS.length, "Authors:");
+  eq(wrong, []);
+});
 
-  test("the trial-covers switch shows on the old books’ pages only", async () => {
-    const sw = document.querySelector(".trial-switch");
-    await go("#old-childrens"); dispatchEvent(new HashChangeEvent("hashchange")); ok(!sw.hidden, "hidden on old books");
-    await go("#home"); dispatchEvent(new HashChangeEvent("hashchange")); ok(sw.hidden, "shown on home");
-  });
+test("every shelf’s banner figures count what they say", async () => {
+  const wrong = [];
+  for (const s of SHELVES.filter(s => s.books.length)) {
+    await go("#shelf-" + s.id);
+    const f = figures(), want = {books: s.books.length, authors: new Set(s.books.map(b => b.by)).size, read: booksRead(s.books),
+      pages: s.books.reduce((n, b) => n + (b.pages || 0), 0), ...((s.notOwned || []).some(isRead) ? {"read but not owned": s.notOwned.filter(isRead).length} : {})};
+    for (const [k, v] of Object.entries(want)) if (f[k] !== v) wrong.push(`${s.id}: “${k}” says ${f[k]}, should be ${v}`);
+    if (navCount("#shelf-" + s.id) !== null && navCount("#shelf-" + s.id) !== f.books) wrong.push(`${s.id}: sidebar ${navCount("#shelf-" + s.id)}, banner ${f.books}`);
+  }
+  eq(wrong, []);
+});
 
-  // ---------- Add a book (fake server) ----------
-  test("Look it up fills the form", async () => {
-    fake = {"api/lookup": () => ({found: true, title: "Fake Book", authors: ["Ann A", "Bo B"], publisher: "P", published: "2024", pages: 300, cover: "", categories: ["Fantasy"]})};
-    freshAdd(); await go("#add");
-    document.getElementById("add-isbn").value = "9780306406157";
-    click(document.getElementById("addLookup"));
-    await until(() => !addForm.looking);
-    eq([document.getElementById("add-title").value, document.getElementById("add-authors").value], ["Fake Book", "Ann A, Bo B"]);
-    fake = null;
-  });
-
-  test("Look it up runs once, and a late answer for an old number is dropped", async () => {
-    let release; const slow = new Promise(r => release = r); let calls = 0;
-    fake = {"api/lookup": () => (calls++, slow.then(() => ({found: true, title: "Old Number's Book", authors: [], publisher: "", published: "", pages: null, cover: "", categories: []})))};
-    freshAdd(); await go("#add");
-    document.getElementById("add-isbn").value = "9780306406157";
-    click(document.getElementById("addLookup")); click(document.getElementById("addLookup"));
-    eq(calls, 1, "looked up twice:");
-    document.getElementById("add-isbn").value = "9781234567897";   // she changes the number meanwhile
-    release(); await until(() => !addForm.looking);
-    eq(document.getElementById("add-title").value, "", "old number's details landed:");
-    eq(document.getElementById("add-isbn").value, "9781234567897");
-    fake = null;
-  });
-
-  test("a failed lookup keeps a Got-it book’s title and author", async () => {
-    fake = {"api/lookup": () => ({found: false})};
-    await go("#to-buy");
-    const w = WISH.find(x => x.by !== "Unknown author");
-    await follow(document.querySelector(`[data-add-from="${w.id}"]`));
-    eq(location.hash, "#add");
-    const t = document.getElementById("add-title").value, a = document.getElementById("add-authors").value;
-    document.getElementById("add-isbn").value = "9781234567897";
-    click(document.getElementById("addLookup")); await until(() => !addForm.looking);
-    eq([document.getElementById("add-title").value, document.getElementById("add-authors").value], [t, a]);
-    fake = null;
-  });
-
-  test("Escape in the search box keeps a Got-it form", async () => {
-    await go("#to-buy");
-    const w = WISH[0];
-    await follow(document.querySelector(`[data-add-from="${w.id}"]`));
-    eq(addForm.fromWish, w.id, "Got it didn’t fill the form:");
-    type(q, "zz"); q.dispatchEvent(new KeyboardEvent("keydown", {key: "Escape"})); await wait(0);
-    eq(addForm.fromWish, w.id);
-  });
-
-  test("what she types keeps its quotes through a redraw", async () => {
-    freshAdd(); await go("#add");
-    document.getElementById("add-title").value = "Rock 'n' Roll and 'Salem's Lot";
-    readAdd(); redrawAdd();
-    eq(document.getElementById("add-title").value, "Rock 'n' Roll and 'Salem's Lot");
-  });
-
-  test("Add to the shelf sends the form to the server", async () => {
-    fake = {"api/books": () => ({ok: false, error: "fake: not saved"})};
-    freshAdd(); await go("#add"); sent.length = 0;
-    document.getElementById("add-title").value = "Sent Book";
-    document.getElementById("add-authors").value = "Ann A, Bo B";
-    const sel = document.getElementById("add-shelf"); sel.value = sel.options[1].value;
-    click(document.getElementById("addSave")); await until(() => sent.length);
-    const body = JSON.parse(sent[0][2]);
-    eq([body.title, body.authors, body.shelf], ["Sent Book", ["Ann A", "Bo B"], sel.options[1].value]);
-    fake = null;
-  });
-
-  test("Add to the shelf needs a title and a shelf", async () => {
-    fake = {"api/books": () => ({ok: true})}; sent.length = 0;
-    freshAdd(); await go("#add");
-    click(document.getElementById("addSave")); await wait(50);
-    eq(sent.length, 0); ok(/needs a title/.test(view().innerText));
-    fake = null;
-  });
-
-  // ---------- 15 Nov review fixes ----------
-  test("“not read yet” counts each book once and leaves out books she didn’t finish or paused", async () => {
-    await go("#home");
-    const fig = [...view().querySelectorAll(".figures div, .figure, .fig")].map(x => x.innerText).find(t => /not read yet/i.test(t)) || view().innerText;
-    const shown = +((/([\d,]+)\s*\n?\s*not read yet/i.exec(fig) || [])[1] || "").replace(/,/g, "");
-    eq(shown, booksUnread(BOOKS), "home figure:");
-    ok(!BOOKS.some(b => ["stopped", "paused"].includes(reading(b).status) && isUnread(b)), "a DNF or paused book counts as unread");
-  });
-
-  test("double quotes and ’90s are curled in shown text", async () => {
-    eq(curly('He said "hello" in the \'90s'), "He said “hello” in the ’90s");
-    eq(esc('a "b" c'), "a “b” c");
-    eq(escRaw('a "b"'), "a &quot;b&quot;", "form values stay straight:");
-  });
-
-  test("an old book’s own note shows under Details as Edition, not as a blurb", async () => {
-    const b = BOOKS.find(x => x.shelf === COLLECTION && x.description && x.description.length < 90);
-    await go("#b-" + b.id);
-    ok(!view().querySelector("p.desc"), "note shown as a blurb");
-    ok([...view().querySelectorAll(".facts dt")].some(dt => dt.textContent.trim() === "Edition"), "no Edition line");
-  });
-
-  test("a special edition says so on its own page", async () => {
-    const b = BOOKS.find(x => x.special && !(("edition" in x ? x.edition : x.sub) || "").includes(x.special));
-    if (!b) return;
-    await go("#b-" + b.id);
-    ok(view().querySelector(".special-line")?.textContent.includes(curly(b.special)));
-  });
-
-  test("blurbs that ran together get their paragraphs back, words unchanged", async () => {
-    const html = blurb("She left town.Set in a small place, it rains.Mr Smith stays.");
-    eq((html.match(/<p /g) || []).length, 3);
-    ok(!/Mr\n/.test(html));
-  });
-
-  test("ratings are read as words, once", async () => {
-    await go("#shelf-" + BOOKS.find(b => reading(b).rating).shelf);
-    const r = view().querySelector(".rated");
-    ok(r && /stars$/.test(r.getAttribute("aria-label") || ""), "no label");
-    ok(r.querySelector('.sg-stars[aria-hidden="true"]'), "stars not hidden from screen readers");
-  });
-
-  test("every page has its own tab title", async () => {
-    for (const [h, t] of [["#reading", "Reading"], ["#stats", "Stats"], ["#to-buy", "To buy"], ["#add", "Add a book"], ["#authors", "Authors"], ["#history", "History"]]) {
-      await go(h); ok(document.title.startsWith(t), `${h}: ${document.title}`);
+test("every shelf’s toolbar count is the number of books it lists, under each filter", async () => {
+  const wrong = [];
+  for (const s of SHELVES.filter(s => s.books.length)) {
+    await go("#shelf-" + s.id);
+    for (const [k, [label, keep]] of Object.entries(FILTERS)) {
+      click($(`[data-filter="${k}"]`));
+      const shown = shownBooks(), want = s.books.concat(s.notOwned || []).filter(keep).length;
+      if (countText().toLowerCase() !== plural(shown.length, "book").toLowerCase()) wrong.push(`${s.id} ${label}: says “${countText()}”, lists ${shown.length}`);
+      if (shown.length !== want) wrong.push(`${s.id} ${label}: lists ${shown.length}, should be ${want}`);
+      const stray = shown.map(bookAt).filter(b => !b || !keep(b));
+      if (stray.length) wrong.push(`${s.id} ${label}: lists ${stray.length} that don’t fit the filter`);
     }
-  });
+  }
+  eq(wrong.slice(0, 15), []);
+});
 
-  test("deleting the search back to one letter shows the page again", async () => {
-    await go("#reading");
-    type(q, "ab"); await wait(0); ok(/Results for/.test(view().innerText));
-    type(q, "a"); await wait(0); ok(!/Results for/.test(view().innerText), "old results still showing");
-    q.value = "";
+test("All shelves: each shelf’s part counts its own books, and the banner counts the library", async () => {
+  await go("#shelves");
+  const f = figures();
+  eq([f.books, f.read, f.authors], [BOOKS.length, booksRead(BOOKS), AUTHORS.length], "banner books, read, authors:");
+  eq(f.shelves, SHELVES.filter(s => s.books.length && s.libib).length, "banner shelves:");
+  const wrong = [];
+  let total = 0;
+  $$("#shelfBooks section.shelf-part").forEach(sec => {
+    const n = shownBooks(sec).length, said = +($(".section-head .more", sec).textContent.replace(/\D/g, ""));
+    if (n !== said) wrong.push(`${$(".section-head h2", sec).textContent}: says ${said}, lists ${n}`);
+    total += n;
   });
+  eq(wrong, []);
+  eq(total, BOOKS.length + NOT_OWNED.length, "all the parts together:");
+  eq(countText().toLowerCase(), plural(total, "book").toLowerCase(), "toolbar:");
+});
 
-  // ---------- run ----------
-  addEventListener("load", async () => {
-    await wait(300);
-    const out = [];
-    for (const [name, fn] of tests) {
-      try { await fn(); out.push({name, ok: true}); }
-      catch (e) { out.push({name, ok: false, error: `${String(e && e.stack || e).slice(0, 500)}
-  (page then: ${location.hash} · ${document.title})`}); }
-    }
-    const report = new URLSearchParams(location.search).get("report");   // back to the test, which waits for it
-    if (report) await realFetch(`http://127.0.0.1:${report}/`, {method: "POST", mode: "no-cors", headers: {"Content-Type": "text/plain"}, body: JSON.stringify(out)});
+test("Home figures agree with the reading and the shelves", async () => {
+  await go("#home");
+  const f = figures(), y = String(new Date().getFullYear());
+  eq(f["read in " + y], finishedIn(y).length, "read this year:");
+  eq(f["books on the shelves"], BOOKS.length, "books on the shelves:");
+  eq(f["not read yet on your shelves"], booksUnread(BOOKS), "not read yet:");
+  eq(f.authors, AUTHORS.length, "authors:");
+  eq($$(".now-row .now-card", view()).length, readingLog().filter(isReading).length, "reading now cards:");
+});
+
+test("Reading page figures agree with its lists and with Home", async () => {
+  await go("#reading");
+  const f = figures(), y = String(new Date().getFullYear()), log = readingLog();
+  eq(f["reading now"], log.filter(isReading).length, "reading now:");
+  eq(f.read, log.filter(isRead).length, "read:");
+  eq(f["finished in " + y], finishedIn(y).length, "finished this year:");
+  eq(f["not read yet on your shelves"], booksUnread(BOOKS), "not read yet:");
+  const m = /([\d,]+) of the books you’ve read are on your shelves; ([\d,]+) aren’t/i.exec(view().innerText);
+  ok(m, "no shelves / not owned line");
+  eq(+m[1].replace(/,/g, "") + +m[2].replace(/,/g, ""), f.read, "on the shelves + not:");
+  if (log.some(isReading)) eq(navCount("#reading"), f["reading now"], "sidebar Reading:");
+});
+
+test("History: each year’s count is the books in it, and the banner’s read is Reading’s", async () => {
+  await go("#history");
+  const f = figures();
+  eq(f.read, readingLog().filter(isRead).length);
+  const wrong = [];
+  $$("details.year", view()).forEach(d => {
+    const said = /·\s*([\d,]+)/.exec($("summary h2", d).textContent), n = $$("a.bk", d).length;
+    if (said && +said[1].replace(/,/g, "") !== n) wrong.push(`${$("summary h2", d).textContent}: lists ${n}`);
   });
-})();
+  eq(wrong, []);
+  eq(f.years, $$("details.year", view()).filter(d => /^\d{4}/.test($("summary h2", d).textContent.trim())).length, "years:");
+});
+
+test("Stats figures agree with the shelves and the reading", async () => {
+  await go("#stats");
+  const text = view().innerText, y = String(new Date().getFullYear());
+  const meter = label => { const m = $$(".meter", view()).find(x => x.querySelector("span").textContent.startsWith(label)); return m && +m.querySelector("b").textContent.replace(/[^\d]/g, ""); };
+  eq(meter("books on the shelves"), BOOKS.length, "books on the shelves:");
+  eq(meter("books read"), readingLog().filter(isRead).length, "books read:");
+  eq(meter("finished in " + y), finishedIn(y).length, "finished this year:");
+  ok(new RegExp(`read \\(${plural(booksRead(BOOKS), "book")}\\)`, "i").test(text), "no “read (n books)” line");
+});
+
+test("old books: each kind’s page lists as many books as its banner and the sidebar say", async () => {
+  const wrong = [];
+  for (const [k] of OLD_KINDS) {
+    await go("#old-" + k);
+    const f = figures(), n = $$("[data-spine]", view()).length;
+    if (f.books !== oldBooks(k).length || n !== f.books || navCount("#old-" + k) !== f.books) wrong.push(`${k}: banner ${f.books}, spines ${n}, sidebar ${navCount("#old-" + k)}, has ${oldBooks(k).length}`);
+  }
+  eq(wrong, []);
+});
+
+test("To buy: the banner counts the two lists it shows, which make the whole list", async () => {
+  await go("#to-buy");
+  const f = figures(), parts = $$(".wish", view()).map(w => w.querySelectorAll(".wish-item").length);
+  eq([f["to buy"], f["old books to find"]], [WISH.filter(w => !w.old).length, WISH.filter(w => w.old).length]);
+  eq(parts.reduce((a, b) => a + b, 0), WISH.length, "listed:");
+  eq(parts[0], f["to buy"], "first list:");
+});
+
+test("“not read yet” leaves out books she didn’t finish or paused", async () => {
+  ok(!BOOKS.some(b => ["stopped", "paused"].includes(reading(b).status) && isUnread(b)), "a DNF or paused book counts as unread");
+});

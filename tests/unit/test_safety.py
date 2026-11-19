@@ -3,6 +3,7 @@ that stop when her reading moves on, a second copy's own cover, and smaller guar
 import json, os, subprocess, sys, time, unittest, zipfile
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from support import PYTHON, TOOLS, Sandbox, load
+import fixture_library
 
 
 class Backup(unittest.TestCase):
@@ -69,31 +70,21 @@ class ReadingCorrections(unittest.TestCase):
         sg = box.built()['storygraph']
         return {e['title']: e['status'] for e in (sg['books'] if isinstance(sg, dict) else sg)}
 
+    # on the made-up library (19 Nov: not her own reading, which changes)
     def test_correction_applies_while_storygraph_agrees(self):
-        with Sandbox() as box:
-            title = box.read('storygraph.json')['books'][0]['title']; was = box.read('storygraph.json')['books'][0]['status']
-            box.write('reading-fixes.json', {title: {'from': was, 'to': 'paused'}})
-            self.assertEqual(self.build(box)[title], 'paused')
+        with Sandbox(data=False, covers=False) as box:
+            fixture_library.make(box)
+            box.write('reading-fixes.json', {'Moon Harbour': {'from': 'read', 'to': 'paused'}})
+            self.assertEqual(self.build(box)['Moon Harbour'], 'paused')
 
     def test_correction_stops_when_her_reading_moves_on(self):   # 15 Nov: "paused" stuck after she finished a book
-        with Sandbox() as box:
-            title = box.read('storygraph.json')['books'][0]['title']
-            box.write('reading-fixes.json', {title: {'from': 'something-else', 'to': 'paused'}})
-            self.assertNotEqual(self.build(box)[title], 'paused')
+        with Sandbox(data=False, covers=False) as box:
+            fixture_library.make(box)
+            box.write('reading-fixes.json', {'Moon Harbour': {'from': 'something-else', 'to': 'paused'}})
+            self.assertEqual(self.build(box)['Moon Harbour'], 'read')
 
 
-class SecondCopyCover(unittest.TestCase):
-    def test_a_copy_added_here_shows_its_own_cover(self):
-        from PIL import Image
-        with Sandbox() as box:
-            owned = next(b for b in box.read('books.json') if b.get('isbn13') and os.path.exists(box.path('site', 'covers', b['isbn13'] + '.jpg')))
-            added = box.read('added.json', []) + [{'id': 'add9001', 'title': owned['title'], 'shelf': owned['shelf'], 'isbn13': owned['isbn13'], 'addedHere': True}]
-            box.write('added.json', added)
-            Image.new('RGB', (100, 150), (10, 200, 10)).save(box.path('site', 'covers', 'id-add9001.jpg'))
-            subprocess.run([PYTHON, '-X', 'utf8', os.path.join(TOOLS, 'build.py')], capture_output=True, env=os.environ.copy(), check=True)
-            books = {b['id']: b for b in box.built()['books']}
-            self.assertTrue(books['add9001']['cover'].startswith('covers/id-add9001.jpg'))
-            self.assertTrue(books[owned['id']]['cover'].startswith(f"covers/{owned['isbn13']}.jpg"), 'the first copy lost its cover')
+# a second copy's own cover (15 Nov): now in test_build_covers.py, on the made-up library
 
 
 class Guards(unittest.TestCase):

@@ -3,17 +3,19 @@ condition / inscription / signed pickers end to end. Also the reading watcher th
 import functools, json, os, sys, threading, time, unittest, urllib.error, urllib.request
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from support import Sandbox, load
+import fixture_library
 
 
 class Server(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.box = Sandbox().__enter__()
+        cls.box = Sandbox(data=False, covers=False).__enter__()   # the made-up library (19 Nov): quicker rebuilds, not tied to her books
+        fixture_library.make(cls.box)
         cls.serve = load('serve')
         cls.httpd = cls.serve.Server(('127.0.0.1', 0), functools.partial(cls.serve.Handler, directory=cls.serve.SITE))
         cls.port = cls.httpd.server_port
         threading.Thread(target=cls.httpd.serve_forever, daemon=True).start()
-        cls.book = next(b for b in cls.box.read('books.json') if b['shelf'] == 'old-book-collection')['id']
+        cls.book = 'old-t1'   # an old book
 
     @classmethod
     def tearDownClass(cls):
@@ -28,11 +30,17 @@ class Server(unittest.TestCase):
         if data is not None:
             h['Content-Type'] = 'application/json'
         req = urllib.request.Request(f'http://127.0.0.1:{self.port}{path}', data=data, headers=h)
-        try:
-            with urllib.request.urlopen(req, timeout=60) as r:
-                return r.status, r.read()
-        except urllib.error.HTTPError as e:
-            return e.code, e.read()
+        for attempt in range(3):
+            try:
+                with urllib.request.urlopen(req, timeout=60) as r:
+                    return r.status, r.read()
+            except urllib.error.HTTPError as e:
+                return e.code, e.read()
+            except (ConnectionError, urllib.error.URLError) as e:
+                # flaky (19 Nov, about 1 run in 40): a request refused before its body is read can reach Windows as a
+                # dropped connection instead of the answer; asking again gets the answer
+                if attempt == 2 or not isinstance(getattr(e, 'reason', e), ConnectionError):
+                    raise
 
     # who may ask
     def test_pages_are_served(self):

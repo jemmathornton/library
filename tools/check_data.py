@@ -55,6 +55,8 @@ for b in books:
         say(f'{b["title"]} ({b["id"]}): the blurb is a shop listing: “{t[:60]}”')
     elif words and sum(w in FOREIGN for w in words) > 3 * max(1, sum(w in ENGLISH for w in words)):
         say(f'{b["title"]} ({b["id"]}): the blurb isn’t in English: “{t[:60]}”')
+    elif re.search(r'\b[a-z]{3,}[A-Z][a-z]{2,}\b|[a-z]\((?!s\))', t):
+        say(f'{b["title"]} ({b["id"]}): words run together in the blurb: “{re.search(r"\S*(?:[a-z]{3,}[A-Z][a-z]{2,}|[a-z]\()\S*", t).group(0)[:50]}”')
     elif len(t) < 160 and norm(b['title'])[:25] and norm(t).startswith(norm(b['title'])[:25]):
         say(f'{b["title"]} ({b["id"]}): the blurb only repeats the title')
 

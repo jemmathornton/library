@@ -3,6 +3,7 @@ stay away, and one bad file mustn't stop it."""
 import json, os, re, subprocess, sys, unittest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from support import PYTHON, TOOLS, Sandbox, load, real_built
+import fixture_library
 
 
 def run_build(box):
@@ -86,35 +87,35 @@ class WholeBuild(unittest.TestCase):
 
 
 class Awkward(unittest.TestCase):
-    """Odd data the build has to cope with."""
+    """Odd data the build has to cope with (on the made-up library, 19 Nov: quicker, and not tied to her books)."""
+
+    def setUp(self):
+        self.box = Sandbox(data=False, covers=False).__enter__()
+        fixture_library.make(self.box)
+
+    def tearDown(self):
+        self.box.__exit__(None, None, None)
 
     def test_a_damaged_cover_doesnt_stop_the_build(self):   # review, 9 Nov
-        with Sandbox() as box:
-            d = box.built()
-            b = next(x for x in d['books'] if x.get('cover', '').startswith('covers/'))
-            p = box.path('site', b['cover'].split('?')[0])
-            os.remove(p)   # it's a link to her real picture: unlink first, never write into it
-            open(p, 'wb').write(b'\xff\xd8\xff\xe0 not really a picture')
-            d = run_build(box)
-            self.assertIn(b['id'], {x['id'] for x in d['books']})
+        p = self.box.path('site', 'covers', 'id-old-t1.jpg')   # a made-up picture (an old book's, so its cloth colour is read too)
+        open(p, 'wb').write(b'\xff\xd8\xff\xe0 not really a picture')
+        b = {x['id']: x for x in run_build(self.box)['books']}['old-t1']
+        self.assertTrue(b['cover'].startswith('covers/id-old-t1.jpg'))
+        self.assertNotIn('cloth', b)
 
     def test_name_fix_still_works_on_a_special_edition(self):   # review, 9 Nov: the edition went on first and hid the title
-        with Sandbox() as box:
-            book = next(b for b in box.read('books.json') if b.get('authors'))
-            box.write('editions.json', {**box.read('editions.json', {}), book['id']: 'Test Edition'})
-            fixes = box.read('name-fixes.json')
-            fixes.setdefault('titles', {})[book['title']] = 'Fixed Test Title'
-            box.write('name-fixes.json', fixes)
-            b = {x['id']: x for x in run_build(box)['books']}[book['id']]
-            self.assertTrue(b['title'].startswith('Fixed Test Title'), b['title'])
-            self.assertIn('Test Edition', b['title'])
+        box = self.box
+        box.write('editions.json', {**box.read('editions.json', {}), 'fx-moon': 'Test Edition'})
+        box.write('name-fixes.json', {'names': {}, 'remove': [], 'roles': {}, 'books': {}, 'surnames': {}, 'titles': {'Moon Harbour': 'Fixed Test Title'}})
+        b = {x['id']: x for x in run_build(box)['books']}['fx-moon']
+        self.assertTrue(b['title'].startswith('Fixed Test Title'), b['title'])
+        self.assertIn('Test Edition', b['title'])
 
     def test_empty_marks_files(self):
-        with Sandbox() as box:
-            for name in ('signed.json', 'condition.json', 'inscriptions.json', 'editions.json'):
-                box.write(name, {})
-            d = run_build(box)
-            self.assertFalse(any(b.get('signed') or b.get('condition') or b.get('inscription') for b in d['books']))
+        for name in ('signed.json', 'condition.json', 'inscriptions.json', 'editions.json'):
+            self.box.write(name, {})
+        d = run_build(self.box)
+        self.assertFalse(any(b.get('signed') or b.get('condition') or b.get('inscription') or b.get('special') for b in d['books']))
 
 
 class Pieces(unittest.TestCase):

@@ -53,6 +53,13 @@
    - **Page subtitles written by the site** ("How the library adds up.") against the no-generated-text rule: keep or drop?
    - **To-buy titles** as typed in Libib: "Guards Guards", "Night Circus".
    - **Reading** is from the 18 Oct StoryGraph export: export again to bring it up to date.
+12. **From the 19 Nov review (her call):**
+   - **The Streets of Ankh-Morpork** lists only Stephen Briggs as author (Pratchett missing); the Discworld companions are filed under Briggs (three) and Pratchett (the Mapp).
+   - **The Last Hero** is on To Buy although a Gollancz copy is on the shelves (a different edition on purpose?). **You and Me on Vacation** on To Buy is the US title.
+   - **Bimbo and Topsy** dated 1969; **Five Go Off in a Caravan** has its year in her note but no published date.
+   - **Box sets in her reading** (Harry Potter Series Box Set, The Chronicles of Narnia) count as read books on top of the single books (about 2 extra in "read").
+   - **"What should I read next?"** can pick atlases, guides and 1860s Dickens from the old books: leave out the Old Book Collection and Display?
+   - **"Most books by"** on Stats counts copies, so the Harry Potter sets push Rowling up.
 
 ## Open
 

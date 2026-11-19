@@ -2,6 +2,14 @@
 import os, sys, types, unittest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from support import Sandbox, load
+import fixture_library
+
+
+def made_up_library():
+    """A sandbox with the made-up library (tests/fixture_library.py): these tests are about adding, not her books."""
+    box = Sandbox(data=False, covers=False).__enter__()
+    fixture_library.make(box)
+    return box
 
 
 class Done:   # what the fake rebuild returns
@@ -11,7 +19,7 @@ class Done:   # what the fake rebuild returns
 
 class AddBook(unittest.TestCase):
     def setUp(self):
-        self.box = Sandbox().__enter__()
+        self.box = made_up_library()
         self.serve = load('serve')
         self.builds = 0
 
@@ -100,8 +108,7 @@ class AddBook(unittest.TestCase):
         self.assertEqual(self.copied, [])
 
     def test_second_copy_leaves_first_copys_cover_alone(self):   # review, 9 Nov
-        books = self.box.read('books.json')
-        owned = next(b for b in books if b.get('isbn13') and b['isbn13'] in self.box.read('covers.json'))
+        owned = next(b for b in self.box.read('books.json') if b['id'] == 'fx-owl1b')   # its cover is in covers.json
         before = self.box.read('covers.json')[owned['isbn13']]
         r = self.add(isbn=owned['isbn13'], cover='https://example.org/other.jpg')
         covers = self.box.read('covers.json')
@@ -147,7 +154,8 @@ class RealRebuild(unittest.TestCase):
     """One add with the real build: the new book is on the site straight away."""
 
     def test_new_book_on_the_site(self):
-        with Sandbox() as box:
+        box = made_up_library()
+        try:
             serve = load('serve')
             shelf = box.read('shelves.json')[1]['id']
             r = serve.add({'title': 'Brand New Test Book', 'authors': ['Zed Zebra'], 'shelf': shelf})
@@ -155,6 +163,8 @@ class RealRebuild(unittest.TestCase):
             ids = {b['id']: b for b in box.built()['books']}
             self.assertIn(r['id'], ids)
             self.assertEqual(ids[r['id']]['shelf'], shelf)
+        finally:
+            box.__exit__(None, None, None)
 
 
 if __name__ == '__main__':

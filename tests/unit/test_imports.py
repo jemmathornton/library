@@ -39,7 +39,7 @@ class Libib(unittest.TestCase):
             {'id': 'w1', 'title': 'Shelf Book', 'creators': 'Ann Writer', 'last_name': 'Writer', 'collection': 'Books to Buy'},
             {'id': 'w2', 'title': 'Wanted Book', 'creators': 'Di New', 'last_name': 'New', 'collection': 'Books to Buy'},
         ])
-        r = run('import_libib.py', self.folder, '--apply')
+        r = run('import_libib.py', self.folder, '--apply', '--force')   # --force: 5 made-up books are far fewer than her library (19 Nov guard)
         self.assertEqual(r.returncode, 0, r.stderr)
         books = {b['id']: b for b in self.box.read('books.json')}
         self.assertEqual(set(books), {'b1', 'b3'})   # the catch-all copy of b1 is the same book

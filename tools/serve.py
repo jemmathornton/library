@@ -47,6 +47,14 @@ PYTHON = os.path.join(os.path.dirname(sys.executable), 'python.exe')   # under p
 LOCK = threading.Lock()   # one add or reading import at a time, so two builds never write the site at once
 
 
+def rebuilt():
+    """build(), but a build that runs too long or can't start counts as a failed one rather than an error (19 Nov)."""
+    try:
+        return build()
+    except Exception as e:
+        return subprocess.CompletedProcess([], 1, '', f'{type(e).__name__}: {e}')
+
+
 def build():
     """Rebuild the site; the finished process, so its exit code can be checked."""
     return subprocess.run([PYTHON, '-X', 'utf8', os.path.join(TOOLS, 'build.py')], cwd=ROOT, capture_output=True, timeout=300,
@@ -485,6 +493,8 @@ def scan_setup():
     try:
         s.connect(('192.0.2.1', 9))   # picks the Wi-Fi address; nothing is sent
         ip = s.getsockname()[0]
+    except OSError:   # no network at all (19 Nov: this was a crash)
+        return {'url': '(not connected to a network: join the home Wi-Fi first)'}
     finally:
         s.close()
     return {'url': f'http://{ip}:{SCAN_PORT}/scan?key={scan_key()}&isbn='}
@@ -502,11 +512,13 @@ def scanned(new=None, remove=None):
 
 
 def on_shelves(isbn):
-    """The title of a copy she already owns with this ISBN, or ''."""
+    """The title of a copy she already owns with this ISBN, or '' (copies she removed don't count, 19 Nov)."""
+    rp = os.path.join(DATA, 'removed.json')
+    gone = {x['id'] for x in json.load(open(rp, encoding='utf-8'))} if os.path.exists(rp) else set()
     for path in (os.path.join(DATA, 'books.json'), ADDED):
         if os.path.exists(path):
             for b in json.load(open(path, encoding='utf-8')):
-                if b.get('isbn13') == isbn:
+                if b.get('isbn13') == isbn and b.get('id') not in gone:
                     return b.get('title', '')
     return ''
 
@@ -593,7 +605,7 @@ def add(book):
     except Exception as e:   # saved all the same (review, 2 Nov: this used to say "That didn't save", and she'd add it twice)
         trouble = f'{type(e).__name__}: {e}'
         sg_log(f"added {b['id']}, but something after saving failed: {trouble}")
-    r = build()
+    r = rebuilt()
     if r.returncode != 0:   # saved, but the page for it doesn't exist yet: say so rather than jump to a missing page
         sg_log(f"added {b['id']}, but the rebuild failed: {(r.stderr or r.stdout).strip()[-300:]}")
         return {'ok': False, 'saved': True, 'error': 'The book is saved, but the site couldn’t be rebuilt, so it isn’t showing yet. Don’t add it again.'}
@@ -652,9 +664,22 @@ def after_add(book, b, i13):
             raise RuntimeError(f'cover not copied: {err}')
 
 
+def mark_saved():
+    """After a mark is saved: rebuild; if that fails the mark is kept all the same, and the page says so (19 Nov)."""
+    r = rebuilt()
+    if r.returncode != 0:
+        sg_log(f'a mark was saved, but the rebuild failed: {(r.stderr or r.stdout).strip()[-300:]}')
+        return {'ok': False, 'saved': True}
+    return {'ok': True}
+
+
 class Handler(http.server.SimpleHTTPRequestHandler):
     def log_message(self, *args):   # no console under pythonw, so nothing to log to
         pass
+
+    def list_directory(self, path):   # folders aren't listed (19 Nov)
+        self.send_error(404)
+        return None
 
     def end_headers(self):          # always check for a newer copy, so a rebuild shows at once
         self.send_header('Cache-Control', 'no-cache')
@@ -740,14 +765,14 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                             set_condition(body['id'], body.get('condition', ''))
                         else:
                             set_inscription(body['id'], body.get('inscription', ''))
-                        result = {'ok': build().returncode == 0}
+                        result = mark_saved()
                 elif self.path == '/api/signed':   # a book's page: signed, signed to her, or neither; then the site is rebuilt
                     known = known_ids()
                     if body.get('id') not in known:
                         result = {'ok': False, 'error': 'No such book.'}
                     else:
                         set_signed(body['id'], body.get('signed', ''))
-                        result = {'ok': build().returncode == 0}
+                        result = mark_saved()
                 else:
                     result = {'ok': True, 'left': scanned(remove=str(body.get('isbn', '')))}
             self.reply(result)
@@ -840,7 +865,7 @@ def import_export(p, state):
         state['mtime'] = os.path.getmtime(p)
         write_json(SG_STATE, state)
         return
-    if os.path.exists(now_path):
+    if os.path.exists(now_path) and state.get('retrying') != os.path.basename(p):   # a retry keeps the reading from before the first try (19 Nov)
         import shutil
         shutil.copy2(now_path, os.path.join(DATA, 'storygraph.prev.json'))
     r = subprocess.run([PYTHON, '-X', 'utf8', os.path.join(TOOLS, 'import_storygraph.py'), p, '--apply'],
@@ -853,6 +878,7 @@ def import_export(p, state):
     rb = build()
     if rb.returncode != 0:   # not marked as done, so the next look tries again
         sg_log(f'imported {os.path.basename(p)}, but the rebuild failed: {(rb.stderr or rb.stdout).strip()[-300:]}')
+        write_json(SG_STATE, {**state, 'retrying': os.path.basename(p)})   # still not done, so tried again
         return
     write_json(SG_STATE, {'file': os.path.basename(p), 'mtime': os.path.getmtime(p), 'imported': datetime.now().isoformat(timespec='minutes')})
     summary = next((l for l in r.stdout.splitlines() if l.startswith(('On her shelves', '345', 'StoryGraph')) or 'StoryGraph books' in l), '')
