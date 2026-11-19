@@ -16,6 +16,18 @@ A private website of the books in Jemma’s home library: every book she owns, s
 - **No buttons for reading:** read or not read comes only from StoryGraph and is shown, never set on the site (her choice, 18 Oct). **The site never mentions StoryGraph** (her choice, 18 Oct): it is just her reading.
 - Laptop (1280px) first; phone layout when she asks.
 
+## How she likes it done (moved here from the Sims project’s notes, 19 Nov: the library keeps its own)
+
+- **Covers, same printing:** a whole series from one printing (same publisher edition and year) matching her copies; lean to UK printings (she’s in the UK; Open Library pictures are often US). Flat, uncropped scans. Show each series as one row in reading order (her copies plus the proposal) and **ask before every cover change**, even her own ISBN’s picture. Libib ISBNs can be wrong: believe her description over the ISBN, and offer her own photos as the sure fix. UK sources: Oxfam’s shop API `https://onlineshop.oxfam.org.uk/ccstore/v1/products/HD_<n>` (ox_isbn13, ox_year, primaryFullImageURL + `&height=940`; one shop’s listings sit on neighbouring numbers) and World of Books `https://image-server.worldofbooks.com/images/<isbn13>.jpg`.
+- **No generated text:** text on the site comes only from her words or the book’s own blurb, word for word; cuts only, never rewording. Missing means blank.
+- **General fixes, not per item:** a problem on one book means fixing the rule for every book; say so in one line when reporting.
+- **Show, don’t ask, for looks:** mock each option in the app, screenshot at 1280px, send them labelled, then ask. Words are fine for facts.
+- **Suggestions are labelled** “my suggestion (not decided)”, and say who decided what.
+- **TODO.md holds only open items;** a decided non-issue comes off.
+- **Restarting the server:** only `explorer.exe "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\Jemma's Library server.lnk"`, then check its parent is explorer.exe (started from Claude’s shell it dies with the session, 31 Oct).
+- **When she’s away for hours,** keep working through a long backlog in one turn (checks, research, small fixes needing no decision); a final reply stops everything. Never write as if time has passed.
+- **Never change Windows security or firewall settings:** she does those herself. Backups are git/GitHub only.
+
 ## Where things are
 
 - `site/`: the app (`index.html`, `site.css`, `js/app.js`, `js/icons.js`, `js/data.js` **generated, never edit**). The only folder to upload if it goes online.
