@@ -4,7 +4,7 @@ Run them all:     python -X utf8 tests/run_tests.py            (about 1½ minute
 Only one half:    python -X utf8 tests/run_tests.py unit      (or e2e)
 Only some:        python -X utf8 tests/run_tests.py e2e -k search     (any words from a test's name)
 
-Every test works on a throwaway copy of the library, never the real data, pictures, Downloads, backups or git settings.
+Every test works on a throwaway copy of the library, never the real data, pictures, Downloads, GitHub copy or git settings.
 Nothing goes out to the internet: lookups are faked (support.FakeWeb, or a fake lookup).
 
 Two libraries
@@ -25,7 +25,7 @@ unit/   Python
   test_build_covers      which cover each book gets: copies sharing an ISBN, second copies added on the site,
                          links, old books (cloth colour, no modern covers), books read elsewhere
   test_cover_tools       find_covers, fill_details and copy_covers run whole with the internet faked
-  test_backup_restore    a backup of a small library unzipped and its history bundle cloned give it all back
+  test_backup_restore    a small library backed up to a stand-in GitHub and cloned back gives it all back
   test_safety            the 15 Nov review fixes; test_imports: Libib and StoryGraph importers;
   test_straighten, test_isbn_and_titles, test_check_data
 

@@ -35,13 +35,24 @@ class BackupPush(unittest.TestCase):
             self.assertIn('new-this-week.json', git(remote, 'show', '--stat', 'main').stdout)
             self.assertIn('github: pushed', open(box.path('logs', 'backup.log'), encoding='utf-8').read())
 
-    def test_no_github_copy_no_push_and_the_zip_still_happens(self):
+    def test_no_github_copy_is_logged_not_an_error(self):
         with Sandbox(covers=False) as box:
             r = run_backup()
             self.assertEqual(r.returncode, 0, r.stderr[-600:])
-            log = open(box.path('logs', 'backup.log'), encoding='utf-8').read()
-            self.assertNotIn('github', log)
-            self.assertIn('zipped', log)
+            self.assertIn('no GitHub copy', open(box.path('logs', 'backup.log'), encoding='utf-8').read())
+
+    def test_no_zips_any_more(self):   # 19 Nov, her call: GitHub is the backup, the zips folder is gone
+        with Sandbox(covers=False) as box:
+            run_backup()
+            self.assertFalse(os.path.exists(box.path('backups')))
+
+    def test_a_failed_push_is_logged_and_the_task_fails(self):   # so Windows shows the task as failed
+        with Sandbox(covers=False) as box:
+            git(box.root, 'init', '-q', '-b', 'main')
+            git(box.root, 'remote', 'add', 'origin', box.path('no-such-github.git'))
+            r = run_backup()
+            self.assertNotEqual(r.returncode, 0)
+            self.assertIn('github push failed', open(box.path('logs', 'backup.log'), encoding='utf-8').read())
 
 
 if __name__ == '__main__':

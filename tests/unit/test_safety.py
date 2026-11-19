@@ -1,36 +1,9 @@
-"""Fixes from the 15 Nov review, kept fixed: the weekly backup, the reading import's sanity check, reading corrections
+"""Fixes from the 15 Nov review, kept fixed: the reading import's sanity check, reading corrections
 that stop when her reading moves on, a second copy's own cover, and smaller guards."""
-import json, os, subprocess, sys, time, unittest, zipfile
+import json, os, subprocess, sys, time, unittest
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from support import PYTHON, TOOLS, Sandbox, load
 import fixture_library
-
-
-class Backup(unittest.TestCase):
-    def test_backup_finishes_and_clears_a_stopped_one(self):
-        with Sandbox() as box:
-            dest = box.path('backups'); os.makedirs(dest)
-            open(os.path.join(dest, 'HomeLibrary backup 2026-01-01.zip.part'), 'wb').write(b'half')
-            pics = box.path('for-jemma', 'board-x', 'pictures'); os.makedirs(pics)
-            open(os.path.join(pics, 'huge.jpg'), 'wb').write(b'x' * 1000)
-            open(box.path('for-jemma', 'board-x', 'board.jpg'), 'wb').write(b'y')
-            r = subprocess.run([PYTHON, '-X', 'utf8', os.path.join(TOOLS, 'backup.py')], capture_output=True, text=True, env=os.environ.copy(), timeout=600)
-            self.assertEqual(r.returncode, 0, r.stderr[-800:])
-            files = os.listdir(dest)
-            self.assertFalse([f for f in files if f.endswith('.part')], 'a stopped run’s .part was kept')
-            zips = [f for f in files if f.endswith('.zip')]
-            self.assertEqual(len(zips), 1)
-            with zipfile.ZipFile(os.path.join(dest, zips[0])) as z:
-                names = z.namelist()
-                self.assertIsNone(z.testzip())
-                self.assertIn('HomeLibrary/data/books.json', names)
-                self.assertIn('HomeLibrary/for-jemma/board-x/board.jpg', names)
-                self.assertNotIn('HomeLibrary/for-jemma/board-x/pictures/huge.jpg', names)
-                jpg = next(i for i in z.infolist() if i.filename.endswith('.jpg'))
-                self.assertEqual(jpg.compress_type, zipfile.ZIP_STORED)
-            log = open(box.path('logs', 'backup.log'), encoding='utf-8').read()
-            self.assertIn('started', log)
-            self.assertIn('removed an unfinished', log)
 
 
 class ReadingImport(unittest.TestCase):

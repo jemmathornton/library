@@ -40,10 +40,9 @@
 7. **Going online** (parked): her reviews would be public unless hidden; Add a book and the reading import only work on her PC (they use the local server).
 8. **To Buy count** (6 Nov review): the sidebar says “To buy 59”, which includes the 30 old books to find; the page itself says 29 to buy and 30 old books to find. Should the sidebar count only the 29 (old ones are counted under Old books › To find)?
 9. **Shelf counts** (9 Nov review): on a shelf page the top figures count each book once and leave out not-owned books (Fantasy: 206 books, 45 read), while the toolbar counts every copy plus read-but-not-owned ones (220 books, Read 64). Should both use one rule?
-10. **Things to know (9 Nov review, not changed):** don't run `find_covers.py` or `fill_details.py` while adding books in the app (now they keep each other's covers, but details can still clash); a Libib re-import doesn't know about books added on the site, so one added in both places shows twice; backups are 466 MB each, eight kept (about 4 GB).
+10. **Things to know (9 Nov review, not changed):** don't run `find_covers.py` or `fill_details.py` while adding books in the app (now they keep each other's covers, but details can still clash); a Libib re-import doesn't know about books added on the site, so one added in both places shows twice.
 11. **From the 15 Nov full review (her call; looks get mock-ups first):**
    - **Firewall (her to do, a Windows setting):** Python's incoming rule is set for Public networks only, the wrong way round: away from home (cafés) the phone-scan door can be reached, and at home it is probably blocked, so phone scanning may not work. Change it to Private only.
-   - **A second backup copy off this PC** (OneDrive or a USB stick): today the backups sit on the same disk as the library. The weekly task could also retry if it fails (a change to the Windows task).
    - **Green colours?** The Display shelf (#3F6B4A) and the old books' Fiction dot (#4F5D47) are greenish, if green is unwanted.
    - **Filters** show even when they'd find nothing (Fantasy → Special editions).
    - **Old-book shelves:** gaps on the to-find list look the same as other gaps; no key for ★ and dashed spines; cream shelves stay bright in dark mode.
