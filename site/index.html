@@ -18,11 +18,14 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="site.css?v=48b11a2b">
+<link rel="stylesheet" href="site.css?v=75f2a0b8">
 </head>
 <body>
 <a class="skip" href="#view" onclick="event.preventDefault();document.getElementById('view').focus()">Skip to the page</a>
 <aside class="side" id="side" aria-label="Library">
+  <!-- Way back to Jemma’s Journals, her home site (her pick, option A, 20 Nov). HOME_SITE_URL: "/" because the sites will share
+       one address (home at the root, the apps under it); on this PC it just opens the library's own start. -->
+  <a class="home-link" href="/">← Jemma’s Journals</a>
   <a class="brand" href="#home"><b>Jemma’s <em>Library</em></b><small>Every book on the shelves</small></a>
   <div class="search"><span class="search-ico" id="searchIco"></span><input id="q" type="search" placeholder="Title, author or ISBN…" aria-label="Search the library" autocomplete="off" spellcheck="false"></div>
   <nav class="nav" id="nav"></nav>
@@ -30,7 +33,7 @@
 <main id="main"><div class="wrap" id="view" tabindex="-1"></div></main>
 
 <script src="js/icons.js?v=81819d2c"></script>
-<script src="js/data.js?v=3af918ae"></script>
+<script src="js/data.js?v=1809d3e2"></script>
 <script src="js/app.js?v=0a651c47"></script>
 </body>
 </html>
