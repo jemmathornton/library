@@ -79,6 +79,18 @@ class WholeBuild(unittest.TestCase):
             if b['shelf'] == 'old-book-collection' and b.get('cover', '').startswith('covers/'):
                 self.assertRegex(b.get('cloth', ''), r'^#[0-9a-f]{6}$', b['title'])
 
+    def test_reading_authors_spelt_as_on_her_shelves(self):   # review, 21 Nov: "TJ Klune" beside "T. J. Klune"
+        squash = lambda n: re.sub(r'[^a-z]', '', n.lower())
+        shelf = {squash(a['name']): a['name'] for b in self.d['books'] for a in b.get('authors', [])}
+        sg = self.d['storygraph']['books'] if isinstance(self.d['storygraph'], dict) else self.d['storygraph']
+        odd = [(n, shelf[squash(n)]) for e in sg for n in str(e.get('authors') or '').split(', ') if squash(n) in shelf and shelf[squash(n)] != n]
+        self.assertEqual(odd, [])
+
+    def test_her_old_book_notes_are_marked_as_notes(self):   # review, 21 Nov: a long note showed as a blurb
+        for b in self.d['books']:
+            if b['shelf'] == 'old-book-collection' and b.get('description') and b['id'] in {x['id'] for x in self.box.read('books.json')}:
+                self.assertTrue(b.get('oldNote'), b['title'])
+
     def test_page_fingerprints_match_the_files(self):
         import hashlib
         page = open(self.box.path('site', 'index.html'), encoding='utf-8').read()
@@ -142,6 +154,40 @@ class Pieces(unittest.TestCase):
             self.assertTrue(r > 150 and g < 60 and b < 60, (r, g, b))
         finally:
             os.remove(p)
+
+    def test_blurb_leftovers_are_cut_and_nothing_else_changes(self):   # review, 21 Nov: cuts only, never rewording
+        cut = self.build.cut_blurb
+        self.assertEqual(cut('A good story. Full description'), 'A good story.')
+        self.assertEqual(cut('A good story.\n\n[Source][1]'), 'A good story.')
+        self.assertEqual(cut('A story. ([source][1]) [1]: https://example.org/x'), 'A story.')
+        self.assertEqual(cut('See [Part One](https://openlibrary.org/works/OL1W) too.'), 'See Part One too.')
+        self.assertEqual(cut('A story.\n--back cover'), 'A story.')
+        self.assertEqual(cut('A story. From the Hardcover edition.'), 'A story.')
+        self.assertEqual(cut('A story.\n\nCover illustration by Josh Kirby'), 'A story.')
+        self.assertEqual(cut('A story. Ages 10+'), 'A story.')
+        self.assertEqual(cut("A story.\n---------- A prior editor's comment: my favourite."), 'A story.')
+        self.assertEqual(cut('First part. Second part. And Rory may have watched h'), 'First part. Second part.')
+        self.assertEqual(cut('It starts here, and it goes on for a good while longer. She has admirers among authors--Jhumpa'),
+                         'It starts here, and it goes on for a good while longer.')
+        for whole in ('A sentence with no full stop at the end', 'Wherever you go', 'Is Bobby ready for what comes next',
+                      'She said “yes”.', 'Book one of the Trebizon series (1978).'):
+            self.assertEqual(cut(whole), whole, 'a real blurb was changed')
+
+    def test_general_title_and_name_tidies(self):   # review, 21 Nov
+        books = [{'title': "Claudine at St.Clare's", 'authors': [{'name': 'Courtney. Rosen'}]},
+                 {'title': 'Extras Pa', 'authors': []}, {'title': 'Story of the Lost Child, The', 'authors': []},
+                 {'title': 'Mrs. Beeton’s Book', 'authors': [{'name': 'Dr. T. Wu'}]}]
+        self.build.fix_names(books, {'names': {}, 'remove': [], 'roles': {}, 'books': {}, 'surnames': {}, 'titles': {}})
+        self.assertEqual([b['title'] for b in books], ["Claudine at St Clare's", 'Extras', 'The Story of the Lost Child', 'Mrs. Beeton’s Book'])
+        self.assertEqual(books[0]['authors'], [{'name': 'Courtney Rosen'}])
+        self.assertEqual(books[3]['authors'], [{'name': 'Dr. T. Wu'}], 'initials and short titles left alone')
+
+    def test_a_tidied_title_keeps_its_own_author_fix(self):   # the St Clare's books by Blyton and Cox kept their order
+        books = [{'title': "Third Form at St.Clare's", 'authors': [{'name': 'Pamela Cox'}, {'name': 'Enid Blyton'}]}]
+        fixes = {'names': {}, 'remove': [], 'roles': {}, 'surnames': {}, 'titles': {},
+                 'books': {"Third Form at St.Clare's": [{'name': 'Enid Blyton'}, {'name': 'Pamela Cox'}]}}
+        self.build.fix_names(books, fixes)
+        self.assertEqual([a['name'] for a in books[0]['authors']], ['Enid Blyton', 'Pamela Cox'])
 
     def test_name_fixes(self):
         books = [{'title': 'X', 'authors': [{'name': 'J.K Rowling'}, {'name': 'Bloomsbury'}, {'name': 'J.K Rowling'}]}]

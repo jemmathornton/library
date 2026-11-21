@@ -335,7 +335,7 @@ function listView(list){
 // are each world's own map); pages with too few covers keep the plain walnut
 function shelfBanner(list){
   const pics = (list || []).filter(b => b.cover).slice(0, 32);
-  return pics.length >= 8 ? `<div class="hero-shelf" aria-hidden="true">${pics.map(b => `<img src="${escRaw(coverSrc(b))}" alt="">`).join("")}</div>` : "";
+  return pics.length >= 8 ? `<div class="hero-shelf" aria-hidden="true">${pics.map(b => `<img src="${escRaw(coverSrc(b))}" alt="" onerror="this.remove()">`).join("")}</div>` : "";
 }
 const hero = (o) => { const bg = shelfBanner(o.covers);
   return `<header class="hero${bg ? " shelved" : ""}">${bg}<div class="kicker">${o.color ? `<span class="dot" style="--c:${o.color}"></span>` : "<i></i>"}<span class="label">${o.kicker}</span></div>
@@ -353,7 +353,7 @@ const OLD_KINDS = [["childrens", "Children’s", "#B5482F"], ["fiction", "Fictio
 const oldBooks = k => (shelfIndex[COLLECTION] ? shelfIndex[COLLECTION].books : []).filter(b => ((DATA.oldKinds || {})[b.id] || "childrens") === k);
 function renderNav(active){
   const nReading = readingLog().filter(isReading).length, left = WISH.length;
-  const link = (href, icon, text, n) => `<a href="${href}" class="${active === href ? "on" : ""}">${icon}${text}${n != null ? `<span class="n">${n}</span>` : ""}</a>`;
+  const link = (href, icon, text, n) => `<a href="${href}" class="${active === href ? "on" : ""}"${active === href ? ' aria-current="page"' : ""}>${icon}${text}${n != null ? `<span class="n">${n}</span>` : ""}</a>`;
   // the shelves come first and largest (her choice, 18 Oct); the rest of the library is a quiet list at the foot
   // (the name at the top is the way home)
   document.getElementById("nav").innerHTML = `
@@ -430,9 +430,9 @@ function shelfBooks(list, grouped = currentGrouped){
     : SHELVES.map(s => { const l = shown.filter(b => b.shelf === s.id); return l.length ? `<section class="shelf-part">`
         + sectionHead(`<span class="dot big" style="--c:${s.color}"></span>${esc(s.name)}`, `<a class="more" href="#shelf-${s.id}">${plural(l.length, "book")}</a>`) + books(l) + `</section>` : ""; }).join("");
   return `<div class="toolbar" id="toolbar">
-      <div class="chips">${Object.entries(FILTERS).map(([k, [l]]) => `<button type="button" data-filter="${k}" class="${shelfView.filter === k ? "on" : ""}">${l}</button>`).join("")}</div>
+      <div class="chips">${Object.entries(FILTERS).map(([k, [l]]) => `<button type="button" data-filter="${k}" class="${shelfView.filter === k ? "on" : ""}" aria-pressed="${shelfView.filter === k}">${l}</button>`).join("")}</div>
       <select id="sort" aria-label="Sort by">${Object.entries(SORTS).map(([k, [l]]) => `<option value="${k}"${shelfView.sort === k ? " selected" : ""}>${l}</option>`).join("")}</select>
-      <div class="views"${ledger ? " hidden" : ""}><button type="button" data-view="covers" class="${view === "covers" ? "on" : ""}" aria-label="Covers">${ic("grid")}</button><button type="button" data-view="list" class="${view === "list" ? "on" : ""}" aria-label="List">${ic("list")}</button></div>
+      <div class="views"${ledger ? " hidden" : ""}><button type="button" data-view="covers" class="${view === "covers" ? "on" : ""}" aria-pressed="${view === "covers"}" aria-label="Covers">${ic("grid")}</button><button type="button" data-view="list" class="${view === "list" ? "on" : ""}" aria-pressed="${view === "list"}" aria-label="List">${ic("list")}</button></div>
       ${pickButton(grouped ? "" : currentShelf)}<span class="count">${plural(shown.length, "book")}</span>
     </div>` + body;
 }
@@ -448,7 +448,7 @@ function pageShelf(s){
   currentList = s.books.concat(s.notOwned || []); currentGrouped = false; currentShelf = s.id;
   const authors = new Set(s.books.flatMap(b => (b.authors || []).filter(a => !a.role).map(a => slug(a.name)))).size, pages = s.books.reduce((n, b) => n + (b.pages || 0), 0);
   return hero({kicker: `<a href="#home">Shelf</a>`, title: esc(s.name), color: s.color, text: s.note ? esc(s.note) : "", covers: [...s.books].sort(SORTS.author[1]),
-      figures: [[num(s.books.length), "books"], [num(authors), "authors"], [num(booksRead(s.books)), "read"], ...((s.notOwned || []).filter(isRead).length ? [[num(s.notOwned.filter(isRead).length), "read but not owned"]] : []), [num(pages), "pages"]]})
+      figures: [[num(s.books.length), "books"], [num(authors), "authors"], [num(booksRead(s.books)), "read"], ...((s.notOwned || []).filter(isRead).length ? [[num(s.notOwned.filter(isRead).length), "read but not owned"]] : []), ...(pages ? [[num(pages), "pages"]] : [])]})   // none counted (the old books): left out, not "0" (review, 21 Nov)
     + `<div id="shelfBooks">${shelfBooks(currentList)}</div>`;
 }
 
@@ -507,7 +507,7 @@ function pageSgBook(e){   // a book from StoryGraph that isn't on her shelves
 }
 
 // an old book's description is her own note on the copy ("First edition", "Undated"), shown under Details (review, 15 Nov)
-const oldNote = b => b.shelf === COLLECTION && (b.description || "").length < 90;
+const oldNote = b => !!b.oldNote || (b.shelf === COLLECTION && (b.description || "").length < 90);   // her notes on her old copies (marked by the build, 21 Nov)
 // a blurb whose paragraphs ran together ("…shooting.Set in…") gets its breaks back; the words are untouched
 const blurb = t => esc(t).replace(/([a-z]{2,}[.!?…][”’)]?)(?=[A-Z][a-z])/g, "$1\n\n").split(/\n\s*\n+/).map(p => `<p class="desc">${p.trim()}</p>`).join("");
 function pageBook(b){
@@ -609,7 +609,7 @@ const pickButton = shelf => `<button class="btn pick pick-open" type="button" da
 function pickPanel(){
   const pool = pickPool(), b = picked && pool.includes(picked) ? picked : null;
   return `<div class="pick-pop" role="dialog" aria-label="What should I read next?">
-    ${b ? `<a class="pick-book" href="${href(b)}">${cover(b)}</a>` : ""}
+    ${b ? `<a class="pick-book" href="${href(b)}" tabindex="-1" aria-hidden="true">${cover(b)}</a>` : ""}
     <div class="pick-body">
       ${b ? `<span class="label">How about…</span><a class="pick-title" href="${href(b)}"><h3>${esc(b.t)}</h3></a>
         <div class="by">${esc(b.by)}${shelfIndex[b.shelf] ? ` · ${esc(shelfIndex[b.shelf].name)}` : ""}</div>
@@ -626,13 +626,21 @@ function pickNew(){
   const all = pickPool(), pool = all.filter(b => b !== picked);   // with only one book there, it stays (it showed an empty box)
   picked = pool.length ? pool[Math.floor(Math.random() * pool.length)] : all[0] || null;
 }
+let pickOpener = null;   // the button that opened the panel: focus goes back to it (review, 21 Nov)
 function pickShow(){
   let box = document.getElementById("pickPanel");
-  if (!box) { box = document.createElement("div"); box.id = "pickPanel"; box.className = "pick-panel"; document.body.appendChild(box); }
+  const focusId = box && box.contains(document.activeElement) ? document.activeElement.id : "pickOne";
+  if (!box) { pickOpener = document.activeElement; box = document.createElement("div"); box.id = "pickPanel"; box.className = "pick-panel";
+    box.setAttribute("role", "dialog"); box.setAttribute("aria-modal", "true"); box.setAttribute("aria-label", "What should I read next?"); document.body.appendChild(box); }
   box.innerHTML = pickPanel();
   box.querySelectorAll("img").forEach(i => i.loading = "eager");   // shown at once, not when scrolled to
+  (document.getElementById(focusId) || box.querySelector("button, a, select"))?.focus({preventScroll: true});
 }
-const pickHide = () => document.getElementById("pickPanel")?.remove();
+function pickHide(){
+  const box = document.getElementById("pickPanel"); if (!box) return;
+  const back = box.contains(document.activeElement) && pickOpener && document.contains(pickOpener) ? pickOpener : null;
+  box.remove(); pickOpener = null; back?.focus({preventScroll: true});
+}
 
 const wishItems = l => `<div class="wish">${l.map(w => `<div class="wish-item">${cover(w)}<div><h3${w.t.length > 40 ? ' class="long"' : ""}>${esc(w.t)}</h3>${w.sub && !(w.old && /^old$/i.test(w.sub)) ? `<div class="by">${esc(w.sub)}</div>` : ""}<div class="by">${esc(w.by)}</div>
         ${w.maybeOwned ? `<a class="flag" href="#b-${w.maybeOwned[0]}">${ic("info")}Already on a shelf?</a>` : ""}</div>
@@ -1069,7 +1077,8 @@ document.addEventListener("click", async e => {
   if (e.target.closest("[data-cover-none]")) { readAdd(); addForm.coverWrong = true; addForm.coverOriginal = null; addForm.coverChoices = null; addForm.corners = null; addForm.cornersUsed = null; addForm.trimEdge = 0; return redrawAdd(); }
   if (e.target.closest("[data-cover-close]")) { readAdd(); addForm.coverChoices = null; return redrawAdd(); }
 });
-const redrawAdd = () => { const y = scrollY; document.getElementById("view").innerHTML = pageAdd(); scrollTo(0, y); };
+const redrawAdd = () => { const y = scrollY, id = document.activeElement?.id; document.getElementById("view").innerHTML = pageAdd(); scrollTo(0, y);
+  if (id) document.getElementById(id)?.focus({preventScroll: true}); };   // focus kept on the box or button used (review, 21 Nov)
 
 // "Set the corners" (her ask, 2 Nov: Child of the Grove had no picture the automatic straightening could do): the picture
 // with four dots she drags onto the cover's corners. Each moves on its own, so any four-sided shape at any angle can be
@@ -1145,7 +1154,7 @@ document.addEventListener("click", async e => {
     if (r.ok) addForm.corners = {src, width: r.width, height: r.height, pts: r.corners};
     else { addForm.corners = null; addForm.note = r.error; }
     redrawAdd();
-    return document.getElementById("cornerStage")?.scrollIntoView({block: "center", behavior: "smooth"});
+    return document.getElementById("cornerStage")?.scrollIntoView({block: "center", behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
   }
   if (e.target.closest("[data-corners-close]")) { readAdd(); addForm.corners = null; return redrawAdd(); }
   if (e.target.closest("[data-corners-use]")) {
@@ -1159,7 +1168,7 @@ document.addEventListener("click", async e => {
     readAdd();
     if (r.ok) Object.assign(addForm, {coverOriginal: c.src, cover: r.cover, trimEdge: 0, cornersUsed: used, corners: null, coverWrong: false});
     else addForm.note = r.error;
-    addForm.straightening = false; redrawAdd(); scrollTo({top: 0, behavior: "smooth"});
+    addForm.straightening = false; redrawAdd(); scrollTo({top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
   }
 });
 document.addEventListener("click", async e => {
@@ -1314,7 +1323,8 @@ function endSearch(){
   addFromWish = !!addForm.fromWish; route(undefined, {keep: true}); scrollTo(0, y);
 }
 q.addEventListener("input", () => { const v = q.value.trim(); if (location.hash === "#add" && searchFrom === null) readAdd();
-  if (v.length >= 2) { if (searchFrom === null) searchFrom = scrollY; document.getElementById("view").innerHTML = pageSearch(v); scrollTo(0, 0); } else endSearch(); });
+  if (v.length >= 2) { if (searchFrom === null) searchFrom = scrollY; document.getElementById("view").innerHTML = pageSearch(v); scrollTo(0, 0);
+    renderNav(null); document.title = `Search · Jemma’s Library`; } else endSearch(); });   // no page marked as current while results show (review, 21 Nov)
 q.addEventListener("keydown", e => { if (e.key === "Escape" && q.value) { e.stopPropagation(); q.value = ""; endSearch(); } });   // empty: Escape is the drawer's
 document.addEventListener("click", e => {   // any link while results show: the search goes; a link to the page underneath redraws it (reviews 9 and 21 Nov)
   const a = e.target.closest('a[href^="#"]:not([data-jump])'); if (!a || searchFrom === null) return;
@@ -1380,6 +1390,7 @@ toTop.addEventListener("click", () => {
 });
 
 // ---------- routing ----------
+let drawn = false;   // the first page drawn takes no focus
 function route(page, opts = {}){   // page: only the tests pass one (they open a thousand pages; the browser limits address changes)
   // opts.keep: the same page drawn again after a search (its shelf filter and sort kept, the drawer left as it is)
   const key = page || location.hash.slice(1) || "home", view = document.getElementById("view");
@@ -1395,7 +1406,11 @@ function route(page, opts = {}){   // page: only the tests pass one (they open a
   else if (key.startsWith("a-") && authorIndex[key.slice(2)]) { const a = authorIndex[key.slice(2)]; html = pageAuthor(a); active = "#authors"; title = a.name; }
   else { html = {authors: pageAuthors, reading: pageReading, history: pageHistory, add: pageAdd, "to-buy": pageToBuy, stats: pageStats, "trial-covers": pageTrialCovers}[key]?.() || (active = "#home", pageHome());
     title = {authors: "Authors", reading: "Reading", history: "History", add: "Add a book", "to-buy": "To buy", stats: "Stats", "trial-covers": "New covers"}[key] || title; }
+  const fromNav = document.getElementById("side").contains(document.activeElement), fromPage = view.contains(document.activeElement);
   view.innerHTML = html; renderNav(active); fitRows();
+  if (!opts.keep && drawn && (fromNav || fromPage) && document.activeElement === document.body)   // the link used was redrawn: focus would fall to nothing
+    ((fromNav && !menuOpen() && document.querySelector(`#nav a[href="${active}"]`)) || view).focus({preventScroll: true});
+  drawn = true;
   document.title = title === "Jemma’s Library" ? title : `${curly(title)} · Jemma’s Library`;
   if (opts.keep) return;
   scrollTo(0, 0);
@@ -1412,11 +1427,17 @@ function fitRows(){
 addEventListener("resize", fitRows);
 
 // ---------- interactions ----------
+// a shelf's books drawn again (filter, view, sort), with keyboard focus put back on the control used
+function redrawShelf(focusSel){
+  const had = document.activeElement && document.getElementById("shelfBooks")?.contains(document.activeElement);
+  document.getElementById("shelfBooks").innerHTML = shelfBooks(currentList);
+  if (had) document.querySelector("#shelfBooks " + focusSel)?.focus({preventScroll: true});
+}
 document.addEventListener("click", e => {
   const t = e.target.closest("button, a[data-jump]"); if (!t) return;
   if (t.dataset.filter || t.dataset.view) {
     if (t.dataset.filter) shelfView.filter = t.dataset.filter; else store.set(VIEW_KEY, t.dataset.view);
-    document.getElementById("shelfBooks").innerHTML = shelfBooks(currentList);
+    redrawShelf(t.dataset.filter ? `[data-filter="${t.dataset.filter}"]` : `[data-view="${t.dataset.view}"]`);
   } else if (t.dataset.jump) { e.preventDefault(); document.getElementById(t.dataset.jump).scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}); }
 });
 document.addEventListener("click", e => { const s = e.target.closest(".spoiler"); if (s) s.classList.toggle("shown"); });
@@ -1430,7 +1451,7 @@ document.addEventListener("keydown", e => { if (e.key === "Escape") pickHide(); 
 addEventListener("hashchange", pickHide);
 document.addEventListener("change", e => {
   const t = e.target;
-  if (t.id === "sort") { shelfView.sort = t.value; document.getElementById("shelfBooks").innerHTML = shelfBooks(currentList); }
+  if (t.id === "sort") { shelfView.sort = t.value; redrawShelf("#sort"); }
   else if (t.id === "pickShelf") { pickShelf = t.value; picked = null; pickNew(); pickShow(); }
 });
 
@@ -1447,7 +1468,7 @@ addEventListener("beforeinstallprompt", e => e.preventDefault());
   if (!a) return;
   const b = bookIndex[a.id]; if (!b) return;
   const note = document.createElement("div"); note.className = "added-note"; note.setAttribute("role", "status");
-  note.innerHTML = `<a href="${href(b)}">${cover(b)}</a><div><span class="label">${ic("check")}Added to ${esc((shelfIndex[b.shelf] || {}).name || "the shelves")}</span>
+  note.innerHTML = `<a href="${href(b)}" tabindex="-1" aria-hidden="true">${cover(b)}</a><div><span class="label">${ic("check")}Added to ${esc((shelfIndex[b.shelf] || {}).name || "the shelves")}</span>
     <a class="t" href="${href(b)}">${esc(b.t)}</a><div class="by">${esc(b.by)}</div>${a.warning ? `<div class="by">${esc(a.warning)}</div>` : ""}</div><button type="button" class="btn quiet" aria-label="Close">${ic("x")}</button>`;
   note.querySelector("button").onclick = () => note.remove();
   document.body.appendChild(note);

@@ -67,8 +67,7 @@ BOOKS = [
     book('old-t3', 'Third Term at Testwood', 'Gwen Ashby', shelf='old-book-collection', published='1950', description='First edition? Probably a reprint'),
     book('old-b2', 'The Mill Mystery', 'Hal Brook', shelf='old-book-collection', published='1938'),
     book('old-fic', 'The Quiet Mill', 'Jon Yard', shelf='old-book-collection', isbn13=OLD_FIC, published='1955'),
-    book('old-odd', 'An Odd Old Almanac', 'Ivy Zane', shelf='old-book-collection', published='1921',
-         description='A long description of an almanac, far longer than a note on her own copy would ever be, so it is shown as a blurb.'),
+    book('old-odd', 'An Odd Old Almanac', 'Ivy Zane', shelf='old-book-collection', published='1921'),   # its blurb is from Open Library (details.json)
 ]
 
 ADDED = [   # two more Moon Harbours added on the site: one with its own cover, one without
@@ -118,6 +117,7 @@ FILES = {
     'signed.json': {'fx-apos': 'to-you'},
     'no-cover.json': {'books': [{'id': 'old-fic', 'title': 'The Quiet Mill'}]},
     'old-books-kinds.json': {'old-fic': 'fiction', 'old-odd': 'non-fiction'},
+    'details.json': {'old-odd': {'description': 'A long description of an almanac, found online rather than her own note, so it is shown as a blurb.'}},
     'elsewhere-shelves.json': {'Borrowed Tale': 'fantasy', 'Someday Story': 'fantasy'},
 }
 

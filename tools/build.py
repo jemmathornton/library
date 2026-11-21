@@ -62,14 +62,54 @@ def shape(path):
         return None
 
 
+# Review, 21 Nov: shop and catalogue leftovers on the ends of blurbs, cut for every book (cuts only, never rewording: her
+# rule). Old books' notes are her own words and are never touched.
+BLURB_CUTS = [
+    re.compile(r'\s*-{4,}\s*A prior editor.*$', re.S | re.I),                           # a reader's comment pasted after the blurb
+    re.compile(r'\s*This work has also been published in multiple volumes\..*$', re.S),  # Open Library's catalogue note
+    re.compile(r'\s*\(?\[source\]\[\d+\]\)?', re.I),                                     # "[Source][1]", "([source][1])"
+    re.compile(r'\s*\[\d+\]:\s*\S+'),                                                     # "[1]: https://…"
+    re.compile(r'\s*(?:…|\.{3})?\s*Full description\s*$', re.I),                         # a shop's "… Full description"
+    re.compile(r'\s*-{1,2}\s*(?:back cover|book jacket)\.?', re.I),
+    re.compile(r'\s*From the (?:trade paperback|mass market paperback|paperback|hardcover|hardback|kindle) edition\.?\s*$', re.I),
+    re.compile(r'\s*Cover illustration by [^.\n]+\.?\s*$'),
+    re.compile(r'\s*(?:\bAges? \d+\s*\+|\b\d+\s*yrs?\s*\+|\bYA)\.?\s*$', re.I),
+]
+MD_LINK = re.compile(r'\[([^\]]+)\]\((?:https?://)[^)]+\)')   # "[words](link)": the words stay, the link goes
+CUT_SHORT = re.compile(r'(?:\s[a-z]|--\S+)\s*$')   # ends in a cut-off word, one letter ("watched h") or a name after a dash ("authors--Jhumpa")
+SENTENCE_END = re.compile(r'[.!?…]["’”)]?(?=\s)')
+
+
+def cut_blurb(text):
+    """A blurb with shop and catalogue leftovers cut off; one that stops mid-word is cut back to its last full sentence."""
+    t = MD_LINK.sub(r'\1', text or '')
+    for _ in range(3):
+        before = t
+        for rx in BLURB_CUTS:
+            t = rx.sub('', t)
+        t = t.strip()
+        if t == before:
+            break
+    if CUT_SHORT.search(t):   # stops mid-word; a sentence that only lacks its full stop is left as it is
+        ends = [m.end() for m in SENTENCE_END.finditer(t)]
+        if ends and ends[-1] >= len(t) * .4:
+            t = t[:ends[-1]]
+    return t
+
+
 def fix_names(books, fixes):
     """Libib's author names tidied (data/name-fixes.json); the surname the shelves file by follows the tidied first author."""
     for b in books:
-        b['title'] = fixes.get('titles', {}).get(b['title'], b['title'])
-        authors = fixes['books'].get(b['title']) or b.get('authors') or []
+        b['title'] = was = fixes.get('titles', {}).get(b['title'], b['title'])
+        t = re.sub(r'\bSt\.(?=[A-Z])', 'St ', b['title'])
+        t = re.sub(r'\s+Pa$', '', t)
+        t = re.sub(r'^(.+), The$', r'The \1', t)
+        b['title'] = t
+        authors = fixes['books'].get(was) or fixes['books'].get(t) or b.get('authors') or []
         out, seen = [], set()
         for a in authors:
             name = fixes['names'].get(a['name'], a['name'])
+            name = re.sub(r'^([A-Za-z]{3,})\. (?=[A-Z])', r'\1 ', name)
             if name in fixes['remove'] or name in seen:
                 continue
             seen.add(name)
@@ -88,6 +128,9 @@ def build():
     covers = load('covers.json', {})
     # books.json is the Libib import (a re-import overwrites it); added.json holds books added on the site since
     books, wish = load('books.json') + load('added.json', []), load('to-buy.json', [])
+    for b in books:
+        if b.get('shelf') == 'old-book-collection' and b.get('description'):
+            b['oldNote'] = True   # her own words about her copy, shown under Details as Edition
     details = load('details.json', {})   # Open Library's description, pages, publisher: only where the book has none
     for b in books:
         for f, v in details.get(b['id'], {}).items():
@@ -98,6 +141,8 @@ def build():
         if b['id'] in blurbs:
             b['description'] = blurbs[b['id']]
         b.update(put_right.get(b['id'], {}))
+        if b.get('description') and not b.get('oldNote'):
+            b['description'] = cut_blurb(b['description'])
     gone = {x['id'] for x in load('removed.json', [])}   # duplicates she has said aren't real copies
     books = [b for b in books if b['id'] not in gone]
     signed = {k: v for k, v in load('signed.json', {}).items() if not k.startswith('_')}   # her signed copies (1 Nov)
@@ -136,9 +181,12 @@ def build():
                 b['title'] += f" ({editions[b['id']]})"
             b['special'] = editions[b['id']]
     sg = load('storygraph.json', {'books': []})
-    for e in sg['books']:   # her reading's authors tidied like her shelves' ("J.K. Rowling" -> "J. K. Rowling", 19 Nov)
-        if isinstance(e.get('authors'), str):
-            e['authors'] = ', '.join(fixes['names'].get(n.strip(), n.strip()) for n in e['authors'].split(','))
+    squash = lambda n: re.sub(r'[^a-z]', '', n.lower())
+    shelf_names = {squash(a['name']): a['name'] for b in books for a in b.get('authors', [])}
+    for e in sg['books']:   # her reading's authors tidied like her shelves' ("J.K. Rowling" -> "J. K. Rowling", 19 Nov;
+        if isinstance(e.get('authors'), str):   # and as spelt on her shelves when only dots and spaces differ, 21 Nov)
+            names = (fixes['names'].get(n.strip(), n.strip()) for n in e['authors'].split(','))
+            e['authors'] = ', '.join(shelf_names.get(squash(n), n) for n in names)
     fixes_r = {k: v for k, v in load('reading-fixes.json', {}).items() if not k.startswith('_')}   # statuses she has corrected
     for e in sg['books']:
         fix = fixes_r.get(e['title'])

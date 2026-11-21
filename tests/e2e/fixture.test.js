@@ -315,7 +315,7 @@ test("an old book with only a modern cover shows a title card", async () => {
   ok($(".book-hero .cover.blank", view()) && !$(".book-hero .cover img", view()), "not a title card");
 });
 
-test("an old book’s own short note shows under Details as Edition, a long one as a blurb", async () => {
+test("an old book’s own note shows under Details as Edition; a blurb found online shows as a blurb", async () => {   // by where it came from, not its length (21 Nov)
   await go("#b-old-t1");
   ok(!$("p.desc", view()), "note shown as a blurb");
   const ed = $$(".facts dt", view()).find(dt => dt.textContent.trim() === "Edition");

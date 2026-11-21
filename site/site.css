@@ -7,7 +7,7 @@
 :root{
   --paper:#F3EAD5; --surface:#FAF4E6; --ink:#2B2017; --muted:#6F5F48; --line:#D9C9A6; --soft:#EADFC6;
   --nav:#3B2616; --deep:#3B2616; --deep-2:#5E3D22; --on-deep:#FBF4E6; --on-deep-mute:color-mix(in srgb,#fff 62%,var(--deep));
-  --brass:#E4B23C; --done:#8A4B17; --reading:#B8861A;
+  --brass:#E4B23C; --done:#8A4B17; --reading:#B8861A; --reading-ink:#7E5B0E;   /* reading-ink: the reading gold dark enough to read as text (review, 21 Nov) */
   --focus:var(--deep-2);   /* keyboard focus on cream: walnut (brass is too faint there); brass in dark mode */
   --display:"Instrument Serif","Iowan Old Style","Palatino Linotype",Georgia,serif;
   --body:"Manrope","Segoe UI",system-ui,sans-serif;
@@ -24,7 +24,7 @@
 /* dark mode: only when she presses the Dark mode button at the bottom of the page (her rule for all her sites, 21 Nov; it used
    to follow the device). The binding stays; the paper becomes a dark warm page, the gilt brighter. */
 :root[data-mode="dark"]{
-  --paper:#1C1610; --surface:#251D15; --ink:#EFE4D0; --muted:#B6A587; --line:#43362A; --soft:#2D2319; --done:#E0A15A; --focus:var(--brass);
+  --paper:#1C1610; --surface:#251D15; --ink:#EFE4D0; --muted:#B6A587; --line:#43362A; --soft:#2D2319; --done:#E0A15A; --focus:var(--brass); --reading-ink:#E0B65A;
   --accent:#D9B25E; --gilt-ink:#E2C47A; --text:#E6DAC4; --mount:#2A2119; --mount-edge:#4A3B2C; --mount-edge-2:#3C3024; --leaf-a:#2B2219; --leaf-b:#3D3125; --shade:rgba(0,0,0,.6);
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .95 0 0 0 0 .85 0 0 0 0 .65 0 0 0 .045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   color-scheme:dark }
@@ -102,8 +102,8 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .hero h1 em{color:var(--accent)}
 .hero p{margin:20px 0 0;max-width:34ch;color:var(--ink);font:italic 400 21px/1.45 var(--read)}
 /* the figures as a ruled line of a title page */
-.figures{display:flex;flex-wrap:wrap;gap:0;margin-top:30px;max-width:58%;border-top:3px double var(--line);border-bottom:1px solid var(--line)}
-.figures div{display:grid;padding:12px 26px 10px;border-left:1px solid var(--line);text-align:center}
+.figures{display:flex;flex-wrap:wrap;gap:0;margin-top:30px;max-width:64%;border-top:3px double var(--line);border-bottom:1px solid var(--line)}
+.figures div{display:grid;padding:12px 20px 10px;border-left:1px solid var(--line);text-align:center}
 .figures div:first-child{border-left:0;padding-left:0;text-align:left}
 .figures b{font:400 42px/1 var(--display);font-variant-numeric:oldstyle-nums;color:var(--ink)}
 .figures span{color:var(--muted);font:italic 400 15px/1.2 var(--read)}
@@ -154,7 +154,7 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .blist span{color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .blist .st{font-size:12.5px;font-weight:700}
 .blist .st.read{color:var(--done)}
-.blist .st.reading{color:var(--reading)}
+.blist .st.reading{color:var(--reading-ink)}
 
 /* toolbar */
 .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;margin:34px 0 26px}
@@ -241,7 +241,7 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .wish-item .cover.blank .a{display:none}
 .wish-item h3{font-size:22px;line-height:1.05}
 .wish-item .by{font-size:13.5px;color:var(--muted)}
-.wish-item .flag{display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:700;color:#8A4B17;background:color-mix(in srgb,var(--brass) 26%,transparent);padding:3px 9px;border-radius:99px;text-decoration:none}
+.wish-item .flag{display:inline-flex;align-items:center;gap:6px;margin-top:6px;font-size:12px;font-weight:700;color:var(--done);background:color-mix(in srgb,var(--brass) 26%,transparent);padding:3px 9px;border-radius:99px;text-decoration:none}
 
 /* ---------- stats ---------- */
 .ledger{margin-top:34px;border-radius:22px;padding:30px clamp(20px,4vw,40px);background:var(--deep);color:var(--on-deep)}
@@ -250,7 +250,7 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .meter b{font:400 50px/1 var(--display);font-variant-numeric:tabular-nums}
 .meter span{font-size:13px;color:var(--on-deep-mute);font-weight:600}
 .bars{display:grid;gap:10px}
-.bar-row{display:grid;grid-template-columns:200px minmax(0,1fr) 80px;gap:16px;align-items:center;font-size:14px;text-decoration:none}
+.bar-row{display:grid;grid-template-columns:200px minmax(0,1fr) 130px;gap:16px;align-items:center;font-size:14px;text-decoration:none}
 .bar-row .track{height:12px;border-radius:99px;background:var(--soft);overflow:hidden}
 .bar-row .track i{display:block;height:100%;border-radius:99px;background:var(--c,var(--deep-2))}
 .bar-row b{font-weight:700}
@@ -307,7 +307,7 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .blist .cover .rated{display:none}
 
 /* series */
-.in-series{display:inline-flex;align-items:center;gap:7px;margin-top:12px;font-size:14px;font-weight:700;color:var(--accent);text-decoration:none}
+.in-series{display:inline-flex;align-items:center;gap:7px;margin-top:12px;font-size:14px;font-weight:700;color:var(--gilt-ink);text-decoration:none}
 .in-series:hover{text-decoration:underline}
 .in-series+.in-series{margin-left:16px}
 .cover.gap{background:transparent;box-shadow:none;border:1.5px dashed color-mix(in srgb,var(--muted) 45%,transparent)}
@@ -322,11 +322,11 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .add-form{margin-top:36px;max-width:860px;display:grid;gap:22px}
 .add-form label{display:grid;gap:5px;font-size:12px;font-weight:700;color:var(--muted)}
 .add-form input,.add-form select{padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--surface);font-size:15px;font-weight:600;color:var(--ink);width:100%}
-.add-form input:focus,.add-form select:focus{outline:none;border-color:var(--brass)}
+.add-form input:focus,.add-form select:focus{outline:2px solid var(--focus);outline-offset:1px;border-color:var(--brass)}
 .isbn-row{display:flex;gap:12px;align-items:flex-end}
 .isbn-row label{flex:1;max-width:340px}
 .isbn-row input{font-size:20px;letter-spacing:.06em;font-variant-numeric:tabular-nums}
-.add-note{margin:0;font-size:14px;font-weight:600;color:var(--reading)}
+.add-note{margin:0;font-size:14px;font-weight:600;color:var(--reading-ink)}
 .add-main{display:grid;grid-template-columns:150px minmax(0,1fr);gap:28px;align-items:start}
 .add-cover{width:150px}
 .add-cover>.cover{width:150px}
@@ -379,7 +379,7 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .now-card:hover{border-color:var(--muted)}
 .now-card h3{font-size:26px;line-height:1.05;margin-top:6px}
 .now-card .by{font-size:13.5px;color:var(--muted);margin-top:4px}
-.now-card .label{color:var(--reading)}
+.now-card .label{color:var(--reading-ink)}
 .wish-item h3.long{font-size:17px;line-height:1.2}
 /* books she has read but doesn't own, on the shelves: faded cover, walnut band (her choice, 18 Oct) */
 .cover.unowned img{opacity:.4;filter:grayscale(.6)}
@@ -596,8 +596,8 @@ main::after{content:"";position:fixed;top:0;bottom:0;right:0;width:7px;pointer-e
 
 /* section headings: centred, over a fading rule with a printer’s ornament */
 .section-head{position:relative;justify-content:center;border-bottom:0;padding-bottom:26px;margin-top:58px}
-.section-head::before{content:"";position:absolute;left:0;right:0;bottom:9px;height:1px;background:linear-gradient(90deg,transparent,var(--line) 20%,var(--line) 80%,transparent)}
-.section-head::after{content:"❦";position:absolute;left:50%;bottom:0;transform:translateX(-50%);padding:0 14px;font-size:18px;line-height:1;color:var(--gilt);background:var(--paper)}
+.section-head::before{content:"";position:absolute;left:0;right:0;bottom:9px;height:1px;background:linear-gradient(90deg,transparent,var(--line) 20%,var(--line) calc(50% - 22px),transparent calc(50% - 22px),transparent calc(50% + 22px),var(--line) calc(50% + 22px),var(--line) 80%,transparent)}
+.section-head::after{content:"❦";position:absolute;left:50%;bottom:0;transform:translateX(-50%);padding:0 14px;font-size:18px;line-height:1;color:var(--gilt)}
 .section-head h2{font-size:42px;text-align:center}
 .section-head h2 em{color:var(--accent)}
 .section-head .pick-open,.section-head .more{position:absolute;right:0;top:50%;transform:translateY(-70%)}
@@ -646,6 +646,10 @@ main::after{content:"";position:fixed;top:0;bottom:0;right:0;width:7px;pointer-e
 .facts dd{font-weight:500}
 .facts select{font-family:var(--read)}
 .review{font:italic 400 18px/1.6 var(--read);border-left:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);border-radius:0;background:transparent}
+
+/* the search box's clear button: gilt on the cloth, not the browser's blue (review, 21 Nov) */
+.search input::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none;width:14px;height:14px;cursor:pointer;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23E2C47A' stroke-width='2.5' stroke-linecap='round'%3E%3Cpath d='M18 6 6 18M6 6l12 12'/%3E%3C/svg%3E") center/contain no-repeat}
 
 /* ---------- phones and narrow windows (21 Nov, her ask): a slim cloth top bar; the sidebar opens over the page as a drawer ---------- */
 /* the same pattern as her Sim World app (top bar with a menu button, drawer from the left, a dark layer behind it), in the Bound book look */
