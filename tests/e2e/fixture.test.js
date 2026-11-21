@@ -648,3 +648,30 @@ test("dark mode: the page’s words are easy to read (4.5:1 or more against the 
   swatch.remove();
   eq(low, [], "too faint in dark mode:");
 });
+
+test("light mode: grey label text (the muted colour) is 4.5:1 or more on the page, panels and cards it sits on", async () => {
+  eq(mode(), "light");
+  const lum = c => { const v = c.match(/[\d.]+/g).slice(0, 3).map(Number).map(x => { x /= 255; return x <= .03928 ? x / 12.92 : ((x + .055) / 1.055) ** 2.4; }); return .2126 * v[0] + .7152 * v[1] + .0722 * v[2]; };
+  const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => p - q); return (y + .05) / (x + .05); };
+  const swatch = document.createElement("i"); document.body.append(swatch);
+  const rgb = v => { swatch.style.color = v; return getComputedStyle(swatch).color; };
+  const css = getComputedStyle(document.documentElement), tok = n => rgb(css.getPropertyValue(n).trim());
+  const muted = tok("--muted"), low = [];
+  for (const bg of ["--paper", "--surface", "--soft", "--mount"]) { const r = ratio(muted, tok(bg)); if (r < 4.5) low.push(`--muted on ${bg}: ${r.toFixed(2)}`); }
+  swatch.remove();
+  // every word shown in the muted colour, on every kind of page, against the nearest solid background behind it
+  const solid = el => { for (; el; el = el.parentElement) { const c = getComputedStyle(el).backgroundColor, a = c.match(/[\d.]+/g); if (a && (a.length < 4 || +a[3] === 1)) return c; } return getComputedStyle(document.body).backgroundColor; };
+  const routes = ["#home", "#shelves", "#authors", "#reading", "#history", "#add", "#to-buy", "#stats", "#old-to-find",
+    ...OLD_KINDS.map(k => "#old-" + k[0]), ...DATA.shelves.map(s => "#shelf-" + s.id), ...DATA.books.slice(0, 8).map(b => "#b-" + b.id)];
+  let seen = 0;
+  for (const h of routes) {
+    await show(h);
+    for (const el of $$("main *")) {
+      if (getComputedStyle(el).color !== muted || !el.offsetParent || ![...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) continue;
+      seen++;
+      const r = ratio(muted, solid(el)); if (r < 4.5) low.push(`${h} ${el.tagName.toLowerCase()}.${String(el.className).split(" ")[0]} “${el.textContent.trim().slice(0, 30)}”: ${r.toFixed(2)}`);
+    }
+  }
+  ok(seen > 20, `only ${seen} muted words found: is the sweep looking in the right place?`);
+  eq([...new Set(low)], [], "too faint in light mode:");
+});

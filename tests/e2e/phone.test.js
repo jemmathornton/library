@@ -171,6 +171,40 @@ test("the Stats figures panel fits: every number shows whole", async () => {
   eq(cut.map(b => b.textContent), [], "numbers cut off:");
 });
 
+// the Stats page's charts at a width: labels that overlap each other, or a label or number that runs into its bar
+function statsClashes(doc){
+  const bad = [], hit = (a, b) => a.left < b.right - .5 && b.left < a.right - .5 && a.top < b.bottom - .5 && b.top < a.bottom - .5;
+  const box = el => { const r = doc.createRange(); r.selectNodeContents(el); return r.getBoundingClientRect(); };
+  for (const d of doc.querySelectorAll("#view .decades")) {
+    const ls = [...d.querySelectorAll("b, span")].filter(x => x.textContent.trim() && x.offsetParent).map(x => [x.textContent, box(x)]);
+    for (let i = 0; i < ls.length; i++) for (let j = i + 1; j < ls.length; j++) if (hit(ls[i][1], ls[j][1])) bad.push(`${ls[i][0]} overlaps ${ls[j][0]}`);
+  }
+  for (const r of doc.querySelectorAll("#view .bar-row")) {
+    const t = r.querySelector(".track").getBoundingClientRect(), b = r.querySelector("b"), s = r.querySelector("span");
+    if (box(b).right > t.left + .5) bad.push(`“${b.textContent}” runs into its bar`);
+    if (box(s).left < t.right - .5) bad.push(`${s.textContent} runs into its bar`);
+    if (b.title !== b.textContent) bad.push(`“${b.textContent}” has no full name to hover`);
+  }
+  return bad;
+}
+
+test("the Stats page at 390, 360 and 320 wide: no labels overlap and none runs into its bar", async () => {
+  await show("#stats");
+  ok($$(".decades span", view()).length > 12, "her library has more than twelve decades (the crowded case)");
+  ok($$(".bar-row b", view()).some(b => b.textContent.length > 20), "a long publisher name is there to test");
+  eq(statsClashes(document), [], `at ${W()} wide:`);
+  for (const w of [360, 320]) {
+    const f = document.createElement("iframe"); f.src = "index.html#stats"; f.style.cssText = `position:fixed;left:-3000px;top:0;width:${w}px;height:800px;border:0`;
+    document.body.append(f);
+    try {
+      await new Promise(r => f.onload = r);
+      await until(() => f.contentDocument.querySelectorAll("#view .decades span").length > 12, `the Stats page at ${w} wide`);
+      eq(f.contentWindow.innerWidth, w, "frame width:");
+      eq(statsClashes(f.contentDocument), [], `at ${w} wide:`);
+    } finally { f.remove(); }
+  }
+});
+
 
 test("Back to top and Dark mode sit side by side at the bottom of a phone page, big enough to tap", async () => {
   await show("#reading");

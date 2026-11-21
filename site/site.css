@@ -5,7 +5,7 @@
    (paper grain, a gutter shadow by the binding, page edges on the right), banners as title pages with a tipped-in plate
    of covers, centred headings with a printer's ornament, reading text in EB Garamond. Shelf colours stay dots. */
 :root{
-  --paper:#F3EAD5; --surface:#FAF4E6; --ink:#2B2017; --muted:#7A6A52; --line:#D9C9A6; --soft:#EADFC6;
+  --paper:#F3EAD5; --surface:#FAF4E6; --ink:#2B2017; --muted:#6F5F48; --line:#D9C9A6; --soft:#EADFC6;
   --nav:#3B2616; --deep:#3B2616; --deep-2:#5E3D22; --on-deep:#FBF4E6; --on-deep-mute:color-mix(in srgb,#fff 62%,var(--deep));
   --brass:#E4B23C; --done:#8A4B17; --reading:#B8861A;
   --focus:var(--deep-2);   /* keyboard focus on cream: walnut (brass is too faint there); brass in dark mode */
@@ -766,4 +766,9 @@ main::after{content:"";position:fixed;top:0;bottom:0;right:0;width:7px;pointer-e
   .decades{gap:3px}
   .decades div{min-width:0}
   .decades b,.decades span{font-size:10.5px}
+  /* more than twelve bars (when they were published, by decade): the numbers and decades stand on end so they don't
+     run into each other (21 Nov, her yes); a word too long for the label column breaks rather than run into its bar */
+  .decades.many{gap:2px}
+  .decades.many b,.decades.many span{writing-mode:vertical-rl;transform:rotate(180deg);line-height:1.15;white-space:nowrap}
+  .bar-row b{overflow-wrap:anywhere}
 }
