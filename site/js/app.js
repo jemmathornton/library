@@ -385,7 +385,9 @@ function pageHome(){
   const unreadOwned = booksUnread(BOOKS);   // each book once, like "read" (review, 15 Nov)   // her to-read list is for borrowing, not this site (1 Nov)
   const recent = [...BOOKS].sort(SORTS.added[1]).slice(0, 6);
   const fan = s => { const withCover = s.books.filter(b => b.cover), pick = (withCover.length >= 3 ? withCover : s.books).slice(0, 3); return pick.map(b => cover(b)).join(""); };
-  const shortDate = d => { const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(d || ""); return m ? `${+m[3]} ${MON[m[2] - 1]}` : ""; };
+  const shortDate = d => { const m = /^(\d{4})(?:-(\d{2}))?(?:-(\d{2}))?/.exec(d || ""); if (!m) return "";   // the year too when it isn't this one (review, 21 Nov)
+    const y = m[1] === thisYear ? "" : " " + m[1];
+    return m[3] ? `${+m[3]} ${MON[m[2] - 1]}${y}` : m[2] ? `${MON[m[2] - 1]} ${m[1]}` : m[1]; };
   return hero({kicker: "Home library", title: "Jemma’s <em>Library</em>", covers: [...BOOKS].sort(SORTS.added[1]),
       text: "Every book on the shelves at home, and everything you read.",
       figures: [[num(yearReads), `read in ${thisYear}`], [num(BOOKS.length), "books on the shelves"], [num(unreadOwned), "not read yet on your shelves"], [num(AUTHORS.length), "authors"]]})
@@ -444,7 +446,7 @@ function pageAllShelves(){
 }
 function pageShelf(s){
   currentList = s.books.concat(s.notOwned || []); currentGrouped = false; currentShelf = s.id;
-  const authors = new Set(s.books.map(b => b.by)).size, pages = s.books.reduce((n, b) => n + (b.pages || 0), 0);
+  const authors = new Set(s.books.flatMap(b => (b.authors || []).filter(a => !a.role).map(a => slug(a.name)))).size, pages = s.books.reduce((n, b) => n + (b.pages || 0), 0);
   return hero({kicker: `<a href="#home">Shelf</a>`, title: esc(s.name), color: s.color, text: s.note ? esc(s.note) : "", covers: [...s.books].sort(SORTS.author[1]),
       figures: [[num(s.books.length), "books"], [num(authors), "authors"], [num(booksRead(s.books)), "read"], ...((s.notOwned || []).filter(isRead).length ? [[num(s.notOwned.filter(isRead).length), "read but not owned"]] : []), [num(pages), "pages"]]})
     + `<div id="shelfBooks">${shelfBooks(currentList)}</div>`;
@@ -1184,7 +1186,7 @@ document.addEventListener("click", async e => {
     catch { addForm.note = "Couldn’t reach Open Library. Fill in the details yourself."; }
     if (camChecked) { camChecked = false; addForm.note = `Read from a picture: check ${addForm.isbn} matches the book. ` + addForm.note; }
     const typed = isbn13Of(addForm.isbn), have = BOOKS.find(b => (typed && b.isbn13 === typed) || (b.shopCode && b.shopCode === addForm.isbn));
-    if (have) addForm.note = `You already have this one: ${have.t}. Add it again only if it’s a second copy.`;
+    if (have) addForm.note = `You already have this one: ${have.t}. Add it again only if it’s a second copy. ` + (addForm.note || "");   // added to, not replacing (review, 21 Nov)
     return redrawAdd();
   }
   if (e.target.closest("#addSave")) {
@@ -1302,12 +1304,21 @@ function pageSearch(term){
     + (away.length ? sectionHead("Read or to read, <em>not on your shelves</em>") + grid(away) : "")
     + (wish.length ? sectionHead("On the <em>to-buy list</em>") + `<div class="books">${wish.map(w => `<a class="bk" ${cardShape(w)} href="#to-buy"><div class="slot">${cover(w)}</div><h3>${esc(w.t)}</h3><div class="by">${esc(w.by)}</div></a>`).join("")}</div>` : "");
 }
-q.addEventListener("input", () => { const v = q.value.trim(); if (location.hash === "#add") readAdd();
-  if (v.length >= 2) { document.getElementById("view").innerHTML = pageSearch(v); scrollTo(0, 0); } else { addFromWish = !!addForm.fromWish; route(); } });
-q.addEventListener("keydown", e => { if (e.key === "Escape") { q.value = ""; addFromWish = !!addForm.fromWish; route(); } });
-document.addEventListener("click", e => {   // a sidebar link or the title: the search goes; on the same page it's redrawn (review, 9 Nov)
-  const a = e.target.closest("#nav a, a.brand"); if (!a || !q.value) return;
-  q.value = "";
+// Review, 21 Nov: clearing the search used to redraw the page from scratch (a shelf's filter and sort lost, back to the top,
+// and on a phone the drawer shut after the first letter). Now the page under the results is put back as it was.
+let searchFrom = null;   // how far down the page was when the results replaced it; null: no results showing
+function endSearch(){
+  if (searchFrom === null) return;
+  const y = searchFrom; searchFrom = null;
+  if (location.hash === "#add") readAdd();
+  addFromWish = !!addForm.fromWish; route(undefined, {keep: true}); scrollTo(0, y);
+}
+q.addEventListener("input", () => { const v = q.value.trim(); if (location.hash === "#add" && searchFrom === null) readAdd();
+  if (v.length >= 2) { if (searchFrom === null) searchFrom = scrollY; document.getElementById("view").innerHTML = pageSearch(v); scrollTo(0, 0); } else endSearch(); });
+q.addEventListener("keydown", e => { if (e.key === "Escape" && q.value) { e.stopPropagation(); q.value = ""; endSearch(); } });   // empty: Escape is the drawer's
+document.addEventListener("click", e => {   // any link while results show: the search goes; a link to the page underneath redraws it (reviews 9 and 21 Nov)
+  const a = e.target.closest('a[href^="#"]:not([data-jump])'); if (!a || searchFrom === null) return;
+  q.value = ""; searchFrom = null;
   if ((a.getAttribute("href") || "") === (location.hash || "#home")) route();
 });
 
@@ -1369,13 +1380,14 @@ toTop.addEventListener("click", () => {
 });
 
 // ---------- routing ----------
-function route(page){   // page: only the tests pass one (they open a thousand pages; the browser limits address changes)
+function route(page, opts = {}){   // page: only the tests pass one (they open a thousand pages; the browser limits address changes)
+  // opts.keep: the same page drawn again after a search (its shelf filter and sort kept, the drawer left as it is)
   const key = page || location.hash.slice(1) || "home", view = document.getElementById("view");
   let html, active = "#" + key, title = "Jemma’s Library";
   if (key === "add" && !addFromWish && addForm.fromWish) addForm = {isbn: "", title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", note: "", busy: false};
   addFromWish = false;
-  if (key.startsWith("shelf-") && shelfIndex[key.slice(6)]) { shelfView = {...SHELF_VIEW}; const s = shelfIndex[key.slice(6)]; html = pageShelf(s); title = s.name; }
-  else if (key === "shelves") { shelfView = {...SHELF_VIEW}; html = pageAllShelves(); title = "All shelves"; }
+  if (key.startsWith("shelf-") && shelfIndex[key.slice(6)]) { if (!opts.keep) shelfView = {...SHELF_VIEW}; const s = shelfIndex[key.slice(6)]; html = pageShelf(s); title = s.name; }
+  else if (key === "shelves") { if (!opts.keep) shelfView = {...SHELF_VIEW}; html = pageAllShelves(); title = "All shelves"; }
   else if (key.startsWith("b-") && bookIndex[key.slice(2)]) { const b = bookIndex[key.slice(2)]; html = pageBook(b); active = b.shelf === COLLECTION ? "#old-" + ((DATA.oldKinds || {})[b.id] || "childrens") : "#shelf-" + b.shelf; title = b.t; }
   else if (key.startsWith("r-") && SG.books[+key.slice(2)] && !SG.books[+key.slice(2)].books && ELSEWHERE.includes(SG.books[+key.slice(2)])) { const e = SG.books[+key.slice(2)]; html = pageSgBook(e); active = e.shelf ? "#shelf-" + e.shelf : "#reading"; title = e.t; }
   else if (key === "old-to-find") { html = pageOldToFind(); title = "Old books to find"; }
@@ -1385,10 +1397,11 @@ function route(page){   // page: only the tests pass one (they open a thousand p
     title = {authors: "Authors", reading: "Reading", history: "History", add: "Add a book", "to-buy": "To buy", stats: "Stats", "trial-covers": "New covers"}[key] || title; }
   view.innerHTML = html; renderNav(active); fitRows();
   document.title = title === "Jemma’s Library" ? title : `${curly(title)} · Jemma’s Library`;
+  if (opts.keep) return;
   scrollTo(0, 0);
   if (menuOpen()) setMenu(false);
 }
-addEventListener("hashchange", () => { q.value = ""; route(); });
+addEventListener("hashchange", () => { q.value = ""; searchFrom = null; route(); });
 // a home row shows only the books that fit whole (review, 2 Nov: a wide cover or a narrow window cut the last one in half)
 function fitRows(){
   document.querySelectorAll(".books.row").forEach(row => {

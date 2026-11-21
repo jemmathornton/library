@@ -58,7 +58,7 @@ const freshAdd = () => { addForm = {isbn: "", title: "", authors: "", publisher:
 // everything a test may have changed, put back
 function resetPage(){
   fake = null; sent.length = 0;
-  q.value = ""; freshAdd(); addFromWish = false; shelfView = {...SHELF_VIEW};
+  q.value = ""; searchFrom = null; freshAdd(); addFromWish = false; shelfView = {...SHELF_VIEW};
   try { localStorage.removeItem(VIEW_KEY); } catch {}
   pickHide(); document.getElementById("spineCard")?.remove();
   if (typeof setMenu === "function" && document.body.classList.contains("nav-open")) setMenu(false);   // the phone drawer (21 Nov)

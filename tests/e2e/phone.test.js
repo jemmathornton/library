@@ -214,3 +214,11 @@ test("Back to top and Dark mode sit side by side at the bottom of a phone page, 
   ok(t.left >= 0 && m.right <= W(), "inside the screen");
   ok(t.top >= view().getBoundingClientRect().bottom - 1, "below the page");
 });
+
+test("typing in the drawer’s search keeps the drawer open, letter by letter, and Escape in the empty box closes it", async () => {   // review, 21 Nov
+  click(menuButton()); ok(isOpen());
+  for (const v of ["t", "th", "t", ""]) { type(q, v); ok(isOpen(), `closed after “${v}”`); }
+  q.focus();
+  q.dispatchEvent(new KeyboardEvent("keydown", {key: "Escape", bubbles: true}));
+  ok(!isOpen(), "Escape in the empty box closes the drawer");
+});

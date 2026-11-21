@@ -490,6 +490,50 @@ test("Look it up says when she already has the book, however the ISBN is typed",
   }
 });
 
+test("“you already have it” is added to the lookup’s own note, not put in its place", async () => {   // review, 21 Nov
+  fake = {"api/lookup": () => ({error: true})};
+  freshAdd(); await go("#add");
+  $("#add-isbn").value = "9790000000073";
+  click($("#addLookup")); await until(() => !addForm.looking, "the lookup");
+  ok(/You already have this one/.test(view().innerText), "already have");
+  ok(/The lookup didn’t work this time/.test(view().innerText), "the lookup's own note kept");
+});
+
+// ---------- the search over a page (review, 21 Nov) ----------
+test("clearing the search puts the shelf back as it was: its filter, sort and place on the page", async () => {
+  const s = DATA.shelves.find(x => shelfIndex[x.id]?.books.length > 2);
+  await go("#shelf-" + s.id);
+  click($('[data-filter="read"]')); const before = [countText(), shownBooks().join()];
+  type(q, "x");
+  eq([countText(), shownBooks().join()], before, "one letter typed changes nothing:");
+  type(q, "zz"); ok(/Results for/.test(view().innerText), "results");
+  type(q, "");
+  eq([countText(), shownBooks().join()], before, "after clearing:");
+  ok($('[data-filter="read"]').classList.contains("on"), "the Read filter is still on");
+  type(q, "zz");
+  q.dispatchEvent(new KeyboardEvent("keydown", {key: "Escape", bubbles: true}));
+  eq(q.value, "", "Escape clears the box");
+  eq([countText(), shownBooks().join()], before, "after Escape:");
+});
+
+test("a search result that leads to the page underneath opens it, not the results again", async () => {
+  await go("#home");
+  type(q, BOOKS[0].t.slice(0, 4));
+  ok(/Results for/.test(view().innerText));
+  const homeLink = document.createElement("a"); homeLink.href = "#home"; view().append(homeLink);   // e.g. the phone top bar's name
+  click(homeLink);
+  ok(!/Results for/.test(view().innerText), "the page is back");
+  eq(q.value, "", "the search box is emptied");
+});
+
+test("a shelf’s authors figure counts people: a book by two people counts both, and each person once", async () => {   // review, 21 Nov
+  for (const s of SHELVES.filter(x => x.books.length)) {
+    await show("#shelf-" + s.id);
+    const want = new Set(s.books.flatMap(b => (b.authors || []).filter(a => !a.role).map(a => a.name))).size;
+    eq(figures().authors, want, s.name);
+  }
+});
+
 test("a failed lookup keeps a Got-it book’s title and author", async () => {
   fake = {"api/lookup": () => ({found: false})};
   await go("#to-buy");

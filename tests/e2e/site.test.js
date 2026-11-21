@@ -65,7 +65,8 @@ test("every shelf’s banner figures count what they say", async () => {
   const wrong = [];
   for (const s of SHELVES.filter(s => s.books.length)) {
     await go("#shelf-" + s.id);
-    const f = figures(), want = {books: s.books.length, authors: new Set(s.books.map(b => b.by)).size, read: booksRead(s.books),
+    const f = figures(), want = {books: s.books.length, authors: new Set(s.books.flatMap(b => (b.authors || []).filter(a => !a.role).map(a => a.name.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").trim()))).size,   // people, not "A & B" strings (review, 21 Nov)
+      read: booksRead(s.books),
       pages: s.books.reduce((n, b) => n + (b.pages || 0), 0), ...((s.notOwned || []).some(isRead) ? {"read but not owned": s.notOwned.filter(isRead).length} : {})};
     for (const [k, v] of Object.entries(want)) if (f[k] !== v) wrong.push(`${s.id}: “${k}” says ${f[k]}, should be ${v}`);
     if (navCount("#shelf-" + s.id) !== null && navCount("#shelf-" + s.id) !== f.books) wrong.push(`${s.id}: sidebar ${navCount("#shelf-" + s.id)}, banner ${f.books}`);
