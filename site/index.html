@@ -21,7 +21,7 @@
      research/family-rules.md in Jemma's Journals). One key for every site, localStorage "jj-mode" (the old "jemmas-library-mode" is moved
      over once). Set here, before the page is drawn, so it never flashes. -->
 <script>(function(){var m=null;try{m=localStorage.getItem("jj-mode");if(m===null){m=localStorage.getItem("jemmas-library-mode");if(m)localStorage.setItem("jj-mode",m)}localStorage.removeItem("jemmas-library-mode")}catch(e){}var d=m==="dark";document.documentElement.setAttribute("data-mode",d?"dark":"light");if(d)document.querySelector('meta[name="theme-color"]').setAttribute("content","#1C1610")})()</script>
-<link rel="stylesheet" href="site.css?v=f943a359">
+<link rel="stylesheet" href="site.css?v=9b794d56">
 </head>
 <body>
 <a class="skip" href="#view" onclick="event.preventDefault();document.getElementById('view').focus()">Skip to the page</a>
@@ -40,12 +40,12 @@
 <!-- at the bottom of every page (21 Nov, the family rules shared by all her sites, as on Jemma's Journals): the name, the two About
      lines (line 1 the same on every site; line 2 the Library's own credits), then Back to top and Dark/Light mode; js/app.js fills the icons -->
 <footer class="foot"><div class="foot-orn" aria-hidden="true"><span>❦</span></div><b class="foot-name">Jemma’s Library</b>
-  <div class="about-site"><p>No cookies, no tracking, no ads. Made with plain HTML and CSS, kept on GitHub.</p>
+  <div class="about-site"><p>No cookies, no tracking, no ads. Made with HTML, CSS and JavaScript, kept on GitHub.</p>
     <p><span class="cr">Book covers from their publishers</span><span class="sep" aria-hidden="true">&nbsp;·</span> <span class="cr">Some book details from Open Library</span><span class="sep" aria-hidden="true">&nbsp;·</span> <span class="cr">Fonts: Instrument Serif, Manrope and EB Garamond</span><span class="sep" aria-hidden="true">&nbsp;·</span> <span class="cr">Icons by Lucide</span></p></div>
   <div class="foot-links"><button type="button" class="totop" id="toTop"></button><button type="button" class="mode-text" id="modeBtn" aria-pressed="false"></button></div></footer></main>
 
 <script src="js/icons.js?v=462de08a"></script>
 <script src="js/data.js?v=3055a4f6"></script>
-<script src="js/app.js?v=042576d7"></script>
+<script src="js/app.js?v=e004218c"></script>
 </body>
 </html>

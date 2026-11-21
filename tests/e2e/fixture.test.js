@@ -799,7 +799,7 @@ test("family rules: the foot of every page is the family’s, in order: the name
   eq($(".foot-name", foot).textContent, "Jemma’s Library");
   eq(getComputedStyle($(".foot-name", foot)).fontStyle, "normal", "the name plain, not italic:");
   const lines = $$(".about-site p", foot).map(p => p.textContent.replace(/\s+/g, " ").trim());
-  eq(lines[0], "No cookies, no tracking, no ads. Made with plain HTML and CSS, kept on GitHub.", "line 1 (the same on every site):");
+  eq(lines[0], "No cookies, no tracking, no ads. Made with HTML, CSS and JavaScript, kept on GitHub.", "line 1 (the same on every site):");
   eq($$(".about-site p:nth-child(2) .cr", foot).map(c => c.textContent), ["Book covers from their publishers", "Some book details from Open Library", "Fonts: Instrument Serif, Manrope and EB Garamond", "Icons by Lucide"], "line 2 (the Library’s own credits):");
   ok($$(".cr", foot).every(c => /^[A-Z]/.test(c.textContent)), "each credit starts with a capital");
   const order = [".foot-name", ".about-site", ".foot-links"].map(sel => $(sel, foot).getBoundingClientRect().top);
@@ -1003,4 +1003,21 @@ test("second review: a pale shelf colour gets darker cloth so its gilt name read
   const shelf = $(".bookshelf", view());
   if (shelf) ok(!/239, 229, 209/.test(getComputedStyle(shelf).backgroundImage), "the board is still cream in dark mode");
   click($("#modeBtn"));
+});
+
+test("read-only: without its own server (opened as a file, or plain hosting online) the site just shows the books: no Add a book, no Got it, no controls, no note", async () => {
+  ok(LIVE, "served by the real server code here, so it starts editable");
+  const old = DATA.books.find(b => b.shelf === "old-book-collection");
+  try {
+    LIVE = false;
+    await go("#home"); eq($$('#nav a[href="#add"]').length, 0, "Add a book in the menu:");
+    eq($$(".note", view()).length, 0, "a note on Home:");
+    await go("#to-buy"); ok($$(".wish-item", view()).length > 0, "the to-buy books still shown");
+    eq($$(".got-it").length, 0, "Got it buttons:");
+    ok(!/Got it/.test($(".hero", view()).textContent), "the banner still says to press Got it");
+    await go("#add"); ok(!$("#addSave") && !$("#add-isbn"), "the Add page still opens"); eq(document.title, "Jemma’s Library");
+    await go("#b-" + old.id); eq($$("#view select, #view textarea, #view input").length, 0, "controls on an old book’s page:");
+  } finally { LIVE = true; }
+  await go("#b-" + old.id);
+  ok($$("#view select").length >= 2, "editable again with the server: condition and signed");
 });

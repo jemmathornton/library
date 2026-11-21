@@ -81,6 +81,10 @@ AUTHORS.sort((x, y) => x.sort.localeCompare(y.sort));
 const WISH = DATA.toBuy; WISH.forEach(prep);
 
 // trial (28 Oct): proposed covers (data/covers-trial.json) shown only while the switch bottom right is on, for her to judge
+// read-only unless the Library's own server answers (her decision, 21 Nov): opened as a file, or from plain web hosting
+// online, the site just shows the books (no Add a book, no Got it, no condition/inscription/signed controls, no notes; no
+// note saying so). Set by checkLive() before the first page is drawn.
+let LIVE = false;
 const TRIAL_KEY = "jemmas-library-trial-covers", TRIAL = store.get(TRIAL_KEY, false);
 const TRIALS = [...BOOKS, ...WISH, ...(DATA.storygraph || {books: []}).books.filter(e => !e.books)].filter(b => b.coverTrial);   // read but not owned too
 TRIALS.forEach(b => { b.coverWas = b.cover; b.coverRatioWas = b.coverRatio; if (TRIAL) { b.cover = b.coverTrial; b.coverRatio = b.coverTrialRatio; } });
@@ -303,7 +307,7 @@ document.documentElement.addEventListener("mouseleave", () => document.getElemen
 // the old books to find: the same list as on To Buy (her choice, 5 Nov: in both places)
 function pageOldToFind(){
   const list = WISH.filter(w => w.old).sort((a, b) => a.sortAuthor.localeCompare(b.sortAuthor) || a.sortTitle.localeCompare(b.sortTitle));
-  return hero({kicker: "Old books", title: "To <em>find</em>", text: "Old printings to look out for. When you find one, press Got it to put it on a shelf; it comes off this list.", figures: [[num(list.length), "to find"]]})
+  return hero({kicker: "Old books", title: "To <em>find</em>", text: "Old printings to look out for." + (LIVE ? " When you find one, press Got it to put it on a shelf; it comes off this list." : ""), figures: [[num(list.length), "to find"]]})
     + wishItems(list);
 }
 // the old books' ledger: a line each, cloth colour, title, author, year, her edition notes, condition. In author order
@@ -380,7 +384,7 @@ function renderNav(active){
       ${link("#to-buy", ic("shopping-bag"), "To buy", left)}
       ${link("#authors", ic("users"), "Authors", AUTHORS.length)}
       ${link("#stats", ic("chart"), "Stats")}
-      ${link("#add", ic("plus"), "Add a book")}    </div>`;
+      ${LIVE ? link("#add", ic("plus"), "Add a book") : ""}    </div>`;
 }
 
 // a shelf colour light enough that the gilt name would be faint on its cloth (Children's mustard): that card gets darker cloth
@@ -558,9 +562,9 @@ function pageBook(b){
         ${fact("Published", /-01-01/.test(b.published || "") ? year(b.published) : niceDate(b.published) || year(b.published))}${fact("Pages", b.pages ? num(b.pages) : "")}
         ${fact("ISBN-13", b.isbn13 || "")}${fact("ISBN-10", b.isbn10 || "")}${fact("Copies", b.copies > 1 ? b.copies : "")}
         ${fact("Edition", oldNote(b) ? esc(b.description) : "")}${fact("Added", niceDate(b.added))}${fact("Full title", b.t !== b.title ? esc(b.title) : "")}
-        ${location.protocol.startsWith("http") && b.shelf === COLLECTION ? fact("Condition", `<select class="cond-pick" data-cond-id="${b.id}" aria-label="Condition"><option value="">Not set</option>${CONDITIONS.map(c => `<option${b.condition === c ? " selected" : ""}>${c}</option>`).join("")}</select>`) : ""}
-        ${b.shelf !== COLLECTION ? "" : location.protocol.startsWith("http") ? fact("Inscription", `<textarea class="inscr-pick" data-inscr-id="${b.id}" aria-label="Inscription" rows="${b.inscription ? 3 : 1}" maxlength="1000" placeholder="None">${escRaw(b.inscription || "")}</textarea>`) : fact("Inscription", esc(b.inscription || ""))}
-        ${location.protocol.startsWith("http") ? fact("Signed", `<select class="sign-pick" data-sign-id="${b.id}" aria-label="Signed">${[["", "Not signed"], ["signed", "Signed"], ["to-you", "Signed to you"]].map(([v, t]) => `<option value="${v}"${(b.signed || "") === v ? " selected" : ""}>${t}</option>`).join("")}</select>`) : ""}
+        ${b.shelf !== COLLECTION ? "" : !LIVE ? fact("Condition", esc(b.condition || "")) : fact("Condition", `<select class="cond-pick" data-cond-id="${b.id}" aria-label="Condition"><option value="">Not set</option>${CONDITIONS.map(c => `<option${b.condition === c ? " selected" : ""}>${c}</option>`).join("")}</select>`)}
+        ${b.shelf !== COLLECTION ? "" : LIVE ? fact("Inscription", `<textarea class="inscr-pick" data-inscr-id="${b.id}" aria-label="Inscription" rows="${b.inscription ? 3 : 1}" maxlength="1000" placeholder="None">${escRaw(b.inscription || "")}</textarea>`) : fact("Inscription", esc(b.inscription || ""))}
+        ${LIVE ? fact("Signed", `<select class="sign-pick" data-sign-id="${b.id}" aria-label="Signed">${[["", "Not signed"], ["signed", "Signed"], ["to-you", "Signed to you"]].map(([v, t]) => `<option value="${v}"${(b.signed || "") === v ? " selected" : ""}>${t}</option>`).join("")}</select>`) : ""}
       </dl></div></aside></div>`;
 }
 
@@ -667,14 +671,14 @@ function pickHide(){
 
 const wishItems = l => `<div class="wish">${l.map(w => `<div class="wish-item">${cover(w)}<div><h3${w.t.length > 40 ? ' class="long"' : ""}>${esc(w.t)}</h3>${w.sub && !(w.old && /^old$/i.test(w.sub)) ? `<div class="by">${esc(w.sub)}</div>` : ""}<div class="by">${esc(w.by)}</div>
         ${w.maybeOwned ? `<a class="flag" href="#b-${w.maybeOwned[0]}">${ic("info")}Already on a shelf?</a>` : ""}</div>
-        <a class="btn got-it" href="#add" data-add-from="${w.id}">${ic("check")}Got it</a></div>`).join("")}</div>`;
+        ${LIVE ? `<a class="btn got-it" href="#add" data-add-from="${w.id}">${ic("check")}Got it</a>` : ""}</div>`).join("")}</div>`;
 function pageToBuy(){
   // found one? "Got it" adds it to a shelf, and it comes off this list by itself (her ask, 18 Oct); old printings to
   // find second-hand are a list of their own below (her ask, 5 Nov)
   const list = [...WISH].sort((a, b) => a.sortAuthor.localeCompare(b.sortAuthor) || a.sortTitle.localeCompare(b.sortTitle));
   const items = wishItems;
   const now = list.filter(w => !w.old), old = list.filter(w => w.old);
-  return hero({kicker: "On the lookout", title: "To <em>buy</em>", text: "Books to look out for. When you find one, press Got it to put it on a shelf; it comes off this list.",
+  return hero({kicker: "On the lookout", title: "To <em>buy</em>", text: "Books to look out for." + (LIVE ? " When you find one, press Got it to put it on a shelf; it comes off this list." : ""),
       figures: [[num(now.length), "to buy"], [num(old.length), "old books to find"]]})
     + sectionHead("To <em>buy</em>", `<span class="more">${plural(now.length, "book")}</span>`) + items(now)
     + (old.length ? sectionHead("Old books <em>to find</em>", `<span class="more">${plural(old.length, "book")}</span>`) + items(old) : "");
@@ -688,7 +692,7 @@ let addForm = {isbn: "", title: "", authors: "", publisher: "", published: "", p
 const api = (path, opts = {}) => fetch(path, {...opts, headers: {"X-Library": "1", "Content-Type": "application/json", ...(opts.headers || {})}})
   .then(r => r.json().catch(() => { throw new Error(`the library server answered ${r.status}`); }));
 function pageAdd(){
-  const f = addForm, served = location.protocol.startsWith("http");
+  const f = addForm, served = LIVE;
   const field = (k, label, extra = "") => `<label><span>${label}</span><input id="add-${k}" value="${escRaw(f[k] || "")}" ${extra}></label>`;
   return hero({kicker: "Your shelves", title: "Add a <em>book</em>", text: "Type or scan its ISBN (the barcode number, usually on the back), check the details, pick a shelf."})
     + (!served ? `<div class="note">${ic("info")}<div><b>Open the library from its desktop shortcut to add books.</b> Opened straight from the folder, it can’t save anything.</div></div>` : "")
@@ -759,7 +763,7 @@ function scannedBox(){
   }).join("")}</div>`;
 }
 async function pollScanned(){
-  if (location.hash !== "#add" || !location.protocol.startsWith("http")) { scanSeen = null; return; }
+  if (location.hash !== "#add" || !LIVE) { scanSeen = null; return; }
   try { scanList = await api("api/scanned"); } catch { return; }
   const box = document.getElementById("scannedBox"); if (box) box.innerHTML = scannedBox();
   const fresh = scanSeen ? scanList.filter(s => !scanSeen.has(s.isbn)) : [];
@@ -1461,7 +1465,7 @@ function backupNote(){
   return say ? `<div class="note" id="backupNote" role="status">${ic("info")}<div><b>${say}</b></div></div>` : "";
 }
 function loadBackupStatus(){
-  if (!location.protocol.startsWith("http")) return Promise.resolve();
+  if (!LIVE) return Promise.resolve();
   return fetch("backup-status.json", {cache: "no-store"}).then(r => r.ok ? r.json() : null).catch(() => null).then(st => {
     backupStatus = st;
     const home = (location.hash || "#home") === "#home" && !q.value, old = document.getElementById("backupNote"), html = backupNote();
@@ -1470,7 +1474,6 @@ function loadBackupStatus(){
     else if (html) document.querySelector("#view .hero")?.insertAdjacentHTML("afterend", html);
   });
 }
-loadBackupStatus();
 
 // ---------- a StoryGraph export refused as cut short: said on Home, with "Take it anyway" (her yes, 21 Nov) ----------
 let readingRefused = null;
@@ -1487,10 +1490,9 @@ function showReadingNote(){
   else if (html) (document.getElementById("backupNote") || document.querySelector("#view .hero"))?.insertAdjacentHTML("afterend", html);
 }
 function loadReadingStatus(){
-  if (!location.protocol.startsWith("http")) return Promise.resolve();
+  if (!LIVE) return Promise.resolve();
   return api("api/reading-status").catch(() => ({})).then(d => { readingRefused = (d && d.refused) || null; showReadingNote(); });
 }
-loadReadingStatus();
 document.addEventListener("click", e => {
   const b = e.target.closest("#readingAccept"); if (!b) return;
   b.disabled = true; b.lastChild.textContent = "Taking it in…";
@@ -1516,8 +1518,8 @@ function route(page, opts = {}){   // page: only the tests pass one (they open a
   else if (key === "old-to-find") { html = pageOldToFind(); title = "Old books to find"; }
   else if (key.startsWith("old-") && OLD_KINDS.some(k => k[0] === key.slice(4))) { const k = OLD_KINDS.find(k => k[0] === key.slice(4)); html = pageOldKind(k); title = "Old books · " + k[1]; }
   else if (key.startsWith("a-") && authorIndex[key.slice(2)]) { const a = authorIndex[key.slice(2)]; html = pageAuthor(a); active = "#authors"; title = a.name; }
-  else { html = {authors: pageAuthors, reading: pageReading, history: pageHistory, add: pageAdd, "to-buy": pageToBuy, stats: pageStats, "trial-covers": pageTrialCovers}[key]?.() || (active = "#home", pageHome());
-    title = {authors: "Authors", reading: "Reading", history: "History", add: "Add a book", "to-buy": "To buy", stats: "Stats", "trial-covers": "New covers"}[key] || title; }
+  else { html = {authors: pageAuthors, reading: pageReading, history: pageHistory, add: LIVE ? pageAdd : undefined, "to-buy": pageToBuy, stats: pageStats, "trial-covers": pageTrialCovers}[key]?.() || (active = "#home", pageHome());
+    title = {authors: "Authors", reading: "Reading", history: "History", add: LIVE ? "Add a book" : undefined, "to-buy": "To buy", stats: "Stats", "trial-covers": "New covers"}[key] || title; }
   const fromNav = document.getElementById("side").contains(document.activeElement), fromPage = view.contains(document.activeElement);
   view.innerHTML = html; renderNav(active); fitRows();
   if (!opts.keep && drawn && (fromNav || fromPage) && document.activeElement === document.body)   // the link used was redrawn: focus would fall to nothing
@@ -1592,7 +1594,20 @@ addEventListener("beforeinstallprompt", e => e.preventDefault());
   document.body.appendChild(note);
   setTimeout(() => note.classList.add("going"), 6500); setTimeout(() => note.remove(), 7000);
 })();
-route();
+// is the Library's own server there (tools/serve.py, her app window)? Only it answers api/reading-status with JSON; a file or
+// plain web hosting doesn't, and the site stays read-only. Asked once, before the first page is drawn (at most 3 seconds).
+function checkLive(){
+  if (!location.protocol.startsWith("http")) return Promise.resolve(null);
+  const ask = fetch("api/reading-status", {headers: {"X-Library": "1"}, cache: "no-store"})
+    .then(r => r.ok && /json/.test(r.headers.get("Content-Type") || "") ? r.json() : null).catch(() => null);
+  return Promise.race([ask, new Promise(done => setTimeout(() => done(null), 3000))]);
+}
+checkLive().then(d => {
+  LIVE = !!d && typeof d === "object";
+  readingRefused = (LIVE && d.refused) || null;
+  route();
+  loadBackupStatus();
+});
 
 // ---------- capitals on each word in headings, the menu and buttons (her ask, 1 Nov) ----------
 // "New on the Shelves": small words stay lower case unless first or last. Book titles (h3, a book page's h1) are left as published.
@@ -1624,3 +1639,26 @@ function capitalise(root){
 }
 new MutationObserver(ms => { if (ms.some(m => [...m.addedNodes].some(n => n.nodeType === 1))) capitalise(document); }).observe(document.body, {childList: true, subtree: true});
 capitalise(document);
+
+// ===== TRY SWITCH: TEMPORARY (21 Nov), only while she chooses; when she has picked, delete this whole block and the
+// "TRY SWITCH" block at the end of site.css, then build her pick in properly =====
+//   Big first letter on a blurb that opens with a quote mark: Kept (as now) or Skipped
+//   Display shelf card on Home: Green (as now) or Like the others (walnut cloth like the site's own, not green)
+(function trySwitch(){
+  const KEY = "library-try", OPTS = {quote: [["kept", "Kept"], ["skipped", "Skipped"]], display: [["green", "Green"], ["others", "Like the others"]]};
+  let pick = {quote: "kept", display: "green"};
+  try { Object.assign(pick, JSON.parse(sessionStorage.getItem(KEY) || "{}")); } catch {}
+  const box = document.createElement("div"); box.className = "try-switch"; box.setAttribute("role", "group"); box.setAttribute("aria-label", "Try");
+  const row = (k, label) => `<div class="try-row"><span>${label}</span>${OPTS[k].map(([v, t]) => `<button type="button" data-try="${k}" data-v="${v}" aria-pressed="${pick[k] === v}">${t}</button>`).join("")}</div>`;
+  const draw = () => {
+    document.documentElement.dataset.tryQuote = pick.quote; document.documentElement.dataset.tryDisplay = pick.display;
+    box.innerHTML = `<b>Try</b>${row("quote", "Big first letter after a quote mark")}${row("display", "Display shelf card")}`;
+  };
+  box.addEventListener("click", e => { const b = e.target.closest("button[data-try]"); if (!b) return;
+    pick[b.dataset.try] = b.dataset.v; try { sessionStorage.setItem(KEY, JSON.stringify(pick)); } catch {} draw(); });
+  // a blurb whose first paragraph opens with a quote mark is marked, so the Skipped choice can take its big letter away
+  const mark = () => document.querySelectorAll("#view .desc.drop").forEach(p => p.classList.toggle("try-q", /^[“‘"'«„]/.test(p.textContent.trim())));
+  new MutationObserver(mark).observe(document.getElementById("view"), {childList: true});
+  draw(); mark(); document.body.append(box);
+})();
+// ===== end of TRY SWITCH =====
