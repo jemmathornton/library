@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en-GB">
+<html lang="en-GB" data-mode="light">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -15,10 +15,12 @@
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#3B2616">
+<!-- light by default; dark only when she presses the Dark mode button at the bottom (her rule for all her sites, 21 Nov) -->
+<script>try{if(localStorage.getItem("jemmas-library-mode")==="dark")document.documentElement.setAttribute("data-mode","dark")}catch(e){}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="site.css?v=59e25e9b">
+<link rel="stylesheet" href="site.css?v=4343b576">
 </head>
 <body>
 <a class="skip" href="#view" onclick="event.preventDefault();document.getElementById('view').focus()">Skip to the page</a>
@@ -33,10 +35,12 @@
   <div class="search"><span class="search-ico" id="searchIco"></span><input id="q" type="search" placeholder="Title, author or ISBN…" aria-label="Search the library" autocomplete="off" spellcheck="false"></div>
   <nav class="nav" id="nav"></nav>
 </aside>
-<main id="main"><div class="wrap" id="view" tabindex="-1"></div></main>
+<main id="main"><div class="wrap" id="view" tabindex="-1"></div>
+<!-- at the bottom of every page, as on Jemma's Journals (21 Nov, her ask for all her sites) -->
+<footer class="foot"><div class="foot-links"><button type="button" class="totop" id="toTop"></button><button type="button" class="mode-text" id="modeBtn" aria-pressed="false"></button></div></footer></main>
 
-<script src="js/icons.js?v=81819d2c"></script>
+<script src="js/icons.js?v=462de08a"></script>
 <script src="js/data.js?v=2ee86191"></script>
-<script src="js/app.js?v=273293ff"></script>
+<script src="js/app.js?v=2ca9b22c"></script>
 </body>
 </html>

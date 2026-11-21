@@ -170,3 +170,13 @@ test("the Stats figures panel fits: every number shows whole", async () => {
   const cut = $$(".ledger .meter b", view()).filter(b => b.scrollWidth > b.clientWidth + 1 || b.getBoundingClientRect().right > W());
   eq(cut.map(b => b.textContent), [], "numbers cut off:");
 });
+
+
+test("Back to top and Dark mode sit side by side at the bottom of a phone page, big enough to tap", async () => {
+  await show("#reading");
+  const t = $("#toTop").getBoundingClientRect(), m = $("#modeBtn").getBoundingClientRect();
+  ok(t.height >= 44 && m.height >= 44, `too small to tap: ${t.height}px, ${m.height}px`);
+  eq(Math.round(t.top), Math.round(m.top), "on one line:");
+  ok(t.left >= 0 && m.right <= W(), "inside the screen");
+  ok(t.top >= view().getBoundingClientRect().bottom - 1, "below the page");
+});

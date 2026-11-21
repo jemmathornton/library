@@ -62,6 +62,8 @@ function resetPage(){
   try { localStorage.removeItem(VIEW_KEY); } catch {}
   pickHide(); document.getElementById("spineCard")?.remove();
   if (typeof setMenu === "function" && document.body.classList.contains("nav-open")) setMenu(false);   // the phone drawer (21 Nov)
+  try { localStorage.removeItem("jemmas-library-mode"); } catch {}   // the foot's Dark mode button (21 Nov): back to light
+  document.documentElement.setAttribute("data-mode", "light"); if (typeof showMode === "function") showMode();
   history.replaceState(null, "", location.pathname + location.search + "#home"); route();
 }
 

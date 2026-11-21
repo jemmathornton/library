@@ -21,13 +21,9 @@
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .33 0 0 0 0 .18 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   --side:280px; color-scheme:light;
 }
-/* dark mode (follows the device): the binding stays; the paper becomes a dark warm page, the gilt brighter */
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --paper:#1C1610; --surface:#251D15; --ink:#EFE4D0; --muted:#B6A587; --line:#43362A; --soft:#2D2319; --done:#E0A15A; --focus:var(--brass);
-  --accent:#D9B25E; --gilt-ink:#E2C47A; --text:#E6DAC4; --mount:#2A2119; --mount-edge:#4A3B2C; --mount-edge-2:#3C3024; --leaf-a:#2B2219; --leaf-b:#3D3125; --shade:rgba(0,0,0,.6);
-  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .95 0 0 0 0 .85 0 0 0 0 .65 0 0 0 .045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  color-scheme:dark }}
-:root[data-theme="dark"]{
+/* dark mode: only when she presses the Dark mode button at the bottom of the page (her rule for all her sites, 21 Nov; it used
+   to follow the device). The binding stays; the paper becomes a dark warm page, the gilt brighter. */
+:root[data-mode="dark"]{
   --paper:#1C1610; --surface:#251D15; --ink:#EFE4D0; --muted:#B6A587; --line:#43362A; --soft:#2D2319; --done:#E0A15A; --focus:var(--brass);
   --accent:#D9B25E; --gilt-ink:#E2C47A; --text:#E6DAC4; --mount:#2A2119; --mount-edge:#4A3B2C; --mount-edge-2:#3C3024; --leaf-a:#2B2219; --leaf-b:#3D3125; --shade:rgba(0,0,0,.6);
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .95 0 0 0 0 .85 0 0 0 0 .65 0 0 0 .045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -85,7 +81,13 @@ em{font-style:italic}
 
 /* ---------- main ---------- */
 main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
-.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,56px);padding-block:0 110px}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,56px);padding-block:0 56px}
+/* the foot of every page: Back to top and Dark mode, as on Jemma's Journals (21 Nov, her ask for all her sites) */
+.foot{max-width:1180px;margin:0 auto;padding:0 clamp(16px,4vw,56px) 64px}
+.foot-links{display:flex;gap:26px;justify-content:center;align-items:center;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:10px}
+.foot .totop,.foot .mode-text{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:4px 2px;border:0;background:none;font:700 13px/1 var(--body);color:var(--gilt-ink);cursor:pointer}
+.foot svg.i{width:14px;height:14px}
+@media (hover:hover){.foot .totop:hover,.foot .mode-text:hover{text-decoration:underline;text-underline-offset:3px}}
 
 /* hero */
 .hero{--c:var(--brass);margin-inline:min(calc(-1 * clamp(16px,4vw,56px)),calc((100% - 100cqw) / 2));padding:68px max(clamp(16px,4vw,56px),calc((100cqw - 100%) / 2)) 42px;color:var(--ink);position:relative;overflow:hidden}

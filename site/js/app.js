@@ -1346,6 +1346,28 @@ document.getElementById("side").addEventListener("click", e => { if (e.target.cl
 q.addEventListener("keydown", e => { if (e.key === "Enter" && menuOpen()) { q.blur(); setMenu(false); } });   // a phone's Go key shows the results
 matchMedia("(min-width: 901px)").addEventListener("change", e => { if (e.matches) setMenu(false); });
 
+// ---------- the foot of every page: Back to top and Dark mode (21 Nov, her ask for all her sites; as on Jemma's Journals) ----------
+// Light by default, whatever the device prefers; dark only when she presses the button, and remembered (index.html applies it
+// before the page shows, so it never flashes light first).
+const MODE_KEY = "jemmas-library-mode", modeBtn = document.getElementById("modeBtn"), toTop = document.getElementById("toTop");
+toTop.innerHTML = `${ic("arrow-up")}Back to top`;
+function showMode(){
+  const dark = document.documentElement.getAttribute("data-mode") === "dark";
+  modeBtn.innerHTML = `${ic(dark ? "sun" : "moon")}${dark ? "Light mode" : "Dark mode"}`;
+  modeBtn.setAttribute("aria-pressed", dark);
+}
+modeBtn.addEventListener("click", () => {
+  const mode = document.documentElement.getAttribute("data-mode") === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-mode", mode);
+  try { localStorage.setItem(MODE_KEY, mode); } catch {}
+  showMode();
+});
+showMode();
+toTop.addEventListener("click", () => {
+  scrollTo({top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
+  document.getElementById("view").focus({preventScroll: true});
+});
+
 // ---------- routing ----------
 function route(page){   // page: only the tests pass one (they open a thousand pages; the browser limits address changes)
   const key = page || location.hash.slice(1) || "home", view = document.getElementById("view");

@@ -557,3 +557,94 @@ test("a scan from her phone shows on the Add page and fills the form", async () 
   await until(() => !addForm.looking && $("#add-title")?.value === "Phone Book", "the form to fill from the newest scan");
   eq($("#add-isbn").value, "9780306406157");
 });
+
+
+// ---------- the foot of every page: Back to top and Dark mode (21 Nov, her ask for all her sites) ----------
+const footBtns = () => [$("#toTop"), $("#modeBtn")];
+const mode = (doc = document) => doc.documentElement.getAttribute("data-mode");
+const reloaded = () => new Promise((done, fail) => {   // the site opened afresh (as after a reload), in a frame on the same address
+  const f = document.createElement("iframe"); f.src = "index.html"; f.style.cssText = "position:fixed;left:-3000px;width:800px;height:600px";
+  f.onload = async () => { try { await until(() => f.contentDocument.getElementById("modeBtn")?.textContent, "the reloaded page"); done(f); } catch (e) { fail(e); } };
+  document.body.append(f);
+});
+
+test("Back to top and Dark mode are at the bottom of every page, below the page’s own words", async () => {
+  const routes = ["#home", "#shelves", "#authors", "#reading", "#history", "#add", "#to-buy", "#stats", "#old-to-find",
+    ...OLD_KINDS.map(k => "#old-" + k[0]), ...DATA.shelves.map(s => "#shelf-" + s.id), ...DATA.books.map(b => "#b-" + b.id),
+    ...Object.keys(authorIndex).map(k => "#a-" + k)];
+  const wrong = [];
+  for (const h of routes) {
+    await show(h);
+    const [top, md] = footBtns();
+    if (!top || !md || !top.offsetParent || !md.offsetParent) { wrong.push(h + ": not shown"); continue; }
+    if (top.textContent.trim() !== "Back to top" || md.textContent.trim() !== "Dark mode") wrong.push(`${h}: says “${top.textContent}” / “${md.textContent}”`);
+    if (top.getBoundingClientRect().top < view().getBoundingClientRect().bottom - 1) wrong.push(h + ": not below the page");
+    if (top.getBoundingClientRect().height < 44 || md.getBoundingClientRect().height < 44) wrong.push(h + ": under 44px tall");
+  }
+  eq(wrong, [], "pages where the foot is wrong:");
+  ok(footBtns().every(b => b.querySelector("svg") && b.tagName === "BUTTON"), "each is a button with its icon");
+  eq(Math.round($("#toTop").getBoundingClientRect().top - $("#modeBtn").getBoundingClientRect().top), 0, "side by side:");
+});
+
+test("Back to top goes to the top of the page and moves keyboard focus there", async () => {
+  await show("#home");
+  const pad = document.createElement("div"); pad.style.height = "3000px"; view().append(pad);   // a long page whatever the books
+  try {
+    scrollTo(0, document.documentElement.scrollHeight); await until(() => scrollY > 500, "the page to scroll down");
+    $("#toTop").focus(); click($("#toTop"));
+    await until(() => scrollY === 0, "the page to reach the top");
+    eq(document.activeElement, view(), "keyboard focus:");
+  } finally { pad.remove(); }
+});
+
+test("the site opens light, even when the device is set to dark", async () => {
+  eq(mode(), "light");
+  const autoDark = [];
+  for (const sheet of document.styleSheets) { let rules; try { rules = sheet.cssRules; } catch { continue; }
+    for (const r of rules) if (r instanceof CSSMediaRule && /prefers-color-scheme/.test(r.conditionText)) autoDark.push(r.conditionText); }
+  eq(autoDark, [], "styles that follow the device’s light or dark setting:");
+  eq(getComputedStyle(document.body).backgroundColor, "rgb(243, 234, 213)", "the cream page:");
+  localStorage.removeItem("jemmas-library-mode");
+  const f = await reloaded();
+  try { eq(mode(f.contentDocument), "light", "opened afresh:"); eq(f.contentDocument.getElementById("modeBtn").textContent.trim(), "Dark mode"); } finally { f.remove(); }
+});
+
+test("Dark mode switches the page to dark and back, and the button says what it will do", async () => {
+  await show("#home");
+  const light = getComputedStyle(document.body).backgroundColor;
+  click($("#modeBtn"));
+  eq(mode(), "dark");
+  eq($("#modeBtn").textContent.trim(), "Light mode"); eq($("#modeBtn").getAttribute("aria-pressed"), "true");
+  const dark = getComputedStyle(document.body).backgroundColor;
+  ok(dark !== light && dark === "rgb(28, 22, 16)", `the page didn’t turn dark (${dark})`);
+  click($("#modeBtn"));
+  eq(mode(), "light"); eq($("#modeBtn").textContent.trim(), "Dark mode"); eq($("#modeBtn").getAttribute("aria-pressed"), "false");
+  eq(getComputedStyle(document.body).backgroundColor, light, "back to light:");
+});
+
+test("dark mode is remembered when the site opens again, and so is going back to light", async () => {
+  click($("#modeBtn")); eq(mode(), "dark");
+  eq(localStorage.getItem("jemmas-library-mode"), "dark");
+  let f = await reloaded();
+  try { eq(mode(f.contentDocument), "dark", "after a reload:"); eq(f.contentDocument.getElementById("modeBtn").textContent.trim(), "Light mode"); } finally { f.remove(); }
+  click($("#modeBtn")); eq(mode(), "light");
+  f = await reloaded();
+  try { eq(mode(f.contentDocument), "light", "after going back to light and a reload:"); } finally { f.remove(); }
+});
+
+test("dark mode: the page’s words are easy to read (4.5:1 or more against the dark page)", async () => {
+  click($("#modeBtn")); eq(mode(), "dark");
+  const lum = c => { const v = c.match(/[\d.]+/g).slice(0, 3).map(Number).map(x => { x /= 255; return x <= .03928 ? x / 12.92 : ((x + .055) / 1.055) ** 2.4; }); return .2126 * v[0] + .7152 * v[1] + .0722 * v[2]; };
+  const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => p - q); return (y + .05) / (x + .05); };
+  const swatch = document.createElement("i"); document.body.append(swatch);
+  const rgb = v => { swatch.style.color = v; return getComputedStyle(swatch).color; };   // tokens as plain rgb()
+  const css = getComputedStyle(document.documentElement), tok = n => rgb(css.getPropertyValue(n).trim());
+  const low = [];
+  for (const fg of ["--ink", "--text", "--muted", "--accent", "--gilt-ink", "--done"]) for (const bg of ["--paper", "--surface", "--soft", "--mount"]) {
+    const r = ratio(tok(fg), tok(bg)); if (r < 4.5) low.push(`${fg} on ${bg}: ${r.toFixed(2)}`);
+  }
+  const foot = ratio(getComputedStyle($("#modeBtn")).color, getComputedStyle(document.body).backgroundColor);
+  if (foot < 4.5) low.push(`the foot’s buttons: ${foot.toFixed(2)}`);
+  swatch.remove();
+  eq(low, [], "too faint in dark mode:");
+});
