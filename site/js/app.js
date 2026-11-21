@@ -1639,26 +1639,3 @@ function capitalise(root){
 }
 new MutationObserver(ms => { if (ms.some(m => [...m.addedNodes].some(n => n.nodeType === 1))) capitalise(document); }).observe(document.body, {childList: true, subtree: true});
 capitalise(document);
-
-// ===== TRY SWITCH: TEMPORARY (21 Nov), only while she chooses; when she has picked, delete this whole block and the
-// "TRY SWITCH" block at the end of site.css, then build her pick in properly =====
-//   Big first letter on a blurb that opens with a quote mark: Kept (as now) or Skipped
-//   Display shelf card on Home: Green (as now) or Like the others (walnut cloth like the site's own, not green)
-(function trySwitch(){
-  const KEY = "library-try", OPTS = {quote: [["kept", "Kept"], ["skipped", "Skipped"]], display: [["green", "Green"], ["others", "Like the others"]]};
-  let pick = {quote: "kept", display: "green"};
-  try { Object.assign(pick, JSON.parse(sessionStorage.getItem(KEY) || "{}")); } catch {}
-  const box = document.createElement("div"); box.className = "try-switch"; box.setAttribute("role", "group"); box.setAttribute("aria-label", "Try");
-  const row = (k, label) => `<div class="try-row"><span>${label}</span>${OPTS[k].map(([v, t]) => `<button type="button" data-try="${k}" data-v="${v}" aria-pressed="${pick[k] === v}">${t}</button>`).join("")}</div>`;
-  const draw = () => {
-    document.documentElement.dataset.tryQuote = pick.quote; document.documentElement.dataset.tryDisplay = pick.display;
-    box.innerHTML = `<b>Try</b>${row("quote", "Big first letter after a quote mark")}${row("display", "Display shelf card")}`;
-  };
-  box.addEventListener("click", e => { const b = e.target.closest("button[data-try]"); if (!b) return;
-    pick[b.dataset.try] = b.dataset.v; try { sessionStorage.setItem(KEY, JSON.stringify(pick)); } catch {} draw(); });
-  // a blurb whose first paragraph opens with a quote mark is marked, so the Skipped choice can take its big letter away
-  const mark = () => document.querySelectorAll("#view .desc.drop").forEach(p => p.classList.toggle("try-q", /^[“‘"'«„]/.test(p.textContent.trim())));
-  new MutationObserver(mark).observe(document.getElementById("view"), {childList: true});
-  draw(); mark(); document.body.append(box);
-})();
-// ===== end of TRY SWITCH =====

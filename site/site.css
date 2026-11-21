@@ -930,16 +930,3 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 /* dark mode: the old books' shelves a dark board with the walnut ledge, not bright cream bands */
 :root[data-mode="dark"] .bookshelf{background:repeating-linear-gradient(to bottom,#2E241A 0,#261D15 168px,#6B4A2B 168px,#5E4126 182px)}
 :root[data-mode="dark"] .spine.gap{border-color:rgba(226,196,122,.45);background:repeating-linear-gradient(45deg,transparent 0 6px,rgba(226,196,122,.08) 6px 7px)}
-
-/* ===== TRY SWITCH: TEMPORARY (21 Nov), only while she chooses; delete this block with the one at the end of js/app.js ===== */
-.try-switch{position:fixed;right:18px;bottom:18px;z-index:60;display:grid;gap:6px;max-width:calc(100vw - 36px);padding:10px 12px;border-radius:14px;
-  background:var(--deep);color:var(--on-deep);box-shadow:0 6px 20px rgba(0,0,0,.25);font:600 12.5px/1.2 var(--body)}
-.trial-switch:not([hidden]) ~ .try-switch{bottom:76px}
-.try-switch>b{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass)}
-.try-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
-.try-row span{flex:1 1 100%;opacity:.85;font-weight:500}
-.try-switch button{padding:7px 12px;min-height:32px;border:0;border-radius:999px;background:rgba(255,255,255,.12);color:inherit;font:inherit;cursor:pointer}
-.try-switch button[aria-pressed="true"]{background:var(--brass);color:var(--deep)}
-html[data-try-quote="skipped"] .book-body .desc.drop.try-q:first-child::first-letter{float:none;font:inherit;color:inherit;padding:0}
-html[data-try-display="others"] .shelf-card[href="#shelf-display"]{--c:#5E3D22 !important}
-/* ===== end of TRY SWITCH ===== */

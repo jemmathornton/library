@@ -995,7 +995,7 @@ test("second review: the drop capital only on a blurb starting with a letter (a 
 
 test("second review: a pale shelf colour gets darker cloth so its gilt name reads; the old books’ shelves are dark in dark mode", async () => {
   eq(paleCloth("#CF9A2B"), true, "Children’s mustard:");
-  eq(["#8E3B46", "#7A3F7A", "#4B4F8C", "#5A524C", "#B5577A", "#8C6A3F", "#A4542F", "#2E7A92", "#3F6B4A", "#8A8178"].filter(paleCloth), [], "the darker colours keep their cloth:");
+  eq(["#8E3B46", "#7A3F7A", "#4B4F8C", "#5A524C", "#B5577A", "#8C6A3F", "#A4542F", "#2E7A92", "#5E3D22", "#8A8178"].filter(paleCloth), [], "the darker colours keep their cloth:");
   await show("#home");
   $$(".shelf-card", view()).forEach(c => eq(c.classList.contains("pale"), paleCloth(c.style.getPropertyValue("--c").trim()), "card class:"));
   click($("#modeBtn")); ok(mode() === "dark");
