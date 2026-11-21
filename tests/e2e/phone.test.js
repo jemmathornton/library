@@ -223,6 +223,14 @@ test("Back to top and Dark mode sit side by side at the bottom of a phone page, 
   ok(t.top >= view().getBoundingClientRect().bottom - 1, "below the page");
 });
 
+test("family rules: on a phone the foot’s credits stand one per line, with no dots", async () => {
+  await show("#home");
+  const crs = $$(".about-site .cr"), tops = crs.map(c => Math.round(c.getBoundingClientRect().top));
+  ok(crs.length >= 3 && new Set(tops).size === crs.length, "credits share a line");
+  ok($$(".about-site .sep").every(s => getComputedStyle(s).display === "none"), "a dot shows");
+  ok(crs.every(c => c.getBoundingClientRect().right <= W() && c.getBoundingClientRect().left >= 0), "a credit runs off the screen");
+});
+
 test("typing in the drawer’s search keeps the drawer open, letter by letter, and Escape in the empty box closes it", async () => {   // review, 21 Nov
   click(menuButton()); ok(isOpen());
   for (const v of ["t", "th", "t", ""]) { type(q, v); ok(isOpen(), `closed after “${v}”`); }

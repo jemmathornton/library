@@ -1376,33 +1376,40 @@ document.body.append(trialSwitch);
 const trialShown = () => { trialSwitch.hidden = !(["#shelf-old-book-collection", "#trial-covers"].includes(location.hash) || /^#old-/.test(location.hash)); };
 addEventListener("hashchange", trialShown); trialShown();
 
-// ---------- phones and narrow windows: the sidebar as a drawer (21 Nov, her ask; like Sim World's) ----------
-// it opens from the top bar's button and closes on a link chosen, Escape, a tap outside it, or Enter in the search
-const menuBtn = document.getElementById("menuBtn");
+// ---------- phones and narrow windows: the sidebar as a drawer (21 Nov, her ask; like Sim World's; the family rules) ----------
+// it opens from the top bar's button and closes on a link chosen, Escape, a tap outside it, or Enter in the search. While closed on a
+// phone it is inert (Tab can't reach it); while open the page behind is inert and doesn't scroll. Crossing 900px closes it.
+const menuBtn = document.getElementById("menuBtn"), sideEl = document.getElementById("side"), phoneNav = matchMedia("(max-width:900px)");
 document.getElementById("menuIco").innerHTML = ic("menu");
 function setMenu(open, focusBack){
   document.body.classList.toggle("nav-open", open);
-  menuBtn.setAttribute("aria-expanded", open);
+  menuBtn.setAttribute("aria-expanded", String(open));
+  sideEl.inert = phoneNav.matches && !open;
+  const lock = phoneNav.matches && open;
+  document.querySelectorAll("body > *:not(#side):not(.topbar):not(#scrim):not(script)").forEach(el => { el.inert = lock; });
+  // starts on the page showing (or Home), not "← Jemma's Journals": one Enter shouldn't leave the site (her call for Sim World, 21 Nov)
   if (open) setTimeout(() => document.querySelector("#side .nav a.on, #side .nav a")?.focus({preventScroll: true}), 30);
-  else if (focusBack) menuBtn.focus();
+  else if (phoneNav.matches && focusBack) menuBtn.focus({preventScroll: true});   // a link chosen: the new page takes focus instead
 }
 const menuOpen = () => document.body.classList.contains("nav-open");
 menuBtn.addEventListener("click", () => setMenu(!menuOpen()));
-document.getElementById("scrim").addEventListener("click", () => setMenu(false));
+document.getElementById("scrim").addEventListener("click", () => setMenu(false, true));
 document.addEventListener("keydown", e => { if (e.key === "Escape" && menuOpen()) setMenu(false, true); });
-document.getElementById("side").addEventListener("click", e => { if (e.target.closest("a")) setMenu(false); });
+sideEl.addEventListener("click", e => { if (e.target.closest("a") && menuOpen()) setMenu(false); });
 q.addEventListener("keydown", e => { if (e.key === "Enter" && menuOpen()) { q.blur(); setMenu(false); } });   // a phone's Go key shows the results
-matchMedia("(min-width: 901px)").addEventListener("change", e => { if (e.matches) setMenu(false); });
+phoneNav.addEventListener("change", () => setMenu(false, sideEl.contains(document.activeElement)));
+setMenu(false);
 
-// ---------- the foot of every page: Back to top and Dark mode (21 Nov, her ask for all her sites; as on Jemma's Journals) ----------
-// Light by default, whatever the device prefers; dark only when she presses the button, and remembered (index.html applies it
-// before the page shows, so it never flashes light first).
-const MODE_KEY = "jemmas-library-mode", modeBtn = document.getElementById("modeBtn"), toTop = document.getElementById("toTop");
+// ---------- the foot of every page: Back to top and Dark mode (21 Nov; the family rules shared by all her sites) ----------
+// Light by default, whatever the device prefers; dark only when she presses the button, kept in localStorage "jj-mode", the one key
+// every site in the family shares (index.html's head applies it before the page shows, and moves the old key over once).
+const MODE_KEY = "jj-mode", modeBtn = document.getElementById("modeBtn"), toTop = document.getElementById("toTop");
 toTop.innerHTML = `${ic("arrow-up")}Back to top`;
 function showMode(){
   const dark = document.documentElement.getAttribute("data-mode") === "dark";
   modeBtn.innerHTML = `${ic(dark ? "sun" : "moon")}${dark ? "Light mode" : "Dark mode"}`;
-  modeBtn.removeAttribute("aria-pressed");   // the words say what it will do; "pressed" with "Light mode" read as light being on (review, 21 Nov)
+  modeBtn.setAttribute("aria-pressed", String(dark));   // the family rules: pressed while dark
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", dark ? "#1C1610" : "#3B2616");
 }
 modeBtn.addEventListener("click", () => {
   const mode = document.documentElement.getAttribute("data-mode") === "dark" ? "light" : "dark";

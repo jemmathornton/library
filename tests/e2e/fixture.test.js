@@ -648,7 +648,7 @@ test("the site opens light, even when the device is set to dark", async () => {
     for (const r of rules) if (r instanceof CSSMediaRule && /prefers-color-scheme/.test(r.conditionText)) autoDark.push(r.conditionText); }
   eq(autoDark, [], "styles that follow the device’s light or dark setting:");
   eq(getComputedStyle(document.body).backgroundColor, "rgb(243, 234, 213)", "the cream page:");
-  localStorage.removeItem("jemmas-library-mode");
+  localStorage.removeItem("jj-mode");
   const f = await reloaded();
   try { eq(mode(f.contentDocument), "light", "opened afresh:"); eq(f.contentDocument.getElementById("modeBtn").textContent.trim(), "Dark mode"); } finally { f.remove(); }
 });
@@ -658,17 +658,17 @@ test("Dark mode switches the page to dark and back, and the button says what it 
   const light = getComputedStyle(document.body).backgroundColor;
   click($("#modeBtn"));
   eq(mode(), "dark");
-  eq($("#modeBtn").textContent.trim(), "Light mode"); eq($("#modeBtn").getAttribute("aria-pressed"), null, "no pressed state saying the opposite of the words:");
+  eq($("#modeBtn").textContent.trim(), "Light mode"); eq($("#modeBtn").getAttribute("aria-pressed"), "true", "pressed while dark (the family rules):");
   const dark = getComputedStyle(document.body).backgroundColor;
   ok(dark !== light && dark === "rgb(28, 22, 16)", `the page didn’t turn dark (${dark})`);
   click($("#modeBtn"));
-  eq(mode(), "light"); eq($("#modeBtn").textContent.trim(), "Dark mode"); eq($("#modeBtn").getAttribute("aria-pressed"), null);
+  eq(mode(), "light"); eq($("#modeBtn").textContent.trim(), "Dark mode"); eq($("#modeBtn").getAttribute("aria-pressed"), "false");
   eq(getComputedStyle(document.body).backgroundColor, light, "back to light:");
 });
 
 test("dark mode is remembered when the site opens again, and so is going back to light", async () => {
   click($("#modeBtn")); eq(mode(), "dark");
-  eq(localStorage.getItem("jemmas-library-mode"), "dark");
+  eq(localStorage.getItem("jj-mode"), "dark");
   let f = await reloaded();
   try { eq(mode(f.contentDocument), "dark", "after a reload:"); eq(f.contentDocument.getElementById("modeBtn").textContent.trim(), "Light mode"); } finally { f.remove(); }
   click($("#modeBtn")); eq(mode(), "light");
@@ -782,4 +782,108 @@ test("a cover's corner dots can be moved with the arrow keys", async () => {
   dot.dispatchEvent(new KeyboardEvent("keydown", {key: "ArrowDown", shiftKey: true, bubbles: true}));
   ok(addForm.corners.pts[0][0] > 10 && addForm.corners.pts[0][1] > 10 + 5, "the arrow keys didn't move it");
   addForm.corners = null;
+});
+
+
+// ---------- the family rules (21 Nov, her decision for all her sites: Jemma's Journals research/family-rules.md) ----------
+// the site opened afresh in a frame of a given width (the frame's own layout sees exactly that width)
+const frameAt = (width, height = 800) => new Promise((done, fail) => {
+  const f = document.createElement("iframe"); f.src = "index.html"; f.style.cssText = `position:fixed;left:-4000px;top:0;width:${width}px;height:${height}px;border:0`;
+  f.onload = async () => { try { await until(() => f.contentDocument.getElementById("modeBtn")?.textContent && f.contentDocument.getElementById("view").innerText.trim().length > 20, "the framed page"); done(f); } catch (e) { fail(e); } };
+  document.body.append(f);
+});
+
+test("family rules: the foot of every page is the family’s, in order: the name, the two About lines, then Back to top and Dark mode", async () => {
+  const foots = $$("footer"); eq(foots.length, 1, "one footer:");
+  const foot = foots[0];
+  eq($(".foot-name", foot).textContent, "Jemma’s Library");
+  eq(getComputedStyle($(".foot-name", foot)).fontStyle, "normal", "the name plain, not italic:");
+  const lines = $$(".about-site p", foot).map(p => p.textContent.replace(/\s+/g, " ").trim());
+  eq(lines[0], "No cookies, no tracking, no ads. Made with plain HTML and CSS, kept on GitHub.", "line 1 (the same on every site):");
+  eq($$(".about-site p:nth-child(2) .cr", foot).map(c => c.textContent), ["Book covers from their publishers", "Some book details from Open Library", "Fonts: Instrument Serif, Manrope and EB Garamond", "Icons by Lucide"], "line 2 (the Library’s own credits):");
+  ok($$(".cr", foot).every(c => /^[A-Z]/.test(c.textContent)), "each credit starts with a capital");
+  const order = [".foot-name", ".about-site", ".foot-links"].map(sel => $(sel, foot).getBoundingClientRect().top);
+  ok(order[0] < order[1] && order[1] < order[2], "name, then About, then the buttons");
+  eq(getComputedStyle($(".about-site", foot)).fontSize, "12.5px", "About text size:");
+  for (const h of ["#home", "#b-" + DATA.books[0].id, "#stats"]) { await show(h); ok($(".foot-name").offsetParent && $(".about-site").offsetParent, h + ": foot not shown"); }
+});
+
+test("family rules: the foot’s words and buttons are 4.5:1 or more in light and dark", async () => {
+  const lum = c => { const v = c.match(/[\d.]+/g).slice(0, 3).map(Number).map(x => { x /= 255; return x <= .03928 ? x / 12.92 : ((x + .055) / 1.055) ** 2.4; }); return .2126 * v[0] + .7152 * v[1] + .0722 * v[2]; };
+  const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => p - q); return (y + .05) / (x + .05); };
+  const low = [];
+  for (const m of ["light", "dark"]) {
+    if (mode() !== m) click($("#modeBtn"));
+    const bg = getComputedStyle(document.body).backgroundColor;
+    for (const el of [$(".about-site"), $("#toTop"), $("#modeBtn"), $(".foot-name")]) { const r = ratio(getComputedStyle(el).color, bg); if (r < 4.5) low.push(`${m} ${el.className || el.id}: ${r.toFixed(2)}`); }
+  }
+  eq(low, [], "too faint:");
+});
+
+test("family rules: dark mode uses the shared key jj-mode, moves the old key over once, and sets the bar colour", async () => {
+  eq(mode(), "light");
+  eq(document.querySelector('meta[name="theme-color"]').content, "#3B2616", "light bar colour:");
+  click($("#modeBtn"));
+  eq(localStorage.getItem("jj-mode"), "dark", "saved under jj-mode:");
+  eq(document.querySelector('meta[name="theme-color"]').content, "#1C1610", "dark bar colour:");
+  click($("#modeBtn")); eq(localStorage.getItem("jj-mode"), "light");
+  // her choice from before the family key: read once, saved as jj-mode, the old key gone
+  localStorage.removeItem("jj-mode"); localStorage.setItem("jemmas-library-mode", "dark");
+  let f = await reloaded();
+  try {
+    eq(mode(f.contentDocument), "dark", "the old choice kept:");
+    eq(f.contentDocument.querySelector('meta[name="theme-color"]').content, "#1C1610", "dark bar colour from the start:");
+    eq(localStorage.getItem("jj-mode"), "dark"); eq(localStorage.getItem("jemmas-library-mode"), null, "old key moved over:");
+  } finally { f.remove(); }
+  // jj-mode set by another site in the family wins
+  localStorage.setItem("jj-mode", "light"); localStorage.setItem("jemmas-library-mode", "dark");
+  f = await reloaded();
+  try { eq(mode(f.contentDocument), "light", "jj-mode first:"); } finally { f.remove(); }
+});
+
+test("family rules: the Menu bar shows at 899px wide and the sidebar at 901px", async () => {
+  for (const [w, bar] of [[899, true], [901, false]]) {
+    const f = await frameAt(w);
+    try {
+      const d = f.contentDocument, side = d.getElementById("side");
+      eq(getComputedStyle(d.querySelector(".topbar")).display !== "none", bar, `${w}px top bar:`);
+      if (bar) {
+        ok(/^\s*Menu\s*$/.test(d.getElementById("menuBtn").textContent) && d.querySelector("#menuBtn svg"), "the Menu button with its icon");
+        const name = d.querySelector(".topbar-name"); eq(name.tagName, "A"); eq(name.getAttribute("href"), "#home"); ok(name.querySelector("em")?.textContent === "Library", "Library in italics");
+        eq(side.inert, true, "closed drawer inert:");
+      } else {
+        ok(side.getBoundingClientRect().left >= 0, "sidebar on the page"); eq(side.inert, false, "sidebar reachable:");
+        eq(side.querySelector("a").textContent.trim(), "← Jemma’s Journals", "first in the sidebar:");
+      }
+      ok(d.documentElement.scrollWidth <= w, `${w}px: no sideways scroll`);
+    } finally { f.remove(); }
+  }
+});
+
+test("family rules: the drawer at 899px: aria, focus in and back, inert, Escape, scrim, a link, scroll lock, and reset across 900px", async () => {
+  const f = await frameAt(899);
+  try {
+    const d = f.contentDocument, w = f.contentWindow, btn = d.getElementById("menuBtn"), side = d.getElementById("side");
+    const isOpen = () => d.body.classList.contains("nav-open"), key = k => d.dispatchEvent(new w.KeyboardEvent("keydown", {key: k, bubbles: true}));
+    eq(btn.getAttribute("aria-controls"), "side"); eq(btn.getAttribute("aria-expanded"), "false");
+    // open: focus moves in, the page behind is inert and doesn't scroll
+    btn.focus(); btn.click();
+    ok(isOpen()); eq(btn.getAttribute("aria-expanded"), "true"); eq(side.inert, false);
+    await until(() => side.contains(d.activeElement), "focus to move into the drawer");
+    eq(d.querySelector("main").inert, true, "the page behind inert:");
+    eq(w.getComputedStyle(d.body).overflow, "hidden", "no scrolling behind:");
+    eq(w.getComputedStyle(d.getElementById("scrim")).display, "block", "the scrim:");
+    eq([...side.querySelectorAll("a, input")].filter(e => e.offsetParent)[0].textContent.trim(), "← Jemma’s Journals", "first in the drawer:");
+    // Escape closes, focus back on the button
+    key("Escape"); ok(!isOpen()); eq(d.activeElement, btn, "focus back:"); eq(side.inert, true, "closed drawer inert:"); eq(d.querySelector("main").inert, false);
+    // the scrim closes
+    btn.click(); ok(isOpen()); d.getElementById("scrim").click(); ok(!isOpen(), "scrim"); eq(d.activeElement, btn);
+    // a link closes
+    btn.click(); d.querySelector('#nav a[href="#reading"]').click(); ok(!isOpen(), "a link"); eq(side.inert, true);
+    // crossing 900px resets it: open, widen, the drawer is shut and the sidebar reachable
+    btn.click(); ok(isOpen());
+    f.style.width = "1000px"; await until(() => !isOpen(), "the drawer to reset on widening");
+    eq(side.inert, false, "wide sidebar reachable:"); eq(d.querySelector("main").inert, false, "page reachable:"); eq(btn.getAttribute("aria-expanded"), "false");
+    f.style.width = "899px"; await until(() => side.inert === true, "the drawer to be inert again when narrow");
+  } finally { f.remove(); }
 });

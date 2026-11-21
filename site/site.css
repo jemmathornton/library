@@ -83,8 +83,19 @@ em{font-style:italic}
 main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,56px);padding-block:0 56px}
 /* the foot of every page: Back to top and Dark mode, as on Jemma's Journals (21 Nov, her ask for all her sites) */
-.foot{max-width:1180px;margin:0 auto;padding:0 clamp(16px,4vw,56px) 64px}
-.foot-links{display:flex;gap:26px;justify-content:center;align-items:center;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:10px}
+/* the foot of every page (21 Nov; the family rules shared by all her sites): a ❦ between rules, the name, two About lines, then
+   Back to top and Dark mode level (44px to tap). Credits stack one per line on phones (600px rules at the end). */
+.foot{max-width:1180px;margin:0 auto;padding:28px clamp(16px,4vw,56px) 56px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.foot-orn{display:flex;align-items:center;gap:14px;width:min(100%,360px);color:var(--gilt);font-size:18px;line-height:1}
+.foot-orn::before,.foot-orn::after{content:"";flex:1;height:1px}
+.foot-orn::before{background:linear-gradient(90deg,transparent,var(--line))}
+.foot-orn::after{background:linear-gradient(90deg,var(--line),transparent)}
+.foot-name{font:400 24px/1.1 var(--display);color:var(--ink);margin-top:4px}
+.about-site{max-width:none;font:400 12.5px/1.7 var(--body);color:var(--muted)}
+.about-site p{margin:0}
+.about-site .sep{margin:0 3px;color:var(--gilt)}
+.about-site .cr{white-space:nowrap}   /* each credit stays in one piece when the line wraps */
+.foot-links{display:flex;gap:26px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:2px}
 .foot .totop,.foot .mode-text{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:4px 2px;border:0;background:none;font:700 13px/1 var(--body);color:var(--gilt-ink);cursor:pointer}
 .foot svg.i{width:14px;height:14px}
 @media (hover:hover){.foot .totop:hover,.foot .mode-text:hover{text-decoration:underline;text-underline-offset:3px}}
@@ -877,3 +888,8 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 
 /* a corner dot chosen with the keyboard (21 Nov) */
 .corner-dot:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+/* the foot on phones (the family rules): one credit per line, no dots at line ends */
+@media (max-width:600px){
+  .about-site .sep{display:none}
+  .about-site .cr{display:block;white-space:normal}
+}
