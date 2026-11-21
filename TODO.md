@@ -59,6 +59,21 @@
    - **Box sets in her reading** (Harry Potter Series Box Set, The Chronicles of Narnia) count as read books on top of the single books (about 2 extra in "read").
    - **"What should I read next?"** can pick atlases, guides and 1860s Dickens from the old books: leave out the Old Book Collection and Display?
    - **"Most books by"** on Stats counts copies, so the Harry Potter sets push Rowling up.
+13. **From the 21 Nov full review (her call; my suggestions are marked; looks get mock-ups first):**
+   - **Not real blurbs:** The Da Vinci Code (Wikipedia), The Truth (a library review), The Arctic Incident (Amazon's review), Girls In Love and Those Who Leave and Those Who Stay (reviews), Wyrd Sisters, Quiet, HTML XHTML and CSS (shop listings, commas turned into full stops), Days of Shattered Faith (ends in a run-together series list), Cursed Child (apostrophes lost: "London s West End"). My suggestion: find each one's real blurb, or leave it blank.
+   - **Blurbs that start mid-sentence** (The Host, I Was Born for This, Cloud Atlas) or **end on "…"** (both Little Blue Envelopes books): keep, or find whole ones?
+   - **Praise and prize lines still in blurbs** (Foundation, the three Murderbot books, Theodore Boone, Heartstopper, The Scarecrow, others): cut them (cuts only)?
+   - **Page counts look wrong on about 30 books**: too many (Famous Five 2, 5, 6, 10, 13 at 464–672; Secret Seven, Trebizon, the Adventure series, Girls In Love 640, Ballet Shoes 640) or too few (Family of Liars 32, Sondok 32, Sisterhood 2 and 4). My suggestion: I look each up and you check the odd ones against your copies.
+   - **Titles** as typed: "Something From Tiffanys", "Five Go To Smugglers Top", "The Scent of Magic - Book 2 of the Doomspell Trilogy", "Positively Birmingham 2015", "Priestess Of The White [Age Of The Five…]", "The Science Of Discworld Revised Edition", "Illustrated Editi" (cut short). Names "G.D.H. Cole" and "Dr. T. Wu" spaced unlike "J. K. Rowling". Tidy them?
+   - **The Complete Oxford Shakespeare** is dated 1987 but sits in the Old Book Collection (before 1964). **Bleak House**: your note says "editioj".
+   - **Covers:** three old books show later printings (Corridors of Power, The Mystery of the Invisible Thief, Bleak House): title cards instead? The New School at Scawdale's picture is padded white. Series that may mix printings: Girls (Think Again), Noughts & Crosses (Double Cross, Crossfire), Pendragon, The Quest series. Boards first.
+   - **Copies or books:** besides 9, Home says 648 books with 425 unread (599 different books); an author page says Rowling 28 books, 11 read (14 different books); "authors" (267) includes illustrators and translators (251 wrote one).
+   - **Pages still in the old style:** To Buy cards, the Stats number tiles, the Add form, the list view's titles, the Authors list, the Signed drop-down. Bring them into the Bound book look? (Mock-ups first.)
+   - **Smaller looks:** old-book spines are hard to read (small gilt on dark); on a phone the old books' list hides Year, Edition and Condition off to the side with no hint, the New covers switch sits over rows, and there are big gaps under the banner plate; a book with no blurb leaves an empty column at 1280.
+   - **Backup:** the weekly save sends every new file in the folder to the public GitHub copy (an inscription you type will be public too): my suggestion is to send only the library's own folders. A failed backup tells nobody (it failed on 15 Nov): a note on the site? It runs at 08:30 in winter, not 09:30 (set in summer time): reset the Windows task (your OK needed)?
+   - **Reading import:** once an export is refused as cut short, every later one is refused too, silently. A note on the site, and a way to say "yes, take it"?
+   - **Phone scanning** listens on every network the laptop joins, and the key travels unencrypted: limit it to the home Wi-Fi's address (my suggestion)?
+   - **Keyboard and screen readers:** the Dark mode button says "Light mode" while marked pressed; a spoiler shows as soon as you Tab past it; setting a cover's corners is mouse-only; the camera panel isn't marked as a dialog. Fix all four (my suggestion)?
 
 ## Open
 
