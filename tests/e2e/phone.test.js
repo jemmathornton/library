@@ -110,13 +110,21 @@ test("every kind of page fits the phone’s width (nothing sticks out to the sid
   eq(problems, [], "pages wider than the phone:");
 });
 
-test("the old books’ list scrolls sideways inside itself instead of squashing", async () => {
+test("the old books’ list shows each book as a few lines, with nothing hidden off to the side", async () => {   // her yes, 21 Nov
   store.set(VIEW_KEY, "list");
   await show("#shelf-" + COLLECTION);
   const t = $("table.oldbooks", view());
   if (!t) return;   // her old books shown another way: nothing to check
-  ok(["auto", "scroll"].includes(getComputedStyle(t).overflowX), "the list scrolls");
-  ok(t.getBoundingClientRect().right <= W() + 1, "and stays inside the page");
+  ok(t.scrollWidth <= t.clientWidth + 1 && t.getBoundingClientRect().right <= W() + 1, "the list is wider than the page");
+  const row = $$("tr", t).find(r => r.querySelector("td.t a")), year = row.children[3];
+  ok(year.getBoundingClientRect().width > 0 && year.getBoundingClientRect().right <= W() + 1, "the year is out of sight");
+  eq(getComputedStyle($("th", t).closest("tr")).display, "none", "the column headings are left out:");
+});
+
+test("the New covers switch sits at the end of the page, not over the list", async () => {   // her yes, 21 Nov
+  await show("#shelf-" + COLLECTION);
+  if (trialSwitch.hidden) return;
+  eq(getComputedStyle(trialSwitch).position, "static");
 });
 
 test("the banner’s plate of covers sits under the words, not over the title", async () => {

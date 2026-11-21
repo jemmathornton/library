@@ -839,3 +839,37 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
   .decades.many b,.decades.many span{writing-mode:vertical-rl;transform:rotate(180deg);line-height:1.15;white-space:nowrap}
   .bar-row b{overflow-wrap:anywhere}
 }
+
+/* ---------- smaller looks (her yes, 21 Nov) ---------- */
+/* old-book spines: titles larger, brighter and lifted off the darker cloths */
+.spine span{font-size:13.5px;color:#F6DE9C;text-shadow:0 0 2px rgba(0,0,0,.9),0 1px 3px rgba(0,0,0,.8)}
+.spine.pale span{color:#3A2614;text-shadow:none}
+/* a book with no blurb: no empty column; the panels sit side by side, and the first heading on the left starts at the top */
+.book-body:not(:has(> div > *)){grid-template-columns:minmax(0,1fr)}
+.book-body:not(:has(> div > *)) > div{display:none}
+.book-body:not(:has(> div > *)) > aside{grid-template-columns:repeat(auto-fit,minmax(300px,1fr));align-items:start}
+.book-body > div > .section-head:first-child{margin-top:0}
+@media (max-width:600px){
+  /* the gap under the banner's plate */
+  .hero,.hero.shelved{padding-bottom:14px}
+  .hero + .section-head{margin-top:30px}
+  .hero + div .toolbar{margin-top:20px}
+  /* the old books' list: each book as a few lines (title; author and year; your note; condition), nothing hidden off to the side */
+  .oldbooks,.oldbooks tbody{display:block;overflow:visible}
+  .oldbooks tr:first-child:has(th){display:none}
+  .oldbooks tr{display:grid;grid-template-columns:16px minmax(0,1fr) auto;column-gap:10px;row-gap:2px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .oldbooks td{border:0;padding:0;min-width:0!important}
+  .oldbooks td:nth-child(1){grid-row:1 / span 4;padding-top:4px}
+  .oldbooks td:nth-child(2){grid-column:2 / 4}
+  .oldbooks td:nth-child(3){grid-column:2}
+  .oldbooks td:nth-child(4){grid-column:3;text-align:right}
+  .oldbooks td:nth-child(5),.oldbooks td:nth-child(6){grid-column:2 / 4;font-style:italic}
+  .oldbooks td:empty{display:none}
+  .oldbooks .dash{display:none}
+  .oldbooks tr.group{display:block;border-bottom:0}
+  .oldbooks tr.group td{display:block;padding:18px 0 4px}
+  /* the New covers switch sits at the end of the page, not over the rows */
+  .trial-switch{position:static;margin:0 16px 24px;justify-content:center}
+}
+/* the series name over each run of old-book spines, in small capitals like the rest */
+.shelf-name{font:400 17px var(--read);font-variant:small-caps;letter-spacing:.06em;text-transform:none}

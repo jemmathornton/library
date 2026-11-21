@@ -719,3 +719,11 @@ test("light mode: grey label text (the muted colour) is 4.5:1 or more on the pag
   ok(seen > 20, `only ${seen} muted words found: is the sweep looking in the right place?`);
   eq([...new Set(low)], [], "too faint in light mode:");
 });
+
+test("a book with no blurb leaves no empty column: its panels and any other sections use the page", async () => {   // her yes, 21 Nov
+  const b = BOOKS.find(x => !x.description && !sgFor[x.id]); if (!b) return;
+  await go("#b-" + b.id);
+  const left = $(".book-body", view()).firstElementChild;
+  if (left.children.length === 0) eq(getComputedStyle(left).display, "none", "an empty column is still shown:");
+  const h = $(".section-head", left); if (h) eq(getComputedStyle(h).marginTop, "0px", "the first heading starts at the top:");
+});

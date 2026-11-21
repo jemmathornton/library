@@ -310,10 +310,11 @@ function pageOldToFind(){
 // it's grouped by series in reading order, the books of a series she has no old copy of in their places, greyed (and
 // marked when they're on her old-books-to-find list); the books in no series follow together, by author
 const CONDITIONS = ["Fine", "Very good", "Good", "Fair", "Poor"];
+const DASH = `<span class="dash">—</span>`;   // nothing to say (left out on a phone, 21 Nov)
 function ledgerView(list){
-  const yr = b => year(b.published) || "—", note = b => (b.description || "").length < 90 ? b.description || "" : "";
+  const yr = b => year(b.published) || "—", note = b => oldNote(b) ? b.description || "" : "";   // her notes, by the same rule as the book page
   const row = b => `<tr><td>${b.cloth ? `<span class="chip" style="background:${b.cloth}"></span>` : `<span class="chip none"></span>`}</td>
-      <td class="t"><a href="${href(b)}">${esc(b.t)}</a></td><td class="m">${esc(b.by)}</td><td>${yr(b)}</td><td class="m">${esc(note(b)) || "—"}</td><td class="m">${esc(b.condition || "") || "—"}</td></tr>`;
+      <td class="t"><a href="${href(b)}">${esc(b.t)}</a></td><td class="m">${esc(b.by)}</td><td>${yr(b)}</td><td class="m">${esc(note(b)) || DASH}</td><td class="m">${esc(b.condition || "") || DASH}</td></tr>`;
   const missing = (e, s) => `<tr class="gone"><td><span class="chip none"></span></td><td class="t">${esc(e.title)}</td><td class="m">${esc((e.owned[0] || e.wish[0] || {}).by || "")}</td>
       <td></td><td class="m">${e.wish.some(w => w.old) ? "On your list to find" : ""}</td><td></td></tr>`;
   const head = t => `<tr class="group"><td colspan="6">${esc(t)}</td></tr>`;
