@@ -47,15 +47,34 @@ test("pictures on the pages load", async () => {
 // ---------- each page's figures (19 Nov): each number right for what it says it counts ----------
 // Copies against books is her open question (TODO 9), so the banner and the toolbar aren't made to agree: the banner's
 // "books" is the copies on the shelf, its "read" each book once, and the toolbar's count is what the list shows.
+// her call, 21 Nov: figures count each book once however many copies she owns ("authors" = writers); the count over a
+// shelf's books says the owned books once each, and the not-owned ones apart
+const once = list => new Set(list.map(bookKey)).size;
+const countSays = books => { const own = books.filter(b => !b.notOwned), away = books.length - own.length;
+  return (!own.length && away ? `${away} not owned` : plural(once(own), "book") + (away ? ` · ${away} not owned` : "")).toLowerCase(); };
+const writers = () => AUTHORS.filter(a => a.books.some(x => !x.role)).length;
+
+test("an author’s page counts each of their books once, however many copies (J. K. Rowling: 14, not 28)", async () => {   // her call, 21 Nov
+  const wrong = [];
+  for (const a of AUTHORS) {
+    await show("#a-" + a.id);
+    const want = once(a.books.map(x => x.book)), said = figures().books ?? figures().book;
+    if (said !== want) wrong.push(`${a.name}: says ${said}, has ${want}`);
+  }
+  eq(wrong.slice(0, 10), []);
+  const jkr = AUTHORS.find(a => a.name === "J. K. Rowling");
+  if (jkr) ok(once(jkr.books.map(x => x.book)) < jkr.books.length, "her copies of Rowling's books are more than her Rowling books");
+});
+
 test("sidebar counts match the pages they open", async () => {
   await go("#home");
   const wrong = [];
   $$("#nav a[href^='#shelf-'], #nav a[href^='#old-']").forEach(a => {
     const n = +(a.querySelector(".n")?.textContent ?? NaN), h = a.getAttribute("href");
-    const real = h.startsWith("#shelf-") ? shelfIndex[h.slice(7)].books.length : h === "#old-to-find" ? WISH.filter(w => w.old).length : oldBooks(h.slice(5)).length;
+    const real = h.startsWith("#shelf-") ? once(shelfIndex[h.slice(7)].books) : h === "#old-to-find" ? WISH.filter(w => w.old).length : oldBooks(h.slice(5)).length;
     if (n !== real) wrong.push(`${h} says ${n}, has ${real}`);
   });
-  eq(navCount("#shelves"), BOOKS.length, "All shelves:");
+  eq(navCount("#shelves"), once(BOOKS), "All shelves:");
   eq(navCount("#to-buy"), WISH.length, "To buy:");
   eq(navCount("#authors"), AUTHORS.length, "Authors:");
   eq(wrong, []);
@@ -65,9 +84,9 @@ test("every shelf’s banner figures count what they say", async () => {
   const wrong = [];
   for (const s of SHELVES.filter(s => s.books.length)) {
     await go("#shelf-" + s.id);
-    const f = figures(), want = {books: s.books.length, authors: new Set(s.books.flatMap(b => (b.authors || []).filter(a => !a.role).map(a => slug(a.name)))).size,   // people, not "A & B" strings (review, 21 Nov)
+    const f = figures(), want = {books: once(s.books), authors: new Set(s.books.flatMap(b => (b.authors || []).filter(a => !a.role).map(a => slug(a.name)))).size,   // people, not "A & B" strings (review, 21 Nov)
       read: booksRead(s.books),
-      ...(s.books.some(b => b.pages) ? {pages: s.books.reduce((n, b) => n + (b.pages || 0), 0)} : {}), ...((s.notOwned || []).some(isRead) ? {"read but not owned": s.notOwned.filter(isRead).length} : {})};
+      ...(s.books.some(b => b.pages) ? {pages: [...s.books.reduce((m, b) => m.set(bookKey(b), Math.max(m.get(bookKey(b)) || 0, b.pages || 0)), new Map()).values()].reduce((a, n) => a + n, 0)} : {}), ...((s.notOwned || []).some(isRead) ? {"read but not owned": s.notOwned.filter(isRead).length} : {})};
     for (const [k, v] of Object.entries(want)) if (f[k] !== v) wrong.push(`${s.id}: “${k}” says ${f[k]}, should be ${v}`);
     if (navCount("#shelf-" + s.id) !== null && navCount("#shelf-" + s.id) !== f.books) wrong.push(`${s.id}: sidebar ${navCount("#shelf-" + s.id)}, banner ${f.books}`);
   }
@@ -81,7 +100,7 @@ test("every shelf’s toolbar count is the number of books it lists, under each 
     for (const [k, [label, keep]] of Object.entries(FILTERS)) {
       click($(`[data-filter="${k}"]`));
       const shown = shownBooks(), want = s.books.concat(s.notOwned || []).filter(keep).length;
-      if (countText().toLowerCase() !== plural(shown.length, "book").toLowerCase()) wrong.push(`${s.id} ${label}: says “${countText()}”, lists ${shown.length}`);
+      if (countText().toLowerCase() !== countSays(shown.map(bookAt))) wrong.push(`${s.id} ${label}: says “${countText()}”, lists ${countSays(shown.map(bookAt))}`);
       if (shown.length !== want) wrong.push(`${s.id} ${label}: lists ${shown.length}, should be ${want}`);
       const stray = shown.map(bookAt).filter(b => !b || !keep(b));
       if (stray.length) wrong.push(`${s.id} ${label}: lists ${stray.length} that don’t fit the filter`);
@@ -93,27 +112,27 @@ test("every shelf’s toolbar count is the number of books it lists, under each 
 test("All shelves: each shelf’s part counts its own books, and the banner counts the library", async () => {
   await go("#shelves");
   const f = figures();
-  eq([f.books, f.read, f.authors], [BOOKS.length, booksRead(BOOKS), AUTHORS.length], "banner books, read, authors:");
+  eq([f.books, f.read, f.authors], [once(BOOKS), booksRead(BOOKS), writers()], "banner books, read, authors:");
   eq(f.shelves, SHELVES.filter(s => s.books.length && s.libib).length, "banner shelves:");
   const wrong = [];
   let total = 0;
   $$("#shelfBooks section.shelf-part").forEach(sec => {
-    const n = shownBooks(sec).length, said = +($(".section-head .more", sec).textContent.replace(/\D/g, ""));
-    if (n !== said) wrong.push(`${$(".section-head h2", sec).textContent}: says ${said}, lists ${n}`);
+    const n = shownBooks(sec).length, said = $(".section-head .more", sec).textContent.trim().toLowerCase(), want = countSays(shownBooks(sec).map(bookAt));
+    if (said !== want) wrong.push(`${$(".section-head h2", sec).textContent}: says ${said}, lists ${want}`);
     total += n;
   });
   eq(wrong, []);
   eq(total, BOOKS.length + NOT_OWNED.length, "all the parts together:");
-  eq(countText().toLowerCase(), plural(total, "book").toLowerCase(), "toolbar:");
+  eq(countText().toLowerCase(), countSays(shownBooks().map(bookAt)), "toolbar:");
 });
 
 test("Home figures agree with the reading and the shelves", async () => {
   await go("#home");
   const f = figures(), y = String(new Date().getFullYear());
   eq(f["read in " + y], finishedIn(y).length, "read this year:");
-  eq(f["books on the shelves"], BOOKS.length, "books on the shelves:");
+  eq(f["books on the shelves"], once(BOOKS), "books on the shelves:");
   eq(f["not read yet on your shelves"], booksUnread(BOOKS), "not read yet:");
-  eq(f.authors, AUTHORS.length, "authors:");
+  eq(f.authors, writers(), "authors:");
   eq($$(".now-row .now-card", view()).length, readingLog().filter(isReading).length, "reading now cards:");
 });
 
@@ -147,7 +166,7 @@ test("Stats figures agree with the shelves and the reading", async () => {
   await go("#stats");
   const text = view().innerText, y = String(new Date().getFullYear());
   const meter = label => { const m = $$(".meter", view()).find(x => x.querySelector("span").textContent.startsWith(label)); return m && +m.querySelector("b").textContent.replace(/[^\d]/g, ""); };
-  eq(meter("books on the shelves"), BOOKS.length, "books on the shelves:");
+  eq(meter("books on the shelves"), once(BOOKS), "books on the shelves:");
   eq(meter("books read"), readingLog().filter(isRead).length, "books read:");
   eq(meter("finished in " + y), finishedIn(y).length, "finished this year:");
   ok(new RegExp(`read \\(${plural(booksRead(BOOKS), "book")}\\)`, "i").test(text), "no “read (n books)” line");

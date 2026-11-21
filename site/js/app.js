@@ -75,6 +75,7 @@ BOOKS.forEach(b => {
   (editions[norm(b.title) + "|" + norm(b.surname || "")] ||= []).push(b);
 });
 const AUTHORS = Object.values(authorIndex);
+const WRITERS = AUTHORS.filter(a => a.books.some(x => !x.role));   // "authors" in the figures: people who wrote one (her call, 21 Nov)
 AUTHORS.forEach(a => { a.sort = ((a.surname || a.name.split(" ").pop()) + " " + a.name).toLowerCase(); });
 AUTHORS.sort((x, y) => x.sort.localeCompare(y.sort));
 const WISH = DATA.toBuy; WISH.forEach(prep);
@@ -132,6 +133,14 @@ const finishes = b => { const r = reading(b), ends = [...new Set((r.dates || [])
 const finishedIn = y => readingLog().flatMap(finishes).filter(d => year(d) === y);   // a re-read under way keeps its earlier finish (19 Nov)
 // how many books are read, each book once however many copies (three Philosopher's Stones are one book)
 const booksRead = list => new Set(list.filter(isRead).map(bookKey)).size;
+// Her call, 21 Nov: every figure counts each book once, however many copies she owns (Rowling 14, not 28 with the sets)
+const nBooks = list => new Set(list.map(bookKey)).size;
+const titlesOf = list => { const seen = new Map(); list.forEach(b => { const k = bookKey(b), had = seen.get(k); if (!had || (!had.pages && b.pages)) seen.set(k, b); }); return [...seen.values()]; };   // one copy per book (one with a page count if any)
+// the count beside a shelf's filters: the books showing, each once, as the banner counts them, and the not-owned ones apart
+const shownCount = list => { const own = list.filter(b => !b.notOwned), away = list.length - own.length;
+  return !own.length && away ? `${num(away)} not owned` : plural(nBooks(own), "book") + (away ? ` · ${num(away)} not owned` : ""); };
+const authorBooks = a =>nBooks(a.books.map(x => x.book));   // an author's books, each once
+const pagesOf = list => [...list.reduce((m, b) => m.set(bookKey(b), Math.max(m.get(bookKey(b)) || 0, b.pages || 0)), new Map()).values()].reduce((a, n) => a + n, 0);   // each book's pages once (its longest copy)
 // not read yet: not started at all (a book she didn't finish or is taking a break from isn't waiting to be read)
 const isUnread = b => { const st = reading(b).status; return !st || st === "to-read"; };
 const booksUnread = list => new Set(list.filter(isUnread).map(bookKey)).size;
@@ -358,8 +367,8 @@ function renderNav(active){
   // (the name at the top is the way home)
   document.getElementById("nav").innerHTML = `
     <div class="nav-group shelves-nav"><span class="label">Shelves</span>
-      ${link("#shelves", ic("library"), "All shelves", BOOKS.length)}
-      ${SHELVES.filter(s => s.books.length && s.id !== COLLECTION).map(s => link("#shelf-" + s.id, `<span class="dot" style="--c:${s.color}"></span>`, esc(s.name), s.books.length)).join("")}
+      ${link("#shelves", ic("library"), "All shelves", nBooks(BOOKS))}
+      ${SHELVES.filter(s => s.books.length && s.id !== COLLECTION).map(s => link("#shelf-" + s.id, `<span class="dot" style="--c:${s.color}"></span>`, esc(s.name), nBooks(s.books))).join("")}
     </div>
     ${shelfIndex[COLLECTION] ? `<div class="nav-group"><span class="label">Old books</span>
       ${OLD_KINDS.map(([k, name, c]) => link("#old-" + k, `<span class="dot" style="--c:${c}"></span>`, name, oldBooks(k).length)).join("")}
@@ -390,7 +399,7 @@ function pageHome(){
     return m[3] ? `${+m[3]} ${MON[m[2] - 1]}${y}` : m[2] ? `${MON[m[2] - 1]} ${m[1]}` : m[1]; };
   return hero({kicker: "Home library", title: "Jemma’s <em>Library</em>", covers: [...BOOKS].sort(SORTS.added[1]),
       text: "Every book on the shelves at home, and everything you read.",
-      figures: [[num(yearReads), `read in ${thisYear}`], [num(BOOKS.length), "books on the shelves"], [num(unreadOwned), "not read yet on your shelves"], [num(AUTHORS.length), "authors"]]})
+      figures: [[num(yearReads), `read in ${thisYear}`], [num(nBooks(BOOKS)), "books on the shelves"], [num(unreadOwned), "not read yet on your shelves"], [num(WRITERS.length), "authors"]]})
     + (now.length ? sectionHead("Reading <em>now</em>", `<a class="more" href="#reading">All your reading</a>`)
         + `<div class="now-row">${now.map(b => { const st = reading(b).started; return `<a class="now-card" href="${href(b)}">${cover(b, "", true)}<div><span class="label">Reading now</span><h3>${esc(b.t)}</h3><div class="by">${esc(b.by)}</div>${st ? `<div class="by">Started ${niceDate(st)}</div>` : ""}</div></a>`; }).join("")}</div>` : "")
     + (done.length ? sectionHead("Just <em>finished</em>", pickButton()) + `<div class="books row">${done.map(b => card(b, `Finished ${shortDate(lastFinish(b))}`)).join("")}</div>` : "")
@@ -398,7 +407,7 @@ function pageHome(){
     + sectionHead("New on the <em>shelves</em>", done.length ? "" : pickButton()) + `<div class="books row">${recent.map(b => card(b, `Added ${shortDate(b.added)}`)).join("")}</div>`
     + sectionHead("The <em>shelves</em>", `<a class="more" href="#shelves">See them all at once</a>`)
     + `<div class="shelves">${SHELVES.filter(s => s.books.length).map(s => `<a class="shelf-card" href="#shelf-${s.id}" style="--c:${s.color}"><div class="fan">${fan(s)}</div>
-        <div class="txt"><h3>${esc(s.name)}</h3><span>${plural(s.books.length, "book")}</span></div></a>`).join("")}</div>`
+        <div class="txt"><h3>${esc(s.name)}</h3><span>${plural(nBooks(s.books), "book")}</span></div></a>`).join("")}</div>`
     // books she's taking a break from, out of Reading Now and below the shelves (her ask, 1 Nov)
     + (paused.length ? sectionHead("On a <em>break</em>") + `<div class="books">${paused.map(b => card(b)).join("")}</div>` : "");
 }
@@ -428,12 +437,12 @@ function shelfBooks(list, grouped = currentGrouped){
   // all shelves at once: each shelf in turn, in the same order as the sidebar
   const body = !shown.length ? `<p class="empty">Nothing here yet.</p>` : !grouped ? books(shown)
     : SHELVES.map(s => { const l = shown.filter(b => b.shelf === s.id); return l.length ? `<section class="shelf-part">`
-        + sectionHead(`<span class="dot big" style="--c:${s.color}"></span>${esc(s.name)}`, `<a class="more" href="#shelf-${s.id}">${plural(l.length, "book")}</a>`) + books(l) + `</section>` : ""; }).join("");
+        + sectionHead(`<span class="dot big" style="--c:${s.color}"></span>${esc(s.name)}`, `<a class="more" href="#shelf-${s.id}">${shownCount(l)}</a>`) + books(l) + `</section>` : ""; }).join("");
   return `<div class="toolbar" id="toolbar">
       <div class="chips">${Object.entries(FILTERS).map(([k, [l]]) => `<button type="button" data-filter="${k}" class="${shelfView.filter === k ? "on" : ""}" aria-pressed="${shelfView.filter === k}">${l}</button>`).join("")}</div>
       <select id="sort" aria-label="Sort by">${Object.entries(SORTS).map(([k, [l]]) => `<option value="${k}"${shelfView.sort === k ? " selected" : ""}>${l}</option>`).join("")}</select>
       <div class="views"${ledger ? " hidden" : ""}><button type="button" data-view="covers" class="${view === "covers" ? "on" : ""}" aria-pressed="${view === "covers"}" aria-label="Covers">${ic("grid")}</button><button type="button" data-view="list" class="${view === "list" ? "on" : ""}" aria-pressed="${view === "list"}" aria-label="List">${ic("list")}</button></div>
-      ${pickButton(grouped ? "" : currentShelf)}<span class="count">${plural(shown.length, "book")}</span>
+      ${pickButton(grouped ? "" : currentShelf)}<span class="count">${shownCount(shown)}</span>
     </div>` + body;
 }
 let currentList = [], currentGrouped = false, currentShelf = "";
@@ -441,14 +450,14 @@ function pageAllShelves(){
   currentList = BOOKS.concat(NOT_OWNED); currentGrouped = true;
   const shelves = SHELVES.filter(s => s.books.length && s.libib).length;
   return hero({kicker: `<a href="#home">Every shelf</a>`, title: "All <em>shelves</em>", covers: mixed(BOOKS), text: "The whole bookcase at once, shelf by shelf, each in author surname order.",
-      figures: [[num(BOOKS.length), "books"], [num(shelves), "shelves"], [num(AUTHORS.length), "authors"], [num(booksRead(BOOKS)), "read"]]})
+      figures: [[num(nBooks(BOOKS)), "books"], [num(shelves), "shelves"], [num(WRITERS.length), "authors"], [num(booksRead(BOOKS)), "read"]]})
     + `<div id="shelfBooks">${shelfBooks(currentList)}</div>`;
 }
 function pageShelf(s){
   currentList = s.books.concat(s.notOwned || []); currentGrouped = false; currentShelf = s.id;
-  const authors = new Set(s.books.flatMap(b => (b.authors || []).filter(a => !a.role).map(a => slug(a.name)))).size, pages = s.books.reduce((n, b) => n + (b.pages || 0), 0);
+  const authors = new Set(s.books.flatMap(b => (b.authors || []).filter(a => !a.role).map(a => slug(a.name)))).size, pages = pagesOf(s.books);
   return hero({kicker: `<a href="#home">Shelf</a>`, title: esc(s.name), color: s.color, text: s.note ? esc(s.note) : "", covers: [...s.books].sort(SORTS.author[1]),
-      figures: [[num(s.books.length), "books"], [num(authors), "authors"], [num(booksRead(s.books)), "read"], ...((s.notOwned || []).filter(isRead).length ? [[num(s.notOwned.filter(isRead).length), "read but not owned"]] : []), ...(pages ? [[num(pages), "pages"]] : [])]})   // none counted (the old books): left out, not "0" (review, 21 Nov)
+      figures: [[num(nBooks(s.books)), "books"], [num(authors), "authors"], [num(booksRead(s.books)), "read"], ...((s.notOwned || []).filter(isRead).length ? [[num(s.notOwned.filter(isRead).length), "read but not owned"]] : []), ...(pages ? [[num(pages), "pages"]] : [])]})   // none counted (the old books): left out, not "0" (review, 21 Nov)
     + `<div id="shelfBooks">${shelfBooks(currentList)}</div>`;
 }
 
@@ -527,7 +536,7 @@ function pageBook(b){
       ${b.description && !oldNote(b) ? blurb(b.description) : ""}
       ${sgFor[b.id] ? reviews(reading(b)) : ""}
       ${others.length ? sectionHead(`Other copies <em>you own</em>`) + grid(others) : ""}
-      ${more.length ? sectionHead(`More by <em class="keep">${esc(au.name)}</em>`, au.books.length > more.length + 1 ? `<a class="more" href="#a-${au.id}">All ${au.books.length}</a>` : "") + grid(more) : ""}
+      ${more.length ? sectionHead(`More by <em class="keep">${esc(au.name)}</em>`, authorBooks(au) > more.length + 1 ? `<a class="more" href="#a-${au.id}">All ${authorBooks(au)}</a>` : "") + grid(more) : ""}
     </div><aside style="display:grid;gap:18px">
       ${sgFor[b.id] ? sgPanel(reading(b)) : readingPanel(b)}
       <div class="panel"><h2>Details</h2><dl class="facts">
@@ -546,15 +555,15 @@ function pageAuthors(){
   AUTHORS.forEach(a => { const L = (a.sort[0] || "#").toUpperCase(); (groups[/[A-Z]/.test(L) ? L : "#"] ||= []).push(a); });
   const letters = Object.keys(groups).sort();
   return hero({kicker: "Browse", title: "The <em>authors</em>", covers: mixed([...BOOKS].sort(SORTS.author[1])), text: "Everyone with a name on a book here, illustrators and translators included, by surname.",
-      figures: [[num(AUTHORS.length), "people"], [num(AUTHORS.filter(a => a.books.length > 1).length), "with more than one book"]]})
+      figures: [[num(AUTHORS.length), "people"], [num(AUTHORS.filter(a => authorBooks(a) > 1).length), "with more than one book"]]})
     + `<div class="letters">${letters.map(L => `<a href="#authors" data-jump="az-${L}">${L}</a>`).join("")}</div>`
-    + letters.map(L => `<section class="az" id="az-${L}"><h2>${L}</h2><ul>${groups[L].map(a => `<li><a href="#a-${a.id}">${esc(a.name)}</a><span>${a.books.length}</span></li>`).join("")}</ul></section>`).join("");
+    + letters.map(L => `<section class="az" id="az-${L}"><h2>${L}</h2><ul>${groups[L].map(a => `<li><a href="#a-${a.id}">${esc(a.name)}</a><span>${authorBooks(a)}</span></li>`).join("")}</ul></section>`).join("");
 }
 function pageAuthor(a){
   const list = a.books.map(x => x.book).sort((x, y) => (x.published || "9999").localeCompare(y.published || "9999"));
   const roles = [...new Set(a.books.map(x => x.role).filter(Boolean))];
   return hero({kicker: `<a href="#authors">Author</a>`, title: `<span class="keep">${esc(a.name)}</span>`, covers: list, text: roles.length ? `Also credited as ${esc(roles.join(", ").toLowerCase())}.` : "",
-      figures: [[num(list.length), list.length === 1 ? "book" : "books"], [num(booksRead(list)), "read"], (n => [num(n), n === 1 ? "shelf" : "shelves"])(new Set(list.map(b => b.shelf)).size)]})
+      figures: [[num(nBooks(list)), nBooks(list) === 1 ? "book" : "books"], [num(booksRead(list)), "read"], (n => [num(n), n === 1 ? "shelf" : "shelves"])(new Set(list.map(b => b.shelf)).size)]})
     + sectionHead("Their <em>books</em>", `<span class="more">Oldest first</span>`)
     + `<div class="books">${a.books.slice().sort((x, y) => (x.book.published || "9999").localeCompare(y.book.published || "9999")).map(x => card(x.book, x.role ? x.role : year(x.book.published) || x.book.by)).join("")}</div>`;
 }
@@ -1270,14 +1279,14 @@ function readingStats(bars, readYears){
     + (Object.keys(paces).length ? sectionHead("Pace") + bars(Object.entries(paces).map(([label, n]) => ({label: label[0].toUpperCase() + label.slice(1), n})).sort((a, b) => b.n - a.n), Math.max(...Object.values(paces))) : "");
 }
 function pageStats(){
-  const pages = BOOKS.reduce((n, b) => n + (b.pages || 0), 0), withPages = BOOKS.filter(b => b.pages);
+  const TITLES = titlesOf(BOOKS), pages = pagesOf(BOOKS), withPages = TITLES.filter(b => b.pages);
   const bars = (rows, max) => `<div class="bars">${rows.map(r => `<${r.href ? `a href="${r.href}"` : "div"} class="bar-row" style="--c:${r.color || "var(--deep-2)"}"><b title="${esc(r.label)}">${esc(r.label)}</b><div class="track"><i style="width:${(r.n / max * 100).toFixed(1)}%"></i></div><span>${r.text || num(r.n)}</span></${r.href ? "a" : "div"}>`).join("")}</div>`;
-  const shelves = SHELVES.filter(s => s.books.length).map(s => ({label: s.name, n: s.books.length, color: s.color, href: "#shelf-" + s.id,
-    text: `${num(s.books.length)} · ${Math.round(s.books.length / BOOKS.length * 100)}%`})).sort((a, b) => b.n - a.n);
-  const top = AUTHORS.map(a => ({label: a.name, n: a.books.filter(x => !x.role).length, href: "#a-" + a.id})).sort((a, b) => b.n - a.n).slice(0, 12);
-  const pubs = {}; BOOKS.forEach(b => { if (b.publisher) { const p = b.publisher.replace(/\s+(Ltd|Limited|PLC|Plc|plc|Inc|LLC|Publishing|Publishers|Books)\.?$/g, "").replace(/,$/, "").trim(); pubs[p] = (pubs[p] || 0) + 1; } });
+  const shelves = SHELVES.filter(s => s.books.length).map(s => ({label: s.name, n: nBooks(s.books), color: s.color, href: "#shelf-" + s.id,
+    text: `${num(nBooks(s.books))} · ${Math.round(nBooks(s.books) / nBooks(BOOKS) * 100)}%`})).sort((a, b) => b.n - a.n);
+  const top = AUTHORS.map(a => ({label: a.name, n: nBooks(a.books.filter(x => !x.role).map(x => x.book)), href: "#a-" + a.id})).sort((a, b) => b.n - a.n).slice(0, 12);
+  const pubs = {}; TITLES.forEach(b => { if (b.publisher) { const p = b.publisher.replace(/\s+(Ltd|Limited|PLC|Plc|plc|Inc|LLC|Publishing|Publishers|Books)\.?$/g, "").replace(/,$/, "").trim(); pubs[p] = (pubs[p] || 0) + 1; } });
   const topPubs = Object.entries(pubs).map(([label, n]) => ({label, n})).sort((a, b) => b.n - a.n).slice(0, 10);
-  const dec = {}; BOOKS.forEach(b => { const y = +year(b.published); if (y) { const d = Math.floor(y / 10) * 10; dec[d] = (dec[d] || 0) + 1; } });
+  const dec = {}; TITLES.forEach(b => { const y = +year(b.published); if (y) { const d = Math.floor(y / 10) * 10; dec[d] = (dec[d] || 0) + 1; } });
   const dk = Object.keys(dec).map(Number), decs = dk.length ? Array.from({length: (Math.max(...dk) - Math.min(...dk)) / 10 + 1}, (_, i) => Math.min(...dk) + i * 10) : [];
   decs.forEach(d => dec[d] ||= 0); const dmax = Math.max(1, ...Object.values(dec));
   const readN = booksRead(BOOKS), titles = new Set(BOOKS.map(bookKey)).size, perYear = {};
@@ -1285,7 +1294,7 @@ function pageStats(){
   const readYears = Object.keys(perYear).sort().reverse().map(y => ({label: y, n: perYear[y], href: "#history"}));
   return hero({kicker: "The numbers", title: "<em>Stats</em>", text: "How the library adds up.", covers: mixed([...BOOKS].reverse())})
     + `<div class="ledger"><div class="ledger-grid">
-        <div class="meter"><b>${num(BOOKS.length)}</b><span>books on the shelves</span></div>
+        <div class="meter"><b>${num(TITLES.length)}</b><span>books on the shelves</span></div>
         <div class="meter"><b>${num(pages)}</b><span>pages (${num(withPages.length)} books with a page count)</span></div>
         <div class="meter"><b>${num(Math.round(pages / (withPages.length || 1)))}</b><span>pages in an average book</span></div>
         <div class="meter"><b>${Math.round(readN / titles * 100)}%</b><span>read (${plural(readN, "book")})</span></div>
@@ -1308,7 +1317,7 @@ function pageSearch(term){
   const books = BOOKS.filter(hit).sort(SORTS.title[1]), authors = AUTHORS.filter(a => a.name.toLowerCase().includes(t)), wish = WISH.filter(hit);
   const away = ELSEWHERE.filter(hit).sort(SORTS.title[1]);
   return `<div class="section-head" style="margin-top:56px"><h2>Results for <em class="keep">‘${esc(term)}’</em></h2><span class="more">${plural(books.length, "book")}</span></div>`
-    + (authors.length ? `<div class="chips" style="margin-bottom:28px">${authors.slice(0, 20).map(a => `<a class="btn" href="#a-${a.id}">${ic("user")}<span class="keep">${esc(a.name)}</span> · ${a.books.length}</a>`).join("")}</div>` : "")
+    + (authors.length ? `<div class="chips" style="margin-bottom:28px">${authors.slice(0, 20).map(a => `<a class="btn" href="#a-${a.id}">${ic("user")}<span class="keep">${esc(a.name)}</span> · ${authorBooks(a)}</a>`).join("")}</div>` : "")
     + (books.length ? grid(books) : `<p class="empty">No books match.</p>`)
     + (away.length ? sectionHead("Read or to read, <em>not on your shelves</em>") + grid(away) : "")
     + (wish.length ? sectionHead("On the <em>to-buy list</em>") + `<div class="books">${wish.map(w => `<a class="bk" ${cardShape(w)} href="#to-buy"><div class="slot">${cover(w)}</div><h3>${esc(w.t)}</h3><div class="by">${esc(w.by)}</div></a>`).join("")}</div>` : "");

@@ -196,14 +196,14 @@ test("book numbers: a real ISBN-13 passes the check digit, a wrong one or a pric
 test("sidebar counts on the made-up library", async () => {
   await go("#home");
   eq(["#shelves", "#shelf-fantasy", "#shelf-childrens", "#old-childrens", "#old-fiction", "#old-non-fiction", "#old-to-find", "#to-buy", "#authors", "#reading"].map(navCount),
-    [25, 18, 2, 3, 1, 1, 1, 3, 12, 2]);
+    [19, 13, 2, 3, 1, 1, 1, 3, 12, 2]);   // each book once however many copies (her call, 21 Nov): 25 copies are 19 books
   ok(!$('#nav a[href="#shelf-empty-shelf"]'), "an empty shelf is listed");
   ok(!$('#nav a[href="#shelf-old-book-collection"]'), "the old books are listed as a shelf too");
 });
 
 test("Home: read this year counts every finish, not read yet counts each book once", async () => {
   await go("#home");
-  eq(figures(), {[`read in ${Y}`]: 6, "books on the shelves": 25, "not read yet on your shelves": 14, authors: 12});
+  eq(figures(), {[`read in ${Y}`]: 6, "books on the shelves": 19, "not read yet on your shelves": 14, authors: 12});
   eq($$(".now-row h3", view()).map(h => h.textContent), ["Lantern Days", "Second Wind"], "reading now:");
   ok(/On a break/i.test(view().innerText) && view().innerText.includes("Quiet Fields"), "paused book not on a break");
 });
@@ -214,10 +214,10 @@ test("Reading: its figures, and how many of the books read are on the shelves", 
   ok(/2 of the books you’ve read are on your shelves; 2 aren’t/i.test(view().innerText), "shelves / not owned line");
 });
 
-test("a shelf’s banner: copies, authors, books read once each, and read-but-not-owned", async () => {
+test("a shelf’s banner: books, authors and books read once each, and read-but-not-owned", async () => {
   await go("#shelf-fantasy");
-  eq(figures(), {books: 18, authors: 8, read: 2, "read but not owned": 1, pages: 1700});
-  eq(countText(), "19 books", "toolbar (copies and the not-owned one):");
+  eq(figures(), {books: 13, authors: 8, read: 2, "read but not owned": 1, pages: 1380});   // 18 copies are 13 books; each book's pages once (its longest copy)
+  eq(countText(), "13 books · 1 not owned", "the count over the books (each book once, the not-owned one apart):");
   eq(shownBooks().length, 19);
 });
 
@@ -225,8 +225,8 @@ test("a shelf’s filters each show only their books, and count them", async () 
   await go("#shelf-fantasy");
   const counts = {};
   for (const k of Object.keys(FILTERS)) { click($(`[data-filter="${k}"]`)); counts[k] = [shownBooks().length, countText()]; }
-  eq(counts, {all: [19, "19 books"], owned: [18, "18 books"], notowned: [1, "1 book"], special: [2, "2 books"], signed: [1, "1 book"],
-    toyou: [1, "1 book"], unread: [9, "9 books"], reading: [1, "1 book"], read: [7, "7 books"]});
+  eq(counts, {all: [19, "13 books · 1 not owned"], owned: [18, "13 books"], notowned: [1, "1 not owned"], special: [2, "2 books"], signed: [1, "1 book"],
+    toyou: [1, "1 book"], unread: [9, "8 books"], reading: [1, "1 book"], read: [7, "2 books · 1 not owned"]});   // covers shown per copy, counted per book
 });
 
 test("a shelf’s list view and sort keep the same books", async () => {
@@ -240,10 +240,10 @@ test("a shelf’s list view and sort keep the same books", async () => {
 
 test("All shelves: each shelf’s part counts its own books, in sidebar order", async () => {
   await go("#shelves");
-  eq(figures(), {books: 25, shelves: 3, authors: 12, read: 2});
-  eq($$("#shelfBooks section.shelf-part").map(s => [$(".section-head h2", s).textContent.trim(), shownBooks(s).length, +$(".section-head .more", s).textContent.replace(/\D/g, "")]),
-    [["Fantasy", 19, 19], ["Children’s", 2, 2], ["Old Book Collection", 5, 5]]);
-  eq(countText(), "26 books");
+  eq(figures(), {books: 19, shelves: 3, authors: 12, read: 2});
+  eq($$("#shelfBooks section.shelf-part").map(s => [$(".section-head h2", s).textContent.trim(), shownBooks(s).length, $(".section-head .more", s).textContent.trim().toLowerCase()]),
+    [["Fantasy", 19, "13 books · 1 not owned"], ["Children’s", 2, "2 books"], ["Old Book Collection", 5, "5 books"]]);
+  eq(countText(), "19 books · 1 not owned");
 });
 
 test("History: a year lists each book finished in it, a re-read in both years", async () => {
@@ -256,7 +256,7 @@ test("History: a year lists each book finished in it, a re-read in both years", 
 test("Stats: books, reading and stars on the made-up library", async () => {
   await go("#stats");
   const meter = label => { const m = $$(".meter", view()).find(x => x.querySelector("span").textContent.startsWith(label)); return m && m.querySelector("b").textContent; };
-  eq([meter("books on the shelves"), meter("books read"), meter("finished in " + Y), meter("stars on average"), meter("read")], ["25", "4", "6", "3.83", "11%"]);
+  eq([meter("books on the shelves"), meter("books read"), meter("finished in " + Y), meter("stars on average"), meter("read")], ["19", "4", "6", "3.83", "11%"]);
   ok(/3 books rated/.test(view().innerText) && /read \(2 books\)/.test(view().innerText), "rated / read lines");
 });
 
