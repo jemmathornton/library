@@ -29,7 +29,7 @@ test("the window really is phone-sized", async () => {
 test("the top bar shows the menu button and the library’s name; the sidebar is away", async () => {
   const bar = $(".topbar");
   eq(getComputedStyle(bar).display, "flex", "top bar shown:");
-  ok(/Shelves/.test(menuButton().textContent) && menuButton().querySelector("svg"), "the button has the menu icon and its word");
+  ok(/^\s*Menu\s*$/.test(menuButton().textContent) && menuButton().querySelector("svg"), "the button has the menu icon and its word");
   eq($(".topbar-name").textContent.replace(/\s+/g, " ").trim(), "Jemma’s Library");
   ok(!onScreen(side()), "the sidebar is off the screen");
   eq(getComputedStyle(side()).visibility, "hidden", "the closed drawer can't be reached with Tab:");
