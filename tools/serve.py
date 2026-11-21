@@ -771,10 +771,13 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 return self.reply(scanned())
         if u.path == '/api/scan-setup':
             return self.reply(scan_setup())
+        if u.path == '/api/reading-status':   # Home: was a StoryGraph export refused as cut short? (21 Nov)
+            state = read_json_safely(SG_STATE, {})
+            return self.reply({'refused': state.get('refused')} if state.get('refused') else {})
         self.reply({'error': 'unknown'}, 404)
 
     def do_POST(self):
-        if self.path not in ('/api/books', '/api/scanned/remove', '/api/signed', '/api/condition', '/api/inscription') or not self.api_ok() or not self.host_ok():
+        if self.path not in ('/api/books', '/api/scanned/remove', '/api/signed', '/api/condition', '/api/inscription', '/api/reading/accept') or not self.api_ok() or not self.host_ok():
             return self.reply({'error': 'not allowed'}, 403)
         try:
             size = int(self.headers.get('Content-Length', 0) or 0)
@@ -801,6 +804,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                     else:
                         set_signed(body['id'], body.get('signed', ''))
                         result = mark_saved()
+                elif self.path == '/api/reading/accept':   # "Take it anyway" on Home's note (her yes, 21 Nov)
+                    result = accept_refused()
                 else:
                     result = {'ok': True, 'left': scanned(remove=str(body.get('isbn', '')))}
             self.reply(result)
@@ -858,8 +863,12 @@ def sg_log(msg):
         fh.write(f'{datetime.now():%Y-%m-%d %H:%M} {msg}\n')
 
 
+def downloads_folder():
+    return os.environ.get('LIBRARY_DOWNLOADS') or os.path.join(os.path.expanduser('~'), 'Downloads')
+
+
 def newest_export():
-    downloads = os.environ.get('LIBRARY_DOWNLOADS') or os.path.join(os.path.expanduser('~'), 'Downloads')
+    downloads = downloads_folder()
     best = None
     for f in os.listdir(downloads):
         p = os.path.join(downloads, f)
@@ -882,16 +891,18 @@ def export_rows(p):
         return sum(1 for _ in csv.DictReader(fh))
 
 
-def import_export(p, state):
+def import_export(p, state, force=False):
     """Import a new StoryGraph export and rebuild; the state is saved only once both worked (a failed import isn't tried again).
     An export with far fewer books than her reading now (cut short, or someone else's) isn't taken (review, 15 Nov), and the
-    reading as it was is kept as data/storygraph.prev.json."""
+    reading as it was is kept as data/storygraph.prev.json. A refused one is remembered ("refused" in the state), so Home can
+    say so and she can take it anyway (force; her yes, 21 Nov)."""
     now_path = os.path.join(DATA, 'storygraph.json')
     have = len(json.load(open(now_path, encoding='utf-8')).get('books', [])) if os.path.exists(now_path) else 0
     rows = export_rows(p)
-    if have >= 20 and rows < have * .8:
+    if have >= 20 and rows < have * .8 and not force:
         sg_log(f'not imported {os.path.basename(p)}: it has {rows} books, her reading has {have} (cut short?)')
         state['mtime'] = os.path.getmtime(p)
+        state['refused'] = {'file': os.path.basename(p), 'rows': rows, 'have': have, 'when': datetime.now().isoformat(timespec='minutes')}
         write_json(SG_STATE, state)
         return
     if os.path.exists(now_path) and state.get('retrying') != os.path.basename(p):   # a retry keeps the reading from before the first try (19 Nov)
@@ -912,6 +923,20 @@ def import_export(p, state):
     write_json(SG_STATE, {'file': os.path.basename(p), 'mtime': os.path.getmtime(p), 'imported': datetime.now().isoformat(timespec='minutes')})
     summary = next((l for l in r.stdout.splitlines() if l.startswith(('On her shelves', '345', 'StoryGraph')) or 'StoryGraph books' in l), '')
     sg_log(f'imported {os.path.basename(p)}: {summary}')
+
+
+def accept_refused():
+    """The refused export taken after all (she said the drop is real). Callers hold LOCK."""
+    state = read_json_safely(SG_STATE, {})
+    ref = state.get('refused') or {}
+    p = os.path.join(downloads_folder(), os.path.basename(ref.get('file', '')))
+    if not ref or not os.path.isfile(p):
+        return {'ok': False, 'error': 'That export isn’t in Downloads any more. Export your reading from StoryGraph again.'}
+    import_export(p, {k: v for k, v in state.items() if k != 'refused'}, force=True)
+    after = read_json_safely(SG_STATE, {})
+    if after.get('file') == ref['file'] and not after.get('refused') and not after.get('retrying'):
+        return {'ok': True}
+    return {'ok': False, 'error': 'It didn’t import (logs/reading-updates.log says why).'}
 
 
 def watch_reading():

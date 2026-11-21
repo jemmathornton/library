@@ -68,7 +68,7 @@
    - **Pages in the old style: done 21 Nov** (her ask: everything in the Bound book look).
    - **Smaller looks: done 21 Nov** (spines, phone old-books list, New covers switch, gap under the banner, books with no blurb).
    - **Backup: done 21 Nov (her yes):** the weekly save sends only the library's own files (anything else new is left out and named in logs/backup.log); Home shows a note when the last backup failed or none has worked for 9 days; the task runs Sundays 09:30 local time.
-   - **Reading import:** once an export is refused as cut short, every later one is refused too, silently. A note on the site, and a way to say "yes, take it"?
+   - **Reading import: done 21 Nov (her yes):** an export refused as cut short is remembered; Home says so with a Take it anyway button.
    - **Phone scanning** listens on every network the laptop joins, and the key travels unencrypted: limit it to the home Wi-Fi's address (my suggestion)?
    - **Keyboard and screen readers:** the Dark mode button says "Light mode" while marked pressed; a spoiler shows as soon as you Tab past it; setting a cover's corners is mouse-only; the camera panel isn't marked as a dialog. Fix all four (my suggestion)?
 

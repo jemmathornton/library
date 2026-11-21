@@ -238,7 +238,7 @@ def build():
                     b['cloth'] = cloth(local)
                 except Exception:   # a damaged picture: the spine keeps the plain colour
                     pass
-        elif covers.get(key):
+        elif (covers.get(key) or {}).get('src'):   # a cover entry with no link (looked for, none found) is skipped, not a crash (21 Nov)
             b['cover'] = covers[key]['src']
     data = {'built': date.today().isoformat(), 'shelves': load('shelves.json'), 'books': books, 'toBuy': wish, 'storygraph': sg,
             'series': load('series.json', {'series': []})['series'],

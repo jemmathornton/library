@@ -743,3 +743,17 @@ test("Home says when the weekly backup failed, and says nothing while it works",
     ok(!$("#backupNote"), "a note while all is well");
   } finally { backupStatus = null; }
 });
+
+test("Home says when a reading export was refused as cut short, with a Take it anyway button", async () => {   // her yes, 21 Nov
+  try {
+    fake = {"api/reading-status": () => ({refused: {file: "x.csv", rows: 5, have: 300, when: "2026-11-21T10:00"}}),
+            "api/reading/accept": () => ({ok: false, error: "That export isn’t in Downloads any more."})};
+    await loadReadingStatus(); await go("#home");
+    ok(/wasn’t taken in/.test(view().innerText) && /5 books/.test(view().innerText), "no note");
+    click($("#readingAccept"));
+    await until(() => /isn’t in Downloads/.test(view().innerText), "the reason it didn't work");
+    fake = {"api/reading-status": () => ({})};
+    await loadReadingStatus(); await go("#home");
+    ok(!$("#readingNote"), "a note with nothing refused");
+  } finally { readingRefused = null; }
+});

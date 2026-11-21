@@ -401,7 +401,7 @@ function pageHome(){
   return hero({kicker: "Home library", title: "Jemma’s <em>Library</em>", covers: [...BOOKS].sort(SORTS.added[1]),
       text: "Every book on the shelves at home, and everything you read.",
       figures: [[num(yearReads), `read in ${thisYear}`], [num(nBooks(BOOKS)), "books on the shelves"], [num(unreadOwned), "not read yet on your shelves"], [num(WRITERS.length), "authors"]]})
-    + backupNote()
+    + backupNote() + readingNote()
     + (now.length ? sectionHead("Reading <em>now</em>", `<a class="more" href="#reading">All your reading</a>`)
         + `<div class="now-row">${now.map(b => { const st = reading(b).started; return `<a class="now-card" href="${href(b)}">${cover(b, "", true)}<div><span class="label">Reading now</span><h3>${esc(b.t)}</h3><div class="by">${esc(b.by)}</div>${st ? `<div class="by">Started ${niceDate(st)}</div>` : ""}</div></a>`; }).join("")}</div>` : "")
     + (done.length ? sectionHead("Just <em>finished</em>", pickButton()) + `<div class="books row">${done.map(b => card(b, `Finished ${shortDate(lastFinish(b))}`)).join("")}</div>` : "")
@@ -1422,6 +1422,35 @@ function loadBackupStatus(){
   });
 }
 loadBackupStatus();
+
+// ---------- a StoryGraph export refused as cut short: said on Home, with "Take it anyway" (her yes, 21 Nov) ----------
+let readingRefused = null;
+function readingNote(){
+  const r = readingRefused; if (!r) return "";
+  return `<div class="note" id="readingNote" role="status">${ic("info")}<div><b>Your newest reading export wasn’t taken in.</b>
+    It has ${num(r.rows)} books and your reading here has ${num(r.have)}, so it looked cut short. If you really did take books off StoryGraph, take it anyway.
+    <div style="margin-top:10px"><button type="button" class="btn" id="readingAccept">${ic("check")}Take it anyway</button></div></div></div>`;
+}
+function showReadingNote(){
+  if ((location.hash || "#home") !== "#home" || q.value) return;
+  const old = document.getElementById("readingNote"), html = readingNote();
+  if (old) old.outerHTML = html || "";
+  else if (html) (document.getElementById("backupNote") || document.querySelector("#view .hero"))?.insertAdjacentHTML("afterend", html);
+}
+function loadReadingStatus(){
+  if (!location.protocol.startsWith("http")) return Promise.resolve();
+  return api("api/reading-status").catch(() => ({})).then(d => { readingRefused = (d && d.refused) || null; showReadingNote(); });
+}
+loadReadingStatus();
+document.addEventListener("click", e => {
+  const b = e.target.closest("#readingAccept"); if (!b) return;
+  b.disabled = true; b.lastChild.textContent = "Taking it in…";
+  api("api/reading/accept", {method: "POST", body: "{}"}).catch(err => ({ok: false, error: String(err.message || err)})).then(d => {
+    if (d.ok) return location.reload();   // the new reading is in data.js
+    b.disabled = false; b.lastChild.textContent = "Take it anyway";
+    b.insertAdjacentHTML("afterend", `<p class="add-note">${esc(d.error || "It didn’t work.")}</p>`);
+  });
+});
 
 // ---------- routing ----------
 let drawn = false;   // the first page drawn takes no focus

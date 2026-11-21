@@ -106,6 +106,39 @@ class Server(unittest.TestCase):
         self.assertEqual(json.loads(body)['left'], [])
 
 
+class RefusedReading(unittest.TestCase):
+    """A StoryGraph export refused as cut short is remembered, reported to Home, and taken when she says so (21 Nov)."""
+
+    def test_refused_then_taken_anyway(self):
+        import csv, glob
+        with Sandbox(covers=False) as box:   # her reading (hundreds of books), so a short export looks cut short
+            serve = load('serve')
+            from support import REAL
+            src = sorted(glob.glob(os.path.join(REAL, 'imports', 'storygraph-*', '*.csv')))[-1]
+            with open(src, encoding='utf-8-sig', newline='') as fh:
+                rows = list(csv.reader(fh))
+            short = os.path.join(box.downloads, 'storygraph_short.csv')
+            with open(short, 'w', encoding='utf-8', newline='') as fh:
+                csv.writer(fh).writerows(rows[:11])   # the column names and 10 books
+            serve.import_export(short, {})
+            state = box.read('storygraph-source.json')
+            self.assertEqual(state['refused']['file'], 'storygraph_short.csv')
+            self.assertEqual(state['refused']['rows'], 10)
+            self.assertNotIn(os.sep, json.dumps(state['refused']), 'a folder path would go to the public GitHub copy')
+            before = len(box.read('storygraph.json')['books'])
+            self.assertGreater(before, 20)
+            self.assertEqual(serve.accept_refused(), {'ok': True})
+            self.assertEqual(len(box.read('storygraph.json')['books']), 10)
+            self.assertNotIn('refused', box.read('storygraph-source.json'))
+
+    def test_taking_it_anyway_when_the_file_has_gone(self):
+        with Sandbox(data=False, covers=False) as box:
+            serve = load('serve')
+            box.write('storygraph-source.json', {'refused': {'file': 'gone.csv', 'rows': 3, 'have': 300, 'when': '2026-11-21T10:00'}})
+            r = serve.accept_refused()
+            self.assertFalse(r['ok']); self.assertIn('Downloads', r['error'])
+
+
 class ReadingWatcher(unittest.TestCase):
     """Every 5 minutes the server looks in Downloads for the newest StoryGraph export."""
 
