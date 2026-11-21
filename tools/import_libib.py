@@ -114,6 +114,10 @@ def main():
             print('  to buy but maybe owned:', w['title'])
     now = json.load(open(os.path.join(DATA, 'books.json'), encoding='utf-8')) if os.path.exists(os.path.join(DATA, 'books.json')) else []
     emptied = sorted({b['shelf'] for b in now} - {b['shelf'] for b in books} - {'unsorted'})
+    wish_now = json.load(open(os.path.join(DATA, 'to-buy.json'), encoding='utf-8')) if os.path.exists(os.path.join(DATA, 'to-buy.json')) else []
+    if '--apply' in sys.argv and '--force' not in sys.argv and wish_now and len(wish) < len(wish_now) * .5:   # review, 21 Nov: a missing Books to Buy CSV emptied the list
+        sys.exit(f'Not written: this export has {len(wish)} books to buy against {len(wish_now)} now. Is the Books to Buy CSV missing '
+                 'from the folder? (--force writes it anyway.)')
     if '--apply' in sys.argv and '--force' not in sys.argv and (len(books) < len(now) * .9 or emptied):
         sys.exit(f'Not written: this export has {len(books)} books against {len(now)} now'
                  + (f', and these shelves would be empty: {", ".join(emptied)}' if emptied else '')

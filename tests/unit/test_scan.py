@@ -16,10 +16,10 @@ class ScanDoor(unittest.TestCase):
         self.serve = load('serve')
         self.looked = []
 
-        def lookup(isbn):
+        def find(isbn):   # the scan asks for the name only (21 Nov: no cover hunting while the phone waits)
             self.looked.append(isbn)
             return {'found': True, 'title': 'Looked-up Title'}
-        self.serve.lookup = lookup
+        self.serve.find = find
         self.serve.time = types.SimpleNamespace(sleep=lambda s: None)   # no pause after a wrong key (this module only)
         self.httpd = self.serve.Server(('127.0.0.1', 0), self.serve.ScanHandler)
         threading.Thread(target=self.httpd.serve_forever, daemon=True).start()
@@ -87,10 +87,27 @@ class ScanDoor(unittest.TestCase):
     def test_a_failed_lookup_still_lists_the_scan(self):
         def broken(isbn):
             raise OSError('no internet')
-        self.serve.lookup = broken
+        self.serve.find = broken
         code, text = self.scan(NEW)
         self.assertEqual((code, text), (200, f'Got it: {NEW}'))
         self.assertEqual(self.waiting()[0]['title'], '')
+
+    def test_an_empty_key_file_never_lets_a_keyless_scan_in(self):   # review, 21 Nov: '' matched ''
+        open(self.serve.KEY_FILE, 'w').close()
+        self.assertEqual(self.scan(NEW, key='')[0], 403)
+        new = self.serve.scan_key()
+        self.assertRegex(new, r'^[a-z2-9]{12}$', 'a fresh key is made')
+        self.assertEqual(open(self.serve.KEY_FILE, encoding='utf-8').read(), new)
+        self.assertEqual(self.waiting(), [])
+
+    def test_a_damaged_scanned_list_doesnt_lose_the_scan(self):   # review, 21 Nov
+        open(self.box.path('data', 'scanned.json'), 'w').write('{not json')
+        self.assertEqual(self.scan(NEW)[0], 200)
+        self.assertEqual([x['isbn'] for x in self.waiting()], [NEW])
+
+    def test_the_scan_doesnt_go_hunting_for_covers(self):   # the phone gives up waiting (review, 21 Nov)
+        self.serve.lookup = lambda isbn: self.fail('the full lookup (with covers) was used for a scan')
+        self.assertEqual(self.scan(NEW)[0], 200)
 
     def test_nothing_else_is_served(self):
         self.assertEqual(self.scan(NEW, path='/')[0], 404)

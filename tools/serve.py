@@ -39,6 +39,11 @@ ROOT = os.environ.get('LIBRARY_ROOT') or os.path.dirname(os.path.dirname(os.path
 TOOLS = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, TOOLS)
 MAX_PICTURE = 20_000_000   # a cover picture never needs more (review, 15 Nov: downloads had no limit)
+try:   # and never more than 100 million pixels once opened (review, 21 Nov: a small file can open huge)
+    from PIL import Image as _Image
+    _Image.MAX_IMAGE_PIXELS = 100_000_000   # a 50-megapixel phone photo still opens
+except ImportError:
+    pass
 SITE, DATA = os.path.join(ROOT, 'site'), os.path.join(ROOT, 'data')
 ADDED, SCANNED = os.path.join(DATA, 'added.json'), os.path.join(DATA, 'scanned.json')
 KEY_FILE = os.path.join(os.environ.get('LOCALAPPDATA', os.path.expanduser('~')), 'Jemmas Library', 'scan-key.txt')
@@ -479,11 +484,17 @@ def book_number(s):
 
 
 def scan_key():
-    if not os.path.exists(KEY_FILE):
+    """The phone-scan key. Review, 21 Nov: an empty key file let any scan in without a key, so a key shorter than 8 is made
+    again (written whole or not at all)."""
+    key = open(KEY_FILE, encoding='utf-8').read().strip() if os.path.exists(KEY_FILE) else ''
+    if len(key) < 8:
         os.makedirs(os.path.dirname(KEY_FILE), exist_ok=True)
-        with open(KEY_FILE, 'w', encoding='utf-8') as fh:   # 12 letters and digits she can type on a phone (no 0/o, 1/l look-alikes)
-            fh.write(''.join(secrets.choice('abcdefghjkmnpqrstuvwxyz23456789') for _ in range(12)))
-    return open(KEY_FILE, encoding='utf-8').read().strip()
+        key = ''.join(secrets.choice('abcdefghjkmnpqrstuvwxyz23456789') for _ in range(12))   # 12 she can type on a phone (no 0/o, 1/l look-alikes)
+        tmp = KEY_FILE + '.tmp'
+        with open(tmp, 'w', encoding='utf-8') as fh:
+            fh.write(key); fh.flush(); os.fsync(fh.fileno())
+        os.replace(tmp, KEY_FILE)
+    return key
 
 
 def scan_setup():
@@ -500,9 +511,26 @@ def scan_setup():
     return {'url': f'http://{ip}:{SCAN_PORT}/scan?key={scan_key()}&isbn='}
 
 
+def read_json_safely(path, default):
+    """A data file read for the phone-scan path: a moment's lock while a save swaps the file in is waited out, and a
+    damaged file reads as empty, so a scan is never lost to either (review, 21 Nov)."""
+    for attempt in range(5):
+        try:
+            with open(path, encoding='utf-8') as fh:
+                v = json.load(fh)
+            return v if isinstance(v, type(default)) else default
+        except FileNotFoundError:
+            return default
+        except PermissionError:
+            time.sleep(0.1)
+        except ValueError:
+            return default
+    return default
+
+
 def scanned(new=None, remove=None):
     """The scanned list: read it, add a scan to it, or take one off (callers hold LOCK when changing it)."""
-    items = json.load(open(SCANNED, encoding='utf-8')) if os.path.exists(SCANNED) else []
+    items = read_json_safely(SCANNED, [])
     if new or remove:
         items = [x for x in items if x['isbn'] not in (remove, (new or {}).get('isbn'))]
         if new:
@@ -514,10 +542,10 @@ def scanned(new=None, remove=None):
 def on_shelves(isbn):
     """The title of a copy she already owns with this ISBN, or '' (copies she removed don't count, 19 Nov)."""
     rp = os.path.join(DATA, 'removed.json')
-    gone = {x['id'] for x in json.load(open(rp, encoding='utf-8'))} if os.path.exists(rp) else set()
+    gone = {x.get('id') for x in read_json_safely(rp, [])}
     for path in (os.path.join(DATA, 'books.json'), ADDED):
         if os.path.exists(path):
-            for b in json.load(open(path, encoding='utf-8')):
+            for b in read_json_safely(path, []):
                 if b.get('isbn13') == isbn and b.get('id') not in gone:
                     return b.get('title', '')
     return ''
@@ -588,9 +616,9 @@ def add(book):
             used += [k.removeprefix('id-') for k in json.load(open(p, encoding='utf-8'))]
     n = max([int(i[3:]) for i in used if re.fullmatch(r'add\d+', i)] + [0]) + 1
     b = {'id': f'add{n:04d}', 'title': title,
-         'authors': [{'name': n.strip()} for n in book.get('authors', []) if n.strip()], 'shelf': book['shelf'],
+         'authors': [{'name': n.strip()} for n in (book.get('authors') if isinstance(book.get('authors'), list) else []) if isinstance(n, str) and n.strip()], 'shelf': book['shelf'],
          'isbn13': i13, 'shopCode': shop, 'publisher': book.get('publisher', ''), 'published': book.get('published', ''),
-         'pages': int(book['pages']) if str(book.get('pages') or '').isdigit() else None,
+         'pages': int(book['pages']) if re.fullmatch(r'[0-9]{1,5}', str(book.get('pages') or '')) else None,
          'description': book.get('description', ''), 'added': date.today().isoformat(), 'copies': 1, 'addedHere': True}
     if book.get('coverWrong') is True:   # none of the covers found was hers (1 Nov): a photo of her own copy is needed
         b['coverWrong'] = True
@@ -808,7 +836,8 @@ class ScanHandler(http.server.BaseHTTPRequestHandler):
         if not isbn:
             return self.say('That isn’t a book barcode (it needs the one starting 978 or 979)', 400)
         try:
-            title = lookup(isbn).get('title', '')
+            found = find(isbn)   # the name only; the Add page finds the cover when she uses the scan (review, 21 Nov)
+            title = clean_title(found['title']) if found.get('found') else ''
         except Exception:
             title = ''
         owned = on_shelves(isbn)

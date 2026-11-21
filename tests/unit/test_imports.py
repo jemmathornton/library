@@ -64,6 +64,21 @@ class Libib(unittest.TestCase):
         self.assertEqual(run('import_libib.py', self.folder).returncode, 0)
         self.assertEqual(open(self.box.path('data', 'books.json'), 'rb').read(), before)
 
+    def test_a_missing_books_to_buy_csv_doesnt_empty_the_list(self):   # review, 21 Nov
+        import shutil
+        latest = sorted(glob.glob(os.path.join(REAL, 'imports', 'libib-*')))[-1]
+        for f in glob.glob(os.path.join(latest, '*.csv')):   # every collection but Books to Buy (found by what's in it)
+            with open(f, encoding='utf-8-sig', newline='') as fh:
+                first = next(csv.DictReader(fh), {})
+            if first.get('collection') != 'Books to Buy':
+                shutil.copy(f, self.folder)
+        self.assertTrue(self.box.read('to-buy.json'), 'the test needs a to-buy list to lose')
+        before = open(self.box.path('data', 'to-buy.json'), 'rb').read()
+        r = run('import_libib.py', self.folder, '--apply')
+        self.assertNotEqual(r.returncode, 0)
+        self.assertIn('Books to Buy', r.stderr + r.stdout)
+        self.assertEqual(open(self.box.path('data', 'to-buy.json'), 'rb').read(), before)
+
     def test_her_latest_real_export_still_reads(self):
         latest = sorted(glob.glob(os.path.join(REAL, 'imports', 'libib-*')))[-1]
         r = run('import_libib.py', latest)
