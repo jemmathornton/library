@@ -39,7 +39,9 @@
   "Sir Arthur C. Clarke CBE": "Arthur C. Clarke",
   "Stephen Donaldson": "Stephen R. Donaldson",
   "Cay Horstmann": "Cay S. Horstmann",
-  "DK Eyewitness": "Dorling Kindersley"
+  "DK Eyewitness": "Dorling Kindersley",
+  "G.D.H. Cole": "G. D. H. Cole",
+  "Dr. T. Wu": "Dr T. Wu"
  },
  "remove": [
   "Anonymous"
@@ -215,6 +217,14 @@
   "Feat of Clay (original paperback)": "Feet of Clay (original paperback)",
   "Outward Escape": "Any Way the Wind Blows",
   "The Callista Prophecy (The Natural Human Saga)": "The Callista Prophecy",
-  "Lycan Lamia: The Beyond Series - Book Four": "Lycan Lamia"
+  "Lycan Lamia: The Beyond Series - Book Four": "Lycan Lamia",
+  "Something From Tiffanys": "Something from Tiffany’s",
+  "Five Go To Smugglers Top": "Five Go to Smuggler’s Top",
+  "The Scent of Magic - Book 2 of the Doomspell Trilogy": "The Scent of Magic (Doomspell Trilogy)",
+  "Priestess Of The White: Age Of The Five Book One: The Age of Five: Book One": "Priestess of the White (Age of the Five)",
+  "The Science Of Discworld Revised Edition (Science of Discworld 1)": "The Science of Discworld (Revised edition) (Science of Discworld 1)",
+  "Harry Potter and the Chamber of Secrets: Illustrated Edition (Harry Potter Illustrated Editi)": "Harry Potter and the Chamber of Secrets: Illustrated Edition",
+  "Harry Potter and the Philosopher's Stone: Illustrated Edition (Harry Potter Illustrated ed)": "Harry Potter and the Philosopher's Stone: Illustrated Edition",
+  "Harry Potter and the Prisoner of Azkaban: Illustrated Edition (Harry Potter Illustrated Edtn)": "Harry Potter and the Prisoner of Azkaban: Illustrated Edition"
  }
 }

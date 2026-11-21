@@ -529,7 +529,7 @@ test("a search result that leads to the page underneath opens it, not the result
 test("a shelf’s authors figure counts people: a book by two people counts both, and each person once", async () => {   // review, 21 Nov
   for (const s of SHELVES.filter(x => x.books.length)) {
     await show("#shelf-" + s.id);
-    const want = new Set(s.books.flatMap(b => (b.authors || []).filter(a => !a.role).map(a => a.name))).size;
+    const want = new Set(s.books.flatMap(b => (b.authors || []).filter(a => !a.role).map(a => slug(a.name)))).size   // one person spelt two ways counts once;
     eq(figures().authors, want, s.name);
   }
 });

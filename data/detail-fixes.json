@@ -120,19 +120,22 @@
   "published": "2005-04-01"
  },
  "m4rd1x731h": {
-  "published": "1994-01-27"
+  "published": "1994-01-27",
+  "pages": 272
  },
  "yw7a2ifr71": {
   "published": "2014"
  },
  "kql3v79ysl": {
-  "published": "2006-08-01"
+  "published": "2006-08-01",
+  "pages": 272
  },
  "3kxuzr5arj": {
   "published": "2005-04-01"
  },
  "3kxuzj2arj": {
-  "published": "2008-04-15"
+  "published": "2008-04-15",
+  "pages": 128
  },
  "v8dzp1r26q": {
   "published": "2018"
@@ -144,7 +147,8 @@
   "published": "2018"
  },
  "ga48lc6bt4": {
-  "published": "2003"
+  "published": "2003",
+  "pages": 694
  },
  "ga48la0bt4": {
   "isbn13": "9781784161194",
@@ -186,5 +190,71 @@
   "publisher": "Canongate",
   "published": "2026-05-21",
   "pages": 304
+ },
+ "m4rdhup31h": {
+  "pages": 186
+ },
+ "3kxu1gwarj": {
+  "pages": 144
+ },
+ "9dbek5p6rp": {
+  "pages": 144
+ },
+ "w1fy8r4isd": {
+  "pages": 196
+ },
+ "e9oh31y5u2": {
+  "pages": 201
+ },
+ "m4rdhgn31h": {
+  "pages": 144
+ },
+ "u3n6w8lgnz": {
+  "pages": 180
+ },
+ "xl1ntnkjps": {
+  "pages": 122
+ },
+ "v8dzpzx26q": {
+  "pages": 122
+ },
+ "yw7avnwr71": {
+  "pages": 128
+ },
+ "prqbsmlno7": {
+  "pages": 128
+ },
+ "yw7av3xr71": {
+  "pages": 160
+ },
+ "kql35p7ysl": {
+  "pages": 127
+ },
+ "yw7avajr71": {
+  "pages": 304
+ },
+ "9dbekea6rp": {
+  "pages": 288
+ },
+ "2ousnzltqt": {
+  "pages": 192
+ },
+ "he2qgtn19k": {
+  "pages": 160
+ },
+ "ls5xdbh7b9": {
+  "pages": 332
+ },
+ "ft873ofe5y": {
+  "pages": 384
+ },
+ "8gmvxaaohq": {
+  "pages": 192
+ },
+ "cny0h72mmk": {
+  "pages": 284
+ },
+ "kql3v5gysl": {
+  "pages": 240
  }
 }
