@@ -887,3 +887,120 @@ test("family rules: the drawer at 899px: aria, focus in and back, inert, Escape,
     f.style.width = "899px"; await until(() => side.inert === true, "the drawer to be inert again when narrow");
   } finally { f.remove(); }
 });
+
+// ---------- the second review (21 Nov) and the tightened family rules (sections 3 and 4) ----------
+const hashIn = async (f, h) => { f.contentWindow.location.hash = h; await until(() => f.contentWindow.location.hash === h && f.contentDocument.getElementById("view").innerText.trim().length > 20, "the framed page " + h); await wait(50); };
+const meets = (a, b) => { const r = a.getBoundingClientRect(), s = b.getBoundingClientRect(); return r.width && s.width && r.left < s.right && s.left < r.right && r.top < s.bottom && s.top < r.bottom; };
+
+test("family rules: the drawer opens on the page’s own link (Home when none), and everything outside it is inert while open", async () => {
+  const f = await frameAt(899);
+  try {
+    const d = f.contentDocument, btn = d.getElementById("menuBtn"), side = d.getElementById("side");
+    await hashIn(f, "#reading");
+    btn.click(); await until(() => side.contains(d.activeElement), "focus into the drawer");
+    eq(d.activeElement.getAttribute("href"), "#reading", "the page’s own link:");
+    for (const sel of [".topbar", ".skip", "main"]) eq(d.querySelector(sel).inert, true, sel + " inert while open:");
+    eq(d.getElementById("scrim").inert, false, "the scrim still closes it:");
+    d.getElementById("scrim").click(); eq(d.activeElement, btn, "focus back to Menu:"); eq(d.querySelector(".topbar").inert, false, "top bar back:");
+    await hashIn(f, "#home");
+    btn.click(); await until(() => side.contains(d.activeElement), "focus into the drawer");
+    eq(d.activeElement.getAttribute("href"), "#home", "Home when the page has no link of its own:");
+    ok(!d.activeElement.classList.contains("home-link"), "not “← Jemma’s Journals”");
+    d.getElementById("scrim").click();
+  } finally { f.remove(); }
+});
+
+test("family rules: a page chosen in the drawer (by link, the same page again, or Enter in the search) takes keyboard focus", async () => {
+  const f = await frameAt(899);
+  try {
+    const d = f.contentDocument, w = f.contentWindow, btn = d.getElementById("menuBtn"), side = d.getElementById("side"), view = d.getElementById("view");
+    btn.click(); await until(() => side.contains(d.activeElement), "focus into the drawer");
+    const a = d.querySelector('#nav a[href="#reading"]'); a.focus(); a.click();
+    await until(() => w.location.hash === "#reading", "the page to change"); await wait(30);
+    eq(d.activeElement, view, "focus on the new page:");
+    btn.click(); await until(() => side.contains(d.activeElement), "focus into the drawer");
+    d.querySelector('#nav a[href="#reading"]').click(); await wait(30);
+    eq(d.activeElement, view, "focus on the page after choosing the same page:");
+    btn.click(); await until(() => side.contains(d.activeElement), "focus into the drawer");
+    const q = d.getElementById("q"); q.focus(); q.value = "the"; q.dispatchEvent(new w.Event("input", {bubbles: true}));
+    q.dispatchEvent(new w.KeyboardEvent("keydown", {key: "Enter", bubbles: true}));
+    eq(d.activeElement, view, "focus on the results:");
+  } finally { f.remove(); }
+});
+
+test("family rules: sizes: Menu 44px or more, the bar’s name 26px, the scrim black at 45%, “← Jemma’s Journals” 24px or more tall", async () => {
+  const f = await frameAt(899);
+  try {
+    const d = f.contentDocument, w = f.contentWindow;
+    ok(d.getElementById("menuBtn").getBoundingClientRect().height >= 44, "Menu button too small");
+    eq(w.getComputedStyle(d.querySelector(".topbar-name")).fontSize, "26px", "bar name:");
+    d.getElementById("menuBtn").click();
+    eq(w.getComputedStyle(d.getElementById("scrim")).backgroundColor, "rgba(0, 0, 0, 0.45)", "scrim:");
+    ok(d.querySelector("#side .home-link").getBoundingClientRect().height >= 24, "back link too small in the drawer");
+    d.getElementById("scrim").click();
+  } finally { f.remove(); }
+  ok($("#side .home-link").getBoundingClientRect().height >= 24, `back link on the wide sidebar is ${$("#side .home-link").getBoundingClientRect().height}px tall`);
+});
+
+test("family rules: robots meta, data-mode always set, fonts only from the site itself", async () => {
+  eq(document.querySelector('meta[name="robots"]')?.content, "noindex, noai, noimageai", "robots:");
+  ok(["light", "dark"].includes(document.documentElement.getAttribute("data-mode")), "data-mode set");
+  const away = $$("link[href], script[src]").map(e => e.href || e.src).filter(u => !u.startsWith(location.origin) && !u.startsWith("file:"));
+  eq(away, [], "files from other sites:");
+  const faces = [...document.styleSheets].flatMap(s => { try { return [...s.cssRules]; } catch { return []; } }).filter(r => r instanceof CSSFontFaceRule);
+  ok(["Instrument Serif", "Manrope", "EB Garamond"].every(n => faces.some(r => r.style.getPropertyValue("font-family").replace(/"/g, "") === n)), "each font has a local @font-face");
+  ok(faces.every(r => !/https?:/.test(r.style.getPropertyValue("src"))), "a font comes from another site");
+});
+
+test("family rules: the credits’ dots never start or end a line (a no-break space before each, lines balanced)", async () => {
+  const p = $(".about-site p:nth-child(2)");
+  eq($$(".sep", p).map(s => s.textContent), [" ·", " ·", " ·"], "each dot tied to the credit before it:");
+  eq(getComputedStyle(p).textWrap || getComputedStyle(p).textWrapStyle, "balance", "balanced:");
+  // narrow enough to wrap (but wider than a phone, where the dots are hidden): each dot stays on its credit’s line
+  const f = await frameAt(700);
+  try {
+    const d = f.contentDocument, seps = [...d.querySelectorAll(".about-site .sep")], crs = [...d.querySelectorAll(".about-site p:nth-child(2) .cr")];
+    seps.forEach((s, i) => { const r = s.getBoundingClientRect(), before = crs[i].getBoundingClientRect(); ok(Math.abs(r.bottom - before.bottom) < 2, `dot ${i + 1} left its credit’s line`); });
+    ok(crs.some((c, i) => i && c.getBoundingClientRect().top > crs[0].getBoundingClientRect().top + 2), "the credits should wrap at 700px for this check");
+    seps.forEach((s, i) => { const ends = crs[i + 1].getBoundingClientRect().top > s.getBoundingClientRect().top + 2; ok(!ends || f.contentWindow.getComputedStyle(s).visibility === "hidden", `dot ${i + 1} shows at the end of a line`); });
+  } finally { f.remove(); }
+});
+
+test("second review: between 901 and 1100 wide, Stats fits, its figures don’t run together, and no button or note sits on a heading", async () => {
+  for (const wd of [901, 1000, 1100]) {
+    const f = await frameAt(wd);
+    try {
+      const d = f.contentDocument;
+      for (const h of ["#home", "#reading", "#stats"]) {
+        await hashIn(f, h);
+        ok(d.documentElement.scrollWidth <= wd, `${wd}px ${h}: runs off the side (${d.documentElement.scrollWidth})`);
+        for (const head of d.querySelectorAll(".section-head")) {
+          const h2 = head.querySelector("h2"), extra = head.querySelector(".more, .pick-open");
+          if (extra) ok(!meets(h2, extra), `${wd}px ${h}: “${extra.textContent.trim()}” on “${h2.textContent.trim()}”`);
+        }
+        if (h === "#stats") for (const m of d.querySelectorAll(".meter b")) ok(m.scrollWidth <= m.parentElement.clientWidth + 1, `${wd}px: “${m.textContent}” runs past its column`);
+        else { const fig = [...d.querySelectorAll(".hero .figures div")]; if (fig.length > 2) ok(fig.every(x => x.getBoundingClientRect().left >= fig[0].getBoundingClientRect().left - 1), `${wd}px ${h}: a figure indented`); }
+      }
+    } finally { f.remove(); }
+  }
+});
+
+test("second review: the drop capital only on a blurb starting with a letter (a leading number stays whole)", async () => {
+  eq(dropCap("20 years after the war"), false, "a number:");
+  eq(dropCap("It was a dark night"), true, "a letter:");
+  eq(dropCap("“Hello,” she said"), true, "after an opening quote mark (kept, her question):");
+  const b = BOOKS.find(x => x.description && x.shelf !== COLLECTION);
+  if (b) { await show("#b-" + b.id); const p = $(".book-body .desc", view()); if (p) eq(p.classList.contains("drop"), dropCap(p.textContent.trim()), "the class follows the rule:"); }
+});
+
+test("second review: a pale shelf colour gets darker cloth so its gilt name reads; the old books’ shelves are dark in dark mode", async () => {
+  eq(paleCloth("#CF9A2B"), true, "Children’s mustard:");
+  eq(["#8E3B46", "#7A3F7A", "#4B4F8C", "#5A524C", "#B5577A", "#8C6A3F", "#A4542F", "#2E7A92", "#3F6B4A", "#8A8178"].filter(paleCloth), [], "the darker colours keep their cloth:");
+  await show("#home");
+  $$(".shelf-card", view()).forEach(c => eq(c.classList.contains("pale"), paleCloth(c.style.getPropertyValue("--c").trim()), "card class:"));
+  click($("#modeBtn")); ok(mode() === "dark");
+  await show("#old-" + OLD_KINDS[0][0]);
+  const shelf = $(".bookshelf", view());
+  if (shelf) ok(!/239, 229, 209/.test(getComputedStyle(shelf).backgroundImage), "the board is still cream in dark mode");
+  click($("#modeBtn"));
+});

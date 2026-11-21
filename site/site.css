@@ -28,6 +28,14 @@
   --accent:#D9B25E; --gilt-ink:#E2C47A; --text:#E6DAC4; --mount:#2A2119; --mount-edge:#4A3B2C; --mount-edge-2:#3C3024; --leaf-a:#2B2219; --leaf-b:#3D3125; --shade:rgba(0,0,0,.6);
   --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .95 0 0 0 0 .85 0 0 0 0 .65 0 0 0 .045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   color-scheme:dark }
+/* Instrument Serif and Manrope: local copies (from Jemma’s Journals, SIL OFL: site/fonts/OFL-*.txt), so no request goes to Google
+   (the family rules: the footer says “no tracking”). Latin and Latin Extended halves, each fetched only when a page needs it. */
+@font-face{font-family:"Instrument Serif";font-style:normal;font-weight:400;font-display:swap;src:url("fonts/instrument-serif-latin-ext.woff2") format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:"Instrument Serif";font-style:normal;font-weight:400;font-display:swap;src:url("fonts/instrument-serif-latin.woff2") format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"Instrument Serif";font-style:italic;font-weight:400;font-display:swap;src:url("fonts/instrument-serif-italic-latin-ext.woff2") format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:"Instrument Serif";font-style:italic;font-weight:400;font-display:swap;src:url("fonts/instrument-serif-italic-latin.woff2") format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:200 800;font-display:swap;src:url("fonts/manrope-latin-ext.woff2") format("woff2");unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:"Manrope";font-style:normal;font-weight:200 800;font-display:swap;src:url("fonts/manrope-latin.woff2") format("woff2");unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
 /* EB Garamond, copied from her own PC (the Parahumans print set's fonts; SIL Open Font License, site/fonts/OFL-EBGaramond.txt) */
 @font-face{font-family:"EB Garamond";src:url("fonts/EBGaramond-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:"EB Garamond";src:url("fonts/EBGaramond-Italic.ttf") format("truetype");font-weight:400;font-style:italic;font-display:swap}
@@ -52,7 +60,7 @@ em{font-style:italic}
 /* ---------- sidebar ---------- */
 .side{position:fixed;inset:0 auto 0 0;width:var(--side);background:var(--nav);color:var(--on-deep);display:flex;flex-direction:column;z-index:20}
 /* "← Jemma's Journals" above the brand: small and quiet so it doesn't compete with the name (her pick, option A, 20 Nov) */
-.home-link{align-self:flex-start;margin:14px 0 0 24px;padding:2px 0;font:600 10px/1.2 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--on-deep-mute);text-decoration:none}
+.home-link{align-self:flex-start;margin:2px 0 0 24px;padding:10px 0;font:600 10px/1.2 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--on-deep-mute);text-decoration:none}
 .home-link:hover,.home-link:focus-visible{color:var(--on-deep)}
 /* the title between two gilt double rules */
 .brand{display:block;margin:10px 18px 0;padding:16px 10px;text-align:center;text-decoration:none;border-top:3px double var(--gilt);border-bottom:3px double var(--gilt)}
@@ -93,7 +101,8 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .foot-name{font:400 24px/1.1 var(--display);color:var(--ink);margin-top:4px}
 .about-site{max-width:none;font:400 12.5px/1.7 var(--body);color:var(--muted)}
 .about-site p{margin:0}
-.about-site .sep{margin:0 3px;color:var(--gilt)}
+.about-site p{text-wrap:balance}
+.about-site .sep{margin-right:3px;color:var(--gilt)}
 .about-site .cr{white-space:nowrap}   /* each credit stays in one piece when the line wraps */
 .foot-links{display:flex;gap:26px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:2px}
 .foot .totop,.foot .mode-text{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:4px 2px;border:0;background:none;font:700 13px/1 var(--body);color:var(--gilt-ink);cursor:pointer}
@@ -647,7 +656,7 @@ main::after{content:"";position:fixed;top:0;bottom:0;right:0;width:7px;pointer-e
 .book-body{margin-top:34px}
 .desc{font:400 19px/1.62 var(--read);text-align:justify;hyphens:auto;max-width:62ch;color:var(--text)}
 .desc.none{text-align:left}
-.book-body .desc:not(.none):first-child::first-letter{float:left;font:400 78px/.8 var(--display);color:var(--accent);padding:7px 10px 0 0}   /* a drop capital on the blurb's first paragraph only */
+.book-body .desc.drop:first-child::first-letter{float:left;font:400 78px/.8 var(--display);color:var(--accent);padding:7px 10px 0 0}   /* a drop capital on the blurb's first paragraph only, when it starts with a letter (js/app.js blurb(): a leading number stays whole) */
 .panel{border-radius:0;background:var(--surface);border:1px solid var(--mount-edge);outline:1px solid var(--line);outline-offset:-6px;padding:24px 26px;gap:12px;box-shadow:0 10px 20px -18px var(--shade)}
 .panel h2{text-align:center;font-size:27px;padding-bottom:12px;border-bottom:1px solid var(--line)}
 .panel h2::after{content:"❦";display:block;font-size:14px;color:var(--gilt);margin-top:6px}
@@ -743,7 +752,7 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
   .side{width:min(var(--side),86vw);transform:translateX(-102%);visibility:hidden;transition:transform .25s ease,visibility 0s .25s;box-shadow:0 0 40px rgba(0,0,0,.45);z-index:30;
     padding-bottom:env(safe-area-inset-bottom)}
   body.nav-open .side{transform:none;visibility:visible;transition:transform .25s ease,visibility 0s}
-  body.nav-open .scrim{display:block;position:fixed;inset:0;background:rgba(20,10,4,.5);z-index:25}
+  body.nav-open .scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:25}
   body.nav-open{overflow:hidden}
   .nav a{min-height:44px}   /* big enough to tap */
   .nav-group.minor a{min-height:40px}
@@ -893,3 +902,31 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
   .about-site .sep{display:none}
   .about-site .cr{display:block;white-space:normal}
 }
+
+/* ---------- second review (21 Nov): laptop windows from 901 to about 1100 wide, and smaller fixes ---------- */
+/* bars of a chart may shrink (they couldn't, so Stats ran off the side between 901 and 1024) */
+.decades div{min-width:0}
+@media (max-width:1100px){
+  /* the Stats figures two by two, so long numbers don't run together ("162,287307") */
+  .ledger-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  /* more than twelve bars: the numbers and decades stand on end, as on a phone */
+  .decades.many{gap:2px}
+  .decades.many b,.decades.many span{writing-mode:vertical-rl;transform:rotate(180deg);line-height:1.15;white-space:nowrap}
+  /* a section heading's button or note goes under the heading instead of on top of it */
+  .section-head{flex-direction:column;align-items:center;gap:10px}
+  .section-head .pick-open,.section-head .more{position:static;transform:none}
+  .book-body .section-head{align-items:flex-start}
+}
+@media (max-width:1150px){
+  /* the title page's figures two by two, so none drops onto an indented second row */
+  .figures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .figures div,.figures div:first-child{padding:12px 6px 10px;text-align:center;border-left:1px solid var(--line)}
+  .figures div:nth-child(odd){border-left:0}
+  .figures div:nth-child(n+3){border-top:1px solid var(--line)}
+  .figures div:last-child:nth-child(odd){grid-column:1/-1}
+}
+/* a shelf card in a pale colour (Children’s mustard): darker cloth, so the gilt name reads (js/app.js marks it .pale) */
+.shelf-card.pale{background:var(--weave),linear-gradient(160deg,color-mix(in srgb,var(--c) 40%,#2A170C),color-mix(in srgb,var(--c) 28%,#1E120A))}
+/* dark mode: the old books' shelves a dark board with the walnut ledge, not bright cream bands */
+:root[data-mode="dark"] .bookshelf{background:repeating-linear-gradient(to bottom,#2E241A 0,#261D15 168px,#6B4A2B 168px,#5E4126 182px)}
+:root[data-mode="dark"] .spine.gap{border-color:rgba(226,196,122,.45);background:repeating-linear-gradient(45deg,transparent 0 6px,rgba(226,196,122,.08) 6px 7px)}

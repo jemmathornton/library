@@ -383,6 +383,14 @@ function renderNav(active){
       ${link("#add", ic("plus"), "Add a book")}    </div>`;
 }
 
+// a shelf colour light enough that the gilt name would be faint on its cloth (Children's mustard): that card gets darker cloth
+// (second review, 21 Nov; one rule for every card, by the colour's relative luminance)
+function paleCloth(hex){
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex || ""); if (!m) return false;
+  const [r, g, b] = [0, 2, 4].map(i => { const c = parseInt(m[1].slice(i, i + 2), 16) / 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; });
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.3;
+}
+
 // ---------- pages ----------
 // home (her yes to a fuller one, 18 Oct): this year in figures, what she's reading, what she just finished, a pick
 // for what to read next, the shelves, and what's new on them (no closing line: out of place, her call)
@@ -408,7 +416,7 @@ function pageHome(){
     // newest books, straight under what she's just read (her ask, 1 Nov; it was at the foot of the page)
     + sectionHead("New on the <em>shelves</em>", done.length ? "" : pickButton()) + `<div class="books row">${recent.map(b => card(b, `Added ${shortDate(b.added)}`)).join("")}</div>`
     + sectionHead("The <em>shelves</em>", `<a class="more" href="#shelves">See them all at once</a>`)
-    + `<div class="shelves">${SHELVES.filter(s => s.books.length).map(s => `<a class="shelf-card" href="#shelf-${s.id}" style="--c:${s.color}"><div class="fan">${fan(s)}</div>
+    + `<div class="shelves">${SHELVES.filter(s => s.books.length).map(s => `<a class="shelf-card${paleCloth(s.color) ? " pale" : ""}" href="#shelf-${s.id}" style="--c:${s.color}"><div class="fan">${fan(s)}</div>
         <div class="txt"><h3>${esc(s.name)}</h3><span>${plural(nBooks(s.books), "book")}</span></div></a>`).join("")}</div>`
     // books she's taking a break from, out of Reading Now and below the shelves (her ask, 1 Nov)
     + (paused.length ? sectionHead("On a <em>break</em>") + `<div class="books">${paused.map(b => card(b)).join("")}</div>` : "");
@@ -520,7 +528,11 @@ function pageSgBook(e){   // a book from StoryGraph that isn't on her shelves
 // an old book's description is her own note on the copy ("First edition", "Undated"), shown under Details (review, 15 Nov)
 const oldNote = b => !!b.oldNote || (b.shelf === COLLECTION && (b.description || "").length < 90);   // her notes on her old copies (marked by the build, 21 Nov)
 // a blurb whose paragraphs ran together ("…shooting.Set in…") gets its breaks back; the words are untouched
-const blurb = t => esc(t).replace(/([a-z]{2,}[.!?…][”’)]?)(?=[A-Z][a-z])/g, "$1\n\n").split(/\n\s*\n+/).map(p => `<p class="desc">${p.trim()}</p>`).join("");
+const blurb = t => esc(t).replace(/([a-z]{2,}[.!?…][”’)]?)(?=[A-Z][a-z])/g, "$1\n\n").split(/\n\s*\n+/)
+  .map((p, i) => `<p class="desc${i === 0 && dropCap(p.trim()) ? " drop" : ""}">${p.trim()}</p>`).join("");
+// the blurb's drop capital only when it starts with a letter (an opening quote mark before it stays as it was, her question);
+// one starting with a number stays whole ("20 years after…", not a big "2"; second review, 21 Nov)
+const dropCap = p => /^[\p{P}\s]*\p{L}/u.test(p);
 function pageBook(b){
   const s = shelfIndex[b.shelf] || {id: b.shelf, name: b.shelf, color: "#5E3D22"}, others = BOOKS.filter(x => x !== b && (bookKey(x) === bookKey(b) || (editions[norm(b.title) + "|" + norm(b.surname || "")] || []).includes(x)));
   const lead = (b.authors || []).find(a => !a.role), au = lead && authorIndex[slug(lead.name)];
@@ -1385,18 +1397,23 @@ function setMenu(open, focusBack){
   document.body.classList.toggle("nav-open", open);
   menuBtn.setAttribute("aria-expanded", String(open));
   sideEl.inert = phoneNav.matches && !open;
+  // while open everything else (the skip link, the top bar with Menu, the page) is inert, so Tab stays in the drawer (the family rules);
+  // the scrim stays live so a tap on it closes the drawer
   const lock = phoneNav.matches && open;
-  document.querySelectorAll("body > *:not(#side):not(.topbar):not(#scrim):not(script)").forEach(el => { el.inert = lock; });
-  // starts on the page showing (or Home), not "← Jemma's Journals": one Enter shouldn't leave the site (her call for Sim World, 21 Nov)
-  if (open) setTimeout(() => document.querySelector("#side .nav a.on, #side .nav a")?.focus({preventScroll: true}), 30);
+  document.querySelectorAll("body > *:not(#side):not(#scrim):not(script)").forEach(el => { el.inert = lock; });
+  // starts on the page showing (Home's link if the page has none), not "← Jemma's Journals": one Enter shouldn't leave the site
+  // (her call for Sim World, 21 Nov, now for every site)
+  if (open) setTimeout(() => (document.querySelector("#side .nav a.on") || document.querySelector("#side .brand"))?.focus({preventScroll: true}), 30);
   else if (phoneNav.matches && focusBack) menuBtn.focus({preventScroll: true});   // a link chosen: the new page takes focus instead
 }
 const menuOpen = () => document.body.classList.contains("nav-open");
 menuBtn.addEventListener("click", () => setMenu(!menuOpen()));
 document.getElementById("scrim").addEventListener("click", () => setMenu(false, true));
 document.addEventListener("keydown", e => { if (e.key === "Escape" && menuOpen()) setMenu(false, true); });
-sideEl.addEventListener("click", e => { if (e.target.closest("a") && menuOpen()) setMenu(false); });
-q.addEventListener("keydown", e => { if (e.key === "Enter" && menuOpen()) { q.blur(); setMenu(false); } });   // a phone's Go key shows the results
+// a link chosen (or Enter in the search): the page takes keyboard focus, not the closed drawer (focus fell to nothing; second review)
+const toPage = () => document.getElementById("view").focus({preventScroll: true});
+sideEl.addEventListener("click", e => { if (e.target.closest("a") && menuOpen()) { setMenu(false); toPage(); } });
+q.addEventListener("keydown", e => { if (e.key === "Enter" && menuOpen()) { setMenu(false); toPage(); } });   // a phone's Go key shows the results
 phoneNav.addEventListener("change", () => setMenu(false, sideEl.contains(document.activeElement)));
 setMenu(false);
 
@@ -1418,6 +1435,15 @@ modeBtn.addEventListener("click", () => {
   showMode();
 });
 showMode();
+// the credits' dots: each is tied to the credit before it ("credit&nbsp;· credit", so none starts a line); one left at the end of a
+// line when the credits wrap is hidden too (the family rules: a dot never starts or ends a line). Its space is kept, so nothing moves.
+function footDots(){
+  document.querySelectorAll(".about-site .sep").forEach(s => {
+    const next = s.nextElementSibling;
+    s.style.visibility = next && next.getBoundingClientRect().top > s.getBoundingClientRect().top + 2 ? "hidden" : "";
+  });
+}
+addEventListener("resize", footDots); document.fonts?.ready.then(footDots); footDots();
 toTop.addEventListener("click", () => {
   scrollTo({top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
   document.getElementById("view").focus({preventScroll: true});
@@ -1495,7 +1521,7 @@ function route(page, opts = {}){   // page: only the tests pass one (they open a
   const fromNav = document.getElementById("side").contains(document.activeElement), fromPage = view.contains(document.activeElement);
   view.innerHTML = html; renderNav(active); fitRows();
   if (!opts.keep && drawn && (fromNav || fromPage) && document.activeElement === document.body)   // the link used was redrawn: focus would fall to nothing
-    ((fromNav && !menuOpen() && document.querySelector(`#nav a[href="${active}"]`)) || view).focus({preventScroll: true});
+    ((fromNav && !phoneNav.matches && document.querySelector(`#nav a[href="${active}"]`)) || view).focus({preventScroll: true});
   drawn = true;
   document.title = title === "Jemma’s Library" ? title : `${curly(title)} · Jemma’s Library`;
   if (opts.keep) return;
