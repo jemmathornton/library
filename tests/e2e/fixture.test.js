@@ -727,3 +727,19 @@ test("a book with no blurb leaves no empty column: its panels and any other sect
   if (left.children.length === 0) eq(getComputedStyle(left).display, "none", "an empty column is still shown:");
   const h = $(".section-head", left); if (h) eq(getComputedStyle(h).marginTop, "0px", "the first heading starts at the top:");
 });
+
+// ---------- the weekly backup's note on Home (her yes, 21 Nov) ----------
+test("Home says when the weekly backup failed, and says nothing while it works", async () => {
+  const now = new Date().toISOString().slice(0, 16), old = new Date(Date.now() - 20 * 864e5).toISOString().slice(0, 16);
+  try {
+    fake = {"backup-status.json": () => ({lastTry: now, ok: false, lastOk: old, why: "sending to GitHub failed"})};
+    await loadBackupStatus(); await go("#home");
+    ok(/weekly backup to GitHub didn’t work/.test(view().innerText), "no note after a failed backup");
+    fake = {"backup-status.json": () => ({lastTry: old, ok: true, lastOk: old, why: ""})};
+    await loadBackupStatus(); await go("#home");
+    ok(/hasn’t run since/.test(view().innerText), "no note when it hasn't run for weeks");
+    fake = {"backup-status.json": () => ({lastTry: now, ok: true, lastOk: now, why: ""})};
+    await loadBackupStatus(); await go("#home");
+    ok(!$("#backupNote"), "a note while all is well");
+  } finally { backupStatus = null; }
+});

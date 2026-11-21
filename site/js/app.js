@@ -401,6 +401,7 @@ function pageHome(){
   return hero({kicker: "Home library", title: "Jemma’s <em>Library</em>", covers: [...BOOKS].sort(SORTS.added[1]),
       text: "Every book on the shelves at home, and everything you read.",
       figures: [[num(yearReads), `read in ${thisYear}`], [num(nBooks(BOOKS)), "books on the shelves"], [num(unreadOwned), "not read yet on your shelves"], [num(WRITERS.length), "authors"]]})
+    + backupNote()
     + (now.length ? sectionHead("Reading <em>now</em>", `<a class="more" href="#reading">All your reading</a>`)
         + `<div class="now-row">${now.map(b => { const st = reading(b).started; return `<a class="now-card" href="${href(b)}">${cover(b, "", true)}<div><span class="label">Reading now</span><h3>${esc(b.t)}</h3><div class="by">${esc(b.by)}</div>${st ? `<div class="by">Started ${niceDate(st)}</div>` : ""}</div></a>`; }).join("")}</div>` : "")
     + (done.length ? sectionHead("Just <em>finished</em>", pickButton()) + `<div class="books row">${done.map(b => card(b, `Finished ${shortDate(lastFinish(b))}`)).join("")}</div>` : "")
@@ -1398,6 +1399,29 @@ toTop.addEventListener("click", () => {
   scrollTo({top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
   document.getElementById("view").focus({preventScroll: true});
 });
+
+// ---------- the weekly backup's note on Home (her yes, 21 Nov) ----------
+// tools/backup.py writes backup-status.json each Sunday; Home says so when the last one failed, or none has worked for over
+// nine days (the laptop off on Sunday does that too; the next run catches up). Nothing is said while all is well.
+let backupStatus = null;
+function backupNote(){
+  const st = backupStatus; if (!st || !st.lastTry) return "";
+  const day = d => d ? niceDate(d.slice(0, 10)) : "", since = st.lastOk ? (Date.now() - new Date(st.lastOk)) / 864e5 : Infinity;
+  const say = !st.ok ? `The weekly backup to GitHub didn’t work on ${day(st.lastTry)}${st.lastOk ? ` (the last one that worked was ${day(st.lastOk)})` : ""}. It tries again next Sunday.`
+    : since > 9 ? `The weekly backup to GitHub hasn’t run since ${day(st.lastOk)}.` : "";
+  return say ? `<div class="note" id="backupNote" role="status">${ic("info")}<div><b>${say}</b></div></div>` : "";
+}
+function loadBackupStatus(){
+  if (!location.protocol.startsWith("http")) return Promise.resolve();
+  return fetch("backup-status.json", {cache: "no-store"}).then(r => r.ok ? r.json() : null).catch(() => null).then(st => {
+    backupStatus = st;
+    const home = (location.hash || "#home") === "#home" && !q.value, old = document.getElementById("backupNote"), html = backupNote();
+    if (!home) return;
+    if (old) old.outerHTML = html || "";
+    else if (html) document.querySelector("#view .hero")?.insertAdjacentHTML("afterend", html);
+  });
+}
+loadBackupStatus();
 
 // ---------- routing ----------
 let drawn = false;   // the first page drawn takes no focus

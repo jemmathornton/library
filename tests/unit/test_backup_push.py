@@ -35,6 +35,39 @@ class BackupPush(unittest.TestCase):
             self.assertIn('new-this-week.json', git(remote, 'show', '--stat', 'main').stdout)
             self.assertIn('github: pushed', open(box.path('logs', 'backup.log'), encoding='utf-8').read())
 
+    def test_only_the_librarys_own_files_are_saved(self):   # her yes, 21 Nov: the GitHub copy is public
+        with Sandbox(covers=False) as box:
+            git(box.root, 'init', '-q', '-b', 'main')
+            os.environ.update(GIT_AUTHOR_NAME='t', GIT_AUTHOR_EMAIL='t@example.org', GIT_COMMITTER_NAME='t', GIT_COMMITTER_EMAIL='t@example.org')
+            try:
+                open(box.path('data', 'new-this-week.json'), 'w').write('{}')
+                open(box.path('my bank statement.csv'), 'w').write('private')
+                os.makedirs(box.path('Downloads copy')); open(box.path('Downloads copy', 'x.txt'), 'w').write('private')
+                r = run_backup()
+            finally:
+                for k in ('GIT_AUTHOR_NAME', 'GIT_AUTHOR_EMAIL', 'GIT_COMMITTER_NAME', 'GIT_COMMITTER_EMAIL'):
+                    os.environ.pop(k, None)
+            self.assertEqual(r.returncode, 0, r.stderr[-600:])
+            saved = git(box.root, 'ls-files').stdout
+            self.assertIn('data/new-this-week.json', saved)
+            self.assertNotIn('bank statement', saved)
+            self.assertNotIn('Downloads copy', saved)
+            self.assertIn('left out', open(box.path('logs', 'backup.log'), encoding='utf-8').read())
+
+    def test_each_run_leaves_a_status_for_the_home_page(self):   # her yes, 21 Nov: a failed backup is said on Home
+        import json
+        with Sandbox(covers=False) as box:
+            run_backup()
+            st = json.load(open(box.path('site', 'backup-status.json'), encoding='utf-8'))
+            self.assertTrue(st['ok']); self.assertEqual(st['lastOk'], st['lastTry'])
+            git(box.root, 'init', '-q', '-b', 'main')
+            git(box.root, 'remote', 'add', 'origin', box.path('no-such-github.git'))
+            run_backup()
+            st2 = json.load(open(box.path('site', 'backup-status.json'), encoding='utf-8'))
+            self.assertFalse(st2['ok'])
+            self.assertEqual(st2['lastOk'], st['lastOk'], 'the last good backup is remembered')
+            self.assertTrue(st2['why'])
+
     def test_no_github_copy_is_logged_not_an_error(self):
         with Sandbox(covers=False) as box:
             r = run_backup()

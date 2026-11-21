@@ -67,7 +67,7 @@
    - **Copies or books: decided 21 Nov:** every figure counts each book once however many copies (Rowling 14, not 28); "authors" in the figures means writers; the count over a shelf's books agrees with its banner and lists not-owned ones apart ("198 books · 14 not owned").
    - **Pages in the old style: done 21 Nov** (her ask: everything in the Bound book look).
    - **Smaller looks: done 21 Nov** (spines, phone old-books list, New covers switch, gap under the banner, books with no blurb).
-   - **Backup:** the weekly save sends every new file in the folder to the public GitHub copy (an inscription you type will be public too): my suggestion is to send only the library's own folders. A failed backup tells nobody (it failed on 15 Nov): a note on the site? It runs at 08:30 in winter, not 09:30 (set in summer time): reset the Windows task (your OK needed)?
+   - **Backup: done 21 Nov (her yes):** the weekly save sends only the library's own files (anything else new is left out and named in logs/backup.log); Home shows a note when the last backup failed or none has worked for 9 days; the task runs Sundays 09:30 local time.
    - **Reading import:** once an export is refused as cut short, every later one is refused too, silently. A note on the site, and a way to say "yes, take it"?
    - **Phone scanning** listens on every network the laptop joins, and the key travels unencrypted: limit it to the home Wi-Fi's address (my suggestion)?
    - **Keyboard and screen readers:** the Dark mode button says "Light mode" while marked pressed; a spoiler shows as soon as you Tab past it; setting a cover's corners is mouse-only; the camera panel isn't marked as a dialog. Fix all four (my suggestion)?

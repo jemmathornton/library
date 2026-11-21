@@ -59,7 +59,7 @@ class Restore(unittest.TestCase):
             dirs[:] = [d for d in dirs if d not in ('.git', 'logs')]
             for f in files:
                 rel = os.path.relpath(os.path.join(here, f), root).replace(os.sep, '/')
-                if not rel.startswith('for-jemma/board-x/pictures/'):
+                if not rel.startswith('for-jemma/board-x/pictures/') and rel != 'site/backup-status.json':   # this PC's own note, not kept in git
                     out[rel] = open(os.path.join(here, f), 'rb').read()
         return out
 

@@ -6,3 +6,4 @@ data/scanned.json
 site/covers/_straightened/
 for-jemma/old-book-covers-2/pictures/
 *.tmp
+site/backup-status.json
