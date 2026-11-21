@@ -1,6 +1,8 @@
 # Jemma’s Library
 
-A private website of the books in Jemma’s home library: every book she owns, shelf by shelf, what she’s reading and has read, and a to-buy list. Started 18 Oct 2026 as a prototype in the style of her Sims site (`C:\Users\Jemma\Documents\SimTracker`): a static site on her PC, built so it can go online later. Open things are in `TODO.md`.
+**Where this lives (since 21 Nov 2026, her layout):** `Documents\JemmasJournals\library`, a submodule of Jemma’s Journals (the parent; its own repo is unchanged on GitHub). The old folder `Documents\HomeLibrary` is kept for now but no longer used: work here. Node and Playwright for tests are shared in the parent (`JemmasJournals\.tools`, `JemmasJournals\node_modules`). The whole family on one address: `python tools/serve_all.py` in the parent, http://localhost:8050/library/. After committing here, record the new version in the parent too.
+
+A private website of the books in Jemma’s home library: every book she owns, shelf by shelf, what she’s reading and has read, and a to-buy list. Started 18 Oct 2026 as a prototype in the style of her Sims site (`C:\Users\Jemma\Documents\JemmasJournals\sim-world`): a static site on her PC, built so it can go online later. Open things are in `TODO.md`.
 
 ## Working rules (as for her Sims site)
 
