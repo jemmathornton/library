@@ -62,7 +62,7 @@
 13. **From the 21 Nov full review (her call; my suggestions are marked; looks get mock-ups first):**
    - **Done 21 Nov (her yes):** 17 real blurbs put in from the publishers (checked on `for-jemma/blurbs-to-check/`), praise words cut from 27 blurbs, 26 page counts put right, 8 titles and 2 names tidied.
    - **Count from your copies:** Secret Seven on the Trail (we have 480; another edition has 144), A Visit from the Goon Squad (176; the UK paperback has about 351), Sisterhood 2 and 4 (40 and 32; Libib has the ebooks' ISBNs).
-   - **The Complete Oxford Shakespeare** is dated 1987 but sits in the Old Book Collection (before 1964). **Bleak House**: your note says "editioj".
+   - **To check on the shelf:** The Complete Oxford Shakespeare is dated 1987 but is on the Old Book Collection (before 1964): is 1987 right, and which shelf? (Bleak House's "editioj" corrected, 21 Nov.)
    - **Covers:** three old books show later printings (Corridors of Power, The Mystery of the Invisible Thief, Bleak House): title cards instead? The New School at Scawdale's picture is padded white. Series that may mix printings: Girls (Think Again), Noughts & Crosses (Double Cross, Crossfire), Pendragon, The Quest series. Boards first.
    - **Copies or books:** besides 9, Home says 648 books with 425 unread (599 different books); an author page says Rowling 28 books, 11 read (14 different books); "authors" (267) includes illustrators and translators (251 wrote one).
    - **Pages still in the old style:** To Buy cards, the Stats number tiles, the Add form, the list view's titles, the Authors list, the Signed drop-down. Bring them into the Bound book look? (Mock-ups first.)
