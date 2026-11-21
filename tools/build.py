@@ -75,6 +75,17 @@ BLURB_CUTS = [
     re.compile(r'\s*Cover illustration by [^.\n]+\.?\s*$'),
     re.compile(r'\s*(?:\bAges? \d+\s*\+|\b\d+\s*yrs?\s*\+|\bYA)\.?\s*$', re.I),
 ]
+# Praise words cut from inside a sentence, leaving the story (her yes, 21 Nov: "cut them"): sales and prize labels in front of a
+# name or a book ("Heller's bestselling novel" -> "Heller's novel"). Nouns ("a cult bestseller") are left: cutting those
+# would leave a broken sentence.
+LIST = r'(?:#1 )?(?:(?:New York Times|USA Today|Sunday Times|international(?:ly)?|hugely|multi-million)\s*(?:and\s*)?)*'
+PRAISE_CUTS = [
+    (re.compile(r'(?:[A-Z][a-z]+, )*(?:[A-Z][a-z]+,? and )?[A-Z][a-z]+ Award-winning,\s*' + LIST + r'(?:best-?selling )?'), ''),
+    (re.compile(r'\band ' + LIST + r'best-?selling (?=\w)'), ''),                      # "beloved and internationally bestselling X"
+    (re.compile(r'(^|(?<=[.!?]\s))(?:Bestselling|Best-selling|Award-winning|Prizewinning) author (?=[A-Z])', re.M), r'\1'),
+    (re.compile(r'(?<![Mm]ost )(?<![Mm]ost widely )\b(?:widely )?acclaimed (?=\w)'), ''),   # not "the most widely acclaimed and…"
+    (re.compile(r'\b(?:the )?' + LIST + r'(?:best-?selling|award-winning|prizewinning) (?=\w)'), lambda m: 'the ' if m.group(0).startswith('the ') else ''),
+]
 MD_LINK = re.compile(r'\[([^\]]+)\]\((?:https?://)[^)]+\)')   # "[words](link)": the words stay, the link goes
 CUT_SHORT = re.compile(r'(?:\s[a-z]|--\S+)\s*$')   # ends in a cut-off word, one letter ("watched h") or a name after a dash ("authors--Jhumpa")
 SENTENCE_END = re.compile(r'[.!?…]["’”)]?(?=\s)')
@@ -90,6 +101,8 @@ def cut_blurb(text):
         t = t.strip()
         if t == before:
             break
+    for rx, to in PRAISE_CUTS:
+        t = rx.sub(to, t)
     if CUT_SHORT.search(t):   # stops mid-word; a sentence that only lacks its full stop is left as it is
         ends = [m.end() for m in SENTENCE_END.finditer(t)]
         if ends and ends[-1] >= len(t) * .4:

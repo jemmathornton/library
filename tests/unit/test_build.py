@@ -173,6 +173,18 @@ class Pieces(unittest.TestCase):
                       'She said “yes”.', 'Book one of the Trebizon series (1978).'):
             self.assertEqual(cut(whole), whole, 'a real blurb was changed')
 
+    def test_praise_words_are_cut_and_the_story_stays(self):   # her yes, 21 Nov
+        cut = self.build.cut_blurb
+        self.assertEqual(cut("At the heart of Joseph Heller's bestselling novel is a satire."), "At the heart of Joseph Heller's novel is a satire.")
+        self.assertEqual(cut('Bestselling author John Grisham delivers drama.'), 'John Grisham delivers drama.')
+        self.assertEqual(cut('In the second book in the New York Times bestselling mystery series, Veronica is back.'),
+                         'In the second book in the mystery series, Veronica is back.')
+        self.assertEqual(cut("The follow-up to Martha Wells's Hugo, Nebula, Alex, and Locus Award-winning, New York Times bestselling All Systems Red."),
+                         "The follow-up to Martha Wells's All Systems Red.")
+        self.assertEqual(cut('Author of the beloved and internationally bestselling Harry Potter books.'), 'Author of the beloved Harry Potter books.')
+        for left in ('The cult Japanese bestseller about a cook.', 'the most widely acclaimed and enduring novel.', 'They need to write bestsellers.'):
+            self.assertEqual(cut(left), left)
+
     def test_general_title_and_name_tidies(self):   # review, 21 Nov
         books = [{'title': "Claudine at St.Clare's", 'authors': [{'name': 'Courtney. Rosen'}]},
                  {'title': 'Extras Pa', 'authors': []}, {'title': 'Story of the Lost Child, The', 'authors': []},
