@@ -61,6 +61,7 @@ function resetPage(){
   q.value = ""; freshAdd(); addFromWish = false; shelfView = {...SHELF_VIEW};
   try { localStorage.removeItem(VIEW_KEY); } catch {}
   pickHide(); document.getElementById("spineCard")?.remove();
+  if (typeof setMenu === "function" && document.body.classList.contains("nav-open")) setMenu(false);   // the phone drawer (21 Nov)
   history.replaceState(null, "", location.pathname + location.search + "#home"); route();
 }
 

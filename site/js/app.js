@@ -1328,6 +1328,24 @@ document.body.append(trialSwitch);
 const trialShown = () => { trialSwitch.hidden = !(["#shelf-old-book-collection", "#trial-covers"].includes(location.hash) || /^#old-/.test(location.hash)); };
 addEventListener("hashchange", trialShown); trialShown();
 
+// ---------- phones and narrow windows: the sidebar as a drawer (21 Nov, her ask; like Sim World's) ----------
+// it opens from the top bar's button and closes on a link chosen, Escape, a tap outside it, or Enter in the search
+const menuBtn = document.getElementById("menuBtn");
+document.getElementById("menuIco").innerHTML = ic("menu");
+function setMenu(open, focusBack){
+  document.body.classList.toggle("nav-open", open);
+  menuBtn.setAttribute("aria-expanded", open);
+  if (open) setTimeout(() => document.querySelector("#side .nav a.on, #side .nav a")?.focus({preventScroll: true}), 30);
+  else if (focusBack) menuBtn.focus();
+}
+const menuOpen = () => document.body.classList.contains("nav-open");
+menuBtn.addEventListener("click", () => setMenu(!menuOpen()));
+document.getElementById("scrim").addEventListener("click", () => setMenu(false));
+document.addEventListener("keydown", e => { if (e.key === "Escape" && menuOpen()) setMenu(false, true); });
+document.getElementById("side").addEventListener("click", e => { if (e.target.closest("a")) setMenu(false); });
+q.addEventListener("keydown", e => { if (e.key === "Enter" && menuOpen()) { q.blur(); setMenu(false); } });   // a phone's Go key shows the results
+matchMedia("(min-width: 901px)").addEventListener("change", e => { if (e.matches) setMenu(false); });
+
 // ---------- routing ----------
 function route(page){   // page: only the tests pass one (they open a thousand pages; the browser limits address changes)
   const key = page || location.hash.slice(1) || "home", view = document.getElementById("view");
@@ -1346,6 +1364,7 @@ function route(page){   // page: only the tests pass one (they open a thousand p
   view.innerHTML = html; renderNav(active); fitRows();
   document.title = title === "Jemma’s Library" ? title : `${curly(title)} · Jemma’s Library`;
   scrollTo(0, 0);
+  if (menuOpen()) setMenu(false);
 }
 addEventListener("hashchange", () => { q.value = ""; route(); });
 // a home row shows only the books that fit whole (review, 2 Nov: a wide cover or a narrow window cut the last one in half)

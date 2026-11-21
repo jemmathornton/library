@@ -39,6 +39,9 @@ e2e/    the site in headless Chrome or Edge (test_site.py runs it; harness.js is
                          read and unread counts), exact figures on every kind of page, old books' shelves (surname
                          order, numbers, gaps, first-edition stars, cloth), book pages, search, the Add page with a
                          fake server, phone scans on the Add page
+  phone.test.js          on her library in a 390 x 844 frame (21 Nov): the top bar and its drawer (opens, closes on a
+                         link, Escape, a tap outside, Enter in the search), every kind of page fitting the width,
+                         things big enough to tap, typing boxes big enough that a phone doesn't zoom in
   Each page test is its own result in Python, named after the test. After each one the page is put back (fake server
   off, search and Add form empty, shelf view reset), so they don't lean on each other; LIBRARY_TEST_ORDER=reverse
   (or shuffle-<number>) runs them in another order to check. No fixed waits: until() waits for what's needed.

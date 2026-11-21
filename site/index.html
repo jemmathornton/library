@@ -18,10 +18,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="site.css?v=e307c9e8">
+<link rel="stylesheet" href="site.css?v=59e25e9b">
 </head>
 <body>
 <a class="skip" href="#view" onclick="event.preventDefault();document.getElementById('view').focus()">Skip to the page</a>
+<!-- phones and narrow windows (21 Nov, her ask; like Sim World's): a slim top bar, the sidebar opens over the page as a drawer -->
+<div class="topbar"><button id="menuBtn" type="button" aria-controls="side" aria-expanded="false"><span id="menuIco"></span>Shelves</button><a class="topbar-name" href="#home">Jemma’s <em>Library</em></a></div>
+<div class="scrim" id="scrim"></div>
 <aside class="side" id="side" aria-label="Library">
   <!-- Way back to Jemma’s Journals, her home site (her pick, option A, 20 Nov). HOME_SITE_URL: "/" because the sites will share
        one address (home at the root, the apps under it); on this PC it just opens the library's own start. -->
@@ -34,6 +37,6 @@
 
 <script src="js/icons.js?v=81819d2c"></script>
 <script src="js/data.js?v=2ee86191"></script>
-<script src="js/app.js?v=0a651c47"></script>
+<script src="js/app.js?v=273293ff"></script>
 </body>
 </html>

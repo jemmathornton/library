@@ -644,3 +644,124 @@ main::after{content:"";position:fixed;top:0;bottom:0;right:0;width:7px;pointer-e
 .facts dd{font-weight:500}
 .facts select{font-family:var(--read)}
 .review{font:italic 400 18px/1.6 var(--read);border-left:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);border-radius:0;background:transparent}
+
+/* ---------- phones and narrow windows (21 Nov, her ask): a slim cloth top bar; the sidebar opens over the page as a drawer ---------- */
+/* the same pattern as her Sim World app (top bar with a menu button, drawer from the left, a dark layer behind it), in the Bound book look */
+.topbar,.scrim{display:none}
+@media (max-width:900px){
+  .topbar{display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:15;min-height:58px;padding:8px 16px;padding-top:max(8px,env(safe-area-inset-top));
+    background:var(--weave),linear-gradient(180deg,#55301D,var(--cloth));color:var(--on-deep);
+    border-bottom:3px double var(--gilt);box-shadow:0 8px 18px -12px var(--shade)}
+  .topbar button{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 14px 0 11px;border-radius:2px;border:1px solid color-mix(in srgb,var(--gilt) 60%,transparent);
+    background:rgba(0,0,0,.16);color:var(--gilt-2);font:italic 400 17px var(--read);cursor:pointer}
+  .topbar button:hover{background:rgba(201,162,78,.16)}
+  .topbar button .i{width:20px;height:20px}
+  .topbar button:focus-visible,.topbar-name:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+  .topbar-name{font:400 26px/1 var(--display);color:var(--on-deep);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .topbar-name em{color:var(--gilt-2)}
+  .side{width:min(var(--side),86vw);transform:translateX(-102%);visibility:hidden;transition:transform .25s ease,visibility 0s .25s;box-shadow:0 0 40px rgba(0,0,0,.45);z-index:30;
+    padding-bottom:env(safe-area-inset-bottom)}
+  body.nav-open .side{transform:none;visibility:visible;transition:transform .25s ease,visibility 0s}
+  body.nav-open .scrim{display:block;position:fixed;inset:0;background:rgba(20,10,4,.5);z-index:25}
+  body.nav-open{overflow:hidden}
+  .nav a{min-height:44px}   /* big enough to tap */
+  .nav-group.minor a{min-height:40px}
+  .home-link{padding:10px 0;margin-top:6px}
+  main{margin-left:0;box-shadow:none}   /* no binding at the side, so no gutter shadow */
+  .skip:focus{left:12px}
+}
+@media (prefers-reduced-motion: reduce){ .side,body.nav-open .side{transition:none} }
+
+/* ---------- the pages on narrow windows and phones (21 Nov) ---------- */
+@media (max-width:900px){
+  /* banners: the plate of covers goes under the words instead of behind the title */
+  .hero{padding-top:40px;padding-bottom:32px}
+  .hero.shelved{min-height:0;padding-top:40px}
+  .hero.shelved h1{max-width:none;font-size:clamp(54px,14vw,112px)}
+  .hero.shelved{display:flex;flex-direction:column}
+  .hero .hero-shelf{position:relative;top:auto;right:auto;order:9;width:min(100%,460px);margin-top:28px;grid-template-columns:repeat(6,minmax(0,1fr))}
+  .hero-shelf img:nth-child(n+7){display:none}
+  .figures{max-width:none}
+  /* section headings: the link or button beside the heading goes under it */
+  .section-head{flex-direction:column;align-items:center;gap:10px}
+  .section-head .pick-open,.section-head .more{position:static;transform:none}
+  .book-body .section-head{align-items:flex-start}
+  /* a book's page: the cover above the title, the details under the blurb */
+  .book-top{grid-template-columns:minmax(0,1fr);gap:20px;justify-items:center;text-align:center}
+  .book-top .cover{width:min(240px,62vw)}
+  .book-top>div:not(.cover){width:100%}
+  .book-top h1{font-size:clamp(40px,10vw,84px)}
+  .book-top .authors{justify-content:center}
+  .book-top .kicker{justify-content:center;flex-wrap:wrap;row-gap:6px}
+  .book-body{grid-template-columns:minmax(0,1fr);gap:34px}
+  .shelves{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .now-row{grid-template-columns:minmax(0,1fr)}
+  .add-main{grid-template-columns:minmax(0,1fr)}
+  .add-cover{justify-self:center}
+  /* the old books' list scrolls sideways instead of squashing */
+  .oldbooks{display:block;overflow-x:auto;overscroll-behavior-x:contain}
+  .oldbooks td.t{min-width:12em}
+  .oldbooks td:nth-child(3){min-width:9em}
+  /* things to tap: at least 40px tall */
+  .chips button{padding:10px 15px}
+  .toolbar select,.pick-opts select{min-height:40px}
+  .sign-pick,.cond-pick{min-height:40px;padding:6px 10px}
+  .btn{min-height:40px}
+  .section-head .more{padding:8px 4px}
+  .views button{padding:13px 15px}
+  .letters{gap:6px}
+  .letters a{width:40px;height:40px}
+  .az ul{columns:2 150px}
+  .az li{padding:8px 0}
+  html{scroll-padding-top:74px}   /* a jump (A–Z, a section) lands below the top bar */
+  .az{scroll-margin-top:74px}
+  /* 16px or more in boxes you type in, so a phone doesn't zoom in on them */
+  .search input,.add-form input,.add-form select,.sign-pick,.cond-pick,.toolbar select,.pick-opts select{font-size:16px}
+}
+@media (max-width:600px){
+  .wrap{padding-inline:16px}
+  .hero h1{font-size:clamp(52px,16vw,90px)}
+  .hero p{font-size:18px}
+  .figures{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}   /* two by two; an odd last one across both */
+  .figures div,.figures div:first-child{padding:12px 6px 10px;text-align:center;border-left:1px solid var(--line)}
+  .figures div:nth-child(odd){border-left:0}
+  .figures div:nth-child(n+3){border-top:1px solid var(--line)}
+  .figures div:last-child:nth-child(odd){grid-column:1/-1}
+  .figures b{font-size:34px}
+  .figures span{font-size:14px}
+  .section-head{margin-top:44px}
+  .section-head h2{font-size:33px}
+  .books{--ch:150px;gap:26px 14px}
+  .books.row{--ch:140px}
+  .shelves{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  .wish{grid-template-columns:minmax(0,1fr)}
+  .wish-item{grid-template-columns:54px minmax(0,1fr);row-gap:10px}
+  .wish-item .cover{width:54px}
+  .wish-item>:last-child:not(:nth-child(2)){grid-column:2;justify-self:start}
+  .bar-row{grid-template-columns:minmax(0,7.5em) minmax(0,1fr) auto;gap:10px;font-size:13.5px}
+  .add-fields .two{grid-template-columns:minmax(0,1fr)}
+  .pick-pop{grid-template-columns:84px minmax(0,1fr);gap:14px;padding:16px}
+  .pick-title h3{font-size:23px}
+  .desc{font-size:18px;text-align:left;hyphens:manual}
+  .panel{padding:20px 18px}
+  .toolbar .count{margin-left:0;flex-basis:100%}
+  .ledger{padding:22px 20px;border-radius:14px}
+  .ledger-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+  .meter b{font-size:40px}
+  .isbn-row{flex-wrap:wrap}
+  .isbn-row label{flex-basis:100%;max-width:none}
+  .isbn-row .btn{flex:1 1 auto;justify-content:center}
+  .wish-item .btn.got-it{min-height:38px}
+  /* a shelf as a list: title and its state on one line, author and year under (the publisher is on the book's page) */
+  .blist a{grid-template-columns:44px minmax(0,1fr) auto;grid-template-rows:auto auto;gap:2px 12px}
+  .blist a>.cover{grid-row:1/3}
+  .blist a>b{grid-column:2;grid-row:1}
+  .blist a>span:nth-of-type(1){grid-column:2;grid-row:2}
+  .blist a>span:nth-of-type(2){display:none}
+  .blist a>span:nth-of-type(3){grid-column:3;grid-row:2;text-align:right}
+  .blist a>.st{grid-column:3;grid-row:1;text-align:right}
+  /* this year month by month: twelve narrow bars */
+  .decades{gap:3px}
+  .decades div{min-width:0}
+  .decades b,.decades span{font-size:10.5px}
+}

@@ -5,6 +5,8 @@ Edge, with tests/e2e/harness.js and a test file loaded into it. Two runs:
                checked against what it lists
   MadeUp       fixture.test.js on a small made-up library (tests/fixture_library.py, built by the real build), so the
                answers are known exactly: titles, series, copies, reading counts, search, old books, the Add page
+  Phone        phone.test.js on a copy of her own library in a 390 x 844 window: the top bar and drawer, every kind of
+               page fitting the width, things big enough to tap
 
 Each JavaScript test is its own result here (named after the test, its words as the description), so
 `run_tests.py e2e -k search` runs just those; the page then runs only the chosen ones."""
@@ -40,8 +42,10 @@ class _Results(http.server.BaseHTTPRequestHandler):
         self.send_response(204); self.end_headers()
 
 
-def run_page(box, test_file, only=None, timeout=300):
-    """Open the sandbox's site with the harness and test_file in it; the page's results, as a list."""
+def run_page(box, test_file, only=None, timeout=300, frame=None):
+    """Open the sandbox's site with the harness and test_file in it; the page's results, as a list. frame (width, height):
+    the site opened inside a frame that size, as on a phone (headless Chrome won't make its window narrower than about
+    500px; inside the frame the page and its layout see exactly that size)."""
     site = box.path('site')
     page = open(os.path.join(site, 'index.html'), encoding='utf-8').read()
     page = page.replace('</body>', f'<script src="__tests__/harness.js"></script><script src="__tests__/{test_file}"></script></body>')
@@ -60,11 +64,17 @@ def run_page(box, test_file, only=None, timeout=300):
         query['only'] = json.dumps(sorted(only))
     if os.environ.get('LIBRARY_TEST_ORDER'):   # reverse, or shuffle-<seed>: to find tests that lean on each other
         query['order'] = os.environ['LIBRARY_TEST_ORDER']
+    page_name = f'__test__.html?{urllib.parse.urlencode(query)}'
+    if frame:
+        w, h = frame
+        open(os.path.join(site, '__frame__.html'), 'w', encoding='utf-8').write(
+            f'<!doctype html><meta charset="utf-8"><body style="margin:0"><iframe src="{page_name}" width="{w}" height="{h}" style="border:0;display:block"></iframe>')
+        page_name = '__frame__.html'
     profile = tempfile.mkdtemp(prefix='library-chrome-')
     chrome = subprocess.Popen([BROWSER, '--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check',
                                '--disable-extensions', '--disable-background-timer-throttling', '--disable-renderer-backgrounding',
                                f'--user-data-dir={profile}', '--window-size=1280,900',
-                               f'http://127.0.0.1:{httpd.server_port}/__test__.html?{urllib.parse.urlencode(query)}'],
+                               f'http://127.0.0.1:{httpd.server_port}/{page_name}'],
                               stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     try:
         body = _Results.box.get(timeout=timeout)
@@ -81,6 +91,7 @@ def run_page(box, test_file, only=None, timeout=300):
 class PageTests(unittest.TestCase):
     """One JavaScript test file; its tests are added as methods by page_tests() below."""
     test_file = None
+    frame = None   # (width, height): run inside a frame that size, as on a phone
     selected = None   # the methods chosen to run (load_tests fills it in); None or empty: all
     results = None
 
@@ -99,7 +110,7 @@ class PageTests(unittest.TestCase):
         cls.box = cls.make_box().__enter__()
         try:
             cls.prepare(cls.box)
-            found = run_page(cls.box, cls.test_file, only=chosen)
+            found = run_page(cls.box, cls.test_file, only=chosen, frame=cls.frame)
         except BaseException:
             cls.box.__exit__(None, None, None)
             cls.box = None
@@ -160,12 +171,20 @@ class MadeUp(PageTests):
         run_build(box)
 
 
+@unittest.skipUnless(BROWSER, 'needs Chrome or Edge')
+@page_tests
+class Phone(PageTests):
+    """phone.test.js on a copy of her own library, in a 390 x 844 window (21 Nov: the phone layout)."""
+    test_file = 'phone.test.js'
+    frame = (390, 844)
+
+
 def load_tests(loader, tests, pattern):
     """Tell each page which of its tests were chosen (-k), so it runs only those."""
     def walk(suite):
         for t in suite:
             yield from (walk(t) if isinstance(t, unittest.TestSuite) else [t])
-    for cls in (HerLibrary, MadeUp):
+    for cls in (HerLibrary, MadeUp, Phone):
         cls.selected = []
     for t in walk(tests):
         if isinstance(t, PageTests):
