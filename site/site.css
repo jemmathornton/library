@@ -1,22 +1,46 @@
 /* Jemma's Library: styles. Same family as Jemma's Sim World (deep sidebar, Instrument Serif + Manrope); her colours here are
    yellows and browns (18 Oct): a dark walnut sidebar, cream paper, mustard-gold accent;
    shelves get their own colour, books show their real covers (or a plain title card when there's none). Icons: Lucide (ISC). */
+/* L1 · Bound book (her pick, 21 Nov 2026): the sidebar a cloth binding with gilt rules, the main area a printed page
+   (paper grain, a gutter shadow by the binding, page edges on the right), banners as title pages with a tipped-in plate
+   of covers, centred headings with a printer's ornament, reading text in EB Garamond. Shelf colours stay dots. */
 :root{
-  --paper:#F7F1E4; --surface:#FFFCF6; --ink:#2A1F16; --muted:#75664F; --line:#E7DCC6; --soft:#EFE5D1;
+  --paper:#F3EAD5; --surface:#FAF4E6; --ink:#2B2017; --muted:#7A6A52; --line:#D9C9A6; --soft:#EADFC6;
   --nav:#3B2616; --deep:#3B2616; --deep-2:#5E3D22; --on-deep:#FBF4E6; --on-deep-mute:color-mix(in srgb,#fff 62%,var(--deep));
   --brass:#E4B23C; --done:#8A4B17; --reading:#B8861A;
   --focus:var(--deep-2);   /* keyboard focus on cream: walnut (brass is too faint there); brass in dark mode */
   --display:"Instrument Serif","Iowan Old Style","Palatino Linotype",Georgia,serif;
   --body:"Manrope","Segoe UI",system-ui,sans-serif;
+  --read:"EB Garamond","Palatino Linotype","Book Antiqua",Georgia,serif;   /* reading text (site/fonts, SIL OFL) */
+  /* the binding: cloth and gilt (the same in dark mode) */
+  --cloth:#4A2A1A; --gilt:#C9A24E; --gilt-2:#E2C47A;
+  --weave:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgba(0,0,0,.09) 0 1px,transparent 1px 3px);
+  /* the page: gilt-brown accents, the mount round plates, the page edges, the gutter shadow, the paper's grain */
+  --accent:#9A7022; --gilt-ink:#7A5418; --text:#2E241A;
+  --mount:#FBF6EA; --mount-edge:#E3D5B5; --mount-edge-2:#E0D0AE; --leaf-a:#E6D8B8; --leaf-b:#F8F1DF; --shade:rgba(60,36,16,.45);
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .33 0 0 0 0 .18 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   --side:280px; color-scheme:light;
 }
+/* dark mode (follows the device): the binding stays; the paper becomes a dark warm page, the gilt brighter */
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --paper:#16110C; --surface:#201911; --ink:#F0E7D8; --muted:#B3A48D; --line:#33291E; --soft:#2A2117; --done:#E0A15A; --focus:var(--brass); color-scheme:dark }}
-:root[data-theme="dark"]{ --paper:#16110C; --surface:#201911; --ink:#F0E7D8; --muted:#B3A48D; --line:#33291E; --soft:#2A2117; --done:#E0A15A; --focus:var(--brass); color-scheme:dark }
+  --paper:#1C1610; --surface:#251D15; --ink:#EFE4D0; --muted:#B6A587; --line:#43362A; --soft:#2D2319; --done:#E0A15A; --focus:var(--brass);
+  --accent:#D9B25E; --gilt-ink:#E2C47A; --text:#E6DAC4; --mount:#2A2119; --mount-edge:#4A3B2C; --mount-edge-2:#3C3024; --leaf-a:#2B2219; --leaf-b:#3D3125; --shade:rgba(0,0,0,.6);
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .95 0 0 0 0 .85 0 0 0 0 .65 0 0 0 .045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  color-scheme:dark }}
+:root[data-theme="dark"]{
+  --paper:#1C1610; --surface:#251D15; --ink:#EFE4D0; --muted:#B6A587; --line:#43362A; --soft:#2D2319; --done:#E0A15A; --focus:var(--brass);
+  --accent:#D9B25E; --gilt-ink:#E2C47A; --text:#E6DAC4; --mount:#2A2119; --mount-edge:#4A3B2C; --mount-edge-2:#3C3024; --leaf-a:#2B2219; --leaf-b:#3D3125; --shade:rgba(0,0,0,.6);
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .95 0 0 0 0 .85 0 0 0 0 .65 0 0 0 .045 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  color-scheme:dark }
+/* EB Garamond, copied from her own PC (the Parahumans print set's fonts; SIL Open Font License, site/fonts/OFL-EBGaramond.txt) */
+@font-face{font-family:"EB Garamond";src:url("fonts/EBGaramond-Regular.ttf") format("truetype");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"EB Garamond";src:url("fonts/EBGaramond-Italic.ttf") format("truetype");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"EB Garamond";src:url("fonts/EBGaramond-Medium.ttf") format("truetype");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"EB Garamond";src:url("fonts/EBGaramond-SemiBold.ttf") format("truetype");font-weight:600 700;font-style:normal;font-display:swap}
 
 *{box-sizing:border-box}
 [hidden]{display:none!important}
-body{margin:0;background:var(--paper);color:var(--ink);font:400 15.5px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--paper) var(--grain);color:var(--ink);font:400 15.5px/1.6 var(--body);-webkit-font-smoothing:antialiased}
 a{color:inherit}
 button,input,select{font:inherit;color:inherit}
 img{max-width:100%}
@@ -34,8 +58,8 @@ em{font-style:italic}
 /* "← Jemma's Journals" above the brand: small and quiet so it doesn't compete with the name (her pick, option A, 20 Nov) */
 .home-link{align-self:flex-start;margin:14px 0 0 24px;padding:2px 0;font:600 10px/1.2 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--on-deep-mute);text-decoration:none}
 .home-link:hover,.home-link:focus-visible{color:var(--on-deep)}
-.home-link + .brand{padding-top:10px}
-.brand{display:block;padding:22px 24px 18px;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.08)}
+/* the title between two gilt double rules */
+.brand{display:block;margin:10px 18px 0;padding:16px 10px;text-align:center;text-decoration:none;border-top:3px double var(--gilt);border-bottom:3px double var(--gilt)}
 .brand b{font:400 32px/1 var(--display);display:block}
 .brand b em{color:var(--brass)}
 .brand small{display:block;margin-top:8px;color:var(--on-deep-mute);font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700}
@@ -64,24 +88,23 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,56px);padding-block:0 110px}
 
 /* hero */
-.hero{--c:var(--brass);margin-inline:min(calc(-1 * clamp(16px,4vw,56px)),calc((100% - 100cqw) / 2));padding:68px max(clamp(16px,4vw,56px),calc((100cqw - 100%) / 2)) 42px;color:var(--on-deep);position:relative;overflow:hidden;
-  background:radial-gradient(110% 90% at 88% 0%,color-mix(in srgb,var(--brass) 38%,transparent) 0%,transparent 58%),linear-gradient(160deg,var(--deep-2),var(--deep) 70%)}
-.hero::before{content:"";position:absolute;right:-40px;top:-40px;width:520px;height:520px;opacity:.13;
-  background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.95) 0 2px,transparent 2px 22px);
-  mask-image:radial-gradient(closest-side,#000 25%,transparent);-webkit-mask-image:radial-gradient(closest-side,#000 25%,transparent);transform:rotate(-8deg)}
+.hero{--c:var(--brass);margin-inline:min(calc(-1 * clamp(16px,4vw,56px)),calc((100% - 100cqw) / 2));padding:68px max(clamp(16px,4vw,56px),calc((100cqw - 100%) / 2)) 42px;color:var(--ink);position:relative;overflow:hidden}
 .hero>*{position:relative}
-.kicker{display:flex;align-items:center;gap:10px;color:var(--on-deep-mute)}
-.kicker .label{color:var(--on-deep-mute)}
-.kicker i{width:28px;height:1px;background:var(--brass)}
-.kicker a{color:var(--on-deep-mute);text-decoration:none}
-.kicker a:hover{color:#fff}
+.kicker{display:flex;align-items:center;gap:10px;color:var(--muted)}
+.kicker .label{color:var(--muted);font:italic 400 17px/1 var(--read);letter-spacing:.02em;text-transform:none}
+.kicker i{display:none}
+.kicker::before{content:"❧";font-size:20px;color:var(--gilt);line-height:1}   /* a printer’s leaf before the kicker */
+.kicker a{color:var(--muted);text-decoration:none}
+.kicker a:hover{color:var(--ink)}
 .hero h1{font-size:clamp(60px,9vw,120px);line-height:.9;margin-top:18px;letter-spacing:-.02em}
-.hero h1 em{color:var(--brass)}
-.hero p{margin:20px 0 0;font-size:17.5px;max-width:58ch;color:color-mix(in srgb,var(--on-deep) 88%,transparent)}
-.figures{display:flex;flex-wrap:wrap;gap:12px 44px;margin-top:38px;padding-top:22px;border-top:1px solid rgba(255,255,255,.14)}
-.figures div{display:grid}
-.figures b{font:400 44px/1 var(--display);font-variant-numeric:tabular-nums}
-.figures span{font-size:12.5px;color:var(--on-deep-mute);font-weight:600}
+.hero h1 em{color:var(--accent)}
+.hero p{margin:20px 0 0;max-width:34ch;color:var(--ink);font:italic 400 21px/1.45 var(--read)}
+/* the figures as a ruled line of a title page */
+.figures{display:flex;flex-wrap:wrap;gap:0;margin-top:30px;max-width:58%;border-top:3px double var(--line);border-bottom:1px solid var(--line)}
+.figures div{display:grid;padding:12px 26px 10px;border-left:1px solid var(--line);text-align:center}
+.figures div:first-child{border-left:0;padding-left:0;text-align:left}
+.figures b{font:400 42px/1 var(--display);font-variant-numeric:oldstyle-nums;color:var(--ink)}
+.figures span{color:var(--muted);font:italic 400 15px/1.2 var(--read)}
 
 .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin:64px 0 22px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:12px}
 .section-head h2{font-size:40px;line-height:1}
@@ -173,11 +196,11 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .book-top .cover.blank .t{font-size:30px}
 .book-top .cover.blank .a{font-size:11px}
 .book-top h1{font-size:clamp(44px,5.4vw,76px);line-height:.98;margin-top:16px}
-.book-top .sub{font:italic 400 22px/1.25 var(--display);color:var(--on-deep-mute);margin-top:10px}
+.book-top .sub{font:italic 400 22px/1.25 var(--display);color:var(--muted);margin-top:10px}
 .book-top .authors{margin-top:18px;font-size:16px;display:flex;flex-wrap:wrap;gap:4px 16px}
 .book-top .authors a{font-weight:700;text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--brass) 70%,transparent)}
-.book-top .authors a:hover{color:var(--brass)}
-.book-top .authors small{color:var(--on-deep-mute);font-size:13px;font-weight:600}
+.book-top .authors a:hover{color:var(--accent)}
+.book-top .authors small{color:var(--muted);font-size:13px;font-weight:600}
 .book-body{display:grid;grid-template-columns:minmax(0,1fr) 330px;gap:48px;margin-top:44px;align-items:start}
 .desc{font-size:16.5px;line-height:1.7;max-width:68ch;white-space:pre-line}
 .desc.none{color:var(--muted);font-style:italic}
@@ -263,14 +286,14 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .shelf-part .section-head{margin-top:56px}
 .nav a .i{font-size:15px}
 
-/* banners made of the page's own covers (a tilted wall of books on the right, fading into walnut behind the words) */
-.hero.shelved{background:var(--deep)}
-.hero.shelved::before{display:none}
-.hero .hero-shelf{position:absolute;z-index:0;top:-40px;bottom:-40px;right:-30px;width:66%;display:grid;grid-template-columns:repeat(8,minmax(0,1fr));align-content:start;gap:8px;transform:rotate(-5deg);pointer-events:none}
-.hero-shelf img{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:2px 4px 4px 2px;display:block}
-.hero.shelved::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(90deg,var(--deep) 0%,var(--deep) 34%,color-mix(in srgb,var(--deep) 72%,transparent) 56%,color-mix(in srgb,var(--deep) 30%,transparent) 100%),
-             linear-gradient(0deg,var(--deep) 0%,color-mix(in srgb,var(--deep) 40%,transparent) 30%,transparent 55%)}
+/* banners made of the page's own covers: in L1 (21 Nov) a plate of eighteen covers tipped in on the right of the title page,
+   in a cream mount with a ruled line inside */
+.hero .hero-shelf{position:absolute;z-index:0;top:40px;right:max(56px,calc((100cqw - 1180px) / 2 + 56px));width:31%;overflow:hidden;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-content:start;gap:6px;padding:12px;pointer-events:none;
+  background:var(--mount);border:1px solid var(--mount-edge);outline:1px solid var(--line);outline-offset:-6px;box-shadow:0 1px 2px rgba(0,0,0,.08),0 14px 30px -18px var(--shade)}
+.hero-shelf img{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:1px;display:block;filter:sepia(.18) saturate(.9)}
+.hero-shelf img:nth-child(n+19){display:none}
+.hero.shelved{padding-top:58px;padding-bottom:40px;min-height:calc(23.25cqw + 80px)}   /* tall enough for the whole plate (three rows of six) on short banners like Stats */
+.hero.shelved h1{max-width:64%;font-size:112px}
 .hero.shelved>*:not(.hero-shelf){z-index:2}
 .kicker .dot{width:10px;height:10px;box-shadow:0 0 0 2px rgba(255,255,255,.15)}
 
@@ -282,7 +305,7 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .blist .cover .rated{display:none}
 
 /* series */
-.in-series{display:inline-flex;align-items:center;gap:7px;margin-top:12px;font-size:14px;font-weight:700;color:var(--brass);text-decoration:none}
+.in-series{display:inline-flex;align-items:center;gap:7px;margin-top:12px;font-size:14px;font-weight:700;color:var(--accent);text-decoration:none}
 .in-series:hover{text-decoration:underline}
 .in-series+.in-series{margin-left:16px}
 .cover.gap{background:transparent;box-shadow:none;border:1.5px dashed color-mix(in srgb,var(--muted) 45%,transparent)}
@@ -545,3 +568,79 @@ a.spine:hover{transform:translateY(-6px)}
 .spine-card dd{margin:0}
 .spine.gap{background:repeating-linear-gradient(45deg,transparent 0 6px,rgba(140,106,63,.12) 6px 7px);border:1.5px dashed rgba(140,106,63,.55);box-shadow:none}
 .spine.gap span{color:var(--muted);text-shadow:none}
+
+/* ---------- L1 · Bound book (her pick, 21 Nov 2026) ---------- */
+/* the sidebar: a cloth binding with gilt rules */
+.side{background:var(--weave),linear-gradient(90deg,#3A2014,var(--cloth) 18%,#55301D 70%,#3E2216);box-shadow:inset -1px 0 0 rgba(255,255,255,.06)}
+.home-link{color:color-mix(in srgb,var(--gilt-2) 70%,transparent)}
+.brand b{font-size:33px}
+.brand b em{color:var(--gilt-2)}
+.brand small{margin-top:8px;font:italic 400 15px/1.2 var(--read);letter-spacing:.02em;text-transform:none;color:color-mix(in srgb,var(--gilt-2) 75%,#fff)}
+.search input{border-radius:3px;background:rgba(0,0,0,.18);border-color:color-mix(in srgb,var(--gilt) 45%,transparent);font-family:var(--read);font-size:15.5px}
+.nav-group .label{display:flex;align-items:center;gap:8px;font:italic 400 15px/1 var(--read);letter-spacing:.03em;text-transform:none;color:var(--gilt-2)}
+.nav-group .label::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,color-mix(in srgb,var(--gilt) 55%,transparent),transparent)}
+.nav a{font:500 16.5px/1.35 var(--read);border-radius:2px}
+.shelves-nav a{font-size:17px}
+.nav a.on{background:rgba(201,162,78,.16);box-shadow:inset 2px 0 0 var(--gilt)}
+.nav .n{font:italic 400 14px var(--read);color:color-mix(in srgb,var(--gilt-2) 70%,transparent)}
+.dot{box-shadow:0 0 0 1.5px color-mix(in srgb,var(--gilt) 60%,transparent)}
+.nav-group.minor{border-top-color:color-mix(in srgb,var(--gilt) 30%,transparent)}
+.nav-group.minor a{font-size:15px}
+
+/* the main area as a page: the gutter's shadow by the binding, page edges down the right */
+main{box-shadow:inset 28px 0 30px -22px var(--shade)}
+main::after{content:"";position:fixed;top:0;bottom:0;right:0;width:7px;pointer-events:none;
+  background:repeating-linear-gradient(90deg,var(--leaf-a) 0 1px,var(--leaf-b) 1px 2px);box-shadow:-2px 0 4px rgba(60,36,16,.12)}
+
+/* section headings: centred, over a fading rule with a printer’s ornament */
+.section-head{position:relative;justify-content:center;border-bottom:0;padding-bottom:26px;margin-top:58px}
+.section-head::before{content:"";position:absolute;left:0;right:0;bottom:9px;height:1px;background:linear-gradient(90deg,transparent,var(--line) 20%,var(--line) 80%,transparent)}
+.section-head::after{content:"❦";position:absolute;left:50%;bottom:0;transform:translateX(-50%);padding:0 14px;font-size:18px;line-height:1;color:var(--gilt);background:var(--paper)}
+.section-head h2{font-size:42px;text-align:center}
+.section-head h2 em{color:var(--accent)}
+.section-head .pick-open,.section-head .more{position:absolute;right:0;top:50%;transform:translateY(-70%)}
+.section-head .more{font:italic 400 17px var(--read)}
+.book-body .section-head{justify-content:flex-start}
+.book-body .section-head h2{text-align:left}
+/* "What should I read next?" as a small gilt-edged label */
+.btn.pick-open{background:transparent;border:1px solid var(--gilt);color:var(--gilt-ink);border-radius:2px;font:italic 400 16px var(--read);padding:6px 14px}
+.btn.pick-open:hover{background:color-mix(in srgb,var(--gilt) 14%,transparent);border-color:var(--gilt)}
+.btn.pick-open .i{color:var(--gilt)}
+
+/* covers sit on the page like plates; captions in the book face */
+.cover{border-radius:1px 3px 3px 1px;box-shadow:0 1px 1px rgba(0,0,0,.18),0 10px 18px -12px rgba(50,30,10,.55)}
+.bk h3{font-size:20px}
+.bk .by{font:italic 400 15px var(--read);margin-top:-7px}
+
+/* shelf cards as cloth-bound volumes, the name gilt-stamped */
+.shelf-card{border-radius:2px 5px 5px 2px;border:0;
+  background:var(--weave),linear-gradient(160deg,color-mix(in srgb,var(--c) 72%,#3A2414),color-mix(in srgb,var(--c) 45%,#1E120A));
+  box-shadow:inset 7px 0 0 rgba(0,0,0,.16),inset 8px 0 0 rgba(255,255,255,.06),0 2px 3px rgba(0,0,0,.18),0 12px 22px -14px rgba(40,20,5,.6)}
+.shelf-card .fan{background:transparent;margin:10px 10px 0 16px;border-bottom:1px solid color-mix(in srgb,var(--gilt) 55%,transparent)}
+.shelf-card .txt{flex-direction:column;align-items:center;gap:2px;padding:9px 10px 13px 16px;text-align:center}
+.shelf-card h3{color:var(--gilt-2);font-size:21px;text-shadow:0 1px 0 rgba(0,0,0,.35)}
+.shelf-card .txt span{font:italic 400 15px var(--read);color:color-mix(in srgb,var(--gilt-2) 70%,#fff 10%)}
+
+/* a book's page: a title page, the cover as a mounted plate, the blurb set as reading text */
+.hero.book-hero{padding-top:50px;padding-bottom:20px;margin-inline:0;padding-inline:0}
+.book-top{align-items:center}
+.book-top .cover{border-radius:0;margin:14px;overflow:hidden;
+  box-shadow:0 0 0 6px var(--mount),0 0 0 7px var(--line),0 0 0 13px var(--mount),0 0 0 14px var(--mount-edge-2),0 26px 40px -16px var(--shade)}
+.book-top h1{font-size:84px}
+.book-top .authors{font:italic 400 22px var(--read)}
+.book-top .authors a{font-weight:400;border-bottom-color:var(--gilt)}
+.book-top>div:not(.cover){border-top:3px double var(--line);border-bottom:1px solid var(--line);padding:22px 0 26px}
+.book-body{margin-top:34px}
+.desc{font:400 19px/1.62 var(--read);text-align:justify;hyphens:auto;max-width:62ch;color:var(--text)}
+.desc.none{text-align:left}
+.book-body .desc:not(.none):first-child::first-letter{float:left;font:400 78px/.8 var(--display);color:var(--accent);padding:7px 10px 0 0}   /* a drop capital on the blurb's first paragraph only */
+.panel{border-radius:0;background:var(--surface);border:1px solid var(--mount-edge);outline:1px solid var(--line);outline-offset:-6px;padding:24px 26px;gap:12px;box-shadow:0 10px 20px -18px var(--shade)}
+.panel h2{text-align:center;font-size:27px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.panel h2::after{content:"❦";display:block;font-size:14px;color:var(--gilt);margin-top:6px}
+.sg-status{font-family:var(--read);font-size:22px;justify-content:center}
+.sg-dates{font:italic 400 17px var(--read);text-align:center}
+.facts{font:400 16.5px var(--read)}
+.facts dt{font-weight:400;font-variant:small-caps;letter-spacing:.04em;font-size:17px}
+.facts dd{font-weight:500}
+.facts select{font-family:var(--read)}
+.review{font:italic 400 18px/1.6 var(--read);border-left:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);border-radius:0;background:transparent}
