@@ -497,17 +497,41 @@ def scan_key():
     return key
 
 
-def scan_setup():
-    """The address to put in Binary Eye: this laptop's address on the home Wi-Fi, the port, the key (shown only on this laptop)."""
+def network_address():
+    """This laptop's address on the network it's on, or None when it isn't on one."""
     import socket
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
         s.connect(('192.0.2.1', 9))   # picks the Wi-Fi address; nothing is sent
         ip = s.getsockname()[0]
+        return None if ip.startswith(('127.', '0.')) else ip
     except OSError:   # no network at all (19 Nov: this was a crash)
-        return {'url': '(not connected to a network: join the home Wi-Fi first)'}
+        return None
     finally:
         s.close()
+
+
+def home_address():
+    """This laptop's address, but only on a network Windows calls Private (her home Wi-Fi, Moonbase 3); None on any other
+    (a café's is Public), so the phone's door is shut there (her yes, 21 Nov)."""
+    ip = network_address()
+    if not ip:
+        return None
+    try:
+        r = subprocess.run(['powershell', '-NoProfile', '-NonInteractive', '-Command',
+                            "Get-NetConnectionProfile | Where-Object NetworkCategory -eq 'Private' | ForEach-Object { "
+                            "(Get-NetIPAddress -InterfaceIndex $_.InterfaceIndex -AddressFamily IPv4 -ErrorAction SilentlyContinue).IPAddress }"],
+                           capture_output=True, text=True, timeout=30, creationflags=getattr(subprocess, 'CREATE_NO_WINDOW', 0))
+        return ip if ip in r.stdout.split() else None
+    except Exception:
+        return None
+
+
+def scan_setup():
+    """The address to put in Binary Eye: this laptop's address on the home Wi-Fi, the port, the key (shown only on this laptop)."""
+    ip = network_address()
+    if not ip:
+        return {'url': '(not connected to a network: join the home Wi-Fi first)'}
     return {'url': f'http://{ip}:{SCAN_PORT}/scan?key={scan_key()}&isbn='}
 
 
@@ -957,18 +981,51 @@ class Server(http.server.ThreadingHTTPServer):
     allow_reuse_address = False   # on Windows "reuse" lets a second copy share the port; it must fail and stop instead
 
 
+class ScanDoor:
+    """The phone's door (port 8021), open only on this laptop's address on the home Wi-Fi (her yes, 21 Nov; it used to listen
+    on every network). Checked every two minutes: opened when she's home, moved when the address changes, shut elsewhere."""
+
+    def __init__(self, port=None):
+        self.port, self.server, self.ip = SCAN_PORT if port is None else port, None, None
+
+    def check(self):
+        ip = home_address()
+        if ip == self.ip and (self.server or not ip):
+            return
+        self.shut()
+        if ip:
+            try:
+                self.server = Server((ip, self.port), ScanHandler)
+                threading.Thread(target=self.server.serve_forever, daemon=True).start()
+                sg_log(f'phone scanning open on the home Wi-Fi ({ip})')
+            except OSError as e:
+                sg_log(f'phone scanning not started: {e}')
+                self.server, ip = None, None
+        self.ip = ip
+
+    def shut(self):
+        if self.server:
+            self.server.shutdown(); self.server.server_close()
+            self.server = None
+            sg_log('phone scanning shut (not on the home Wi-Fi)')
+
+    def keep(self):
+        while True:
+            try:
+                self.check()
+            except Exception as e:
+                sg_log(f'phone scanning check failed: {e}')
+            time.sleep(120)
+
+
 def main():
     try:
         server = Server(('127.0.0.1', PORT), functools.partial(Handler, directory=SITE))
     except OSError:
         sys.exit(0)
     threading.Thread(target=watch_reading, daemon=True).start()
-    try:   # the phone's door; if it can't open, the library runs as before
-        scan = Server(('0.0.0.0', SCAN_PORT), ScanHandler)
-        scan_key()
-        threading.Thread(target=scan.serve_forever, daemon=True).start()
-    except OSError as e:
-        sg_log(f'phone scanning not started: {e}')
+    scan_key()
+    threading.Thread(target=ScanDoor().keep, daemon=True).start()   # the phone's door; if it can't open, the library runs as before
     server.serve_forever()
 
 

@@ -482,7 +482,7 @@ function dateRange([a, b]){   // ['2024-01-02', '2024-01-20'] -> '2 Jan – 20 J
 }
 const starsShown = r => `<span class="sg-stars" style="--r:${(r / 5 * 100).toFixed(1)}%" role="img" aria-label="${r} stars"><span aria-hidden="true">★★★★★</span><span aria-hidden="true">★★★★★</span></span><b class="sg-num">${r}</b>`;
 // her StoryGraph reviews: spoilers stay hidden until clicked
-const reviewHtml = t => esc(t).replace(/\[spoiler\]([\s\S]*?)(\[\/spoiler\]|$)/g, '<span class="spoiler" tabindex="0" title="Spoiler: click to show">$1</span>');
+const reviewHtml = t => esc(t).replace(/\[spoiler\]([\s\S]*?)(\[\/spoiler\]|$)/g, '<span class="spoiler" tabindex="0" role="button" aria-pressed="false" aria-label="Spoiler, hidden: press to show" title="Spoiler: click to show"><span aria-hidden="true">$1</span></span>');
 function sgPanel(r){
   const icon = {read: "check", reading: "bookmark", "to-read": "clock", stopped: "x", paused: "clock"}[r.status] || "book";
   const dates = r.dates.filter(d => d[0] || d[1]);
@@ -771,22 +771,29 @@ const isBookNumber = s => /^97[89]\d{10}$/.test(s) && [...s].reduce((t, d, i) =>
 const isShopCode = s => /^2\d{12}$/.test(s) && [...s].reduce((t, d, i) => t + d * (i % 2 ? 3 : 1), 0) % 10 === 0;
 const loadZxing = () => window.ZXing ? Promise.resolve() : new Promise((ok, fail) => {
   const s = document.createElement("script"); s.src = "js/zxing.min.js"; s.onload = ok; s.onerror = fail; document.head.appendChild(s); });
+let camOpener = null;
 function camClose(){
   if (camReader) { camReader.reset(); camReader = null; }
   camStillFor = null;
-  document.getElementById("camPanel")?.remove();
+  const panel = document.getElementById("camPanel"), back = panel && panel.contains(document.activeElement) ? camOpener : null;
+  panel?.remove();
+  if (back && document.contains(back)) back.focus({preventScroll: true});
 }
 async function camOpen(){
   camClose();
   const me = {reset(){}}, mine = () => camReader === me;   // this opening's own (review, 2 Nov: old loops ran on into a new one)
   camReader = me;
+  camOpener = document.activeElement;
   const panel = document.createElement("div"); panel.id = "camPanel"; panel.className = "cam-panel";
+  panel.setAttribute("role", "dialog"); panel.setAttribute("aria-modal", "true"); panel.setAttribute("aria-label", "Scan with the camera");
   panel.innerHTML = `<div class="cam-box"><div class="cam-view"><video id="camVideo" muted playsinline></video><div class="cam-aim"></div></div>
     <div class="cam-zoom"><canvas id="camZoom" width="640" height="200"></canvas><span>What the reader sees in the box, close up</span></div>
     <p id="camMsg">Starting the camera…</p>
     <div class="cam-buttons"><button class="btn pick" type="button" id="camStill">${ic("scan-barcode")}Take a picture in 3…</button>
     <button class="btn" type="button" id="camStop">${ic("x")}Stop</button></div></div>`;
   document.body.appendChild(panel);
+  document.getElementById("camStop").focus();   // into the dialog (review, 21 Nov)
+  document.getElementById("camMsg").setAttribute("role", "status");
   const msg = t => { const m = document.getElementById("camMsg"); if (m) m.textContent = t; };
   try { await loadZxing(); }
   catch { return mine() && msg("The barcode reader didn’t load. Type the ISBN instead."); }
@@ -1103,7 +1110,7 @@ function cornerEditor(f){
       <button type="button" class="btn quiet" data-corners-close>${ic("x")}Cancel</button></div>
     <div class="corner-stage" id="cornerStage"><img id="cornerImg" src="${escRaw(c.src)}" alt="" draggable="false">
       <svg class="corner-lines" aria-hidden="true"><polygon></polygon></svg>
-      ${[0, 1, 2, 3].map(i => `<span class="corner-dot" data-dot="${i}" aria-label="${["Top left", "Top right", "Bottom right", "Bottom left"][i]} corner"></span>`).join("")}
+      ${[0, 1, 2, 3].map(i => `<span class="corner-dot" data-dot="${i}" tabindex="0" role="button" aria-label="${["Top left", "Top right", "Bottom right", "Bottom left"][i]} corner: move it with the arrow keys"></span>`).join("")}
       <div class="corner-loupe" id="cornerLoupe" hidden></div></div></div>`;
 }
 function placeCorners(){
@@ -1146,6 +1153,15 @@ function cornerMove(e){
   loupe.style.left = (x < img.clientWidth / 2 ? img.clientWidth - L - 8 : 8) + "px";
 }
 document.addEventListener("pointermove", cornerMove);
+document.addEventListener("keydown", e => {   // the arrow keys move a chosen corner dot (review, 21 Nov: it was mouse-only)
+  const dot = e.target.closest?.(".corner-dot"), c = addForm.corners;
+  const step = {ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1]}[e.key];
+  if (!dot || !step || !c || c === "busy") return;
+  e.preventDefault();
+  const i = +dot.dataset.dot, by = (e.shiftKey ? 0.02 : 0.004) * Math.max(c.width, c.height);
+  c.pts[i] = [Math.min(Math.max(c.pts[i][0] + step[0] * by, 0), c.width), Math.min(Math.max(c.pts[i][1] + step[1] * by, 0), c.height)];
+  placeCorners();
+});
 document.addEventListener("pointerup", () => {
   if (cornerDrag === null) return;
   cornerDrag = null;
@@ -1386,7 +1402,7 @@ toTop.innerHTML = `${ic("arrow-up")}Back to top`;
 function showMode(){
   const dark = document.documentElement.getAttribute("data-mode") === "dark";
   modeBtn.innerHTML = `${ic(dark ? "sun" : "moon")}${dark ? "Light mode" : "Dark mode"}`;
-  modeBtn.setAttribute("aria-pressed", dark);
+  modeBtn.removeAttribute("aria-pressed");   // the words say what it will do; "pressed" with "Light mode" read as light being on (review, 21 Nov)
 }
 modeBtn.addEventListener("click", () => {
   const mode = document.documentElement.getAttribute("data-mode") === "dark" ? "light" : "dark";
@@ -1503,7 +1519,13 @@ document.addEventListener("click", e => {
     redrawShelf(t.dataset.filter ? `[data-filter="${t.dataset.filter}"]` : `[data-view="${t.dataset.view}"]`);
   } else if (t.dataset.jump) { e.preventDefault(); document.getElementById(t.dataset.jump).scrollIntoView({behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}); }
 });
-document.addEventListener("click", e => { const s = e.target.closest(".spoiler"); if (s) s.classList.toggle("shown"); });
+function toggleSpoiler(s){   // shown or hidden by a click, Enter or Space; tabbing past no longer shows it (review, 21 Nov)
+  const shown = s.classList.toggle("shown");
+  s.setAttribute("aria-pressed", shown); s.firstElementChild.setAttribute("aria-hidden", !shown);
+  s.setAttribute("aria-label", shown ? "Spoiler, shown: press to hide" : "Spoiler, hidden: press to show");
+}
+document.addEventListener("click", e => { const s = e.target.closest(".spoiler"); if (s) toggleSpoiler(s); });
+document.addEventListener("keydown", e => { const s = e.target.closest?.(".spoiler"); if (s && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); toggleSpoiler(s); } });
 document.addEventListener("click", e => {
   const open = e.target.closest(".pick-open");
   if (open) { pickShelf = open.dataset.pickShelf; pickFixed = !!pickShelf; picked = null; pickNew(); return pickShow(); }

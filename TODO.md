@@ -69,8 +69,8 @@
    - **Smaller looks: done 21 Nov** (spines, phone old-books list, New covers switch, gap under the banner, books with no blurb).
    - **Backup: done 21 Nov (her yes):** the weekly save sends only the library's own files (anything else new is left out and named in logs/backup.log); Home shows a note when the last backup failed or none has worked for 9 days; the task runs Sundays 09:30 local time.
    - **Reading import: done 21 Nov (her yes):** an export refused as cut short is remembered; Home says so with a Take it anyway button.
-   - **Phone scanning** listens on every network the laptop joins, and the key travels unencrypted: limit it to the home Wi-Fi's address (my suggestion)?
-   - **Keyboard and screen readers:** the Dark mode button says "Light mode" while marked pressed; a spoiler shows as soon as you Tab past it; setting a cover's corners is mouse-only; the camera panel isn't marked as a dialog. Fix all four (my suggestion)?
+   - **Phone scanning: done 21 Nov (her yes):** the phone door (port 8021) opens only on a network Windows calls Private (her home Wi-Fi, Moonbase 3), on the laptop's address there; shut elsewhere; checked every two minutes.
+   - **Keyboard and screen readers: done 21 Nov (her yes):** Dark mode button no longer says pressed; spoilers are buttons (Enter or Space, not shown by tabbing past); cover corners move with the arrow keys; the camera panel is a dialog that takes focus and gives it back.
 
 ## Open
 

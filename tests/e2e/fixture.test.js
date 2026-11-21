@@ -658,11 +658,11 @@ test("Dark mode switches the page to dark and back, and the button says what it 
   const light = getComputedStyle(document.body).backgroundColor;
   click($("#modeBtn"));
   eq(mode(), "dark");
-  eq($("#modeBtn").textContent.trim(), "Light mode"); eq($("#modeBtn").getAttribute("aria-pressed"), "true");
+  eq($("#modeBtn").textContent.trim(), "Light mode"); eq($("#modeBtn").getAttribute("aria-pressed"), null, "no pressed state saying the opposite of the words:");
   const dark = getComputedStyle(document.body).backgroundColor;
   ok(dark !== light && dark === "rgb(28, 22, 16)", `the page didn’t turn dark (${dark})`);
   click($("#modeBtn"));
-  eq(mode(), "light"); eq($("#modeBtn").textContent.trim(), "Dark mode"); eq($("#modeBtn").getAttribute("aria-pressed"), "false");
+  eq(mode(), "light"); eq($("#modeBtn").textContent.trim(), "Dark mode"); eq($("#modeBtn").getAttribute("aria-pressed"), null);
   eq(getComputedStyle(document.body).backgroundColor, light, "back to light:");
 });
 
@@ -756,4 +756,30 @@ test("Home says when a reading export was refused as cut short, with a Take it a
     await loadReadingStatus(); await go("#home");
     ok(!$("#readingNote"), "a note with nothing refused");
   } finally { readingRefused = null; }
+});
+
+// ---------- keyboard and screen readers (review fixes, her yes, 21 Nov) ----------
+test("a spoiler stays hidden when tabbed past, and Enter or Space shows and hides it", async () => {
+  const b = BOOKS.find(x => /\[spoiler\]/.test(reading(x).review || "")); if (!b) return;
+  await go("#b-" + b.id);
+  const sp = $(".spoiler", view());
+  sp.focus();
+  ok(getComputedStyle(sp).filter !== "none", "shown just by tabbing to it");
+  sp.dispatchEvent(new KeyboardEvent("keydown", {key: "Enter", bubbles: true}));
+  ok(sp.classList.contains("shown") && sp.getAttribute("aria-pressed") === "true", "Enter didn't show it");
+  sp.dispatchEvent(new KeyboardEvent("keydown", {key: " ", bubbles: true}));
+  ok(!sp.classList.contains("shown"), "Space didn't hide it");
+});
+
+test("a cover's corner dots can be moved with the arrow keys", async () => {
+  freshAdd(); await go("#add");
+  addForm.corners = {src: "", width: 600, height: 900, pts: [[10, 10], [590, 10], [590, 890], [10, 890]]};
+  document.getElementById("view").innerHTML = pageAdd();
+  const dot = $('.corner-dot[data-dot="0"]');
+  ok(dot && dot.tabIndex === 0, "the dot can't be reached with Tab");
+  dot.focus();
+  dot.dispatchEvent(new KeyboardEvent("keydown", {key: "ArrowRight", bubbles: true}));
+  dot.dispatchEvent(new KeyboardEvent("keydown", {key: "ArrowDown", shiftKey: true, bubbles: true}));
+  ok(addForm.corners.pts[0][0] > 10 && addForm.corners.pts[0][1] > 10 + 5, "the arrow keys didn't move it");
+  addForm.corners = null;
 });

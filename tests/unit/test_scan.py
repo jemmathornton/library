@@ -122,3 +122,29 @@ class ScanDoor(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class HomeOnlyDoor(unittest.TestCase):
+    """The phone's door opens only on the home Wi-Fi's address and shuts elsewhere (her yes, 21 Nov)."""
+
+    def test_opens_at_home_moves_with_the_address_and_shuts_away(self):
+        with Sandbox(data=False, covers=False):
+            serve = load('serve')
+            where = {'ip': '127.0.0.1'}
+            serve.home_address = lambda: where['ip']
+            door = serve.ScanDoor(port=0)
+            try:
+                door.check()
+                self.assertIsNotNone(door.server, 'not opened at home')
+                self.assertEqual(door.server.server_address[0], '127.0.0.1', 'listening on more than the home address')
+                first = door.server
+                door.check()
+                self.assertIs(door.server, first, 'reopened for no reason')
+                where['ip'] = None   # a café: Windows calls it Public
+                door.check()
+                self.assertIsNone(door.server, 'still open away from home')
+                where['ip'] = '127.0.0.1'
+                door.check()
+                self.assertIsNotNone(door.server, 'not reopened back home')
+            finally:
+                door.shut()

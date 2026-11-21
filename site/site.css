@@ -281,7 +281,8 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .review{font-size:16px;line-height:1.7;max-width:68ch;white-space:pre-line;padding:18px 22px;border-left:3px solid var(--brass);background:var(--surface);border-radius:0 12px 12px 0}
 .review+.review{margin-top:14px}
 .spoiler{filter:blur(5px);cursor:pointer;transition:filter .2s;border-radius:4px;background:var(--soft)}
-.spoiler.shown,.spoiler:focus{filter:none;background:none}
+.spoiler.shown{filter:none;background:none}
+.spoiler:focus-visible{outline:2px solid var(--focus);outline-offset:2px}   /* focus shows where it is, not what it says (21 Nov) */
 
 /* all shelves at once */
 .dot.big{width:14px;height:14px;display:inline-block;vertical-align:middle;margin:-4px 14px 0 2px;box-shadow:none}
@@ -873,3 +874,6 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 }
 /* the series name over each run of old-book spines, in small capitals like the rest */
 .shelf-name{font:400 17px var(--read);font-variant:small-caps;letter-spacing:.06em;text-transform:none}
+
+/* a corner dot chosen with the keyboard (21 Nov) */
+.corner-dot:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
