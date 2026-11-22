@@ -440,14 +440,9 @@ function spineOrder(books, roundOf){
 // the header's books stand as spines on a walnut ledge (her pick, 22 Nov, Spines with the Stamped finish, from a Try switch of a plate,
 // shelf, spines, fan, row and stack): each spine in its cover's main colour (data.js "spine", made by the build; an old book's
 // "cloth"), rounded, with gilt bands; its thickness from the page count (a 32-page picture book thin, a 900-page book thick; no count:
-// middling) and its height from the book's shape (a picture book or square edition short, a mass-market paperback a little shorter
-// than a trade one, a big illustrated or hardback edition tallest); her title and author up every spine (fitSpines() below)
+// middling), every spine the same height; her title and author up every spine (fitSpines() below)
 const spineThick = b => { const n = +b.pages; return n > 0 ? Math.round(Math.min(46, Math.max(16, 9 + n / 15))) : 26; };
-const spineTall = b => { const r = +b.coverRatio || 1.53, n = +b.pages || 0;
-  if (r < 1.2 || (n && n < 64)) return 74;   // picture books, square editions
-  if (r < 1.45) return 100;                    // big illustrated and hardback editions
-  if (r > 1.62) return 86;                     // mass-market paperbacks, travel guides
-  return 93; };                                // trade paperbacks
+const SPINE_TALL = 93;   // every spine the same height (her pick, 22 Nov evening: heights by the cover's shape looked random)
 const surnameOf = by => (String(by || "").split(/,| and | & /)[0].trim().split(/\s+/).pop() || "");
 function shelfBanner(list){
   const books = variedPick(list || [], 30);
@@ -455,7 +450,7 @@ function shelfBanner(list){
   return `<div class="hero-shelf" aria-hidden="true"><div class="sp-row">${books.map(b => {
     const c = spineColour(b), lum = luminance(c);
     // dark: gilt-foil lettering; anything lighter is blind-stamped (darker, with a light edge), for legibility
-    return `<span class="sp${lum < 0.2 ? " dark" : ""}" style="--c:${c};--h:${spineTall(b)}%;--w:${spineThick(b)}px"><span class="t"><b>${esc(b.t)}</b>${b.by ? `<i data-full="${esc(b.by)}" data-short="${esc(surnameOf(b.by))}">${esc(b.by)}</i>` : ""}</span></span>`;
+    return `<span class="sp${lum < 0.2 ? " dark" : ""}" style="--c:${c};--h:${SPINE_TALL}%;--w:${spineThick(b)}px"><span class="t"><b>${esc(b.t)}</b>${b.by ? `<i data-full="${esc(b.by)}" data-short="${esc(surnameOf(b.by))}">${esc(b.by)}</i>` : ""}</span></span>`;
   }).join("")}</div></div>`;
 }
 // each spine's lettering fitted to it, title and author always both (her rule, 22 Nov): on one line, smaller as needed; else in two
@@ -1810,27 +1805,3 @@ capitalise(document);
 document.addEventListener("click", e => { const a = e.target.closest && e.target.closest("a[data-skip]"); if (!a) return; e.preventDefault(); const v = document.getElementById("view"); if (v) { if (!v.hasAttribute("tabindex")) v.setAttribute("tabindex", "-1"); v.focus(); } });
 
 
-// ---------- Try switch (while she chooses, 22 Nov evening; removed once she picks) ----------
-// her notes: the header's shelf looks short with a big gap before the title; the line above the figures runs on too far; the spines'
-// heights look random. Rows: Shelf length (Now: at most 430px / Longer: fills from the title to the edge); Line (Now: the whole column /
-// Ends with the figures); Placement (her ask: does it need to float? Now / standing on the panel's foot / across the top / across the
-// bottom); Heights (By shape: now / All the same); Thickness (By page count: now / All the same). ?try-len=… etc. pick one.
-(() => {
-  const ROWS = [["place", "Shelf placement", [["now", "Now (floating)"], ["foot", "On the panel’s foot"], ["top", "Across the top"], ["bottom", "Across the bottom"]]],
-                ["len", "Shelf length", [["now", "Now"], ["longer", "Longer"]]],
-                ["line", "Line above the figures", [["now", "Now"], ["short", "Ends with the figures"]]],
-                ["h", "Spine heights", [["now", "By shape (now)"], ["same", "All the same"]]],
-                ["w", "Spine thickness", [["now", "By page count (now)"], ["same", "All the same"]]]];
-  const root = document.documentElement, q = new URLSearchParams(location.search), pick = {};
-  for (const [k, , opts] of ROWS) { let v = "now"; try { v = localStorage.getItem("library-try-" + k) || "now"; } catch {}
-    v = q.get("try-" + k) || v; pick[k] = opts.some(o => o[0] === v) ? v : "now"; }
-  const box = document.createElement("div"); box.className = "try-switch"; box.setAttribute("role", "group"); box.setAttribute("aria-label", "Try a look");
-  const draw = () => { box.innerHTML = "<b>Try</b>" + ROWS.map(([k, label, opts]) => `<div class="try-row"><span>${label}</span>${opts.map(([v, w]) =>
-    `<button type="button" data-k="${k}" data-v="${v}" aria-pressed="${pick[k] === v}">${w}</button>`).join("")}</div>`).join(""); };
-  const room = () => { document.body.style.paddingBottom = box.offsetHeight + 28 + "px"; };
-  const apply = () => { for (const k in pick) { root.dataset["try" + k[0].toUpperCase() + k.slice(1)] = pick[k]; try { localStorage.setItem("library-try-" + k, pick[k]); } catch {} }
-    draw(); room(); requestAnimationFrame(fitSpines); };
-  box.addEventListener("click", e => { const b = e.target.closest("button[data-k]"); if (!b) return; pick[b.dataset.k] = b.dataset.v; apply();
-    box.querySelector(`[data-k="${b.dataset.k}"][data-v="${b.dataset.v}"]`)?.focus(); });
-  document.body.appendChild(box); addEventListener("resize", room); apply();
-})();
