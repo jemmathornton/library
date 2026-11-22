@@ -1,6 +1,8 @@
 // Page tests at phone size (21 Nov, her ask): her own library (a throwaway copy) in a 390 × 844 window, as on her phone.
 // The sidebar is a drawer opened from the top bar (like her Sim World app); every page fits the width; things to tap
 // are big enough; typing boxes don't make a phone zoom in. Toolkit in harness.js.
+// The family's drawer and footer rules (Menu, Escape, the scrim, focus, Back to top, credits one per line) are tested for every
+// site in the parent's tests/family/family.test.js (22 Nov); this file keeps the Library's own phone layout.
 const W = () => innerWidth;
 const menuButton = () => $("#menuBtn");
 const isOpen = () => document.documentElement.classList.contains("jj-menu-open");   // the family's JJFamily.menu (22 Nov)
@@ -24,44 +26,6 @@ function sticksOut(root){
 
 test("the window really is phone-sized", async () => {
   ok(innerWidth <= 420, `the test window is ${innerWidth}px wide`);
-});
-
-test("the top bar shows the menu button and the library’s name; the sidebar is away", async () => {
-  const bar = $(".topbar");
-  eq(getComputedStyle(bar).display, "flex", "top bar shown:");
-  ok(/^\s*Menu\s*$/.test(menuButton().textContent) && menuButton().querySelector("svg"), "the button has the menu icon and its word");
-  eq($(".topbar-name").textContent.replace(/\s+/g, " ").trim(), "Jemma’s Library");
-  ok(!onScreen(side()), "the sidebar is off the screen");
-  eq(getComputedStyle(side()).visibility, "hidden", "the closed drawer can't be reached with Tab:");
-  eq(getComputedStyle($("main")).marginLeft, "0px", "the page uses the whole width:");
-  eq(menuButton().getAttribute("aria-expanded"), "false");
-});
-
-test("the menu button opens the drawer over the page, with the way back to Jemma’s Journals at the top", async () => {
-  click(menuButton());
-  await until(() => side().getBoundingClientRect().left >= -1, "the drawer to slide in");
-  ok(isOpen(), "open");
-  eq(menuButton().getAttribute("aria-expanded"), "true");
-  eq(getComputedStyle(side()).visibility, "visible");
-  eq(getComputedStyle($("#scrim")).display, "block", "the dark layer behind it:");
-  const first = $$("a, input", side()).filter(e => e.offsetParent)[0];
-  eq(first.textContent.trim(), "← Jemma’s Journals", "first thing in the drawer:");
-  await until(() => side().contains(document.activeElement), "keyboard focus to move into the drawer");
-  ok(side().getBoundingClientRect().width < W() - 40, "a strip of the page stays showing to tap");
-  eq(getComputedStyle(document.body).overflow, "hidden", "the page behind doesn't scroll:");
-});
-
-test("the drawer closes on Escape, and focus goes back to the button", async () => {
-  click(menuButton()); ok(isOpen());
-  document.dispatchEvent(new KeyboardEvent("keydown", {key: "Escape", bubbles: true}));
-  ok(!isOpen(), "closed"); eq(document.activeElement, menuButton(), "focus:");
-  eq(menuButton().getAttribute("aria-expanded"), "false");
-});
-
-test("the drawer closes on a tap outside it", async () => {
-  click(menuButton()); ok(isOpen());
-  click($("#scrim"));
-  ok(!isOpen());
 });
 
 test("choosing a link in the drawer opens that page and closes the drawer, even the page already showing", async () => {
@@ -216,21 +180,17 @@ test("the Stats page at 390, 360 and 320 wide: no labels overlap and none runs i
 });
 
 
-test("Back to top and Dark mode sit side by side at the bottom of a phone page, big enough to tap", async () => {
-  await show("#reading");
-  const t = $("#toTop").getBoundingClientRect(), m = $("#modeBtn").getBoundingClientRect();
-  ok(t.height >= 44 && m.height >= 44, `too small to tap: ${t.height}px, ${m.height}px`);
-  eq(Math.round(t.top), Math.round(m.top), "on one line:");
-  ok(t.left >= 0 && m.right <= W(), "inside the screen");
-  ok(t.top >= view().getBoundingClientRect().bottom - 1, "below the page");
-});
-
-test("family rules: on a phone the foot’s credits stand one per line, with no dots", async () => {
-  await show("#home");
-  const crs = $$("[data-jj-credits] .cr"), tops = crs.map(c => Math.round(c.getBoundingClientRect().top));
-  ok(crs.length >= 3 && new Set(tops).size === crs.length, "credits share a line");
-  ok($$("[data-jj-credits] .jj-dot").every(s => getComputedStyle(s).display === "none"), "a dot shows");
-  ok(crs.every(c => c.getBoundingClientRect().right <= W() && c.getBoundingClientRect().left >= 0), "a credit runs off the screen");
+test("family phone helpers: the drawer is min(300px, 86vw) wide; “← Jemma’s Journals” is the family’s home link, 44px tall, 12.5px, and the brand stays where it was", async () => {
+  click(menuButton()); await until(() => side().getBoundingClientRect().left >= -1, "the drawer to slide in");
+  try {
+    eq(Math.round(side().getBoundingClientRect().width), Math.round(Math.min(300, W() * .86)), "drawer width:");
+    const home = $("#side .home-link"), r = home.getBoundingClientRect();
+    ok(home.classList.contains("jj-home-link") && home.hasAttribute("data-jj-home"), "the family’s class and data-jj-home");
+    ok(r.height >= 44, `“← Jemma’s Journals” is ${r.height}px tall`);
+    eq(getComputedStyle(home).fontSize, "12.5px", "its text:");
+    eq(Math.round(r.left - side().getBoundingClientRect().left), 24, "its left margin:");
+    eq(Math.round($("#side .brand").getBoundingClientRect().top - side().getBoundingClientRect().top), 48, "the brand’s place in the drawer (as before):");
+  } finally { click($("#scrim")); }
 });
 
 test("typing in the drawer’s search keeps the drawer open, letter by letter, and Escape in the empty box closes it", async () => {   // review, 21 Nov

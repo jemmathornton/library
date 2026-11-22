@@ -778,13 +778,17 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
   .topbar button:focus-visible,.topbar-name:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
   .topbar-name{font:400 26px/1 var(--display);color:var(--on-deep);text-decoration:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .topbar-name em{color:var(--gilt-2)}
-  .side{width:min(var(--side),86vw);transform:translateX(-102%);visibility:hidden;transition:transform .25s ease,visibility 0s .25s;box-shadow:0 0 40px rgba(0,0,0,.45);z-index:30;
+  .side{width:min(300px,86vw);   /* the family's drawer width (site/family/README.md) */
+    transform:translateX(-102%);visibility:hidden;transition:transform .25s ease,visibility 0s .25s;box-shadow:0 0 40px rgba(0,0,0,.45);z-index:30;
     padding-bottom:env(safe-area-inset-bottom)}
   .side.jj-open{transform:none;visibility:visible;transition:transform .25s ease,visibility 0s}   /* open: family.js's JJFamily.menu (js/app.js) */
   .jj-menu-open .scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:25}   /* the page behind stays still: family.css */
   .nav a{min-height:44px}   /* big enough to tap */
   .nav-group.minor a{min-height:40px}
-  .home-link{padding:10px 0;margin-top:6px}
+  /* “← Jemma’s Journals” is the family’s jj-home-link here (44px tall, 12.5px: family.css); its margin and the brand’s trimmed
+     so the drawer below it stays where it was (6 + 32 + 10 = 0 + 44 + 4) */
+  .home-link{margin-top:0}
+  .brand{margin-top:4px}
   main{margin-left:0;box-shadow:none}   /* no binding at the side, so no gutter shadow */
   .skip:focus{left:12px}
   /* an iPhone on its side: the notch and rounded corners never cover the words (phone review, round 5; viewport-fit=cover) */

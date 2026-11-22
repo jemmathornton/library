@@ -604,15 +604,13 @@ test("a scan from her phone shows on the Add page and fills the form", async () 
 
 
 // ---------- the foot of every page: Back to top and Dark mode (21 Nov, her ask for all her sites) ----------
+// The family rules themselves (opens light, the button, jj-mode and the old key, footer order and sizes, the dots, the drawer,
+// robots, fonts, /family/ loading) are tested once for every site in the parent: Jemma's Journals tests/family/family.test.js
+// (22 Nov). Kept here: what only the Library can show (every one of its pages, its own credits, contrast, deeper pages).
 const footBtns = () => [$("#toTop"), $("#modeBtn")];
 const mode = (doc = document) => doc.documentElement.getAttribute("data-mode");
-const reloaded = () => new Promise((done, fail) => {   // the site opened afresh (as after a reload), in a frame on the same address
-  const f = document.createElement("iframe"); f.src = "index.html"; f.style.cssText = "position:fixed;left:-3000px;width:800px;height:600px";
-  f.onload = async () => { try { await until(() => f.contentDocument.getElementById("modeBtn")?.textContent, "the reloaded page", 10000); done(f); } catch (e) { fail(e); } };
-  document.body.append(f);
-});
 
-test("Back to top and Dark mode are at the bottom of every page, below the page’s own words", async () => {
+test("Back to top and Dark mode are shown at the bottom of every page, below the page’s own words", async () => {
   const routes = ["#home", "#shelves", "#authors", "#reading", "#history", "#add", "#to-buy", "#stats", "#old-to-find",
     ...OLD_KINDS.map(k => "#old-" + k[0]), ...DATA.shelves.map(s => "#shelf-" + s.id), ...DATA.books.map(b => "#b-" + b.id),
     ...Object.keys(authorIndex).map(k => "#a-" + k)];
@@ -623,58 +621,8 @@ test("Back to top and Dark mode are at the bottom of every page, below the page�
     if (!top || !md || !top.offsetParent || !md.offsetParent) { wrong.push(h + ": not shown"); continue; }
     if (top.textContent.trim() !== "Back to top" || md.textContent.trim() !== "Dark mode") wrong.push(`${h}: says “${top.textContent}” / “${md.textContent}”`);
     if (top.getBoundingClientRect().top < view().getBoundingClientRect().bottom - 1) wrong.push(h + ": not below the page");
-    if (top.getBoundingClientRect().height < 44 || md.getBoundingClientRect().height < 44) wrong.push(h + ": under 44px tall");
   }
   eq(wrong, [], "pages where the foot is wrong:");
-  ok(footBtns().every(b => b.querySelector("svg")), "each with its icon");
-  eq(footBtns().map(b => b.tagName), ["A", "BUTTON"], "Back to top a link to the top, Dark mode a button (the family’s markup):");
-  eq(Math.round($("#toTop").getBoundingClientRect().top - $("#modeBtn").getBoundingClientRect().top), 0, "side by side:");
-});
-
-test("Back to top goes to the top of the page and moves keyboard focus there", async () => {
-  await show("#home");
-  const pad = document.createElement("div"); pad.style.height = "3000px"; view().append(pad);   // a long page whatever the books
-  try {
-    scrollTo(0, document.documentElement.scrollHeight); await until(() => scrollY > 500, "the page to scroll down");
-    $("#toTop").focus(); click($("#toTop"));
-    await until(() => scrollY === 0, "the page to reach the top");
-    eq(document.activeElement, view(), "keyboard focus:");
-  } finally { pad.remove(); }
-});
-
-test("the site opens light, even when the device is set to dark", async () => {
-  eq(mode(), "light");
-  const autoDark = [];
-  for (const sheet of document.styleSheets) { let rules; try { rules = sheet.cssRules; } catch { continue; }
-    for (const r of rules) if (r instanceof CSSMediaRule && /prefers-color-scheme/.test(r.conditionText)) autoDark.push(r.conditionText); }
-  eq(autoDark, [], "styles that follow the device’s light or dark setting:");
-  eq(getComputedStyle(document.body).backgroundColor, "rgb(243, 234, 213)", "the cream page:");
-  localStorage.removeItem("jj-mode");
-  const f = await reloaded();
-  try { eq(mode(f.contentDocument), "light", "opened afresh:"); eq(f.contentDocument.getElementById("modeBtn").textContent.trim(), "Dark mode"); } finally { f.remove(); }
-});
-
-test("Dark mode switches the page to dark and back, and the button says what it will do", async () => {
-  await show("#home");
-  const light = getComputedStyle(document.body).backgroundColor;
-  click($("#modeBtn"));
-  eq(mode(), "dark");
-  eq($("#modeBtn").textContent.trim(), "Light mode"); eq($("#modeBtn").getAttribute("aria-pressed"), "true", "pressed while dark (the family rules):");
-  const dark = getComputedStyle(document.body).backgroundColor;
-  ok(dark !== light && dark === "rgb(28, 22, 16)", `the page didn’t turn dark (${dark})`);
-  click($("#modeBtn"));
-  eq(mode(), "light"); eq($("#modeBtn").textContent.trim(), "Dark mode"); eq($("#modeBtn").getAttribute("aria-pressed"), "false");
-  eq(getComputedStyle(document.body).backgroundColor, light, "back to light:");
-});
-
-test("dark mode is remembered when the site opens again, and so is going back to light", async () => {
-  click($("#modeBtn")); eq(mode(), "dark");
-  eq(localStorage.getItem("jj-mode"), "dark");
-  let f = await reloaded();
-  try { eq(mode(f.contentDocument), "dark", "after a reload:"); eq(f.contentDocument.getElementById("modeBtn").textContent.trim(), "Light mode"); } finally { f.remove(); }
-  click($("#modeBtn")); eq(mode(), "light");
-  f = await reloaded();
-  try { eq(mode(f.contentDocument), "light", "after going back to light and a reload:"); } finally { f.remove(); }
 });
 
 test("dark mode: the page’s words are easy to read (4.5:1 or more against the dark page)", async () => {
@@ -794,19 +742,8 @@ const frameAt = (width, height = 800) => new Promise((done, fail) => {
   document.body.append(f);
 });
 
-test("family rules: the foot of every page is the family’s, in order: the name, the two About lines, then Back to top and Dark mode", async () => {
-  const foots = $$("footer"); eq(foots.length, 1, "one footer:");
-  const foot = foots[0];
-  eq($(".jj-name", foot).textContent, "Jemma’s Library");
-  eq(getComputedStyle($(".jj-name", foot)).fontStyle, "normal", "the name plain, not italic:");
-  const lines = $$("[data-jj-line1], [data-jj-credits]", foot).map(p => p.textContent.replace(/\s+/g, " ").trim());
-  eq(lines[0], "No cookies, no tracking, no ads. Made with HTML, CSS, JavaScript and Python, kept on GitHub.", "line 1 (the same on every site):");
-  eq($$("[data-jj-credits] .cr", foot).map(c => c.textContent), ["Book covers from their publishers", "Some book details from Open Library", "Fonts: Instrument Serif, Manrope and EB Garamond", "Icons by Lucide"], "line 2 (the Library’s own credits):");
-  ok($$(".cr", foot).every(c => /^[A-Z]/.test(c.textContent)), "each credit starts with a capital");
-  const order = [".jj-name", "[data-jj-line1]", "[data-jj-credits]", ".jj-foot-links"].map(sel => $(sel, foot).getBoundingClientRect().top);
-  ok(order[0] < order[1] && order[1] < order[2] && order[2] < order[3], "name, then the two About lines, then the buttons");
-  for (const sel of ["[data-jj-line1]", "[data-jj-credits]"]) eq(getComputedStyle($(sel, foot)).fontSize, "12.5px", "About text size:");
-  for (const h of ["#home", "#b-" + DATA.books[0].id, "#stats"]) { await show(h); ok($(".jj-name").offsetParent && $("[data-jj-credits]").offsetParent, h + ": foot not shown"); }
+test("family rules: the foot’s line 2 is the Library’s own credits, word for word", async () => {   // the rest of the footer: the parent's family suite
+  eq($$("footer [data-jj-credits] .cr").map(c => c.textContent), ["Book covers from their publishers", "Some book details from Open Library", "Fonts: Instrument Serif, Manrope and EB Garamond", "Icons by Lucide"], "line 2 (the Library’s own credits):");
 });
 
 test("family rules: the foot’s words and buttons are 4.5:1 or more in light and dark", async () => {
@@ -821,79 +758,11 @@ test("family rules: the foot’s words and buttons are 4.5:1 or more in light an
   eq(low, [], "too faint:");
 });
 
-test("family rules: dark mode uses the shared key jj-mode, moves the old key over once, and sets the bar colour", async () => {
-  eq(mode(), "light");
-  eq(document.querySelector('meta[name="theme-color"]').content, "#3B2616", "light bar colour:");
-  click($("#modeBtn"));
-  eq(localStorage.getItem("jj-mode"), "dark", "saved under jj-mode:");
-  eq(document.querySelector('meta[name="theme-color"]').content, "#1C1610", "dark bar colour:");
-  click($("#modeBtn")); eq(localStorage.getItem("jj-mode"), "light");
-  // her choice from before the family key: read once, saved as jj-mode, the old key gone
-  localStorage.removeItem("jj-mode"); localStorage.setItem("jemmas-library-mode", "dark");
-  let f = await reloaded();
-  try {
-    eq(mode(f.contentDocument), "dark", "the old choice kept:");
-    eq(f.contentDocument.querySelector('meta[name="theme-color"]').content, "#1C1610", "dark bar colour from the start:");
-    eq(localStorage.getItem("jj-mode"), "dark"); eq(localStorage.getItem("jemmas-library-mode"), null, "old key moved over:");
-  } finally { f.remove(); }
-  // jj-mode set by another site in the family wins
-  localStorage.setItem("jj-mode", "light"); localStorage.setItem("jemmas-library-mode", "dark");
-  f = await reloaded();
-  try { eq(mode(f.contentDocument), "light", "jj-mode first:"); } finally { f.remove(); }
-});
-
-test("family rules: the Menu bar shows at 899px wide and the sidebar at 901px", async () => {
-  for (const [w, bar] of [[899, true], [901, false]]) {
-    const f = await frameAt(w);
-    try {
-      const d = f.contentDocument, side = d.getElementById("side");
-      eq(getComputedStyle(d.querySelector(".topbar")).display !== "none", bar, `${w}px top bar:`);
-      if (bar) {
-        ok(/^\s*Menu\s*$/.test(d.getElementById("menuBtn").textContent) && d.querySelector("#menuBtn svg"), "the Menu button with its icon");
-        const name = d.querySelector(".topbar-name"); eq(name.tagName, "A"); eq(name.getAttribute("href"), "#home"); ok(name.querySelector("em")?.textContent === "Library", "Library in italics");
-        eq(side.inert, true, "closed drawer inert:");
-      } else {
-        ok(side.getBoundingClientRect().left >= 0, "sidebar on the page"); eq(side.inert, false, "sidebar reachable:");
-        eq(side.querySelector("a").textContent.trim(), "← Jemma’s Journals", "first in the sidebar:");
-      }
-      ok(d.documentElement.scrollWidth <= w, `${w}px: no sideways scroll`);
-    } finally { f.remove(); }
-  }
-});
-
-test("family rules: the drawer at 899px: aria, focus in and back, inert, Escape, scrim, a link, scroll lock, and reset across 900px", async () => {
-  const f = await frameAt(899);
-  try {
-    const d = f.contentDocument, w = f.contentWindow, btn = d.getElementById("menuBtn"), side = d.getElementById("side");
-    const isOpen = () => d.documentElement.classList.contains("jj-menu-open"), key = k => d.dispatchEvent(new w.KeyboardEvent("keydown", {key: k, bubbles: true}));
-    eq(btn.getAttribute("aria-controls"), "side"); eq(btn.getAttribute("aria-expanded"), "false");
-    // open: focus moves in, the page behind is inert and doesn't scroll
-    btn.focus(); btn.click();
-    ok(isOpen()); eq(btn.getAttribute("aria-expanded"), "true"); eq(side.inert, false);
-    await until(() => side.contains(d.activeElement), "focus to move into the drawer");
-    eq(d.querySelector("main").inert, true, "the page behind inert:");
-    eq(w.getComputedStyle(d.body).overflow, "hidden", "no scrolling behind:");
-    eq(w.getComputedStyle(d.getElementById("scrim")).display, "block", "the scrim:");
-    eq([...side.querySelectorAll("a, input")].filter(e => e.offsetParent)[0].textContent.trim(), "← Jemma’s Journals", "first in the drawer:");
-    // Escape closes, focus back on the button
-    key("Escape"); ok(!isOpen()); eq(d.activeElement, btn, "focus back:"); eq(side.inert, true, "closed drawer inert:"); eq(d.querySelector("main").inert, false);
-    // the scrim closes
-    btn.click(); ok(isOpen()); d.getElementById("scrim").click(); ok(!isOpen(), "scrim"); eq(d.activeElement, btn);
-    // a link closes
-    btn.click(); d.querySelector('#nav a[href="#reading"]').click(); ok(!isOpen(), "a link"); eq(side.inert, true);
-    // crossing 900px resets it: open, widen, the drawer is shut and the sidebar reachable
-    btn.click(); ok(isOpen());
-    f.style.width = "1000px"; await until(() => !isOpen(), "the drawer to reset on widening");
-    eq(side.inert, false, "wide sidebar reachable:"); eq(d.querySelector("main").inert, false, "page reachable:"); eq(btn.getAttribute("aria-expanded"), "false");
-    f.style.width = "899px"; await until(() => side.inert === true, "the drawer to be inert again when narrow");
-  } finally { f.remove(); }
-});
-
 // ---------- the second review (21 Nov) and the tightened family rules (sections 3 and 4) ----------
 const hashIn = async (f, h) => { f.contentWindow.location.hash = h; await until(() => f.contentWindow.location.hash === h && f.contentDocument.getElementById("view").innerText.trim().length > 20, "the framed page " + h); await wait(50); };
 const meets = (a, b) => { const r = a.getBoundingClientRect(), s = b.getBoundingClientRect(); return r.width && s.width && r.left < s.right && s.left < r.right && r.top < s.bottom && s.top < r.bottom; };
 
-test("family rules: the drawer opens on the page’s own link (Home when none), and everything outside it is inert while open", async () => {
+test("family rules: on a deeper page the drawer opens on that page’s own link, and the Library’s top bar and skip link are inert while open", async () => {   // Home and the rest: the parent's family suite
   const f = await frameAt(899);
   try {
     const d = f.contentDocument, btn = d.getElementById("menuBtn"), side = d.getElementById("side");
@@ -903,11 +772,7 @@ test("family rules: the drawer opens on the page’s own link (Home when none), 
     for (const sel of [".topbar", ".skip", "main"]) eq(d.querySelector(sel).inert, true, sel + " inert while open:");
     eq(d.getElementById("scrim").inert, false, "the scrim still closes it:");
     d.getElementById("scrim").click(); eq(d.activeElement, btn, "focus back to Menu:"); eq(d.querySelector(".topbar").inert, false, "top bar back:");
-    await hashIn(f, "#home");
-    btn.click(); await until(() => side.contains(d.activeElement), "focus into the drawer");
-    eq(d.activeElement.getAttribute("href"), "#home", "Home when the page has no link of its own:");
-    ok(!d.activeElement.classList.contains("home-link"), "not “← Jemma’s Journals”");
-    d.getElementById("scrim").click();
+    eq(d.querySelector(".topbar-name").getAttribute("href"), "#home", "the bar’s name goes to the Library’s Home:");
   } finally { f.remove(); }
 });
 
@@ -926,45 +791,6 @@ test("family rules: a page chosen in the drawer (by link, the same page again, o
     const q = d.getElementById("q"); q.focus(); q.value = "the"; q.dispatchEvent(new w.Event("input", {bubbles: true}));
     q.dispatchEvent(new w.KeyboardEvent("keydown", {key: "Enter", bubbles: true}));
     eq(d.activeElement, view, "focus on the results:");
-  } finally { f.remove(); }
-});
-
-test("family rules: sizes: Menu 44px or more, the bar’s name 26px, the scrim black at 45%, “← Jemma’s Journals” 24px or more tall", async () => {
-  const f = await frameAt(899);
-  try {
-    const d = f.contentDocument, w = f.contentWindow;
-    ok(d.getElementById("menuBtn").getBoundingClientRect().height >= 44, "Menu button too small");
-    eq(w.getComputedStyle(d.querySelector(".topbar-name")).fontSize, "26px", "bar name:");
-    d.getElementById("menuBtn").click();
-    eq(w.getComputedStyle(d.getElementById("scrim")).backgroundColor, "rgba(0, 0, 0, 0.45)", "scrim:");
-    ok(d.querySelector("#side .home-link").getBoundingClientRect().height >= 24, "back link too small in the drawer");
-    d.getElementById("scrim").click();
-  } finally { f.remove(); }
-  ok($("#side .home-link").getBoundingClientRect().height >= 24, `back link on the wide sidebar is ${$("#side .home-link").getBoundingClientRect().height}px tall`);
-});
-
-test("family rules: robots meta, data-mode always set, fonts only from the site itself", async () => {
-  eq(document.querySelector('meta[name="robots"]')?.content, "noindex, noai, noimageai", "robots:");
-  ok(["light", "dark"].includes(document.documentElement.getAttribute("data-mode")), "data-mode set");
-  const away = $$("link[href], script[src]").map(e => e.href || e.src).filter(u => !u.startsWith(location.origin) && !u.startsWith("file:"));
-  eq(away, [], "files from other sites:");
-  const faces = [...document.styleSheets].flatMap(s => { try { return [...s.cssRules]; } catch { return []; } }).filter(r => r instanceof CSSFontFaceRule);
-  ok(["Instrument Serif", "Manrope", "EB Garamond"].every(n => faces.some(r => r.style.getPropertyValue("font-family").replace(/"/g, "") === n)), "each font has a local @font-face");
-  ok(faces.every(r => !/https?:/.test(r.style.getPropertyValue("src"))), "a font comes from another site");
-});
-
-test("family rules: the credits’ dots never start or end a line (a no-break space before each, lines balanced)", async () => {
-  const p = $("[data-jj-credits]");
-  eq($$(".jj-dot", p).map(s => s.textContent), [" ·", " ·", " ·"], "each dot tied to the credit before it:");
-  eq(getComputedStyle(p).textWrap || getComputedStyle(p).textWrapStyle, "balance", "balanced:");
-  // narrow enough to wrap (but wider than a phone, where the dots are hidden): each dot stays on its credit’s line
-  const f = await frameAt(700);
-  try {
-    const d = f.contentDocument, seps = [...d.querySelectorAll("[data-jj-credits] .jj-dot")], crs = [...d.querySelectorAll("[data-jj-credits] .cr")];
-    seps.forEach((s, i) => { if (f.contentWindow.getComputedStyle(s).display === "none") return;   // a dot at a break is taken out (family.js)
-      const r = s.getBoundingClientRect(), before = crs[i].getBoundingClientRect(); ok(Math.abs(r.bottom - before.bottom) < 2, `dot ${i + 1} left its credit’s line`); });
-    ok(crs.some((c, i) => i && c.getBoundingClientRect().top > crs[0].getBoundingClientRect().top + 2), "the credits should wrap at 700px for this check");
-    seps.forEach((s, i) => { const ends = crs[i + 1].getBoundingClientRect().top > s.getBoundingClientRect().top + 2; ok(!ends || f.contentWindow.getComputedStyle(s).visibility === "hidden" || f.contentWindow.getComputedStyle(s).display === "none", `dot ${i + 1} shows at the end of a line`); });
   } finally { f.remove(); }
 });
 
@@ -1025,24 +851,6 @@ test("read-only: without its own server (opened as a file, or plain hosting onli
 });
 
 // ---------- the family's shared code (22 Nov, her decision: one copy in Jemma's Journals, site/family, loaded from /family/) ----------
-test("family code: the page loads /family/mode.js, family.css and family.js, and window.JJFamily is there", async () => {
-  const mode = $('script[src="/family/mode.js"]'), css = $('link[rel="stylesheet"][href="/family/family.css"]'), js = $('script[src="/family/family.js"]');
-  ok(mode && css && js, "the three family files in the page");
-  eq(mode.dataset.oldKey, "jemmas-library-mode", "the Library’s old dark-mode key, moved over once:");
-  ok(js.defer, "family.js deferred");
-  const site = $('link[rel="stylesheet"][href^="site.css"]');
-  ok(css.compareDocumentPosition(site) & Node.DOCUMENT_POSITION_FOLLOWING, "family.css before the Library’s own stylesheet");
-  ok(mode.compareDocumentPosition(site) & Node.DOCUMENT_POSITION_FOLLOWING, "mode.js before the stylesheet (no flash of the wrong mode)");
-  ok([...document.styleSheets].some(s => s.href && s.href.endsWith("/family/family.css") && s.cssRules.length > 5), "family.css loaded");
-  ok(window.JJFamily && typeof JJFamily.menu === "function" && typeof JJFamily.mode.set === "function", "JJFamily is there");
-  for (const f of ["mode.js", "family.js", "family.css"]) {
-    const r = await realFetch("/family/" + f); eq(r.status, 200, f + ":");
-  }
-  ok(menuCtl && typeof menuCtl.isOpen === "function", "the Menu drawer is the family’s (JJFamily.menu)");
-  eq($('meta[name="theme-color"]').dataset.dark, "#1C1610", "the dark bar colour for family.js:");
-  eq($("[data-jj-line1]").textContent, JJFamily.LINE1, "footer line 1 from the family:");
-});
-
 // ---------- round 3 review (22 Nov) ----------
 test("round 3: read-only, the New covers switch and its page are gone (a working tool for her, not for visitors)", async () => {
   const sw = $(".trial-switch");
