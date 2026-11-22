@@ -1725,14 +1725,45 @@ document.addEventListener("click", e => { const a = e.target.closest && e.target
 // header. Remembered in localStorage "library-try-covers"; ?try-covers=… in the address picks one (for the record pictures).
 (() => {
   const OPTS = [["now", "As now"], ["shelf", "Shelf"], ["spines", "Spines"], ["fan", "Fan"], ["row", "Row"], ["stack", "Stack"]];
-  // Spines: the same books as narrow upright spines on the ledge, each in its cover's main colour (data.js "spine", made by the build;
-  // an old book's "cloth"), her title (and author) set up the spine; drawn beside the plate and shown only with this option
-  const HEIGHTS = [100, 91, 96, 87, 98, 90, 94, 88, 97, 92, 89, 95], WIDTHS = [34, 28, 38, 30, 36, 27, 32, 35, 29, 37, 31, 33];
+  // Spines: the same books as upright spines on the ledge, each in its cover's main colour (data.js "spine", made by the build; an
+  // old book's "cloth"), her title (and author when it fits) up the spine. Believable sizes (her note, 22 Nov): the thickness from the
+  // page count (a 32-page picture book thin, a 900-page book thick; no count: middling), the height from the book's shape (a picture
+  // book or square edition short, a mass-market paperback a little shorter than a trade one, a big illustrated or hardback edition tallest)
+  const thick = b => { const n = +b.pages; return n > 0 ? Math.round(Math.min(46, Math.max(12, 9 + n / 15))) : 26; };
+  const tall = b => { const r = +b.coverRatio || 1.53, n = +b.pages || 0;
+    if (r < 1.2 || (n && n < 64)) return 74;   // picture books, square editions
+    if (r < 1.45) return 100;                    // big illustrated and hardback editions
+    if (r > 1.62) return 86;                     // mass-market paperbacks, travel guides
+    return 93; };                                // trade paperbacks
   const realBanner = shelfBanner;
   shelfBanner = list => { const html = realBanner(list); if (!html) return html;
-    const spines = variedPick(list || [], 12).map((b, i) => { const c = /^#[0-9a-f]{6}$/i.test(b.spine || b.cloth || "") ? (b.spine || b.cloth) : "#7A6650";
-      return `<span class="sp${luminance(c) > 0.33 ? " pale" : ""}" style="--c:${c};--h:${HEIGHTS[i]}%;--w:${WIDTHS[i]}px"><b>${esc(b.t)}</b><i>${esc(b.by || "")}</i></span>`; }).join("");
+    const spines = variedPick(list || [], 30).map(b => { const c = /^#[0-9a-f]{6}$/i.test(b.spine || b.cloth || "") ? (b.spine || b.cloth) : "#7A6650";
+      return `<span class="sp${luminance(c) > 0.33 ? " pale" : ""}" style="--c:${c};--h:${tall(b)}%;--w:${thick(b)}px"><span class="t"><b>${esc(b.t)}</b>${b.by ? `<i>${esc(b.by)}</i>` : ""}</span></span>`; }).join("");
     return html + `<div class="hero-spines" aria-hidden="true"><div class="sp-row">${spines}</div></div>`; };
+  // each spine's lettering fitted to it: the title and author on one line if they fit; else the title alone, a little smaller;
+  // else on two lines when the spine is wide enough; only then cut short with an ellipsis. Centred both ways in the spine.
+  const fitSpines = () => { if (pick !== "spines") return;
+    // only whole spines on the ledge: those that would run past its end are left off, and the row is centred
+    document.querySelectorAll("#view .hero-spines .sp-row").forEach(row => {
+      row.classList.add("measuring"); row.querySelectorAll(".sp").forEach(sp => { sp.hidden = false; });
+      row.querySelectorAll(".sp").forEach(sp => { if (sp.offsetLeft + sp.offsetWidth > row.clientWidth) sp.hidden = true; });
+      row.classList.remove("measuring"); });
+    document.querySelectorAll("#view .hero-spines .sp:not([hidden])").forEach(sp => {
+      const t = sp.querySelector(".t"), au = t.querySelector("i");
+      if (!sp.offsetHeight) return;
+      const room = sp.clientHeight - 20, across = sp.clientWidth - 6;
+      t.className = "t"; t.style.fontSize = ""; if (au) au.hidden = false;
+      if (across < 10) { t.className = "t none"; return; }   // a very thin book: no lettering, as on a real one
+      const fits = () => t.scrollHeight <= room + 1 && t.scrollWidth <= across + 1;
+      if (fits()) return;
+      if (au) au.hidden = true;
+      for (let fs = 13; fs >= 10; fs -= 0.5) { t.style.fontSize = fs + "px"; if (fits()) return; }
+      if (across >= 2 * 11 + 2) { t.classList.add("two"); t.style.fontSize = "11px"; if (fits()) return; }
+      t.className = "t cut"; t.style.fontSize = "11px";
+    }); };
+  new MutationObserver(() => requestAnimationFrame(fitSpines)).observe(document.getElementById("view"), {childList: true});
+  addEventListener("resize", () => requestAnimationFrame(fitSpines));
+  document.fonts?.ready.then(fitSpines);
   let pick = "now";
   try { pick = localStorage.getItem("library-try-covers") || "now"; } catch {}
   pick = new URLSearchParams(location.search).get("try-covers") || pick;
@@ -1745,7 +1776,7 @@ document.addEventListener("click", e => { const a = e.target.closest && e.target
   const draw = () => { box.innerHTML = `<b>Try</b><div class="try-row"><span>Covers in the header</span>${OPTS.map(([v, w]) =>
     `<button type="button" data-try="${v}" aria-pressed="${pick === v}">${w}</button>`).join("")}</div>`; };
   const room = () => { document.body.style.paddingBottom = box.offsetHeight + 28 + "px"; };   // the page's foot is never under it
-  const apply = () => { root.dataset.tryCovers = pick; draw(); room(); sharpen(); try { localStorage.setItem("library-try-covers", pick); } catch {} };
+  const apply = () => { root.dataset.tryCovers = pick; draw(); room(); sharpen(); requestAnimationFrame(fitSpines); try { localStorage.setItem("library-try-covers", pick); } catch {} };
   box.addEventListener("click", e => { const b = e.target.closest("[data-try]"); if (!b) return; pick = b.dataset.try; apply(); box.querySelector(`[data-try="${pick}"]`)?.focus(); });
   document.body.appendChild(box);
   addEventListener("resize", room);
