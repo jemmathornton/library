@@ -267,7 +267,10 @@ test("22 Nov evening: the header's shelf: full width under the title, the figure
             const eng = be.querySelector("svg g.eng"), panel = be.querySelector(".be-panel").getBBox();
             if (!eng) problems.push(`${at}: bookend ${k + 1} has no engraving`);
             else { const r = eng.getBoundingClientRect(), pr = be.querySelector(".be-panel").getBoundingClientRect();
-              if (r.left < pr.left || r.right > pr.right || r.top < pr.top || r.bottom > pr.bottom) problems.push(`${at}: bookend ${k + 1}'s engraving off its panel`); }
+              if (r.left < pr.left || r.right > pr.right || r.top < pr.top || r.bottom > pr.bottom) problems.push(`${at}: bookend ${k + 1}'s engraving off its panel`);
+              // her note: each picture stands on the carved ground line above the foot
+              const gr = be.querySelector("svg g.eng-ground").getBoundingClientRect(), ownBottom = be.querySelectorAll("svg g.eng > g")[1].getBoundingClientRect().bottom;
+              if (Math.abs(ownBottom - gr.top) > 1.2) problems.push(`${at}: bookend ${k + 1}'s engraving not standing on its ground line (${(ownBottom - gr.top).toFixed(1)}px)`); }
             if (panel.x + panel.width < 51.5) problems.push(`${at}: bookend ${k + 1}'s panel not against the book`); });
           const line = hero.querySelector(":scope > p");
           if (h === "home" && w >= 1300 && line && line.getBoundingClientRect().height > parseFloat(win.getComputedStyle(line).lineHeight) * 1.5) problems.push(`${at}: the line under the title wraps`);

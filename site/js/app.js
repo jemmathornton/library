@@ -476,6 +476,9 @@ const MOTIFS = {
     g: `<path d="M20.5 69V94M8.5 73.5c3.5-1.3 7-1.3 9.5 0M8.5 79c3.5-1.3 7-1.3 9.5 0M8.5 84.5c3.5-1.3 7-1.3 9.5 0M23 73.5c2.5-1.3 6-1.3 9.5 0M23 79c2.5-1.3 6-1.3 9.5 0M23 84.5c2.5-1.3 6-1.3 9.5 0"/>`},
   // Adult Fiction: a quill leaning against the upright
   quill: {s: `<g transform="translate(8 99.5) rotate(31.5)">${featherShape(62)}</g>`, g: `<g transform="translate(8 99.5) rotate(31.5)">${featherGrooves(62)}</g>`},
+  // Adult Fiction on the engraving: the quill standing in an inkpot on the ground line
+  quillInk: {s: `<g transform="translate(20 80) rotate(20)">${featherShape(50)}</g><path d="M8 100V86q0-6 6-6h12q6 0 6 6v14z"/><rect x="16" y="75" width="8" height="5"/><rect x="14.5" y="72.5" width="11" height="2.5"/>`,
+    g: `<g transform="translate(20 80) rotate(20)">${featherGrooves(50)}</g><path d="M11 90H29"/>`},
   // Fantasy: a small castle, two towers and a wall with a gate
   castle: {s: `<path d="M3 100V60H3V55H6V58H7.5V55H10.5V58H12V55H15V74H16V70.5H18.5V74H20V70.5H22.5V74H24V70.5H26V53H26V48H29V51H30.5V48H33.5V51H35V48H38V100z"/>`,
     r: `<path d="M16.5 100V91a4 4 0 0 1 8 0v9z"/><rect x="8" y="66" width="2.4" height="5" rx="1.2"/><rect x="30.8" y="60" width="2.4" height="5" rx="1.2"/>`,
@@ -496,20 +499,24 @@ const MOTIFS = {
   // Non-Fiction: an hourglass
   hourglass: {s: `<rect x="10" y="95.5" width="24" height="4.5" rx="1.2"/><rect x="10" y="65" width="24" height="4.5" rx="1.2"/><path class="rd" d="M15 69.5C12 74.5 13.5 79 20.6 82.5C13.5 86 12 90.5 15 95.5H29C32 90.5 30.5 86 23.4 82.5C30.5 79 32 74.5 29 69.5z"/>`,
     g: `<path d="M16.5 93C18 89.6 20.6 88.4 22 88.2C23.4 88.4 26 89.6 27.5 93M17 72.6H27"/>`},
-  // Travel: a small steam engine (side on)
-  steamTrain: {s: `<circle class="rd" cx="9" cy="95.5" r="4.5"/><circle class="rd" cx="19" cy="95.5" r="4.5"/><circle class="rd" cx="31" cy="96.5" r="3.5"/><rect x="3" y="88" width="35" height="4.5"/><rect x="1" y="86.5" width="3" height="3.5"/><path class="rd" d="M4 88V81Q4 78 7 78H26V88z"/><rect x="26" y="70" width="12" height="18"/><rect x="24.5" y="67.5" width="13.5" height="3"/><rect x="7.5" y="71" width="4" height="7"/><rect x="6.5" y="69" width="6" height="2.5"/><circle cx="18" cy="78" r="2.6"/>`,
+  // Travel: a small steam engine (side on), on the ground line as its rail, with steam puffs rising from its chimney (her note)
+  steamTrain: {s: `<circle class="rd" cx="9" cy="95.5" r="4.5"/><circle class="rd" cx="19" cy="95.5" r="4.5"/><circle class="rd" cx="31" cy="96.5" r="3.5"/><rect x="3" y="88" width="35" height="4.5"/><rect x="1" y="86.5" width="3" height="3.5"/><path class="rd" d="M4 88V81Q4 78 7 78H26V88z"/><rect x="26" y="70" width="12" height="18"/><rect x="24.5" y="67.5" width="13.5" height="3"/><rect x="7.5" y="71" width="4" height="7"/><rect x="6.5" y="69" width="6" height="2.5"/><circle cx="18" cy="78" r="2.6"/><circle cx="9.5" cy="65" r="3"/><circle cx="12.6" cy="64.2" r="2.6"/><circle cx="8" cy="58" r="2.4"/><circle cx="10.3" cy="57.2" r="2"/><circle cx="11" cy="51.8" r="1.7"/>`,
     r: `<rect x="29" y="73" width="6" height="5.5" rx="1"/>`,
     g: `<path d="M9 95.5H19M7 83H25"/><circle cx="9" cy="95.5" r="1.4"/><circle cx="19" cy="95.5" r="1.4"/>`},
 };
-const SHELF_MOTIFS = {"adult-fiction": "quill", fantasy: "castle", "science-fiction": "planet", dystopia: "brokenClock", "young-adult": "headphones",
+const SHELF_MOTIFS = {"adult-fiction": "quillInk", fantasy: "castle", "science-fiction": "planet", dystopia: "brokenClock", "young-adult": "headphones",
   childrens: "teddy", "non-fiction": "hourglass", travel: "steamTrain"};   // anything else: the open book
 // where each picture sits in its own drawing (x, y, width, height), so it can be fitted evenly into the panel's face, centred
-const MOTIF_BOX = {openBook: [3, 65, 35, 35], quill: [1, 45, 38, 55], castle: [3, 48, 35, 52], planet: [0.5, 50, 39, 50], brokenClock: [5, 54, 30, 46],
-  headphones: [3, 61, 34, 39], teddy: [6, 47.5, 28, 52.5], hourglass: [10, 65, 24, 35], steamTrain: [1, 67, 37, 33]};
-// engraved: the recess's shadowed upper-left edge, the recess in darker wood, its cut lines, then a pale lower edge on the cuts
-const engrave = kind => { const m = MOTIFS[kind], [x, y, w, h] = MOTIF_BOX[kind], k = Math.min(26 / w, 36 / h);
-  const fit = `translate(33 63) scale(${k.toFixed(3)}) translate(${-(x + w / 2)} ${-(y + h / 2)})`, flat = m.s.replace(/ class="rd"/g, "");
-  return `<g class="eng" transform="${fit}"><g transform="translate(-.7 -.7)" fill="#341C0C" opacity=".8">${flat}</g><g fill="#522D15">${flat}</g>`
+const MOTIF_BOX = {openBook: [3, 65, 35, 35], quill: [1, 45, 38, 55], quillInk: [8, 33, 27, 67], castle: [3, 48, 35, 52], planet: [0.5, 50, 39, 50], brokenClock: [5, 54, 30, 46],
+  headphones: [3, 61, 34, 39], teddy: [6, 47.5, 28, 52.5], hourglass: [10, 65, 24, 35], steamTrain: [1, 50, 37, 50]};
+// engraved: the recess's shadowed upper-left edge, the recess in darker wood, its cut lines, then a pale lower edge on the cuts. Each
+// picture stands on a carved ground line just above the panel's foot (her note: "they should be on the bottom of the bookend like they
+// have a base"), centred across, bottom-aligned on it
+const ENGRAVE_GROUND = 88;
+const engrave = kind => { const m = MOTIFS[kind], [x, y, w, h] = MOTIF_BOX[kind], k = Math.min(27 / w, 48 / h);
+  const fit = `translate(33 ${ENGRAVE_GROUND}) scale(${k.toFixed(3)}) translate(${-(x + w / 2)} ${-(y + h)})`, flat = m.s.replace(/ class="rd"/g, "");
+  const ground = `<rect x="19" y="${ENGRAVE_GROUND}" width="28" height="2.4" rx=".8"/>`;
+  return `<g class="eng-ground"><g transform="translate(-.6 -.6)" fill="#341C0C" opacity=".8">${ground}</g><g fill="#522D15">${ground}</g><path d="M19.6 ${ENGRAVE_GROUND + 2.9}H46.4" stroke="#B07A44" stroke-width=".6" opacity=".55"/></g><g class="eng" transform="${fit}"><g transform="translate(-.7 -.7)" fill="#341C0C" opacity=".8">${flat}</g><g fill="#522D15">${flat}</g>`
     + (m.r ? `<g fill="#2E180A" opacity=".8">${m.r}</g>` : "")
     + `<g fill="none" stroke="#2E180A" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">${m.g}</g><g fill="none" stroke="#B07A44" stroke-width=".6" stroke-linecap="round" opacity=".55" transform="translate(.5 .6)">${m.g}</g></g>`; };
 // the wood: lit from the upper left; ids per end ("start"/"end") so the two bookends on a page never share one
