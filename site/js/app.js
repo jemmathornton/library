@@ -1809,3 +1809,28 @@ capitalise(document);
 // the skip link: focus the page without changing the address (no inline handler, ready for a strict security policy online; round 4)
 document.addEventListener("click", e => { const a = e.target.closest && e.target.closest("a[data-skip]"); if (!a) return; e.preventDefault(); const v = document.getElementById("view"); if (v) { if (!v.hasAttribute("tabindex")) v.setAttribute("tabindex", "-1"); v.focus(); } });
 
+
+// ---------- Try switch (while she chooses, 22 Nov evening; removed once she picks) ----------
+// her notes: the header's shelf looks short with a big gap before the title; the line above the figures runs on too far; the spines'
+// heights look random. Rows: Shelf length (Now: at most 430px / Longer: fills from the title to the edge); Line (Now: the whole column /
+// Ends with the figures); Placement (her ask: does it need to float? Now / standing on the panel's foot / across the top / across the
+// bottom); Heights (By shape: now / All the same); Thickness (By page count: now / All the same). ?try-len=… etc. pick one.
+(() => {
+  const ROWS = [["place", "Shelf placement", [["now", "Now (floating)"], ["foot", "On the panel’s foot"], ["top", "Across the top"], ["bottom", "Across the bottom"]]],
+                ["len", "Shelf length", [["now", "Now"], ["longer", "Longer"]]],
+                ["line", "Line above the figures", [["now", "Now"], ["short", "Ends with the figures"]]],
+                ["h", "Spine heights", [["now", "By shape (now)"], ["same", "All the same"]]],
+                ["w", "Spine thickness", [["now", "By page count (now)"], ["same", "All the same"]]]];
+  const root = document.documentElement, q = new URLSearchParams(location.search), pick = {};
+  for (const [k, , opts] of ROWS) { let v = "now"; try { v = localStorage.getItem("library-try-" + k) || "now"; } catch {}
+    v = q.get("try-" + k) || v; pick[k] = opts.some(o => o[0] === v) ? v : "now"; }
+  const box = document.createElement("div"); box.className = "try-switch"; box.setAttribute("role", "group"); box.setAttribute("aria-label", "Try a look");
+  const draw = () => { box.innerHTML = "<b>Try</b>" + ROWS.map(([k, label, opts]) => `<div class="try-row"><span>${label}</span>${opts.map(([v, w]) =>
+    `<button type="button" data-k="${k}" data-v="${v}" aria-pressed="${pick[k] === v}">${w}</button>`).join("")}</div>`).join(""); };
+  const room = () => { document.body.style.paddingBottom = box.offsetHeight + 28 + "px"; };
+  const apply = () => { for (const k in pick) { root.dataset["try" + k[0].toUpperCase() + k.slice(1)] = pick[k]; try { localStorage.setItem("library-try-" + k, pick[k]); } catch {} }
+    draw(); room(); requestAnimationFrame(fitSpines); };
+  box.addEventListener("click", e => { const b = e.target.closest("button[data-k]"); if (!b) return; pick[b.dataset.k] = b.dataset.v; apply();
+    box.querySelector(`[data-k="${b.dataset.k}"][data-v="${b.dataset.v}"]`)?.focus(); });
+  document.body.appendChild(box); addEventListener("resize", room); apply();
+})();

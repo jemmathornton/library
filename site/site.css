@@ -995,3 +995,29 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 :root[data-mode="dark"] .bookshelf{background:repeating-linear-gradient(to bottom,#2E241A 0,#261D15 168px,#6B4A2B 168px,#5E4126 182px)}
 :root[data-mode="dark"] .spine.gap{border-color:rgba(226,196,122,.45);background:repeating-linear-gradient(45deg,transparent 0 6px,rgba(226,196,122,.08) 6px 7px)}
 
+
+/* Try switch (while she chooses, 22 Nov evening; removed once she picks): the header's shelf length, the line above the figures,
+   the spines' heights and thickness (rows in js/app.js) */
+.try-switch{position:fixed;right:18px;bottom:18px;z-index:20;display:grid;gap:7px;max-width:calc(100vw - 36px);padding:10px 12px;border-radius:4px;
+  background:var(--deep);color:var(--on-deep);box-shadow:0 6px 20px rgba(0,0,0,.3);border:1px solid color-mix(in srgb,var(--gilt) 45%,transparent);font:600 12.5px/1.2 var(--body)}
+.jj-menu-open .try-switch{display:none}
+.try-switch>b{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass)}
+.try-row{display:flex;flex-wrap:wrap;align-items:center;gap:5px}
+.try-row span{flex:1 1 100%;opacity:.85;font-weight:500}
+.try-switch button{padding:6px 11px;min-height:30px;border:0;border-radius:999px;background:rgba(255,255,255,.12);color:inherit;font:inherit;cursor:pointer}
+.try-switch button[aria-pressed="true"]{background:var(--brass);color:var(--deep)}
+.try-switch button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+@media (max-width:600px){ .try-switch{right:10px;left:10px;bottom:10px;max-width:none;padding:8px 10px;gap:5px} .try-switch button{padding:5px 9px;min-height:28px;font-size:12px} }
+@media (min-width:901px){ :root[data-try-len="longer"] .hero.shelved{grid-template-columns:minmax(0,max-content) minmax(210px,1fr)} }
+:root[data-try-line="short"] .hero .figures{width:fit-content;max-width:100%}
+:root[data-try-h="same"] .hero-shelf .sp{height:93%}
+:root[data-try-w="same"] .hero-shelf .sp{flex-basis:26px}
+/* Shelf placement (her ask: "does shelf need to float?"): on the panel's foot (the ledge on its bottom rule), or full width across the top
+   or the bottom of the panel */
+@media (min-width:901px){
+  :root[data-try-place="foot"] .hero.shelved .hero-shelf{align-self:end;margin-bottom:-36px}
+  :root[data-try-place="top"] .hero.shelved,:root[data-try-place="bottom"] .hero.shelved{grid-template-columns:minmax(0,1fr)}
+  :root[data-try-place="top"] .hero.shelved .hero-shelf,:root[data-try-place="bottom"] .hero.shelved .hero-shelf{grid-column:1 / -1;grid-row:auto;height:150px;margin:0 -12px}
+  :root[data-try-place="top"] .hero.shelved .hero-shelf{margin-top:-14px;margin-bottom:12px}
+  :root[data-try-place="bottom"] .hero.shelved .hero-shelf{order:99;margin-top:28px;margin-bottom:-36px}
+}
