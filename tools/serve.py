@@ -1015,6 +1015,7 @@ def watch_reading():
 
 
 class Server(http.server.ThreadingHTTPServer):
+    request_queue_size = 128   # every cover is its own connection; the default 5 refused some under load (round 4 review)
     allow_reuse_address = False   # on Windows "reuse" lets a second copy share the port; it must fail and stop instead
 
 

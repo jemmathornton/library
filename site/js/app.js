@@ -1633,3 +1633,6 @@ new MutationObserver(ms => {
   if (els.size) capitaliseEls(els);
 }).observe(document.body, {childList: true, subtree: true});
 capitalise(document);
+
+// the skip link: focus the page without changing the address (no inline handler, ready for a strict security policy online; round 4)
+document.addEventListener("click", e => { const a = e.target.closest && e.target.closest("a[data-skip]"); if (!a) return; e.preventDefault(); const v = document.getElementById("view"); if (v) { if (!v.hasAttribute("tabindex")) v.setAttribute("tabindex", "-1"); v.focus(); } });
