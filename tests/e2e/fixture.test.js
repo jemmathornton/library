@@ -807,7 +807,7 @@ test("second review: between 901 and 1100 wide, Stats fits, its figures don’t 
           if (extra) ok(!meets(h2, extra), `${wd}px ${h}: “${extra.textContent.trim()}” on “${h2.textContent.trim()}”`);
         }
         if (h === "#stats") for (const m of d.querySelectorAll(".meter b")) ok(m.scrollWidth <= m.parentElement.clientWidth + 1, `${wd}px: “${m.textContent}” runs past its column`);
-        else { const fig = [...d.querySelectorAll(".hero .figures div")]; if (fig.length > 2) ok(fig.every(x => x.getBoundingClientRect().left >= fig[0].getBoundingClientRect().left - 1), `${wd}px ${h}: a figure indented`); }
+        else { const fig = [...d.querySelectorAll(".hero > .figures div")];   /* the ruled line (framed figures on a shelf: site.test.js) */ if (fig.length > 2) ok(fig.every(x => x.getBoundingClientRect().left >= fig[0].getBoundingClientRect().left - 1), `${wd}px ${h}: a figure indented`); }
       }
     } finally { f.remove(); }
   }

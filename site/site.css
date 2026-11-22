@@ -348,12 +348,46 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .hero:not(.book-hero){margin:24px 0 0;padding:42px clamp(22px,3.2cqw,48px) 36px;background:var(--surface);
   border:1px solid var(--mount-edge);border-bottom:4px double color-mix(in srgb,var(--gilt) 75%,transparent);
   outline:1px solid color-mix(in srgb,var(--gilt) 45%,transparent);outline-offset:-9px;box-shadow:0 16px 26px -22px var(--shade)}
-/* her picks, 22 Nov evening: the shelf longer (from the title to the panel's edge) and lower, its ledge level with the rule under the figures */
-.hero.shelved{display:grid;grid-template-columns:minmax(0,max-content) minmax(210px,1fr);grid-template-rows:repeat(6,auto) 1fr;column-gap:clamp(24px,3cqw,44px);align-items:start}
-.hero.shelved>:not(.hero-shelf){grid-column:1;min-width:0}
-.hero.shelved .hero-shelf{grid-column:2;grid-row:1 / span 7;align-self:end}
+/* her vision, 22 Nov evening: the shelf across the whole header, from the left edge to the right (just inside the gilt rule), under
+   the title and its line; the figures stand on it as framed pictures among the books, with a bookend at each end of the books */
+.hero:not(.book-hero){--hp:clamp(22px,3.2cqw,48px);padding-inline:var(--hp)}
+.hero.shelved{display:block}
 .hero.shelved h1{font-size:clamp(54px,7cqw,104px)}
-.hero.shelved .figures{max-width:none}
+.hero.shelved .hero-shelf{margin:30px calc(14px - var(--hp)) -10px;padding:0 14px}
+/* the frames: a wood, gilt or black moulding round a mount, the number and its words on it; each a little different in size (--s) and
+   tilt (--r, turning on the bottom corner it stands on), set by shelfBanner() in js/app.js; fitSpines() gives each room to lean */
+.hero-shelf .figures{display:contents}
+.hero-shelf .figures .fr{--fw:calc(var(--s,1) * 8px);flex:0 0 auto;align-self:flex-end;box-sizing:border-box;position:relative;z-index:1;
+  width:calc(var(--s,1) * clamp(90px,7.6cqw,124px));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
+  margin:0 5px;padding:calc(var(--s,1) * 12px) calc(var(--s,1) * 7px) calc(var(--s,1) * 11px);text-align:center;
+  border:var(--fw) solid #5A3418;border-image:var(--frame) 1;background:var(--mount);
+  box-shadow:inset 0 0 0 1px rgba(60,36,16,.22),inset 2px 3px 5px rgba(60,36,16,.22),3px 5px 7px -3px rgba(30,18,8,.55);
+  transform-origin:var(--ox,50%) 100%;transform:rotate(var(--r,0deg));pointer-events:auto}
+.hero-shelf .figures .fr b{font:400 max(24px,calc(var(--s,1) * clamp(28px,2.7cqw,40px)))/1 var(--display);font-variant-numeric:oldstyle-nums;color:var(--ink)}
+.hero-shelf .figures .fr span{font:italic 400 max(12px,calc(var(--s,1) * clamp(12.5px,1.1cqw,15px)))/1.15 var(--read);color:var(--muted);text-wrap:balance}
+.hero-shelf .fr.f-wood,:root[data-try-frames="wood"] .hero-shelf .fr{--frame:linear-gradient(135deg,#8A5A2E,#5A3418 35%,#7B4A24 60%,#4A2A12)}
+.hero-shelf .fr.f-gilt,:root[data-try-frames="gilt"] .hero-shelf .fr{--frame:linear-gradient(135deg,#A77A26,#F3DC8E 30%,#B98A34 55%,#E9CC7A 75%,#8A6420)}
+.hero-shelf .fr.f-black,:root[data-try-frames="black"] .hero-shelf .fr{--frame:linear-gradient(135deg,#3A332C,#14110E 40%,#2A2520 70%,#0C0A08)}
+:root[data-mode="dark"] .hero-shelf .figures .fr{box-shadow:inset 0 0 0 1px rgba(0,0,0,.4),inset 2px 3px 5px rgba(0,0,0,.35),0 0 0 1px rgba(255,240,210,.12),3px 5px 8px -3px rgba(0,0,0,.8)}
+/* the bookends (shapes drawn in js/app.js, BOOKENDS): each shelf its own, the brass arch elsewhere; the right one mirrored */
+.hero-shelf .bookend{--eh:clamp(93px,8.7cqw,124px);flex:0 0 auto;align-self:flex-end;display:block;margin:0 3px}
+.hero-shelf .bookend svg{display:block;height:var(--eh);width:calc(var(--eh) * var(--a))}
+.hero-shelf .bookend.end svg{transform:scaleX(-1)}
+.hero-shelf .bookend .be-std,:root[data-try-ends="same"] .hero-shelf .bookend .be-own:not(:only-child){display:none}
+:root[data-try-ends="same"] .hero-shelf .bookend .be-std{display:block}
+/* too narrow for the frames among the books (fewer than ten would fit; phones): the frames on a ledge of their own above the books,
+   each line the same height so the ledges line up (a smaller frame is set lower by its top margin) */
+.hero .hero-shelf.tiered{height:auto}
+.hero-shelf.tiered .sp-row{flex-wrap:wrap;height:auto;row-gap:18px}
+.hero-shelf.tiered .sp{height:124px}
+.hero-shelf.tiered .bookend{--eh:82px}
+.hero-shelf.tiered .figures{--fl:122px;display:flex;max-width:none;margin:0;border:0;flex:0 0 100%;order:-1 !important;flex-wrap:wrap;justify-content:center;align-items:flex-end;
+  background:repeating-linear-gradient(to bottom,transparent 0 var(--fl),#5E3D22 var(--fl) calc(var(--fl) + 8px));box-shadow:none}
+:root[data-mode="dark"] .hero-shelf.tiered .figures{background:repeating-linear-gradient(to bottom,transparent 0 var(--fl),#6B4A2B var(--fl) calc(var(--fl) + 8px))}
+.hero-shelf.tiered .figures .fr{--fw:6px;height:calc(70px + var(--s,1) * 40px);margin-top:calc((1 - var(--s,1)) * 40px + 12px);margin-bottom:8px;
+  width:calc(104px + var(--s,1) * 18px);padding:6px 6px;gap:3px}
+.hero-shelf.tiered .figures .fr b{font-size:calc(22px + var(--s,1) * 8px)}
+.hero-shelf.tiered .figures .fr span{font-size:13px;line-height:1.1}
 .kicker .dot{width:10px;height:10px;box-shadow:0 0 0 2px rgba(255,255,255,.15)}
 
 /* her stars on a cover, in a strip fading up from its foot (back as before, her ask 22 Nov); an arrow, not a text cursor, and not selectable */
@@ -824,10 +858,9 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 @media (max-width:900px){
   /* banners: the plate of covers goes under the words instead of behind the title */
   .hero{padding-top:40px;padding-bottom:32px}
-  .hero:not(.book-hero){margin-top:18px;padding:32px clamp(18px,4vw,32px) 28px;outline-offset:-7px}
+  .hero:not(.book-hero){--hp:clamp(18px,4vw,32px);margin-top:18px;padding:32px var(--hp) 28px;outline-offset:-7px}
   .hero.shelved h1{max-width:none;font-size:clamp(54px,14vw,112px)}
-  .hero.shelved{display:flex;flex-direction:column}
-  .hero .hero-shelf{order:9;width:min(100%,420px);height:130px;margin-top:28px;align-self:center}
+  .hero .hero-shelf{height:150px;margin-top:28px}
   .figures{max-width:none}
   /* section headings: the link or button beside the heading goes under it */
   .section-head{flex-direction:column;align-items:center;gap:10px}
@@ -935,7 +968,7 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 @media (max-width:600px){
   /* the gap under the banner's plate */
   .hero,.hero.shelved{padding-bottom:14px}
-  .hero:not(.book-hero){padding:24px 16px 20px}
+  .hero:not(.book-hero){--hp:16px;padding:24px var(--hp) 20px}
   .hero + .section-head{margin-top:30px}
   .hero + div .toolbar{margin-top:20px}
   /* the old books' list: each book as a few lines (title; author and year; your note; condition), nothing hidden off to the side */
@@ -997,3 +1030,15 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 :root[data-mode="dark"] .spine.gap{border-color:rgba(226,196,122,.45);background:repeating-linear-gradient(45deg,transparent 0 6px,rgba(226,196,122,.08) 6px 7px)}
 
 
+
+/* Try switch (while she chooses, 22 Nov evening; removed once she picks): the header shelf's frames, where they stand, the bookends (rows in js/app.js) */
+.try-switch{position:fixed;right:18px;bottom:18px;z-index:20;display:grid;gap:7px;max-width:calc(100vw - 36px);padding:10px 12px;border-radius:4px;
+  background:var(--deep);color:var(--on-deep);box-shadow:0 6px 20px rgba(0,0,0,.3);border:1px solid color-mix(in srgb,var(--gilt) 45%,transparent);font:600 12.5px/1.2 var(--body)}
+.jj-menu-open .try-switch{display:none}
+.try-switch>b{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass)}
+.try-row{display:flex;flex-wrap:wrap;align-items:center;gap:5px}
+.try-row span{flex:1 1 100%;opacity:.85;font-weight:500}
+.try-switch button{padding:6px 11px;min-height:30px;border:0;border-radius:999px;background:rgba(255,255,255,.12);color:inherit;font:inherit;cursor:pointer}
+.try-switch button[aria-pressed="true"]{background:var(--brass);color:var(--deep)}
+.try-switch button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+@media (max-width:600px){ .try-switch{right:10px;left:10px;bottom:10px;max-width:none;padding:8px 10px;gap:5px} .try-switch button{padding:5px 9px;min-height:28px;font-size:12px} }

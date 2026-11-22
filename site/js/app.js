@@ -444,23 +444,78 @@ function spineOrder(books, roundOf){
 const spineThick = b => { const n = +b.pages; return n > 0 ? Math.round(Math.min(46, Math.max(16, 9 + n / 15))) : 26; };
 const SPINE_TALL = 93;   // every spine the same height (her pick, 22 Nov evening: heights by the cover's shape looked random)
 const surnameOf = by => (String(by || "").split(/,| and | & /)[0].trim().split(/\s+/).pop() || "");
-function shelfBanner(list){
-  const books = variedPick(list || [], 30);
+// her vision (22 Nov evening): "Make shelf take up entire header and go all the way to left. Stats appear in like photo frames on the
+// shelf at slightly different sizes and angles. Also add bookends to each shelf, maybe different for each shelf for right vibes."
+// The figures stand on the ledge as framed pictures (real text: the spines and bookends are hidden from screen readers, the frames
+// are not), each a little different in size and tilt (the same every time, not random), in a wood, gilt or black frame with a mount.
+const FRAME_TILT = [-3.5, 2, -1.5, 3, -4, 1.5], FRAME_SIZE = [1, 0.88, 0.95, 0.85, 0.92, 0.97], FRAME_MIX = ["wood", "gilt", "black", "gilt", "wood", "black"];
+// the bookends, drawn here as simple shapes (no pictures): each shelf its own "for the right vibes"; [width, shapes] on a 100-tall box
+const BOOKENDS = {
+  brass: [40, `<rect x="0" y="92" width="40" height="8" fill="#8A6420"/><path d="M4 92V30a16 16 0 0 1 32 0v62z" fill="#C9A24E"/><path d="M10 88V32a10 10 0 0 1 20 0v56z" fill="none" stroke="#8A6420" stroke-width="1.5"/><rect x="7" y="32" width="3" height="58" fill="#fff" opacity=".3"/><rect x="31" y="30" width="5" height="62" fill="#000" opacity=".15"/>`],
+  castle: [44, `<path d="M22 8v18" stroke="#3a2e3f" stroke-width="1.5"/><path d="M22 8l12 4-12 4z" fill="#7A3F7A"/><path d="M5 26h7v8h6.5v-8h7v8H32v-8h7v14h-3v60H8V40H5z" fill="#8C8496"/><path d="M18 70V60a4 4 0 0 1 8 0v10z" fill="#2B2230"/><path d="M15 100V88a7 7 0 0 1 14 0v12z" fill="#3A2E3F"/><path d="M8 52h28M8 78h28M5 40h34" stroke="#3a2e3f" stroke-width="1" opacity=".35"/><rect x="31" y="40" width="5" height="60" fill="#000" opacity=".15"/>`],
+  rocket: [40, `<path d="M12 68L4 80 2 100h10zM28 68l8 12 2 20H28z" fill="#4B4F8C"/><path d="M12 100V40C12 22 20 8 20 4c0 4 8 18 8 36v60z" fill="#C9CED6"/><rect x="14" y="40" width="3" height="56" fill="#fff" opacity=".55"/><rect x="24" y="40" width="4" height="60" fill="#000" opacity=".15"/><rect x="12" y="70" width="16" height="3" fill="#4B4F8C"/><circle cx="20" cy="48" r="5" fill="#2B3050" stroke="#8A93A3" stroke-width="2"/><rect x="14" y="96" width="12" height="4" fill="#6B7280"/>`],
+  blocks: [40, `<rect x="2" y="62" width="36" height="38" fill="#3A7DC9"/><rect x="7" y="67" width="26" height="28" fill="none" stroke="#fff" stroke-width="2" opacity=".6"/><circle cx="20" cy="81" r="6" fill="#F2C230"/><rect x="6" y="30" width="28" height="32" fill="#D9483B"/><path d="M20 37l8 17H12z" fill="#fff" opacity=".85"/><rect x="11" y="12" width="18" height="18" fill="#F2C230" transform="rotate(-6 20 21)"/><circle cx="20" cy="21" r="4" fill="#4E9A51"/><rect x="2" y="62" width="36" height="3" fill="#fff" opacity=".25"/><rect x="6" y="30" width="28" height="3" fill="#fff" opacity=".25"/>`],
+  globe: [46, `<rect x="8" y="92" width="30" height="8" rx="2" fill="#5E3D22"/><rect x="21" y="67" width="4" height="25" fill="#8A6420"/><path d="M2 46a21 21 0 0 0 42 0" fill="none" stroke="#8A6420" stroke-width="3"/><circle cx="23" cy="46" r="17" fill="#2E7A92"/><path d="M14 36c4-4 10-2 9 4s-7 4-9 0zM26 50c5-3 9 2 7 7s-7 0-7-4z" fill="#C9B37A"/><ellipse cx="23" cy="46" rx="7" ry="17" fill="none" stroke="#fff" opacity=".35"/><path d="M6 46h34" stroke="#fff" opacity=".35"/><circle cx="17" cy="39" r="5" fill="#fff" opacity=".18"/>`],
+  marble: [38, `<path d="M2 100V22l6-8h22l6 8v78z" fill="#E6E1D8" stroke="#B8B2A6"/><path d="M8 30c6 10 2 22 10 30s6 20 12 32" fill="none" stroke="#9C978D" opacity=".7"/><path d="M24 22c-2 12 6 18 3 28" fill="none" stroke="#9C978D" stroke-width=".8" opacity=".5"/><path d="M30 14l6 8v78h-6z" fill="#000" opacity=".1"/>`],
+  walnut: [36, `<path d="M2 100V24q0-10 10-10h22v86z" fill="#5E3D22"/><path d="M8 98c2-28-2-48 4-76M16 98c2-26-2-52 4-80M26 98c-2-28 4-54 0-82" fill="none" stroke="#3B2616" opacity=".6"/><rect x="4" y="26" width="3" height="72" fill="#fff" opacity=".12"/><rect x="2" y="86" width="32" height="2" fill="#C9A24E"/>`],
+  iron: [34, `<rect x="0" y="96" width="34" height="4" fill="#1A1816"/><path d="M3 96V18q0-8 8-8h14q6 0 6 6v80z" fill="#2B2826"/><path d="M11 80V40a6 6 0 0 1 12 0v40z" fill="#4A4540"/><g fill="#6B655E"><circle cx="8" cy="90" r="1.5"/><circle cx="26" cy="90" r="1.5"/><circle cx="8" cy="20" r="1.5"/><circle cx="26" cy="20" r="1.5"/></g>`],
+  concrete: [40, `<path d="M2 100V18l8-6h28v88z" fill="#8E8A84"/><g fill="#6E6A64"><circle cx="9" cy="44" r="1"/><circle cx="20" cy="52" r="1.2"/><circle cx="30" cy="40" r=".8"/><circle cx="14" cy="64" r=".9"/><circle cx="27" cy="62" r="1.1"/><circle cx="12" cy="92" r="1"/><circle cx="28" cy="90" r=".8"/></g><rect x="2" y="74" width="36" height="9" fill="#E2B81F"/><path d="M4 83l6-9h4l-6 9zM14 83l6-9h4l-6 9zM24 83l6-9h4l-6 9z" fill="#1F1D1A"/><circle cx="10" cy="28" r="2.2" fill="#55524D"/><circle cx="30" cy="28" r="2.2" fill="#55524D"/><path d="M28 12l-3 10 4 8-3 8" fill="none" stroke="#5C5852"/><rect x="33" y="12" width="5" height="88" fill="#000" opacity=".12"/>`],
+  rainbow: [48, `<path d="M2 100V52a22 22 0 0 1 44 0v48h-5V52a17 17 0 0 0-34 0v48z" fill="#E8508A"/><path d="M7 100V52a17 17 0 0 1 34 0v48h-5V52a12 12 0 0 0-24 0v48z" fill="#F5A623"/><path d="M12 100V52a12 12 0 0 1 24 0v48h-5V52a7 7 0 0 0-14 0v48z" fill="#2BB3A3"/><rect x="0" y="94" width="48" height="6" fill="#B5577A"/>`],
+  column: [34, `<rect x="1" y="92" width="32" height="8" fill="#6E5432"/><rect x="4" y="87" width="26" height="5" fill="#8C6E44"/><rect x="7" y="26" width="20" height="61" fill="#9A7B4F"/><path d="M11 26v61M15 26v61M19 26v61M23 26v61" stroke="#6E5432" opacity=".7"/><rect x="8" y="26" width="2" height="61" fill="#fff" opacity=".2"/><rect x="3" y="20" width="28" height="6" fill="#A68756"/><circle cx="6" cy="23" r="3.2" fill="none" stroke="#6E5432" stroke-width="1.5"/><circle cx="28" cy="23" r="3.2" fill="none" stroke="#6E5432" stroke-width="1.5"/><rect x="1" y="14" width="32" height="6" fill="#8C6E44"/>`],
+};
+const SHELF_BOOKENDS = {fantasy: "castle", "science-fiction": "rocket", childrens: "blocks", travel: "globe", "non-fiction": "marble", display: "walnut",
+  "adult-fiction": "iron", dystopia: "concrete", "young-adult": "rainbow", "old-book-collection": "column"};   // anything else (Home, All shelves…): brass
+const bookendSvg = (kind, cls) => { const [w, shapes] = BOOKENDS[kind]; return `<svg class="${cls}" viewBox="0 0 ${w} 100" style="--a:${w / 100}" focusable="false">${shapes}</svg>`; };
+// the Try switch's "the same everywhere" shows the brass ones (both drawn, one shown by site.css, so the switch needs no redraw)
+const bookend = (shelf, pos) => { const kind = SHELF_BOOKENDS[shelf] || "brass";
+  return `<span class="bookend ${pos}" data-kind="${kind}" aria-hidden="true">${bookendSvg(kind, "be-own")}${kind === "brass" ? "" : bookendSvg("brass", "be-std")}</span>`; };
+function shelfBanner(list, figures, shelf){
+  const books = variedPick(list || [], 40);
   if (books.length < 8) return "";
-  return `<div class="hero-shelf" aria-hidden="true"><div class="sp-row">${books.map(b => {
+  const frames = (figures || []).map(([n, l], i) => { const r = FRAME_TILT[i % FRAME_TILT.length];
+    return `<div class="fr f-${FRAME_MIX[i % FRAME_MIX.length]}" style="--r:${r}deg;--s:${FRAME_SIZE[i % FRAME_SIZE.length]};--ox:${r < 0 ? 0 : 100}%"><b>${n}</b><span>${l}</span></div>`; }).join("");
+  return `<div class="hero-shelf"><div class="sp-row">${bookend(shelf, "start")}${books.map(b => {
     const c = spineColour(b), lum = luminance(c);
     // dark: gilt-foil lettering; anything lighter is blind-stamped (darker, with a light edge), for legibility
-    return `<span class="sp${lum < 0.2 ? " dark" : ""}" style="--c:${c};--h:${SPINE_TALL}%;--w:${spineThick(b)}px"><span class="t"><b>${esc(b.t)}</b>${b.by ? `<i data-full="${esc(b.by)}" data-short="${esc(surnameOf(b.by))}">${esc(b.by)}</i>` : ""}</span></span>`;
-  }).join("")}</div></div>`;
+    return `<span class="sp${lum < 0.2 ? " dark" : ""}" aria-hidden="true" style="--c:${c};--h:${SPINE_TALL}%;--w:${spineThick(b)}px"><span class="t"><b>${esc(b.t)}</b>${b.by ? `<i data-full="${esc(b.by)}" data-short="${esc(surnameOf(b.by))}">${esc(b.by)}</i>` : ""}</span></span>`;
+  }).join("")}${frames ? `<div class="figures">${frames}</div>` : ""}${bookend(shelf, "end")}</div></div>`;
 }
 // each spine's lettering fitted to it, title and author always both (her rule, 22 Nov): on one line, smaller as needed; else in two
 // lines side by side where the spine is wide enough; else the author's surname only, smaller; only then the title cut short with an
-// ellipsis. Centred both ways. Only whole spines stand on the ledge: any that would run past its end are left off, the row centred.
+// ellipsis. Centred both ways. Only whole spines stand on the ledge: any that won't fit beside the bookends and frames are left off,
+// the row centred. The frames stand among the books (or grouped at one end: the Try switch); each leans its top towards a
+// neighbour, with just enough room that it never covers a spine's lettering. Where the frames would leave room for fewer than eight
+// books (narrow windows, phones) they stand on a ledge of their own above the books ("tiered").
+const leanRoom = (h, deg) => Math.ceil(h * Math.sin(Math.abs(deg) * Math.PI / 180)) + 5;
 function fitSpines(){
-  document.querySelectorAll("#view .hero-shelf .sp-row").forEach(row => {
-    row.classList.add("measuring"); row.querySelectorAll(".sp").forEach(sp => { sp.hidden = false; });
-    row.querySelectorAll(".sp").forEach(sp => { if (sp.offsetLeft + sp.offsetWidth > row.clientWidth) sp.hidden = true; });
-    row.classList.remove("measuring");
+  const place = document.documentElement.dataset.tryPlace || "spread";
+  document.querySelectorAll("#view .hero-shelf").forEach(shelf => {
+    const row = shelf.querySelector(".sp-row"); if (!row) return;
+    const sps = [...row.querySelectorAll(".sp")], frs = [...row.querySelectorAll(".fr")], ends = [...row.querySelectorAll(".bookend")];
+    const outer = el => { const cs = getComputedStyle(el); return el.offsetWidth + parseFloat(cs.marginLeft) + parseFloat(cs.marginRight); };
+    const lean = () => frs.forEach(fr => { const r = parseFloat(fr.style.getPropertyValue("--r")) || 0, room = leanRoom(fr.offsetHeight, r);
+      fr.style.marginLeft = (r < 0 ? room : 5) + "px"; fr.style.marginRight = (r > 0 ? room : 5) + "px"; });
+    const fit = inRow => { const gap = parseFloat(getComputedStyle(row).columnGap) || 0;
+      let room = row.clientWidth + gap - ends.concat(inRow ? frs : []).reduce((a, el) => a + outer(el) + gap, 0), n = 0;
+      for (const sp of sps) { const w = outer(sp) + gap; if (w > room + 0.01) break; room -= w; n++; }
+      return n; };
+    sps.forEach(sp => { sp.hidden = false; });
+    shelf.classList.remove("tiered"); lean();
+    let n = fit(frs.length > 0);
+    if (frs.length && n < Math.min(8, sps.length)) { shelf.classList.add("tiered"); lean(); n = fit(false); }
+    sps.forEach((sp, i) => { sp.hidden = i >= n; });
+    const inRow = !shelf.classList.contains("tiered");
+    let o = 0; const put = el => { el.style.order = o++; }, placed = new Set();
+    const slots = frs.map((_, k) => Math.max(1, Math.round((k + 1) * n / (frs.length + 1))));   // evenly among the books
+    if (inRow && place === "left") frs.forEach(put);
+    if (ends[0]) put(ends[0]);
+    for (let i = 0; i < n; i++) {
+      if (inRow && place === "spread") frs.forEach((fr, k) => { if (!placed.has(fr) && slots[k] <= i) { put(fr); placed.add(fr); } });
+      put(sps[i]);
+    }
+    if (inRow && place === "spread") frs.forEach(fr => { if (!placed.has(fr)) put(fr); });
+    if (ends[1]) put(ends[1]);
+    if (!inRow || place === "right") frs.forEach(put);
   });
   document.querySelectorAll("#view .hero-shelf .sp:not([hidden])").forEach(sp => {
     const t = sp.querySelector(".t"), b = t.querySelector("b"), au = t.querySelector("i");
@@ -480,9 +535,10 @@ addEventListener("resize", () => requestAnimationFrame(fitSpines));
 // and as soon as the page's width changes, before it is drawn (the longer shelf, 22 Nov evening: a resize left spines past the edge for a frame)
 if (window.ResizeObserver) { let lastW = 0; new ResizeObserver(([e]) => { const w = Math.round(e.contentRect.width); if (w !== lastW) { lastW = w; fitSpines(); } }).observe(document.getElementById("view")); }
 document.fonts?.ready.then(fitSpines);
-const hero = (o) => { const bg = shelfBanner(o.covers);
-  // no kicker line (❧ and a label or link) above the title any more (her note, 22 Nov: unneeded in the header); the sidebar is the way about
-  return `<header class="hero${bg ? " shelved" : ""}">${bg}<h1>${o.title}</h1>${o.text ? `<p>${o.text}</p>` : ""}${o.figures ? `<div class="figures">${o.figures.map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join("")}</div>` : ""}</header>`; };
+const hero = (o) => { const bg = shelfBanner(o.covers, o.figures, o.shelf);
+  // no kicker line (❧ and a label or link) above the title any more (her note, 22 Nov: unneeded in the header); the sidebar is the way about.
+  // With a shelf, the figures are framed on it (shelfBanner); without one (a small shelf, pages with no books), the ruled line as before.
+  return `<header class="hero${bg ? " shelved" : ""}"><h1>${o.title}</h1>${o.text ? `<p>${o.text}</p>` : ""}${bg || (o.figures ? `<div class="figures">${o.figures.map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join("")}</div>` : "")}</header>`; };
 const sectionHead = (title, more) => `<div class="section-head"><h2>${title}</h2>${more || ""}</div>`;
 
 // ---------- sidebar ----------
@@ -619,7 +675,7 @@ function pageAllShelves(){
 function pageShelf(s){
   currentList = s.books.concat(s.notOwned || []); currentGrouped = false; currentShelf = s.id;
   const authors = new Set(s.books.flatMap(b => (b.authors || []).filter(a => !a.role).map(a => slug(a.name)))).size, pages = pagesOf(s.books);
-  return hero({kicker: `<a href="#home">Shelf</a>`, title: esc(s.name), color: s.color, text: s.note ? esc(s.note) : "", covers: [...s.books].sort(SORTS.author[1]),
+  return hero({kicker: `<a href="#home">Shelf</a>`, title: esc(s.name), color: s.color, shelf: s.id, text: s.note ? esc(s.note) : "", covers: [...s.books].sort(SORTS.author[1]),
       figures: [[num(nBooks(s.books)), "books"], [num(authors), "authors"], [num(booksRead(s.books)), "read"], ...((s.notOwned || []).filter(isRead).length ? [[num(s.notOwned.filter(isRead).length), "read but not owned"]] : []), ...(pages ? [[num(pages), "pages"]] : [])]})   // none counted (the old books): left out, not "0" (review, 21 Nov)
     + `<div id="shelfBooks">${shelfBooks(currentList)}</div>`;
 }
@@ -1807,3 +1863,25 @@ capitalise(document);
 document.addEventListener("click", e => { const a = e.target.closest && e.target.closest("a[data-skip]"); if (!a) return; e.preventDefault(); const v = document.getElementById("view"); if (v) { if (!v.hasAttribute("tabindex")) v.setAttribute("tabindex", "-1"); v.focus(); } });
 
 
+
+// ---------- Try switch (while she chooses, 22 Nov evening; removed once she picks) ----------
+// her vision for the header's shelf: the figures framed on it and a bookend at each end. Rows: Frames (Mixed / Wood / Gilt / Black);
+// Frame placement (Spread among the books / Grouped at the left / Grouped at the right); Bookends (Different for each shelf / The
+// same brass ones everywhere). Remembered in localStorage library-try-<row>; ?try-frames=… etc. pick one.
+(() => {
+  const ROWS = [["frames", "Frames", [["mixed", "Mixed"], ["wood", "Wood"], ["gilt", "Gilt"], ["black", "Black"]]],
+                ["place", "Frame placement", [["spread", "Spread among the books"], ["left", "Grouped at the left"], ["right", "Grouped at the right"]]],
+                ["ends", "Bookends", [["shelf", "Different for each shelf"], ["same", "The same everywhere"]]]];
+  const root = document.documentElement, q = new URLSearchParams(location.search), pick = {};
+  for (const [k, , opts] of ROWS) { let v = opts[0][0]; try { v = localStorage.getItem("library-try-" + k) || v; } catch {}
+    v = q.get("try-" + k) || v; pick[k] = opts.some(o => o[0] === v) ? v : opts[0][0]; }
+  const box = document.createElement("div"); box.className = "try-switch"; box.setAttribute("role", "group"); box.setAttribute("aria-label", "Try a look");
+  const draw = () => { box.innerHTML = "<b>Try</b>" + ROWS.map(([k, label, opts]) => `<div class="try-row"><span>${label}</span>${opts.map(([v, w]) =>
+    `<button type="button" data-k="${k}" data-v="${v}" aria-pressed="${pick[k] === v}">${w}</button>`).join("")}</div>`).join(""); };
+  const room = () => { document.body.style.paddingBottom = box.offsetHeight + 28 + "px"; };
+  const apply = () => { for (const k in pick) { root.dataset["try" + k[0].toUpperCase() + k.slice(1)] = pick[k]; try { localStorage.setItem("library-try-" + k, pick[k]); } catch {} }
+    draw(); room(); requestAnimationFrame(fitSpines); };
+  box.addEventListener("click", e => { const b = e.target.closest("button[data-k]"); if (!b) return; pick[b.dataset.k] = b.dataset.v; apply();
+    box.querySelector(`[data-k="${b.dataset.k}"][data-v="${b.dataset.v}"]`)?.focus(); });
+  document.body.appendChild(box); addEventListener("resize", room); apply();
+})();

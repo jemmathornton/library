@@ -194,8 +194,82 @@ test("“not read yet” leaves out books she didn’t finish or paused", async 
   ok(!BOOKS.some(b => ["stopped", "paused"].includes(reading(b).status) && isUnread(b)), "a DNF or paused book counts as unread");
 });
 
+// her vision (22 Nov evening): the shelf across the whole header under the title, the figures framed on its ledge among the books
+// (each placement on the Try switch), a bookend at each end; frames inside the header, never over a spine's lettering, real text
+test("22 Nov evening: the header's shelf: full width under the title, the figures framed on the ledge, never over a spine's lettering, 901 to 1920 wide", async () => {
+  const problems = [];
+  const f = document.createElement("iframe"); f.src = "index.html";
+  f.style.cssText = "position:fixed;left:-5000px;top:0;width:1600px;height:900px;border:0";
+  await new Promise(done => { f.onload = done; document.body.append(f); });
+  const meet = (a, b) => a.right > b.left + 0.5 && a.left < b.right - 0.5 && a.bottom > b.top + 0.5 && a.top < b.bottom - 0.5;
+  try {
+    const win = f.contentWindow, d = f.contentDocument;
+    await until(() => d.getElementById("view") && d.getElementById("view").innerText.trim().length > 20, "the framed page", 15000);
+    for (const place of ["spread", "left", "right"]) {
+      d.documentElement.dataset.tryPlace = place;
+      for (const h of ["home", "shelf-fantasy", "shelves"]) {
+        win.route(h); await wait(30);
+        for (const w of [901, 1000, 1300, 1600, 1920]) {
+          f.style.width = w + "px"; await new Promise(r => win.requestAnimationFrame(() => win.requestAnimationFrame(r))); win.fitSpines();
+          const at = `${h} @${w} ${place}`, hero = d.querySelector("#view .hero"), shelf = hero && hero.querySelector(".hero-shelf");
+          if (!shelf) { problems.push(`${at}: no shelf`); continue; }
+          const hr = hero.getBoundingClientRect(), sr = shelf.getBoundingClientRect(), ledge = sr.bottom - parseFloat(win.getComputedStyle(shelf).borderBottomWidth);
+          if (sr.left > hr.left + 20 || sr.right < hr.right - 20) problems.push(`${at}: the shelf isn't the header's width`);
+          hero.querySelectorAll(":scope > :not(.hero-shelf)").forEach(el => { if (el.getBoundingClientRect().bottom > sr.top + 0.5) problems.push(`${at}: ${el.tagName} not above the shelf`); });
+          const frs = [...shelf.querySelectorAll(".fr")], letters = [...shelf.querySelectorAll(".sp:not([hidden]) .t")].map(t => t.getBoundingClientRect());
+          const tiered = shelf.classList.contains("tiered"), spineTop = Math.min(...[...shelf.querySelectorAll(".sp:not([hidden])")].map(s => s.getBoundingClientRect().top));
+          if (frs.length !== 4 && h !== "shelf-fantasy") problems.push(`${at}: ${frs.length} frames`);
+          if (shelf.querySelectorAll(".bookend").length !== 2) problems.push(`${at}: not two bookends`);
+          if (!tiered && (shelf.querySelectorAll(".sp:not([hidden])").length < 8)) problems.push(`${at}: fewer than 8 books beside the frames`);
+          frs.forEach((fr, i) => { const r = fr.getBoundingClientRect(), what = `${at}: frame ${i + 1} (${fr.textContent})`;
+            if (fr.closest("[aria-hidden='true']") || !fr.querySelector("b").textContent.trim() || !fr.querySelector("span").textContent.trim()) problems.push(`${what}: not real text`);
+            if (r.left < hr.left || r.right > hr.right || r.top < hr.top || r.bottom > hr.bottom) problems.push(`${what}: outside the header`);
+            if (!tiered && Math.abs(r.bottom - ledge) > 2) problems.push(`${what}: not standing on the ledge (${(r.bottom - ledge).toFixed(1)})`);
+            if (tiered && r.bottom > spineTop) problems.push(`${what}: not on the ledge above the books`);
+            if (letters.some(t => meet(r, t))) problems.push(`${what}: over a spine's lettering`);
+            frs.forEach((g, j) => { if (j > i && meet(r, g.getBoundingClientRect())) problems.push(`${what}: over frame ${j + 1}`); });
+            const deg = parseFloat(fr.style.getPropertyValue("--r")); if (!(deg >= -4 && deg <= 3)) problems.push(`${what}: tilt ${deg}`); });
+          shelf.querySelectorAll(".bookend").forEach(be => { const r = be.getBoundingClientRect(); if (letters.some(t => meet(r, t))) problems.push(`${at}: a bookend over a spine's lettering`);
+            if (r.left < sr.left || r.right > sr.right) problems.push(`${at}: a bookend off the shelf`); });
+          d.querySelectorAll("#view .hero, #view .hero *").forEach(el => {
+            const b = el.getBoundingClientRect(); if (b.width && b.right > d.documentElement.clientWidth + 0.5) problems.push(`${at}: ${el.tagName}.${el.className} past the right edge`); });
+        }
+      }
+    }
+    delete d.documentElement.dataset.tryPlace;
+  } finally { f.remove(); }
+  eq([...new Set(problems)].slice(0, 12), [], "problems:");
+});
+
+// her vision (22 Nov evening): "add bookends to each shelf, maybe different for each shelf for right vibes"; the Try switch can show
+// the brass ones everywhere; the frames keep the figures' words and numbers as before, and the tilts and sizes are the same every time
+test("22 Nov evening: the header's bookends differ by shelf, and the frames are the same each time", async () => {
+  const kinds = {};
+  for (const h of ["#home", "#shelves", "#shelf-fantasy", "#shelf-childrens", "#shelf-science-fiction", "#shelf-travel"]) {
+    await show(h); const ends = $$("#view .hero-shelf .bookend");
+    if (!ends.length) continue;
+    eq(ends.length, 2, `${h}: two bookends`);
+    ok(ends.every(e => e.getAttribute("aria-hidden") === "true"), `${h}: the bookends hidden from screen readers`);
+    kinds[h] = ends[0].dataset.kind;
+  }
+  eq(kinds["#home"], "brass", "Home:"); eq(kinds["#shelves"], "brass", "All shelves:");
+  if (kinds["#shelf-fantasy"]) eq(kinds["#shelf-fantasy"], "castle", "Fantasy:");
+  if (kinds["#shelf-childrens"]) eq(kinds["#shelf-childrens"], "blocks", "Children’s:");
+  await show("#shelf-fantasy");
+  const end = $("#view .hero-shelf .bookend"), own = end && end.querySelector(".be-own"), std = end && end.querySelector(".be-std");
+  if (own && std) {
+    eq([getComputedStyle(own).display, getComputedStyle(std).display], ["block", "none"], "per shelf:");
+    document.documentElement.dataset.tryEnds = "same";
+    try { eq([getComputedStyle(own).display, getComputedStyle(std).display], ["none", "block"], "the same everywhere:"); }
+    finally { delete document.documentElement.dataset.tryEnds; }
+  }
+  await show("#home"); const first = $$("#view .hero-shelf .fr").map(f => f.getAttribute("style"));
+  await show("#home"); eq($$("#view .hero-shelf .fr").map(f => f.getAttribute("style")), first, "the same tilts and sizes again:");
+  ok(!$("#view .hero > .figures"), "Home: no ruled line of figures besides the frames");
+});
+
 // round 5 (22 Nov): at 1300-1920 wide the title page's words ran into the plate of covers and its rules over the covers
-test("round 5: the header (title page): its words stop short of the plate, and nothing runs off the right, 901 to 1920 wide", async () => {
+test("round 5: the header (title page): nothing runs off the right, and its words stay out of a page's plate, 901 to 1920 wide", async () => {
   const problems = [];
   const f = document.createElement("iframe"); f.src = "index.html";
   f.style.cssText = "position:fixed;left:-5000px;top:0;width:1600px;height:900px;border:0";
