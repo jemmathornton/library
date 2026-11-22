@@ -195,7 +195,7 @@ test("“not read yet” leaves out books she didn’t finish or paused", async 
 });
 
 // round 5 (22 Nov): at 1300-1920 wide the title page's words ran into the plate of covers and its rules over the covers
-test("round 5: on every page with a plate, the title page's words stop short of it and nothing runs off the right, 901 to 1920 wide", async () => {
+test("round 5: the header (title page): its words stop short of the plate, and nothing runs off the right, 901 to 1920 wide", async () => {
   const problems = [];
   const f = document.createElement("iframe"); f.src = "index.html";
   f.style.cssText = "position:fixed;left:-5000px;top:0;width:1600px;height:900px;border:0";
@@ -210,7 +210,7 @@ test("round 5: on every page with a plate, the title page's words stop short of 
         const cw = d.documentElement.clientWidth, hero = d.querySelector("#view .hero"), plate = hero && hero.querySelector(".hero-shelf");
         d.querySelectorAll("#view .hero, #view .hero *, #view .section-head, #view .section-head *").forEach(el => {
           const b = el.getBoundingClientRect(); if (b.width && b.right > cw + 0.5) problems.push(`${h} @${w}: ${el.tagName}.${el.className} past the right edge`); });
-        if (plate && win.getComputedStyle(plate).position === "absolute") {
+        if (plate && w > 900) {   // beside the words in the header (round 5: her header)
           const p = plate.getBoundingClientRect();
           hero.querySelectorAll(":scope > :not(.hero-shelf)").forEach(el => { const b = el.getBoundingClientRect();
             if (b.width && b.right > p.left && b.bottom > p.top && b.top < p.bottom) problems.push(`${h} @${w}: ${el.tagName}.${el.className} into the plate`); });

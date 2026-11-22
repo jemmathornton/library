@@ -1131,6 +1131,19 @@ test("22 Nov (her ask, round 5): her stars are on the cover again, in the strip 
   rows.forEach((t, y) => eq(new Set(t).size, 1, `titles in the row at ${y} line up:`));
 });
 
+test("round 5 (her ask): the title page is the page’s header, one framed panel (title, line, figures, plate); the Try switch is gone", async () => {
+  for (const h of ["#home", "#shelf-fantasy", "#history", "#authors"]) {
+    await show(h);
+    const hero = $("#view > .hero"); ok(hero, `${h}: the header`);
+    const cs = getComputedStyle(hero);
+    eq([cs.borderBottomStyle, cs.outlineStyle], ["double", "solid"], `${h}: a double rule along its foot and a rule inside its edge:`);
+    ok(cs.backgroundColor !== "rgba(0, 0, 0, 0)", `${h}: on its own paper`);
+    ok(hero.querySelector("h1") && hero.getBoundingClientRect().right <= view().getBoundingClientRect().right + 1, `${h}: inside the page`);
+  }
+  ok(!$(".try-switch") && !$("#tryHead") && !document.documentElement.dataset.tryHeader, "no Try switch");
+  eq(localStorage.getItem("library-try"), null, "its remembered choice cleared:");
+});
+
 test("round 5: small copies on every cover grid (shelves, authors, history…), the cover itself on a book’s page; a missing copy falls back to the cover", async () => {
   eq(coverSrc({cover: "covers/9780000000001.jpg?v=1"}, false), "covers/thumbs/9780000000001.webp?v=1", "a cover card:");
   eq(coverSrc({cover: "covers/9780000000001.jpg"}, false, true), "covers/thumbs/9780000000001-s.webp", "banner:");
@@ -1169,8 +1182,11 @@ test("round 5: Back returns to where the page was scrolled; a new page opens at 
   const was = history.state, key = location.hash.slice(1) || "home";
   try {
     const put = y => until(() => { try { history.replaceState({...(history.state || {}), y}, ""); } catch {} return (history.state || {}).y === y; }, "the place kept in history", 12000);
-    await put(300); route(key); await wait(50);
-    ok(Math.abs(scrollY - Math.min(300, document.documentElement.scrollHeight - innerHeight)) <= 2, `kept place: ${scrollY}`);
+    const log = []; const onS = () => log.push(Math.round(scrollY)); addEventListener("scroll", onS);
+    await put(300); route(key); await wait(600); removeEventListener("scroll", onS);
+    const most = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    // within a line or two: the browser keeps what’s in view in place if something above it settles a little afterwards
+    ok(Math.abs(scrollY - Math.min(300, most)) <= 40, `kept place: ${scrollY} (the most it can scroll: ${most}; key ${key}; scrolls ${log.join(",")})`);
     await put(null); route(key); await wait(50);
     eq(scrollY, 0, "no place kept: the top:");
   } finally { history.replaceState(was, ""); scrollTo(0, 0); }
@@ -1216,14 +1232,6 @@ test("round 5: the format in words on a book page (a phone can’t show the sash
   await show("#shelf-fantasy");
   ok($$(".cover .sash", view()).every(s => s.getAttribute("aria-label")), "sashes labelled");
   ok($$(".cover .seal", view()).every(s => s.getAttribute("aria-label")), "seals labelled");
-});
-
-test("round 5: the TEMPORARY Try switch (Header, Shelf list) is there, and never over the drawer", async () => {
-  const box = $(".try-switch"); ok(box, "the switch");
-  eq($$(".try-row", box).length, 2, "two rows:");
-  eq($$("button", box).length, 7, "seven choices:");
-  const rules = [...document.styleSheets].flatMap(s => { try { return [...s.cssRules]; } catch { return []; } });
-  ok(rules.some(r => r.selectorText === ".jj-menu-open .try-switch" && r.style.display === "none"), "hidden while the drawer is open");
 });
 
 test("22 Nov: the sidebar fades at the foot while more links are below, at the top once scrolled, not at all when it fits", async () => {

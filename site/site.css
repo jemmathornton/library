@@ -115,9 +115,7 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .foot .jj-foot-links>*{font:700 13px/1 var(--body);color:var(--gilt-ink)}   /* over the Library's own a/button rules (colour and font inherited) */
 
 /* hero */
-/* --pad: from the page's edge to the text column (.wrap's padding plus the space beside its 1180px), worked out from the page's
-   own width (cqw), so the hero, its plate and the text all use the same figure, with or without a scrollbar (round 5) */
-.hero{--c:var(--brass);--pad:calc((100cqw - min(100cqw,1180px)) / 2 + clamp(16px,4vw,56px));margin-inline:calc(-1 * var(--pad));padding:68px var(--pad) 42px;color:var(--ink);position:relative;overflow:hidden}
+.hero{--c:var(--brass);padding:68px 0 42px;color:var(--ink);position:relative;overflow:hidden}
 .hero>*{position:relative}
 .kicker{display:flex;align-items:center;gap:10px;color:var(--muted)}
 .kicker .label{color:var(--muted);font:italic 400 17px/1 var(--read);letter-spacing:.02em;text-transform:none}
@@ -318,16 +316,22 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 
 /* banners made of the page's own covers: in L1 (21 Nov) a plate of eighteen covers tipped in on the right of the title page,
    in a cream mount with a ruled line inside */
-.hero .hero-shelf{position:absolute;z-index:0;top:40px;right:var(--pad);width:var(--plate);overflow:hidden;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-content:start;gap:6px;padding:12px;pointer-events:none;
+.hero .hero-shelf{position:relative;overflow:hidden;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-content:start;gap:6px;padding:12px;pointer-events:none;
   background:var(--mount);border:1px solid var(--mount-edge);outline:1px solid var(--line);outline-offset:-6px;box-shadow:0 1px 2px rgba(0,0,0,.08),0 14px 30px -18px var(--shade)}
 .hero-shelf img{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:1px;display:block;filter:sepia(.18) saturate(.9)}
 .hero-shelf img:nth-child(n+19){display:none}
-.hero.shelved{padding-top:58px;padding-bottom:40px;min-height:calc(23.25cqw + 80px)}   /* tall enough for the whole plate (three rows of six) on short banners like Stats */
-.hero.shelved{--plate:31cqw}
-.hero.shelved h1{font-size:min(112px,10cqw)}
-/* the words stop short of the plate at every width (round 5: at 1500–1920 the figures' rules ran into it, at 901–1100 the title) */
-@media (min-width:901px){ .hero.shelved>:not(.hero-shelf){max-width:calc(100% - var(--plate) - 32px)} }
-.hero.shelved>*:not(.hero-shelf){z-index:2}
+/* the title page is the page's header (her ask, 22 Nov, round 5: "Jemma's Library", the line under it, the figures and the plate of
+   covers as one header, not a separate band): one mounted paper panel in the bound-book style, a gilt rule inside its edge and a
+   double gilt rule along its foot, set off from the page below. With a plate (≥901px) a grid: the words on the left, the plate in
+   its own column on the right, so nothing can overlap or run off at any width; under 900px they stack (the plate below the words) */
+.hero:not(.book-hero){margin:24px 0 0;padding:42px clamp(22px,3.2cqw,48px) 36px;background:var(--surface);
+  border:1px solid var(--mount-edge);border-bottom:4px double color-mix(in srgb,var(--gilt) 75%,transparent);
+  outline:1px solid color-mix(in srgb,var(--gilt) 45%,transparent);outline-offset:-9px;box-shadow:0 16px 26px -22px var(--shade)}
+.hero.shelved{display:grid;grid-template-columns:minmax(0,1fr) clamp(210px,33%,430px);grid-template-rows:repeat(6,auto) 1fr;column-gap:clamp(24px,3cqw,44px);align-items:start}
+.hero.shelved>:not(.hero-shelf){grid-column:1;min-width:0}
+.hero.shelved .hero-shelf{grid-column:2;grid-row:1 / span 7;align-self:center}
+.hero.shelved h1{font-size:clamp(54px,7cqw,104px)}
+.hero.shelved .figures{max-width:none}
 .kicker .dot{width:10px;height:10px;box-shadow:0 0 0 2px rgba(255,255,255,.15)}
 
 /* her stars on a cover, in a strip fading up from its foot (back as before, her ask 22 Nov); an arrow, not a text cursor, and not selectable */
@@ -794,10 +798,10 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 @media (max-width:900px){
   /* banners: the plate of covers goes under the words instead of behind the title */
   .hero{padding-top:40px;padding-bottom:32px}
-  .hero.shelved{min-height:0;padding-top:40px}
+  .hero:not(.book-hero){margin-top:18px;padding:32px clamp(18px,4vw,32px) 28px;outline-offset:-7px}
   .hero.shelved h1{max-width:none;font-size:clamp(54px,14vw,112px)}
   .hero.shelved{display:flex;flex-direction:column}
-  .hero .hero-shelf{position:relative;top:auto;right:auto;order:9;width:min(100%,460px);margin-top:28px;grid-template-columns:repeat(6,minmax(0,1fr))}
+  .hero .hero-shelf{order:9;width:min(100%,460px);margin-top:28px;grid-template-columns:repeat(6,minmax(0,1fr))}
   .hero-shelf img:nth-child(n+7){display:none}
   .figures{max-width:none}
   /* section headings: the link or button beside the heading goes under it */
@@ -906,6 +910,7 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 @media (max-width:600px){
   /* the gap under the banner's plate */
   .hero,.hero.shelved{padding-bottom:14px}
+  .hero:not(.book-hero){padding:24px 16px 20px}
   .hero + .section-head{margin-top:30px}
   .hero + div .toolbar{margin-top:20px}
   /* the old books' list: each book as a few lines (title; author and year; your note; condition), nothing hidden off to the side */
@@ -965,60 +970,3 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 /* dark mode: the old books' shelves a dark board with the walnut ledge, not bright cream bands */
 :root[data-mode="dark"] .bookshelf{background:repeating-linear-gradient(to bottom,#2E241A 0,#261D15 168px,#6B4A2B 168px,#5E4126 182px)}
 :root[data-mode="dark"] .spine.gap{border-color:rgba(226,196,122,.45);background:repeating-linear-gradient(45deg,transparent 0 6px,rgba(226,196,122,.08) 6px 7px)}
-
-/* ===== TRY SWITCH: TEMPORARY (22 Nov, round 5), only while she chooses; delete this block with the one at the end of js/app.js =====
-   Header: As now / Cloth band / Slim masthead (wide windows only: under 900px the family's top bar and Menu drawer stay as they are).
-   Shelf list: As now / Dot only / Cloth spines / Name only. Set on <html> as data-try-header and data-try-shelf. */
-.try-switch{position:fixed;right:18px;bottom:18px;z-index:20;display:grid;gap:7px;max-width:calc(100vw - 36px);padding:10px 12px;border-radius:4px;
-  background:var(--deep);color:var(--on-deep);box-shadow:0 6px 20px rgba(0,0,0,.3);border:1px solid color-mix(in srgb,var(--gilt) 45%,transparent);font:600 12.5px/1.2 var(--body)}
-.trial-switch:not([hidden]) ~ .try-switch{bottom:76px}
-.jj-menu-open .try-switch{display:none}   /* never over the drawer or its scrim */
-.try-switch>b{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass)}
-.try-row{display:flex;flex-wrap:wrap;align-items:center;gap:5px}
-.try-row span{flex:1 1 100%;opacity:.85;font-weight:500}
-.try-switch button{padding:6px 11px;min-height:30px;border:0;border-radius:999px;background:rgba(255,255,255,.12);color:inherit;font:inherit;cursor:pointer}
-.try-switch button[aria-pressed="true"]{background:var(--brass);color:var(--deep)}
-.try-switch button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
-@media (max-width:600px){ .try-switch{right:10px;left:10px;bottom:10px;max-width:none;padding:8px 10px;gap:5px} .try-switch button{padding:5px 9px;min-height:28px;font-size:12px} }
-@media (max-width:900px){ .try-row:first-of-type{display:none} }   /* the Header options are for wide windows only */
-.try-head{display:none}
-@media (min-width:901px){
-  /* Cloth band: the binding's cloth across the top of every page, the name in gilt like a book's cover, between gilt rules */
-  [data-try-header="band"] .try-head{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;position:relative;min-height:112px;padding:20px 24px 18px;
-    background:var(--weave),linear-gradient(180deg,#55301D,var(--cloth));border-bottom:3px double var(--gilt);box-shadow:0 8px 18px -14px var(--shade)}
-  [data-try-header="band"] .try-head::before{content:"";position:absolute;inset:9px 14px;border:1px solid color-mix(in srgb,var(--gilt) 50%,transparent);pointer-events:none}
-  [data-try-header="band"] .try-lockup{display:grid;justify-items:center;gap:6px;text-decoration:none;color:var(--gilt-2)}
-  [data-try-header="band"] .try-lockup b{font:400 46px/1 var(--display);color:var(--on-deep);letter-spacing:.01em}
-  [data-try-header="band"] .try-lockup b em{color:var(--gilt-2)}
-  [data-try-header="band"] .try-lockup small{font:italic 400 16px/1 var(--read);color:var(--gilt-2)}
-  [data-try-header="band"] .side .brand{display:none}
-  [data-try-header="band"] #view .hero:not(.book-hero){padding-top:42px}
-  [data-try-header="band"] #view .hero:not(.book-hero) h1{font-size:clamp(48px,6vw,84px)}
-  [data-try-header="band"] #view .hero.shelved h1{font-size:min(84px,7.5cqw)}
-  /* Slim masthead: a thin printed masthead on the page between gilt rules, the name on the left and the search on the right */
-  [data-try-header="slim"] .try-head{display:flex;align-items:center;justify-content:space-between;gap:24px;
-    padding:10px calc((100cqw - min(100cqw,1180px)) / 2 + clamp(16px,4vw,56px));border-bottom:3px double var(--line);background:color-mix(in srgb,var(--paper) 92%,var(--gilt))}
-  [data-try-header="slim"] .try-lockup{display:flex;align-items:baseline;gap:14px;text-decoration:none;color:var(--ink)}
-  [data-try-header="slim"] .try-lockup b{font:400 30px/1 var(--display);white-space:nowrap}
-  [data-try-header="slim"] .try-lockup b em{color:var(--accent)}
-  [data-try-header="slim"] .try-lockup small{font:italic 400 15px/1 var(--read);color:var(--muted);white-space:nowrap}
-  [data-try-header="slim"] .try-search{flex:0 1 340px}
-  [data-try-header="slim"] .try-search .search{margin:0}
-  [data-try-header="slim"] .try-search .search input{background:var(--surface);color:var(--ink);border-color:var(--line)}
-  [data-try-header="slim"] .try-search .search input::placeholder{color:var(--muted)}
-  [data-try-header="slim"] .try-search .search-ico{color:var(--muted)}
-  [data-try-header="slim"] .side .brand{display:none}
-  [data-try-header="slim"] #view .hero:not(.book-hero){padding-top:46px}
-}
-@media (min-width:901px) and (max-width:1100px){ [data-try-header="slim"] .try-lockup small{display:none} }
-/* Shelf list: Dot only (no gilt ring round the dot, no gilt bar on the shelf she's on) */
-[data-try-shelf="dot"] .nav .dot{box-shadow:none}
-[data-try-shelf="dot"] .nav a.on,[data-try-shelf="spine"] .nav a.on,[data-try-shelf="name"] .nav a.on{box-shadow:none}
-/* Cloth spines: a small upright spine in the shelf's colour with gilt bands top and foot, in place of the dot */
-[data-try-shelf="spine"] .nav .dot{width:8px;height:22px;border-radius:1px 1px 0 0;margin-left:2px;
-  box-shadow:inset 0 3px 0 -1px color-mix(in srgb,var(--gilt-2) 80%,transparent),inset 0 -3px 0 -1px color-mix(in srgb,var(--gilt-2) 80%,transparent),inset -2px 0 0 rgba(0,0,0,.18)}
-/* Name only: no dot or icon; the shelf's colour shows as a thin rule on the left while pointed at or chosen */
-[data-try-shelf="name"] .nav-group:not(.minor) a>.dot,[data-try-shelf="name"] .nav-group:not(.minor) a>.i{display:none}
-[data-try-shelf="name"] .nav-group:not(.minor) a:hover{box-shadow:inset 2px 0 0 var(--c,var(--gilt))}
-[data-try-shelf="name"] .nav-group:not(.minor) a.on{box-shadow:inset 3px 0 0 var(--c,var(--gilt))}
-/* ===== end of TRY SWITCH ===== */

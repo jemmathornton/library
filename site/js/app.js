@@ -1467,6 +1467,7 @@ function startFamily(){
 // The family's code comes from Jemma's Journals: /family/ when served, its site/family folder beside when opened as a file
 // (js/family-path.js chooses before the page asks for anything; round 5)
 if (window.JJFamily) startFamily();
+try { localStorage.removeItem("library-try"); } catch {}   // the round 5 Try switch's remembered choice (the switch is gone)
 
 // "← Jemma's Journals": "/" is home where the sites share one address (the family server, online); opened straight from the folder
 // that would be the root of drive C:, so it goes to Jemma's Journals' page in the folder beside (round 3, 22 Nov; as Sim World does)
@@ -1550,11 +1551,14 @@ function route(page, opts = {}){   // page: only the tests pass one (they open a
   // a new page (a link) has no place kept, so it opens at the top. As in Sim World: history.state.y, kept while scrolling (below).
   const y = history.state && typeof history.state.y === "number" ? history.state.y : 0;
   scrollTo(0, y);
-  if (y) requestAnimationFrame(() => { if (Math.abs(scrollY - y) > 2) scrollTo(0, y); });
+  // the page can still be growing as it settles: tried again a few times (each only while this is still the page shown)
+  const drawnAs = ++routeCount;
+  const again = n => { if (drawnAs === routeCount && y && Math.abs(scrollY - y) > 2 && n) { scrollTo(0, y); setTimeout(() => again(n - 1), 120); } };
+  requestAnimationFrame(() => again(4));
   if (menuOpen()) setMenu(false);
 }
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-let scrollKeep = 0;
+let scrollKeep = 0, routeCount = 0;
 // written only when the place has changed, and at most every quarter second (Chrome stops a page that changes its history too often)
 const keepScroll = () => { clearTimeout(scrollKeep); const y = Math.round(scrollY);
   if ((history.state || {}).y === y || (!history.state && y === 0)) return;
@@ -1693,39 +1697,3 @@ capitalise(document);
 
 // the skip link: focus the page without changing the address (no inline handler, ready for a strict security policy online; round 4)
 document.addEventListener("click", e => { const a = e.target.closest && e.target.closest("a[data-skip]"); if (!a) return; e.preventDefault(); const v = document.getElementById("view"); if (v) { if (!v.hasAttribute("tabindex")) v.setAttribute("tabindex", "-1"); v.focus(); } });
-
-// ===== TRY SWITCH: TEMPORARY (22 Nov, round 5), only while she chooses; delete this block with the one at the end of site.css =====
-// Bottom right: "Header" (As now / Cloth band / Slim masthead) and "Shelf list" (As now / Dot only / Cloth spines / Name only).
-// Remembered in localStorage "library-try"; ?try-header=…&try-shelf=… in the address picks one (for the record pictures).
-(() => {
-  const OPTS = {header: [["now", "As now"], ["band", "Cloth band"], ["slim", "Slim masthead"]],
-    shelf: [["now", "As now"], ["dot", "Dot only"], ["spine", "Cloth spines"], ["name", "Name only"]]};
-  const LABEL = {header: "Header", shelf: "Shelf list"};
-  const pick = {header: "now", shelf: "now"};
-  try { Object.assign(pick, JSON.parse(localStorage.getItem("library-try") || "{}")); } catch {}
-  const qs = new URLSearchParams(location.search);
-  for (const k in OPTS) { const v = qs.get("try-" + k); if (v) pick[k] = v; if (!OPTS[k].some(o => o[0] === pick[k])) pick[k] = "now"; }
-  const root = document.documentElement, side = document.getElementById("side"), search = side.querySelector(".search"), brand = side.querySelector(".brand");
-  const head = document.createElement("header"); head.className = "try-head"; head.id = "tryHead";
-  head.innerHTML = `<a class="try-lockup" href="#home"><b>Jemma’s <em>Library</em></b><small>Every book on the shelves</small></a><div class="try-search"></div>`;
-  document.getElementById("main").prepend(head);
-  const wide = matchMedia("(min-width:901px)");
-  const place = () => { const slot = head.querySelector(".try-search");   // the search goes into the masthead (wide windows only)
-    if (pick.header === "slim" && wide.matches) { if (search.parentNode !== slot) slot.appendChild(search); }
-    else if (search.parentNode !== side) brand.after(search); };
-  const box = document.createElement("div"); box.className = "try-switch"; box.setAttribute("role", "group"); box.setAttribute("aria-label", "Try a look");
-  const draw = () => { box.innerHTML = `<b>Try</b>` + Object.keys(OPTS).map(k => `<div class="try-row"><span>${LABEL[k]}</span>${OPTS[k].map(([v, w]) =>
-    `<button type="button" data-try="${k}:${v}" aria-pressed="${pick[k] === v}">${w}</button>`).join("")}</div>`).join(""); };
-  const room = () => { document.body.style.paddingBottom = box.offsetHeight + 28 + "px"; };   // the page's foot is never under it
-  const apply = () => { root.dataset.tryHeader = pick.header; root.dataset.tryShelf = pick.shelf; place(); draw(); room(); navFades();
-    try { localStorage.setItem("library-try", JSON.stringify(pick)); } catch {} };
-  box.addEventListener("click", e => { const b = e.target.closest("[data-try]"); if (!b) return; const [k, v] = b.dataset.try.split(":"); pick[k] = v; apply();
-    box.querySelector(`[data-try="${k}:${v}"]`)?.focus(); });
-  document.body.appendChild(box);
-  wide.addEventListener("change", place); addEventListener("resize", room);
-  // the shelf's colour on its link too, for Name only's rule
-  const tint = () => document.querySelectorAll("#nav a .dot").forEach(d => d.parentElement.style.setProperty("--c", d.style.getPropertyValue("--c")));
-  new MutationObserver(tint).observe(document.getElementById("nav"), {childList: true}); tint();
-  apply();
-})();
-// ===== end of TRY SWITCH =====
