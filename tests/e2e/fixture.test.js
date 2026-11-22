@@ -800,7 +800,7 @@ test("family rules: the foot of every page is the family’s, in order: the name
   eq($(".jj-name", foot).textContent, "Jemma’s Library");
   eq(getComputedStyle($(".jj-name", foot)).fontStyle, "normal", "the name plain, not italic:");
   const lines = $$("[data-jj-line1], [data-jj-credits]", foot).map(p => p.textContent.replace(/\s+/g, " ").trim());
-  eq(lines[0], "No cookies, no tracking, no ads. Made with HTML, CSS and JavaScript, kept on GitHub.", "line 1 (the same on every site):");
+  eq(lines[0], "No cookies, no tracking, no ads. Made with HTML, CSS, JavaScript and Python, kept on GitHub.", "line 1 (the same on every site):");
   eq($$("[data-jj-credits] .cr", foot).map(c => c.textContent), ["Book covers from their publishers", "Some book details from Open Library", "Fonts: Instrument Serif, Manrope and EB Garamond", "Icons by Lucide"], "line 2 (the Library’s own credits):");
   ok($$(".cr", foot).every(c => /^[A-Z]/.test(c.textContent)), "each credit starts with a capital");
   const order = [".jj-name", "[data-jj-line1]", "[data-jj-credits]", ".jj-foot-links"].map(sel => $(sel, foot).getBoundingClientRect().top);
