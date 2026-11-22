@@ -380,21 +380,14 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .hero-shelf .fr.f-gilt{--frame:linear-gradient(135deg,#A77A26,#F3DC8E 30%,#B98A34 55%,#E9CC7A 75%,#8A6420)}
 .hero-shelf .fr.f-black{--frame:linear-gradient(135deg,#3A332C,#14110E 40%,#2A2520 70%,#0C0A08)}
 :root[data-mode="dark"] .hero-shelf .figures .fr{box-shadow:inset 0 0 0 1px rgba(0,0,0,.4),inset 2px 3px 5px rgba(0,0,0,.35),0 0 0 1px rgba(255,240,210,.12),0 3px 5px -2px rgba(0,0,0,.85)}
-/* the bookends (her picks: a solid wooden L pressed against the end book and the shelf, the motif added to it, a carved object for
-   each shelf in the style of the quill): the same L on every shelf, drawn in js/app.js (BOOKEND_WOOD, MOTIFS); its upright flush against the end spine (the row's 2px gap taken back), its base
-   plate drawn past its box over the end books' feet (so above them); the right one mirrored */
+/* the bookends (her pick: a classic wooden bookend, a bit fancier than a plain L, with a picture engraved on its face): the same on every
+   shelf, drawn in js/app.js (bookendWood, engrave); its panel flush against the end spine (the row's 2px gap taken back), its short
+   foot outwards along the ledge, away from the books; the right one mirrored */
 .hero-shelf .bookend{--eh:clamp(93px,8.7cqw,124px);flex:0 0 auto;align-self:flex-end;display:block;position:relative;z-index:2}
 .hero-shelf .bookend.start{margin:0 -2px 0 3px}
 .hero-shelf .bookend.end{margin:0 3px 0 -2px}
 .hero-shelf .bookend svg{display:block;height:var(--eh);width:calc(var(--eh) * var(--a));overflow:visible}
 .hero-shelf .bookend.end svg{transform:scaleX(-1)}
-/* the L's base plate: from the foot of the upright inwards, under the end two books (length --bl from fitSpines()); they stand on it */
-.hero-shelf{--bh:6px}
-.hero-shelf .bookend::after{content:"";position:absolute;bottom:0;height:var(--bh);width:var(--bl,0px);background:linear-gradient(#8A5A2E,#6B3F1F);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),inset 0 -1px 0 rgba(0,0,0,.25)}
-.hero-shelf .bookend.start::after{left:100%}
-.hero-shelf .bookend.end::after{right:100%}
-.hero-shelf .sp.on-base{margin-bottom:var(--bh)}
 /* too narrow for the frames among the books (fewer than ten would fit; phones): the frames on a ledge of their own above the books,
    each line the same height so the ledges line up (a smaller frame is set lower by its top margin) */
 .hero .hero-shelf.tiered{height:auto}

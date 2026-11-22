@@ -257,13 +257,18 @@ test("22 Nov evening: the header's shelf: full width under the title, the figure
           if (e0 && spr.length && Math.abs(Math.min(...spr.map(x => x.left)) - e0.right) > 1) problems.push(`${at}: the left bookend not against the first book (${(Math.min(...spr.map(x => x.left)) - e0.right).toFixed(1)}px)`);
           if (e1 && spr.length && Math.abs(e1.left - Math.max(...spr.map(x => x.right))) > 1) problems.push(`${at}: the right bookend not against the last book (${(e1.left - Math.max(...spr.map(x => x.right))).toFixed(1)}px)`);
           [e0, e1].forEach((e, k) => { if (e && Math.abs(e.bottom - booksLedge) > 1) problems.push(`${at}: bookend ${k + 1} not on the ledge (${(e.bottom - booksLedge).toFixed(1)}px)`); });
-          // her note: "L shape away from books": the base runs inwards under the end books, which stand on it; the object is outside the upright
-          const shownSp = [...shelf.querySelectorAll(".sp:not([hidden])")];
-          [[shelf.querySelector(".bookend.start"), shownSp[0]], [shelf.querySelector(".bookend.end"), shownSp[shownSp.length - 1]]].forEach(([be, sp], k) => { if (!be || !sp) return;
-            const bh = parseFloat(win.getComputedStyle(shelf).getPropertyValue("--bh")), bl = parseFloat(be.style.getPropertyValue("--bl")) || 0;
-            if (!sp.classList.contains("on-base") || bl < sp.offsetWidth) problems.push(`${at}: bookend ${k + 1}'s base not under the end book`);
-            if (Math.abs(sp.getBoundingClientRect().bottom - (booksLedge - bh)) > 1) problems.push(`${at}: the end book not standing on bookend ${k + 1}'s base`);
-            const mo = be.querySelector("svg > g.mo").getBBox(); if (mo.x + mo.width / 2 > 38 || mo.x + mo.width > 41.5) problems.push(`${at}: bookend ${k + 1}'s object not outside its upright`); });
+          // her notes: nothing of the bookend under or over the books (they stand on the ledge), its foot runs outwards along the ledge
+          [...shelf.querySelectorAll(".sp:not([hidden])")].forEach(sp => { if (Math.abs(sp.getBoundingClientRect().bottom - booksLedge) > 1) problems.push(`${at}: a book not standing on the ledge`); });
+          [shelf.querySelector(".bookend.start"), shelf.querySelector(".bookend.end")].forEach((be, k) => { if (!be) return;
+            const vr = be.querySelector("svg").getBoundingClientRect(), base = be.querySelector(".be-base").getBBox();
+            if (spr.some(x => vr.right > x.left + 1 && vr.left < x.right - 1)) problems.push(`${at}: bookend ${k + 1} over a book`);
+            if (base.x > 3 || base.width < 10) problems.push(`${at}: bookend ${k + 1}'s foot doesn't run outwards`);
+            // her pick: the shelf's picture engraved on the panel's face, inside it
+            const eng = be.querySelector("svg g.eng"), panel = be.querySelector(".be-panel").getBBox();
+            if (!eng) problems.push(`${at}: bookend ${k + 1} has no engraving`);
+            else { const r = eng.getBoundingClientRect(), pr = be.querySelector(".be-panel").getBoundingClientRect();
+              if (r.left < pr.left || r.right > pr.right || r.top < pr.top || r.bottom > pr.bottom) problems.push(`${at}: bookend ${k + 1}'s engraving off its panel`); }
+            if (panel.x + panel.width < 51.5) problems.push(`${at}: bookend ${k + 1}'s panel not against the book`); });
           const line = hero.querySelector(":scope > p");
           if (h === "home" && w >= 1300 && line && line.getBoundingClientRect().height > parseFloat(win.getComputedStyle(line).lineHeight) * 1.5) problems.push(`${at}: the line under the title wraps`);
           d.querySelectorAll("#view .hero, #view .hero *").forEach(el => {
@@ -277,8 +282,8 @@ test("22 Nov evening: the header's shelf: full width under the title, the figure
 
 // her picks (22 Nov evening): bookends "only slightly different. Like traditional wooden bookends but maybe with a different motif",
 // "a solid like L shape, pressed against book and shelf, then motif is in addition to that": the same wooden L on every shelf, the
-// shelf's own carved object (in the quill's style) beside it: an open book on Home and other pages, a castle for Fantasy, a teddy bear
-// for Children's, and so on; the frames' turns and sizes the same every time; the Try
+// shelf's own picture engraved on its face (her last pick: a classic bookend with a 2D engraving): an open book on Home and other
+// pages, a castle for Fantasy, a teddy bear for Children's, and so on; the frames' turns and sizes the same every time; the Try
 // switch gone and its remembered choices cleared
 test("22 Nov evening: the header's bookends are the same wooden L with each shelf's motif, the frames are the same each time, the Try switch is gone", async () => {
   const kinds = {}, wood = new Set();
@@ -288,14 +293,14 @@ test("22 Nov evening: the header's bookends are the same wooden L with each shel
     eq(ends.length, 2, `${h}: two bookends`);
     ok(ends.every(e => e.getAttribute("aria-hidden") === "true"), `${h}: the bookends hidden from screen readers`);
     kinds[h] = ends[0].dataset.kind;
-    wood.add(ends.map(e => e.querySelector("svg .be-l").innerHTML).join("|"));
+    wood.add(ends.map(e => e.querySelector("svg .be-panel").getAttribute("d")).join("|"));
   }
   eq(kinds["#home"], "openBook", "Home:"); eq(kinds["#shelves"], "openBook", "All shelves:");
   if (kinds["#shelf-fantasy"]) eq(kinds["#shelf-fantasy"], "castle", "Fantasy:");
   if (kinds["#shelf-childrens"]) eq(kinds["#shelf-childrens"], "teddy", "Children’s:");
   if (kinds["#shelf-science-fiction"]) eq(kinds["#shelf-science-fiction"], "planet", "Science Fiction:");
   if (kinds["#shelf-travel"]) eq(kinds["#shelf-travel"], "steamTrain", "Travel:");
-  eq(wood.size, 1, "the same wooden L on every shelf:");
+  eq(wood.size, 1, "the same wooden bookend on every shelf:");
   ok(!$(".try-switch") && !document.documentElement.dataset.tryPlace && !document.documentElement.dataset.tryEnds && !document.documentElement.dataset.tryFrames, "the Try switch is gone");
   ok(["frames", "place", "ends"].every(k => localStorage.getItem("library-try-" + k) === null), "its remembered choices cleared");
   await show("#home"); const first = $$("#view .hero-shelf .fr").map(f => f.getAttribute("style"));

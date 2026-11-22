@@ -452,24 +452,22 @@ const surnameOf = by => (String(by || "").split(/,| and | & /)[0].trim().split(/
 // The figures stay real text (the spines and bookends are hidden from screen readers, the frames are not); sizes and turns are the
 // same every time, not random.
 const FRAME_TURN = [-18, 14, -9, 20, -14, 10], FRAME_BACK = [4, 3, 5, 3, 4, 5], FRAME_SIZE = [1, 0.88, 0.95, 0.85, 0.92, 0.97], FRAME_MIX = ["wood", "gilt", "black", "gilt", "wood", "black"];
-// the bookends (her picks, 22 Nov evening: "traditional wooden bookends but maybe with a different motif"; "a solid like L shape,
-// pressed against book and shelf, then motif is in addition to that"): the same solid wooden L on every shelf, seen end-on from the
-// front: an upright (its top softly rounded) pressed flat against the end book, and a base plate on the ledge running inwards under
-// the end two books, which stand on it (her note: "L shape away from books" — the base goes under the books, their weight holds it;
-// the plate is .bookend::after in site.css, its length set by fitSpines(), and those books are lifted by its thickness). The shelf's motif is a carved wooden object in the style of the
-// quill she liked best, standing on the ledge or leaning against the outside of the upright, never floating or on a point; her
-// picks (22 Nov evening): Home and every other page an open book, Adult Fiction the quill, Fantasy a castle, Science Fiction a ringed
-// planet on a stand, Dystopia a broken clock, Young Adult headphones on a stand, Children's a teddy bear, Non-Fiction an hourglass,
-// Travel a steam train (Display and the old books have no shelf yet: later, her call). The box is 52 × 100: the object in 2–38, the upright 38–52 (its outside face at 38), the base 38–83.
-// Drawn here as simple shapes (no pictures).
-const BOOKEND_WOOD = `<path d="M38 100V25q0-5 5-5h4q5 0 5 5v75z" fill="#7B4A24"/>`
-  + `<path d="M41.5 99c1-24-1-46 1-76M47 99c-1-26 1-48 0-77" fill="none" stroke="#5A3418" stroke-width=".7" opacity=".55"/>`
-  + `<rect x="39" y="24" width="2" height="72" fill="#fff" opacity=".12"/><rect x="49.5" y="24" width="2.5" height="72" fill="#000" opacity=".16"/>`
-  + `<rect x="38" y="94" width="14" height="6" fill="#6B3F1F"/>`;   // the foot of the upright, where the base plate (site.css, .bookend::after) joins it
-// each object is cut from the same wood as the L (her note: "meant to be wooden … actual wooden bookends, not weird cartoon drawings"):
-// one solid silhouette (s) with a lighter top-left edge and a darker side for depth, a few carved grooves (g) and carved recesses (r);
-// no outlines, no colours, no faces. Each is drawn at its own natural proportions, standing on the ledge (y 100) against or beside the
-// upright's outer face (x 38); the box is scaled evenly (preserveAspectRatio), never stretched.
+// the bookends (her picks, 22 Nov evening, last: "maybe pick some more standard bookends a bit fancier than simple L shape and then
+// add a 2D engraving instead"): one classic wooden bookend on every shelf, its face shown: a solid panel with stepped shoulders and an
+// arched top, a routed edge with a pale rim, wood grain, pressed against the end book (its book side flush with the spine), and a short
+// foot running outwards along the ledge, away from the books (nothing under them: they stand on the ledge). Mirrored at the right-hand
+// end. The shelf's picture is engraved into the panel's face (a recessed silhouette in darker wood with cut lines, no other colours):
+// Home and every other page an open book, Adult Fiction a quill, Fantasy a castle, Science Fiction a ringed planet, Dystopia a broken
+// clock, Young Adult headphones, Children's a teddy bear, Non-Fiction an hourglass, Travel a steam train (her picks; Display and the old
+// books have no shelf yet: later, her call). The box is 52 × 100: the foot 2–14, the panel 14–52. Drawn as simple shapes (no pictures).
+const BOOKEND_PANEL = "M14 100V44h2v-4q0-16 17-17q17 1 17 17v4h2v56z", BOOKEND_RIM = "M18 96.5V45.5q0-17.5 15-18q15 .5 15 18v51z";
+const bookendWood = id => `<path class="be-base" d="M2 100V95.5q0-1.5 1.5-1.5H15v6z" fill="url(#${id}-w)"/><path d="M3 94.6H14" stroke="#B07A44" stroke-width="1"/>`
+  + `<path class="be-panel" d="${BOOKEND_PANEL}" fill="url(#${id}-w)"/>`
+  + `<path d="M20 99c1-20-1-40 1-62M26 99c-1-24 1-46 0-70M33 99c1-26-1-50 0-76M40 99c-1-24 1-46 0-70M46 99c1-20-1-40 0-60" fill="none" stroke="#5A3418" stroke-width=".55" opacity=".45"/>`
+  + `<path d="${BOOKEND_RIM}" fill="none" stroke="#3E2412" stroke-width="1" opacity=".55" transform="translate(.6 .6)"/><path d="${BOOKEND_RIM}" fill="none" stroke="#C08A52" stroke-width="1"/>`
+  + `<path d="${BOOKEND_PANEL}" fill="none" stroke="#3E2412" stroke-width=".8" opacity=".5"/>`;
+// the pictures for the engravings: each a solid silhouette (s), its cut lines (g) and deeper recesses (r), drawn at its own natural
+// proportions (ground at y 100); MOTIF_BOX says where each sits, and engrave() fits it evenly into the panel (never stretched)
 const featherShape = n => `<path d="M0 0L-.8 ${-n * .16}C${-n * .11} ${-n * .32} ${-n * .15} ${-n * .64} ${-n * .05} ${-n}C${n * .03} ${-n * .8} ${n * .06} ${-n * .48} ${n * .025} ${-n * .22}L.8 ${-n * .16}z"/>`;
 const featherGrooves = n => `<path d="M0 -2L${-n * .03} ${-n * .94}M${-n * .02} ${-n * .4}l${-n * .09} ${-n * .08}M${-n * .025} ${-n * .55}l${-n * .09} ${-n * .08}M${-n * .03} ${-n * .7}l${-n * .07} ${-n * .07}M${-n * .015} ${-n * .3}l${n * .04} ${-n * .05}M${-n * .02} ${-n * .48}l${n * .045} ${-n * .06}"/>`;
 const MOTIFS = {
@@ -483,36 +481,42 @@ const MOTIFS = {
     r: `<path d="M16.5 100V91a4 4 0 0 1 8 0v9z"/><rect x="8" y="66" width="2.4" height="5" rx="1.2"/><rect x="30.8" y="60" width="2.4" height="5" rx="1.2"/>`,
     g: `<path d="M3 82H15M26 80H38M15 86H26"/>`},
   // Science Fiction: a ringed planet on a stand
-  planet: {s: `<rect x="10" y="95" width="20" height="5" rx="1"/><rect x="18.3" y="78" width="3.4" height="17"/><circle cx="20" cy="64" r="13"/><path fill-rule="evenodd" transform="rotate(-14 20 64)" d="M0.5 64a19.5 5.2 0 1 0 39 0a19.5 5.2 0 1 0-39 0zM5 64a15 3 0 1 0 30 0a15 3 0 1 0-30 0z"/>`,
+  planet: {s: `<rect x="10" y="95" width="20" height="5" rx="1"/><rect x="18.3" y="78" width="3.4" height="17"/><circle class="rd" cx="20" cy="64" r="13"/><path fill-rule="evenodd" transform="rotate(-14 20 64)" d="M0.5 64a19.5 5.2 0 1 0 39 0a19.5 5.2 0 1 0-39 0zM5 64a15 3 0 1 0 30 0a15 3 0 1 0-30 0z"/>`,
     g: `<path transform="rotate(-14 20 64)" d="M5 64a15 3 0 0 0 30 0"/><path d="M10 58c6-2.5 14-2.5 20 0"/>`},
   // Dystopia: a broken mantel clock
-  brokenClock: {s: `<path d="M5 100V96H8V72Q8 54 20 54Q32 54 32 72V96H35V100z"/>`,
+  brokenClock: {s: `<path class="rd" d="M5 100V96H8V72Q8 54 20 54Q32 54 32 72V96H35V100z"/>`,
     r: `<circle cx="20" cy="72" r="8.5"/>`,
     g: `<path d="M20 72V66.5M20 72l4.2 2.6M13.5 66l3.5 4.5-2 2.6 4.5 3.6-1 2.6 3.2 3M8 88H32"/>`},
   // Young Adult: headphones on a stand
-  headphones: {s: `<rect x="10" y="95" width="20" height="5" rx="1"/><rect x="18.3" y="62" width="3.4" height="33"/><path d="M6.5 82V74A13.5 13 0 0 1 33.5 74V82H30.5V74A10.5 10 0 0 0 9.5 74V82z"/><rect x="3" y="76" width="9" height="16" rx="3.5"/><rect x="28" y="76" width="9" height="16" rx="3.5"/>`,
+  headphones: {s: `<rect x="10" y="95" width="20" height="5" rx="1"/><rect x="18.3" y="62" width="3.4" height="33"/><path d="M6.5 82V74A13.5 13 0 0 1 33.5 74V82H30.5V74A10.5 10 0 0 0 9.5 74V82z"/><rect class="rd" x="3" y="76" width="9" height="16" rx="3.5"/><rect class="rd" x="28" y="76" width="9" height="16" rx="3.5"/>`,
     g: `<path d="M9 79V89M31 79V89"/>`},
   // Children's: a teddy bear sitting (a silhouette, no face)
-  teddy: {s: `<circle cx="13.6" cy="52.5" r="3.6"/><circle cx="26.4" cy="52.5" r="3.6"/><circle cx="20" cy="60" r="8.6"/><ellipse cx="20" cy="82" rx="10.5" ry="12.5"/><ellipse cx="9.5" cy="78" rx="3.6" ry="7" transform="rotate(25 9.5 78)"/><ellipse cx="30.5" cy="78" rx="3.6" ry="7" transform="rotate(-25 30.5 78)"/><ellipse cx="12" cy="95.6" rx="6" ry="4.4"/><ellipse cx="28" cy="95.6" rx="6" ry="4.4"/>`,
-    g: `<path d="M12.5 69.8C15 71.6 25 71.6 27.5 69.8M14 88.5V93M26 88.5V93"/>`},
+  teddy: {s: `<circle class="rd" cx="13.8" cy="51.5" r="3.8"/><circle class="rd" cx="26.2" cy="51.5" r="3.8"/><ellipse class="rd" cx="20" cy="80" rx="11" ry="13.5"/><circle class="rd" cx="20" cy="58.5" r="9"/><ellipse class="rd" cx="10.8" cy="77" rx="4" ry="7.5" transform="rotate(22 10.8 77)"/><ellipse class="rd" cx="29.2" cy="77" rx="4" ry="7.5" transform="rotate(-22 29.2 77)"/><ellipse class="rd" cx="12.5" cy="95.4" rx="6.4" ry="4.6"/><ellipse class="rd" cx="27.5" cy="95.4" rx="6.4" ry="4.6"/>`,
+    g: `<path d="M12.8 68.2C15.5 70 24.5 70 27.2 68.2M14.6 88.5V92.6M25.4 88.5V92.6M20 72V90"/>`},
   // Non-Fiction: an hourglass
-  hourglass: {s: `<rect x="7" y="94" width="26" height="6" rx="1"/><rect x="7" y="46" width="26" height="6" rx="1"/><rect x="8.5" y="52" width="2.6" height="42"/><rect x="28.9" y="52" width="2.6" height="42"/><path d="M13.5 52C13.5 64 18.6 69.5 18.6 73C18.6 76.5 13.5 82 13.5 94H26.5C26.5 82 21.4 76.5 21.4 73C21.4 69.5 26.5 64 26.5 52z"/>`,
-    g: `<path d="M15.5 90C16.5 86 18.5 84.5 20 84C21.5 84.5 23.5 86 24.5 90M16.5 58H23.5"/>`},
+  hourglass: {s: `<rect x="10" y="95.5" width="24" height="4.5" rx="1.2"/><rect x="10" y="65" width="24" height="4.5" rx="1.2"/><path class="rd" d="M15 69.5C12 74.5 13.5 79 20.6 82.5C13.5 86 12 90.5 15 95.5H29C32 90.5 30.5 86 23.4 82.5C30.5 79 32 74.5 29 69.5z"/>`,
+    g: `<path d="M16.5 93C18 89.6 20.6 88.4 22 88.2C23.4 88.4 26 89.6 27.5 93M17 72.6H27"/>`},
   // Travel: a small steam engine (side on)
-  steamTrain: {s: `<circle cx="9" cy="95.5" r="4.5"/><circle cx="19" cy="95.5" r="4.5"/><circle cx="31" cy="96.5" r="3.5"/><rect x="3" y="88" width="35" height="4.5"/><rect x="1" y="86.5" width="3" height="3.5"/><path d="M4 88V81Q4 78 7 78H26V88z"/><rect x="26" y="70" width="12" height="18"/><rect x="24.5" y="67.5" width="13.5" height="3"/><rect x="7.5" y="71" width="4" height="7"/><rect x="6.5" y="69" width="6" height="2.5"/><circle cx="18" cy="78" r="2.6"/>`,
+  steamTrain: {s: `<circle class="rd" cx="9" cy="95.5" r="4.5"/><circle class="rd" cx="19" cy="95.5" r="4.5"/><circle class="rd" cx="31" cy="96.5" r="3.5"/><rect x="3" y="88" width="35" height="4.5"/><rect x="1" y="86.5" width="3" height="3.5"/><path class="rd" d="M4 88V81Q4 78 7 78H26V88z"/><rect x="26" y="70" width="12" height="18"/><rect x="24.5" y="67.5" width="13.5" height="3"/><rect x="7.5" y="71" width="4" height="7"/><rect x="6.5" y="69" width="6" height="2.5"/><circle cx="18" cy="78" r="2.6"/>`,
     r: `<rect x="29" y="73" width="6" height="5.5" rx="1"/>`,
     g: `<path d="M9 95.5H19M7 83H25"/><circle cx="9" cy="95.5" r="1.4"/><circle cx="19" cy="95.5" r="1.4"/>`},
 };
 const SHELF_MOTIFS = {"adult-fiction": "quill", fantasy: "castle", "science-fiction": "planet", dystopia: "brokenClock", "young-adult": "headphones",
   childrens: "teddy", "non-fiction": "hourglass", travel: "steamTrain"};   // anything else: the open book
-// the carving: the silhouette's darker side (offset right), a pale top-left edge, the face in the L's wood, the recesses darker, then
-// the grooves (a dark cut with a pale lower edge); the L over it all
-const carve = m => `<g transform="translate(1.1 0)" fill="#3E2412">${m.s}</g><g transform="translate(-.6 -.6)" fill="#B07A44">${m.s}</g><g fill="#7B4A24">${m.s}</g>`
-  + (m.r ? `<g fill="#3E2412" opacity=".7">${m.r}</g>` : "")
-  + `<g fill="none" stroke="#3E2412" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">${m.g}</g><g fill="none" stroke="#B07A44" stroke-width=".55" stroke-linecap="round" opacity=".75" transform="translate(.45 .55)">${m.g}</g>`;
-const bookendSvg = kind => `<svg viewBox="0 0 52 100" preserveAspectRatio="xMidYMid meet" style="--a:.52" overflow="visible" focusable="false"><g class="mo">${carve(MOTIFS[kind])}</g><g class="be-l">${BOOKEND_WOOD}</g></svg>`;
+// where each picture sits in its own drawing (x, y, width, height), so it can be fitted evenly into the panel's face, centred
+const MOTIF_BOX = {openBook: [3, 65, 35, 35], quill: [1, 45, 38, 55], castle: [3, 48, 35, 52], planet: [0.5, 50, 39, 50], brokenClock: [5, 54, 30, 46],
+  headphones: [3, 61, 34, 39], teddy: [6, 47.5, 28, 52.5], hourglass: [10, 65, 24, 35], steamTrain: [1, 67, 37, 33]};
+// engraved: the recess's shadowed upper-left edge, the recess in darker wood, its cut lines, then a pale lower edge on the cuts
+const engrave = kind => { const m = MOTIFS[kind], [x, y, w, h] = MOTIF_BOX[kind], k = Math.min(26 / w, 36 / h);
+  const fit = `translate(33 63) scale(${k.toFixed(3)}) translate(${-(x + w / 2)} ${-(y + h / 2)})`, flat = m.s.replace(/ class="rd"/g, "");
+  return `<g class="eng" transform="${fit}"><g transform="translate(-.7 -.7)" fill="#341C0C" opacity=".8">${flat}</g><g fill="#522D15">${flat}</g>`
+    + (m.r ? `<g fill="#2E180A" opacity=".8">${m.r}</g>` : "")
+    + `<g fill="none" stroke="#2E180A" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">${m.g}</g><g fill="none" stroke="#B07A44" stroke-width=".6" stroke-linecap="round" opacity=".55" transform="translate(.5 .6)">${m.g}</g></g>`; };
+// the wood: lit from the upper left; ids per end ("start"/"end") so the two bookends on a page never share one
+const bookendSvg = (kind, pos) => { const id = "be-" + pos;
+  return `<svg viewBox="0 0 52 100" preserveAspectRatio="xMidYMid meet" style="--a:.52" overflow="visible" focusable="false"><defs><linearGradient id="${id}-w" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#94602F"/><stop offset=".5" stop-color="#7B4A24"/><stop offset="1" stop-color="#5E3519"/></linearGradient></defs>${bookendWood(id)}${engrave(kind)}</svg>`; };
 const bookend = (shelf, pos) => { const kind = SHELF_MOTIFS[shelf] || "openBook";
-  return `<span class="bookend ${pos}" data-kind="${kind}" aria-hidden="true">${bookendSvg(kind)}</span>`; };
+  return `<span class="bookend ${pos}" data-kind="${kind}" aria-hidden="true">${bookendSvg(kind, pos)}</span>`; };
 function shelfBanner(list, figures, shelf){
   const books = variedPick(list || [], 40);
   if (books.length < 8) return "";
@@ -551,8 +555,7 @@ function fitSpines(){
     sps.forEach((sp, i) => { sp.hidden = i >= n; });
     const inRow = !shelf.classList.contains("tiered");
     let o = 0; const put = el => { el.style.order = o++; }, placed = new Set();
-    // evenly among the books, never between the two at each end that stand on a bookend's base
-    const slots = frs.map((_, k) => Math.min(Math.max(n - 2, 2), Math.max(2, Math.round((k + 1) * n / (frs.length + 1)))));
+    const slots = frs.map((_, k) => Math.max(1, Math.round((k + 1) * n / (frs.length + 1))));   // evenly among the books
     if (ends[0]) put(ends[0]);
     for (let i = 0; i < n; i++) {
       if (inRow) frs.forEach((fr, k) => { if (!placed.has(fr) && slots[k] <= i) { put(fr); placed.add(fr); } });
@@ -561,12 +564,6 @@ function fitSpines(){
     if (inRow) frs.forEach(fr => { if (!placed.has(fr)) put(fr); });
     if (ends[1]) put(ends[1]);
     if (!inRow) frs.forEach(put);
-    // each bookend's base plate runs under the two books beside it, which stand on it
-    sps.forEach(sp => sp.classList.remove("on-base"));
-    const shown = sps.slice(0, n), gap = parseFloat(getComputedStyle(row).columnGap) || 0;
-    [[ends[0], shown.slice(0, 2)], [ends[1], shown.slice(-2)]].forEach(([end, under]) => { if (!end) return;
-      under.forEach(sp => sp.classList.add("on-base"));
-      end.style.setProperty("--bl", under.reduce((a, sp) => a + sp.offsetWidth, 0) + gap * Math.max(0, under.length - 1) + "px"); });
   });
   document.querySelectorAll("#view .hero-shelf .sp:not([hidden])").forEach(sp => {
     const t = sp.querySelector(".t"), b = t.querySelector("b"), au = t.querySelector("i");
