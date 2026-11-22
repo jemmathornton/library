@@ -477,6 +477,8 @@ function fitSpines(){
 }
 new MutationObserver(() => requestAnimationFrame(fitSpines)).observe(document.getElementById("view"), {childList: true});
 addEventListener("resize", () => requestAnimationFrame(fitSpines));
+// and as soon as the page's width changes, before it is drawn (the longer shelf, 22 Nov evening: a resize left spines past the edge for a frame)
+if (window.ResizeObserver) { let lastW = 0; new ResizeObserver(([e]) => { const w = Math.round(e.contentRect.width); if (w !== lastW) { lastW = w; fitSpines(); } }).observe(document.getElementById("view")); }
 document.fonts?.ready.then(fitSpines);
 const hero = (o) => { const bg = shelfBanner(o.covers);
   // no kicker line (❧ and a label or link) above the title any more (her note, 22 Nov: unneeded in the header); the sidebar is the way about
