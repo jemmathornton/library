@@ -1041,3 +1041,25 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 /* dark mode: the old books' shelves a dark board with the walnut ledge, not bright cream bands */
 :root[data-mode="dark"] .bookshelf{background:repeating-linear-gradient(to bottom,#2E241A 0,#261D15 168px,#6B4A2B 168px,#5E4126 182px)}
 :root[data-mode="dark"] .spine.gap{border-color:rgba(226,196,122,.45);background:repeating-linear-gradient(45deg,transparent 0 6px,rgba(226,196,122,.08) 6px 7px)}
+
+/* Try switch (while she chooses, 22 Nov evening; removed once she picks): Dystopia's engraving, only on its page (js/app.js) */
+.try-switch{position:fixed;right:18px;bottom:18px;z-index:20;display:grid;gap:7px;max-width:min(560px,calc(100vw - 36px));padding:10px 12px;border-radius:4px;
+  background:var(--deep);color:var(--on-deep);box-shadow:0 6px 20px rgba(0,0,0,.3);border:1px solid color-mix(in srgb,var(--gilt) 45%,transparent);font:600 12.5px/1.2 var(--body)}
+.try-switch[hidden],.jj-menu-open .try-switch{display:none}
+.try-switch>b{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass)}
+.try-row{display:flex;flex-wrap:wrap;align-items:center;gap:5px}
+.try-row span{flex:1 1 100%;opacity:.85;font-weight:500}
+.try-switch button{padding:6px 11px;min-height:30px;border:0;border-radius:999px;background:rgba(255,255,255,.12);color:inherit;font:inherit;cursor:pointer}
+.try-switch button[aria-pressed="true"]{background:var(--brass);color:var(--deep)}
+.try-switch button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+@media (max-width:600px){ .try-switch{right:10px;left:10px;bottom:10px;max-width:none;padding:8px 10px;gap:5px} .try-switch button{padding:5px 9px;min-height:28px;font-size:12px} }
+.hero-shelf .eng-opt{display:none}
+:root:not([data-try-dystopia]) .hero-shelf .eng-opt[data-opt="brokenClock"],
+:root[data-try-dystopia="brokenClock"] .hero-shelf .eng-opt[data-opt="brokenClock"],
+:root[data-try-dystopia="camera"] .hero-shelf .eng-opt[data-opt="camera"],
+:root[data-try-dystopia="watchtower"] .hero-shelf .eng-opt[data-opt="watchtower"],
+:root[data-try-dystopia="loudspeaker"] .hero-shelf .eng-opt[data-opt="loudspeaker"],
+:root[data-try-dystopia="gasMask"] .hero-shelf .eng-opt[data-opt="gasMask"],
+:root[data-try-dystopia="deadTree"] .hero-shelf .eng-opt[data-opt="deadTree"],
+:root[data-try-dystopia="skyline"] .hero-shelf .eng-opt[data-opt="skyline"],
+:root[data-try-dystopia="padlock"] .hero-shelf .eng-opt[data-opt="padlock"]{display:inline}

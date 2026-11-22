@@ -264,13 +264,16 @@ test("22 Nov evening: the header's shelf: full width under the title, the figure
             if (spr.some(x => vr.right > x.left + 1 && vr.left < x.right - 1)) problems.push(`${at}: bookend ${k + 1} over a book`);
             if (base.x > 3 || base.width < 10) problems.push(`${at}: bookend ${k + 1}'s foot doesn't run outwards`);
             // her pick: the shelf's picture engraved on the panel's face, inside it
-            const eng = be.querySelector("svg g.eng"), panel = be.querySelector(".be-panel").getBBox();
+            const eng = [...be.querySelectorAll("svg g.eng")].find(g => g.getBoundingClientRect().width), panel = be.querySelector(".be-panel").getBBox();
             if (!eng) problems.push(`${at}: bookend ${k + 1} has no engraving`);
             else { const r = eng.getBoundingClientRect(), pr = be.querySelector(".be-panel").getBoundingClientRect();
               if (r.left < pr.left || r.right > pr.right || r.top < pr.top || r.bottom > pr.bottom) problems.push(`${at}: bookend ${k + 1}'s engraving off its panel`);
-              // her note: each picture stands on the carved ground line above the foot
-              const gr = be.querySelector("svg g.eng-ground").getBoundingClientRect(), ownBottom = be.querySelectorAll("svg g.eng > g")[1].getBoundingClientRect().bottom;
-              if (Math.abs(ownBottom - gr.top) > 1.2) problems.push(`${at}: bookend ${k + 1}'s engraving not standing on its ground line (${(ownBottom - gr.top).toFixed(1)}px)`); }
+              // her notes: each picture's drawn shape stands on the carved ground line (sunk a little into it, never above it), with clear
+              // space at the sides and top (at least 15% of the panel's width)
+              const line = be.querySelector("svg .eng-line").getBoundingClientRect(), face = eng.querySelector(".eng-face").getBoundingClientRect(), into = face.bottom - line.top;
+              if (into < 0.3 || into > line.height) problems.push(`${at}: bookend ${k + 1}'s engraving not standing on its ground line (${into.toFixed(1)}px)`);
+              const room = pr.width * 0.15;
+              if (face.left - pr.left < room || pr.right - face.right < room || face.top - pr.top < room) problems.push(`${at}: bookend ${k + 1}'s engraving too big for its panel`); }
             if (panel.x + panel.width < 51.5) problems.push(`${at}: bookend ${k + 1}'s panel not against the book`); });
           const line = hero.querySelector(":scope > p");
           if (h === "home" && w >= 1300 && line && line.getBoundingClientRect().height > parseFloat(win.getComputedStyle(line).lineHeight) * 1.5) problems.push(`${at}: the line under the title wraps`);
@@ -304,10 +307,22 @@ test("22 Nov evening: the header's bookends are the same wooden L with each shel
   if (kinds["#shelf-science-fiction"]) eq(kinds["#shelf-science-fiction"], "planet", "Science Fiction:");
   if (kinds["#shelf-travel"]) eq(kinds["#shelf-travel"], "steamTrain", "Travel:");
   eq(wood.size, 1, "the same wooden bookend on every shelf:");
-  ok(!$(".try-switch") && !document.documentElement.dataset.tryPlace && !document.documentElement.dataset.tryEnds && !document.documentElement.dataset.tryFrames, "the Try switch is gone");
+  ok(!document.documentElement.dataset.tryPlace && !document.documentElement.dataset.tryEnds && !document.documentElement.dataset.tryFrames, "the old Try switch rows are gone");
+  // the Dystopia Try switch (while she chooses): only on the Dystopia shelf's page, every option drawn, one shown
+  await show("#home"); await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  ok(!$(".try-switch") || $(".try-switch").hidden, "no Try switch on Home");
+  if (shelfIndex["dystopia"] && $("#view .hero-shelf")) { /* (Home has a shelf; Dystopia's own page is checked below if it has one) */ }
+  await show("#shelf-dystopia"); await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+  const dys = $("#view .hero-shelf .bookend");
+  if (dys) {
+    ok($(".try-switch") && !$(".try-switch").hidden, "the Try switch on the Dystopia page");
+    eq(dys.querySelectorAll(".eng-opt").length, 8, "eight Dystopia options drawn:");
+    eq(dys.querySelectorAll(".eng-opt").length - [...dys.querySelectorAll(".eng-opt")].filter(g => getComputedStyle(g).display === "none").length, 1, "one shown:");
+  }
   ok(["frames", "place", "ends"].every(k => localStorage.getItem("library-try-" + k) === null), "its remembered choices cleared");
-  await show("#home"); const first = $$("#view .hero-shelf .fr").map(f => f.getAttribute("style"));
-  await show("#home"); eq($$("#view .hero-shelf .fr").map(f => f.getAttribute("style")), first, "the same turns and sizes again:");
+  const turns = () => $$("#view .hero-shelf .fr").map(f => ["--ry", "--rx", "--s"].map(k => f.style.getPropertyValue(k).trim()).join(" "));   // not the margins and order fitSpines() adds
+  await show("#home"); const first = turns();
+  await show("#home"); eq(turns(), first, "the same turns and sizes again:");
   ok(!$("#view .hero > .figures"), "Home: no ruled line of figures besides the frames");
 });
 

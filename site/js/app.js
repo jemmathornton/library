@@ -503,22 +503,44 @@ const MOTIFS = {
   steamTrain: {s: `<circle class="rd" cx="9" cy="95.5" r="4.5"/><circle class="rd" cx="19" cy="95.5" r="4.5"/><circle class="rd" cx="31" cy="96.5" r="3.5"/><rect x="3" y="88" width="35" height="4.5"/><rect x="1" y="86.5" width="3" height="3.5"/><path class="rd" d="M4 88V81Q4 78 7 78H26V88z"/><rect x="26" y="70" width="12" height="18"/><rect x="24.5" y="67.5" width="13.5" height="3"/><rect x="7.5" y="71" width="4" height="7"/><rect x="6.5" y="69" width="6" height="2.5"/><circle cx="18" cy="78" r="2.6"/><circle cx="9.5" cy="65" r="3"/><circle cx="12.6" cy="64.2" r="2.6"/><circle cx="8" cy="58" r="2.4"/><circle cx="10.3" cy="57.2" r="2"/><circle cx="11" cy="51.8" r="1.7"/>`,
     r: `<rect x="29" y="73" width="6" height="5.5" rx="1"/>`,
     g: `<path d="M9 95.5H19M7 83H25"/><circle cx="9" cy="95.5" r="1.4"/><circle cx="19" cy="95.5" r="1.4"/>`},
+  // Dystopia options (her ask: "Show me options for dystopia"; Try switch while she chooses)
+  camera: {s: `<rect x="12" y="96" width="16" height="4" rx="1"/><rect x="18.2" y="58" width="3.6" height="38"/><rect x="17.5" y="52" width="5" height="8" rx="1"/><rect x="9" y="42" width="24" height="11" rx="2.5" transform="rotate(16 21 47.5)"/><rect x="4.5" y="42.5" width="6" height="8" rx="1.2" transform="rotate(16 21 47.5)"/>`,
+    g: `<path d="M13 45.5L29 50" transform="rotate(0)"/><path d="M18 70H22M18 80H22"/>`, r: `<circle cx="8.2" cy="45.4" r="1.6"/>`},
+  watchtower: {s: `<path d="M7 100L12.5 66H15.5L10.5 100zM33 100L27.5 66H24.5L29.5 100z"/><rect x="9" y="52" width="22" height="14"/><path d="M6 52L20 41L34 52z"/><rect x="8" y="65" width="24" height="2.4"/>`,
+    g: `<path d="M11 92L28 78M29 92L12 78M12.5 80H27.5"/>`, r: `<rect x="12" y="55" width="16" height="6"/>`},
+  loudspeaker: {s: `<rect x="17" y="96" width="14" height="4" rx="1"/><rect x="22.4" y="50" width="3.2" height="46"/><rect x="20" y="49" width="9" height="9" rx="1.2"/><path d="M21 51L6 43V64L21 56.5z"/><rect x="4" y="42" width="3" height="23" rx="1.2"/>`,
+    g: `<path d="M10 46V61M22 75H26"/>`},
+  gasMask: {s: `<rect x="13" y="96" width="14" height="4" rx="1"/><rect x="18.4" y="88" width="3.2" height="8"/><path d="M6 66C6 50 34 50 34 66C34 75 29 80 25 82H15C11 80 6 75 6 66z"/><circle cx="20" cy="83" r="6.5"/>`,
+    g: `<circle cx="20" cy="83" r="3.6"/><path d="M6.5 62L2.5 58M33.5 62L37.5 58"/>`, r: `<ellipse cx="13.6" cy="63.5" rx="4.4" ry="3.8"/><ellipse cx="26.4" cy="63.5" rx="4.4" ry="3.8"/>`},
+  deadTree: {s: `<path d="M8 100Q20 95.5 32 100z"/><path d="M16 99C17.5 88 17.5 78 16.5 70C13.5 66 10.5 62 7.5 56L9 55C12.5 60 15 63 17.4 66C18 60 17 52 14.8 46L16.6 45.4C19.6 52 20.6 60 20.2 66C23 62 27 58 30.6 52L32.2 53C29 59 25.5 64 22.4 70C22.2 80 22.6 90 24.5 99z"/><path d="M11 59.5L6 61L6.5 59.4L10.4 58zM29 55.6L34 56L33.4 57.4L28.6 57zM16 50L12.5 47.5L13.6 46.6L16.5 49z"/>`,
+    g: `<path d="M19 96C19.6 88 19.6 80 19.2 72"/>`},
+  skyline: {s: `<path d="M3 100V74H8V70L10 72.5V64H16V80L18 77.5V58H24V63L26 60.5V71L28.5 69V84H32V76L35 79.5V100z"/>`,
+    g: `<path d="M3 90H35"/>`, r: `<rect x="11" y="67" width="2.4" height="3"/><rect x="11" y="73" width="2.4" height="3"/><rect x="20" y="62" width="2.4" height="3"/><rect x="20" y="68" width="2.4" height="3"/><rect x="20" y="74" width="2.4" height="3"/><rect x="4.6" y="78" width="2" height="3"/><rect x="29" y="87" width="2" height="2.6"/>`},
+  padlock: {s: `<rect x="10" y="74" width="20" height="26" rx="3"/><path d="M13.5 75V65A6.5 6.5 0 0 1 26.5 65V75H22.8V65A2.8 2.8 0 0 0 17.2 65V75z"/><path fill-rule="evenodd" d="M2.5 61.5a3.2 4.6 0 1 0 6.4 0a3.2 4.6 0 1 0-6.4 0zM4.3 61.5a1.4 2.8 0 1 0 2.8 0a1.4 2.8 0 1 0-2.8 0zM31.1 61.5a3.2 4.6 0 1 0 6.4 0a3.2 4.6 0 1 0-6.4 0zM32.9 61.5a1.4 2.8 0 1 0 2.8 0a1.4 2.8 0 1 0-2.8 0z"/><rect x="8.4" y="60.6" width="5.6" height="1.8"/><rect x="26" y="60.6" width="5.6" height="1.8"/>`,
+    g: `<path d="M12.5 79H27.5"/>`, r: `<circle cx="20" cy="85" r="2.4"/><path d="M18.9 86.6h2.2L21.8 93h-3.6z"/>`},
 };
+const DYSTOPIA_OPTIONS = [["brokenClock", "Clock (now)"], ["camera", "Security camera"], ["watchtower", "Watchtower"], ["loudspeaker", "Loudspeaker"], ["gasMask", "Gas mask"], ["deadTree", "Dead tree"], ["skyline", "Ruined skyline"], ["padlock", "Padlock and chain"]];
 const SHELF_MOTIFS = {"adult-fiction": "quillInk", fantasy: "castle", "science-fiction": "planet", dystopia: "brokenClock", "young-adult": "headphones",
   childrens: "teddy", "non-fiction": "hourglass", travel: "steamTrain"};   // anything else: the open book
-// where each picture sits in its own drawing (x, y, width, height), so it can be fitted evenly into the panel's face, centred
-const MOTIF_BOX = {openBook: [3, 65, 35, 35], quill: [1, 45, 38, 55], quillInk: [8, 33, 27, 67], castle: [3, 48, 35, 52], planet: [0.5, 50, 39, 50], brokenClock: [5, 54, 30, 46],
-  headphones: [3, 61, 34, 39], teddy: [6, 47.5, 28, 52.5], hourglass: [10, 65, 24, 35], steamTrain: [1, 50, 37, 50]};
+// where each picture's drawn shape sits in its own drawing (x, y, width, height), measured once in the browser (her note: some didn't
+// touch the line; a rounded foot only met it at a point)
+const MOTIF_BOX = {};
+const motifBox = kind => MOTIF_BOX[kind] || (MOTIF_BOX[kind] = (() => { const ns = "http://www.w3.org/2000/svg", svg = document.createElementNS(ns, "svg"), g = document.createElementNS(ns, "g");
+  svg.setAttribute("style", "position:absolute;left:-9999px;top:0;width:100px;height:100px;visibility:hidden"); g.innerHTML = MOTIFS[kind].s;
+  svg.appendChild(g); document.body.appendChild(svg); const r = g.getBBox(); svg.remove(); return [r.x, r.y, r.width, r.height]; })());
 // engraved: the recess's shadowed upper-left edge, the recess in darker wood, its cut lines, then a pale lower edge on the cuts. Each
 // picture stands on a carved ground line just above the panel's foot (her note: "they should be on the bottom of the bookend like they
-// have a base"), centred across, bottom-aligned on it
+// have a base"), its lowest part sunk 1 into the line so it plainly stands on it; centred across, with clear space at the sides and
+// top (her note: some were too big): at most 21 wide (the panel is 38) and 32 tall, and about the same area each
 const ENGRAVE_GROUND = 88;
-const engrave = kind => { const m = MOTIFS[kind], [x, y, w, h] = MOTIF_BOX[kind], k = Math.min(27 / w, 48 / h);
-  const fit = `translate(33 ${ENGRAVE_GROUND}) scale(${k.toFixed(3)}) translate(${-(x + w / 2)} ${-(y + h)})`, flat = m.s.replace(/ class="rd"/g, "");
-  const ground = `<rect x="19" y="${ENGRAVE_GROUND}" width="28" height="2.4" rx=".8"/>`;
-  return `<g class="eng-ground"><g transform="translate(-.6 -.6)" fill="#341C0C" opacity=".8">${ground}</g><g fill="#522D15">${ground}</g><path d="M19.6 ${ENGRAVE_GROUND + 2.9}H46.4" stroke="#B07A44" stroke-width=".6" opacity=".55"/></g><g class="eng" transform="${fit}"><g transform="translate(-.7 -.7)" fill="#341C0C" opacity=".8">${flat}</g><g fill="#522D15">${flat}</g>`
+const engraveOne = kind => { const m = MOTIFS[kind], [x, y, w, h] = motifBox(kind), k = Math.min(21 / w, 32 / h, Math.sqrt(560 / (w * h)));
+  const fit = `translate(33 ${ENGRAVE_GROUND + 1}) scale(${k.toFixed(3)}) translate(${(-(x + w / 2)).toFixed(2)} ${(-(y + h)).toFixed(2)})`, flat = m.s.replace(/ class="rd"/g, "");
+  return `<g class="eng" transform="${fit}"><g transform="translate(-.7 -.7)" fill="#341C0C" opacity=".8">${flat}</g><g class="eng-face" fill="#522D15">${flat}</g>`
     + (m.r ? `<g fill="#2E180A" opacity=".8">${m.r}</g>` : "")
     + `<g fill="none" stroke="#2E180A" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">${m.g}</g><g fill="none" stroke="#B07A44" stroke-width=".6" stroke-linecap="round" opacity=".55" transform="translate(.5 .6)">${m.g}</g></g>`; };
+const engrave = kind => { const ground = `<rect x="19" y="${ENGRAVE_GROUND}" width="28" height="2.4" rx=".8"/>`;
+  return `<g class="eng-ground"><g transform="translate(-.6 -.6)" fill="#341C0C" opacity=".8">${ground}</g><g class="eng-line" fill="#522D15">${ground}</g><path d="M19.6 ${ENGRAVE_GROUND + 2.9}H46.4" stroke="#B07A44" stroke-width=".6" opacity=".55"/></g>`
+    + (kind === "brokenClock" ? DYSTOPIA_OPTIONS.map(([k]) => `<g class="eng-opt" data-opt="${k}">${engraveOne(k)}</g>`).join("") : engraveOne(kind)); };
 // the wood: lit from the upper left; ids per end ("start"/"end") so the two bookends on a page never share one
 const bookendSvg = (kind, pos) => { const id = "be-" + pos;
   return `<svg viewBox="0 0 52 100" preserveAspectRatio="xMidYMid meet" style="--a:.52" overflow="visible" focusable="false"><defs><linearGradient id="${id}-w" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#94602F"/><stop offset=".5" stop-color="#7B4A24"/><stop offset="1" stop-color="#5E3519"/></linearGradient></defs>${bookendWood(id)}${engrave(kind)}</svg>`; };
@@ -1916,6 +1938,24 @@ capitalise(document);
 
 // the skip link: focus the page without changing the address (no inline handler, ready for a strict security policy online; round 4)
 document.addEventListener("click", e => { const a = e.target.closest && e.target.closest("a[data-skip]"); if (!a) return; e.preventDefault(); const v = document.getElementById("view"); if (v) { if (!v.hasAttribute("tabindex")) v.setAttribute("tabindex", "-1"); v.focus(); } });
+
+// ---------- Try switch (while she chooses, 22 Nov evening; removed once she picks) ----------
+// Dystopia's engraving (her ask: "Show me options for dystopia"): only on the Dystopia shelf's page. Remembered in localStorage
+// library-try-dystopia; ?try-dystopia=… picks one.
+(() => {
+  const root = document.documentElement, q = new URLSearchParams(location.search);
+  let v = "brokenClock"; try { v = localStorage.getItem("library-try-dystopia") || v; } catch {}
+  v = q.get("try-dystopia") || v; if (!DYSTOPIA_OPTIONS.some(o => o[0] === v)) v = "brokenClock";
+  const box = document.createElement("div"); box.className = "try-switch"; box.setAttribute("role", "group"); box.setAttribute("aria-label", "Try a look");
+  const draw = () => { box.innerHTML = `<b>Try</b><div class="try-row"><span>Dystopia bookends</span>${DYSTOPIA_OPTIONS.map(([k, w]) =>
+    `<button type="button" data-v="${k}" aria-pressed="${v === k}">${w}</button>`).join("")}</div>`; };
+  const show = () => { box.hidden = !document.querySelector('#view .bookend[data-kind="brokenClock"]'); document.body.style.paddingBottom = box.hidden ? "" : box.offsetHeight + 28 + "px"; };
+  const apply = () => { root.dataset.tryDystopia = v; try { localStorage.setItem("library-try-dystopia", v); } catch {} draw(); show(); };
+  box.addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (!b) return; v = b.dataset.v; apply(); box.querySelector(`[data-v="${v}"]`)?.focus(); });
+  document.body.appendChild(box); apply();
+  new MutationObserver(() => requestAnimationFrame(show)).observe(document.getElementById("view"), {childList: true});
+  addEventListener("resize", show);
+})();
 
 // the header Try switch is gone (her picks, 22 Nov evening: mixed frames, among the books, wooden bookends): its remembered choices cleared
 try { ["frames", "place", "ends"].forEach(k => localStorage.removeItem("library-try-" + k)); } catch {}
