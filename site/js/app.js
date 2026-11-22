@@ -265,10 +265,10 @@ function cover(b, extra = "", big = false){
   return `<div class="cover${b.cover ? "" : " blank"}${ratio ? " fit" : ""}${b.notOwned && !big ? " unowned" : ""}${TRIAL && b.coverTrial ? " trial" : ""} ${extra}" style="--c:${s ? s.color : "#5E3D22"}${ratio ? ";--r:" + ratio : ""}">${badge}${tag}${strip}${b.cover ? `<img src="${escRaw(coverSrc(b, big))}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
 }
 // a cover that won't load becomes a title card
-// (and a banner's small cover that won't load is taken out: no inline handlers, for the Content Security Policy, 22 Nov)
+// (no inline handlers, for the Content Security Policy, 22 Nov)
 document.addEventListener("error", e => { const img = e.target; if (img.tagName !== "IMG" || !img.parentNode) return;
   if (img.parentNode.classList.contains("cover")) { img.parentNode.classList.add("blank"); img.remove(); }
-  else if (img.parentNode.classList.contains("hero-shelf")) img.remove(); }, true);
+  }, true);
 
 const href = b => isElsewhere(b) ? "#" + b.id : "#b-" + b.id;
 // each card as wide as its cover at the shelf height, so every cover is the same height and none overlap (her ask, 1 Nov)
@@ -365,39 +365,79 @@ function listView(list){
     return `<a href="${href(b)}">${cover(b)}<b>${esc(b.t)}</b><span>${esc(b.by)}</span><span>${esc(b.publisher || "")}</span><span>${year(b.published)}</span>`
       + `<span class="st ${st || ""}">${st === "read" ? "Read" : st === "reading" ? "Reading" : ""}</span></a>`; }).join("")}</div>`;
 }
-// a banner is made of the page's own book covers, fading into the walnut behind the words (as the Sims site's banners
-// are each world's own map); pages with too few covers keep the plain walnut
-// the header's covers are a varied selection (her ask, 22 Nov): at most one book per series and per author where there are enough,
-// the shelves taken in turn (Home, All shelves…), in an order that is the same all day for the same page (seeded by the date and the
-// page's books, not reshuffled on every load); then, if that leaves too few, the rest of the page's books as before
+// the header's books (her rules, 22 Nov): on a page of the whole library (Home, All shelves…) one book from each shelf in turn, in the
+// shelves' own order, so every shelf has one before any has two; never two by the same author or from the same series. On a shelf page
+// only its books, by the same rule, then (if that leaves too few) its other books. The order within each shelf is the same all day for
+// the same page (seeded by the date and the page's books), not reshuffled on every load.
 function variedPick(list, n){
   const books = list.filter(b => b.cover);
   let seed = 0; for (const ch of new Date().toISOString().slice(0, 10) + "|" + books.length + "|" + (books[0] ? books[0].id || books[0].t : "")) seed = (seed * 31 + ch.charCodeAt(0)) >>> 0;
   const rand = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
   const mixed = books.map(b => [rand(), b]).sort((x, y) => x[0] - y[0]).map(x => x[1]);
-  const byShelf = new Map(); mixed.forEach(b => (byShelf.get(b.shelf) || byShelf.set(b.shelf, []).get(b.shelf)).push(b));
-  const turns = []; for (let i = 0, more = true; more; i++) { more = false; byShelf.forEach(l => { if (i < l.length) { turns.push(l[i]); more = true; } }); }
+  const byShelf = new Map(SHELVES.map(sh => [sh.id, []]));
+  mixed.forEach(b => (byShelf.get(b.shelf) || byShelf.set(b.shelf, []).get(b.shelf)).push(b));
+  const queues = [...byShelf.values()].filter(q => q.length);
   const picked = [], series = new Set(), authors = new Set();
   const seriesKey = b => { const h = (seriesOf[b.id] || [])[0]; return h ? h.series.name : ""; };
   const authorKey = b => slug(b.by || "");
-  for (const strict of [true, false]) for (const b of turns) {
-    if (picked.length >= n) break;
-    if (picked.includes(b)) continue;
-    const sk = seriesKey(b), ak = authorKey(b);
-    if (strict && ((sk && series.has(sk)) || (ak && authors.has(ak)))) continue;
-    picked.push(b); if (sk) series.add(sk); if (ak) authors.add(ak);
+  const ok = b => { const sk = seriesKey(b), ak = authorKey(b); return !(sk && series.has(sk)) && !(ak && authors.has(ak)); };
+  const take = b => { picked.push(b); const sk = seriesKey(b), ak = authorKey(b); if (sk) series.add(sk); if (ak) authors.add(ak); };
+  for (let took = true; took && picked.length < n; ) {
+    took = false;
+    for (const q of queues) { if (picked.length >= n) break; const i = q.findIndex(ok); if (i >= 0) { take(q.splice(i, 1)[0]); took = true; } }
   }
+  if (queues.length === 1) for (const b of mixed) { if (picked.length >= n) break; if (!picked.includes(b)) picked.push(b); }
   return picked;
 }
+// the header's books stand as spines on a walnut ledge (her pick, 22 Nov, Spines with the Stamped finish, from a Try switch of a plate,
+// shelf, spines, fan, row and stack): each spine in its cover's main colour (data.js "spine", made by the build; an old book's
+// "cloth"), rounded, with gilt bands; its thickness from the page count (a 32-page picture book thin, a 900-page book thick; no count:
+// middling) and its height from the book's shape (a picture book or square edition short, a mass-market paperback a little shorter
+// than a trade one, a big illustrated or hardback edition tallest); her title and author up every spine (fitSpines() below)
+const spineThick = b => { const n = +b.pages; return n > 0 ? Math.round(Math.min(46, Math.max(16, 9 + n / 15))) : 26; };
+const spineTall = b => { const r = +b.coverRatio || 1.53, n = +b.pages || 0;
+  if (r < 1.2 || (n && n < 64)) return 74;   // picture books, square editions
+  if (r < 1.45) return 100;                    // big illustrated and hardback editions
+  if (r > 1.62) return 86;                     // mass-market paperbacks, travel guides
+  return 93; };                                // trade paperbacks
+const surnameOf = by => (String(by || "").split(/,| and | & /)[0].trim().split(/\s+/).pop() || "");
 function shelfBanner(list){
-  const pics = variedPick(list || [], 32);
-  return pics.length >= 8 ? `<div class="hero-shelf" aria-hidden="true">${pics.map(b => `<img src="${escRaw(coverSrc(b, false, true))}" alt="">`).join("")}</div>` : "";   // the banner's small copies (tiny); one that won't load is taken out (below, no inline handler)
+  const books = variedPick(list || [], 30);
+  if (books.length < 8) return "";
+  return `<div class="hero-shelf" aria-hidden="true"><div class="sp-row">${books.map(b => {
+    const c = /^#[0-9a-f]{6}$/i.test(b.spine || b.cloth || "") ? (b.spine || b.cloth) : "#7A6650", lum = luminance(c);
+    // dark: gilt-foil lettering; anything lighter is blind-stamped (darker, with a light edge), for legibility
+    return `<span class="sp${lum < 0.2 ? " dark" : ""}" style="--c:${c};--h:${spineTall(b)}%;--w:${spineThick(b)}px"><span class="t"><b>${esc(b.t)}</b>${b.by ? `<i data-full="${esc(b.by)}" data-short="${esc(surnameOf(b.by))}">${esc(b.by)}</i>` : ""}</span></span>`;
+  }).join("")}</div></div>`;
 }
+// each spine's lettering fitted to it, title and author always both (her rule, 22 Nov): on one line, smaller as needed; else in two
+// lines side by side where the spine is wide enough; else the author's surname only, smaller; only then the title cut short with an
+// ellipsis. Centred both ways. Only whole spines stand on the ledge: any that would run past its end are left off, the row centred.
+function fitSpines(){
+  document.querySelectorAll("#view .hero-shelf .sp-row").forEach(row => {
+    row.classList.add("measuring"); row.querySelectorAll(".sp").forEach(sp => { sp.hidden = false; });
+    row.querySelectorAll(".sp").forEach(sp => { if (sp.offsetLeft + sp.offsetWidth > row.clientWidth) sp.hidden = true; });
+    row.classList.remove("measuring");
+  });
+  document.querySelectorAll("#view .hero-shelf .sp:not([hidden])").forEach(sp => {
+    const t = sp.querySelector(".t"), b = t.querySelector("b"), au = t.querySelector("i");
+    if (!sp.offsetHeight) return;
+    const room = sp.clientHeight - 20, across = sp.clientWidth - 6;
+    const whole = el => !el || (el.scrollHeight <= el.clientHeight + 1 && el.scrollWidth <= el.clientWidth + 1);
+    const fits = () => t.scrollHeight <= room + 1 && t.scrollWidth <= across + 1 && whole(b) && whole(au);
+    const set = (cls, fs, short) => { t.className = "t" + (cls ? " " + cls : ""); t.style.fontSize = fs + "px"; if (au) au.textContent = short ? au.dataset.short : au.dataset.full; };
+    for (let fs = 13; fs >= 9.5; fs -= 0.5) { set("", fs); if (fits()) return; }
+    if (au && across >= 24) for (let fs = 13; fs >= 9; fs -= 0.5) { set("stack", fs); if (fits()) return; }
+    for (let fs = 12; fs >= 8.5; fs -= 0.5) { set("", fs, true); if (fits()) return; }
+    set("", 8.5, true);   // the title cut short, the surname kept
+  });
+}
+new MutationObserver(() => requestAnimationFrame(fitSpines)).observe(document.getElementById("view"), {childList: true});
+addEventListener("resize", () => requestAnimationFrame(fitSpines));
+document.fonts?.ready.then(fitSpines);
 const hero = (o) => { const bg = shelfBanner(o.covers);
   // no kicker line (❧ and a label or link) above the title any more (her note, 22 Nov: unneeded in the header); the sidebar is the way about
   return `<header class="hero${bg ? " shelved" : ""}">${bg}<h1>${o.title}</h1>${o.text ? `<p>${o.text}</p>` : ""}${o.figures ? `<div class="figures">${o.figures.map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join("")}</div>` : ""}</header>`; };
-// a mix across the whole library: every few books, so all the shelves show
-const mixed = list => { const c = list.filter(b => b.cover), step = Math.max(1, Math.floor(c.length / 32)); return c.filter((b, i) => i % step === 0); };
 const sectionHead = (title, more) => `<div class="section-head"><h2>${title}</h2>${more || ""}</div>`;
 
 // ---------- sidebar ----------
@@ -527,7 +567,7 @@ let currentList = [], currentGrouped = false, currentShelf = "";
 function pageAllShelves(){
   currentList = BOOKS.concat(NOT_OWNED); currentGrouped = true;
   const shelves = SHELVES.filter(s => s.books.length && s.libib).length;
-  return hero({kicker: `<a href="#home">Every shelf</a>`, title: "All <em>shelves</em>", covers: mixed(BOOKS), text: "The whole bookcase at once, shelf by shelf, each in author surname order.",
+  return hero({kicker: `<a href="#home">Every shelf</a>`, title: "All <em>shelves</em>", covers: BOOKS, text: "The whole bookcase at once, shelf by shelf, each in author surname order.",
       figures: [[num(nBooks(BOOKS)), "books"], [num(shelves), "shelves"], [num(WRITERS.length), "authors"], [num(booksRead(BOOKS)), "read"]]})
     + `<div id="shelfBooks">${shelfBooks(currentList)}</div>`;
 }
@@ -638,7 +678,7 @@ function pageAuthors(){
   const groups = {};
   AUTHORS.forEach(a => { const L = (a.sort[0] || "#").toUpperCase(); (groups[/[A-Z]/.test(L) ? L : "#"] ||= []).push(a); });
   const letters = Object.keys(groups).sort();
-  return hero({kicker: "Browse", title: "The <em>authors</em>", covers: mixed([...BOOKS].sort(SORTS.author[1])), text: "Everyone with a name on a book here, illustrators and translators included, by surname.",
+  return hero({kicker: "Browse", title: "The <em>authors</em>", covers: BOOKS, text: "Everyone with a name on a book here, illustrators and translators included, by surname.",
       figures: [[num(AUTHORS.length), "people"], [num(AUTHORS.filter(a => authorBooks(a) > 1).length), "with more than one book"]]})
     + `<div class="letters">${letters.map(L => `<a href="#authors" data-jump="az-${L}">${L}</a>`).join("")}</div>`
     + letters.map(L => `<section class="az" id="az-${L}"><h2>${L}</h2><ul>${groups[L].map(a => `<li><a href="#a-${a.id}">${esc(a.name)}</a><span>${authorBooks(a)}</span></li>`).join("")}</ul></section>`).join("");
@@ -1398,7 +1438,7 @@ function pageStats(){
   const readN = booksRead(BOOKS), titles = new Set(BOOKS.map(bookKey)).size, perYear = {};
   readingLog().filter(isRead).flatMap(finishes).forEach(d => { const y = year(d); if (y) perYear[y] = (perYear[y] || 0) + 1; });
   const readYears = Object.keys(perYear).sort().reverse().map(y => ({label: y, n: perYear[y], href: "#history"}));
-  return hero({kicker: "The numbers", title: "<em>Stats</em>", text: "How the library adds up.", covers: mixed([...BOOKS].reverse())})
+  return hero({kicker: "The numbers", title: "<em>Stats</em>", text: "How the library adds up.", covers: BOOKS})
     + `<div class="ledger"><div class="ledger-grid">
         <div class="meter"><b>${num(TITLES.length)}</b><span>books on the shelves</span></div>
         <div class="meter"><b>${num(pages)}</b><span>pages (${num(withPages.length)} books with a page count)</span></div>
@@ -1489,7 +1529,8 @@ function startFamily(){
 // The family's code comes from Jemma's Journals: /family/ when served, its site/family folder beside when opened as a file
 // (js/family-path.js chooses before the page asks for anything; round 5)
 if (window.JJFamily) startFamily();
-try { localStorage.removeItem("library-try"); } catch {}   // the round 5 Try switch's remembered choice (the switch is gone)
+// the round 5 Try switches' remembered choices (the switches are gone)
+try { ["library-try", "library-try-covers", "library-try-finish"].forEach(k => localStorage.removeItem(k)); } catch {}
 
 // "← Jemma's Journals": "/" is home where the sites share one address (the family server, online); opened straight from the folder
 // that would be the root of drive C:, so it goes to Jemma's Journals' page in the folder beside (round 3, 22 Nov; as Sim World does)
@@ -1720,80 +1761,3 @@ capitalise(document);
 // the skip link: focus the page without changing the address (no inline handler, ready for a strict security policy online; round 4)
 document.addEventListener("click", e => { const a = e.target.closest && e.target.closest("a[data-skip]"); if (!a) return; e.preventDefault(); const v = document.getElementById("view"); if (v) { if (!v.hasAttribute("tabindex")) v.setAttribute("tabindex", "-1"); v.focus(); } });
 
-// ===== TRY SWITCH: TEMPORARY (22 Nov, round 5), only while she chooses; delete this block with the one at the end of site.css =====
-// Bottom right, one row, "Covers in the header": As now (the plate) / Shelf / Fan / Row / Stack, on every page with covers in its
-// header. Remembered in localStorage "library-try-covers"; ?try-covers=… in the address picks one (for the record pictures).
-(() => {
-  const OPTS = [["now", "As now"], ["shelf", "Shelf"], ["spines", "Spines"], ["fan", "Fan"], ["row", "Row"], ["stack", "Stack"]];
-  // Spines: the same books as upright spines on the ledge, each in its cover's main colour (data.js "spine", made by the build; an
-  // old book's "cloth"), her title (and author when it fits) up the spine. Believable sizes (her note, 22 Nov): the thickness from the
-  // page count (a 32-page picture book thin, a 900-page book thick; no count: middling), the height from the book's shape (a picture
-  // book or square edition short, a mass-market paperback a little shorter than a trade one, a big illustrated or hardback edition tallest)
-  const thick = b => { const n = +b.pages; return n > 0 ? Math.round(Math.min(46, Math.max(12, 9 + n / 15))) : 26; };
-  const tall = b => { const r = +b.coverRatio || 1.53, n = +b.pages || 0;
-    if (r < 1.2 || (n && n < 64)) return 74;   // picture books, square editions
-    if (r < 1.45) return 100;                    // big illustrated and hardback editions
-    if (r > 1.62) return 86;                     // mass-market paperbacks, travel guides
-    return 93; };                                // trade paperbacks
-  const realBanner = shelfBanner;
-  shelfBanner = list => { const html = realBanner(list); if (!html) return html;
-    const spines = variedPick(list || [], 30).map(b => { const c = /^#[0-9a-f]{6}$/i.test(b.spine || b.cloth || "") ? (b.spine || b.cloth) : "#7A6650";
-      const lum = luminance(c);   // pale: dark lettering (Flat); dark: gilt foil when Stamped (anything lighter is blind-stamped there, for legibility)
-      return `<span class="sp${lum > 0.33 ? " pale" : ""}${lum < 0.2 ? " dark" : ""}" style="--c:${c};--h:${tall(b)}%;--w:${thick(b)}px"><span class="t"><b>${esc(b.t)}</b>${b.by ? `<i>${esc(b.by)}</i>` : ""}</span></span>`; }).join("");
-    return html + `<div class="hero-spines" aria-hidden="true"><div class="sp-row">${spines}</div></div>`; };
-  // each spine's lettering fitted to it: the title and author on one line if they fit; else the title alone, a little smaller;
-  // else on two lines when the spine is wide enough; only then cut short with an ellipsis. Centred both ways in the spine.
-  const fitSpines = () => { if (pick !== "spines") return;
-    // only whole spines on the ledge: those that would run past its end are left off, and the row is centred
-    document.querySelectorAll("#view .hero-spines .sp-row").forEach(row => {
-      row.classList.add("measuring"); row.querySelectorAll(".sp").forEach(sp => { sp.hidden = false; });
-      row.querySelectorAll(".sp").forEach(sp => { if (sp.offsetLeft + sp.offsetWidth > row.clientWidth) sp.hidden = true; });
-      row.classList.remove("measuring"); });
-    document.querySelectorAll("#view .hero-spines .sp:not([hidden])").forEach(sp => {
-      const t = sp.querySelector(".t"), au = t.querySelector("i");
-      if (!sp.offsetHeight) return;
-      const room = sp.clientHeight - 20, across = sp.clientWidth - 6;
-      t.className = "t"; t.style.fontSize = ""; if (au) au.hidden = false;
-      if (across < 10) { t.className = "t none"; return; }   // a very thin book: no lettering, as on a real one
-      const fits = () => t.scrollHeight <= room + 1 && t.scrollWidth <= across + 1;
-      if (fits()) return;
-      if (au) au.hidden = true;
-      for (let fs = 13; fs >= 10; fs -= 0.5) { t.style.fontSize = fs + "px"; if (fits()) return; }
-      if (across >= 2 * 11 + 2) { t.classList.add("two"); t.style.fontSize = "11px"; if (fits()) return; }
-      t.className = "t cut"; t.style.fontSize = "11px";
-    }); };
-  new MutationObserver(() => requestAnimationFrame(fitSpines)).observe(document.getElementById("view"), {childList: true});
-  addEventListener("resize", () => requestAnimationFrame(fitSpines));
-  document.fonts?.ready.then(fitSpines);
-  let pick = "now";
-  try { pick = localStorage.getItem("library-try-covers") || "now"; } catch {}
-  pick = new URLSearchParams(location.search).get("try-covers") || pick;
-  if (!OPTS.some(o => o[0] === pick)) pick = "now";
-  // a second row, "Spine finish" (her ask, 22 Nov: less flat): Flat (as built) / Stamped (rounded spines, gilt-foil or blind-stamped
-  // titles, gilt bands with a sheen); remembered in "library-try-finish", ?try-finish=… picks one
-  const FINISH = [["flat", "Flat"], ["stamped", "Stamped"]];
-  let finish = "flat";
-  try { finish = localStorage.getItem("library-try-finish") || "flat"; } catch {}
-  finish = new URLSearchParams(location.search).get("try-finish") || finish;
-  if (!FINISH.some(o => o[0] === finish)) finish = "flat";
-  const root = document.documentElement;
-  // the bigger options show covers larger than the banner's 180px small copies: the 460px ones instead
-  const sharpen = () => { if (pick === "now") return;
-    document.querySelectorAll("#view .hero-shelf img").forEach(i => { const s = i.getAttribute("src") || ""; if (/-s\.webp/.test(s)) i.setAttribute("src", s.replace("-s.webp", ".webp")); }); };
-  const box = document.createElement("div"); box.className = "try-switch"; box.setAttribute("role", "group"); box.setAttribute("aria-label", "Try a look");
-  const draw = () => { box.innerHTML = `<b>Try</b><div class="try-row"><span>Covers in the header</span>${OPTS.map(([v, w]) =>
-    `<button type="button" data-try="${v}" aria-pressed="${pick === v}">${w}</button>`).join("")}</div>`
-    + `<div class="try-row"><span>Spine finish</span>${FINISH.map(([v, w]) => `<button type="button" data-try-finish="${v}" aria-pressed="${finish === v}">${w}</button>`).join("")}</div>`; };
-  const room = () => { document.body.style.paddingBottom = box.offsetHeight + 28 + "px"; };   // the page's foot is never under it
-  const apply = () => { root.dataset.tryCovers = pick; root.dataset.tryFinish = finish; draw(); room(); sharpen(); requestAnimationFrame(fitSpines);
-    try { localStorage.setItem("library-try-covers", pick); localStorage.setItem("library-try-finish", finish); } catch {} };
-  box.addEventListener("click", e => {
-    const f = e.target.closest("button[data-try-finish]"); if (f) { finish = f.dataset.tryFinish; apply(); box.querySelector(`[data-try-finish="${finish}"]`)?.focus(); return; }
-    // buttons only: <html> itself carries data-try-finish, so a plain [data-try-finish] matched every click
-    const b = e.target.closest("button[data-try]"); if (!b) return; pick = b.dataset.try; apply(); box.querySelector(`[data-try="${pick}"]`)?.focus(); });
-  document.body.appendChild(box);
-  addEventListener("resize", room);
-  new MutationObserver(sharpen).observe(document.getElementById("view"), {childList: true});
-  apply();
-})();
-// ===== end of TRY SWITCH =====

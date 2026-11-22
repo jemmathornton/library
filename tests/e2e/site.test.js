@@ -220,3 +220,23 @@ test("round 5: the header (title page): its words stop short of the plate, and n
   } finally { f.remove(); }
   eq([...new Set(problems)].slice(0, 12), [], "overlaps:");
 });
+
+// her rules for the header's spines (22 Nov): one book from each shelf in turn on the whole-library pages, never two by one author or
+// from one series; a shelf page only its own books; title and author on every spine
+test("22 Nov: the header's spines: each shelf in turn on Home and All shelves, no author or series twice, title and author on every spine", async () => {
+  const shelves = new Set(BOOKS.filter(b => b.cover).map(b => b.shelf)).size;
+  for (const list of [[...BOOKS], [...BOOKS].sort(SORTS.added[1])]) {   // All shelves, Authors, Stats; Home
+    const picked = variedPick(list, 30);
+    eq(new Set(picked.slice(0, shelves).map(b => b.shelf)).size, Math.min(shelves, picked.length), "every shelf before any shelf twice:");
+    const authors = picked.map(b => slug(b.by || "")).filter(Boolean);
+    eq(authors.length, new Set(authors).size, "no author twice:");
+    const series = picked.map(b => ((seriesOf[b.id] || [])[0] || {series: {}}).series.name).filter(Boolean);
+    eq(series.length, new Set(series).size, "no series twice:");
+  }
+  const fantasy = shelfIndex["fantasy"];
+  if (fantasy) ok(variedPick(fantasy.books, 30).every(b => b.shelf === "fantasy"), "a shelf page: only its own books");
+  await show("#home"); await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); fitSpines();
+  const spines = $$("#view .hero-shelf .sp:not([hidden])");
+  ok(spines.length >= 6, `spines on Home: ${spines.length}`);
+  for (const sp of spines) { const i = sp.querySelector(".t i"); ok(i && i.textContent.trim() && getComputedStyle(i).display !== "none", "an author on every spine: " + sp.textContent); }
+});

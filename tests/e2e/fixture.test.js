@@ -954,22 +954,6 @@ test("round 5 (her ask): the title page is the page’s header, one framed panel
   eq(localStorage.getItem("library-try"), null, "its remembered choice cleared:");
 });
 
-test("round 5: the TEMPORARY Try switch “Covers in the header” (six choices) is there, sets the look, and never sits over the drawer", async () => {
-  const box = $(".try-switch"); ok(box, "the switch");
-  eq($$("button[data-try]", box).map(b => b.textContent), ["As now", "Shelf", "Spines", "Fan", "Row", "Stack"], "the choices:");
-  eq($$("button[data-try-finish]", box).map(b => b.textContent), ["Flat", "Stamped"], "the spine finishes:");
-  const wasF = document.documentElement.dataset.tryFinish;
-  $('[data-try-finish="stamped"]', box).click(); eq(document.documentElement.dataset.tryFinish, "stamped", "finish chosen:");
-  $(`[data-try-finish="${wasF || "flat"}"]`, box).click();
-  const was = document.documentElement.dataset.tryCovers;
-  try {
-    $('[data-try="fan"]', box).click(); eq(document.documentElement.dataset.tryCovers, "fan", "chosen:");
-    eq($('[data-try="fan"]', box).getAttribute("aria-pressed"), "true", "shown as chosen:");
-  } finally { $(`[data-try="${was || "now"}"]`, box).click(); }
-  const rules = [...document.styleSheets].flatMap(s => { try { return [...s.cssRules]; } catch { return []; } });
-  ok(rules.some(r => r.selectorText === ".jj-menu-open .try-switch" && r.style.display === "none"), "hidden while the drawer is open");
-});
-
 test("round 5: small copies on every cover grid (shelves, authors, history…), the cover itself on a book’s page; a missing copy falls back to the cover", async () => {
   eq(coverSrc({cover: "covers/9780000000001.jpg?v=1"}, false), "covers/thumbs/9780000000001.webp?v=1", "a cover card:");
   eq(coverSrc({cover: "covers/9780000000001.jpg"}, false, true), "covers/thumbs/9780000000001-s.webp", "banner:");
