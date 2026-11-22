@@ -236,7 +236,13 @@ test("22 Nov evening: the header's shelf: full width under the title, the figure
             if (/rotate\(|rotateZ/.test(fr.getAttribute("style") + win.getComputedStyle(fr).getPropertyValue("--r"))) problems.push(`${what}: tilted in its own plane`);
             // her note: the number and words are printed on the mount: inside the turned frame, turning with it, not selectable
             if (fr.querySelector("b").parentElement !== fr || fr.querySelector("span").parentElement !== fr) problems.push(`${what}: its text not inside the turned frame`);
-            if (win.getComputedStyle(fr).userSelect !== "none" || win.getComputedStyle(fr.querySelector("b")).userSelect !== "none") problems.push(`${what}: its text can be selected`); });
+            if (win.getComputedStyle(fr).userSelect !== "none" || win.getComputedStyle(fr.querySelector("b")).userSelect !== "none") problems.push(`${what}: its text can be selected`);
+            // her note: the text lies in the mount's plane: no transform of its own, and its baseline slopes as the mount's top edge (within 1°)
+            if (["b", "span"].some(q => win.getComputedStyle(fr.querySelector(q)).transform !== "none")) problems.push(`${what}: its text has a transform of its own`);
+            const at2 = (x, y) => { const q = m.transformPoint(new win.DOMPoint(x - half, y - fr.offsetHeight, 0, 1)); return [q.x / q.w, q.y / q.w]; };
+            const slope = (p1, p2) => Math.atan2(p2[1] - p1[1], p2[0] - p1[0]) * 180 / Math.PI, num = fr.querySelector("b");
+            const top = slope(at2(0, 0), at2(fr.offsetWidth, 0)), base = slope(at2(num.offsetLeft, num.offsetTop + num.offsetHeight), at2(num.offsetLeft + num.offsetWidth, num.offsetTop + num.offsetHeight));
+            if (Math.abs(top - base) > 1) problems.push(`${what}: its number slopes ${base.toFixed(1)}°, the mount's top ${top.toFixed(1)}°`); });
           // her note: frames "basically against" the books beside them (each side 2px at most, never over a spine's lettering: above)
           if (!tiered) {
             const items = [...shelf.querySelectorAll(".sp:not([hidden]), .fr, .bookend")].sort((x, y) => +x.style.order - +y.style.order).map(x => [x.classList.contains("fr"), x.getBoundingClientRect()]);
@@ -247,10 +253,17 @@ test("22 Nov evening: the header's shelf: full width under the title, the figure
             if (r.left < sr.left || r.right > sr.right) problems.push(`${at}: a bookend off the shelf`); });
           // her note: a bookend is a solid L pressed against the book and the shelf: its upright touches the end spine, its foot the ledge
           const spr = [...shelf.querySelectorAll(".sp:not([hidden])")].map(x => x.getBoundingClientRect()), [e0, e1] = [...shelf.querySelectorAll(".bookend")].map(x => x.getBoundingClientRect());
-          const booksLedge = tiered ? Math.max(...spr.map(x => x.bottom)) : ledge;
+          const booksLedge = tiered ? Math.max(...[...shelf.querySelectorAll(".bookend")].map(x => x.getBoundingClientRect().bottom)) : ledge;
           if (e0 && spr.length && Math.abs(Math.min(...spr.map(x => x.left)) - e0.right) > 1) problems.push(`${at}: the left bookend not against the first book (${(Math.min(...spr.map(x => x.left)) - e0.right).toFixed(1)}px)`);
           if (e1 && spr.length && Math.abs(e1.left - Math.max(...spr.map(x => x.right))) > 1) problems.push(`${at}: the right bookend not against the last book (${(e1.left - Math.max(...spr.map(x => x.right))).toFixed(1)}px)`);
           [e0, e1].forEach((e, k) => { if (e && Math.abs(e.bottom - booksLedge) > 1) problems.push(`${at}: bookend ${k + 1} not on the ledge (${(e.bottom - booksLedge).toFixed(1)}px)`); });
+          // her note: "L shape away from books": the base runs inwards under the end books, which stand on it; the object is outside the upright
+          const shownSp = [...shelf.querySelectorAll(".sp:not([hidden])")];
+          [[shelf.querySelector(".bookend.start"), shownSp[0]], [shelf.querySelector(".bookend.end"), shownSp[shownSp.length - 1]]].forEach(([be, sp], k) => { if (!be || !sp) return;
+            const bh = parseFloat(win.getComputedStyle(shelf).getPropertyValue("--bh")), bl = parseFloat(be.style.getPropertyValue("--bl")) || 0;
+            if (!sp.classList.contains("on-base") || bl < sp.offsetWidth) problems.push(`${at}: bookend ${k + 1}'s base not under the end book`);
+            if (Math.abs(sp.getBoundingClientRect().bottom - (booksLedge - bh)) > 1) problems.push(`${at}: the end book not standing on bookend ${k + 1}'s base`);
+            const mo = be.querySelector("svg > g.mo").getBBox(); if (mo.x + mo.width / 2 > 38 || mo.x + mo.width > 41.5) problems.push(`${at}: bookend ${k + 1}'s object not outside its upright`); });
           const line = hero.querySelector(":scope > p");
           if (h === "home" && w >= 1300 && line && line.getBoundingClientRect().height > parseFloat(win.getComputedStyle(line).lineHeight) * 1.5) problems.push(`${at}: the line under the title wraps`);
           d.querySelectorAll("#view .hero, #view .hero *").forEach(el => {
