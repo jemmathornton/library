@@ -6,6 +6,13 @@
 // covers/list choice reset, home page drawn), so no test depends on another and each can run alone (?only=[names]).
 // No fixed sleeps: waits are until() a condition holds, or until the browser has handled what a click set going.
 const TESTS = [];
+// every Content Security Policy violation since the page opened (22 Nov): the ones before this file loaded come from the
+// buffered report observer, later ones from the event too; cspSeen() is the list, each once
+const CSP_SEEN = new Set();
+document.addEventListener("securitypolicyviolation", e => CSP_SEEN.add(`${e.violatedDirective} ${e.blockedURI || "inline"} ${e.sourceFile || ""}:${e.lineNumber}`));
+const cspReports = typeof ReportingObserver === "function" ? new ReportingObserver(() => {}, {types: ["csp-violation"], buffered: true}) : null;
+if (cspReports) cspReports.observe();
+const cspSeen = () => { if (cspReports) cspReports.takeRecords().forEach(r => CSP_SEEN.add(`${r.body.effectiveDirective} ${r.body.blockedURL || "inline"} ${r.body.sourceFile || ""}:${r.body.lineNumber}`)); return [...CSP_SEEN]; };
 const test = (name, fn) => TESTS.push({name, fn});
 const knownBug = (name, bug, fn) => TESTS.push({name, fn, bug});
 

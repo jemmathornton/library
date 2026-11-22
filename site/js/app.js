@@ -220,8 +220,21 @@ ELSEWHERE.forEach(e => { const id = (DATA.elsewhereShelves || {})[e.title]; if (
 
 // ---------- pieces ----------
 // covers are copied into covers/; one still only linked from Open Library uses its quicker medium size in lists
-const coverSrc = (b, big, tiny) => (!big && trySmall(b.cover, tiny)) ||   // trySmall: TRY SWITCH hook (temporary, 22 Nov): when it goes, back to "(b, big) => big || …"
+// smaller pictures (her pick from the Try switch, 22 Nov): Home's cover cards use covers/thumbs/<name>.webp (460px tall) and the
+// small covers in every page's banner covers/thumbs/<name>-s.webp (180px), both made by tools/make_thumbs.py at about twice the
+// size shown; a book page and the other pages keep the cover itself
+const thumbSrc = (src, tiny) => {
+  const m = /^covers\/([^/?]+)\.(?:jpe?g|png|webp)(\?.*)?$/i.exec(src || "");
+  if (!m || (!tiny && (location.hash.slice(1) || "home") !== "home")) return "";
+  return `covers/thumbs/${m[1]}${tiny ? "-s" : ""}.webp${m[2] || ""}`;
+};
+const coverSrc = (b, big, tiny) => (!big && thumbSrc(b.cover, tiny)) ||
   (big || !/^https:/.test(b.cover) ? b.cover : b.cover.replace(/-L\.jpg$/, "-M.jpg"));
+// a small copy that isn't there (a cover added since make_thumbs.py ran) falls back to the cover itself, before the page's own
+// handler (below) would turn it into a title card: on window, so it runs first
+addEventListener("error", e => { const img = e.target;
+  if (img.tagName !== "IMG" || !/covers\/thumbs\//.test(img.getAttribute("src") || "")) return;
+  e.stopImmediatePropagation(); img.src = img.getAttribute("src").replace(/thumbs\/([^/?]+?)(-s)?\.webp/, (_, n) => n + ".jpg"); }, true);
 // her signed copies (data/signed.json, her choice 1 Nov): a brass seal with a pen, bottom right level with the stars;
 // signed to her, a scalloped seal with a big pen and a small person beside it
 const SIGN_PATHS = {signed: '<path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/>',
@@ -230,8 +243,8 @@ const SIGN_WORDS = {signed: "Signed", "to-you": "Signed to you"};
 const sealMark = kind => `<span class="seal${kind === "to-you" ? " fancy" : ""}" title="${SIGN_WORDS[kind]}"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${SIGN_PATHS[kind]}</svg></span>`;
 function cover(b, extra = "", big = false){
   const s = shelfIndex[b.shelf], st = reading(b).status;
-  // read or reading: a tick (or bookmark) in the top corner, walnut and cream (her choice, 18 Oct); her stars, filled to
-  // the rating with no number, in a strip across the foot
+  // read or reading: a tick (or bookmark) in the top corner, walnut and cream (her choice, 18 Oct); her stars go under the
+  // cover (ratedLine, 22 Nov), no longer in a dark strip across its foot
   // read: a cream "Read" sash across the top corner (her choice, 18 Oct, over a tick)
   // didn't finish and paused: "DNF" and "Paused" sashes the same way (her choices, 18 Oct)
   // with a small icon for how she read it: an open book (print), headphones (audiobook) or a tablet (ebook) (her ask, 18 Oct)
@@ -239,8 +252,6 @@ function cover(b, extra = "", big = false){
   const sash = (word, title) => `<span class="sash" title="${title}${fmt ? " · " + FORMATS[fmt] : ""}">${how ? ic(how) : ""}${word}</span>`;
   const badge = st === "read" ? sash("Read", "Read") : st === "reading" ? sash("Reading", "Reading now")
     : st === "stopped" ? sash("DNF", "Didn’t finish") : st === "paused" ? sash("Paused", "Paused") : "";
-  const r = reading(b).rating;
-  const strip = r ? `<span class="rated" title="${starsText(r)} stars" role="img" aria-label="${starsText(r)} stars"><span class="sg-stars" style="--r:${(r / 5 * 100).toFixed(1)}%" aria-hidden="true"><span>★★★★★</span><span>★★★★★</span></span></span>` : "";
   // not owned: the cover faded, with a walnut "Not owned" band across it (her choice, 18 Oct; not on a book's own page)
   const tag = (b.notOwned && !big ? `<span class="not-owned">Not owned</span>` : "")
     // a special edition (Illumicrate and the like, data/editions.json): a brass sash across the other top corner (her ask, 18 Oct)
@@ -248,15 +259,22 @@ function cover(b, extra = "", big = false){
     + (b.signed ? sealMark(b.signed) : "");
   // the whole cover at its own shape, never trimmed to a frame (her ask, 30 Oct); a picture with no known shape keeps the frame
   const ratio = b.cover && b.coverRatio;
-  return `<div class="cover${b.cover ? "" : " blank"}${ratio ? " fit" : ""}${b.notOwned && !big ? " unowned" : ""}${TRIAL && b.coverTrial ? " trial" : ""} ${extra}" style="--c:${s ? s.color : "#5E3D22"}${ratio ? ";--r:" + ratio : ""}">${badge}${tag}${strip}${b.cover ? `<img src="${escRaw(coverSrc(b, big))}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
+  return `<div class="cover${b.cover ? "" : " blank"}${ratio ? " fit" : ""}${b.notOwned && !big ? " unowned" : ""}${TRIAL && b.coverTrial ? " trial" : ""} ${extra}" style="--c:${s ? s.color : "#5E3D22"}${ratio ? ";--r:" + ratio : ""}">${badge}${tag}${b.cover ? `<img src="${escRaw(coverSrc(b, big))}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
 }
+// her stars for a book, filled to the rating with no number: just under its cover on book pages and cover cards, plain, in the
+// page's own colours (her decision, 22 Nov: no dark strip on the cover); an arrow, not a text cursor, and not selectable
+const ratedLine = b => { const r = reading(b).rating;
+  return r ? `<span class="rated" title="${starsText(r)} stars" role="img" aria-label="${starsText(r)} stars"><span class="sg-stars" style="--r:${(r / 5 * 100).toFixed(1)}%" aria-hidden="true"><span>★★★★★</span><span>★★★★★</span></span></span>` : ""; };
 // a cover that won't load becomes a title card
-document.addEventListener("error", e => { const img = e.target; if (img.tagName === "IMG" && img.parentNode.classList.contains("cover")) { img.parentNode.classList.add("blank"); img.remove(); } }, true);
+// (and a banner's small cover that won't load is taken out: no inline handlers, for the Content Security Policy, 22 Nov)
+document.addEventListener("error", e => { const img = e.target; if (img.tagName !== "IMG" || !img.parentNode) return;
+  if (img.parentNode.classList.contains("cover")) { img.parentNode.classList.add("blank"); img.remove(); }
+  else if (img.parentNode.classList.contains("hero-shelf")) img.remove(); }, true);
 
 const href = b => isElsewhere(b) ? "#" + b.id : "#b-" + b.id;
 // each card as wide as its cover at the shelf height, so every cover is the same height and none overlap (her ask, 1 Nov)
 const cardShape = b => `style="--br:${(b.cover && b.coverRatio) || 1.5}"`;
-const card = (b, note) => `<a class="bk" ${cardShape(b)} href="${href(b)}"><div class="slot">${cover(b)}</div><h3>${esc(b.t)}</h3><div class="by">${esc(note || b.by)}</div></a>`;
+const card = (b, note) => `<a class="bk" ${cardShape(b)} href="${href(b)}"><div class="slot">${cover(b)}</div>${ratedLine(b)}<h3>${esc(b.t)}</h3><div class="by">${esc(note || b.by)}</div></a>`;
 const grid = (list, cls = "") => list.length ? `<div class="books ${cls}">${list.map(b => card(b)).join("")}</div>` : "";
 // an old-books page (her choice, 6 Nov): each series as a shelf of spines in reading order, the spine in the book's cloth
 // colour with its title up it, a book she has no old copy of as a dashed gap in its place (by the series' original
@@ -352,7 +370,7 @@ function listView(list){
 // are each world's own map); pages with too few covers keep the plain walnut
 function shelfBanner(list){
   const pics = (list || []).filter(b => b.cover).slice(0, 32);
-  return pics.length >= 8 ? `<div class="hero-shelf" aria-hidden="true">${pics.map(b => `<img src="${escRaw(coverSrc(b, false, true))}" alt="" onerror="this.remove()">`).join("")}</div>` : "";   // TRY SWITCH: ", false, true" (banner = tiny) goes with the switch
+  return pics.length >= 8 ? `<div class="hero-shelf" aria-hidden="true">${pics.map(b => `<img src="${escRaw(coverSrc(b, false, true))}" alt="">`).join("")}</div>` : "";   // the banner's small copies (tiny); one that won't load is taken out (below, no inline handler)
 }
 const hero = (o) => { const bg = shelfBanner(o.covers);
   return `<header class="hero${bg ? " shelved" : ""}">${bg}<div class="kicker">${o.color ? `<span class="dot" style="--c:${o.color}"></span>` : "<i></i>"}<span class="label">${o.kicker}</span></div>
@@ -388,7 +406,17 @@ function renderNav(active){
       ${link("#authors", ic("users"), "Authors", AUTHORS.length)}
       ${link("#stats", ic("chart"), "Stats")}
       ${LIVE ? link("#add", ic("plus"), "Add a book") : ""}    </div>`;
+  navFades();
 }
+// the sidebar's list fades out at the foot while more links are below, and at the top once scrolled down (her ask, 22 Nov:
+// on a laptop-height window the last links were hidden with no sign); nothing when it all fits
+function navFades(){
+  const nav = document.getElementById("nav");
+  nav.classList.toggle("more-above", nav.scrollTop > 2);
+  nav.classList.toggle("more-below", nav.scrollTop + nav.clientHeight < nav.scrollHeight - 2);
+}
+document.getElementById("nav").addEventListener("scroll", navFades, {passive: true});
+addEventListener("resize", navFades);
 
 // a shelf colour light enough that the gilt name would be faint on its cloth (Children's mustard): that card gets darker cloth
 // (second review, 21 Nov; one rule for every card, by the colour's relative luminance)
@@ -519,8 +547,8 @@ function pageSgBook(e){   // a book from StoryGraph that isn't on her shelves
   const r = reading(e), fmt = FORMATS[e.format] || "";
   const known = e.authors.map(a => authorIndex[slug(a.name)]).filter(Boolean);
   const more = known.length ? known[0].books.map(x => x.book).slice(0, 12) : [];
-  const fact = (k, v) => v ? `<dt>${k}</dt><dd>${v}</dd>` : "";
-  return `<header class="hero book-hero"><div class="book-top">${cover(e, "", true)}<div>
+  const fact = (k, v) => v ? `<dt${/^[A-Z]+-/.test(k) ? ' class="caps"' : ""}>${k}</dt><dd>${v}</dd>` : "";
+  return `<header class="hero book-hero"><div class="book-top"><figure class="plate">${cover(e, "", true)}${ratedLine(e)}</figure><div>
       <div class="kicker"><i></i>${e.shelf ? `<a class="label" href="#shelf-${e.shelf}">${esc(shelfIndex[e.shelf].name)}</a><span class="label"> · Not owned</span>` : `<span class="label">Not owned</span>`}${fmt ? `<span class="label"> · ${fmt}</span>` : ""}</div>
       <h1>${esc(e.t)}</h1>${e.sub ? `<div class="sub">${esc(e.sub)}</div>` : ""}
       <div class="authors">${e.authors.map(a => authorIndex[slug(a.name)] ? `<span><a href="#a-${slug(a.name)}">${esc(a.name)}</a></span>` : `<span>${esc(a.name)}</span>`).join("")}</div>
@@ -547,8 +575,8 @@ function pageBook(b){
   const s = shelfIndex[b.shelf] || {id: b.shelf, name: b.shelf, color: "#5E3D22"}, others = BOOKS.filter(x => x !== b && (bookKey(x) === bookKey(b) || (editions[norm(b.title) + "|" + norm(b.surname || "")] || []).includes(x)));
   const lead = (b.authors || []).find(a => !a.role), au = lead && authorIndex[slug(lead.name)];
   const more = au ? au.books.map(x => x.book).filter(x => x !== b && !others.includes(x)).slice(0, 12) : [];
-  const fact = (k, v) => v ? `<dt>${k}</dt><dd>${v}</dd>` : "", sub = "edition" in b ? b.edition : b.sub;
-  return `<header class="hero book-hero" style="--c:${s.color}"><div class="book-top">${cover(b, "", true)}<div>
+  const fact = (k, v) => v ? `<dt${/^[A-Z]+-/.test(k) ? ' class="caps"' : ""}>${k}</dt><dd>${v}</dd>` : "", sub = "edition" in b ? b.edition : b.sub;
+  return `<header class="hero book-hero" style="--c:${s.color}"><div class="book-top"><figure class="plate">${cover(b, "", true)}${ratedLine(b)}</figure><div>
       <div class="kicker"><i></i><a class="label" href="#shelf-${s.id}">${esc(s.name)}</a></div>
       <h1>${esc(b.t)}</h1>${sub ? `<div class="sub">${esc(sub)}</div>` : ""}
       <div class="authors">${(b.authors || []).map(a => `<span><a href="#a-${slug(a.name)}">${esc(a.name)}</a>${a.role ? ` <small>${esc(a.role)}</small>` : ""}</span>`).join("") || "<span>Unknown author</span>"}</div>
@@ -1320,7 +1348,7 @@ function readingStats(bars, readYears){
 }
 function pageStats(){
   const TITLES = titlesOf(BOOKS), pages = pagesOf(BOOKS), withPages = TITLES.filter(b => b.pages);
-  const bars = (rows, max) => `<div class="bars">${rows.map(r => `<${r.href ? `a href="${r.href}"` : "div"} class="bar-row" style="--c:${r.color || "var(--deep-2)"}"><b title="${esc(r.label)}">${esc(r.label)}</b><div class="track"><i style="width:${(r.n / max * 100).toFixed(1)}%"></i></div><span>${r.text || num(r.n)}</span></${r.href ? "a" : "div"}>`).join("")}</div>`;
+  const bars = (rows, max) => `<div class="bars">${rows.map(r => `<${r.href ? `a href="${r.href}"` : "div"} class="bar-row" style="--c:${r.color || "var(--chart)"}"><b title="${esc(r.label)}">${esc(r.label)}</b><div class="track"><i style="width:${(r.n / max * 100).toFixed(1)}%"></i></div><span>${r.text || num(r.n)}</span></${r.href ? "a" : "div"}>`).join("")}</div>`;
   const shelves = SHELVES.filter(s => s.books.length).map(s => ({label: s.name, n: nBooks(s.books), color: s.color, href: "#shelf-" + s.id,
     text: `${num(nBooks(s.books))} · ${Math.round(nBooks(s.books) / nBooks(BOOKS) * 100)}%`})).sort((a, b) => b.n - a.n);
   const top = AUTHORS.map(a => ({label: a.name, n: nBooks(a.books.filter(x => !x.role).map(x => x.book)), href: "#a-" + a.id})).sort((a, b) => b.n - a.n).slice(0, 12);
@@ -1637,32 +1665,3 @@ capitalise(document);
 
 // the skip link: focus the page without changing the address (no inline handler, ready for a strict security policy online; round 4)
 document.addEventListener("click", e => { const a = e.target.closest && e.target.closest("a[data-skip]"); if (!a) return; e.preventDefault(); const v = document.getElementById("view"); if (v) { if (!v.hasAttribute("tabindex")) v.setAttribute("tabindex", "-1"); v.focus(); } });
-
-// ===== TRY SWITCH: TEMPORARY (22 Nov), only while she chooses; when she has picked, delete this whole block, the "TRY SWITCH"
-// block at the end of site.css and the two marked hooks (coverSrc and shelfBanner), then build her pick in properly =====
-//   Pictures on Home: As now (the covers as copied, up to 600px tall) or Smaller (site/covers/thumbs/, made by
-//   tools/make_thumbs.py at about twice the size they're shown: <name>.webp for Home's cover cards, <name>-s.webp for the
-//   small covers in every page's banner). It should look the same, only download less.
-function trySmall(src, tiny){
-  if (trySmall.pick !== "smaller" || !src) return "";
-  const m = /^covers\/([^/?]+)\.(?:jpe?g|png|webp)(\?.*)?$/i.exec(src);
-  if (!m || (!tiny && (location.hash.slice(1) || "home") !== "home")) return "";
-  return `covers/thumbs/${m[1]}${tiny ? "-s" : ""}.webp${m[2] || ""}`;
-}
-(function trySwitch(){
-  const KEY = "library-try", OPTS = [["now", "As now"], ["smaller", "Smaller"]];
-  try { trySmall.pick = sessionStorage.getItem(KEY) || "now"; } catch { trySmall.pick = "now"; }
-  // a small copy that isn't there (a cover added since make_thumbs.py ran) falls back to the cover itself, before the
-  // page's own handler would turn it into a title card
-  addEventListener("error", e => { const img = e.target;
-    if (img.tagName !== "IMG" || !/covers\/thumbs\//.test(img.getAttribute("src") || "")) return;
-    e.stopImmediatePropagation(); img.src = img.getAttribute("src").replace(/thumbs\/([^/?]+?)(-s)?\.webp/, (_, n) => n + ".jpg"); }, true);
-  const box = document.createElement("div"); box.className = "try-switch"; box.setAttribute("role", "group"); box.setAttribute("aria-label", "Try");
-  const draw = () => { box.innerHTML = `<b>Try</b><div class="try-row"><span>Pictures on Home</span>${OPTS.map(([v, t]) =>
-    `<button type="button" data-v="${v}" aria-pressed="${trySmall.pick === v}">${t}</button>`).join("")}</div>`; };
-  box.addEventListener("click", e => { const b = e.target.closest("button[data-v]"); if (!b || b.dataset.v === trySmall.pick) return;
-    trySmall.pick = b.dataset.v; try { sessionStorage.setItem(KEY, trySmall.pick); } catch {}
-    draw(); route(undefined, {keep: true}); box.querySelector(`button[data-v="${trySmall.pick}"]`).focus(); });
-  draw(); document.body.append(box);
-})();
-// ===== end of TRY SWITCH =====

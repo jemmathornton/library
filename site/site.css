@@ -106,7 +106,7 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .foot-orn::before{background:linear-gradient(90deg,transparent,var(--line))}
 .foot-orn::after{background:linear-gradient(90deg,var(--line),transparent)}
 .foot .jj-name{line-height:1.1;margin:0 0 10px}
-.foot .jj-dot{margin:0 3px 0 0;color:var(--gilt)}   /* "jj-dot", not "dot": .dot is the Library's shelf-colour dot */
+.foot .jj-dot{margin:0 3px;color:var(--gilt)}   /* even space each side (22 Nov): the no-break space inside before the dot, the ordinary space after it; "jj-dot", not "dot": .dot is the Library's shelf-colour dot */
 .foot .jj-foot-links{margin-top:12px}
 .foot .jj-foot-links>*{font:700 13px/1 var(--body);color:var(--gilt-ink)}   /* over the Library's own a/button rules (colour and font inherited) */
 
@@ -322,11 +322,13 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .kicker .dot{width:10px;height:10px;box-shadow:0 0 0 2px rgba(255,255,255,.15)}
 
 /* her stars on a cover */
-.cover .rated{position:absolute;left:0;right:0;bottom:0;z-index:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:14px 8px 6px;background:linear-gradient(0deg,rgba(28,18,10,.88) 0%,rgba(28,18,10,.7) 55%,transparent);color:#F5C44E}
-.cover .rated .sg-stars{font-size:15px;letter-spacing:1px;color:rgba(255,255,255,.3)}
-.cover .rated .sg-stars span+span{color:#F5C44E}
-.cover .rated b{font:700 11px/1 var(--body);color:#F5C44E}
-.blist .cover .rated{display:none}
+/* her stars under a cover (22 Nov, her decision: no dark strip on the cover): plain, small, centred, in the page's own colours (the
+   Your reading panel's stars); an arrow, not a text cursor, and not selectable */
+.rated{display:flex;justify-content:center;line-height:1;cursor:default;-webkit-user-select:none;user-select:none}
+.rated .sg-stars{font-size:15px;letter-spacing:1px}
+.plate{margin:0;display:grid;justify-items:center}
+.plate .rated{margin-top:10px}
+.plate .rated .sg-stars{font-size:19px;letter-spacing:2px}
 
 /* series */
 .in-series{display:inline-flex;align-items:center;gap:7px;margin-top:12px;font-size:14px;font-weight:700;color:var(--gilt-ink);text-decoration:none}
@@ -384,10 +386,6 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .add-fields .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .add-fields .btn{justify-self:start}
 .btn[disabled]{opacity:.5;cursor:default}
-.cover.blank:has(.rated){padding-bottom:30px}
-.cover .rated.word{font:700 10.5px/1 var(--body);letter-spacing:.14em;text-transform:uppercase;gap:6px}
-.cover .rated.now{color:#fff}
-.cover .rated.now .i{color:#F5C44E;font-size:12px}
 /* read books: a cream sash across the top corner (her choice, 18 Oct) */
 .cover .sash{position:absolute;z-index:1;right:-34px;top:16px;width:120px;transform:rotate(45deg);text-align:center;padding:4px 0 3px;
   background:#FBF4E6;color:#3B2616;font:800 9.5px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;box-shadow:0 1px 4px rgba(0,0,0,.35)}
@@ -504,7 +502,7 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .shelf-card .fan .cover:nth-child(1){left:calc(50% - 76px)}
 .shelf-card .fan .cover:nth-child(2){left:calc(50% - 28px);bottom:-9px}
 .shelf-card .fan .cover:nth-child(3){left:calc(50% + 20px)}
-.shelf-card .fan .cover .sash,.shelf-card .fan .cover .rated,.shelf-card .fan .cover .seal{display:none}
+.shelf-card .fan .cover .sash,.shelf-card .fan .cover .seal{display:none}
 .shelf-card .txt{padding:11px 13px 13px;gap:8px}
 .shelf-card h3{font-size:20px}
 .shelf-card .txt span{font-size:14.5px}
@@ -609,6 +607,12 @@ a.spine:hover{transform:translateY(-6px)}
 .nav .n{font:italic 400 14px var(--read);color:color-mix(in srgb,var(--gilt-2) 70%,transparent)}
 .dot{box-shadow:0 0 0 1.5px color-mix(in srgb,var(--gilt) 60%,transparent)}
 .nav-group.minor{border-top-color:color-mix(in srgb,var(--gilt) 30%,transparent)}
+/* the list fades into the cloth at the foot while more links are below, and at the top once scrolled (js/app.js navFades(); 22 Nov) */
+.nav{--fade-top:0px;--fade-bottom:0px;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 var(--fade-top),#000 calc(100% - var(--fade-bottom)),transparent 100%);
+  mask-image:linear-gradient(to bottom,transparent 0,#000 var(--fade-top),#000 calc(100% - var(--fade-bottom)),transparent 100%)}
+.nav.more-above{--fade-top:36px}
+.nav.more-below{--fade-bottom:48px}
 .nav-group.minor a{font-size:15px}
 
 /* the main area as a page: the gutter's shadow by the binding, page edges down the right */
@@ -655,7 +659,7 @@ main::after{content:"";position:fixed;top:0;bottom:0;right:0;width:7px;pointer-e
 .book-top .authors a{font-weight:400;border-bottom-color:var(--gilt)}
 .book-top>div:not(.cover){border-top:3px double var(--line);border-bottom:1px solid var(--line);padding:22px 0 26px}
 .book-body{margin-top:34px}
-.desc{font:400 19px/1.62 var(--read);text-align:justify;hyphens:auto;max-width:62ch;color:var(--text)}
+.desc{font:400 19px/1.62 var(--read);text-align:left;hyphens:manual;max-width:62ch;color:var(--text)}   /* ragged right (her ask, 22 Nov; was justified) */
 .desc.none{text-align:left}
 .book-body .desc.drop:first-child::first-letter{float:left;font:400 78px/.8 var(--display);color:var(--accent);padding:7px 10px 0 0}   /* a drop capital on the blurb's first paragraph only, when it starts with a letter (js/app.js blurb(): a leading number stays whole) */
 .panel{border-radius:0;background:var(--surface);border:1px solid var(--mount-edge);outline:1px solid var(--line);outline-offset:-6px;padding:24px 26px;gap:12px;box-shadow:0 10px 20px -18px var(--shade)}
@@ -665,6 +669,7 @@ main::after{content:"";position:fixed;top:0;bottom:0;right:0;width:7px;pointer-e
 .sg-dates{font:italic 400 17px var(--read);text-align:center}
 .facts{font:400 16.5px var(--read)}
 .facts dt{font-weight:400;font-variant:small-caps;letter-spacing:.04em;font-size:17px}
+.facts dt.caps{font-variant:normal;font-variant-numeric:lining-nums;letter-spacing:.02em;font-size:15px}   /* ISBN-13, ISBN-10: plain capitals and figures (her ask, 22 Nov), not small capitals with old-style figures */
 .facts dd{font-weight:500}
 .facts select{font-family:var(--read)}
 .review{font:italic 400 18px/1.6 var(--read);border-left:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);border-radius:0;background:transparent}
@@ -697,12 +702,24 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 /* Reading now: mounted cards */
 .now-card{border-radius:0;border:1px solid var(--mount-edge);outline:1px solid var(--line);outline-offset:-5px;box-shadow:0 8px 16px -14px var(--shade)}
 .now-card .by{font:italic 400 15.5px var(--read)}
-/* Stats: the figures panel bound in cloth with a gilt border */
-.ledger{border-radius:2px;background:var(--weave),linear-gradient(160deg,#55301D,var(--cloth) 60%,#3A2014);
-  box-shadow:inset 0 0 0 7px rgba(0,0,0,.12),inset 0 0 0 8px color-mix(in srgb,var(--gilt) 55%,transparent),0 14px 26px -18px var(--shade)}
-.meter{border-top:3px double color-mix(in srgb,var(--gilt) 55%,transparent)}
-.meter b{color:var(--gilt-2);font-variant-numeric:oldstyle-nums}
-.meter span{font:italic 400 16px/1.3 var(--read);color:color-mix(in srgb,var(--gilt-2) 70%,#fff)}
+/* Stats (22 Nov, her ask "consistent with rest of library"): the figures a mounted panel on the page, like the book pages' panels
+   and Home's ruled figures (it was a walnut cloth slab); the charts set like the rest of the book: names in the book face, numbers in
+   italic, thin square-ended bars in the shelf colours or the page's gilt-brown, a ruled foot under the columns */
+.ledger{border-radius:0;background:var(--surface);color:var(--ink);border:1px solid var(--mount-edge);outline:1px solid var(--line);outline-offset:-6px;
+  box-shadow:0 10px 20px -18px var(--shade)}
+.meter{border-top:3px double var(--line)}
+.meter b{color:var(--ink);font-variant-numeric:oldstyle-nums}
+.meter span{font:italic 400 16px/1.3 var(--read);color:var(--muted)}
+.bar-row{font:400 17px/1.3 var(--read)}
+.bar-row b{font-weight:500;color:var(--ink)}
+.bar-row span{font:italic 400 16px/1.3 var(--read);font-variant-numeric:oldstyle-nums}
+.bar-row .track{height:9px;border-radius:0;background:var(--soft);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--line) 60%,transparent)}
+.bar-row .track i{border-radius:0;background:var(--c,var(--chart))}
+.decades div{gap:5px}
+.decades i{border-radius:0;background:var(--chart)}
+:root{--chart:var(--accent)} :root[data-mode="dark"]{--chart:color-mix(in srgb,var(--accent) 70%,var(--paper))}   /* the charts' gilt-brown, a little quieter on the dark page */
+.decades span{font:italic 400 14.5px/1 var(--read);color:var(--muted)}
+.decades b{font:400 14.5px/1 var(--read);font-variant-numeric:oldstyle-nums;color:var(--ink)}
 /* Add a book: labels in small capitals, boxes like the page */
 .add-form label{font:400 16px/1.2 var(--read);font-variant:small-caps;letter-spacing:.04em;color:var(--muted)}
 .add-form input,.add-form select{border-radius:2px;border-color:var(--mount-edge);background:var(--mount);font:400 17px var(--read)}
@@ -781,7 +798,6 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
   .book-top .cover{width:min(240px,62vw)}
   /* a title card's margins from the card's own width (round 3: as percentages they came from the whole column, leaving “Witne”) */
   .book-top .cover.blank{padding:calc(min(240px,62vw) * .14) calc(min(240px,62vw) * .11) calc(min(240px,62vw) * .11)}
-  .book-top .cover.blank:has(.rated){padding-bottom:30px}
   .book-top>div:not(.cover){width:100%}
   .book-top h1{font-size:clamp(40px,10vw,84px)}
   .book-top .authors{justify-content:center}
@@ -838,7 +854,7 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
   .desc{font-size:18px;text-align:left;hyphens:manual}
   .panel{padding:20px 18px}
   .toolbar .count{margin-left:0;flex-basis:100%}
-  .ledger{padding:22px 20px;border-radius:14px}
+  .ledger{padding:22px 20px;border-radius:0}
   .ledger-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
   .meter b{font-size:40px}
   .isbn-row{flex-wrap:wrap}
@@ -916,6 +932,13 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
   .section-head{flex-direction:column;align-items:center;gap:10px}
   .section-head .pick-open,.section-head .more{position:static;transform:none}
   .book-body .section-head{align-items:flex-start}
+  /* ...and the rule with its ❦ stays right under the heading, the button or note below it (her ask, 22 Nov: on a phone the
+     ornament sat under "What should I read next?"): the rule and ornament drawn by the heading itself */
+  .section-head:has(> :not(h2)){padding-bottom:0}
+  .section-head:has(> :not(h2))::before,.section-head:has(> :not(h2))::after{content:none}
+  .section-head:has(> :not(h2)) h2{align-self:stretch;position:relative;padding-bottom:26px}
+  .section-head:has(> :not(h2)) h2::before{content:"";position:absolute;left:0;right:0;bottom:9px;height:1px;background:linear-gradient(90deg,transparent,var(--line) 20%,var(--line) calc(50% - 22px),transparent calc(50% - 22px),transparent calc(50% + 22px),var(--line) calc(50% + 22px),var(--line) 80%,transparent)}
+  .section-head:has(> :not(h2)) h2::after{content:"❦";position:absolute;left:50%;bottom:0;transform:translateX(-50%);padding:0 14px;font:normal 400 18px/1 var(--display);letter-spacing:0;color:var(--gilt)}
 }
 @media (max-width:1150px){
   /* the title page's figures two by two, so none drops onto an indented second row */
@@ -930,14 +953,3 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 /* dark mode: the old books' shelves a dark board with the walnut ledge, not bright cream bands */
 :root[data-mode="dark"] .bookshelf{background:repeating-linear-gradient(to bottom,#2E241A 0,#261D15 168px,#6B4A2B 168px,#5E4126 182px)}
 :root[data-mode="dark"] .spine.gap{border-color:rgba(226,196,122,.45);background:repeating-linear-gradient(45deg,transparent 0 6px,rgba(226,196,122,.08) 6px 7px)}
-
-/* ===== TRY SWITCH: TEMPORARY (22 Nov), only while she chooses; delete this block with the one at the end of js/app.js ===== */
-.try-switch{position:fixed;right:18px;bottom:18px;z-index:60;display:grid;gap:6px;max-width:calc(100vw - 36px);padding:10px 12px;border-radius:14px;
-  background:var(--deep);color:var(--on-deep);box-shadow:0 6px 20px rgba(0,0,0,.25);font:600 12.5px/1.2 var(--body)}
-.trial-switch:not([hidden]) ~ .try-switch{bottom:76px}
-.try-switch>b{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass)}
-.try-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
-.try-row span{flex:1 1 100%;opacity:.85;font-weight:500}
-.try-switch button{padding:7px 12px;min-height:32px;border:0;border-radius:999px;background:rgba(255,255,255,.12);color:inherit;font:inherit;cursor:pointer}
-.try-switch button[aria-pressed="true"]{background:var(--brass);color:var(--deep)}
-/* ===== end of TRY SWITCH ===== */

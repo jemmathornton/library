@@ -2,6 +2,11 @@
 <html lang="en-GB" data-mode="light">
 <head>
 <meta charset="utf-8">
+<!-- Content Security Policy (her decision, 22 Nov): the browser runs only the site's own code (no inline scripts or handlers, nothing
+     from other sites). Pictures may also come from https: as the Add a book page shows the covers it looks up (Open Library, shops)
+     before one is chosen and copied in; data: and blob: for the cover tools' pictures. Styles 'unsafe-inline' for the style="…"
+     colours and sizes the pages are built with. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Jemma’s Library</title>
 <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -24,7 +29,7 @@
      Back to top, footer line 1, the credits' dots and the Menu drawer (js/app.js starts it). -->
 <script src="/family/mode.js" data-old-key="jemmas-library-mode"></script>
 <link rel="stylesheet" href="/family/family.css">
-<link rel="stylesheet" href="site.css?v=133d8540">
+<link rel="stylesheet" href="site.css?v=405c10c9">
 <script src="/family/family.js" defer></script>
 </head>
 <body>
@@ -52,6 +57,6 @@
 
 <script src="js/icons.js?v=462de08a"></script>
 <script src="js/data.js?v=15b95219"></script>
-<script src="js/app.js?v=9cfc3eb3" defer></script>
+<script src="js/app.js?v=94743ef0" defer></script>
 </body>
 </html>

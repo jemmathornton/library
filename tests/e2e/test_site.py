@@ -50,7 +50,6 @@ def run_page(box, test_file, only=None, timeout=300, frame=None):
     page = open(os.path.join(site, 'index.html'), encoding='utf-8').read()
     # deferred, like js/app.js (22 Nov: it waits for the family's /family/family.js), so they still run after it
     page = page.replace('</body>', f'<script src="__tests__/harness.js" defer></script><script src="__tests__/{test_file}" defer></script></body>')
-    open(os.path.join(site, '__test__.html'), 'w', encoding='utf-8').write(page)
     os.makedirs(os.path.join(site, '__tests__'), exist_ok=True)
     for f in ('harness.js', test_file):
         shutil.copy(os.path.join(E2E, f), os.path.join(site, '__tests__', f))
@@ -58,6 +57,13 @@ def run_page(box, test_file, only=None, timeout=300, frame=None):
     httpd = serve.Server(('127.0.0.1', 0), functools.partial(serve.Handler, directory=serve.SITE))
     _Results.box = queue.Queue()
     inbox = http.server.ThreadingHTTPServer(('127.0.0.1', 0), _Results)
+    # the page's Content Security Policy (22 Nov) lets it talk only to its own server and embed no frames; the test copy may
+    # also send its results to the inbox on its own port, and open the site itself in frames (the 899/901 and 360 checks):
+    # the only changes to the policy, and only in the test copy
+    for csp, more in (("connect-src 'self'", f"connect-src 'self' http://127.0.0.1:{inbox.server_port}"), ("frame-src 'none'", "frame-src 'self'")):
+        assert csp in page, f"the page’s Content Security Policy has no {csp}"
+        page = page.replace(csp, more, 1)
+    open(os.path.join(site, '__test__.html'), 'w', encoding='utf-8').write(page)
     for srv in (httpd, inbox):
         threading.Thread(target=srv.serve_forever, daemon=True).start()
     query = {'report': inbox.server_port}

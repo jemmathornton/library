@@ -240,3 +240,21 @@ test("typing in the drawer’s search keeps the drawer open, letter by letter, a
   q.dispatchEvent(new KeyboardEvent("keydown", {key: "Escape", bubbles: true}));
   ok(!isOpen(), "Escape in the empty box closes the drawer");
 });
+
+// ---------- her decisions of 22 Nov ----------
+test("22 Nov: on a phone the ❦ rule sits right under a heading, its button or note below it", async () => {
+  for (const h of ["#home", "#reading"]) {
+    await show(h);
+    const head = $$(".section-head", view()).find(s => s.querySelector(".pick-open, .more"));
+    ok(head, `${h}: a heading with a button or note`);
+    const h2 = head.querySelector("h2"), btn = head.querySelector(".pick-open, .more");
+    eq(getComputedStyle(h2, "::after").content, '"❦"', `${h}: the ornament is drawn under the heading:`);
+    eq(getComputedStyle(head, "::after").content, "none", `${h}: not at the foot of the whole block:`);
+    ok(btn.getBoundingClientRect().top >= h2.getBoundingClientRect().bottom - 1, `${h}: the button or note comes below the rule`);
+  }
+});
+
+test("22 Nov: the Stats figures are square mounted panels on a phone too (not rounded walnut)", async () => {
+  await show("#stats");
+  for (const l of $$(".ledger", view())) { const cs = getComputedStyle(l); eq([cs.borderTopLeftRadius, cs.backgroundImage], ["0px", "none"], "a figures panel:"); }
+});

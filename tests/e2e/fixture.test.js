@@ -1108,3 +1108,115 @@ test("round 3: capitals are put on headings added later, without going over the 
     eq(seen.length, 0, "a hover card isn’t a heading, so nothing to go over:");
   } finally { capitaliseEls = was; h.remove(); }
 });
+
+// ---------- her decisions of 22 Nov ----------
+test("22 Nov: a cover’s stars sit under it, plain (no dark strip on the cover), an arrow and not selectable", async () => {
+  for (const h of ["#shelf-fantasy", "#b-fx-moon"]) {
+    await show(h);   // drawn without touching the address (Chrome stops a page changing it too often)
+    const r = h === "#b-fx-moon" ? $(".book-top .plate .rated", view()) : $(`a.bk[href="#b-fx-moon"] .rated`, view());
+    ok(r, `${h}: the stars are there`);
+    ok(!r.closest(".cover"), `${h}: the stars aren’t on the cover`);
+    const cov = r.parentElement.querySelector(".cover");
+    ok(cov && r.getBoundingClientRect().top >= cov.getBoundingClientRect().bottom - 1, `${h}: the stars are under the cover`);
+    const cs = getComputedStyle(r);
+    eq([cs.cursor, cs.userSelect, cs.backgroundImage, cs.backgroundColor], ["default", "none", "none", "rgba(0, 0, 0, 0)"], `${h}: arrow, not selectable, no strip:`);
+    eq(r.getAttribute("aria-label"), "4.5 stars", `${h}: read as words:`);
+    eq(r.title, "4.5 stars", `${h}: its title:`);
+  }
+  ok(!$$(".cover .rated").length, "no stars left on any cover");
+});
+
+test("22 Nov: smaller pictures on Home and in banners (covers/thumbs/), a missing small copy falls back to the cover", async () => {
+  ok(!$(".try-switch"), "the Try switch is gone");
+  // Home's small pictures depend on the address, so it is changed here (waiting out Chrome's limit on changing it too often)
+  await until(() => { try { history.replaceState(null, "", "#home"); } catch {} return location.hash === "#home"; }, "the address to change to #home", 12000);
+  route(); await wait(0);
+  const img = $$("a.bk .cover img", view()).find(i => /covers\//.test(i.getAttribute("src")));
+  ok(img, "a cover card with a copied cover on Home");
+  await until(() => (img.complete && img.naturalWidth > 0 && !/thumbs/.test(img.getAttribute("src"))) || !img.isConnected, "the Home cover to load", 5000);
+  ok(img.isConnected && /^covers\/[^/]+\.jpg/.test(img.getAttribute("src")), `the fixture has no small copies, so the cover itself: ${img.getAttribute("src")}`);
+  eq(coverSrc({cover: "covers/9780000000001.jpg?v=1"}, false), "covers/thumbs/9780000000001.webp?v=1", "Home card:");
+  eq(coverSrc({cover: "covers/9780000000001.jpg"}, false, true), "covers/thumbs/9780000000001-s.webp", "banner:");
+  eq(coverSrc({cover: "covers/9780000000001.jpg"}, true), "covers/9780000000001.jpg", "a book’s own page keeps the cover:");
+  await until(() => { try { history.replaceState(null, "", "#shelf-fantasy"); } catch {} return location.hash === "#shelf-fantasy"; }, "the address to change", 12000);
+  eq(coverSrc({cover: "covers/9780000000001.jpg"}, false), "covers/9780000000001.jpg", "a shelf’s cards keep the cover:");
+});
+
+test("22 Nov: the sidebar fades at the foot while more links are below, at the top once scrolled, not at all when it fits", async () => {
+  const nav = $("#nav"), was = nav.style.cssText;
+  try {
+    nav.style.flex = "none"; nav.style.height = "120px"; nav.scrollTop = 0; navFades();
+    ok(nav.classList.contains("more-below") && !nav.classList.contains("more-above"), "at the top: a fade at the foot only");
+    ok(getComputedStyle(nav).maskImage.includes("gradient"), "the fade is a mask (the cloth shows through)");
+    nav.scrollTop = 40; nav.dispatchEvent(new Event("scroll")); await wait(0);
+    ok(nav.classList.contains("more-above"), "scrolled down: a fade at the top");
+    nav.scrollTop = nav.scrollHeight; nav.dispatchEvent(new Event("scroll")); await wait(0);
+    ok(!nav.classList.contains("more-below"), "at the end: no fade at the foot");
+    nav.style.height = "5000px"; nav.scrollTop = 0; navFades();
+    ok(!nav.classList.contains("more-below") && !nav.classList.contains("more-above"), "everything fits: no fade");
+  } finally { nav.style.cssText = was; navFades(); }
+});
+
+test("22 Nov: ISBN labels in plain capitals, blurbs ragged right (drop capital kept), Stats in the Bound book look", async () => {
+  await show("#b-fx-apos");
+  const dt =$$(".facts dt", view()).find(d => d.textContent === "ISBN-13");
+  ok(dt, "an ISBN-13 label"); eq(getComputedStyle(dt).fontVariantCaps, "normal", "ISBN-13:");
+  eq(getComputedStyle($$(".facts dt", view()).find(d => d.textContent === "Shelf")).fontVariantCaps, "small-caps", "the other labels stay small capitals:");
+  const p = $(".desc", view()); ok(p, "a blurb"); eq(getComputedStyle(p).textAlign, "left", "the blurb:");
+  ok(p.classList.contains("drop"), "the drop capital stays");
+  await show("#stats");
+  const panels = $$(".ledger", view()); ok(panels.length === 2, "two figure panels");
+  for (const l of panels) {
+    const cs = getComputedStyle(l);
+    eq([cs.borderTopLeftRadius, cs.backgroundImage, cs.backgroundColor], ["0px", "none", getComputedStyle(document.documentElement).getPropertyValue("--surface").trim() === "#FAF4E6" ? "rgb(250, 244, 230)" : cs.backgroundColor],
+      "the figures panel: square, on the page’s paper (no walnut cloth):");
+  }
+  const bar = $(".bar-row .track i", view()), dec = $(".decades i", view());
+  eq([getComputedStyle(bar).borderTopLeftRadius, getComputedStyle(dec).borderTopLeftRadius], ["0px", "0px"], "square bars:");
+  ok(/EB Garamond/.test(getComputedStyle($(".bar-row b", view())).fontFamily), "chart names in the book face");
+});
+
+test("22 Nov: Content Security Policy: only the site’s own code, and no page breaks it", async () => {
+  const meta = $('meta[http-equiv="Content-Security-Policy"]');
+  ok(meta, "the policy is in the page");
+  const pol = meta.content;
+  for (const d of ["default-src 'self'", "script-src 'self';", "object-src 'none'", "base-uri 'self'"]) ok(pol.includes(d), `the policy has ${d}`);
+  // the test copy lets the tests open the site in frames and send their results; the real page embeds no frames
+  const real = new DOMParser().parseFromString(await (await realFetch("index.html", {cache: "no-store"})).text(), "text/html");
+  const realPol = real.querySelector('meta[http-equiv="Content-Security-Policy"]')?.content || "";
+  for (const d of ["frame-src 'none'", "connect-src 'self';"]) ok(realPol.includes(d), `the real page’s policy has ${d}`);
+  ok(!/script-src[^;]*('unsafe-inline'|'unsafe-eval'|https?:)/.test(pol), "no inline, eval or other sites’ scripts");
+  ok(meta.compareDocumentPosition($("script")) & Node.DOCUMENT_POSITION_FOLLOWING, "the policy comes before every script");
+  const routes = ["#home", "#shelves", "#authors", "#reading", "#history", "#add", "#to-buy", "#stats", "#trial-covers", "#old-to-find",
+    ...OLD_KINDS.map(k => "#old-" + k[0]), ...DATA.shelves.map(s => "#shelf-" + s.id), ...DATA.books.map(b => "#b-" + b.id),
+    ...Object.keys(authorIndex).map(k => "#a-" + k), ...ELSEWHERE.map(e => "#r-" + SG.books.indexOf(e))];
+  const inline = [];
+  for (const h of routes) {
+    await show(h);
+    for (const el of document.querySelectorAll("*")) for (const a of el.attributes) {
+      if (/^on/i.test(a.name)) inline.push(`${h}: <${el.tagName.toLowerCase()} ${a.name}>`);
+      if (/^\s*javascript:/i.test(a.value)) inline.push(`${h}: ${a.name}="${a.value}"`);
+    }
+  }
+  type(q, "moon"); await wait(0); type(q, ""); await wait(0);
+  eq(inline.slice(0, 10), [], "inline handlers or javascript: links:");
+  await wait(300);   // reports come a moment after
+  eq(cspSeen(), [], "Content Security Policy violations:");
+  // and the watch works: an inline script is refused and seen
+  const s = document.createElement("script"); s.textContent = "window.cspLeak = 1"; document.head.append(s);
+  await until(() => cspSeen().length > 0, "the refused inline script to be reported", 3000);
+  ok(!window.cspLeak, "the inline script didn’t run");
+  s.remove(); CSP_SEEN.clear();
+});
+
+test("22 Nov: each dot in the footer’s credits has the same space on both sides", async () => {
+  const dots = $$("[data-jj-credits] .jj-dot").filter(d => d.style.display !== "none" && d.getClientRects().length);
+  ok(dots.length >= 2, "dots shown between the credits");
+  for (const d of dots) {
+    const r = document.createRange(), t = d.firstChild; r.setStart(t, t.length - 1); r.setEnd(t, t.length);
+    const dot = r.getBoundingClientRect(), prev = d.previousElementSibling.getBoundingClientRect(), next = d.nextElementSibling.getBoundingClientRect();
+    if (Math.abs(prev.top - next.top) > 2) continue;   // a dot at a line end is hidden anyway
+    const before = dot.left - prev.right, after = next.left - dot.right;
+    ok(Math.abs(before - after) <= 1 && before >= 3, `${d.previousElementSibling.textContent}: ${before.toFixed(1)}px before the dot, ${after.toFixed(1)}px after`);
+  }
+});
