@@ -1146,9 +1146,9 @@ test("round 5 (her ask): the title page is the page’s header, one framed panel
   eq(localStorage.getItem("library-try"), null, "its remembered choice cleared:");
 });
 
-test("round 5: the TEMPORARY Try switch “Covers in the header” (five choices) is there, sets the look, and never sits over the drawer", async () => {
+test("round 5: the TEMPORARY Try switch “Covers in the header” (six choices) is there, sets the look, and never sits over the drawer", async () => {
   const box = $(".try-switch"); ok(box, "the switch");
-  eq($$("button", box).map(b => b.textContent), ["As now", "Shelf", "Fan", "Row", "Stack"], "the choices:");
+  eq($$("button", box).map(b => b.textContent), ["As now", "Shelf", "Spines", "Fan", "Row", "Stack"], "the choices:");
   const was = document.documentElement.dataset.tryCovers;
   try {
     $('[data-try="fan"]', box).click(); eq(document.documentElement.dataset.tryCovers, "fan", "chosen:");

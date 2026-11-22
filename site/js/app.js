@@ -367,8 +367,30 @@ function listView(list){
 }
 // a banner is made of the page's own book covers, fading into the walnut behind the words (as the Sims site's banners
 // are each world's own map); pages with too few covers keep the plain walnut
+// the header's covers are a varied selection (her ask, 22 Nov): at most one book per series and per author where there are enough,
+// the shelves taken in turn (Home, All shelves…), in an order that is the same all day for the same page (seeded by the date and the
+// page's books, not reshuffled on every load); then, if that leaves too few, the rest of the page's books as before
+function variedPick(list, n){
+  const books = list.filter(b => b.cover);
+  let seed = 0; for (const ch of new Date().toISOString().slice(0, 10) + "|" + books.length + "|" + (books[0] ? books[0].id || books[0].t : "")) seed = (seed * 31 + ch.charCodeAt(0)) >>> 0;
+  const rand = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
+  const mixed = books.map(b => [rand(), b]).sort((x, y) => x[0] - y[0]).map(x => x[1]);
+  const byShelf = new Map(); mixed.forEach(b => (byShelf.get(b.shelf) || byShelf.set(b.shelf, []).get(b.shelf)).push(b));
+  const turns = []; for (let i = 0, more = true; more; i++) { more = false; byShelf.forEach(l => { if (i < l.length) { turns.push(l[i]); more = true; } }); }
+  const picked = [], series = new Set(), authors = new Set();
+  const seriesKey = b => { const h = (seriesOf[b.id] || [])[0]; return h ? h.series.name : ""; };
+  const authorKey = b => slug(b.by || "");
+  for (const strict of [true, false]) for (const b of turns) {
+    if (picked.length >= n) break;
+    if (picked.includes(b)) continue;
+    const sk = seriesKey(b), ak = authorKey(b);
+    if (strict && ((sk && series.has(sk)) || (ak && authors.has(ak)))) continue;
+    picked.push(b); if (sk) series.add(sk); if (ak) authors.add(ak);
+  }
+  return picked;
+}
 function shelfBanner(list){
-  const pics = (list || []).filter(b => b.cover).slice(0, 32);
+  const pics = variedPick(list || [], 32);
   return pics.length >= 8 ? `<div class="hero-shelf" aria-hidden="true">${pics.map(b => `<img src="${escRaw(coverSrc(b, false, true))}" alt="">`).join("")}</div>` : "";   // the banner's small copies (tiny); one that won't load is taken out (below, no inline handler)
 }
 const hero = (o) => { const bg = shelfBanner(o.covers);
@@ -1702,7 +1724,15 @@ document.addEventListener("click", e => { const a = e.target.closest && e.target
 // Bottom right, one row, "Covers in the header": As now (the plate) / Shelf / Fan / Row / Stack, on every page with covers in its
 // header. Remembered in localStorage "library-try-covers"; ?try-covers=… in the address picks one (for the record pictures).
 (() => {
-  const OPTS = [["now", "As now"], ["shelf", "Shelf"], ["fan", "Fan"], ["row", "Row"], ["stack", "Stack"]];
+  const OPTS = [["now", "As now"], ["shelf", "Shelf"], ["spines", "Spines"], ["fan", "Fan"], ["row", "Row"], ["stack", "Stack"]];
+  // Spines: the same books as narrow upright spines on the ledge, each in its cover's main colour (data.js "spine", made by the build;
+  // an old book's "cloth"), her title (and author) set up the spine; drawn beside the plate and shown only with this option
+  const HEIGHTS = [100, 91, 96, 87, 98, 90, 94, 88, 97, 92, 89, 95], WIDTHS = [34, 28, 38, 30, 36, 27, 32, 35, 29, 37, 31, 33];
+  const realBanner = shelfBanner;
+  shelfBanner = list => { const html = realBanner(list); if (!html) return html;
+    const spines = variedPick(list || [], 12).map((b, i) => { const c = /^#[0-9a-f]{6}$/i.test(b.spine || b.cloth || "") ? (b.spine || b.cloth) : "#7A6650";
+      return `<span class="sp${luminance(c) > 0.33 ? " pale" : ""}" style="--c:${c};--h:${HEIGHTS[i]}%;--w:${WIDTHS[i]}px"><b>${esc(b.t)}</b><i>${esc(b.by || "")}</i></span>`; }).join("");
+    return html + `<div class="hero-spines" aria-hidden="true"><div class="sp-row">${spines}</div></div>`; };
   let pick = "now";
   try { pick = localStorage.getItem("library-try-covers") || "now"; } catch {}
   pick = new URLSearchParams(location.search).get("try-covers") || pick;

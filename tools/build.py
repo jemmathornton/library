@@ -238,6 +238,12 @@ def build():
                     b['cloth'] = cloth(local)
                 except Exception:   # a damaged picture: the spine keeps the plain colour
                     pass
+            else:   # every other book: its spine's colour, the cover's main colour (22 Nov, the header's Spines option), from its small copy (quick)
+                small = os.path.join(SITE, 'covers', 'thumbs', key + '-s.webp')
+                try:
+                    b['spine'] = cloth(small if os.path.exists(small) else local)
+                except Exception:
+                    pass
         elif (covers.get(key) or {}).get('src'):   # a cover entry with no link (looked for, none found) is skipped, not a crash (21 Nov)
             b['cover'] = covers[key]['src']
     data = {'built': date.today().isoformat(), 'shelves': load('shelves.json'), 'books': books, 'toBuy': wish, 'storygraph': sg,
