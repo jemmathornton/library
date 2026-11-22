@@ -961,9 +961,10 @@ test("family rules: the credits’ dots never start or end a line (a no-break sp
   const f = await frameAt(700);
   try {
     const d = f.contentDocument, seps = [...d.querySelectorAll("[data-jj-credits] .jj-dot")], crs = [...d.querySelectorAll("[data-jj-credits] .cr")];
-    seps.forEach((s, i) => { const r = s.getBoundingClientRect(), before = crs[i].getBoundingClientRect(); ok(Math.abs(r.bottom - before.bottom) < 2, `dot ${i + 1} left its credit’s line`); });
+    seps.forEach((s, i) => { if (f.contentWindow.getComputedStyle(s).display === "none") return;   // a dot at a break is taken out (family.js)
+      const r = s.getBoundingClientRect(), before = crs[i].getBoundingClientRect(); ok(Math.abs(r.bottom - before.bottom) < 2, `dot ${i + 1} left its credit’s line`); });
     ok(crs.some((c, i) => i && c.getBoundingClientRect().top > crs[0].getBoundingClientRect().top + 2), "the credits should wrap at 700px for this check");
-    seps.forEach((s, i) => { const ends = crs[i + 1].getBoundingClientRect().top > s.getBoundingClientRect().top + 2; ok(!ends || f.contentWindow.getComputedStyle(s).visibility === "hidden", `dot ${i + 1} shows at the end of a line`); });
+    seps.forEach((s, i) => { const ends = crs[i + 1].getBoundingClientRect().top > s.getBoundingClientRect().top + 2; ok(!ends || f.contentWindow.getComputedStyle(s).visibility === "hidden" || f.contentWindow.getComputedStyle(s).display === "none", `dot ${i + 1} shows at the end of a line`); });
   } finally { f.remove(); }
 });
 
