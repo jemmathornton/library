@@ -1138,10 +1138,24 @@ test("round 5 (her ask): the title page is the page’s header, one framed panel
     const cs = getComputedStyle(hero);
     eq([cs.borderBottomStyle, cs.outlineStyle], ["double", "solid"], `${h}: a double rule along its foot and a rule inside its edge:`);
     ok(cs.backgroundColor !== "rgba(0, 0, 0, 0)", `${h}: on its own paper`);
+    ok(!hero.querySelector(".kicker"), `${h}: no kicker line`);
     ok(hero.querySelector("h1") && hero.getBoundingClientRect().right <= view().getBoundingClientRect().right + 1, `${h}: inside the page`);
   }
-  ok(!$(".try-switch") && !$("#tryHead") && !document.documentElement.dataset.tryHeader, "no Try switch");
+  ok(!$("#tryHead") && !document.documentElement.dataset.tryHeader, "the header and shelf-list Try switch is gone");
+  ok(!$("#view > .hero .kicker"), "no kicker line (❧ and a label) in the header (her note)");
   eq(localStorage.getItem("library-try"), null, "its remembered choice cleared:");
+});
+
+test("round 5: the TEMPORARY Try switch “Covers in the header” (five choices) is there, sets the look, and never sits over the drawer", async () => {
+  const box = $(".try-switch"); ok(box, "the switch");
+  eq($$("button", box).map(b => b.textContent), ["As now", "Shelf", "Fan", "Row", "Stack"], "the choices:");
+  const was = document.documentElement.dataset.tryCovers;
+  try {
+    $('[data-try="fan"]', box).click(); eq(document.documentElement.dataset.tryCovers, "fan", "chosen:");
+    eq($('[data-try="fan"]', box).getAttribute("aria-pressed"), "true", "shown as chosen:");
+  } finally { $(`[data-try="${was || "now"}"]`, box).click(); }
+  const rules = [...document.styleSheets].flatMap(s => { try { return [...s.cssRules]; } catch { return []; } });
+  ok(rules.some(r => r.selectorText === ".jj-menu-open .try-switch" && r.style.display === "none"), "hidden while the drawer is open");
 });
 
 test("round 5: small copies on every cover grid (shelves, authors, history…), the cover itself on a book’s page; a missing copy falls back to the cover", async () => {

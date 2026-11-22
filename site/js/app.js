@@ -372,8 +372,8 @@ function shelfBanner(list){
   return pics.length >= 8 ? `<div class="hero-shelf" aria-hidden="true">${pics.map(b => `<img src="${escRaw(coverSrc(b, false, true))}" alt="">`).join("")}</div>` : "";   // the banner's small copies (tiny); one that won't load is taken out (below, no inline handler)
 }
 const hero = (o) => { const bg = shelfBanner(o.covers);
-  return `<header class="hero${bg ? " shelved" : ""}">${bg}<div class="kicker">${o.color ? `<span class="dot" style="--c:${o.color}"></span>` : "<i></i>"}<span class="label">${o.kicker}</span></div>
-  <h1>${o.title}</h1>${o.text ? `<p>${o.text}</p>` : ""}${o.figures ? `<div class="figures">${o.figures.map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join("")}</div>` : ""}</header>`; };
+  // no kicker line (❧ and a label or link) above the title any more (her note, 22 Nov: unneeded in the header); the sidebar is the way about
+  return `<header class="hero${bg ? " shelved" : ""}">${bg}<h1>${o.title}</h1>${o.text ? `<p>${o.text}</p>` : ""}${o.figures ? `<div class="figures">${o.figures.map(([n, l]) => `<div><b>${n}</b><span>${l}</span></div>`).join("")}</div>` : ""}</header>`; };
 // a mix across the whole library: every few books, so all the shelves show
 const mixed = list => { const c = list.filter(b => b.cover), step = Math.max(1, Math.floor(c.length / 32)); return c.filter((b, i) => i % step === 0); };
 const sectionHead = (title, more) => `<div class="section-head"><h2>${title}</h2>${more || ""}</div>`;
@@ -1697,3 +1697,29 @@ capitalise(document);
 
 // the skip link: focus the page without changing the address (no inline handler, ready for a strict security policy online; round 4)
 document.addEventListener("click", e => { const a = e.target.closest && e.target.closest("a[data-skip]"); if (!a) return; e.preventDefault(); const v = document.getElementById("view"); if (v) { if (!v.hasAttribute("tabindex")) v.setAttribute("tabindex", "-1"); v.focus(); } });
+
+// ===== TRY SWITCH: TEMPORARY (22 Nov, round 5), only while she chooses; delete this block with the one at the end of site.css =====
+// Bottom right, one row, "Covers in the header": As now (the plate) / Shelf / Fan / Row / Stack, on every page with covers in its
+// header. Remembered in localStorage "library-try-covers"; ?try-covers=… in the address picks one (for the record pictures).
+(() => {
+  const OPTS = [["now", "As now"], ["shelf", "Shelf"], ["fan", "Fan"], ["row", "Row"], ["stack", "Stack"]];
+  let pick = "now";
+  try { pick = localStorage.getItem("library-try-covers") || "now"; } catch {}
+  pick = new URLSearchParams(location.search).get("try-covers") || pick;
+  if (!OPTS.some(o => o[0] === pick)) pick = "now";
+  const root = document.documentElement;
+  // the bigger options show covers larger than the banner's 180px small copies: the 460px ones instead
+  const sharpen = () => { if (pick === "now") return;
+    document.querySelectorAll("#view .hero-shelf img").forEach(i => { const s = i.getAttribute("src") || ""; if (/-s\.webp/.test(s)) i.setAttribute("src", s.replace("-s.webp", ".webp")); }); };
+  const box = document.createElement("div"); box.className = "try-switch"; box.setAttribute("role", "group"); box.setAttribute("aria-label", "Try a look");
+  const draw = () => { box.innerHTML = `<b>Try</b><div class="try-row"><span>Covers in the header</span>${OPTS.map(([v, w]) =>
+    `<button type="button" data-try="${v}" aria-pressed="${pick === v}">${w}</button>`).join("")}</div>`; };
+  const room = () => { document.body.style.paddingBottom = box.offsetHeight + 28 + "px"; };   // the page's foot is never under it
+  const apply = () => { root.dataset.tryCovers = pick; draw(); room(); sharpen(); try { localStorage.setItem("library-try-covers", pick); } catch {} };
+  box.addEventListener("click", e => { const b = e.target.closest("[data-try]"); if (!b) return; pick = b.dataset.try; apply(); box.querySelector(`[data-try="${pick}"]`)?.focus(); });
+  document.body.appendChild(box);
+  addEventListener("resize", room);
+  new MutationObserver(sharpen).observe(document.getElementById("view"), {childList: true});
+  apply();
+})();
+// ===== end of TRY SWITCH =====

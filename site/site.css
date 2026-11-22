@@ -970,3 +970,76 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 /* dark mode: the old books' shelves a dark board with the walnut ledge, not bright cream bands */
 :root[data-mode="dark"] .bookshelf{background:repeating-linear-gradient(to bottom,#2E241A 0,#261D15 168px,#6B4A2B 168px,#5E4126 182px)}
 :root[data-mode="dark"] .spine.gap{border-color:rgba(226,196,122,.45);background:repeating-linear-gradient(45deg,transparent 0 6px,rgba(226,196,122,.08) 6px 7px)}
+
+/* ===== TRY SWITCH: TEMPORARY (22 Nov, round 5), only while she chooses; delete this block with the one at the end of js/app.js =====
+   "Covers in the header": As now (the plate) / Shelf / Fan / Row / Stack, set on <html> as data-try-covers. Built from the same
+   .hero-shelf and its covers (the first ones in its list). */
+.try-switch{position:fixed;right:18px;bottom:18px;z-index:20;display:grid;gap:7px;max-width:calc(100vw - 36px);padding:10px 12px;border-radius:4px;
+  background:var(--deep);color:var(--on-deep);box-shadow:0 6px 20px rgba(0,0,0,.3);border:1px solid color-mix(in srgb,var(--gilt) 45%,transparent);font:600 12.5px/1.2 var(--body)}
+.trial-switch:not([hidden]) ~ .try-switch{bottom:76px}
+.jj-menu-open .try-switch{display:none}   /* never over the drawer or its scrim */
+.try-switch>b{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass)}
+.try-row{display:flex;flex-wrap:wrap;align-items:center;gap:5px}
+.try-row span{flex:1 1 100%;opacity:.85;font-weight:500}
+.try-switch button{padding:6px 11px;min-height:30px;border:0;border-radius:999px;background:rgba(255,255,255,.12);color:inherit;font:inherit;cursor:pointer}
+.try-switch button[aria-pressed="true"]{background:var(--brass);color:var(--deep)}
+.try-switch button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+@media (max-width:600px){ .try-switch{right:10px;left:10px;bottom:10px;max-width:none;padding:8px 10px;gap:5px} .try-switch button{padding:5px 9px;min-height:28px;font-size:12px} }
+
+/* the options share: no cream mount round the covers; the covers whole (no trimming), filter as now */
+:is([data-try-covers="shelf"],[data-try-covers="fan"],[data-try-covers="row"],[data-try-covers="stack"]) .hero .hero-shelf{
+  background:none;border:0;outline:0;box-shadow:none;padding:0;overflow:visible}
+:is([data-try-covers="shelf"],[data-try-covers="fan"],[data-try-covers="row"],[data-try-covers="stack"]) .hero-shelf img{border-radius:1px;box-shadow:0 1px 2px rgba(0,0,0,.18),0 8px 14px -8px var(--shade)}
+
+/* Shelf: covers standing upright side by side on a thin wooden ledge, a little different in height like real books */
+[data-try-covers="shelf"] .hero .hero-shelf{align-self:end;width:100%;box-sizing:border-box;display:flex;align-items:flex-end;justify-content:center;gap:5px;padding:0 10px;
+  border-bottom:9px solid #5E3D22;box-shadow:0 2px 0 #3B2616,0 12px 14px -10px var(--shade);background:linear-gradient(to top,rgba(0,0,0,.06),transparent 30%)}
+[data-try-covers="shelf"] .hero-shelf img{flex:0 0 calc((100% - 20px) / 5 * .92);width:0;min-width:0;height:auto;aspect-ratio:2/3;object-fit:cover}
+[data-try-covers="shelf"] .hero-shelf img:nth-child(3n+1){flex-basis:calc((100% - 20px) / 5)}
+[data-try-covers="shelf"] .hero-shelf img:nth-child(3n+2){flex-basis:calc((100% - 20px) / 5 * .86)}
+[data-try-covers="shelf"] .hero-shelf img:nth-child(4n){flex-basis:calc((100% - 20px) / 5 * .96)}
+[data-try-covers="shelf"] .hero-shelf img:nth-child(n+6){display:none}
+@media (min-width:901px){ [data-try-covers="shelf"] .hero.shelved{grid-template-columns:minmax(0,1fr) clamp(260px,42%,520px)} }
+:root[data-mode="dark"][data-try-covers="shelf"] .hero .hero-shelf{border-bottom-color:#6B4A2B;box-shadow:0 2px 0 #241810,0 12px 14px -10px var(--shade)}
+
+/* Fan: six covers overlapping in a gentle spread, like books laid out on a table */
+[data-try-covers="fan"] .hero .hero-shelf{align-self:center;width:100%;display:block;position:relative;height:clamp(170px,17cqw,240px)}
+[data-try-covers="fan"] .hero-shelf img{position:absolute;bottom:6%;left:50%;width:auto;height:64%;aspect-ratio:2/3;object-fit:cover;transform-origin:50% 100%}
+[data-try-covers="fan"] .hero-shelf img:nth-child(n+7){display:none}
+[data-try-covers="fan"] .hero-shelf img:nth-child(1){transform:translateX(-50%) translateX(-88%) rotate(-13deg)}
+[data-try-covers="fan"] .hero-shelf img:nth-child(2){transform:translateX(-50%) translateX(-54%) rotate(-8deg)}
+[data-try-covers="fan"] .hero-shelf img:nth-child(3){transform:translateX(-50%) translateX(-20%) rotate(-3deg)}
+[data-try-covers="fan"] .hero-shelf img:nth-child(4){transform:translateX(-50%) translateX(20%) rotate(3deg)}
+[data-try-covers="fan"] .hero-shelf img:nth-child(5){transform:translateX(-50%) translateX(54%) rotate(8deg)}
+[data-try-covers="fan"] .hero-shelf img:nth-child(6){transform:translateX(-50%) translateX(88%) rotate(13deg)}
+
+/* Row: one straight row of covers along the foot of the header, under the title and figures, the same height, small gaps */
+@media (min-width:901px){
+  [data-try-covers="row"] .hero.shelved{grid-template-columns:minmax(0,1fr);grid-template-rows:none}
+  [data-try-covers="row"] .hero.shelved .hero-shelf{grid-column:1;grid-row:auto;order:9;margin-top:30px}
+}
+/* one row only: as many whole covers as fit (the rest wrap into rows of no height, hidden) */
+[data-try-covers="row"] .hero .hero-shelf{align-self:stretch;display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,96px));justify-content:space-between;grid-template-rows:auto;grid-auto-rows:0;gap:0 10px;overflow:hidden;width:auto;padding-top:22px;border-top:1px solid var(--line)}
+[data-try-covers="row"] .hero-shelf img{width:100%;height:auto;aspect-ratio:2/3}
+[data-try-covers="row"] .hero-shelf img:nth-child(n+7),[data-try-covers="row"] .hero-shelf img:nth-child(n+19){display:block}
+[data-try-covers="row"] .hero.shelved{display:flex;flex-direction:column}
+@media (min-width:901px){ [data-try-covers="row"] .hero.shelved{display:flex} }
+
+@media (min-width:901px) and (max-width:1200px){ [data-try-covers="fan"] .hero-shelf img{height:54%} }
+/* Stack: three covers overlapping as a neat collage with a soft shadow, the front one largest */
+[data-try-covers="stack"] .hero .hero-shelf{width:100%;display:block;position:relative;aspect-ratio:1/1;max-height:300px}
+[data-try-covers="stack"] .hero-shelf img{position:absolute;width:auto;aspect-ratio:2/3;object-fit:cover;box-shadow:0 2px 4px rgba(0,0,0,.2),0 18px 26px -14px var(--shade)}
+[data-try-covers="stack"] .hero-shelf img:nth-child(n+4){display:none}
+[data-try-covers="stack"] .hero-shelf img:nth-child(1){height:72%;top:6%;left:7%;transform:rotate(-7deg)}
+[data-try-covers="stack"] .hero-shelf img:nth-child(2){height:72%;top:3%;right:7%;transform:rotate(6deg)}
+[data-try-covers="stack"] .hero-shelf img:nth-child(3){height:92%;top:6%;left:50%;transform:translateX(-50%);z-index:1}
+
+/* phones: under 900px the covers sit under the words, so each option keeps to a modest size there */
+@media (max-width:900px){
+  [data-try-covers="shelf"] .hero .hero-shelf{width:min(100%,420px);align-self:center}
+  [data-try-covers="fan"] .hero .hero-shelf{height:170px;width:100%;align-self:stretch}
+  [data-try-covers="fan"] .hero-shelf img:nth-child(1),[data-try-covers="fan"] .hero-shelf img:nth-child(6){display:none}
+  [data-try-covers="row"] .hero .hero-shelf{grid-template-columns:repeat(auto-fill,minmax(64px,1fr))}
+  [data-try-covers="stack"] .hero .hero-shelf{width:min(100%,300px);max-height:230px;align-self:center}
+}
+/* ===== end of TRY SWITCH ===== */
