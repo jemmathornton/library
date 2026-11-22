@@ -9,9 +9,9 @@
   --nav:#3B2616; --deep:#3B2616; --deep-2:#5E3D22; --on-deep:#FBF4E6; --on-deep-mute:color-mix(in srgb,#fff 62%,var(--deep));
   --brass:#E4B23C; --done:#8A4B17; --reading:#B8861A; --reading-ink:#7E5B0E;   /* reading-ink: the reading gold dark enough to read as text (review, 21 Nov) */
   --focus:var(--deep-2);   /* keyboard focus on cream: walnut (brass is too faint there); brass in dark mode */
-  --display:"Instrument Serif","Iowan Old Style","Palatino Linotype",Georgia,serif;
-  --body:"Manrope","Segoe UI",system-ui,sans-serif;
-  --read:"EB Garamond","Palatino Linotype","Book Antiqua",Georgia,serif;   /* reading text (site/fonts, SIL OFL) */
+  --display:"Library Ornaments","Instrument Serif","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --body:"Library Ornaments","Manrope","Segoe UI",system-ui,sans-serif;
+  --read:"Library Ornaments","EB Garamond","Palatino Linotype","Book Antiqua",Georgia,serif;   /* reading text (site/fonts, SIL OFL) */
   /* the binding: cloth and gilt (the same in dark mode) */
   --cloth:#4A2A1A; --gilt:#C9A24E; --gilt-2:#E2C47A;
   --weave:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgba(0,0,0,.09) 0 1px,transparent 1px 3px);
@@ -41,6 +41,12 @@
 @font-face{font-family:"EB Garamond";src:url("fonts/EBGaramond-Italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap}
 @font-face{font-family:"EB Garamond";src:url("fonts/EBGaramond-Medium.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap}
 @font-face{font-family:"EB Garamond";src:url("fonts/EBGaramond-SemiBold.woff2") format("woff2");font-weight:600 700;font-style:normal;font-display:swap}
+/* the ornaments ❦ ❧ and the arrow ← in EB Garamond wherever they appear (her decision, 22 Nov: they were drawn in the Windows symbol
+   font, as Instrument Serif and Manrope don't have them): the same files, only for those three characters, first in every font list */
+@font-face{font-family:"Library Ornaments";src:url("fonts/EBGaramond-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap;unicode-range:U+2190,U+2766-2767}
+@font-face{font-family:"Library Ornaments";src:url("fonts/EBGaramond-Italic.woff2") format("woff2");font-weight:400;font-style:italic;font-display:swap;unicode-range:U+2190,U+2766-2767}
+@font-face{font-family:"Library Ornaments";src:url("fonts/EBGaramond-Medium.woff2") format("woff2");font-weight:500;font-style:normal;font-display:swap;unicode-range:U+2190,U+2766-2767}
+@font-face{font-family:"Library Ornaments";src:url("fonts/EBGaramond-SemiBold.woff2") format("woff2");font-weight:600 700;font-style:normal;font-display:swap;unicode-range:U+2190,U+2766-2767}
 
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -924,3 +930,14 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 /* dark mode: the old books' shelves a dark board with the walnut ledge, not bright cream bands */
 :root[data-mode="dark"] .bookshelf{background:repeating-linear-gradient(to bottom,#2E241A 0,#261D15 168px,#6B4A2B 168px,#5E4126 182px)}
 :root[data-mode="dark"] .spine.gap{border-color:rgba(226,196,122,.45);background:repeating-linear-gradient(45deg,transparent 0 6px,rgba(226,196,122,.08) 6px 7px)}
+
+/* ===== TRY SWITCH: TEMPORARY (22 Nov), only while she chooses; delete this block with the one at the end of js/app.js ===== */
+.try-switch{position:fixed;right:18px;bottom:18px;z-index:60;display:grid;gap:6px;max-width:calc(100vw - 36px);padding:10px 12px;border-radius:14px;
+  background:var(--deep);color:var(--on-deep);box-shadow:0 6px 20px rgba(0,0,0,.25);font:600 12.5px/1.2 var(--body)}
+.trial-switch:not([hidden]) ~ .try-switch{bottom:76px}
+.try-switch>b{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass)}
+.try-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.try-row span{flex:1 1 100%;opacity:.85;font-weight:500}
+.try-switch button{padding:7px 12px;min-height:32px;border:0;border-radius:999px;background:rgba(255,255,255,.12);color:inherit;font:inherit;cursor:pointer}
+.try-switch button[aria-pressed="true"]{background:var(--brass);color:var(--deep)}
+/* ===== end of TRY SWITCH ===== */
