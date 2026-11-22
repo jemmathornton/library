@@ -369,8 +369,24 @@ function listView(list){
 // shelves' own order, so every shelf has one before any has two; never two by the same author or from the same series. On a shelf page
 // only its books, by the same rule, then (if that leaves too few) its other books. The order within each shelf is the same all day for
 // the same page (seeded by the date and the page's books), not reshuffled on every load.
+// Books never chosen for the header's spines (her decision, 22 Nov: no Harry Potter books there). The books themselves stay everywhere
+// else in the Library. A book is left out if any of its authors is listed under "authors", it is in a series listed under "series"
+// (data/series.json names), or its title contains one of "titles" (for companion books and editions in no series). Capitals,
+// spaces and full stops don't matter ("J.K. Rowling" = "J. K. Rowling"). Edit these lists to change it.
+const SPINE_EXCLUDE = {
+  authors: ["J. K. Rowling"],
+  series: ["Harry Potter", "Hogwarts Library", "Fantastic Beasts Screenplays"],
+  titles: ["Harry Potter", "Hogwarts", "Fantastic Beasts", "Quidditch Through the Ages", "Beedle the Bard", "Cursed Child"],
+};
+const spineExcluded = (() => {
+  const norm = s => slug(s || "").replace(/-/g, "");
+  const authors = new Set(SPINE_EXCLUDE.authors.map(norm)), series = new Set(SPINE_EXCLUDE.series.map(norm)), titles = SPINE_EXCLUDE.titles.map(norm);
+  return b => (b.authors || []).some(a => authors.has(norm(a.name))) || String(b.by || "").split(/,| & | and /).some(a => authors.has(norm(a)))
+    || (seriesOf[b.id] || []).some(h => series.has(norm(h.series.name)))
+    || [b.t, b.title, b.displayTitle].some(t => t && titles.some(x => norm(t).includes(x)));
+})();
 function variedPick(list, n){
-  const books = list.filter(b => b.cover);
+  const books = list.filter(b => b.cover && !spineExcluded(b));
   let seed = 0; for (const ch of new Date().toISOString().slice(0, 10) + "|" + books.length + "|" + (books[0] ? books[0].id || books[0].t : "")) seed = (seed * 31 + ch.charCodeAt(0)) >>> 0;
   const rand = () => { seed = (seed * 1664525 + 1013904223) >>> 0; return seed / 4294967296; };
   const mixed = books.map(b => [rand(), b]).sort((x, y) => x[0] - y[0]).map(x => x[1]);
@@ -381,13 +397,45 @@ function variedPick(list, n){
   const seriesKey = b => { const h = (seriesOf[b.id] || [])[0]; return h ? h.series.name : ""; };
   const authorKey = b => slug(b.by || "");
   const ok = b => { const sk = seriesKey(b), ak = authorKey(b); return !(sk && series.has(sk)) && !(ak && authors.has(ak)); };
-  const take = b => { picked.push(b); const sk = seriesKey(b), ak = authorKey(b); if (sk) series.add(sk); if (ak) authors.add(ak); };
-  for (let took = true; took && picked.length < n; ) {
+  const round = new Map();
+  const take = (b, r) => { picked.push(b); round.set(b, r); const sk = seriesKey(b), ak = authorKey(b); if (sk) series.add(sk); if (ak) authors.add(ak); };
+  // a spread of colours (her ask, 22 Nov): of a shelf's next few allowed books (still in the day's order), the one whose colour is
+  // furthest from those already chosen
+  const pickFrom = q => { let best = -1, far = -1;
+    for (let i = 0, seen = 0; i < q.length && seen < 4; i++) { if (!ok(q[i])) continue; seen++;
+      const c = spineLab(q[i]), d = picked.length ? Math.min(...picked.map(p => labGap(c, spineLab(p)))) : 0;
+      if (d > far) { far = d; best = i; } }
+    return best; };
+  for (let took = true, r = 0; took && picked.length < n; r++) {
     took = false;
-    for (const q of queues) { if (picked.length >= n) break; const i = q.findIndex(ok); if (i >= 0) { take(q.splice(i, 1)[0]); took = true; } }
+    for (const q of queues) { if (picked.length >= n) break; const i = pickFrom(q); if (i >= 0) { take(q.splice(i, 1)[0], r); took = true; } }
   }
-  if (queues.length === 1) for (const b of mixed) { if (picked.length >= n) break; if (!picked.includes(b)) picked.push(b); }
-  return picked;
+  if (queues.length === 1) for (const b of mixed) { if (picked.length >= n) break; if (!picked.includes(b)) take(b, 0); }
+  return spineOrder(picked, queues.length === 1 ? () => 0 : b => round.get(b));
+}
+// the spines' colours compared in OKLab (a perceptual colour space: equal distances look about equally different)
+const SPINE_GAP = 0.12;   // the least difference between two neighbouring spines' colours (her ask, 22 Nov: never two alike side by side)
+const spineColour = b => /^#[0-9a-f]{6}$/i.test(b.spine || b.cloth || "") ? (b.spine || b.cloth) : "#7A6650";
+const hexLab = hex => {
+  const [r, g, b] = [1, 3, 5].map(i => { const v = parseInt(hex.slice(i, i + 2), 16) / 255; return v <= 0.04045 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; });
+  const l = Math.cbrt(0.4122214708 * r + 0.5363325363 * g + 0.0514459929 * b), m = Math.cbrt(0.2119034982 * r + 0.6806995451 * g + 0.1073969566 * b),
+    s = Math.cbrt(0.0883024619 * r + 0.2817188376 * g + 0.6299787005 * b);
+  return [0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s, 1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s, 0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s];
+};
+const spineLab = b => hexLab(spineColour(b));
+const labGap = (x, y) => Math.hypot(x[0] - y[0], x[1] - y[1], x[2] - y[2]);
+// the row's order: as chosen, except that each next spine is the first still to place (from the same round of shelves, so every shelf
+// still comes before any comes twice) whose colour differs from its neighbour's by SPINE_GAP or more; if none does, the most different
+function spineOrder(books, roundOf){
+  const left = [...books], out = [];
+  while (left.length) {
+    const r = Math.min(...left.map(roundOf)), now = left.filter(b => roundOf(b) === r), prev = out[out.length - 1];
+    let next = now[0];
+    if (prev) { const pc = spineLab(prev), gaps = now.map(b => labGap(pc, spineLab(b)));
+      const i = gaps.findIndex(g => g >= SPINE_GAP); next = now[i >= 0 ? i : gaps.indexOf(Math.max(...gaps))]; }
+    out.push(next); left.splice(left.indexOf(next), 1);
+  }
+  return out;
 }
 // the header's books stand as spines on a walnut ledge (her pick, 22 Nov, Spines with the Stamped finish, from a Try switch of a plate,
 // shelf, spines, fan, row and stack): each spine in its cover's main colour (data.js "spine", made by the build; an old book's
@@ -405,7 +453,7 @@ function shelfBanner(list){
   const books = variedPick(list || [], 30);
   if (books.length < 8) return "";
   return `<div class="hero-shelf" aria-hidden="true"><div class="sp-row">${books.map(b => {
-    const c = /^#[0-9a-f]{6}$/i.test(b.spine || b.cloth || "") ? (b.spine || b.cloth) : "#7A6650", lum = luminance(c);
+    const c = spineColour(b), lum = luminance(c);
     // dark: gilt-foil lettering; anything lighter is blind-stamped (darker, with a light edge), for legibility
     return `<span class="sp${lum < 0.2 ? " dark" : ""}" style="--c:${c};--h:${spineTall(b)}%;--w:${spineThick(b)}px"><span class="t"><b>${esc(b.t)}</b>${b.by ? `<i data-full="${esc(b.by)}" data-short="${esc(surnameOf(b.by))}">${esc(b.by)}</i>` : ""}</span></span>`;
   }).join("")}</div></div>`;

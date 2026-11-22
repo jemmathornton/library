@@ -237,6 +237,53 @@ test("22 Nov: the header's spines: each shelf in turn on Home and All shelves, n
   if (fantasy) ok(variedPick(fantasy.books, 30).every(b => b.shelf === "fantasy"), "a shelf page: only its own books");
   await show("#home"); await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); fitSpines();
   const spines = $$("#view .hero-shelf .sp:not([hidden])");
+  ok(spines.every(sp => !/rowling|harry potter/i.test(sp.textContent)), "no Harry Potter book on Home's spines");
   ok(spines.length >= 6, `spines on Home: ${spines.length}`);
   for (const sp of spines) { const i = sp.querySelector(".t i"); ok(i && i.textContent.trim() && getComputedStyle(i).display !== "none", "an author on every spine: " + sp.textContent); }
+});
+
+// her ask (22 Nov): a variety of colours in the header's spines, never two alike side by side (OKLab distance SPINE_GAP or more)
+test("22 Nov: the header's spines: no two neighbours of a similar colour", async () => {
+  const mk = (id, spine, shelf) => ({id, t: id, by: id, authors: [{name: id}], shelf, cover: "x", spine});
+  const sh = SHELVES[0].id, row = spineOrder(["#7a1010", "#7b1212", "#7c1414", "#203070", "#e0d0a0", "#215030"].map((c, i) => mk("c" + i, c, sh)), () => 0);
+  for (let i = 1; i < row.length; i++) ok(labGap(spineLab(row[i - 1]), spineLab(row[i])) >= SPINE_GAP, "made-up row: neighbours differ: " + row.map(b => b.spine));
+  const colourOf = sp => { const m = sp.style.getPropertyValue("--c").trim(); return hexLab(m); };
+  for (const h of ["#home", "#shelves"]) {
+    await show(h); await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))); fitSpines();
+    const spines = $$("#view .hero-shelf .sp:not([hidden])");
+    if (BOOKS.length < 100) continue;   // the made-up library is too small to always manage it
+    for (let i = 1; i < spines.length; i++) {
+      const g = labGap(colourOf(spines[i - 1]), colourOf(spines[i]));
+      ok(g >= SPINE_GAP, `${h}: spines ${i} and ${i + 1} too alike (${g.toFixed(3)}): ${spines[i - 1].style.getPropertyValue("--c")} ${spines[i].style.getPropertyValue("--c")}`);
+    }
+  }
+});
+
+// her decision (22 Nov): no J.K. Rowling / Harry Potter book in any header's spines (SPINE_EXCLUDE in app.js); a shelf page still
+// tops up from its other books. The made-up library has no such books, so a few are added here, on a shelf and on a shelf of their own.
+test("22 Nov: no Harry Potter books in the header's spines", async () => {
+  const shelf = BOOKS.find(b => b.cover).shelf, cover = BOOKS.find(b => b.cover).cover;
+  const hp = [
+    {id: "hp-1", t: "Harry Potter and the Goblet of Fire", by: "J. K. Rowling", authors: [{name: "J. K. Rowling"}]},
+    {id: "hp-2", t: "The Casual Vacancy", by: "J.K. Rowling", authors: [{name: "J.K. Rowling"}]},
+    {id: "hp-3", t: "Quidditch Through the Ages", by: "Kennilworthy Whisp", authors: [{name: "Kennilworthy Whisp"}]},
+    {id: "hp-4", t: "The Tales of Beedle the Bard", by: "Someone Else", authors: [{name: "Someone Else"}]},
+    {id: "hp-5", t: "Fantastic Beasts: The Crimes of Grindelwald", by: "Someone Else", authors: [{name: "Someone Else"}]},
+    {id: "hp-6", t: "Harry Potter and the Cursed Child", by: "Jack Thorne & John Tiffany", authors: [{name: "Jack Thorne"}, {name: "John Tiffany"}]},
+  ].map(b => ({...b, shelf, cover}));
+  const isHP = b => b.id.startsWith("hp-");
+  ok(hp.every(spineExcluded), "every one is on the exclusion list");
+  const hpLike = b => /rowling/i.test((b.authors || []).map(a => a.name).join(" ") + " " + b.by)
+    || /harry potter|hogwarts|fantastic beasts|quidditch|beedle the bard|cursed child/i.test(b.t + " " + (b.title || ""));
+  eq(BOOKS.filter(spineExcluded).filter(b => !hpLike(b)).map(b => b.t), [], "no other book is left out:");
+  for (const s of SHELVES) ok(!variedPick(s.books, 30).some(spineExcluded), "none on the page of the shelf " + s.id);
+  for (const list of [[...hp, ...BOOKS], [...BOOKS, ...hp]]) ok(!variedPick(list, 30).some(isHP), "none picked for the whole library");
+  const own = BOOKS.filter(b => b.shelf === shelf);
+  const picked = variedPick([...hp, ...own], 30);
+  ok(!picked.some(isHP), "none picked on their shelf's page");
+  eq(picked.length, Math.min(30, own.filter(b => b.cover).length), "the shelf page still topped up from its other books:");
+  for (const h of ["#home", "#shelves", "#shelf-" + shelf]) {
+    await show(h);
+    ok(!$$("#view .hero-shelf .sp").some(sp => /rowling|harry potter/i.test(sp.textContent)), "no Harry Potter spine on " + h);
+  }
 });
