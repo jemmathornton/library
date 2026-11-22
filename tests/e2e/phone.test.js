@@ -3,7 +3,7 @@
 // are big enough; typing boxes don't make a phone zoom in. Toolkit in harness.js.
 const W = () => innerWidth;
 const menuButton = () => $("#menuBtn");
-const isOpen = () => document.body.classList.contains("nav-open");
+const isOpen = () => document.documentElement.classList.contains("jj-menu-open");   // the family's JJFamily.menu (22 Nov)
 const side = () => $("#side");
 const onScreen = el => { const r = el.getBoundingClientRect(); return r.right > 0 && r.left < W(); };
 // anything sticking out past the right edge that the page doesn't clip or scroll (the old books' list scrolls sideways on purpose)
@@ -205,8 +205,10 @@ test("the Stats page at 390, 360 and 320 wide: no labels overlap and none runs i
     const f = document.createElement("iframe"); f.src = "index.html#stats"; f.style.cssText = `position:fixed;left:-3000px;top:0;width:${w}px;height:800px;border:0`;
     document.body.append(f);
     try {
-      await new Promise(r => f.onload = r);
-      await until(() => f.contentDocument.querySelectorAll("#view .decades span").length > 12, `the Stats page at ${w} wide`);
+      await new Promise(r => { f.onload = r; setTimeout(r, 15000); });
+      // 10 s (round 3): the framed page asks its server once before drawing (the read-only check) and loads the family's code;
+      // 5 s timed out now and then under the full suite's load
+      await until(() => f.contentDocument?.querySelectorAll("#view .decades span").length > 12, `the Stats page at ${w} wide`, 10000);
       eq(f.contentWindow.innerWidth, w, "frame width:");
       eq(statsClashes(f.contentDocument), [], `at ${w} wide:`);
     } finally { f.remove(); }
@@ -225,9 +227,9 @@ test("Back to top and Dark mode sit side by side at the bottom of a phone page, 
 
 test("family rules: on a phone the foot’s credits stand one per line, with no dots", async () => {
   await show("#home");
-  const crs = $$(".about-site .cr"), tops = crs.map(c => Math.round(c.getBoundingClientRect().top));
+  const crs = $$("[data-jj-credits] .cr"), tops = crs.map(c => Math.round(c.getBoundingClientRect().top));
   ok(crs.length >= 3 && new Set(tops).size === crs.length, "credits share a line");
-  ok($$(".about-site .sep").every(s => getComputedStyle(s).display === "none"), "a dot shows");
+  ok($$("[data-jj-credits] .jj-dot").every(s => getComputedStyle(s).display === "none"), "a dot shows");
   ok(crs.every(c => c.getBoundingClientRect().right <= W() && c.getBoundingClientRect().left >= 0), "a credit runs off the screen");
 });
 

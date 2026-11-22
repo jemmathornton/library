@@ -61,10 +61,13 @@ function resetPage(){
   q.value = ""; searchFrom = null; freshAdd(); addFromWish = false; shelfView = {...SHELF_VIEW};
   try { localStorage.removeItem(VIEW_KEY); } catch {}
   pickHide(); document.getElementById("spineCard")?.remove();
-  if (typeof setMenu === "function" && document.body.classList.contains("nav-open")) setMenu(false);   // the phone drawer (21 Nov)
-  try { localStorage.removeItem("jj-mode"); localStorage.removeItem("jemmas-library-mode"); } catch {}   // the foot's Dark mode button (21 Nov; key jj-mode, the family rules): back to light
-  document.documentElement.setAttribute("data-mode", "light"); if (typeof showMode === "function") showMode();
+  if (typeof menuOpen === "function" && menuOpen()) setMenu(false);   // the phone drawer (21 Nov; the family's JJFamily.menu since 22 Nov)
+  // the foot's Dark mode button (21 Nov; key jj-mode, the family rules; the family's family.js since 22 Nov): back to light
+  if (window.JJFamily && JJFamily.mode.get() !== "light") JJFamily.mode.set("light");
+  try { localStorage.removeItem("jj-mode"); localStorage.removeItem("jemmas-library-mode"); } catch {}
+  document.documentElement.setAttribute("data-mode", "light"); window.JJFamily?.paint(true);
   history.replaceState(null, "", location.pathname + location.search + "#home"); route();
+  if (typeof trialShown === "function") trialShown();   // the New covers switch follows the address (no hashchange here)
 }
 
 addEventListener("load", async () => {

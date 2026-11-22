@@ -45,6 +45,10 @@ try:   # and never more than 100 million pixels once opened (review, 21 Nov: a s
 except ImportError:
     pass
 SITE, DATA = os.path.join(ROOT, 'site'), os.path.join(ROOT, 'data')
+# the family's shared code (dark mode, footer, Menu drawer) lives in Jemma's Journals, the parent (her decision, 22 Nov); the
+# page loads it from /family/, so this server serves it from there too, as the family server (port 8050) does
+FAMILY = os.path.normpath(os.path.join(ROOT, '..', 'site', 'family'))
+FAMILY_TYPES = {'.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.md': 'text/plain; charset=utf-8'}
 ADDED, SCANNED = os.path.join(DATA, 'added.json'), os.path.join(DATA, 'scanned.json')
 KEY_FILE = os.path.join(os.environ.get('LOCALAPPDATA', os.path.expanduser('~')), 'Jemmas Library', 'scan-key.txt')
 UA = {'User-Agent': 'HomeLibrary/1.0 (private, personal use)'}   # names no one (review, 15 Nov)
@@ -752,14 +756,44 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         port = self.server.server_port
         return (self.headers.get('Host') or '').lower() in (f'localhost:{port}', f'127.0.0.1:{port}')
 
+    def family_file(self):
+        """/family/<name>: a file straight inside Jemma's Journals' site/family, or None (no folders, nothing outside it)."""
+        path = urllib.parse.unquote(urllib.parse.urlparse(self.path).path)
+        if not path.startswith('/family/'):
+            return None
+        name = path[len('/family/'):]
+        if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]*', name) or '..' in name:
+            return False
+        full = os.path.normpath(os.path.join(FAMILY, name))
+        if os.path.dirname(full) != FAMILY or not os.path.isfile(full):
+            return False
+        return full
+
+    def send_family(self, head=False):
+        full = self.family_file()
+        if not full:
+            self.send_error(404)
+            return
+        body = open(full, 'rb').read()
+        self.send_response(200)
+        self.send_header('Content-Type', FAMILY_TYPES.get(os.path.splitext(full)[1].lower(), 'application/octet-stream'))
+        self.send_header('Content-Length', str(len(body)))
+        self.end_headers()
+        if not head:
+            self.wfile.write(body)
+
     def do_HEAD(self):
         if not self.host_ok():
             return self.reply({'error': 'not allowed'}, 403)
+        if self.family_file() is not None:
+            return self.send_family(head=True)
         return super().do_HEAD()
 
     def do_GET(self):
         if not self.host_ok():
             return self.reply({'error': 'not allowed'}, 403)
+        if self.family_file() is not None:
+            return self.send_family()
         if not self.path.startswith('/api/'):
             return super().do_GET()
         if not self.api_ok():
@@ -795,6 +829,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
                 return self.reply(scanned())
         if u.path == '/api/scan-setup':
             return self.reply(scan_setup())
+        if u.path == '/api/backup-status':   # Home: the weekly backup's last result (site/backup-status.json, from tools/backup.py);
+            # asked here, not as a file, so there's no 404 before the first backup, and it works through the family server too (round 3)
+            return self.reply(read_json_safely(os.path.join(SITE, 'backup-status.json'), {}))
         if u.path == '/api/reading-status':   # Home: was a StoryGraph export refused as cut short? (21 Nov)
             state = read_json_safely(SG_STATE, {})
             return self.reply({'refused': state.get('refused')} if state.get('refused') else {})

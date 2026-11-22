@@ -9,6 +9,8 @@ import importlib.util, json, os, shutil, sys, tempfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REAL = os.path.dirname(HERE)
+# the family's shared code (dark mode, footer, Menu drawer), in Jemma's Journals, the parent (22 Nov): the site loads it from /family/
+FAMILY = os.path.normpath(os.path.join(REAL, '..', 'site', 'family'))
 TOOLS = os.path.join(REAL, 'tools')
 PYTHON = sys.executable
 if TOOLS not in sys.path:
@@ -42,7 +44,13 @@ class Sandbox:
         self.data, self.covers = data, covers
 
     def __enter__(self):
-        self.root = tempfile.mkdtemp(prefix='library-test-')
+        # laid out as on her PC (22 Nov): <outer>/library is the library, <outer>/site/family a copy of the family's shared code,
+        # which tools/serve.py serves at /family/ from ROOT/../site/family
+        self.outer = tempfile.mkdtemp(prefix='library-test-')
+        self.root = os.path.join(self.outer, 'library')
+        os.makedirs(self.root)
+        if os.path.isdir(FAMILY):
+            shutil.copytree(FAMILY, os.path.join(self.outer, 'site', 'family'))
         if self.data:
             shutil.copytree(os.path.join(REAL, 'data'), os.path.join(self.root, 'data'),
                             ignore=shutil.ignore_patterns('*.tmp', 'scanned.json'))
@@ -68,7 +76,7 @@ class Sandbox:
                 os.environ.pop(k, None)
             else:
                 os.environ[k] = v
-        shutil.rmtree(self.root, ignore_errors=True)
+        shutil.rmtree(self.outer, ignore_errors=True)
 
     # helpers
     def path(self, *parts):

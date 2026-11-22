@@ -14,14 +14,18 @@
 <link rel="icon" href="icon-192.png" sizes="192x192" type="image/png">
 <link rel="apple-touch-icon" href="icon-192.png">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#3B2616">
+<meta name="theme-color" content="#3B2616" data-dark="#1C1610">
 <!-- kept out of search engines and AI crawlers (her decision for all her sites, 20 Nov; the family rules) -->
 <meta name="robots" content="noindex, noai, noimageai">
-<!-- light by default; dark only when she presses the Dark mode button at the bottom (the family rules shared by all her sites, 21 Nov:
-     research/family-rules.md in Jemma's Journals). One key for every site, localStorage "jj-mode" (the old "jemmas-library-mode" is moved
-     over once). Set here, before the page is drawn, so it never flashes. -->
-<script>(function(){var m=null;try{m=localStorage.getItem("jj-mode");if(m===null){m=localStorage.getItem("jemmas-library-mode");if(m)localStorage.setItem("jj-mode",m)}localStorage.removeItem("jemmas-library-mode")}catch(e){}var d=m==="dark";document.documentElement.setAttribute("data-mode",d?"dark":"light");if(d)document.querySelector('meta[name="theme-color"]').setAttribute("content","#1C1610")})()</script>
-<link rel="stylesheet" href="site.css?v=2e5a04f7">
+<!-- the family's shared code, one copy in Jemma's Journals for all her sites (her decision, 22 Nov: site/family there, see its README).
+     mode.js: light by default, dark only once she presses Dark mode on any site (localStorage "jj-mode"; the Library's old
+     "jemmas-library-mode" is moved over once), set here before the page is drawn so it never flashes. family.css: the footer's layout
+     and the drawer's mechanics (the Library's own look is in site.css). family.js: the Dark mode button, the bar colour above,
+     Back to top, footer line 1, the credits' dots and the Menu drawer (js/app.js starts it). -->
+<script src="/family/mode.js" data-old-key="jemmas-library-mode"></script>
+<link rel="stylesheet" href="/family/family.css">
+<link rel="stylesheet" href="site.css?v=48614177">
+<script src="/family/family.js" defer></script>
 </head>
 <body>
 <a class="skip" href="#view" onclick="event.preventDefault();document.getElementById('view').focus()">Skip to the page</a>
@@ -30,22 +34,24 @@
 <div class="scrim" id="scrim"></div>
 <aside class="side" id="side" aria-label="Library">
   <!-- Way back to Jemma’s Journals, her home site (her pick, option A, 20 Nov). HOME_SITE_URL: "/" because the sites will share
-       one address (home at the root, the apps under it); on this PC it just opens the library's own start. -->
+       one address (home at the root, the apps under it; on her PC the family server, port 8050). Opened straight from the folder,
+       js/app.js points it at Jemma's Journals' page in the folder beside (round 3, 22 Nov). -->
   <a class="home-link" href="/">← Jemma’s Journals</a>
   <a class="brand" href="#home"><b>Jemma’s <em>Library</em></b><small>Every book on the shelves</small></a>
   <div class="search"><span class="search-ico" id="searchIco"></span><input id="q" type="search" placeholder="Title, author or ISBN…" aria-label="Search the library" autocomplete="off" spellcheck="false"></div>
   <nav class="nav" id="nav"></nav>
 </aside>
 <main id="main"><div class="wrap" id="view" tabindex="-1"></div>
-<!-- at the bottom of every page (21 Nov, the family rules shared by all her sites, as on Jemma's Journals): the name, the two About
-     lines (line 1 the same on every site; line 2 the Library's own credits), then Back to top and Dark/Light mode; js/app.js fills the icons -->
-<footer class="foot"><div class="foot-orn" aria-hidden="true"><span>❦</span></div><b class="foot-name">Jemma’s Library</b>
-  <div class="about-site"><p>No cookies, no tracking, no ads. Made with HTML, CSS and JavaScript, kept on GitHub.</p>
-    <p><span class="cr">Book covers from their publishers</span><span class="sep" aria-hidden="true">&nbsp;·</span> <span class="cr">Some book details from Open Library</span><span class="sep" aria-hidden="true">&nbsp;·</span> <span class="cr">Fonts: Instrument Serif, Manrope and EB Garamond</span><span class="sep" aria-hidden="true">&nbsp;·</span> <span class="cr">Icons by Lucide</span></p></div>
-  <div class="foot-links"><button type="button" class="totop" id="toTop"></button><button type="button" class="mode-text" id="modeBtn" aria-pressed="false"></button></div></footer></main>
+<!-- at the bottom of every page: the family's footer (the same on all her sites; markup and behaviour from Jemma's Journals'
+     site/family, the ❦ between rules and the colours the Library's own): the name, line 1 (filled by family.js, the same words on every
+     site), the Library's credits, then Back to top and Dark/Light mode (family.js fills their icons and words) -->
+<footer class="foot jj-foot"><div class="foot-orn" aria-hidden="true"><span>❦</span></div><b class="jj-name">Jemma’s Library</b>
+  <p data-jj-line1></p>
+  <p data-jj-credits><span class="cr">Book covers from their publishers</span><span class="jj-dot" aria-hidden="true">&nbsp;·</span> <span class="cr">Some book details from Open Library</span><span class="jj-dot" aria-hidden="true">&nbsp;·</span> <span class="cr">Fonts: Instrument Serif, Manrope and EB Garamond</span><span class="jj-dot" aria-hidden="true">&nbsp;·</span> <span class="cr">Icons by Lucide</span></p>
+  <div class="jj-foot-links"><a href="#top" data-jj-top="#view" id="toTop"></a><button type="button" data-jj-mode id="modeBtn"></button></div></footer></main>
 
 <script src="js/icons.js?v=462de08a"></script>
-<script src="js/data.js?v=f11b3d71"></script>
-<script src="js/app.js?v=432db977"></script>
+<script src="js/data.js?v=15b95219"></script>
+<script src="js/app.js?v=9327752b" defer></script>
 </body>
 </html>

@@ -265,7 +265,9 @@ function oldShelves(list){
   // each spine: the title in gilt, its number in the series at the foot, a gold star at the head for a first edition
   // (her yes, 6 Nov); pointing at one shows a card with the cover and its details
   const firstEd = b => /first edition/i.test(b.description || "") && !/reprint|\?/i.test(b.description || "");
-  const pale = c => { const m = /^#(..)(..)(..)$/.exec(c || ""); return m && (.299 * parseInt(m[1], 16) + .587 * parseInt(m[2], 16) + .114 * parseInt(m[3], 16)) > 165; };   // dark lettering on a pale spine
+  // dark lettering on a spine where it reads better than the gilt (round 3, 22 Nov: by contrast ratio, one rule for every cloth;
+  // a fixed brightness line left mid-tone cloths at about 2.3:1); the two letterings are site.css's .spine span and .spine.pale span
+  const pale = c => /^#[0-9a-f]{6}$/i.test(c || "") && contrast(c, "#3A2614") > contrast(c, "#F6DE9C");
   const spine = (b, n) => `<a class="spine${pale(b.cloth) ? " pale" : ""}" href="${href(b)}" data-spine="${b.id}" style="background:${b.cloth || "#7A6650"}"><span>${esc(b.t)}</span>${firstEd(b) ? `<i class="ed" aria-label="First edition">★</i>` : ""}${n ? `<i class="no">${n}</i>` : ""}</a>`;
   const gap = (e, n) => `<span class="spine gap" title="${esc(e.title)}${e.wish.some(w => w.old) ? " · on your list to find" : ""}"><span>${esc(e.title)}</span><i class="no">${n}</i></span>`;
   SERIES.forEach(s => {
@@ -389,11 +391,14 @@ function renderNav(active){
 
 // a shelf colour light enough that the gilt name would be faint on its cloth (Children's mustard): that card gets darker cloth
 // (second review, 21 Nov; one rule for every card, by the colour's relative luminance)
-function paleCloth(hex){
-  const m = /^#?([0-9a-f]{6})$/i.exec(hex || ""); if (!m) return false;
+// WCAG relative luminance and contrast ratio of two #rrggbb colours
+function luminance(hex){
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex || ""); if (!m) return 0;
   const [r, g, b] = [0, 2, 4].map(i => { const c = parseInt(m[1].slice(i, i + 2), 16) / 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; });
-  return 0.2126 * r + 0.7152 * g + 0.0722 * b > 0.3;
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
+function contrast(a, b){ const x = luminance(a), y = luminance(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+function paleCloth(hex){ return /^#?[0-9a-f]{6}$/i.test(hex || "") && luminance(hex) > 0.3; }
 
 // ---------- pages ----------
 // home (her yes to a fuller one, 18 Oct): this year in figures, what she's reading, what she just finished, a pick
@@ -1389,72 +1394,48 @@ trialSwitch.innerHTML = `<button type="button" aria-pressed="${TRIAL}">${ic("ima
 trialSwitch.querySelector("button").addEventListener("click", () => { store.set(TRIAL_KEY, !TRIAL); location.reload(); });
 document.body.append(trialSwitch);
 // the suggested covers are all for the Old Book Collection now, so the switch shows only there (her ask, 1 Nov)
-const trialShown = () => { trialSwitch.hidden = !(["#shelf-old-book-collection", "#trial-covers"].includes(location.hash) || /^#old-/.test(location.hash)); };
+// and only with her server there (round 3, 22 Nov): read-only, as a file or online, it's a working tool for her, not for visitors
+const trialShown = () => { trialSwitch.hidden = !LIVE || !(["#shelf-old-book-collection", "#trial-covers"].includes(location.hash) || /^#old-/.test(location.hash)); };
 addEventListener("hashchange", trialShown); trialShown();
 
 // ---------- phones and narrow windows: the sidebar as a drawer (21 Nov, her ask; like Sim World's; the family rules) ----------
-// it opens from the top bar's button and closes on a link chosen, Escape, a tap outside it, or Enter in the search. While closed on a
-// phone it is inert (Tab can't reach it); while open the page behind is inert and doesn't scroll. Crossing 900px closes it.
-const menuBtn = document.getElementById("menuBtn"), sideEl = document.getElementById("side"), phoneNav = matchMedia("(max-width:900px)");
+// Since 22 Nov the opening and closing is the family's shared code (Jemma's Journals' /family/family.js, JJFamily.menu): it opens
+// from the top bar's button and closes on a link chosen, Escape or a tap on the scrim (and Enter in the search, below). While closed
+// on a phone the drawer is inert; while open everything else is inert (Tab stays in it) and the page doesn't scroll; it opens on the
+// page's own link (the name, i.e. Home, when there is none), never on "← Jemma's Journals"; after a link the page (#view) takes focus;
+// crossing 900px closes it. The Library keeps its own bar and drawer look (site.css).
+const sideEl = document.getElementById("side"), phoneNav = matchMedia("(max-width:900px)");
 document.getElementById("menuIco").innerHTML = ic("menu");
-function setMenu(open, focusBack){
-  document.body.classList.toggle("nav-open", open);
-  menuBtn.setAttribute("aria-expanded", String(open));
-  sideEl.inert = phoneNav.matches && !open;
-  // while open everything else (the skip link, the top bar with Menu, the page) is inert, so Tab stays in the drawer (the family rules);
-  // the scrim stays live so a tap on it closes the drawer
-  const lock = phoneNav.matches && open;
-  document.querySelectorAll("body > *:not(#side):not(#scrim):not(script)").forEach(el => { el.inert = lock; });
-  // starts on the page showing (Home's link if the page has none), not "← Jemma's Journals": one Enter shouldn't leave the site
-  // (her call for Sim World, 21 Nov, now for every site)
-  if (open) setTimeout(() => (document.querySelector("#side .nav a.on") || document.querySelector("#side .brand"))?.focus({preventScroll: true}), 30);
-  else if (phoneNav.matches && focusBack) menuBtn.focus({preventScroll: true});   // a link chosen: the new page takes focus instead
-}
-const menuOpen = () => document.body.classList.contains("nav-open");
-menuBtn.addEventListener("click", () => setMenu(!menuOpen()));
-document.getElementById("scrim").addEventListener("click", () => setMenu(false, true));
-document.addEventListener("keydown", e => { if (e.key === "Escape" && menuOpen()) setMenu(false, true); });
-// a link chosen (or Enter in the search): the page takes keyboard focus, not the closed drawer (focus fell to nothing; second review)
-const toPage = () => document.getElementById("view").focus({preventScroll: true});
-sideEl.addEventListener("click", e => { if (e.target.closest("a") && menuOpen()) { setMenu(false); toPage(); } });
-q.addEventListener("keydown", e => { if (e.key === "Enter" && menuOpen()) { setMenu(false); toPage(); } });   // a phone's Go key shows the results
-phoneNav.addEventListener("change", () => setMenu(false, sideEl.contains(document.activeElement)));
-setMenu(false);
-
-// ---------- the foot of every page: Back to top and Dark mode (21 Nov; the family rules shared by all her sites) ----------
-// Light by default, whatever the device prefers; dark only when she presses the button, kept in localStorage "jj-mode", the one key
-// every site in the family shares (index.html's head applies it before the page shows, and moves the old key over once).
-const MODE_KEY = "jj-mode", modeBtn = document.getElementById("modeBtn"), toTop = document.getElementById("toTop");
-toTop.innerHTML = `${ic("arrow-up")}Back to top`;
-function showMode(){
-  const dark = document.documentElement.getAttribute("data-mode") === "dark";
-  modeBtn.innerHTML = `${ic(dark ? "sun" : "moon")}${dark ? "Light mode" : "Dark mode"}`;
-  modeBtn.setAttribute("aria-pressed", String(dark));   // the family rules: pressed while dark
-  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", dark ? "#1C1610" : "#3B2616");
-}
-modeBtn.addEventListener("click", () => {
-  const mode = document.documentElement.getAttribute("data-mode") === "dark" ? "light" : "dark";
-  document.documentElement.setAttribute("data-mode", mode);
-  try { localStorage.setItem(MODE_KEY, mode); } catch {}
-  showMode();
-});
-showMode();
-// the credits' dots: each is tied to the credit before it ("credit&nbsp;· credit", so none starts a line); one left at the end of a
-// line when the credits wrap is hidden too (the family rules: a dot never starts or ends a line). Its space is kept, so nothing moves.
-function footDots(){
-  document.querySelectorAll(".about-site .sep").forEach(s => {
-    const next = s.nextElementSibling;
-    s.style.visibility = next && next.getBoundingClientRect().top > s.getBoundingClientRect().top + 2 ? "hidden" : "";
+let menuCtl = null;
+const menuOpen = () => !!(menuCtl && menuCtl.isOpen());
+function setMenu(open){ if (!menuCtl) return; if (open) menuCtl.open(); else menuCtl.close("silent"); }   // the tests and route() use these
+// a phone's Go key in the search shows the results: the drawer closes and the page takes focus, as after a link
+q.addEventListener("keydown", e => { if (e.key === "Enter" && menuOpen()) menuCtl.close("link"); });
+function startFamily(){
+  menuCtl = JJFamily.menu({
+    button: document.getElementById("menuBtn"), drawer: sideEl, scrim: document.getElementById("scrim"),
+    outside: () => [...document.querySelectorAll("body > *:not(#side):not(#scrim):not(script)")],   // the skip link, the top bar, the page
+    current: () => document.querySelector("#side .nav a.on") || document.querySelector("#side .brand"),
+    main: () => document.getElementById("view")
   });
 }
-addEventListener("resize", footDots); document.fonts?.ready.then(footDots); footDots();
-toTop.addEventListener("click", () => {
-  scrollTo({top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"});
-  document.getElementById("view").focus({preventScroll: true});
-});
+// The family's code comes from Jemma's Journals at /family/ (its server, this library's own server, the tests' server). Opened
+// straight from the folder there is no /family/, so it comes from the folder beside instead (Jemma's Journals' site/family).
+function familyFromFolder(){
+  const base = new URL("../../site/family/", location.href).href;
+  const css = document.createElement("link"); css.rel = "stylesheet"; css.href = base + "family.css";
+  document.head.insertBefore(css, document.querySelector('link[href^="site.css"]'));
+  const add = (name, old) => new Promise(done => { const el = document.createElement("script"); el.src = base + name; if (old) el.dataset.oldKey = old; el.onload = el.onerror = done; document.head.appendChild(el); });
+  add("mode.js", "jemmas-library-mode").then(() => add("family.js")).then(() => { if (window.JJFamily) startFamily(); });
+}
+if (window.JJFamily) startFamily(); else if (location.protocol === "file:") familyFromFolder();
+
+// "← Jemma's Journals": "/" is home where the sites share one address (the family server, online); opened straight from the folder
+// that would be the root of drive C:, so it goes to Jemma's Journals' page in the folder beside (round 3, 22 Nov; as Sim World does)
+if (location.protocol === "file:") document.querySelector(".home-link")?.setAttribute("href", new URL("../../site/index.html", location.href).href);
 
 // ---------- the weekly backup's note on Home (her yes, 21 Nov) ----------
-// tools/backup.py writes backup-status.json each Sunday; Home says so when the last one failed, or none has worked for over
+// tools/backup.py writes backup-status.json each Sunday (asked through tools/serve.py's api/backup-status since round 3); Home says so when the last one failed, or none has worked for over
 // nine days (the laptop off on Sunday does that too; the next run catches up). Nothing is said while all is well.
 let backupStatus = null;
 function backupNote(){
@@ -1466,7 +1447,7 @@ function backupNote(){
 }
 function loadBackupStatus(){
   if (!LIVE) return Promise.resolve();
-  return fetch("backup-status.json", {cache: "no-store"}).then(r => r.ok ? r.json() : null).catch(() => null).then(st => {
+  return fetch("api/backup-status", {headers: {"X-Library": "1"}, cache: "no-store"}).then(r => r.ok ? r.json() : null).catch(() => null).then(st => {
     backupStatus = st;
     const home = (location.hash || "#home") === "#home" && !q.value, old = document.getElementById("backupNote"), html = backupNote();
     if (!home) return;
@@ -1518,8 +1499,8 @@ function route(page, opts = {}){   // page: only the tests pass one (they open a
   else if (key === "old-to-find") { html = pageOldToFind(); title = "Old books to find"; }
   else if (key.startsWith("old-") && OLD_KINDS.some(k => k[0] === key.slice(4))) { const k = OLD_KINDS.find(k => k[0] === key.slice(4)); html = pageOldKind(k); title = "Old books · " + k[1]; }
   else if (key.startsWith("a-") && authorIndex[key.slice(2)]) { const a = authorIndex[key.slice(2)]; html = pageAuthor(a); active = "#authors"; title = a.name; }
-  else { html = {authors: pageAuthors, reading: pageReading, history: pageHistory, add: LIVE ? pageAdd : undefined, "to-buy": pageToBuy, stats: pageStats, "trial-covers": pageTrialCovers}[key]?.() || (active = "#home", pageHome());
-    title = {authors: "Authors", reading: "Reading", history: "History", add: LIVE ? "Add a book" : undefined, "to-buy": "To buy", stats: "Stats", "trial-covers": "New covers"}[key] || title; }
+  else { html = {authors: pageAuthors, reading: pageReading, history: pageHistory, add: LIVE ? pageAdd : undefined, "to-buy": pageToBuy, stats: pageStats, "trial-covers": LIVE ? pageTrialCovers : undefined}[key]?.() || (active = "#home", pageHome());
+    title = {authors: "Authors", reading: "Reading", history: "History", add: LIVE ? "Add a book" : undefined, "to-buy": "To buy", stats: "Stats", "trial-covers": LIVE ? "New covers" : undefined}[key] || title; }
   const fromNav = document.getElementById("side").contains(document.activeElement), fromPage = view.contains(document.activeElement);
   view.innerHTML = html; renderNav(active); fitRows();
   if (!opts.keep && drawn && (fromNav || fromPage) && document.activeElement === document.body)   // the link used was redrawn: focus would fall to nothing
@@ -1605,6 +1586,7 @@ function checkLive(){
 checkLive().then(d => {
   LIVE = !!d && typeof d === "object";
   readingRefused = (LIVE && d.refused) || null;
+  trialShown();
   route();
   loadBackupStatus();
 });
@@ -1612,9 +1594,11 @@ checkLive().then(d => {
 // ---------- capitals on each word in headings, the menu and buttons (her ask, 1 Nov) ----------
 // "New on the Shelves": small words stay lower case unless first or last. Book titles (h3, a book page's h1) are left as published.
 const SMALL_WORDS = new Set(["a", "an", "and", "as", "at", "but", "by", "for", "from", "in", "into", "nor", "of", "on", "or", "per", "the", "to", "via", "with"]);
-function capitalise(root){
+const CAPS = "#view h2, #view .hero:not(.book-hero) h1, #nav a, #view .btn, #view .section-head .more, #camPanel .btn";
+function capitalise(root){ capitaliseEls(root.querySelectorAll(CAPS)); }
+function capitaliseEls(els){
   const nodes = [];
-  root.querySelectorAll("#view h2, #view .hero:not(.book-hero) h1, #nav a, #view .btn, #view .section-head .more, #camPanel .btn").forEach(el => {
+  els.forEach(el => {
     const walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
     while (walk.nextNode()) if (!walk.currentNode.parentElement.closest(".n, svg, h3")) nodes.push(walk.currentNode);
   });
@@ -1637,5 +1621,15 @@ function capitalise(root){
     });
   });
 }
-new MutationObserver(ms => { if (ms.some(m => [...m.addedNodes].some(n => n.nodeType === 1))) capitalise(document); }).observe(document.body, {childList: true, subtree: true});
+// only what was just added (round 3, 22 Nov: it went over the whole page on every insertion, even a hover card): each added element,
+// the heading, link or button it sits in, and those inside it
+new MutationObserver(ms => {
+  const els = new Set();
+  ms.forEach(m => m.addedNodes.forEach(n => {
+    if (n.nodeType !== 1 || !n.isConnected) return;
+    const up = n.closest(CAPS); if (up) els.add(up);
+    n.querySelectorAll(CAPS).forEach(el => els.add(el));
+  }));
+  if (els.size) capitaliseEls(els);
+}).observe(document.body, {childList: true, subtree: true});
 capitalise(document);

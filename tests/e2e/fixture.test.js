@@ -608,7 +608,7 @@ const footBtns = () => [$("#toTop"), $("#modeBtn")];
 const mode = (doc = document) => doc.documentElement.getAttribute("data-mode");
 const reloaded = () => new Promise((done, fail) => {   // the site opened afresh (as after a reload), in a frame on the same address
   const f = document.createElement("iframe"); f.src = "index.html"; f.style.cssText = "position:fixed;left:-3000px;width:800px;height:600px";
-  f.onload = async () => { try { await until(() => f.contentDocument.getElementById("modeBtn")?.textContent, "the reloaded page"); done(f); } catch (e) { fail(e); } };
+  f.onload = async () => { try { await until(() => f.contentDocument.getElementById("modeBtn")?.textContent, "the reloaded page", 10000); done(f); } catch (e) { fail(e); } };
   document.body.append(f);
 });
 
@@ -626,7 +626,8 @@ test("Back to top and Dark mode are at the bottom of every page, below the page�
     if (top.getBoundingClientRect().height < 44 || md.getBoundingClientRect().height < 44) wrong.push(h + ": under 44px tall");
   }
   eq(wrong, [], "pages where the foot is wrong:");
-  ok(footBtns().every(b => b.querySelector("svg") && b.tagName === "BUTTON"), "each is a button with its icon");
+  ok(footBtns().every(b => b.querySelector("svg")), "each with its icon");
+  eq(footBtns().map(b => b.tagName), ["A", "BUTTON"], "Back to top a link to the top, Dark mode a button (the family’s markup):");
   eq(Math.round($("#toTop").getBoundingClientRect().top - $("#modeBtn").getBoundingClientRect().top), 0, "side by side:");
 });
 
@@ -732,13 +733,13 @@ test("a book with no blurb leaves no empty column: its panels and any other sect
 test("Home says when the weekly backup failed, and says nothing while it works", async () => {
   const now = new Date().toISOString().slice(0, 16), old = new Date(Date.now() - 20 * 864e5).toISOString().slice(0, 16);
   try {
-    fake = {"backup-status.json": () => ({lastTry: now, ok: false, lastOk: old, why: "sending to GitHub failed"})};
+    fake = {"api/backup-status": () => ({lastTry: now, ok: false, lastOk: old, why: "sending to GitHub failed"})};
     await loadBackupStatus(); await go("#home");
     ok(/weekly backup to GitHub didn’t work/.test(view().innerText), "no note after a failed backup");
-    fake = {"backup-status.json": () => ({lastTry: old, ok: true, lastOk: old, why: ""})};
+    fake = {"api/backup-status": () => ({lastTry: old, ok: true, lastOk: old, why: ""})};
     await loadBackupStatus(); await go("#home");
     ok(/hasn’t run since/.test(view().innerText), "no note when it hasn't run for weeks");
-    fake = {"backup-status.json": () => ({lastTry: now, ok: true, lastOk: now, why: ""})};
+    fake = {"api/backup-status": () => ({lastTry: now, ok: true, lastOk: now, why: ""})};
     await loadBackupStatus(); await go("#home");
     ok(!$("#backupNote"), "a note while all is well");
   } finally { backupStatus = null; }
@@ -789,23 +790,23 @@ test("a cover's corner dots can be moved with the arrow keys", async () => {
 // the site opened afresh in a frame of a given width (the frame's own layout sees exactly that width)
 const frameAt = (width, height = 800) => new Promise((done, fail) => {
   const f = document.createElement("iframe"); f.src = "index.html"; f.style.cssText = `position:fixed;left:-4000px;top:0;width:${width}px;height:${height}px;border:0`;
-  f.onload = async () => { try { await until(() => f.contentDocument.getElementById("modeBtn")?.textContent && f.contentDocument.getElementById("view").innerText.trim().length > 20, "the framed page"); done(f); } catch (e) { fail(e); } };
+  f.onload = async () => { try { await until(() => f.contentDocument.getElementById("modeBtn")?.textContent && f.contentDocument.getElementById("view").innerText.trim().length > 20, "the framed page", 10000); done(f); } catch (e) { fail(e); } };
   document.body.append(f);
 });
 
 test("family rules: the foot of every page is the family’s, in order: the name, the two About lines, then Back to top and Dark mode", async () => {
   const foots = $$("footer"); eq(foots.length, 1, "one footer:");
   const foot = foots[0];
-  eq($(".foot-name", foot).textContent, "Jemma’s Library");
-  eq(getComputedStyle($(".foot-name", foot)).fontStyle, "normal", "the name plain, not italic:");
-  const lines = $$(".about-site p", foot).map(p => p.textContent.replace(/\s+/g, " ").trim());
+  eq($(".jj-name", foot).textContent, "Jemma’s Library");
+  eq(getComputedStyle($(".jj-name", foot)).fontStyle, "normal", "the name plain, not italic:");
+  const lines = $$("[data-jj-line1], [data-jj-credits]", foot).map(p => p.textContent.replace(/\s+/g, " ").trim());
   eq(lines[0], "No cookies, no tracking, no ads. Made with HTML, CSS and JavaScript, kept on GitHub.", "line 1 (the same on every site):");
-  eq($$(".about-site p:nth-child(2) .cr", foot).map(c => c.textContent), ["Book covers from their publishers", "Some book details from Open Library", "Fonts: Instrument Serif, Manrope and EB Garamond", "Icons by Lucide"], "line 2 (the Library’s own credits):");
+  eq($$("[data-jj-credits] .cr", foot).map(c => c.textContent), ["Book covers from their publishers", "Some book details from Open Library", "Fonts: Instrument Serif, Manrope and EB Garamond", "Icons by Lucide"], "line 2 (the Library’s own credits):");
   ok($$(".cr", foot).every(c => /^[A-Z]/.test(c.textContent)), "each credit starts with a capital");
-  const order = [".foot-name", ".about-site", ".foot-links"].map(sel => $(sel, foot).getBoundingClientRect().top);
-  ok(order[0] < order[1] && order[1] < order[2], "name, then About, then the buttons");
-  eq(getComputedStyle($(".about-site", foot)).fontSize, "12.5px", "About text size:");
-  for (const h of ["#home", "#b-" + DATA.books[0].id, "#stats"]) { await show(h); ok($(".foot-name").offsetParent && $(".about-site").offsetParent, h + ": foot not shown"); }
+  const order = [".jj-name", "[data-jj-line1]", "[data-jj-credits]", ".jj-foot-links"].map(sel => $(sel, foot).getBoundingClientRect().top);
+  ok(order[0] < order[1] && order[1] < order[2] && order[2] < order[3], "name, then the two About lines, then the buttons");
+  for (const sel of ["[data-jj-line1]", "[data-jj-credits]"]) eq(getComputedStyle($(sel, foot)).fontSize, "12.5px", "About text size:");
+  for (const h of ["#home", "#b-" + DATA.books[0].id, "#stats"]) { await show(h); ok($(".jj-name").offsetParent && $("[data-jj-credits]").offsetParent, h + ": foot not shown"); }
 });
 
 test("family rules: the foot’s words and buttons are 4.5:1 or more in light and dark", async () => {
@@ -815,7 +816,7 @@ test("family rules: the foot’s words and buttons are 4.5:1 or more in light an
   for (const m of ["light", "dark"]) {
     if (mode() !== m) click($("#modeBtn"));
     const bg = getComputedStyle(document.body).backgroundColor;
-    for (const el of [$(".about-site"), $("#toTop"), $("#modeBtn"), $(".foot-name")]) { const r = ratio(getComputedStyle(el).color, bg); if (r < 4.5) low.push(`${m} ${el.className || el.id}: ${r.toFixed(2)}`); }
+    for (const el of [$("[data-jj-line1]"), $("[data-jj-credits]"), $("#toTop"), $("#modeBtn"), $(".jj-name")]) { const r = ratio(getComputedStyle(el).color, bg); if (r < 4.5) low.push(`${m} ${el.className || el.id}: ${r.toFixed(2)}`); }
   }
   eq(low, [], "too faint:");
 });
@@ -864,7 +865,7 @@ test("family rules: the drawer at 899px: aria, focus in and back, inert, Escape,
   const f = await frameAt(899);
   try {
     const d = f.contentDocument, w = f.contentWindow, btn = d.getElementById("menuBtn"), side = d.getElementById("side");
-    const isOpen = () => d.body.classList.contains("nav-open"), key = k => d.dispatchEvent(new w.KeyboardEvent("keydown", {key: k, bubbles: true}));
+    const isOpen = () => d.documentElement.classList.contains("jj-menu-open"), key = k => d.dispatchEvent(new w.KeyboardEvent("keydown", {key: k, bubbles: true}));
     eq(btn.getAttribute("aria-controls"), "side"); eq(btn.getAttribute("aria-expanded"), "false");
     // open: focus moves in, the page behind is inert and doesn't scroll
     btn.focus(); btn.click();
@@ -953,13 +954,13 @@ test("family rules: robots meta, data-mode always set, fonts only from the site 
 });
 
 test("family rules: the credits’ dots never start or end a line (a no-break space before each, lines balanced)", async () => {
-  const p = $(".about-site p:nth-child(2)");
-  eq($$(".sep", p).map(s => s.textContent), [" ·", " ·", " ·"], "each dot tied to the credit before it:");
+  const p = $("[data-jj-credits]");
+  eq($$(".jj-dot", p).map(s => s.textContent), [" ·", " ·", " ·"], "each dot tied to the credit before it:");
   eq(getComputedStyle(p).textWrap || getComputedStyle(p).textWrapStyle, "balance", "balanced:");
   // narrow enough to wrap (but wider than a phone, where the dots are hidden): each dot stays on its credit’s line
   const f = await frameAt(700);
   try {
-    const d = f.contentDocument, seps = [...d.querySelectorAll(".about-site .sep")], crs = [...d.querySelectorAll(".about-site p:nth-child(2) .cr")];
+    const d = f.contentDocument, seps = [...d.querySelectorAll("[data-jj-credits] .jj-dot")], crs = [...d.querySelectorAll("[data-jj-credits] .cr")];
     seps.forEach((s, i) => { const r = s.getBoundingClientRect(), before = crs[i].getBoundingClientRect(); ok(Math.abs(r.bottom - before.bottom) < 2, `dot ${i + 1} left its credit’s line`); });
     ok(crs.some((c, i) => i && c.getBoundingClientRect().top > crs[0].getBoundingClientRect().top + 2), "the credits should wrap at 700px for this check");
     seps.forEach((s, i) => { const ends = crs[i + 1].getBoundingClientRect().top > s.getBoundingClientRect().top + 2; ok(!ends || f.contentWindow.getComputedStyle(s).visibility === "hidden", `dot ${i + 1} shows at the end of a line`); });
@@ -1020,4 +1021,89 @@ test("read-only: without its own server (opened as a file, or plain hosting onli
   } finally { LIVE = true; }
   await go("#b-" + old.id);
   ok($$("#view select").length >= 2, "editable again with the server: condition and signed");
+});
+
+// ---------- the family's shared code (22 Nov, her decision: one copy in Jemma's Journals, site/family, loaded from /family/) ----------
+test("family code: the page loads /family/mode.js, family.css and family.js, and window.JJFamily is there", async () => {
+  const mode = $('script[src="/family/mode.js"]'), css = $('link[rel="stylesheet"][href="/family/family.css"]'), js = $('script[src="/family/family.js"]');
+  ok(mode && css && js, "the three family files in the page");
+  eq(mode.dataset.oldKey, "jemmas-library-mode", "the Library’s old dark-mode key, moved over once:");
+  ok(js.defer, "family.js deferred");
+  const site = $('link[rel="stylesheet"][href^="site.css"]');
+  ok(css.compareDocumentPosition(site) & Node.DOCUMENT_POSITION_FOLLOWING, "family.css before the Library’s own stylesheet");
+  ok(mode.compareDocumentPosition(site) & Node.DOCUMENT_POSITION_FOLLOWING, "mode.js before the stylesheet (no flash of the wrong mode)");
+  ok([...document.styleSheets].some(s => s.href && s.href.endsWith("/family/family.css") && s.cssRules.length > 5), "family.css loaded");
+  ok(window.JJFamily && typeof JJFamily.menu === "function" && typeof JJFamily.mode.set === "function", "JJFamily is there");
+  for (const f of ["mode.js", "family.js", "family.css"]) {
+    const r = await realFetch("/family/" + f); eq(r.status, 200, f + ":");
+  }
+  ok(menuCtl && typeof menuCtl.isOpen === "function", "the Menu drawer is the family’s (JJFamily.menu)");
+  eq($('meta[name="theme-color"]').dataset.dark, "#1C1610", "the dark bar colour for family.js:");
+  eq($("[data-jj-line1]").textContent, JJFamily.LINE1, "footer line 1 from the family:");
+});
+
+// ---------- round 3 review (22 Nov) ----------
+test("round 3: read-only, the New covers switch and its page are gone (a working tool for her, not for visitors)", async () => {
+  const sw = $(".trial-switch");
+  await go("#old-childrens"); trialShown();   // go() changes the address without a hashchange, which is what calls trialShown
+  eq(sw.hidden, false, "with her server, on an old books page:");
+  try {
+    LIVE = false; trialShown();
+    eq(sw.hidden, true, "read-only, on an old books page:");
+    await go("#trial-covers"); trialShown(); eq(sw.hidden, true, "read-only, the New covers address:");
+    ok(!$(".trial-list", view()), "the New covers page opens read-only"); eq(document.title, "Jemma’s Library", "Home instead:");
+  } finally { LIVE = true; }
+  await go("#trial-covers"); trialShown(); eq(document.title, "New covers · Jemma’s Library", "with her server it still opens:");
+  eq(sw.hidden, false, "and so does its switch:");
+});
+
+test("round 3: a word longer than its card breaks instead of being cut off, and a book page’s title card keeps its margins at 899", async () => {
+  await show("#shelf-fantasy");
+  const h3 = $(".bk h3", view()); ok(h3, "a book card"); eq(getComputedStyle(h3).overflowWrap, "anywhere", "card titles:");
+  const blank = BOOKS.find(b => !b.cover && b.shelf !== COLLECTION) || BOOKS.find(b => !b.cover);
+  ok(blank, "a book with no cover in the made-up library");
+  const f = await frameAt(899);
+  try {
+    await hashIn(f, "#b-" + blank.id);
+    const card = f.contentDocument.querySelector(".book-top .cover.blank"), t = card.querySelector(".t");
+    eq(f.contentWindow.getComputedStyle(t).overflowWrap, "anywhere", "title card text:");
+    const cw = card.getBoundingClientRect().width, tw = t.getBoundingClientRect().width;
+    ok(tw > cw * 0.7, `the title card’s words get ${Math.round(tw)}px of a ${Math.round(cw)}px card`);
+    ok(t.scrollWidth <= t.clientWidth + 1, "a word is cut off");
+  } finally { f.remove(); }
+});
+
+test("round 3: old books: spine lettering is whichever of gilt or dark reads better on its cloth, and missing books are 4.5:1", async () => {
+  const lum = c => { const v = c.match(/[\d.]+/g).slice(0, 3).map(Number).map(x => { x /= 255; return x <= .03928 ? x / 12.92 : ((x + .055) / 1.055) ** 2.4; }); return .2126 * v[0] + .7152 * v[1] + .0722 * v[2]; };
+  const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => p - q); return (y + .05) / (x + .05); };
+  eq(contrast("#000000", "#FFFFFF").toFixed(0), "21", "contrast():");
+  eq(+contrast("#3A2614", "#3A2614").toFixed(2), 1, "contrast() of one colour:");
+  const gilt = "rgb(246, 222, 156)", dark = "rgb(58, 38, 20)";
+  await go("#old-childrens");
+  for (const s of $$("a.spine", view())) {
+    const bg = getComputedStyle(s).backgroundColor, span = s.querySelector("span"), no = s.querySelector(".no");
+    const r = ratio(getComputedStyle(span).color, bg), other = ratio(s.classList.contains("pale") ? gilt : dark, bg);
+    ok(r >= other - 0.01, `${span.textContent}: ${r.toFixed(2)}:1, the other lettering would be ${other.toFixed(2)}:1`);
+    if (no) eq(getComputedStyle(no).color, getComputedStyle(span).color, `${span.textContent}: its number in the same lettering:`);
+  }
+  await go("#shelf-old-book-collection");
+  const page = getComputedStyle(document.body).backgroundColor, gone = $$("table.oldbooks tr.gone td", view()).filter(td => td.textContent.trim());
+  ok(gone.length >= 3, "missing books listed");
+  for (const td of gone) {
+    eq(getComputedStyle(td).opacity, "1", "not faded:");
+    const r = ratio(getComputedStyle(td).color, page); ok(r >= 4.5, `“${td.textContent.trim()}” ${r.toFixed(2)}:1`);
+  }
+});
+
+test("round 3: capitals are put on headings added later, without going over the whole page each time", async () => {
+  const h = document.createElement("h2"); h.textContent = "new on the shelves";
+  view().append(h);
+  await until(() => h.textContent === "New on the Shelves", "the added heading’s capitals");
+  const seen = [];
+  const was = capitaliseEls; capitaliseEls = els => { seen.push([...els]); return was(els); };
+  try {
+    const card = document.createElement("div"); card.className = "spine-card"; card.textContent = "a hover card"; document.body.append(card);
+    await wait(30); card.remove();
+    eq(seen.length, 0, "a hover card isn’t a heading, so nothing to go over:");
+  } finally { capitaliseEls = was; h.remove(); }
 });

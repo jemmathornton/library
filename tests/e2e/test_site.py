@@ -48,7 +48,8 @@ def run_page(box, test_file, only=None, timeout=300, frame=None):
     500px; inside the frame the page and its layout see exactly that size)."""
     site = box.path('site')
     page = open(os.path.join(site, 'index.html'), encoding='utf-8').read()
-    page = page.replace('</body>', f'<script src="__tests__/harness.js"></script><script src="__tests__/{test_file}"></script></body>')
+    # deferred, like js/app.js (22 Nov: it waits for the family's /family/family.js), so they still run after it
+    page = page.replace('</body>', f'<script src="__tests__/harness.js" defer></script><script src="__tests__/{test_file}" defer></script></body>')
     open(os.path.join(site, '__test__.html'), 'w', encoding='utf-8').write(page)
     os.makedirs(os.path.join(site, '__tests__'), exist_ok=True)
     for f in ('harness.js', test_file):

@@ -91,23 +91,18 @@ em{font-style:italic}
 main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .wrap{max-width:1180px;margin:0 auto;padding-inline:clamp(16px,4vw,56px);padding-block:0 56px}
 /* the foot of every page: Back to top and Dark mode, as on Jemma's Journals (21 Nov, her ask for all her sites) */
-/* the foot of every page (21 Nov; the family rules shared by all her sites): a ❦ between rules, the name, two About lines, then
-   Back to top and Dark mode level (44px to tap). Credits stack one per line on phones (600px rules at the end). */
-.foot{max-width:1180px;margin:0 auto;padding:28px clamp(16px,4vw,56px) 56px;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
-.foot-orn{display:flex;align-items:center;gap:14px;width:min(100%,360px);color:var(--gilt);font-size:18px;line-height:1}
+/* the foot of every page: the family's footer (markup, layout and behaviour from Jemma's Journals' /family/family.css and family.js,
+   22 Nov); the Library keeps its own look here: a ❦ between rules, its fonts and colours (the --jj-* values), the gilt dots */
+:root{--jj-display:var(--display);--jj-body:var(--body);--jj-ink:var(--ink);--jj-muted:var(--muted);--jj-accent:var(--gilt-ink)}   /* light and dark: they follow the tokens above */
+.foot{max-width:1180px;margin:0 auto;padding:28px clamp(16px,4vw,56px) 56px}
+.foot-orn{display:flex;align-items:center;gap:14px;width:min(100%,360px);margin:0 auto 14px;color:var(--gilt);font-size:18px;line-height:1}
 .foot-orn::before,.foot-orn::after{content:"";flex:1;height:1px}
 .foot-orn::before{background:linear-gradient(90deg,transparent,var(--line))}
 .foot-orn::after{background:linear-gradient(90deg,var(--line),transparent)}
-.foot-name{font:400 24px/1.1 var(--display);color:var(--ink);margin-top:4px}
-.about-site{max-width:none;font:400 12.5px/1.7 var(--body);color:var(--muted)}
-.about-site p{margin:0}
-.about-site p{text-wrap:balance}
-.about-site .sep{margin-right:3px;color:var(--gilt)}
-.about-site .cr{white-space:nowrap}   /* each credit stays in one piece when the line wraps */
-.foot-links{display:flex;gap:26px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:2px}
-.foot .totop,.foot .mode-text{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:4px 2px;border:0;background:none;font:700 13px/1 var(--body);color:var(--gilt-ink);cursor:pointer}
-.foot svg.i{width:14px;height:14px}
-@media (hover:hover){.foot .totop:hover,.foot .mode-text:hover{text-decoration:underline;text-underline-offset:3px}}
+.foot .jj-name{line-height:1.1;margin:0 0 10px}
+.foot .jj-dot{margin:0 3px 0 0;color:var(--gilt)}   /* "jj-dot", not "dot": .dot is the Library's shelf-colour dot */
+.foot .jj-foot-links{margin-top:12px}
+.foot .jj-foot-links>*{font:700 13px/1 var(--body);color:var(--gilt-ink)}   /* over the Library's own a/button rules (colour and font inherited) */
 
 /* hero */
 .hero{--c:var(--brass);margin-inline:min(calc(-1 * clamp(16px,4vw,56px)),calc((100% - 100cqw) / 2));padding:68px max(clamp(16px,4vw,56px),calc((100cqw - 100%) / 2)) 42px;color:var(--ink);position:relative;overflow:hidden}
@@ -151,7 +146,7 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
   background:radial-gradient(120% 70% at 20% 0%,color-mix(in srgb,var(--c) 60%,#fff 18%),transparent 70%),linear-gradient(160deg,var(--c),color-mix(in srgb,var(--c) 62%,#000))}
 .cover.blank .t,.cover.blank .a{width:100%}
 .cover:not(.blank) .t,.cover:not(.blank) .a{display:none}
-.cover.blank .t{font:400 clamp(15px,1.7cqw,22px)/1.08 var(--display);overflow:hidden;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;text-wrap:balance}
+.cover.blank .t{font:400 clamp(15px,1.7cqw,22px)/1.08 var(--display);overflow:hidden;display:-webkit-box;-webkit-line-clamp:5;-webkit-box-orient:vertical;text-wrap:balance;overflow-wrap:anywhere}
 .cover.blank .a{font:700 9.5px/1.3 var(--body);letter-spacing:.12em;text-transform:uppercase;opacity:.85;border-top:1px solid color-mix(in srgb,var(--brass) 80%,transparent);padding-top:8px}
 
 /* book grids */
@@ -159,7 +154,7 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .bk{display:grid;gap:10px;text-decoration:none;align-content:start}
 .bk .cover{transition:transform .35s cubic-bezier(.2,.7,.2,1),box-shadow .35s}
 .bk:hover .cover{transform:translateY(-4px) rotate(-.6deg);box-shadow:0 2px 4px rgba(0,0,0,.12),0 16px 28px -12px rgba(0,0,0,.45)}
-.bk h3{font-size:19px;line-height:1.1;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
+.bk h3{font-size:19px;line-height:1.1;overflow:hidden;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow-wrap:anywhere}   /* a word longer than the card breaks rather than being cut off (round 3) */
 .bk .by{font-size:13px;color:var(--muted);margin-top:-6px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
 .bk:hover h3{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;text-decoration-color:var(--brass)}
 
@@ -564,7 +559,7 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .oldbooks td.t a:hover{text-decoration:underline;text-decoration-color:var(--brass);text-underline-offset:4px}
 .oldbooks td.m{color:var(--muted)}
 .oldbooks tr.group td{padding:18px 10px 6px;font:700 11px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.oldbooks tr.gone td{opacity:.45}
+.oldbooks tr.gone td{color:var(--muted)}   /* books she hasn’t got: the grey label colour, 4.5:1 or more (round 3; it was faded to 1.9:1) */
 .oldbooks tr.gone td.t{font-style:italic}
 .oldbooks .chip{display:inline-block;width:12px;height:18px;border-radius:2px 3px 3px 2px;box-shadow:inset 3px 0 0 rgba(0,0,0,.18),0 1px 2px rgba(0,0,0,.25);vertical-align:middle}
 .oldbooks .chip.none{background:transparent;box-shadow:none;border:1px dashed var(--muted)}
@@ -581,7 +576,7 @@ a.spine:hover{transform:translateY(-6px)}
 .spine .ed{position:absolute;top:5px;left:0;right:0;text-align:center;font-size:11px;font-style:normal;color:#F2CF6B;text-shadow:0 0 3px rgba(0,0,0,.6)}
 .spine.gap .no{color:var(--muted)}
 .spine.pale span{color:#4A3420;text-shadow:none}
-.spine.pale .no{color:rgba(60,40,20,.75)}
+.spine.pale .no{color:#3A2614}
 .spine-card{position:fixed;z-index:50;width:290px;display:grid;grid-template-columns:76px 1fr;gap:12px;padding:12px;border-radius:12px;background:var(--surface);border:1px solid var(--line);box-shadow:0 12px 30px rgba(0,0,0,.25);pointer-events:none;font-size:13px}
 .spine-card img{width:76px;border-radius:2px;box-shadow:0 1px 3px rgba(0,0,0,.3)}
 .spine-card b{display:block;font:400 18px/1.15 var(--display)}
@@ -751,16 +746,15 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
   .topbar-name em{color:var(--gilt-2)}
   .side{width:min(var(--side),86vw);transform:translateX(-102%);visibility:hidden;transition:transform .25s ease,visibility 0s .25s;box-shadow:0 0 40px rgba(0,0,0,.45);z-index:30;
     padding-bottom:env(safe-area-inset-bottom)}
-  body.nav-open .side{transform:none;visibility:visible;transition:transform .25s ease,visibility 0s}
-  body.nav-open .scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:25}
-  body.nav-open{overflow:hidden}
+  .side.jj-open{transform:none;visibility:visible;transition:transform .25s ease,visibility 0s}   /* open: family.js's JJFamily.menu (js/app.js) */
+  .jj-menu-open .scrim{display:block;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:25}   /* the page behind stays still: family.css */
   .nav a{min-height:44px}   /* big enough to tap */
   .nav-group.minor a{min-height:40px}
   .home-link{padding:10px 0;margin-top:6px}
   main{margin-left:0;box-shadow:none}   /* no binding at the side, so no gutter shadow */
   .skip:focus{left:12px}
 }
-@media (prefers-reduced-motion: reduce){ .side,body.nav-open .side{transition:none} }
+@media (prefers-reduced-motion: reduce){ .side,.side.jj-open{transition:none} }
 
 /* ---------- the pages on narrow windows and phones (21 Nov) ---------- */
 @media (max-width:900px){
@@ -779,6 +773,9 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
   /* a book's page: the cover above the title, the details under the blurb */
   .book-top{grid-template-columns:minmax(0,1fr);gap:20px;justify-items:center;text-align:center}
   .book-top .cover{width:min(240px,62vw)}
+  /* a title card's margins from the card's own width (round 3: as percentages they came from the whole column, leaving “Witne”) */
+  .book-top .cover.blank{padding:calc(min(240px,62vw) * .14) calc(min(240px,62vw) * .11) calc(min(240px,62vw) * .11)}
+  .book-top .cover.blank:has(.rated){padding-bottom:30px}
   .book-top>div:not(.cover){width:100%}
   .book-top h1{font-size:clamp(40px,10vw,84px)}
   .book-top .authors{justify-content:center}
@@ -865,6 +862,8 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 /* old-book spines: titles larger, brighter and lifted off the darker cloths */
 .spine span{font-size:13.5px;color:#F6DE9C;text-shadow:0 0 2px rgba(0,0,0,.9),0 1px 3px rgba(0,0,0,.8)}
 .spine.pale span{color:#3A2614;text-shadow:none}
+/* the series numbers in the same lettering as the titles (round 3: the faint ones were 2.5–3.5:1) */
+.spine .no{color:#F6DE9C}
 /* a book with no blurb: no empty column; the panels sit side by side, and the first heading on the left starts at the top */
 .book-body:not(:has(> div > *)){grid-template-columns:minmax(0,1fr)}
 .book-body:not(:has(> div > *)) > div{display:none}
@@ -897,11 +896,6 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 
 /* a corner dot chosen with the keyboard (21 Nov) */
 .corner-dot:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
-/* the foot on phones (the family rules): one credit per line, no dots at line ends */
-@media (max-width:600px){
-  .about-site .sep{display:none}
-  .about-site .cr{display:block;white-space:normal}
-}
 
 /* ---------- second review (21 Nov): laptop windows from 901 to about 1100 wide, and smaller fixes ---------- */
 /* bars of a chart may shrink (they couldn't, so Stats ran off the side between 901 and 1024) */

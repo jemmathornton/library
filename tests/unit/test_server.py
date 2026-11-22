@@ -56,6 +56,35 @@ class Server(unittest.TestCase):
         self.assertEqual(self.ask('/api/scanned', header=False)[0], 403)
         self.assertEqual(self.ask('/api/condition', {'id': self.book, 'condition': 'Good'}, header=False)[0], 403)
 
+    # the family's shared code (22 Nov): served at /family/ from Jemma's Journals' site/family, and nothing else from there
+    def test_the_familys_shared_code_is_served(self):
+        for name, kind in (('mode.js', b'javascript'), ('family.js', b'javascript'), ('family.css', b'text/css')):
+            req = urllib.request.Request(f'http://127.0.0.1:{self.port}/family/{name}', headers={'Host': f'127.0.0.1:{self.port}'})
+            with urllib.request.urlopen(req, timeout=60) as r:
+                self.assertEqual(r.status, 200, name)
+                self.assertIn(kind, r.headers.get('Content-Type', '').encode(), name)
+                self.assertEqual(r.read(), open(os.path.join(self.box.outer, 'site', 'family', name), 'rb').read(), name)
+
+    def test_nothing_else_through_family(self):
+        for p in ('/family/', '/family/nope.js', '/family/../index.html', '/family/..%2findex.html', '/family/%2e%2e/library/data/books.json',
+                  '/family/..%5c..%5clibrary%5cdata%5cbooks.json', '/family/sub/mode.js', '/family/.hidden'):
+            self.assertEqual(self.ask(p, header=False)[0], 404, p)
+        self.assertEqual(self.ask('/family/mode.js', host='evil.example:80', header=False)[0], 403)
+
+    def test_backup_status_before_the_first_backup_is_empty_not_missing(self):   # round 3: no 404 in the console
+        p = os.path.join(self.box.root, 'site', 'backup-status.json')
+        if os.path.exists(p):
+            os.remove(p)
+        code, body = self.ask('/api/backup-status')
+        self.assertEqual((code, json.loads(body)), (200, {}))
+        self.assertEqual(self.ask('/api/backup-status', header=False)[0], 403)
+        open(p, 'w', encoding='utf-8').write('{"ok": true, "lastTry": "2026-11-22T09:30"}')
+        try:
+            code, body = self.ask('/api/backup-status')
+            self.assertEqual((code, json.loads(body)['ok']), (200, True))
+        finally:
+            os.remove(p)
+
     def test_no_files_outside_the_site(self):
         for p in ('/../data/books.json', '/..%2fdata%2fbooks.json', '/%2e%2e/tools/serve.py'):
             code, body = self.ask(p, header=False)

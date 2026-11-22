@@ -1,4 +1,8 @@
 # Shortcuts that open Jemma's Library in its own app window (no tabs or address bar), as for Jemma's Sim World.
+# Since 22 Nov her Desktop and Start menu shortcuts open the Library through Jemma's Journals (its tools\open_site.pyw, port 8050),
+# which also keeps dark mode the same in every app window. Running this again would point them back at http://localhost:8020
+# (that works, the Library's own server serves /family/ too, but dark mode wouldn't carry across): don't, unless she asks.
+# (The git-ignored shortcut in this folder is a copy of the Desktop one, 22 Nov.)
 # Run:  powershell -ExecutionPolicy Bypass -File tools\make_shortcuts.ps1
 # - "Jemma's Library server" in her Startup folder: tools/serve.py (no window) serves the site at http://localhost:8020,
 #   this computer only. Started now too.

@@ -8,6 +8,8 @@ then sends them to her GitHub copy (19 Nov; see push()). GitHub keeps every vers
 left out and named in the log, since the GitHub copy is public. Each run also writes site/backup-status.json (not kept in
 git), which the Home page reads to say when the last backup failed or hasn't run for over a week.
 Until 19 Nov it also zipped the project to Documents\\HomeLibraryBackups; she dropped that once GitHub was set up.
+22 Nov: it saves only on the main branch (as a submodule the Library could be left on a detached HEAD) and pushes main by
+name; after a push it runs Jemma's Journals' tools/record_apps.py, so the parent records the Library's new version.
 Run every Sunday by the Windows task "Jemma's Library - weekly backup" (tools/make_backup_task.ps1); log in logs/backup.log.
 """
 import json, os, subprocess, sys
@@ -41,9 +43,40 @@ def push():
         log('github: no GitHub copy set up, nothing sent')
         return True
     helper = ['-c', 'credential.helper=', '-c', f"credential.helper=!'{GH.replace(os.sep, '/')}' auth git-credential"] if os.path.exists(GH) else []
-    r = git(*helper, 'push', 'origin', 'HEAD')
+    r = git(*helper, 'push', 'origin', 'main')   # the main branch by name (22 Nov: as a submodule it could be on a detached HEAD)
     log('github: pushed' if r.returncode == 0 else 'github push failed: ' + (r.stderr or r.stdout).strip()[-300:])
     return r.returncode == 0
+
+
+def on_main():
+    """The week's save must land on main (22 Nov: the Library is a submodule of Jemma's Journals, and updating submodules
+    leaves them on a detached HEAD). Detached at main's own commit: back onto main. Anywhere else: False, nothing saved."""
+    if git('rev-parse', '--git-dir').returncode != 0:   # no git here at all: nothing to save (save() and push() say so)
+        return True
+    if git('symbolic-ref', '-q', 'HEAD').stdout.strip() == 'refs/heads/main':
+        return True
+    head, main = git('rev-parse', 'HEAD').stdout.strip(), git('rev-parse', '-q', '--verify', 'refs/heads/main').stdout.strip()
+    if head and head == main and git('checkout', '-q', 'main').returncode == 0:
+        log('git: was on a detached HEAD at main, back on main')
+        return True
+    log('git: not on the main branch, so nothing saved or sent (' + (git('rev-parse', '--abbrev-ref', 'HEAD').stdout.strip() or '?') + ')')
+    return False
+
+
+def record_in_parent():
+    """After a push, record the Library's new version in Jemma's Journals, the parent (its tools/record_apps.py; 22 Nov).
+    Only when it's there; its output goes in the log; it never makes the backup fail."""
+    script = os.path.join(ROOT, '..', 'tools', 'record_apps.py')
+    if not os.path.exists(script):
+        return
+    try:
+        r = subprocess.run([sys.executable, '-X', 'utf8', script], cwd=os.path.dirname(os.path.dirname(script)), capture_output=True,
+                           text=True, encoding='utf-8', errors='replace', creationflags=NO_WINDOW, timeout=600,
+                           env={**os.environ, 'GIT_TERMINAL_PROMPT': '0'})
+        out = ' '.join((r.stdout + ' ' + r.stderr).split())[-400:]
+        log(f'parent: record_apps.py {"done" if r.returncode == 0 else "failed (exit " + str(r.returncode) + ")"}' + (f': {out}' if out else ''))
+    except Exception as e:
+        log(f'parent: record_apps.py didn’t run: {e}')
 
 
 def save():
@@ -80,17 +113,25 @@ def write_status(ok, why=''):
 
 def main():
     log('started')
-    ok, why = True, ''
+    ok, why, branch_ok = True, '', False
     try:
-        if not save():
+        branch_ok = on_main()
+        if not branch_ok:
+            ok, why = False, 'the library wasn’t on its main branch'
+        elif not save():
             ok, why = False, 'saving the changes in git failed'
     except Exception as e:
         log(f'git failed: {e}'); ok, why = False, 'git failed'
+    pushed = False
     try:
-        if not push():
-            ok, why = False, why or 'sending to GitHub failed'
+        if branch_ok:
+            pushed = push()
+            if not pushed:
+                ok, why = False, why or 'sending to GitHub failed'
     except Exception as e:
         log(f'github push failed: {e}'); ok, why = False, why or 'sending to GitHub failed'
+    if pushed:
+        record_in_parent()
     try:
         write_status(ok, why)
     except Exception as e:
