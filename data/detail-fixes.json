@@ -45,7 +45,8 @@
   "pages": 138
  },
  "he2quc719k": {
-  "published": "2005-02-02"
+  "published": "2005-02-02",
+  "pages": 544
  },
  "m4rdh1231h": {
   "published": "1998"
@@ -60,25 +61,31 @@
   "published": "2003"
  },
  "0catqw1dcu": {
-  "published": "2010"
+  "published": "2010",
+  "pages": 252
  },
  "v8dzn4d26q": {
-  "published": "2007"
+  "published": "2007",
+  "pages": 239
  },
  "ft873nde5y": {
   "published": "2000-05-11"
  },
  "bpko717cho": {
-  "published": "1998"
+  "published": "1998",
+  "pages": 258
  },
  "j7z46oiqlq": {
-  "published": "2007"
+  "published": "2007",
+  "pages": 607
  },
  "dmp9wlru84": {
-  "published": "2001"
+  "published": "2001",
+  "pages": 636
  },
  "ob32jie0an": {
-  "published": "1998"
+  "published": "1998",
+  "pages": 414
  },
  "6uc5rpa8dt": {
   "published": "2007"
@@ -87,7 +94,8 @@
   "published": "1994-03-01"
  },
  "v8dznrb26q": {
-  "published": "2004"
+  "published": "2004",
+  "pages": 494
  },
  "rihpt6dxoz": {
   "published": "1989"
@@ -108,10 +116,12 @@
   "published": "1998"
  },
  "izer0bflqm": {
-  "published": "2001"
+  "published": "2001",
+  "pages": 444
  },
  "kql3v6aysl": {
-  "published": "2009"
+  "published": "2009",
+  "pages": 400
  },
  "j7z460lqlq": {
   "published": "1992"
@@ -124,7 +134,8 @@
   "pages": 272
  },
  "yw7a2ifr71": {
-  "published": "2014"
+  "published": "2014",
+  "pages": 288
  },
  "kql3v79ysl": {
   "published": "2006-08-01",
@@ -154,11 +165,13 @@
   "isbn13": "9781784161194",
   "isbn10": "1784161195",
   "publisher": "Black Swan (Transworld)",
-  "published": "2015"
+  "published": "2015",
+  "pages": 352
  },
  "add0001": {
   "published": "2018",
-  "publisher": "Independently published"
+  "publisher": "Independently published",
+  "pages": 511
  },
  "add0004": {
   "published": "2025-02-20",
@@ -258,9 +271,610 @@
   "pages": 240
  },
  "6uc5yww8dt": {
-  "title": "A/S/L"
+  "title": "A/S/L",
+  "pages": 498
  },
  "0b5q53udcu": {
   "title": "The Story of a New Name: My Brilliant Friend Book 2 (Neapolitan Novels)"
+ },
+ "yw7a2f6r71": {
+  "pages": 864
+ },
+ "8gmvxrrohq": {
+  "pages": 748
+ },
+ "3kxuztparj": {
+  "pages": 816
+ },
+ "nxwcesm41p": {
+  "pages": 688
+ },
+ "bpko7lwcho": {
+  "pages": 704
+ },
+ "6uc5rik8dt": {
+  "pages": 19
+ },
+ "yw7a2qzr71": {
+  "pages": 640
+ },
+ "8gmvxjfohq": {
+  "pages": 42
+ },
+ "v8dznku26q": {
+  "pages": 772
+ },
+ "kql352mysl": {
+  "pages": 576
+ },
+ "xl1n9dujps": {
+  "pages": 32
+ },
+ "w1fyob0isd": {
+  "pages": 32
+ },
+ "3kxuzl8arj": {
+  "pages": 740
+ },
+ "j7z469jqlq": {
+  "pages": 242
+ },
+ "qhsk82ewe4": {
+  "pages": 336
+ },
+ "prqbsfbno7": {
+  "pages": 502
+ },
+ "qhsk6rkwe4": {
+  "pages": 32
+ },
+ "ga48i1jbt4": {
+  "pages": 608
+ },
+ "v8dzn3626q": {
+  "pages": 348
+ },
+ "2ousnrntqt": {
+  "pages": 120
+ },
+ "ls5xdaf7b9": {
+  "pages": 640
+ },
+ "w1fyoe1isd": {
+  "pages": 592
+ },
+ "kql3veuysl": {
+  "pages": 512
+ },
+ "izerogflqm": {
+  "pages": 437
+ },
+ "nxwcewo41p": {
+  "pages": 120
+ },
+ "569qtecv9x": {
+  "pages": 642
+ },
+ "e9oh3po5u2": {
+  "pages": 464
+ },
+ "8gmvxy1ohq": {
+  "pages": 512
+ },
+ "prqbfq2no7": {
+  "pages": 120
+ },
+ "yw7av8mr71": {
+  "pages": 468
+ },
+ "yw7a2omr71": {
+  "pages": 176
+ },
+ "qhsk6knwe4": {
+  "pages": 120
+ },
+ "qhsk862we4": {
+  "pages": 517
+ },
+ "prqbfzdno7": {
+  "pages": 448
+ },
+ "6uc5rqn8dt": {
+  "pages": 445
+ },
+ "3kxu1zgarj": {
+  "pages": 421
+ },
+ "ft873g2e5y": {
+  "pages": 252
+ },
+ "6uc5rym8dt": {
+  "pages": 526
+ },
+ "6uc5rk48dt": {
+  "pages": 256
+ },
+ "e9oh34d5u2": {
+  "pages": 352
+ },
+ "yw7av2ur71": {
+  "pages": 605
+ },
+ "e9oh3ku5u2": {
+  "pages": 451
+ },
+ "8gmvr2tohq": {
+  "pages": 144
+ },
+ "j7z49x0qlq": {
+  "pages": 208
+ },
+ "ayjgsexpsz": {
+  "pages": 607
+ },
+ "6uc5y5h8dt": {
+  "pages": 132
+ },
+ "j7z46uhqlq": {
+  "pages": 384
+ },
+ "j7z4949qlq": {
+  "pages": 117
+ },
+ "6uc5ye78dt": {
+  "pages": 150
+ },
+ "v8dzp4u26q": {
+  "pages": 412
+ },
+ "u3n6wo7gnz": {
+  "pages": 128
+ },
+ "cny0hyhmmk": {
+  "pages": 400
+ },
+ "cny07opmmk": {
+  "pages": 128
+ },
+ "5601anyv9x": {
+  "pages": 396
+ },
+ "4jim5xwkbx": {
+  "pages": 369
+ },
+ "j7z46e4qlq": {
+  "pages": 168
+ },
+ "e9ohamt5u2": {
+  "pages": 594
+ },
+ "6uc5rut8dt": {
+  "pages": 336
+ },
+ "t0gf4eb93y": {
+  "pages": 144
+ },
+ "dmp9wpgu84": {
+  "pages": 336
+ },
+ "8gmvxbrohq": {
+  "pages": 352
+ },
+ "ayjgz2ipsz": {
+  "pages": 160
+ },
+ "6uc5r0v8dt": {
+  "pages": 352
+ },
+ "w1fy8ynisd": {
+  "pages": 136
+ },
+ "t0gfkdy93y": {
+  "pages": 344
+ },
+ "ft87ma0e5y": {
+  "pages": 352
+ },
+ "yw7av6cr71": {
+  "pages": 92
+ },
+ "bpkol86cho": {
+  "pages": 159
+ },
+ "iz1ahwjlqm": {
+  "pages": 544
+ },
+ "he2qgzg19k": {
+  "pages": 320
+ },
+ "t0gfkur93y": {
+  "pages": 336
+ },
+ "7fvju9xhd6": {
+  "pages": 400
+ },
+ "v8dznn026q": {
+  "pages": 512
+ },
+ "ob32xti0an": {
+  "pages": 180
+ },
+ "qhsk8vfwe4": {
+  "pages": 672
+ },
+ "5601p0uv9x": {
+  "pages": 352
+ },
+ "3kxu153arj": {
+  "pages": 186
+ },
+ "w1fyocdisd": {
+  "pages": 464
+ },
+ "ls5x0dl7b9": {
+  "pages": 357
+ },
+ "ga48lzjbt4": {
+  "pages": 430
+ },
+ "w1fyozlisd": {
+  "pages": 320
+ },
+ "bpkolz1cho": {
+  "pages": 352
+ },
+ "e9ohap85u2": {
+  "pages": 272
+ },
+ "ga48io5bt4": {
+  "pages": 144
+ },
+ "prqbsecno7": {
+  "pages": 352
+ },
+ "v8dzn9h26q": {
+  "pages": 336
+ },
+ "izerodzlqm": {
+  "pages": 351
+ },
+ "3kxuz1darj": {
+  "pages": 296
+ },
+ "ob32j1n0an": {
+  "pages": 233
+ },
+ "u3n6w6ignz": {
+  "pages": 121
+ },
+ "ga48lnubt4": {
+  "pages": 288
+ },
+ "dmp9wb8u84": {
+  "pages": 311
+ },
+ "3kxu1m7arj": {
+  "pages": 512
+ },
+ "8gmvrilohq": {
+  "pages": 160
+ },
+ "rihp29dxoz": {
+  "pages": 320
+ },
+ "0catjvodcu": {
+  "pages": 144
+ },
+ "rihp23kxoz": {
+  "pages": 128
+ },
+ "ob32jy70an": {
+  "pages": 224
+ },
+ "5601a7zv9x": {
+  "pages": 160
+ },
+ "8gmvxxsohq": {
+  "pages": 176
+ },
+ "6uc5yxp8dt": {
+  "pages": 327
+ },
+ "ga48li4bt4": {
+  "pages": 422
+ },
+ "nxwcf3s41p": {
+  "pages": 128
+ },
+ "kql353iysl": {
+  "pages": 288
+ },
+ "e9oha815u2": {
+  "pages": 272
+ },
+ "kql3vjeysl": {
+  "pages": 158
+ },
+ "9dbekvn6rp": {
+  "pages": 159
+ },
+ "m4rdhda31h": {
+  "pages": 160
+ },
+ "rihp2prxoz": {
+  "pages": 192
+ },
+ "0catjlfdcu": {
+  "pages": 480
+ },
+ "prqbs5mno7": {
+  "pages": 256
+ },
+ "yw7a22dr71": {
+  "pages": 192
+ },
+ "ft87m4ge5y": {
+  "pages": 328
+ },
+ "7fvju6jhd6": {
+  "pages": 391
+ },
+ "2ousns7tqt": {
+  "pages": 138
+ },
+ "prqbfyfno7": {
+  "pages": 172
+ },
+ "8gmvxmmohq": {
+  "pages": 400
+ },
+ "t0gfko493y": {
+  "pages": 158
+ },
+ "2ous4mdtqt": {
+  "pages": 254
+ },
+ "u3n6ip2gnz": {
+  "pages": 288
+ },
+ "e9ohayu5u2": {
+  "pages": 32
+ },
+ "t0gfkrf93y": {
+  "pages": 288
+ },
+ "9dbeydq6rp": {
+  "pages": 160
+ },
+ "ft873c9e5y": {
+  "pages": 576
+ },
+ "8gmvrv2ohq": {
+  "pages": 138
+ },
+ "0catj9udcu": {
+  "pages": 202
+ },
+ "xl1n9iljps": {
+  "pages": 280
+ },
+ "3kxuz5marj": {
+  "pages": 400
+ },
+ "m4rdhzt31h": {
+  "pages": 279
+ },
+ "4jime34kbx": {
+  "pages": 170
+ },
+ "2ousnvstqt": {
+  "pages": 454
+ },
+ "6uc5rd08dt": {
+  "pages": 308
+ },
+ "izerouslqm": {
+  "pages": 352
+ },
+ "3kxu1sbarj": {
+  "pages": 288
+ },
+ "ls5xds37b9": {
+  "pages": 352
+ },
+ "um2i2n7gnz": {
+  "pages": 176
+ },
+ "ob32jcy0an": {
+  "pages": 256
+ },
+ "xl1n9e5jps": {
+  "pages": 688
+ },
+ "izer02jlqm": {
+  "pages": 464
+ },
+ "izer0celqm": {
+  "pages": 288
+ },
+ "kql356pysl": {
+  "pages": 352
+ },
+ "0catqqhdcu": {
+  "pages": 176
+ },
+ "izer05rlqm": {
+  "pages": 352
+ },
+ "2ous4o2tqt": {
+  "pages": 248
+ },
+ "ayjgs14psz": {
+  "pages": 486
+ },
+ "9dbeyk56rp": {
+  "pages": 204
+ },
+ "9dbekwo6rp": {
+  "pages": 316
+ },
+ "u3n6intgnz": {
+  "pages": 272
+ },
+ "9dbeyps6rp": {
+  "pages": 336
+ },
+ "nxwcekv41p": {
+  "pages": 256
+ },
+ "he2qgem19k": {
+  "pages": 192
+ },
+ "ob32jqs0an": {
+  "pages": 336
+ },
+ "j7z46bzqlq": {
+  "pages": 352
+ },
+ "ga48i0vbt4": {
+  "pages": 240
+ },
+ "nxwcetk41p": {
+  "pages": 460
+ },
+ "8gmvx33ohq": {
+  "pages": 336
+ },
+ "kql35t3ysl": {
+  "pages": 320
+ },
+ "kql359aysl": {
+  "pages": 240
+ },
+ "8gmvrxjohq": {
+  "pages": 336
+ },
+ "he2qg8y19k": {
+  "pages": 352
+ },
+ "ga48i6fbt4": {
+  "pages": 160
+ },
+ "ls5xdoq7b9": {
+  "pages": 256
+ },
+ "4jime59kbx": {
+  "pages": 144
+ },
+ "xl1n996jps": {
+  "pages": 208
+ },
+ "ga48i8ebt4": {
+  "pages": 122
+ },
+ "ob32xwm0an": {
+  "pages": 400
+ },
+ "0catqhedcu": {
+  "pages": 372
+ },
+ "cny070nmmk": {
+  "pages": 304
+ },
+ "ob32xla0an": {
+  "pages": 266
+ },
+ "kql35vcysl": {
+  "pages": 231
+ },
+ "kql3vi2ysl": {
+  "pages": 240
+ },
+ "v8dznpo26q": {
+  "pages": 340
+ },
+ "w1fy8d8isd": {
+  "pages": 288
+ },
+ "he2qumh19k": {
+  "pages": 208
+ },
+ "e9oh3n05u2": {
+  "pages": 416
+ },
+ "xl1ntodjps": {
+  "pages": 304
+ },
+ "w1fyo6visd": {
+  "pages": 352
+ },
+ "m4rd1st31h": {
+  "pages": 288
+ },
+ "ft87mnue5y": {
+  "pages": 256
+ },
+ "4jim58dkbx": {
+  "pages": 256
+ },
+ "ob32jaj0an": {
+  "pages": 312
+ },
+ "izer0o7lqm": {
+  "pages": 217
+ },
+ "2ousnfhtqt": {
+  "pages": 186
+ },
+ "ayjgszkpsz": {
+  "pages": 339
+ },
+ "izer0tqlqm": {
+  "pages": 291
+ },
+ "qhsk81lwe4": {
+  "pages": 192
+ },
+ "8gmvx44ohq": {
+  "pages": 304
+ },
+ "5601p3pv9x": {
+  "pages": 272
+ },
+ "kjbo7osysl": {
+  "pages": 208
+ },
+ "nxwcfc141p": {
+  "pages": 160
+ },
+ "rihptv6xoz": {
+  "pages": 238
+ },
+ "8gmvr2cohq": {
+  "pages": 202
+ },
+ "ls5xdfa7b9": {
+  "pages": 160
+ },
+ "j7z46hmqlq": {
+  "pages": 160
+ },
+ "5601podv9x": {
+  "pages": 160
+ },
+ "569qt5mv9x": {
+  "pages": 610
+ },
+ "ba9eyebcho": {
+  "pages": 364
+ },
+ "mn05o0831h": {
+  "pages": 368
+ },
+ "ob32x2w0an": {
+  "pages": 137
+ },
+ "etijnrn5u2": {
+  "pages": 848
  }
 }
