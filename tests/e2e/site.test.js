@@ -195,7 +195,9 @@ test("“not read yet” leaves out books she didn’t finish or paused", async 
 });
 
 // her vision (22 Nov evening): the shelf across the whole header under the title, the figures framed on its ledge among the books
-// (each placement on the Try switch), a bookend at each end; frames inside the header, never over a spine's lettering, real text
+// (spread evenly, her pick), a bookend at each end; frames inside the header, never over a spine's lettering, real text; each frame
+// turned about its upright axis, so both bottom corners stand on the ledge (her note: tilted in its own plane it looked like floating);
+// Home's line under the title on one line from 1300 wide (her note: it wrapped for no reason once the shelf was below it)
 test("22 Nov evening: the header's shelf: full width under the title, the figures framed on the ledge, never over a spine's lettering, 901 to 1920 wide", async () => {
   const problems = [];
   const f = document.createElement("iframe"); f.src = "index.html";
@@ -205,13 +207,12 @@ test("22 Nov evening: the header's shelf: full width under the title, the figure
   try {
     const win = f.contentWindow, d = f.contentDocument;
     await until(() => d.getElementById("view") && d.getElementById("view").innerText.trim().length > 20, "the framed page", 15000);
-    for (const place of ["spread", "left", "right"]) {
-      d.documentElement.dataset.tryPlace = place;
+    {
       for (const h of ["home", "shelf-fantasy", "shelves"]) {
         win.route(h); await wait(30);
         for (const w of [901, 1000, 1300, 1600, 1920]) {
           f.style.width = w + "px"; await new Promise(r => win.requestAnimationFrame(() => win.requestAnimationFrame(r))); win.fitSpines();
-          const at = `${h} @${w} ${place}`, hero = d.querySelector("#view .hero"), shelf = hero && hero.querySelector(".hero-shelf");
+          const at = `${h} @${w}`, hero = d.querySelector("#view .hero"), shelf = hero && hero.querySelector(".hero-shelf");
           if (!shelf) { problems.push(`${at}: no shelf`); continue; }
           const hr = hero.getBoundingClientRect(), sr = shelf.getBoundingClientRect(), ledge = sr.bottom - parseFloat(win.getComputedStyle(shelf).borderBottomWidth);
           if (sr.left > hr.left + 20 || sr.right < hr.right - 20) problems.push(`${at}: the shelf isn't the header's width`);
@@ -228,43 +229,52 @@ test("22 Nov evening: the header's shelf: full width under the title, the figure
             if (tiered && r.bottom > spineTop) problems.push(`${what}: not on the ledge above the books`);
             if (letters.some(t => meet(r, t))) problems.push(`${what}: over a spine's lettering`);
             frs.forEach((g, j) => { if (j > i && meet(r, g.getBoundingClientRect())) problems.push(`${what}: over frame ${j + 1}`); });
-            const deg = parseFloat(fr.style.getPropertyValue("--r")); if (!(deg >= -4 && deg <= 3)) problems.push(`${what}: tilt ${deg}`); });
+            // both bottom corners where the untransformed bottom edge was (the transform turns on it): no tilt in its own plane
+            const m = new win.DOMMatrix(win.getComputedStyle(fr).transform), half = fr.offsetWidth / 2;
+            const lift = x => { const q = m.transformPoint(new win.DOMPoint(x, 0, 0, 1)); return Math.abs(q.y / q.w); };
+            if (lift(-half) > 1.5 || lift(half) > 1.5) problems.push(`${what}: a bottom corner off the ledge (${lift(-half).toFixed(1)}, ${lift(half).toFixed(1)})`);
+            if (/rotate\(|rotateZ/.test(fr.getAttribute("style") + win.getComputedStyle(fr).getPropertyValue("--r"))) problems.push(`${what}: tilted in its own plane`); });
           shelf.querySelectorAll(".bookend").forEach(be => { const r = be.getBoundingClientRect(); if (letters.some(t => meet(r, t))) problems.push(`${at}: a bookend over a spine's lettering`);
             if (r.left < sr.left || r.right > sr.right) problems.push(`${at}: a bookend off the shelf`); });
+          // her note: a bookend is a solid L pressed against the book and the shelf: its upright touches the end spine, its foot the ledge
+          const spr = [...shelf.querySelectorAll(".sp:not([hidden])")].map(x => x.getBoundingClientRect()), [e0, e1] = [...shelf.querySelectorAll(".bookend")].map(x => x.getBoundingClientRect());
+          const booksLedge = tiered ? Math.max(...spr.map(x => x.bottom)) : ledge;
+          if (e0 && spr.length && Math.abs(Math.min(...spr.map(x => x.left)) - e0.right) > 1) problems.push(`${at}: the left bookend not against the first book (${(Math.min(...spr.map(x => x.left)) - e0.right).toFixed(1)}px)`);
+          if (e1 && spr.length && Math.abs(e1.left - Math.max(...spr.map(x => x.right))) > 1) problems.push(`${at}: the right bookend not against the last book (${(e1.left - Math.max(...spr.map(x => x.right))).toFixed(1)}px)`);
+          [e0, e1].forEach((e, k) => { if (e && Math.abs(e.bottom - booksLedge) > 1) problems.push(`${at}: bookend ${k + 1} not on the ledge (${(e.bottom - booksLedge).toFixed(1)}px)`); });
+          const line = hero.querySelector(":scope > p");
+          if (h === "home" && w >= 1300 && line && line.getBoundingClientRect().height > parseFloat(win.getComputedStyle(line).lineHeight) * 1.5) problems.push(`${at}: the line under the title wraps`);
           d.querySelectorAll("#view .hero, #view .hero *").forEach(el => {
             const b = el.getBoundingClientRect(); if (b.width && b.right > d.documentElement.clientWidth + 0.5) problems.push(`${at}: ${el.tagName}.${el.className} past the right edge`); });
         }
       }
     }
-    delete d.documentElement.dataset.tryPlace;
   } finally { f.remove(); }
   eq([...new Set(problems)].slice(0, 12), [], "problems:");
 });
 
-// her vision (22 Nov evening): "add bookends to each shelf, maybe different for each shelf for right vibes"; the Try switch can show
-// the brass ones everywhere; the frames keep the figures' words and numbers as before, and the tilts and sizes are the same every time
-test("22 Nov evening: the header's bookends differ by shelf, and the frames are the same each time", async () => {
-  const kinds = {};
+// her picks (22 Nov evening): bookends "only slightly different. Like traditional wooden bookends but maybe with a different motif",
+// "a solid like L shape, pressed against book and shelf, then motif is in addition to that": the same wooden L on every shelf, the
+// shelf's own carved figure added on its outside; the frames' turns and sizes the same every time; the Try
+// switch gone and its remembered choices cleared
+test("22 Nov evening: the header's bookends are the same wooden L with each shelf's motif, the frames are the same each time, the Try switch is gone", async () => {
+  const kinds = {}, wood = new Set();
   for (const h of ["#home", "#shelves", "#shelf-fantasy", "#shelf-childrens", "#shelf-science-fiction", "#shelf-travel"]) {
     await show(h); const ends = $$("#view .hero-shelf .bookend");
     if (!ends.length) continue;
     eq(ends.length, 2, `${h}: two bookends`);
     ok(ends.every(e => e.getAttribute("aria-hidden") === "true"), `${h}: the bookends hidden from screen readers`);
     kinds[h] = ends[0].dataset.kind;
+    wood.add(ends.map(e => e.querySelector("svg path").getAttribute("d")).join("|"));
   }
-  eq(kinds["#home"], "brass", "Home:"); eq(kinds["#shelves"], "brass", "All shelves:");
-  if (kinds["#shelf-fantasy"]) eq(kinds["#shelf-fantasy"], "castle", "Fantasy:");
-  if (kinds["#shelf-childrens"]) eq(kinds["#shelf-childrens"], "blocks", "Children’s:");
-  await show("#shelf-fantasy");
-  const end = $("#view .hero-shelf .bookend"), own = end && end.querySelector(".be-own"), std = end && end.querySelector(".be-std");
-  if (own && std) {
-    eq([getComputedStyle(own).display, getComputedStyle(std).display], ["block", "none"], "per shelf:");
-    document.documentElement.dataset.tryEnds = "same";
-    try { eq([getComputedStyle(own).display, getComputedStyle(std).display], ["none", "block"], "the same everywhere:"); }
-    finally { delete document.documentElement.dataset.tryEnds; }
-  }
+  eq(kinds["#home"], "rosette", "Home:"); eq(kinds["#shelves"], "rosette", "All shelves:");
+  if (kinds["#shelf-fantasy"]) eq(kinds["#shelf-fantasy"], "turret", "Fantasy:");
+  if (kinds["#shelf-childrens"]) eq(kinds["#shelf-childrens"], "balloon", "Children’s:");
+  eq(wood.size, 1, "the same wooden L on every shelf:");
+  ok(!$(".try-switch") && !document.documentElement.dataset.tryPlace && !document.documentElement.dataset.tryEnds && !document.documentElement.dataset.tryFrames, "the Try switch is gone");
+  ok(["frames", "place", "ends"].every(k => localStorage.getItem("library-try-" + k) === null), "its remembered choices cleared");
   await show("#home"); const first = $$("#view .hero-shelf .fr").map(f => f.getAttribute("style"));
-  await show("#home"); eq($$("#view .hero-shelf .fr").map(f => f.getAttribute("style")), first, "the same tilts and sizes again:");
+  await show("#home"); eq($$("#view .hero-shelf .fr").map(f => f.getAttribute("style")), first, "the same turns and sizes again:");
   ok(!$("#view .hero > .figures"), "Home: no ruled line of figures besides the frames");
 });
 

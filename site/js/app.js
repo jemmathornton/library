@@ -446,34 +446,49 @@ const SPINE_TALL = 93;   // every spine the same height (her pick, 22 Nov evenin
 const surnameOf = by => (String(by || "").split(/,| and | & /)[0].trim().split(/\s+/).pop() || "");
 // her vision (22 Nov evening): "Make shelf take up entire header and go all the way to left. Stats appear in like photo frames on the
 // shelf at slightly different sizes and angles. Also add bookends to each shelf, maybe different for each shelf for right vibes."
-// The figures stand on the ledge as framed pictures (real text: the spines and bookends are hidden from screen readers, the frames
-// are not), each a little different in size and tilt (the same every time, not random), in a wood, gilt or black frame with a mount.
-const FRAME_TILT = [-3.5, 2, -1.5, 3, -4, 1.5], FRAME_SIZE = [1, 0.88, 0.95, 0.85, 0.92, 0.97], FRAME_MIX = ["wood", "gilt", "black", "gilt", "wood", "black"];
-// the bookends, drawn here as simple shapes (no pictures): each shelf its own "for the right vibes"; [width, shapes] on a 100-tall box
-const BOOKENDS = {
-  brass: [40, `<rect x="0" y="92" width="40" height="8" fill="#8A6420"/><path d="M4 92V30a16 16 0 0 1 32 0v62z" fill="#C9A24E"/><path d="M10 88V32a10 10 0 0 1 20 0v56z" fill="none" stroke="#8A6420" stroke-width="1.5"/><rect x="7" y="32" width="3" height="58" fill="#fff" opacity=".3"/><rect x="31" y="30" width="5" height="62" fill="#000" opacity=".15"/>`],
-  castle: [44, `<path d="M22 8v18" stroke="#3a2e3f" stroke-width="1.5"/><path d="M22 8l12 4-12 4z" fill="#7A3F7A"/><path d="M5 26h7v8h6.5v-8h7v8H32v-8h7v14h-3v60H8V40H5z" fill="#8C8496"/><path d="M18 70V60a4 4 0 0 1 8 0v10z" fill="#2B2230"/><path d="M15 100V88a7 7 0 0 1 14 0v12z" fill="#3A2E3F"/><path d="M8 52h28M8 78h28M5 40h34" stroke="#3a2e3f" stroke-width="1" opacity=".35"/><rect x="31" y="40" width="5" height="60" fill="#000" opacity=".15"/>`],
-  rocket: [40, `<path d="M12 68L4 80 2 100h10zM28 68l8 12 2 20H28z" fill="#4B4F8C"/><path d="M12 100V40C12 22 20 8 20 4c0 4 8 18 8 36v60z" fill="#C9CED6"/><rect x="14" y="40" width="3" height="56" fill="#fff" opacity=".55"/><rect x="24" y="40" width="4" height="60" fill="#000" opacity=".15"/><rect x="12" y="70" width="16" height="3" fill="#4B4F8C"/><circle cx="20" cy="48" r="5" fill="#2B3050" stroke="#8A93A3" stroke-width="2"/><rect x="14" y="96" width="12" height="4" fill="#6B7280"/>`],
-  blocks: [40, `<rect x="2" y="62" width="36" height="38" fill="#3A7DC9"/><rect x="7" y="67" width="26" height="28" fill="none" stroke="#fff" stroke-width="2" opacity=".6"/><circle cx="20" cy="81" r="6" fill="#F2C230"/><rect x="6" y="30" width="28" height="32" fill="#D9483B"/><path d="M20 37l8 17H12z" fill="#fff" opacity=".85"/><rect x="11" y="12" width="18" height="18" fill="#F2C230" transform="rotate(-6 20 21)"/><circle cx="20" cy="21" r="4" fill="#4E9A51"/><rect x="2" y="62" width="36" height="3" fill="#fff" opacity=".25"/><rect x="6" y="30" width="28" height="3" fill="#fff" opacity=".25"/>`],
-  globe: [46, `<rect x="8" y="92" width="30" height="8" rx="2" fill="#5E3D22"/><rect x="21" y="67" width="4" height="25" fill="#8A6420"/><path d="M2 46a21 21 0 0 0 42 0" fill="none" stroke="#8A6420" stroke-width="3"/><circle cx="23" cy="46" r="17" fill="#2E7A92"/><path d="M14 36c4-4 10-2 9 4s-7 4-9 0zM26 50c5-3 9 2 7 7s-7 0-7-4z" fill="#C9B37A"/><ellipse cx="23" cy="46" rx="7" ry="17" fill="none" stroke="#fff" opacity=".35"/><path d="M6 46h34" stroke="#fff" opacity=".35"/><circle cx="17" cy="39" r="5" fill="#fff" opacity=".18"/>`],
-  marble: [38, `<path d="M2 100V22l6-8h22l6 8v78z" fill="#E6E1D8" stroke="#B8B2A6"/><path d="M8 30c6 10 2 22 10 30s6 20 12 32" fill="none" stroke="#9C978D" opacity=".7"/><path d="M24 22c-2 12 6 18 3 28" fill="none" stroke="#9C978D" stroke-width=".8" opacity=".5"/><path d="M30 14l6 8v78h-6z" fill="#000" opacity=".1"/>`],
-  walnut: [36, `<path d="M2 100V24q0-10 10-10h22v86z" fill="#5E3D22"/><path d="M8 98c2-28-2-48 4-76M16 98c2-26-2-52 4-80M26 98c-2-28 4-54 0-82" fill="none" stroke="#3B2616" opacity=".6"/><rect x="4" y="26" width="3" height="72" fill="#fff" opacity=".12"/><rect x="2" y="86" width="32" height="2" fill="#C9A24E"/>`],
-  iron: [34, `<rect x="0" y="96" width="34" height="4" fill="#1A1816"/><path d="M3 96V18q0-8 8-8h14q6 0 6 6v80z" fill="#2B2826"/><path d="M11 80V40a6 6 0 0 1 12 0v40z" fill="#4A4540"/><g fill="#6B655E"><circle cx="8" cy="90" r="1.5"/><circle cx="26" cy="90" r="1.5"/><circle cx="8" cy="20" r="1.5"/><circle cx="26" cy="20" r="1.5"/></g>`],
-  concrete: [40, `<path d="M2 100V18l8-6h28v88z" fill="#8E8A84"/><g fill="#6E6A64"><circle cx="9" cy="44" r="1"/><circle cx="20" cy="52" r="1.2"/><circle cx="30" cy="40" r=".8"/><circle cx="14" cy="64" r=".9"/><circle cx="27" cy="62" r="1.1"/><circle cx="12" cy="92" r="1"/><circle cx="28" cy="90" r=".8"/></g><rect x="2" y="74" width="36" height="9" fill="#E2B81F"/><path d="M4 83l6-9h4l-6 9zM14 83l6-9h4l-6 9zM24 83l6-9h4l-6 9z" fill="#1F1D1A"/><circle cx="10" cy="28" r="2.2" fill="#55524D"/><circle cx="30" cy="28" r="2.2" fill="#55524D"/><path d="M28 12l-3 10 4 8-3 8" fill="none" stroke="#5C5852"/><rect x="33" y="12" width="5" height="88" fill="#000" opacity=".12"/>`],
-  rainbow: [48, `<path d="M2 100V52a22 22 0 0 1 44 0v48h-5V52a17 17 0 0 0-34 0v48z" fill="#E8508A"/><path d="M7 100V52a17 17 0 0 1 34 0v48h-5V52a12 12 0 0 0-24 0v48z" fill="#F5A623"/><path d="M12 100V52a12 12 0 0 1 24 0v48h-5V52a7 7 0 0 0-14 0v48z" fill="#2BB3A3"/><rect x="0" y="94" width="48" height="6" fill="#B5577A"/>`],
-  column: [34, `<rect x="1" y="92" width="32" height="8" fill="#6E5432"/><rect x="4" y="87" width="26" height="5" fill="#8C6E44"/><rect x="7" y="26" width="20" height="61" fill="#9A7B4F"/><path d="M11 26v61M15 26v61M19 26v61M23 26v61" stroke="#6E5432" opacity=".7"/><rect x="8" y="26" width="2" height="61" fill="#fff" opacity=".2"/><rect x="3" y="20" width="28" height="6" fill="#A68756"/><circle cx="6" cy="23" r="3.2" fill="none" stroke="#6E5432" stroke-width="1.5"/><circle cx="28" cy="23" r="3.2" fill="none" stroke="#6E5432" stroke-width="1.5"/><rect x="1" y="14" width="32" height="6" fill="#8C6E44"/>`],
+// Then her picks (same evening): "mixed frames", "place them among books", and the angles the right way: a frame stands flat on the
+// ledge and is turned to face a little left or right (about its upright axis, with perspective; both bottom corners stay on the
+// ledge), leaning back a touch like a frame with an easel back; never tilted in its own plane (that looked like floating).
+// The figures stay real text (the spines and bookends are hidden from screen readers, the frames are not); sizes and turns are the
+// same every time, not random.
+const FRAME_TURN = [-18, 14, -9, 20, -14, 10], FRAME_BACK = [4, 3, 5, 3, 4, 5], FRAME_SIZE = [1, 0.88, 0.95, 0.85, 0.92, 0.97], FRAME_MIX = ["wood", "gilt", "black", "gilt", "wood", "black"];
+// the bookends (her picks, 22 Nov evening: "traditional wooden bookends but maybe with a different motif"; "a solid like L shape,
+// pressed against book and shelf, then motif is in addition to that"): the same solid wooden L on every shelf, seen end-on from the
+// front: an upright (its top softly rounded) pressed flat against the end book, and a base plate on the ledge running under the end
+// books (drawn past the bookend's own box, over the books' feet). The shelf's motif is a small carved wooden figure on a block,
+// standing on the ledge against the outside of the upright. Drawn here as simple shapes (no pictures); the box is 40 × 100: the
+// figure in 0–27, the upright 27–40 (its outside face at 27, the book side at 40), the base from 27 to 85.
+const BOOKEND_WOOD = `<path d="M27 100V25q0-5 5-5h3q5 0 5 5v75z" fill="#7B4A24"/>`
+  + `<path d="M30.5 99c1-24-1-46 1-76M35.5 99c-1-26 1-48 0-77" fill="none" stroke="#5A3418" stroke-width=".7" opacity=".55"/>`
+  + `<rect x="28" y="24" width="2" height="72" fill="#fff" opacity=".12"/><rect x="37.5" y="24" width="2.5" height="72" fill="#000" opacity=".16"/>`
+  + `<rect x="27" y="95.5" width="58" height="4.5" fill="#6B3F1F"/><rect x="27" y="95.5" width="58" height="1" fill="#fff" opacity=".15"/>`
+  + `<rect x="3" y="89" width="24" height="11" fill="#6B3F1F"/><rect x="3" y="89" width="24" height="1.2" fill="#fff" opacity=".15"/>`;
+const MOTIFS = {
+  rosette: `<circle r="1.9"/>${[0, 60, 120, 180, 240, 300].map(a => `<circle r="2" cx="${(4.4 * Math.cos(a * Math.PI / 180)).toFixed(2)}" cy="${(4.4 * Math.sin(a * Math.PI / 180)).toFixed(2)}"/>`).join("")}`,
+  turret: `<rect x="-4" y="-3" width="8" height="10"/><rect x="-5" y="-3.5" width="10" height="1.5"/><rect x="-5" y="-6.5" width="2.5" height="3"/><rect x="-1.25" y="-6.5" width="2.5" height="3"/><rect x="2.5" y="-6.5" width="2.5" height="3"/>`,
+  rocket: `<path d="M0-8c3 3 3 8 2 12h-4c-1-4-1-9 2-12zM-2 3l-3 5h3zM2 3l3 5h-3z"/>`,
+  balloon: `<circle cy="-2.5" r="5"/><path d="M-1.2 2.6h2.4l-1.2 1.8z"/><rect x="-.35" y="4.2" width=".7" height="4"/>`,
+  compass: `<path d="M0-8L1.8-1.8 8 0 1.8 1.8 0 8-1.8 1.8-8 0-1.8-1.8z"/>`,
+  key: `<path fill-rule="evenodd" d="M0-8a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7zM0-6a1.5 1.5 0 1 0 0 3 1.5 1.5 0 1 0 0-3z"/><rect x="-.9" y="-1.5" width="1.8" height="9.5"/><rect x=".9" y="4" width="2.2" height="1.4"/><rect x=".9" y="6.2" width="1.6" height="1.4"/>`,
+  diamond: `<path fill-rule="evenodd" d="M0-7L6 0 0 7-6 0zM0-4L3.5 0 0 4-3.5 0z"/>`,
+  quill: `<path d="M5-8C-2-6-4 1-4 6l-1 3 1.6-.4C-1 4 4-1 5-8z"/>`,
+  cog: `<path fill-rule="evenodd" d="M-1.3-7h2.6l.5 2.1 1.9.8 1.9-1.1 1.8 1.8-1.1 1.9.8 1.9 2.1.5v2.6l-2.1.5-.8 1.9 1.1 1.9-1.8 1.8-1.9-1.1-1.9.8-.5 2.1h-2.6l-.5-2.1-1.9-.8-1.9 1.1-1.8-1.8 1.1-1.9-.8-1.9L-7 1.3v-2.6l2.1-.5.8-1.9-1.1-1.9 1.8-1.8 1.9 1.1 1.9-.8zM0-2a2 2 0 1 0 0 4 2 2 0 1 0 0-4z"/>`,
+  heart: `<path d="M0 6C-5 2-7-1-5.5-4S-1-6 0-3.5C1-6 4-6.5 5.5-4S5 2 0 6z"/>`,
+  crown: `<path d="M-6 4V-5l3 3.5 3-5 3 5 3-3.5V4z"/><rect x="-6" y="5" width="12" height="2"/>`,
 };
-const SHELF_BOOKENDS = {fantasy: "castle", "science-fiction": "rocket", childrens: "blocks", travel: "globe", "non-fiction": "marble", display: "walnut",
-  "adult-fiction": "iron", dystopia: "concrete", "young-adult": "rainbow", "old-book-collection": "column"};   // anything else (Home, All shelves…): brass
-const bookendSvg = (kind, cls) => { const [w, shapes] = BOOKENDS[kind]; return `<svg class="${cls}" viewBox="0 0 ${w} 100" style="--a:${w / 100}" focusable="false">${shapes}</svg>`; };
-// the Try switch's "the same everywhere" shows the brass ones (both drawn, one shown by site.css, so the switch needs no redraw)
-const bookend = (shelf, pos) => { const kind = SHELF_BOOKENDS[shelf] || "brass";
-  return `<span class="bookend ${pos}" data-kind="${kind}" aria-hidden="true">${bookendSvg(kind, "be-own")}${kind === "brass" ? "" : bookendSvg("brass", "be-std")}</span>`; };
+const SHELF_BOOKENDS = {fantasy: "turret", "science-fiction": "rocket", childrens: "balloon", travel: "compass", "non-fiction": "key", display: "diamond",
+  "adult-fiction": "quill", dystopia: "cog", "young-adult": "heart", "old-book-collection": "crown"};   // anything else (Home, All shelves…): a rosette
+// how far below its middle each motif reaches, so every figure stands on its block
+const MOTIF_FOOT = {rosette: 6.4, turret: 7, rocket: 8, balloon: 8.2, compass: 8, key: 7.6, diamond: 7, quill: 8.6, cog: 7, heart: 6, crown: 7};
+// the figure: the motif carved in wood, a shade lighter than the L, with a dark edge, standing on its block against the upright
+const bookendSvg = kind => `<svg viewBox="0 0 40 100" style="--a:.4" overflow="visible" focusable="false">${BOOKEND_WOOD}<g transform="translate(14.2 ${(89 - 1.6 * (MOTIF_FOOT[kind] || 8)).toFixed(2)}) scale(1.6)" fill="#8A5A2E" stroke="#4A2A14" stroke-width=".5" stroke-linejoin="round">${MOTIFS[kind]}</g></svg>`;
+const bookend = (shelf, pos) => { const kind = SHELF_BOOKENDS[shelf] || "rosette";
+  return `<span class="bookend ${pos}" data-kind="${kind}" aria-hidden="true">${bookendSvg(kind)}</span>`; };
 function shelfBanner(list, figures, shelf){
   const books = variedPick(list || [], 40);
   if (books.length < 8) return "";
-  const frames = (figures || []).map(([n, l], i) => { const r = FRAME_TILT[i % FRAME_TILT.length];
-    return `<div class="fr f-${FRAME_MIX[i % FRAME_MIX.length]}" style="--r:${r}deg;--s:${FRAME_SIZE[i % FRAME_SIZE.length]};--ox:${r < 0 ? 0 : 100}%"><b>${n}</b><span>${l}</span></div>`; }).join("");
+  const frames = (figures || []).map(([n, l], i) => { const ry = FRAME_TURN[i % FRAME_TURN.length];
+    return `<div class="fr f-${FRAME_MIX[i % FRAME_MIX.length]} ${ry < 0 ? "turn-l" : "turn-r"}" style="--ry:${ry}deg;--rx:${FRAME_BACK[i % FRAME_BACK.length]}deg;--s:${FRAME_SIZE[i % FRAME_SIZE.length]}"><b>${n}</b><span>${l}</span></div>`; }).join("");
   return `<div class="hero-shelf"><div class="sp-row">${bookend(shelf, "start")}${books.map(b => {
     const c = spineColour(b), lum = luminance(c);
     // dark: gilt-foil lettering; anything lighter is blind-stamped (darker, with a light edge), for legibility
@@ -483,39 +498,33 @@ function shelfBanner(list, figures, shelf){
 // each spine's lettering fitted to it, title and author always both (her rule, 22 Nov): on one line, smaller as needed; else in two
 // lines side by side where the spine is wide enough; else the author's surname only, smaller; only then the title cut short with an
 // ellipsis. Centred both ways. Only whole spines stand on the ledge: any that won't fit beside the bookends and frames are left off,
-// the row centred. The frames stand among the books (or grouped at one end: the Try switch); each leans its top towards a
-// neighbour, with just enough room that it never covers a spine's lettering. Where the frames would leave room for fewer than eight
-// books (narrow windows, phones) they stand on a ledge of their own above the books ("tiered").
-const leanRoom = (h, deg) => Math.ceil(h * Math.sin(Math.abs(deg) * Math.PI / 180)) + 5;
+// the row centred. The frames stand among the books, spread evenly (her pick, 22 Nov evening). Where they would leave room for fewer
+// than eight books (narrow windows, phones) they stand on a ledge of their own above the books ("tiered").
 function fitSpines(){
-  const place = document.documentElement.dataset.tryPlace || "spread";
   document.querySelectorAll("#view .hero-shelf").forEach(shelf => {
     const row = shelf.querySelector(".sp-row"); if (!row) return;
     const sps = [...row.querySelectorAll(".sp")], frs = [...row.querySelectorAll(".fr")], ends = [...row.querySelectorAll(".bookend")];
     const outer = el => { const cs = getComputedStyle(el); return el.offsetWidth + parseFloat(cs.marginLeft) + parseFloat(cs.marginRight); };
-    const lean = () => frs.forEach(fr => { const r = parseFloat(fr.style.getPropertyValue("--r")) || 0, room = leanRoom(fr.offsetHeight, r);
-      fr.style.marginLeft = (r < 0 ? room : 5) + "px"; fr.style.marginRight = (r > 0 ? room : 5) + "px"; });
     const fit = inRow => { const gap = parseFloat(getComputedStyle(row).columnGap) || 0;
       let room = row.clientWidth + gap - ends.concat(inRow ? frs : []).reduce((a, el) => a + outer(el) + gap, 0), n = 0;
       for (const sp of sps) { const w = outer(sp) + gap; if (w > room + 0.01) break; room -= w; n++; }
       return n; };
     sps.forEach(sp => { sp.hidden = false; });
-    shelf.classList.remove("tiered"); lean();
+    shelf.classList.remove("tiered");
     let n = fit(frs.length > 0);
-    if (frs.length && n < Math.min(8, sps.length)) { shelf.classList.add("tiered"); lean(); n = fit(false); }
+    if (frs.length && n < Math.min(8, sps.length)) { shelf.classList.add("tiered"); n = fit(false); }
     sps.forEach((sp, i) => { sp.hidden = i >= n; });
     const inRow = !shelf.classList.contains("tiered");
     let o = 0; const put = el => { el.style.order = o++; }, placed = new Set();
     const slots = frs.map((_, k) => Math.max(1, Math.round((k + 1) * n / (frs.length + 1))));   // evenly among the books
-    if (inRow && place === "left") frs.forEach(put);
     if (ends[0]) put(ends[0]);
     for (let i = 0; i < n; i++) {
-      if (inRow && place === "spread") frs.forEach((fr, k) => { if (!placed.has(fr) && slots[k] <= i) { put(fr); placed.add(fr); } });
+      if (inRow) frs.forEach((fr, k) => { if (!placed.has(fr) && slots[k] <= i) { put(fr); placed.add(fr); } });
       put(sps[i]);
     }
-    if (inRow && place === "spread") frs.forEach(fr => { if (!placed.has(fr)) put(fr); });
+    if (inRow) frs.forEach(fr => { if (!placed.has(fr)) put(fr); });
     if (ends[1]) put(ends[1]);
-    if (!inRow || place === "right") frs.forEach(put);
+    if (!inRow) frs.forEach(put);
   });
   document.querySelectorAll("#view .hero-shelf .sp:not([hidden])").forEach(sp => {
     const t = sp.querySelector(".t"), b = t.querySelector("b"), au = t.querySelector("i");
@@ -1862,26 +1871,5 @@ capitalise(document);
 // the skip link: focus the page without changing the address (no inline handler, ready for a strict security policy online; round 4)
 document.addEventListener("click", e => { const a = e.target.closest && e.target.closest("a[data-skip]"); if (!a) return; e.preventDefault(); const v = document.getElementById("view"); if (v) { if (!v.hasAttribute("tabindex")) v.setAttribute("tabindex", "-1"); v.focus(); } });
 
-
-
-// ---------- Try switch (while she chooses, 22 Nov evening; removed once she picks) ----------
-// her vision for the header's shelf: the figures framed on it and a bookend at each end. Rows: Frames (Mixed / Wood / Gilt / Black);
-// Frame placement (Spread among the books / Grouped at the left / Grouped at the right); Bookends (Different for each shelf / The
-// same brass ones everywhere). Remembered in localStorage library-try-<row>; ?try-frames=… etc. pick one.
-(() => {
-  const ROWS = [["frames", "Frames", [["mixed", "Mixed"], ["wood", "Wood"], ["gilt", "Gilt"], ["black", "Black"]]],
-                ["place", "Frame placement", [["spread", "Spread among the books"], ["left", "Grouped at the left"], ["right", "Grouped at the right"]]],
-                ["ends", "Bookends", [["shelf", "Different for each shelf"], ["same", "The same everywhere"]]]];
-  const root = document.documentElement, q = new URLSearchParams(location.search), pick = {};
-  for (const [k, , opts] of ROWS) { let v = opts[0][0]; try { v = localStorage.getItem("library-try-" + k) || v; } catch {}
-    v = q.get("try-" + k) || v; pick[k] = opts.some(o => o[0] === v) ? v : opts[0][0]; }
-  const box = document.createElement("div"); box.className = "try-switch"; box.setAttribute("role", "group"); box.setAttribute("aria-label", "Try a look");
-  const draw = () => { box.innerHTML = "<b>Try</b>" + ROWS.map(([k, label, opts]) => `<div class="try-row"><span>${label}</span>${opts.map(([v, w]) =>
-    `<button type="button" data-k="${k}" data-v="${v}" aria-pressed="${pick[k] === v}">${w}</button>`).join("")}</div>`).join(""); };
-  const room = () => { document.body.style.paddingBottom = box.offsetHeight + 28 + "px"; };
-  const apply = () => { for (const k in pick) { root.dataset["try" + k[0].toUpperCase() + k.slice(1)] = pick[k]; try { localStorage.setItem("library-try-" + k, pick[k]); } catch {} }
-    draw(); room(); requestAnimationFrame(fitSpines); };
-  box.addEventListener("click", e => { const b = e.target.closest("button[data-k]"); if (!b) return; pick[b.dataset.k] = b.dataset.v; apply();
-    box.querySelector(`[data-k="${b.dataset.k}"][data-v="${b.dataset.v}"]`)?.focus(); });
-  document.body.appendChild(box); addEventListener("resize", room); apply();
-})();
+// the header Try switch is gone (her picks, 22 Nov evening: mixed frames, among the books, wooden bookends): its remembered choices cleared
+try { ["frames", "place", "ends"].forEach(k => localStorage.removeItem("library-try-" + k)); } catch {}

@@ -353,28 +353,38 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .hero:not(.book-hero){--hp:clamp(22px,3.2cqw,48px);padding-inline:var(--hp)}
 .hero.shelved{display:block}
 .hero.shelved h1{font-size:clamp(54px,7cqw,104px)}
+.hero.shelved p{max-width:min(100%,64ch)}   /* her note, 22 Nov evening: with the shelf below, the line runs on one line on a laptop (was 34ch) */
 .hero.shelved .hero-shelf{margin:30px calc(14px - var(--hp)) -10px;padding:0 14px}
-/* the frames: a wood, gilt or black moulding round a mount, the number and its words on it; each a little different in size (--s) and
-   tilt (--r, turning on the bottom corner it stands on), set by shelfBanner() in js/app.js; fitSpines() gives each room to lean */
+/* the frames (her picks, 22 Nov evening: mixed, among the books, turned the right way): a wood, gilt or black moulding round a mount,
+   the number and its words on it, each a little different in size (--s). Each stands flat on the ledge and is turned to face a little
+   left or right (--ry, about its upright axis, with perspective) and leans back a touch like an easel-back frame (--rx), both turning
+   on its bottom edge so both bottom corners stay on the ledge; its moulding's side shows on the turned side, a soft shadow at its foot */
 .hero-shelf .figures{display:contents}
 .hero-shelf .figures .fr{--fw:calc(var(--s,1) * 8px);flex:0 0 auto;align-self:flex-end;box-sizing:border-box;position:relative;z-index:1;
   width:calc(var(--s,1) * clamp(90px,7.6cqw,124px));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;
   margin:0 5px;padding:calc(var(--s,1) * 12px) calc(var(--s,1) * 7px) calc(var(--s,1) * 11px);text-align:center;
   border:var(--fw) solid #5A3418;border-image:var(--frame) 1;background:var(--mount);
-  box-shadow:inset 0 0 0 1px rgba(60,36,16,.22),inset 2px 3px 5px rgba(60,36,16,.22),3px 5px 7px -3px rgba(30,18,8,.55);
-  transform-origin:var(--ox,50%) 100%;transform:rotate(var(--r,0deg));pointer-events:auto}
+  box-shadow:inset 0 0 0 1px rgba(60,36,16,.22),inset 2px 3px 5px rgba(60,36,16,.22),0 3px 4px -2px rgba(30,18,8,.6);
+  transform-origin:50% 100%;transform:perspective(700px) rotateY(var(--ry,0deg)) rotateX(var(--rx,0deg));transform-style:preserve-3d;pointer-events:auto}
+/* the moulding's side, standing back from the face on the side turned towards the viewer */
+.hero-shelf .figures .fr::before{content:"";position:absolute;top:calc(-1 * var(--fw));bottom:calc(-1 * var(--fw));width:calc(var(--s,1) * 9px);
+  background:linear-gradient(rgba(0,0,0,.38),rgba(0,0,0,.38)),var(--frame);pointer-events:none}
+.hero-shelf .figures .fr.turn-r::before{left:calc(-1 * var(--fw));transform-origin:0 50%;transform:rotateY(90deg)}
+.hero-shelf .figures .fr.turn-l::before{right:calc(-1 * var(--fw));transform-origin:100% 50%;transform:rotateY(-90deg)}
 .hero-shelf .figures .fr b{font:400 max(24px,calc(var(--s,1) * clamp(28px,2.7cqw,40px)))/1 var(--display);font-variant-numeric:oldstyle-nums;color:var(--ink)}
 .hero-shelf .figures .fr span{font:italic 400 max(12px,calc(var(--s,1) * clamp(12.5px,1.1cqw,15px)))/1.15 var(--read);color:var(--muted);text-wrap:balance}
-.hero-shelf .fr.f-wood,:root[data-try-frames="wood"] .hero-shelf .fr{--frame:linear-gradient(135deg,#8A5A2E,#5A3418 35%,#7B4A24 60%,#4A2A12)}
-.hero-shelf .fr.f-gilt,:root[data-try-frames="gilt"] .hero-shelf .fr{--frame:linear-gradient(135deg,#A77A26,#F3DC8E 30%,#B98A34 55%,#E9CC7A 75%,#8A6420)}
-.hero-shelf .fr.f-black,:root[data-try-frames="black"] .hero-shelf .fr{--frame:linear-gradient(135deg,#3A332C,#14110E 40%,#2A2520 70%,#0C0A08)}
-:root[data-mode="dark"] .hero-shelf .figures .fr{box-shadow:inset 0 0 0 1px rgba(0,0,0,.4),inset 2px 3px 5px rgba(0,0,0,.35),0 0 0 1px rgba(255,240,210,.12),3px 5px 8px -3px rgba(0,0,0,.8)}
-/* the bookends (shapes drawn in js/app.js, BOOKENDS): each shelf its own, the brass arch elsewhere; the right one mirrored */
-.hero-shelf .bookend{--eh:clamp(93px,8.7cqw,124px);flex:0 0 auto;align-self:flex-end;display:block;margin:0 3px}
-.hero-shelf .bookend svg{display:block;height:var(--eh);width:calc(var(--eh) * var(--a))}
+.hero-shelf .fr.f-wood{--frame:linear-gradient(135deg,#8A5A2E,#5A3418 35%,#7B4A24 60%,#4A2A12)}
+.hero-shelf .fr.f-gilt{--frame:linear-gradient(135deg,#A77A26,#F3DC8E 30%,#B98A34 55%,#E9CC7A 75%,#8A6420)}
+.hero-shelf .fr.f-black{--frame:linear-gradient(135deg,#3A332C,#14110E 40%,#2A2520 70%,#0C0A08)}
+:root[data-mode="dark"] .hero-shelf .figures .fr{box-shadow:inset 0 0 0 1px rgba(0,0,0,.4),inset 2px 3px 5px rgba(0,0,0,.35),0 0 0 1px rgba(255,240,210,.12),0 3px 5px -2px rgba(0,0,0,.85)}
+/* the bookends (her picks: a solid wooden L pressed against the end book and the shelf, the motif added to it): the same L on every
+   shelf, drawn in js/app.js (BOOKEND_WOOD, MOTIFS); its upright flush against the end spine (the row's 2px gap taken back), its base
+   plate drawn past its box over the end books' feet (so above them); the right one mirrored */
+.hero-shelf .bookend{--eh:clamp(93px,8.7cqw,124px);flex:0 0 auto;align-self:flex-end;display:block;position:relative;z-index:2}
+.hero-shelf .bookend.start{margin:0 -2px 0 3px}
+.hero-shelf .bookend.end{margin:0 3px 0 -2px}
+.hero-shelf .bookend svg{display:block;height:var(--eh);width:calc(var(--eh) * var(--a));overflow:visible}
 .hero-shelf .bookend.end svg{transform:scaleX(-1)}
-.hero-shelf .bookend .be-std,:root[data-try-ends="same"] .hero-shelf .bookend .be-own:not(:only-child){display:none}
-:root[data-try-ends="same"] .hero-shelf .bookend .be-std{display:block}
 /* too narrow for the frames among the books (fewer than ten would fit; phones): the frames on a ledge of their own above the books,
    each line the same height so the ledges line up (a smaller frame is set lower by its top margin) */
 .hero .hero-shelf.tiered{height:auto}
@@ -1028,17 +1038,3 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 /* dark mode: the old books' shelves a dark board with the walnut ledge, not bright cream bands */
 :root[data-mode="dark"] .bookshelf{background:repeating-linear-gradient(to bottom,#2E241A 0,#261D15 168px,#6B4A2B 168px,#5E4126 182px)}
 :root[data-mode="dark"] .spine.gap{border-color:rgba(226,196,122,.45);background:repeating-linear-gradient(45deg,transparent 0 6px,rgba(226,196,122,.08) 6px 7px)}
-
-
-
-/* Try switch (while she chooses, 22 Nov evening; removed once she picks): the header shelf's frames, where they stand, the bookends (rows in js/app.js) */
-.try-switch{position:fixed;right:18px;bottom:18px;z-index:20;display:grid;gap:7px;max-width:calc(100vw - 36px);padding:10px 12px;border-radius:4px;
-  background:var(--deep);color:var(--on-deep);box-shadow:0 6px 20px rgba(0,0,0,.3);border:1px solid color-mix(in srgb,var(--gilt) 45%,transparent);font:600 12.5px/1.2 var(--body)}
-.jj-menu-open .try-switch{display:none}
-.try-switch>b{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass)}
-.try-row{display:flex;flex-wrap:wrap;align-items:center;gap:5px}
-.try-row span{flex:1 1 100%;opacity:.85;font-weight:500}
-.try-switch button{padding:6px 11px;min-height:30px;border:0;border-radius:999px;background:rgba(255,255,255,.12);color:inherit;font:inherit;cursor:pointer}
-.try-switch button[aria-pressed="true"]{background:var(--brass);color:var(--deep)}
-.try-switch button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
-@media (max-width:600px){ .try-switch{right:10px;left:10px;bottom:10px;max-width:none;padding:8px 10px;gap:5px} .try-switch button{padding:5px 9px;min-height:28px;font-size:12px} }
