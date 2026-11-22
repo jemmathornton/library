@@ -455,34 +455,44 @@ const FRAME_TURN = [-18, 14, -9, 20, -14, 10], FRAME_BACK = [4, 3, 5, 3, 4, 5], 
 // the bookends (her picks, 22 Nov evening: "traditional wooden bookends but maybe with a different motif"; "a solid like L shape,
 // pressed against book and shelf, then motif is in addition to that"): the same solid wooden L on every shelf, seen end-on from the
 // front: an upright (its top softly rounded) pressed flat against the end book, and a base plate on the ledge running under the end
-// books (drawn past the bookend's own box, over the books' feet). The shelf's motif is a small carved wooden figure on a block,
-// standing on the ledge against the outside of the upright. Drawn here as simple shapes (no pictures); the box is 40 × 100: the
-// figure in 0–27, the upright 27–40 (its outside face at 27, the book side at 40), the base from 27 to 85.
-const BOOKEND_WOOD = `<path d="M27 100V25q0-5 5-5h3q5 0 5 5v75z" fill="#7B4A24"/>`
-  + `<path d="M30.5 99c1-24-1-46 1-76M35.5 99c-1-26 1-48 0-77" fill="none" stroke="#5A3418" stroke-width=".7" opacity=".55"/>`
-  + `<rect x="28" y="24" width="2" height="72" fill="#fff" opacity=".12"/><rect x="37.5" y="24" width="2.5" height="72" fill="#000" opacity=".16"/>`
-  + `<rect x="27" y="95.5" width="58" height="4.5" fill="#6B3F1F"/><rect x="27" y="95.5" width="58" height="1" fill="#fff" opacity=".15"/>`
-  + `<rect x="3" y="89" width="24" height="11" fill="#6B3F1F"/><rect x="3" y="89" width="24" height="1.2" fill="#fff" opacity=".15"/>`;
+// books (drawn past the bookend's own box, over the books' feet). The shelf's motif is a carved wooden object in the style of the
+// quill she liked best, standing on the ledge or leaning against the outside of the upright, never floating or on a point; her
+// picks (22 Nov evening): Home and every other page an open book, Adult Fiction the quill, Fantasy a castle, Science Fiction a ringed
+// planet on a stand, Dystopia a broken clock, Young Adult headphones on a stand, Children's a teddy bear, Non-Fiction an hourglass,
+// Travel a steam train (Display and the old books have no shelf yet: later, her call). The box is 52 × 100: the object in 2–38, the upright 38–52 (its outside face at 38), the base 38–83.
+// Drawn here as simple shapes (no pictures).
+const BOOKEND_WOOD = `<path d="M38 100V25q0-5 5-5h4q5 0 5 5v75z" fill="#7B4A24"/>`
+  + `<path d="M41.5 99c1-24-1-46 1-76M47 99c-1-26 1-48 0-77" fill="none" stroke="#5A3418" stroke-width=".7" opacity=".55"/>`
+  + `<rect x="39" y="24" width="2" height="72" fill="#fff" opacity=".12"/><rect x="49.5" y="24" width="2.5" height="72" fill="#000" opacity=".16"/>`
+  + `<rect x="38" y="95.5" width="45" height="4.5" fill="#6B3F1F"/><rect x="38" y="95.5" width="45" height="1" fill="#fff" opacity=".15"/>`;
+const D = "#4A2A14", L = "#C9A06A";   // the carving's dark edge and the pale inlay
+// a feather: its nib at 0,0, length n, the vane mostly to the left
+const feather = n => `<path d="M0 0L-.8 ${-n * .16}C${-n * .11} ${-n * .32} ${-n * .15} ${-n * .64} ${-n * .05} ${-n}C${n * .03} ${-n * .8} ${n * .06} ${-n * .48} ${n * .025} ${-n * .22}L.8 ${-n * .16}z"/><path d="M0 -2L${-n * .03} ${-n * .94}" fill="none" stroke="${D}" stroke-width=".8"/><path d="M${-n * .02} ${-n * .4}l${-n * .09} ${-n * .08}M${-n * .025} ${-n * .55}l${-n * .09} ${-n * .08}M${-n * .03} ${-n * .7}l${-n * .07} ${-n * .07}" fill="none" stroke="${D}" stroke-width=".6"/>`;
 const MOTIFS = {
-  rosette: `<circle r="1.9"/>${[0, 60, 120, 180, 240, 300].map(a => `<circle r="2" cx="${(4.4 * Math.cos(a * Math.PI / 180)).toFixed(2)}" cy="${(4.4 * Math.sin(a * Math.PI / 180)).toFixed(2)}"/>`).join("")}`,
-  turret: `<rect x="-4" y="-3" width="8" height="10"/><rect x="-5" y="-3.5" width="10" height="1.5"/><rect x="-5" y="-6.5" width="2.5" height="3"/><rect x="-1.25" y="-6.5" width="2.5" height="3"/><rect x="2.5" y="-6.5" width="2.5" height="3"/>`,
-  rocket: `<path d="M0-8c3 3 3 8 2 12h-4c-1-4-1-9 2-12zM-2 3l-3 5h3zM2 3l3 5h-3z"/>`,
-  balloon: `<circle cy="-2.5" r="5"/><path d="M-1.2 2.6h2.4l-1.2 1.8z"/><rect x="-.35" y="4.2" width=".7" height="4"/>`,
-  compass: `<path d="M0-8L1.8-1.8 8 0 1.8 1.8 0 8-1.8 1.8-8 0-1.8-1.8z"/>`,
-  key: `<path fill-rule="evenodd" d="M0-8a3.5 3.5 0 1 1 0 7 3.5 3.5 0 1 1 0-7zM0-6a1.5 1.5 0 1 0 0 3 1.5 1.5 0 1 0 0-3z"/><rect x="-.9" y="-1.5" width="1.8" height="9.5"/><rect x=".9" y="4" width="2.2" height="1.4"/><rect x=".9" y="6.2" width="1.6" height="1.4"/>`,
-  diamond: `<path fill-rule="evenodd" d="M0-7L6 0 0 7-6 0zM0-4L3.5 0 0 4-3.5 0z"/>`,
-  quill: `<path d="M5-8C-2-6-4 1-4 6l-1 3 1.6-.4C-1 4 4-1 5-8z"/>`,
-  cog: `<path fill-rule="evenodd" d="M-1.3-7h2.6l.5 2.1 1.9.8 1.9-1.1 1.8 1.8-1.1 1.9.8 1.9 2.1.5v2.6l-2.1.5-.8 1.9 1.1 1.9-1.8 1.8-1.9-1.1-1.9.8-.5 2.1h-2.6l-.5-2.1-1.9-.8-1.9 1.1-1.8-1.8 1.1-1.9-.8-1.9L-7 1.3v-2.6l2.1-.5.8-1.9-1.1-1.9 1.8-1.8 1.9 1.1 1.9-.8zM0-2a2 2 0 1 0 0 4 2 2 0 1 0 0-4z"/>`,
-  heart: `<path d="M0 6C-5 2-7-1-5.5-4S-1-6 0-3.5C1-6 4-6.5 5.5-4S5 2 0 6z"/>`,
-  crown: `<path d="M-6 4V-5l3 3.5 3-5 3 5 3-3.5V4z"/><rect x="-6" y="5" width="12" height="2"/>`,
+  // Home, All shelves and every other page
+  openBook: `<path d="M20 96C14 92 8 92 4 94V58C8 56 14 56 20 60z" fill="${L}"/><path d="M20 96C26 92 32 92 36 94V58C32 56 26 56 20 60z" fill="${L}"/><path d="M7 66c4-1 8-1 11 1M7 72c4-1 8-1 11 1M7 78c4-1 8-1 11 1M7 84c4-1 8-1 11 1M22 67c3-2 7-2 11-1M22 73c3-2 7-2 11-1M22 79c3-2 7-2 11-1M22 85c3-2 7-2 11-1" fill="none" stroke="${D}" stroke-width=".6"/><path d="M3 100V95C9 92 15 93 20 97C25 93 31 92 37 95V100z"/>`,
+  // Adult Fiction
+  quill: `<g transform="translate(8 99.5) rotate(31.5)">${feather(62)}</g>`,
+  // Fantasy
+  castle: `<rect x="8" y="72" width="22" height="28"/><path d="M3 100V56h2.5v3h2.5v-3h2.5v3h2.5v-3H15V100z"/><path d="M27 100V52h2.5v3h2.5v-3h2.5v3h2.5v-3H38V100z"/><path d="M15 100V90a4 4 0 0 1 8 0v10z" fill="${D}"/><path d="M8 66v-4a1.5 1.5 0 0 1 3 0v4zM31 62v-4a1.5 1.5 0 0 1 3 0v4z" fill="${D}"/><path d="M8 72h2v-3h3v3h3v-3h3v3h3v-3h3v3h2" fill="none"/><path d="M32.5 52V42" fill="none"/><path d="M32.5 42l-6 2.5 6 2.5z" fill="${L}"/>`,
+  // Science Fiction
+  planet: `<rect x="10" y="95" width="20" height="5" rx="1"/><rect x="18.5" y="79" width="3" height="16"/><path d="M3 70.5C2 66 12 61 20 60.5S38 61 37 65.5" fill="none" stroke="${D}" stroke-width="3.2"/><path d="M3 70.5C2 66 12 61 20 60.5S38 61 37 65.5" fill="none" stroke="${L}" stroke-width="1.6"/><circle cx="20" cy="66" r="12"/><path d="M10 62c6-2 14-2 20 0M9 69c7 1 15 1 22-1" fill="none" stroke="${D}" stroke-width=".7"/><path d="M37 65.5C38 71 28 75 20 75.5S2 75 3 70.5" fill="none" stroke="${D}" stroke-width="3.2"/><path d="M37 65.5C38 71 28 75 20 75.5S2 75 3 70.5" fill="none" stroke="${L}" stroke-width="1.6"/>`,
+  // Dystopia
+  brokenClock: `<rect x="6" y="96" width="5" height="4"/><rect x="29" y="96" width="5" height="4"/><path d="M6 97V70Q6 52 20 52Q34 52 34 70V97z"/><circle cx="20" cy="72" r="10" fill="${L}"/><path d="M20 72V65M20 72l5 3" fill="none" stroke="${D}" stroke-width="1.4" stroke-linecap="round"/><path d="M13 64l4 5-2 3 5 4-1 3 4 4" fill="none" stroke="${D}" stroke-width=".9"/><path d="M20 63.5v1.5M28.5 72H27M20 80.5V79M11.5 72H13" stroke="${D}" stroke-width=".8"/>`,
+  // Young Adult
+  headphones: `<rect x="10" y="95" width="20" height="5" rx="1"/><rect x="18.5" y="62" width="3" height="33"/><path d="M7.5 80V74A12.5 12 0 0 1 32.5 74V80" fill="none" stroke="${D}" stroke-width="3.6"/><path d="M7.5 80V74A12.5 12 0 0 1 32.5 74V80" fill="none" stroke="#8A5A2E" stroke-width="1.8"/><rect x="4" y="76" width="7" height="14" rx="3"/><rect x="29" y="76" width="7" height="14" rx="3"/><rect x="9" y="78" width="2" height="10" fill="${L}" stroke="none"/><rect x="29" y="78" width="2" height="10" fill="${L}" stroke="none"/>`,
+  // Children's
+  teddy: `<ellipse cx="11" cy="96" rx="5.5" ry="4"/><ellipse cx="29" cy="96" rx="5.5" ry="4"/><ellipse cx="20" cy="83" rx="11" ry="13"/><ellipse cx="20" cy="85" rx="6" ry="7" fill="${L}"/><ellipse cx="8.5" cy="80" rx="3.5" ry="6" transform="rotate(20 8.5 80)"/><ellipse cx="31.5" cy="80" rx="3.5" ry="6" transform="rotate(-20 31.5 80)"/><circle cx="13" cy="54" r="3.4"/><circle cx="27" cy="54" r="3.4"/><circle cx="20" cy="62" r="9"/><ellipse cx="20" cy="66" rx="4.2" ry="3.2" fill="${L}"/><circle cx="16.5" cy="60" r="1.1" fill="${D}"/><circle cx="23.5" cy="60" r="1.1" fill="${D}"/><path d="M18.5 64.5h3l-1.5 1.6z" fill="${D}"/>`,
+  // Non-Fiction
+  hourglass: `<rect x="8" y="94" width="24" height="6" rx="1"/><rect x="8" y="46" width="24" height="6" rx="1"/><rect x="9" y="52" width="2.2" height="42"/><rect x="28.8" y="52" width="2.2" height="42"/><path d="M13 52C13 64 19 70 19 73C19 76 13 82 13 94H27C27 82 21 76 21 73C21 70 27 64 27 52z" fill="${L}"/><path d="M14.6 94C15 88 18 85 20 84C22 85 25 88 25.4 94z" stroke="none"/><path d="M16 58H24C23 63 21 65 20 66C19 65 17 63 16 58z" stroke="none"/>`,
+  // Travel
+  steamTrain: `<circle cx="10" cy="94" r="6" fill="${L}"/><circle cx="23" cy="94" r="6" fill="${L}"/><circle cx="33" cy="96.5" r="3.5" fill="${L}"/><circle cx="10" cy="94" r="1.6" fill="${D}"/><circle cx="23" cy="94" r="1.6" fill="${D}"/><path d="M10 94H23" stroke="${D}" stroke-width="1.6"/><rect x="2" y="84" width="36" height="5"/><path d="M4 84V72Q4 68 8 68H26V84z"/><rect x="25" y="56" width="13" height="28"/><rect x="28" y="60" width="7" height="8" fill="${L}"/><rect x="23" y="53" width="15" height="3"/><path d="M8 68V60H7V57H14V60H13V68z"/><circle cx="18.5" cy="66" r="2.6"/>`,
 };
-const SHELF_BOOKENDS = {fantasy: "turret", "science-fiction": "rocket", childrens: "balloon", travel: "compass", "non-fiction": "key", display: "diamond",
-  "adult-fiction": "quill", dystopia: "cog", "young-adult": "heart", "old-book-collection": "crown"};   // anything else (Home, All shelves…): a rosette
-// how far below its middle each motif reaches, so every figure stands on its block
-const MOTIF_FOOT = {rosette: 6.4, turret: 7, rocket: 8, balloon: 8.2, compass: 8, key: 7.6, diamond: 7, quill: 8.6, cog: 7, heart: 6, crown: 7};
-// the figure: the motif carved in wood, a shade lighter than the L, with a dark edge, standing on its block against the upright
-const bookendSvg = kind => `<svg viewBox="0 0 40 100" style="--a:.4" overflow="visible" focusable="false">${BOOKEND_WOOD}<g transform="translate(14.2 ${(89 - 1.6 * (MOTIF_FOOT[kind] || 8)).toFixed(2)}) scale(1.6)" fill="#8A5A2E" stroke="#4A2A14" stroke-width=".5" stroke-linejoin="round">${MOTIFS[kind]}</g></svg>`;
-const bookend = (shelf, pos) => { const kind = SHELF_BOOKENDS[shelf] || "rosette";
+const SHELF_MOTIFS = {"adult-fiction": "quill", fantasy: "castle", "science-fiction": "planet", dystopia: "brokenClock", "young-adult": "headphones",
+  childrens: "teddy", "non-fiction": "hourglass", travel: "steamTrain"};   // anything else: the open book
+// the object first (carved wood, a shade lighter than the L, with a dark edge), then the L over it
+const bookendSvg = kind => `<svg viewBox="0 0 52 100" style="--a:.52" overflow="visible" focusable="false"><g fill="#8A5A2E" stroke="${D}" stroke-width="1" stroke-linejoin="round">${MOTIFS[kind]}</g><g class="be-l">${BOOKEND_WOOD}</g></svg>`;
+const bookend = (shelf, pos) => { const kind = SHELF_MOTIFS[shelf] || "openBook";
   return `<span class="bookend ${pos}" data-kind="${kind}" aria-hidden="true">${bookendSvg(kind)}</span>`; };
 function shelfBanner(list, figures, shelf){
   const books = variedPick(list || [], 40);
@@ -509,10 +519,16 @@ function fitSpines(){
       let room = row.clientWidth + gap - ends.concat(inRow ? frs : []).reduce((a, el) => a + outer(el) + gap, 0), n = 0;
       for (const sp of sps) { const w = outer(sp) + gap; if (w > room + 0.01) break; room -= w; n++; }
       return n; };
+    // frames flush with the books beside them (her note, 22 Nov evening: "basically against each other"): a turned frame looks narrower
+    // than its box on the side turned away, so each side's margin takes back the row's gap and that inset (from its own transform)
+    const flush = extra => frs.forEach(fr => { const m = new DOMMatrix(getComputedStyle(fr).transform), w = fr.offsetWidth, h = fr.offsetHeight;
+      const xs = [-w / 2, w / 2].flatMap(x => [0, -h].map(y => { const q = m.transformPoint(new DOMPoint(x, y, 0, 1)); return q.x / q.w; }));
+      const gap = parseFloat(getComputedStyle(row).columnGap) || 0;
+      fr.style.marginLeft = (extra - gap - (w / 2 + Math.min(...xs))) + "px"; fr.style.marginRight = (extra - gap - (w / 2 - Math.max(...xs))) + "px"; });
     sps.forEach(sp => { sp.hidden = false; });
-    shelf.classList.remove("tiered");
+    shelf.classList.remove("tiered"); flush(0);
     let n = fit(frs.length > 0);
-    if (frs.length && n < Math.min(8, sps.length)) { shelf.classList.add("tiered"); n = fit(false); }
+    if (frs.length && n < Math.min(8, sps.length)) { shelf.classList.add("tiered"); flush(8); n = fit(false); }
     sps.forEach((sp, i) => { sp.hidden = i >= n; });
     const inRow = !shelf.classList.contains("tiered");
     let o = 0; const put = el => { el.style.order = o++; }, placed = new Set();

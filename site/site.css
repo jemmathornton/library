@@ -365,20 +365,22 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
   margin:0 5px;padding:calc(var(--s,1) * 12px) calc(var(--s,1) * 7px) calc(var(--s,1) * 11px);text-align:center;
   border:var(--fw) solid #5A3418;border-image:var(--frame) 1;background:var(--mount);
   box-shadow:inset 0 0 0 1px rgba(60,36,16,.22),inset 2px 3px 5px rgba(60,36,16,.22),0 3px 4px -2px rgba(30,18,8,.6);
-  transform-origin:50% 100%;transform:perspective(700px) rotateY(var(--ry,0deg)) rotateX(var(--rx,0deg));transform-style:preserve-3d;pointer-events:auto}
+  transform-origin:50% 100%;transform:perspective(340px) rotateY(var(--ry,0deg)) rotateX(var(--rx,0deg));transform-style:preserve-3d;
+  pointer-events:auto;user-select:none;-webkit-user-select:none;cursor:default}   /* the number and words are printed on the mount: they turn with it, not selectable (her note), still read out */
 /* the moulding's side, standing back from the face on the side turned towards the viewer */
 .hero-shelf .figures .fr::before{content:"";position:absolute;top:calc(-1 * var(--fw));bottom:calc(-1 * var(--fw));width:calc(var(--s,1) * 9px);
   background:linear-gradient(rgba(0,0,0,.38),rgba(0,0,0,.38)),var(--frame);pointer-events:none}
 .hero-shelf .figures .fr.turn-r::before{left:calc(-1 * var(--fw));transform-origin:0 50%;transform:rotateY(90deg)}
 .hero-shelf .figures .fr.turn-l::before{right:calc(-1 * var(--fw));transform-origin:100% 50%;transform:rotateY(-90deg)}
+.hero-shelf .figures .fr b,.hero-shelf .figures .fr span{transform:translateZ(.1px)}
 .hero-shelf .figures .fr b{font:400 max(24px,calc(var(--s,1) * clamp(28px,2.7cqw,40px)))/1 var(--display);font-variant-numeric:oldstyle-nums;color:var(--ink)}
 .hero-shelf .figures .fr span{font:italic 400 max(12px,calc(var(--s,1) * clamp(12.5px,1.1cqw,15px)))/1.15 var(--read);color:var(--muted);text-wrap:balance}
 .hero-shelf .fr.f-wood{--frame:linear-gradient(135deg,#8A5A2E,#5A3418 35%,#7B4A24 60%,#4A2A12)}
 .hero-shelf .fr.f-gilt{--frame:linear-gradient(135deg,#A77A26,#F3DC8E 30%,#B98A34 55%,#E9CC7A 75%,#8A6420)}
 .hero-shelf .fr.f-black{--frame:linear-gradient(135deg,#3A332C,#14110E 40%,#2A2520 70%,#0C0A08)}
 :root[data-mode="dark"] .hero-shelf .figures .fr{box-shadow:inset 0 0 0 1px rgba(0,0,0,.4),inset 2px 3px 5px rgba(0,0,0,.35),0 0 0 1px rgba(255,240,210,.12),0 3px 5px -2px rgba(0,0,0,.85)}
-/* the bookends (her picks: a solid wooden L pressed against the end book and the shelf, the motif added to it): the same L on every
-   shelf, drawn in js/app.js (BOOKEND_WOOD, MOTIFS); its upright flush against the end spine (the row's 2px gap taken back), its base
+/* the bookends (her picks: a solid wooden L pressed against the end book and the shelf, the motif added to it, a carved object for
+   each shelf in the style of the quill): the same L on every shelf, drawn in js/app.js (BOOKEND_WOOD, MOTIFS); its upright flush against the end spine (the row's 2px gap taken back), its base
    plate drawn past its box over the end books' feet (so above them); the right one mirrored */
 .hero-shelf .bookend{--eh:clamp(93px,8.7cqw,124px);flex:0 0 auto;align-self:flex-end;display:block;position:relative;z-index:2}
 .hero-shelf .bookend.start{margin:0 -2px 0 3px}
@@ -390,7 +392,7 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .hero .hero-shelf.tiered{height:auto}
 .hero-shelf.tiered .sp-row{flex-wrap:wrap;height:auto;row-gap:18px}
 .hero-shelf.tiered .sp{height:124px}
-.hero-shelf.tiered .bookend{--eh:82px}
+.hero-shelf.tiered .bookend{--eh:96px}
 .hero-shelf.tiered .figures{--fl:122px;display:flex;max-width:none;margin:0;border:0;flex:0 0 100%;order:-1 !important;flex-wrap:wrap;justify-content:center;align-items:flex-end;
   background:repeating-linear-gradient(to bottom,transparent 0 var(--fl),#5E3D22 var(--fl) calc(var(--fl) + 8px));box-shadow:none}
 :root[data-mode="dark"] .hero-shelf.tiered .figures{background:repeating-linear-gradient(to bottom,transparent 0 var(--fl),#6B4A2B var(--fl) calc(var(--fl) + 8px))}

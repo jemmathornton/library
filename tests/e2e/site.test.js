@@ -233,7 +233,16 @@ test("22 Nov evening: the header's shelf: full width under the title, the figure
             const m = new win.DOMMatrix(win.getComputedStyle(fr).transform), half = fr.offsetWidth / 2;
             const lift = x => { const q = m.transformPoint(new win.DOMPoint(x, 0, 0, 1)); return Math.abs(q.y / q.w); };
             if (lift(-half) > 1.5 || lift(half) > 1.5) problems.push(`${what}: a bottom corner off the ledge (${lift(-half).toFixed(1)}, ${lift(half).toFixed(1)})`);
-            if (/rotate\(|rotateZ/.test(fr.getAttribute("style") + win.getComputedStyle(fr).getPropertyValue("--r"))) problems.push(`${what}: tilted in its own plane`); });
+            if (/rotate\(|rotateZ/.test(fr.getAttribute("style") + win.getComputedStyle(fr).getPropertyValue("--r"))) problems.push(`${what}: tilted in its own plane`);
+            // her note: the number and words are printed on the mount: inside the turned frame, turning with it, not selectable
+            if (fr.querySelector("b").parentElement !== fr || fr.querySelector("span").parentElement !== fr) problems.push(`${what}: its text not inside the turned frame`);
+            if (win.getComputedStyle(fr).userSelect !== "none" || win.getComputedStyle(fr.querySelector("b")).userSelect !== "none") problems.push(`${what}: its text can be selected`); });
+          // her note: frames "basically against" the books beside them (each side 2px at most, never over a spine's lettering: above)
+          if (!tiered) {
+            const items = [...shelf.querySelectorAll(".sp:not([hidden]), .fr, .bookend")].sort((x, y) => +x.style.order - +y.style.order).map(x => [x.classList.contains("fr"), x.getBoundingClientRect()]);
+            for (let i = 1; i < items.length; i++) if (items[i][0] || items[i - 1][0]) { const g = items[i][1].left - items[i - 1][1].right;
+              if (g > 2) problems.push(`${at}: a ${g.toFixed(1)}px gap beside frame`); }
+          }
           shelf.querySelectorAll(".bookend").forEach(be => { const r = be.getBoundingClientRect(); if (letters.some(t => meet(r, t))) problems.push(`${at}: a bookend over a spine's lettering`);
             if (r.left < sr.left || r.right > sr.right) problems.push(`${at}: a bookend off the shelf`); });
           // her note: a bookend is a solid L pressed against the book and the shelf: its upright touches the end spine, its foot the ledge
@@ -255,7 +264,8 @@ test("22 Nov evening: the header's shelf: full width under the title, the figure
 
 // her picks (22 Nov evening): bookends "only slightly different. Like traditional wooden bookends but maybe with a different motif",
 // "a solid like L shape, pressed against book and shelf, then motif is in addition to that": the same wooden L on every shelf, the
-// shelf's own carved figure added on its outside; the frames' turns and sizes the same every time; the Try
+// shelf's own carved object (in the quill's style) beside it: an open book on Home and other pages, a castle for Fantasy, a teddy bear
+// for Children's, and so on; the frames' turns and sizes the same every time; the Try
 // switch gone and its remembered choices cleared
 test("22 Nov evening: the header's bookends are the same wooden L with each shelf's motif, the frames are the same each time, the Try switch is gone", async () => {
   const kinds = {}, wood = new Set();
@@ -265,11 +275,13 @@ test("22 Nov evening: the header's bookends are the same wooden L with each shel
     eq(ends.length, 2, `${h}: two bookends`);
     ok(ends.every(e => e.getAttribute("aria-hidden") === "true"), `${h}: the bookends hidden from screen readers`);
     kinds[h] = ends[0].dataset.kind;
-    wood.add(ends.map(e => e.querySelector("svg path").getAttribute("d")).join("|"));
+    wood.add(ends.map(e => e.querySelector("svg .be-l").innerHTML).join("|"));
   }
-  eq(kinds["#home"], "rosette", "Home:"); eq(kinds["#shelves"], "rosette", "All shelves:");
-  if (kinds["#shelf-fantasy"]) eq(kinds["#shelf-fantasy"], "turret", "Fantasy:");
-  if (kinds["#shelf-childrens"]) eq(kinds["#shelf-childrens"], "balloon", "Children’s:");
+  eq(kinds["#home"], "openBook", "Home:"); eq(kinds["#shelves"], "openBook", "All shelves:");
+  if (kinds["#shelf-fantasy"]) eq(kinds["#shelf-fantasy"], "castle", "Fantasy:");
+  if (kinds["#shelf-childrens"]) eq(kinds["#shelf-childrens"], "teddy", "Children’s:");
+  if (kinds["#shelf-science-fiction"]) eq(kinds["#shelf-science-fiction"], "planet", "Science Fiction:");
+  if (kinds["#shelf-travel"]) eq(kinds["#shelf-travel"], "steamTrain", "Travel:");
   eq(wood.size, 1, "the same wooden L on every shelf:");
   ok(!$(".try-switch") && !document.documentElement.dataset.tryPlace && !document.documentElement.dataset.tryEnds && !document.documentElement.dataset.tryFrames, "the Try switch is gone");
   ok(["frames", "place", "ends"].every(k => localStorage.getItem("library-try-" + k) === null), "its remembered choices cleared");
