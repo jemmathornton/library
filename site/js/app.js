@@ -220,13 +220,13 @@ ELSEWHERE.forEach(e => { const id = (DATA.elsewhereShelves || {})[e.title]; if (
 
 // ---------- pieces ----------
 // covers are copied into covers/; one still only linked from Open Library uses its quicker medium size in lists
-// smaller pictures (her pick from the Try switch, 22 Nov): Home's cover cards use covers/thumbs/<name>.webp (460px tall) and the
-// small covers in every page's banner covers/thumbs/<name>-s.webp (180px), both made by tools/make_thumbs.py at about twice the
-// size shown; a book page and the other pages keep the cover itself
+// smaller pictures (her pick, 22 Nov; every cover grid since round 5): cover cards everywhere (Home, the shelves, All shelves,
+// authors, History, More by...) use covers/thumbs/<name>.webp (460px tall, about twice the 222px they show at most) and the small
+// covers in every page's banner covers/thumbs/<name>-s.webp (180px), made by tools/make_thumbs.py (every build runs it); a book's
+// own page (big) keeps the cover itself
 const thumbSrc = (src, tiny) => {
   const m = /^covers\/([^/?]+)\.(?:jpe?g|png|webp)(\?.*)?$/i.exec(src || "");
-  if (!m || (!tiny && (location.hash.slice(1) || "home") !== "home")) return "";
-  return `covers/thumbs/${m[1]}${tiny ? "-s" : ""}.webp${m[2] || ""}`;
+  return m ? `covers/thumbs/${m[1]}${tiny ? "-s" : ""}.webp${m[2] || ""}` : "";
 };
 const coverSrc = (b, big, tiny) => (!big && thumbSrc(b.cover, tiny)) ||
   (big || !/^https:/.test(b.cover) ? b.cover : b.cover.replace(/-L\.jpg$/, "-M.jpg"));
@@ -240,18 +240,21 @@ addEventListener("error", e => { const img = e.target;
 const SIGN_PATHS = {signed: '<path d="M12 20h9"/><path d="M16.376 3.622a1 1 0 0 1 3.002 3.002L7.368 18.635a2 2 0 0 1-.855.506l-2.872.838a.5.5 0 0 1-.62-.62l.838-2.872a2 2 0 0 1 .506-.854z"/>',
   "to-you": '<path d="M18.9 5.7a1.9 1.9 0 0 1 2.7 2.7L10.7 19.3l-3.7 1.1 1.1-3.7z"/><circle cx="6" cy="4.6" r="2.1"/><path d="M2.6 10.8a3.4 3.4 0 0 1 6.8 0"/>'};
 const SIGN_WORDS = {signed: "Signed", "to-you": "Signed to you"};
-const sealMark = kind => `<span class="seal${kind === "to-you" ? " fancy" : ""}" title="${SIGN_WORDS[kind]}"><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${SIGN_PATHS[kind]}</svg></span>`;
+const sealMark = (kind, worded) => `<span class="seal${kind === "to-you" ? " fancy" : ""}" title="${SIGN_WORDS[kind]}" ${worded ? 'aria-hidden="true"' : `role="img" aria-label="${SIGN_WORDS[kind]}"`}><svg class="i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${SIGN_PATHS[kind]}</svg></span>`;
 function cover(b, extra = "", big = false){
   const s = shelfIndex[b.shelf], st = reading(b).status;
-  // read or reading: a tick (or bookmark) in the top corner, walnut and cream (her choice, 18 Oct); her stars go under the
-  // cover (ratedLine, 22 Nov), no longer in a dark strip across its foot
+  // read or reading: a tick (or bookmark) in the top corner, walnut and cream (her choice, 18 Oct); her stars, filled to
+  // the rating with no number, in a strip across the foot (back on the cover, her ask 22 Nov: she liked them there; an arrow,
+  // not a text cursor, and not selectable)
   // read: a cream "Read" sash across the top corner (her choice, 18 Oct, over a tick)
   // didn't finish and paused: "DNF" and "Paused" sashes the same way (her choices, 18 Oct)
   // with a small icon for how she read it: an open book (print), headphones (audiobook) or a tablet (ebook) (her ask, 18 Oct)
   const fmt = reading(b).format, how = {paperback: "book-open", hardcover: "book-open", audio: "headphones", digital: "tablet"}[fmt];
-  const sash = (word, title) => `<span class="sash" title="${title}${fmt ? " · " + FORMATS[fmt] : ""}">${how ? ic(how) : ""}${word}</span>`;
+  const sash = (word, title) => `<span class="sash" title="${title}${fmt ? " · " + FORMATS[fmt] : ""}" aria-label="${title}${fmt ? ", " + FORMATS[fmt] : ""}">${how ? ic(how) : ""}${word}</span>`;
   const badge = st === "read" ? sash("Read", "Read") : st === "reading" ? sash("Reading", "Reading now")
     : st === "stopped" ? sash("DNF", "Didn’t finish") : st === "paused" ? sash("Paused", "Paused") : "";
+  const r = reading(b).rating;
+  const strip = r ? `<span class="rated" title="${starsText(r)} stars" role="img" aria-label="${starsText(r)} stars"><span class="sg-stars" style="--r:${(r / 5 * 100).toFixed(1)}%" aria-hidden="true"><span>★★★★★</span><span>★★★★★</span></span></span>` : "";
   // not owned: the cover faded, with a walnut "Not owned" band across it (her choice, 18 Oct; not on a book's own page)
   const tag = (b.notOwned && !big ? `<span class="not-owned">Not owned</span>` : "")
     // a special edition (Illumicrate and the like, data/editions.json): a brass sash across the other top corner (her ask, 18 Oct)
@@ -259,12 +262,8 @@ function cover(b, extra = "", big = false){
     + (b.signed ? sealMark(b.signed) : "");
   // the whole cover at its own shape, never trimmed to a frame (her ask, 30 Oct); a picture with no known shape keeps the frame
   const ratio = b.cover && b.coverRatio;
-  return `<div class="cover${b.cover ? "" : " blank"}${ratio ? " fit" : ""}${b.notOwned && !big ? " unowned" : ""}${TRIAL && b.coverTrial ? " trial" : ""} ${extra}" style="--c:${s ? s.color : "#5E3D22"}${ratio ? ";--r:" + ratio : ""}">${badge}${tag}${b.cover ? `<img src="${escRaw(coverSrc(b, big))}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
+  return `<div class="cover${b.cover ? "" : " blank"}${ratio ? " fit" : ""}${b.notOwned && !big ? " unowned" : ""}${TRIAL && b.coverTrial ? " trial" : ""} ${extra}" style="--c:${s ? s.color : "#5E3D22"}${ratio ? ";--r:" + ratio : ""}">${badge}${tag}${strip}${b.cover ? `<img src="${escRaw(coverSrc(b, big))}" alt="" loading="lazy">` : ""}<span class="t">${esc(b.t)}</span><span class="a">${esc(b.by)}</span></div>`;
 }
-// her stars for a book, filled to the rating with no number: just under its cover on book pages and cover cards, plain, in the
-// page's own colours (her decision, 22 Nov: no dark strip on the cover); an arrow, not a text cursor, and not selectable
-const ratedLine = b => { const r = reading(b).rating;
-  return r ? `<span class="rated" title="${starsText(r)} stars" role="img" aria-label="${starsText(r)} stars"><span class="sg-stars" style="--r:${(r / 5 * 100).toFixed(1)}%" aria-hidden="true"><span>★★★★★</span><span>★★★★★</span></span></span>` : ""; };
 // a cover that won't load becomes a title card
 // (and a banner's small cover that won't load is taken out: no inline handlers, for the Content Security Policy, 22 Nov)
 document.addEventListener("error", e => { const img = e.target; if (img.tagName !== "IMG" || !img.parentNode) return;
@@ -274,7 +273,7 @@ document.addEventListener("error", e => { const img = e.target; if (img.tagName 
 const href = b => isElsewhere(b) ? "#" + b.id : "#b-" + b.id;
 // each card as wide as its cover at the shelf height, so every cover is the same height and none overlap (her ask, 1 Nov)
 const cardShape = b => `style="--br:${(b.cover && b.coverRatio) || 1.5}"`;
-const card = (b, note) => `<a class="bk" ${cardShape(b)} href="${href(b)}"><div class="slot">${cover(b)}</div>${ratedLine(b)}<h3>${esc(b.t)}</h3><div class="by">${esc(note || b.by)}</div></a>`;
+const card = (b, note) => `<a class="bk" ${cardShape(b)} href="${href(b)}"><div class="slot">${cover(b)}</div><h3>${esc(b.t)}</h3><div class="by">${esc(note || b.by)}</div></a>`;
 const grid = (list, cls = "") => list.length ? `<div class="books ${cls}">${list.map(b => card(b)).join("")}</div>` : "";
 // an old-books page (her choice, 6 Nov): each series as a shelf of spines in reading order, the spine in the book's cloth
 // colour with its title up it, a book she has no old copy of as a dashed gap in its place (by the series' original
@@ -416,6 +415,15 @@ function navFades(){
   nav.classList.toggle("more-below", nav.scrollTop + nav.clientHeight < nav.scrollHeight - 2);
 }
 document.getElementById("nav").addEventListener("scroll", navFades, {passive: true});
+// a link reached with the keyboard is scrolled clear of the fades, so it and its focus ring are never faded out (round 5: Tab to
+// "Add a Book" at 1280 x 720 left it under the fade at the foot); the list's own end counts as clear
+document.getElementById("nav").addEventListener("focusin", e => {
+  const nav = e.currentTarget, a = e.target.getBoundingClientRect(), n = nav.getBoundingClientRect();
+  const below = a.bottom - (n.bottom - 56), above = (n.top + 44) - a.top;
+  if (below > 0) nav.scrollTop = Math.min(nav.scrollTop + below, nav.scrollHeight - nav.clientHeight);
+  else if (above > 0) nav.scrollTop = Math.max(0, nav.scrollTop - above);
+  navFades();
+});
 addEventListener("resize", navFades);
 
 // a shelf colour light enough that the gilt name would be faint on its cloth (Children's mustard): that card gets darker cloth
@@ -529,11 +537,12 @@ function dateRange([a, b]){   // ['2024-01-02', '2024-01-20'] -> '2 Jan – 20 J
 const starsShown = r => `<span class="sg-stars" style="--r:${(r / 5 * 100).toFixed(1)}%" role="img" aria-label="${r} stars"><span aria-hidden="true">★★★★★</span><span aria-hidden="true">★★★★★</span></span><b class="sg-num">${r}</b>`;
 // her StoryGraph reviews: spoilers stay hidden until clicked
 const reviewHtml = t => esc(t).replace(/\[spoiler\]([\s\S]*?)(\[\/spoiler\]|$)/g, '<span class="spoiler" tabindex="0" role="button" aria-pressed="false" aria-label="Spoiler, hidden: press to show" title="Spoiler: click to show"><span aria-hidden="true">$1</span></span>');
-function sgPanel(r){
+function sgPanel(r, withFormat){   // withFormat: how she read it in words (a phone can't show the sash's hover title; round 5)
   const icon = {read: "check", reading: "bookmark", "to-read": "clock", stopped: "x", paused: "clock"}[r.status] || "book";
   const dates = r.dates.filter(d => d[0] || d[1]);
   return `<div class="panel"><h2>Your reading</h2>
     <div class="sg-status ${r.status}">${ic(icon)}${STATUS_WORDS[r.status] || esc(r.status)}</div>
+    ${withFormat && FORMATS[r.format] ? `<div class="saved sg-format">${FORMATS[r.format]}</div>` : ""}
     ${dates.length ? `<ul class="sg-dates">${dates.slice().reverse().map(d => `<li>${dateRange(d)}</li>`).join("")}</ul>` : ""}
     ${r.readCount > 1 ? `<div class="saved">Read ${r.readCount} times</div>` : ""}
     ${r.rating ? `<div class="sg-rating">${starsShown(r.rating)}</div>` : ""}
@@ -543,12 +552,13 @@ function sgPanel(r){
 }
 const reviews = r => r.reviews && r.reviews.length ? sectionHead("Your <em>review</em>") + r.reviews.map(t => `<div class="review">${reviewHtml(t)}</div>`).join("") : "";
 
+// one row of a book page's Details: nothing when there's no value; ISBN-13 / ISBN-10 labels in plain capitals (dt.caps, 22 Nov)
+const fact = (k, v) => v ? `<dt${/^[A-Z]+-/.test(k) ? ' class="caps"' : ""}>${k}</dt><dd>${v}</dd>` : "";
 function pageSgBook(e){   // a book from StoryGraph that isn't on her shelves
   const r = reading(e), fmt = FORMATS[e.format] || "";
   const known = e.authors.map(a => authorIndex[slug(a.name)]).filter(Boolean);
   const more = known.length ? known[0].books.map(x => x.book).slice(0, 12) : [];
-  const fact = (k, v) => v ? `<dt${/^[A-Z]+-/.test(k) ? ' class="caps"' : ""}>${k}</dt><dd>${v}</dd>` : "";
-  return `<header class="hero book-hero"><div class="book-top"><figure class="plate">${cover(e, "", true)}${ratedLine(e)}</figure><div>
+  return `<header class="hero book-hero"><div class="book-top">${cover(e, "", true)}<div>
       <div class="kicker"><i></i>${e.shelf ? `<a class="label" href="#shelf-${e.shelf}">${esc(shelfIndex[e.shelf].name)}</a><span class="label"> · Not owned</span>` : `<span class="label">Not owned</span>`}${fmt ? `<span class="label"> · ${fmt}</span>` : ""}</div>
       <h1>${esc(e.t)}</h1>${e.sub ? `<div class="sub">${esc(e.sub)}</div>` : ""}
       <div class="authors">${e.authors.map(a => authorIndex[slug(a.name)] ? `<span><a href="#a-${slug(a.name)}">${esc(a.name)}</a></span>` : `<span>${esc(a.name)}</span>`).join("")}</div>
@@ -575,13 +585,13 @@ function pageBook(b){
   const s = shelfIndex[b.shelf] || {id: b.shelf, name: b.shelf, color: "#5E3D22"}, others = BOOKS.filter(x => x !== b && (bookKey(x) === bookKey(b) || (editions[norm(b.title) + "|" + norm(b.surname || "")] || []).includes(x)));
   const lead = (b.authors || []).find(a => !a.role), au = lead && authorIndex[slug(lead.name)];
   const more = au ? au.books.map(x => x.book).filter(x => x !== b && !others.includes(x)).slice(0, 12) : [];
-  const fact = (k, v) => v ? `<dt${/^[A-Z]+-/.test(k) ? ' class="caps"' : ""}>${k}</dt><dd>${v}</dd>` : "", sub = "edition" in b ? b.edition : b.sub;
-  return `<header class="hero book-hero" style="--c:${s.color}"><div class="book-top"><figure class="plate">${cover(b, "", true)}${ratedLine(b)}</figure><div>
+  const sub = "edition" in b ? b.edition : b.sub;
+  return `<header class="hero book-hero" style="--c:${s.color}"><div class="book-top">${cover(b, "", true)}<div>
       <div class="kicker"><i></i><a class="label" href="#shelf-${s.id}">${esc(s.name)}</a></div>
       <h1>${esc(b.t)}</h1>${sub ? `<div class="sub">${esc(sub)}</div>` : ""}
       <div class="authors">${(b.authors || []).map(a => `<span><a href="#a-${slug(a.name)}">${esc(a.name)}</a>${a.role ? ` <small>${esc(a.role)}</small>` : ""}</span>`).join("") || "<span>Unknown author</span>"}</div>
       ${seriesLine(b)}
-      ${b.signed ? `<div class="signed-line">${sealMark(b.signed)}${SIGN_WORDS[b.signed]}</div>` : ""}
+      ${b.signed ? `<div class="signed-line">${sealMark(b.signed, true)}${SIGN_WORDS[b.signed]}</div>` : ""}
       ${b.special && !(sub || "").includes(b.special) ? `<div class="signed-line special-line">${esc(b.special)}</div>` : ""}
     </div></div></header>
     <div class="book-body"><div>
@@ -590,7 +600,7 @@ function pageBook(b){
       ${others.length ? sectionHead(`Other copies <em>you own</em>`) + grid(others) : ""}
       ${more.length ? sectionHead(`More by <em class="keep">${esc(au.name)}</em>`, authorBooks(au) > more.length + 1 ? `<a class="more" href="#a-${au.id}">All ${authorBooks(au)}</a>` : "") + grid(more) : ""}
     </div><aside style="display:grid;gap:18px">
-      ${sgFor[b.id] ? sgPanel(reading(b)) : readingPanel(b)}
+      ${sgFor[b.id] ? sgPanel(reading(b), true) : readingPanel(b)}
       <div class="panel"><h2>Details</h2><dl class="facts">
         ${fact("Shelf", `<a href="#shelf-${s.id}">${esc(s.name)}</a>`)}${fact("Publisher", esc(b.publisher || ""))}
         ${fact("Published", /-01-01/.test(b.published || "") ? year(b.published) : niceDate(b.published) || year(b.published))}${fact("Pages", b.pages ? num(b.pages) : "")}
@@ -723,8 +733,14 @@ function pageToBuy(){
 // data/added.json and the site rebuilt. Only works in her app window (served from the server), not from the folder.
 let addFromWish = false;   // the Add page opened from "Got it" keeps its to-buy book; opened any other way it starts empty
 let addForm = {isbn: "", title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", note: "", busy: false};
+// a reply that isn't the library server's own JSON (it isn't running: the family server answers 503, or nothing answers at all)
+// is an error with .server set, so the page can say her Library server didn't answer rather than blame Open Library (round 5);
+// the server's own refusals ({ok: false, error}) still come through as replies
+const SERVER_DOWN = "Your Library server didn’t answer.";
 const api = (path, opts = {}) => fetch(path, {...opts, headers: {"X-Library": "1", "Content-Type": "application/json", ...(opts.headers || {})}})
-  .then(r => r.json().catch(() => { throw new Error(`the library server answered ${r.status}`); }));
+  .catch(() => { throw Object.assign(new Error("no answer"), {server: true}); })
+  .then(r => r.json().then(d => { if (!r.ok && !(d && typeof d === "object" && ("error" in d || "ok" in d))) throw 0; return d; })
+    .catch(() => { throw Object.assign(new Error(`the library server answered ${r.status}`), {server: true}); }));
 function pageAdd(){
   const f = addForm, served = LIVE;
   const field = (k, label, extra = "") => `<label><span>${label}</span><input id="add-${k}" value="${escRaw(f[k] || "")}" ${extra}></label>`;
@@ -1258,7 +1274,7 @@ document.addEventListener("click", async e => {
     const mine = addForm, isbn = addForm.isbn;
     addForm.looking = true; addForm.note = "Looking it up…"; redrawAdd();
     let d = null;
-    try { d = await api("api/lookup?isbn=" + encodeURIComponent(isbn)); } catch {}
+    try { d = await api("api/lookup?isbn=" + encodeURIComponent(isbn)); } catch {}   // null: her Library server didn't answer
     mine.looking = false;
     if (addForm !== mine) return;   // another book meanwhile (review, 9 Nov)
     readAdd();
@@ -1269,7 +1285,7 @@ document.addEventListener("click", async e => {
       else if (d.error) addForm.note = "The lookup didn’t work this time (the shops may be slow). Try again, or fill in the details yourself.";
       else Object.assign(addForm, {title: addForm.fromWish ? addForm.title : "", authors: addForm.fromWish ? addForm.authors : "", publisher: "", published: "", pages: "", cover: "", shelf: "", suggest: null, coverWrong: false, coverOriginal: null, coverChoices: null, corners: null, cornersUsed: null, trimEdge: 0,
         note: "Open Library, Waterstones and Goodreads don’t know that number yet (new or special editions can take a while). Try the Waterstones price sticker if it has one, or fill in the details yourself."}); }
-    catch { addForm.note = "Couldn’t reach Open Library. Fill in the details yourself."; }
+    catch { addForm.note = SERVER_DOWN + " Try again in a moment, or fill in the details yourself."; }
     if (camChecked) { camChecked = false; addForm.note = `Read from a picture: check ${addForm.isbn} matches the book. ` + addForm.note; }
     const typed = isbn13Of(addForm.isbn), have = BOOKS.find(b => (typed && b.isbn13 === typed) || (b.shopCode && b.shopCode === addForm.isbn));
     if (have) addForm.note = `You already have this one: ${have.t}. Add it again only if it’s a second copy. ` + (addForm.note || "");   // added to, not replacing (review, 21 Nov)
@@ -1285,7 +1301,7 @@ document.addEventListener("click", async e => {
         addForm = {isbn: "", title: "", authors: "", publisher: "", published: "", pages: "", cover: "", shelf: "", note: "", busy: false};
         location.href = location.pathname + "?v=" + Date.now() + "#add"; return; }
       addForm.note = r.error || (r.saved ? "It’s saved, but something went wrong after. Don’t add it again." : "That didn’t save."); }
-    catch { addForm.note = "That didn’t save: is the library open from its shortcut?"; }
+    catch { addForm.note = "That didn’t save: " + SERVER_DOWN.replace(/^Your/, "your"); }
     addForm.busy = false; redrawAdd();
   }
 });
@@ -1448,16 +1464,9 @@ function startFamily(){
     main: () => document.getElementById("view")
   });
 }
-// The family's code comes from Jemma's Journals at /family/ (its server, this library's own server, the tests' server). Opened
-// straight from the folder there is no /family/, so it comes from the folder beside instead (Jemma's Journals' site/family).
-function familyFromFolder(){
-  const base = new URL("../../site/family/", location.href).href;
-  const css = document.createElement("link"); css.rel = "stylesheet"; css.href = base + "family.css";
-  document.head.insertBefore(css, document.querySelector('link[href^="site.css"]'));
-  const add = (name, old) => new Promise(done => { const el = document.createElement("script"); el.src = base + name; if (old) el.dataset.oldKey = old; el.onload = el.onerror = done; document.head.appendChild(el); });
-  add("mode.js", "jemmas-library-mode").then(() => add("family.js")).then(() => { if (window.JJFamily) startFamily(); });
-}
-if (window.JJFamily) startFamily(); else if (location.protocol === "file:") familyFromFolder();
+// The family's code comes from Jemma's Journals: /family/ when served, its site/family folder beside when opened as a file
+// (js/family-path.js chooses before the page asks for anything; round 5)
+if (window.JJFamily) startFamily();
 
 // "← Jemma's Journals": "/" is home where the sites share one address (the family server, online); opened straight from the folder
 // that would be the root of drive C:, so it goes to Jemma's Journals' page in the folder beside (round 3, 22 Nov; as Sim World does)
@@ -1537,9 +1546,21 @@ function route(page, opts = {}){   // page: only the tests pass one (they open a
   drawn = true;
   document.title = title === "Jemma’s Library" ? title : `${curly(title)} · Jemma’s Library`;
   if (opts.keep) return;
-  scrollTo(0, 0);
+  // Back and Forward return to where that page was scrolled (phone review, round 5: Back from a book went to the top of the shelf);
+  // a new page (a link) has no place kept, so it opens at the top. As in Sim World: history.state.y, kept while scrolling (below).
+  const y = history.state && typeof history.state.y === "number" ? history.state.y : 0;
+  scrollTo(0, y);
+  if (y) requestAnimationFrame(() => { if (Math.abs(scrollY - y) > 2) scrollTo(0, y); });
   if (menuOpen()) setMenu(false);
 }
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+let scrollKeep = 0;
+// written only when the place has changed, and at most every quarter second (Chrome stops a page that changes its history too often)
+const keepScroll = () => { clearTimeout(scrollKeep); const y = Math.round(scrollY);
+  if ((history.state || {}).y === y || (!history.state && y === 0)) return;
+  try { history.replaceState({...(history.state || {}), y}, ""); } catch {} };
+addEventListener("scroll", () => { clearTimeout(scrollKeep); scrollKeep = setTimeout(keepScroll, 250); }, {passive: true});
+document.addEventListener("click", e => { if (e.target.closest && e.target.closest("a[href^='#']")) keepScroll(); }, true);
 addEventListener("hashchange", () => { q.value = ""; searchFrom = null; route(); });
 // a home row shows only the books that fit whole (review, 2 Nov: a wide cover or a narrow window cut the last one in half)
 function fitRows(){
@@ -1606,8 +1627,10 @@ addEventListener("beforeinstallprompt", e => e.preventDefault());
 })();
 // is the Library's own server there (tools/serve.py, her app window)? Only it answers api/reading-status with JSON; a file or
 // plain web hosting doesn't, and the site stays read-only. Asked once, before the first page is drawn (at most 3 seconds).
+// Only asked on her PC (localhost): online every visitor's console showed a red 404 for it (round 5).
+const ON_HER_PC = location.protocol.startsWith("http") && ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
 function checkLive(){
-  if (!location.protocol.startsWith("http")) return Promise.resolve(null);
+  if (!ON_HER_PC) return Promise.resolve(null);
   const ask = fetch("api/reading-status", {headers: {"X-Library": "1"}, cache: "no-store"})
     .then(r => r.ok && /json/.test(r.headers.get("Content-Type") || "") ? r.json() : null).catch(() => null);
   return Promise.race([ask, new Promise(done => setTimeout(() => done(null), 3000))]);
@@ -1636,10 +1659,15 @@ function capitaliseEls(els){
   nodes.forEach(n => { const el = n.parentElement.closest("h1, h2, a, .btn, .more"); (groups.get(el) || groups.set(el, []).get(el)).push(n); });
   groups.forEach(list => {
     const WORD = /(?<![\p{L}\p{N}’'-])\p{L}[\p{L}’'-]*/gu;
-    const total = list.reduce((t, n) => t + (n.textContent.match(WORD) || []).length, 0);
+    // a name or her search term (.keep) counts as at least one word even with no letters (round 5: an ISBN searched for made
+    // "for" the last word, so "Results For ‘978…’")
+    const keepOf = n => n.parentElement.closest(".keep");
+    const words = n => (n.textContent.match(WORD) || []).length || (keepOf(n) && /[^\s‘’“”"']/u.test(n.textContent) ? 1 : 0);
+    const total = list.reduce((t, n) => t + words(n), 0);
     let i = 0;
     list.forEach(n => {
-      const keep = n.parentElement.closest(".keep");   // a name or her search term: counted, never changed
+      const keep = keepOf(n);   // a name or her search term: counted, never changed
+      if (keep && !(n.textContent.match(WORD) || []).length) { i += words(n); return; }
       const text = n.textContent.replace(WORD, w => {
         const k = i++, low = w.toLowerCase();
         if (keep) return w;
@@ -1665,3 +1693,39 @@ capitalise(document);
 
 // the skip link: focus the page without changing the address (no inline handler, ready for a strict security policy online; round 4)
 document.addEventListener("click", e => { const a = e.target.closest && e.target.closest("a[data-skip]"); if (!a) return; e.preventDefault(); const v = document.getElementById("view"); if (v) { if (!v.hasAttribute("tabindex")) v.setAttribute("tabindex", "-1"); v.focus(); } });
+
+// ===== TRY SWITCH: TEMPORARY (22 Nov, round 5), only while she chooses; delete this block with the one at the end of site.css =====
+// Bottom right: "Header" (As now / Cloth band / Slim masthead) and "Shelf list" (As now / Dot only / Cloth spines / Name only).
+// Remembered in localStorage "library-try"; ?try-header=…&try-shelf=… in the address picks one (for the record pictures).
+(() => {
+  const OPTS = {header: [["now", "As now"], ["band", "Cloth band"], ["slim", "Slim masthead"]],
+    shelf: [["now", "As now"], ["dot", "Dot only"], ["spine", "Cloth spines"], ["name", "Name only"]]};
+  const LABEL = {header: "Header", shelf: "Shelf list"};
+  const pick = {header: "now", shelf: "now"};
+  try { Object.assign(pick, JSON.parse(localStorage.getItem("library-try") || "{}")); } catch {}
+  const qs = new URLSearchParams(location.search);
+  for (const k in OPTS) { const v = qs.get("try-" + k); if (v) pick[k] = v; if (!OPTS[k].some(o => o[0] === pick[k])) pick[k] = "now"; }
+  const root = document.documentElement, side = document.getElementById("side"), search = side.querySelector(".search"), brand = side.querySelector(".brand");
+  const head = document.createElement("header"); head.className = "try-head"; head.id = "tryHead";
+  head.innerHTML = `<a class="try-lockup" href="#home"><b>Jemma’s <em>Library</em></b><small>Every book on the shelves</small></a><div class="try-search"></div>`;
+  document.getElementById("main").prepend(head);
+  const wide = matchMedia("(min-width:901px)");
+  const place = () => { const slot = head.querySelector(".try-search");   // the search goes into the masthead (wide windows only)
+    if (pick.header === "slim" && wide.matches) { if (search.parentNode !== slot) slot.appendChild(search); }
+    else if (search.parentNode !== side) brand.after(search); };
+  const box = document.createElement("div"); box.className = "try-switch"; box.setAttribute("role", "group"); box.setAttribute("aria-label", "Try a look");
+  const draw = () => { box.innerHTML = `<b>Try</b>` + Object.keys(OPTS).map(k => `<div class="try-row"><span>${LABEL[k]}</span>${OPTS[k].map(([v, w]) =>
+    `<button type="button" data-try="${k}:${v}" aria-pressed="${pick[k] === v}">${w}</button>`).join("")}</div>`).join(""); };
+  const room = () => { document.body.style.paddingBottom = box.offsetHeight + 28 + "px"; };   // the page's foot is never under it
+  const apply = () => { root.dataset.tryHeader = pick.header; root.dataset.tryShelf = pick.shelf; place(); draw(); room(); navFades();
+    try { localStorage.setItem("library-try", JSON.stringify(pick)); } catch {} };
+  box.addEventListener("click", e => { const b = e.target.closest("[data-try]"); if (!b) return; const [k, v] = b.dataset.try.split(":"); pick[k] = v; apply();
+    box.querySelector(`[data-try="${k}:${v}"]`)?.focus(); });
+  document.body.appendChild(box);
+  wide.addEventListener("change", place); addEventListener("resize", room);
+  // the shelf's colour on its link too, for Name only's rule
+  const tint = () => document.querySelectorAll("#nav a .dot").forEach(d => d.parentElement.style.setProperty("--c", d.style.getPropertyValue("--c")));
+  new MutationObserver(tint).observe(document.getElementById("nav"), {childList: true}); tint();
+  apply();
+})();
+// ===== end of TRY SWITCH =====

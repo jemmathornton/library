@@ -5,7 +5,10 @@
 <!-- Content Security Policy (her decision, 22 Nov): the browser runs only the site's own code (no inline scripts or handlers, nothing
      from other sites). Pictures may also come from https: as the Add a book page shows the covers it looks up (Open Library, shops)
      before one is chosen and copied in; data: and blob: for the cover tools' pictures. Styles 'unsafe-inline' for the style="…"
-     colours and sizes the pages are built with. -->
+     colours and sizes the pages are built with. Why https: and not a list of hosts (round 5): the looked-up covers' addresses come
+     from other sites' pages (Waterstones' and Goodreads' own image hosts, which they change) and some redirect elsewhere (Open
+     Library's covers to archive.org's numbered servers, Amazon's to its media hosts); the policy checks every redirect too, so a
+     list would silently blank covers on the Add page whenever a shop moved its pictures. -->
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Jemma’s Library</title>
@@ -26,11 +29,10 @@
      mode.js: light by default, dark only once she presses Dark mode on any site (localStorage "jj-mode"; the Library's old
      "jemmas-library-mode" is moved over once), set here before the page is drawn so it never flashes. family.css: the footer's layout
      and the drawer's mechanics (the Library's own look is in site.css). family.js: the Dark mode button, the bar colour above,
-     Back to top, footer line 1, the credits' dots and the Menu drawer (js/app.js starts it). -->
-<script src="/family/mode.js" data-old-key="jemmas-library-mode"></script>
-<link rel="stylesheet" href="/family/family.css">
-<link rel="stylesheet" href="site.css?v=405c10c9">
-<script src="/family/family.js" defer></script>
+     Back to top, footer line 1, the credits' dots and the Menu drawer (js/app.js starts it). js/family-path.js writes the three tags
+     here (mode.js, family.css, then family.js deferred): from /family/, or from Jemma's Journals' site/family when opened as a file. -->
+<script src="js/family-path.js?v=72cc6c9f"></script>
+<link rel="stylesheet" href="site.css?v=6caded3d">
 </head>
 <body>
 <a class="skip" href="#view" data-skip>Skip to the page</a>
@@ -56,7 +58,7 @@
   <div class="jj-foot-links"><a href="#top" data-jj-top="#view" id="toTop"></a><button type="button" data-jj-mode id="modeBtn"></button></div></footer></main>
 
 <script src="js/icons.js?v=462de08a"></script>
-<script src="js/data.js?v=15b95219"></script>
-<script src="js/app.js?v=94743ef0" defer></script>
+<script src="js/data.js?v=d9553fac"></script>
+<script src="js/app.js?v=084188b3" defer></script>
 </body>
 </html>

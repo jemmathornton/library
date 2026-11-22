@@ -1,5 +1,5 @@
 {
- "_about": "Libib values that are wrong or missing, put right: book id -> {pages, publisher, published}. To be applied by tools/build.py over books.json (unlike data/details.json, which only fills gaps).",
+ "_about": "Libib values that are wrong or missing, put right: book id -> {pages, publisher, published, title}. To be applied by tools/build.py over books.json (unlike data/details.json, which only fills gaps).",
  "bpko7zhcho": {
   "pages": 351,
   "published": "1995"
@@ -256,5 +256,11 @@
  },
  "kql3v5gysl": {
   "pages": 240
+ },
+ "6uc5yww8dt": {
+  "title": "A/S/L"
+ },
+ "0b5q53udcu": {
+  "title": "The Story of a New Name: My Brilliant Friend Book 2 (Neapolitan Novels)"
  }
 }

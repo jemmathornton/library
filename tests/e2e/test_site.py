@@ -176,6 +176,10 @@ class MadeUp(PageTests):
     def prepare(cls, box):
         fixture_library.make(box)
         run_build(box)
+        # the build makes every cover's small copies (round 5); the Glass Owl's are taken away again (in the sandbox only), to test
+        # the fall back to the cover
+        for end in ('', '-s'):
+            os.remove(box.path('site', 'covers', 'thumbs', f'9790000000011{end}.webp'))
 
 
 @unittest.skipUnless(BROWSER, 'needs Chrome or Edge')

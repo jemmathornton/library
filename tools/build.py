@@ -268,6 +268,21 @@ def stamp_page():
         swap(page_path + TMP, page_path)
 
 
+def small_covers():
+    """The small copies of new or changed covers (tools/make_thumbs.py; round 5, 22 Nov: it was run by hand only, so a book
+    added on the site had none and a replaced cover kept its old one on Home and in banners). Every build runs it, so it
+    follows the Add page and a replaced cover too (tools/serve.py rebuilds after both). A failure never stops the build:
+    the site falls back to the cover itself."""
+    import sys
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    try:
+        import make_thumbs
+        make_thumbs.make_all(os.path.join(SITE, 'covers'), quiet=True)
+    except Exception as e:
+        print(f'small copies of the covers not made: {type(e).__name__}: {e}')
+
+
 if __name__ == '__main__':
+    small_covers()
     build()
     stamp_page()

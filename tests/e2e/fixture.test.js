@@ -1110,36 +1110,120 @@ test("round 3: capitals are put on headings added later, without going over the 
 });
 
 // ---------- her decisions of 22 Nov ----------
-test("22 Nov: a cover’s stars sit under it, plain (no dark strip on the cover), an arrow and not selectable", async () => {
+test("22 Nov (her ask, round 5): her stars are on the cover again, in the strip at its foot; an arrow and not selectable; no shadow trailing under a book page’s cover", async () => {
   for (const h of ["#shelf-fantasy", "#b-fx-moon"]) {
     await show(h);   // drawn without touching the address (Chrome stops a page changing it too often)
-    const r = h === "#b-fx-moon" ? $(".book-top .plate .rated", view()) : $(`a.bk[href="#b-fx-moon"] .rated`, view());
-    ok(r, `${h}: the stars are there`);
-    ok(!r.closest(".cover"), `${h}: the stars aren’t on the cover`);
-    const cov = r.parentElement.querySelector(".cover");
-    ok(cov && r.getBoundingClientRect().top >= cov.getBoundingClientRect().bottom - 1, `${h}: the stars are under the cover`);
+    const r = h === "#b-fx-moon" ? $(".book-top .cover .rated", view()) : $(`a.bk[href="#b-fx-moon"] .cover .rated`, view());
+    ok(r, `${h}: the stars are on the cover`);
     const cs = getComputedStyle(r);
-    eq([cs.cursor, cs.userSelect, cs.backgroundImage, cs.backgroundColor], ["default", "none", "none", "rgba(0, 0, 0, 0)"], `${h}: arrow, not selectable, no strip:`);
+    eq([cs.position, cs.cursor, cs.userSelect], ["absolute", "default", "none"], `${h}: in the strip, an arrow, not selectable:`);
+    ok(/gradient/.test(cs.backgroundImage), `${h}: the strip fades up from the foot`);
     eq(r.getAttribute("aria-label"), "4.5 stars", `${h}: read as words:`);
     eq(r.title, "4.5 stars", `${h}: its title:`);
   }
-  ok(!$$(".cover .rated").length, "no stars left on any cover");
+  await show("#b-fx-moon");
+  ok(!$(".plate") && !$(".book-top > .rated"), "nothing under the cover");
+  const sh = getComputedStyle($(".book-top .cover", view())).boxShadow;
+  ok(!/26px|40px/.test(sh) && (sh.match(/rgb/g) || []).length === 4, `the frame’s four rings, no shadow under it: ${sh}`);
+  await show("#shelf-fantasy");
+  const rows = new Map();
+  $$("#shelfBooks a.bk", view()).forEach(a => { const y = Math.round(a.getBoundingClientRect().top); (rows.get(y) || rows.set(y, []).get(y)).push(Math.round(a.querySelector("h3").getBoundingClientRect().top)); });
+  rows.forEach((t, y) => eq(new Set(t).size, 1, `titles in the row at ${y} line up:`));
 });
 
-test("22 Nov: smaller pictures on Home and in banners (covers/thumbs/), a missing small copy falls back to the cover", async () => {
-  ok(!$(".try-switch"), "the Try switch is gone");
-  // Home's small pictures depend on the address, so it is changed here (waiting out Chrome's limit on changing it too often)
-  await until(() => { try { history.replaceState(null, "", "#home"); } catch {} return location.hash === "#home"; }, "the address to change to #home", 12000);
-  route(); await wait(0);
-  const img = $$("a.bk .cover img", view()).find(i => /covers\//.test(i.getAttribute("src")));
-  ok(img, "a cover card with a copied cover on Home");
-  await until(() => (img.complete && img.naturalWidth > 0 && !/thumbs/.test(img.getAttribute("src"))) || !img.isConnected, "the Home cover to load", 5000);
-  ok(img.isConnected && /^covers\/[^/]+\.jpg/.test(img.getAttribute("src")), `the fixture has no small copies, so the cover itself: ${img.getAttribute("src")}`);
-  eq(coverSrc({cover: "covers/9780000000001.jpg?v=1"}, false), "covers/thumbs/9780000000001.webp?v=1", "Home card:");
+test("round 5: small copies on every cover grid (shelves, authors, history…), the cover itself on a book’s page; a missing copy falls back to the cover", async () => {
+  eq(coverSrc({cover: "covers/9780000000001.jpg?v=1"}, false), "covers/thumbs/9780000000001.webp?v=1", "a cover card:");
   eq(coverSrc({cover: "covers/9780000000001.jpg"}, false, true), "covers/thumbs/9780000000001-s.webp", "banner:");
   eq(coverSrc({cover: "covers/9780000000001.jpg"}, true), "covers/9780000000001.jpg", "a book’s own page keeps the cover:");
-  await until(() => { try { history.replaceState(null, "", "#shelf-fantasy"); } catch {} return location.hash === "#shelf-fantasy"; }, "the address to change", 12000);
-  eq(coverSrc({cover: "covers/9780000000001.jpg"}, false), "covers/9780000000001.jpg", "a shelf’s cards keep the cover:");
+  for (const h of ["#home", "#shelf-fantasy", "#shelves", "#history"]) {
+    await show(h);
+    const imgs = $$("a.bk .cover img", view()).filter(i => /covers\//.test(i.getAttribute("src")) && !/9790000000011/.test(i.getAttribute("src")));
+    ok(imgs.length, `${h}: cover cards with copied covers`);
+    ok(imgs.every(i => /covers\/thumbs\//.test(i.getAttribute("src"))), `${h}: the cards use the small copies`);
+  }
+  await show("#b-fx-moon");
+  ok(/^covers\/[^/]+\.jpg/.test($(".book-top .cover img", view()).getAttribute("src")), "the book page: the cover itself");
+  await show("#shelf-fantasy");
+  const owl = $$("a.bk .cover img", view()).find(i => /9790000000011/.test(i.getAttribute("src")));
+  ok(owl, "the Glass Owl on its shelf (its small copies taken away by test_site.py)");
+  await until(() => !owl.isConnected || (owl.complete && owl.naturalWidth > 0 && !/thumbs/.test(owl.getAttribute("src"))), "the Glass Owl’s cover in place of its missing small copy", 5000);
+  ok(owl.isConnected && /^covers\/9790000000011\.jpg/.test(owl.getAttribute("src")), `its cover shows, not a title card: ${owl.getAttribute("src")}`);
+});
+
+test("round 5: the search heading keeps “for” small when the term has no letters (an ISBN)", async () => {
+  const h2 = el => { const e = document.createElement("div"); e.innerHTML = el; view().append(e); capitaliseEls(e.querySelectorAll("h2")); const t = e.querySelector("h2").textContent; e.remove(); return t; };
+  eq(h2(`<h2>Results for <em class="keep">‘9790000000035’</em></h2>`), "Results for ‘9790000000035’", "an ISBN:");
+  eq(h2(`<h2>Results for <em class="keep">‘harbour’</em></h2>`), "Results for ‘harbour’", "a word:");
+  eq(h2(`<h2>Most books by</h2>`), "Most Books By", "a heading’s own last word still has its capital:");
+});
+
+test("round 5: the page itself, focused by script after a key press, draws no ring round itself; links keep theirs", async () => {
+  view().focus(); eq(getComputedStyle(view()).outlineStyle, "none", "the page:");
+  const rules = [...document.styleSheets].flatMap(s => { try { return [...s.cssRules]; } catch { return []; } });
+  ok(rules.some(r => r.selectorText === ":focus-visible" && /solid/.test(r.style.outline)), "links and buttons still get a ring with the keyboard");
+  view().blur();
+});
+
+test("round 5: Back returns to where the page was scrolled; a new page opens at the top", async () => {
+  eq(history.scrollRestoration, "manual", "the site keeps the place itself:");
+  const was = history.state, key = location.hash.slice(1) || "home";
+  try {
+    const put = y => until(() => { try { history.replaceState({...(history.state || {}), y}, ""); } catch {} return (history.state || {}).y === y; }, "the place kept in history", 12000);
+    await put(300); route(key); await wait(50);
+    ok(Math.abs(scrollY - Math.min(300, document.documentElement.scrollHeight - innerHeight)) <= 2, `kept place: ${scrollY}`);
+    await put(null); route(key); await wait(50);
+    eq(scrollY, 0, "no place kept: the top:");
+  } finally { history.replaceState(was, ""); scrollTo(0, 0); }
+});
+
+test("round 5: a sidebar link reached with Tab is scrolled clear of the fade", async () => {
+  const nav = $("#nav"), was = nav.style.cssText;
+  try {
+    nav.style.flex = "none"; nav.style.height = "200px"; nav.scrollTop = 0; navFades();
+    const links = $$("a", nav), last = links[links.length - 1];
+    last.focus(); await wait(50);
+    const n = nav.getBoundingClientRect(), a = last.getBoundingClientRect();
+    ok(a.bottom <= n.bottom && (!nav.classList.contains("more-below") || a.bottom <= n.bottom - 48), `the last link clear of the fade (${a.bottom} in ${n.bottom})`);
+  } finally { document.activeElement.blur(); nav.style.cssText = was; navFades(); }
+});
+
+test("round 5: the Add page says her Library server didn’t answer (not Open Library) when it’s down", async () => {
+  ok(/Library server didn’t answer/.test(SERVER_DOWN), "the message");
+  const realF = window.fetch;
+  try {
+    let err = null;
+    window.fetch = () => Promise.resolve(new Response("The library server (port 8020) is not running", {status: 503, headers: {"Content-Type": "text/html"}}));
+    try { await api("api/lookup?isbn=1"); } catch (e) { err = e; }
+    ok(err && err.server, "a 503 from the family server: the library server didn’t answer");
+    err = null; window.fetch = () => Promise.reject(new TypeError("Failed to fetch"));
+    try { await api("api/lookup?isbn=1"); } catch (e) { err = e; }
+    ok(err && err.server, "no answer at all: the same");
+    window.fetch = () => Promise.resolve(new Response(JSON.stringify({ok: false, error: "A book needs a title and a shelf."}), {status: 400, headers: {"Content-Type": "application/json"}}));
+    eq((await api("api/books")).error, "A book needs a title and a shelf.", "the server’s own refusal still comes through:");
+  } finally { window.fetch = realF; }
+});
+
+test("round 5: online (not her PC) the site doesn’t ask for its server", async () => {
+  eq(ON_HER_PC, true, "the tests run on 127.0.0.1: her PC:");
+  ok(checkLive.toString().includes("if (!ON_HER_PC) return Promise.resolve(null)"), "checkLive asks nothing elsewhere");
+});
+
+test("round 5: the format in words on a book page (a phone can’t show the sash’s hover title); sashes and seals labelled", async () => {
+  const b = BOOKS.find(x => sgFor[x.id] && FORMATS[reading(x).format]);
+  ok(b, "a book with a format in the made-up library");
+  await show("#b-" + b.id);
+  eq($(".sg-format", view())?.textContent, FORMATS[reading(b).format], "the format in the Your reading panel:");
+  await show("#shelf-fantasy");
+  ok($$(".cover .sash", view()).every(s => s.getAttribute("aria-label")), "sashes labelled");
+  ok($$(".cover .seal", view()).every(s => s.getAttribute("aria-label")), "seals labelled");
+});
+
+test("round 5: the TEMPORARY Try switch (Header, Shelf list) is there, and never over the drawer", async () => {
+  const box = $(".try-switch"); ok(box, "the switch");
+  eq($$(".try-row", box).length, 2, "two rows:");
+  eq($$("button", box).length, 7, "seven choices:");
+  const rules = [...document.styleSheets].flatMap(s => { try { return [...s.cssRules]; } catch { return []; } });
+  ok(rules.some(r => r.selectorText === ".jj-menu-open .try-switch" && r.style.display === "none"), "hidden while the drawer is open");
 });
 
 test("22 Nov: the sidebar fades at the foot while more links are below, at the top once scrolled, not at all when it fits", async () => {

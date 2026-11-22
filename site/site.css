@@ -56,6 +56,10 @@ button,input,select{font:inherit;color:inherit}
 img{max-width:100%}
 svg.i{width:1em;height:1em;flex:none}
 :focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:6px}
+/* the page and other containers the site moves focus to by script (tabindex="-1": after a page is chosen, Back, the skip link)
+   never draw a ring round themselves: Chrome counts focus set just after a key press (Backspace, Alt+Left) as keyboard focus, and drew
+   a ring round the whole page (her note, 22 Nov); links, buttons and fields keep theirs */
+[tabindex="-1"]:focus,[tabindex="-1"]:focus-visible{outline:none}
 .side :focus-visible{outline-color:var(--brass)}
 .skip{position:absolute;left:-999px;top:8px;z-index:100;padding:8px 14px;border-radius:8px;background:var(--surface);color:var(--ink);font-weight:700}
 .skip:focus{left:calc(var(--side) + 12px)}
@@ -77,7 +81,7 @@ em{font-style:italic}
 .search input{width:100%;padding:9px 12px 9px 36px;border-radius:10px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.07);color:var(--on-deep);outline:none}
 .search input::placeholder{color:var(--on-deep-mute)}
 .search input:focus{border-color:var(--brass);background:rgba(255,255,255,.1)}
-.search-ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--on-deep-mute);display:flex}
+.search-ico{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--on-deep-mute);display:flex;pointer-events:none}   /* a tap on the magnifier goes to the box (phone review, round 5) */
 .nav{overflow-y:auto;padding:10px 12px 16px;flex:1;display:flex;flex-direction:column;gap:14px;scrollbar-color:rgba(255,255,255,.2) transparent}
 .nav-group{display:grid;gap:1px}
 .nav-group .label{padding:6px 12px 8px;color:var(--on-deep-mute)}
@@ -111,13 +115,15 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .foot .jj-foot-links>*{font:700 13px/1 var(--body);color:var(--gilt-ink)}   /* over the Library's own a/button rules (colour and font inherited) */
 
 /* hero */
-.hero{--c:var(--brass);margin-inline:min(calc(-1 * clamp(16px,4vw,56px)),calc((100% - 100cqw) / 2));padding:68px max(clamp(16px,4vw,56px),calc((100cqw - 100%) / 2)) 42px;color:var(--ink);position:relative;overflow:hidden}
+/* --pad: from the page's edge to the text column (.wrap's padding plus the space beside its 1180px), worked out from the page's
+   own width (cqw), so the hero, its plate and the text all use the same figure, with or without a scrollbar (round 5) */
+.hero{--c:var(--brass);--pad:calc((100cqw - min(100cqw,1180px)) / 2 + clamp(16px,4vw,56px));margin-inline:calc(-1 * var(--pad));padding:68px var(--pad) 42px;color:var(--ink);position:relative;overflow:hidden}
 .hero>*{position:relative}
 .kicker{display:flex;align-items:center;gap:10px;color:var(--muted)}
 .kicker .label{color:var(--muted);font:italic 400 17px/1 var(--read);letter-spacing:.02em;text-transform:none}
 .kicker i{display:none}
 .kicker::before{content:"❧";font-size:20px;color:var(--gilt);line-height:1}   /* a printer’s leaf before the kicker */
-.kicker a{color:var(--muted);text-decoration:none}
+.kicker a{color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;min-height:24px}   /* the shelf link on a book page: 24px to tap (round 5) */
 .kicker a:hover{color:var(--ink)}
 .hero h1{font-size:clamp(60px,9vw,120px);line-height:.9;margin-top:18px;letter-spacing:-.02em}
 .hero h1 em{color:var(--accent)}
@@ -215,7 +221,7 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 /* ---------- book page ---------- */
 .book-hero{padding-top:56px;padding-bottom:46px}
 .book-top{display:grid;grid-template-columns:260px minmax(0,1fr);gap:48px;align-items:end}
-.book-top .cover{width:260px;box-shadow:0 2px 4px rgba(0,0,0,.2),0 26px 50px -18px rgba(0,0,0,.6)}
+.book-top .cover{width:260px}
 .book-top .cover.blank .t{font-size:30px}
 .book-top .cover.blank .a{font-size:11px}
 .book-top h1{font-size:clamp(44px,5.4vw,76px);line-height:.98;margin-top:16px}
@@ -312,23 +318,24 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 
 /* banners made of the page's own covers: in L1 (21 Nov) a plate of eighteen covers tipped in on the right of the title page,
    in a cream mount with a ruled line inside */
-.hero .hero-shelf{position:absolute;z-index:0;top:40px;right:max(56px,calc((100cqw - 1180px) / 2 + 56px));width:31%;overflow:hidden;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-content:start;gap:6px;padding:12px;pointer-events:none;
+.hero .hero-shelf{position:absolute;z-index:0;top:40px;right:var(--pad);width:var(--plate);overflow:hidden;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-content:start;gap:6px;padding:12px;pointer-events:none;
   background:var(--mount);border:1px solid var(--mount-edge);outline:1px solid var(--line);outline-offset:-6px;box-shadow:0 1px 2px rgba(0,0,0,.08),0 14px 30px -18px var(--shade)}
 .hero-shelf img{width:100%;aspect-ratio:2/3;object-fit:cover;border-radius:1px;display:block;filter:sepia(.18) saturate(.9)}
 .hero-shelf img:nth-child(n+19){display:none}
 .hero.shelved{padding-top:58px;padding-bottom:40px;min-height:calc(23.25cqw + 80px)}   /* tall enough for the whole plate (three rows of six) on short banners like Stats */
-.hero.shelved h1{max-width:64%;font-size:112px}
+.hero.shelved{--plate:31cqw}
+.hero.shelved h1{font-size:min(112px,10cqw)}
+/* the words stop short of the plate at every width (round 5: at 1500–1920 the figures' rules ran into it, at 901–1100 the title) */
+@media (min-width:901px){ .hero.shelved>:not(.hero-shelf){max-width:calc(100% - var(--plate) - 32px)} }
 .hero.shelved>*:not(.hero-shelf){z-index:2}
 .kicker .dot{width:10px;height:10px;box-shadow:0 0 0 2px rgba(255,255,255,.15)}
 
-/* her stars on a cover */
-/* her stars under a cover (22 Nov, her decision: no dark strip on the cover): plain, small, centred, in the page's own colours (the
-   Your reading panel's stars); an arrow, not a text cursor, and not selectable */
-.rated{display:flex;justify-content:center;line-height:1;cursor:default;-webkit-user-select:none;user-select:none}
-.rated .sg-stars{font-size:15px;letter-spacing:1px}
-.plate{margin:0;display:grid;justify-items:center}
-.plate .rated{margin-top:10px}
-.plate .rated .sg-stars{font-size:19px;letter-spacing:2px}
+/* her stars on a cover, in a strip fading up from its foot (back as before, her ask 22 Nov); an arrow, not a text cursor, and not selectable */
+.cover .rated{position:absolute;left:0;right:0;bottom:0;z-index:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:14px 8px 6px;background:linear-gradient(0deg,rgba(28,18,10,.88) 0%,rgba(28,18,10,.7) 55%,transparent);color:#F5C44E;
+  cursor:default;-webkit-user-select:none;user-select:none}
+.cover .rated .sg-stars{font-size:15px;letter-spacing:1px;color:rgba(255,255,255,.3)}
+.cover .rated .sg-stars span+span{color:#F5C44E}
+.blist .cover .rated{display:none}
 
 /* series */
 .in-series{display:inline-flex;align-items:center;gap:7px;margin-top:12px;font-size:14px;font-weight:700;color:var(--gilt-ink);text-decoration:none}
@@ -386,6 +393,7 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .add-fields .two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .add-fields .btn{justify-self:start}
 .btn[disabled]{opacity:.5;cursor:default}
+.cover.blank:has(.rated){padding-bottom:30px}
 /* read books: a cream sash across the top corner (her choice, 18 Oct) */
 .cover .sash{position:absolute;z-index:1;right:-34px;top:16px;width:120px;transform:rotate(45deg);text-align:center;padding:4px 0 3px;
   background:#FBF4E6;color:#3B2616;font:800 9.5px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;box-shadow:0 1px 4px rgba(0,0,0,.35)}
@@ -446,7 +454,7 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .btn.quiet{padding:8px;border-color:transparent;background:none;color:var(--muted)}
 .btn.quiet:hover{color:var(--ink);border-color:var(--line)}
 .scan-setup{margin:40px 0 60px;padding:14px 18px;border-radius:12px;background:var(--soft);font-size:14px;color:var(--muted)}
-.scan-setup summary{cursor:pointer;font-weight:700;color:var(--ink)}
+.scan-setup summary{cursor:pointer;font-weight:700;color:var(--ink);min-height:24px;line-height:24px}   /* at least 24px to tap (phone review, round 5) */
 .scan-setup ol{margin:12px 0 6px;padding-left:20px;display:grid;gap:6px}
 .scan-setup code{font:600 14px/1.4 ui-monospace,Consolas,monospace;color:var(--ink);background:var(--surface);padding:2px 6px;border-radius:6px;word-break:break-all;user-select:all}
 .scan-setup p{margin:6px 0 0}
@@ -455,8 +463,6 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .cover.fit{aspect-ratio:1/var(--r)}
 .slot{aspect-ratio:2/3;display:flex;align-items:flex-end;justify-content:center}
 .slot .cover{width:100%}
-/* every cover the same height on the shelves (her ask, 1 Nov): a squarer book (a hardback, an A5 book) shows a little
-   wider instead of shorter, up to an eighth wider than the slot, which still leaves a gap to its neighbours; a squarer one (illustrated editions, picture books) is a little shorter instead of overlapping */
 /* every cover the same height (her ask, 1 Nov): the shelves are rows of cards each as wide as its own cover at one
    height, so a wider book takes a wider space instead of shrinking or overlapping */
 .books{display:flex;flex-wrap:wrap;align-items:flex-start;--ch:222px}
@@ -502,7 +508,7 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .shelf-card .fan .cover:nth-child(1){left:calc(50% - 76px)}
 .shelf-card .fan .cover:nth-child(2){left:calc(50% - 28px);bottom:-9px}
 .shelf-card .fan .cover:nth-child(3){left:calc(50% + 20px)}
-.shelf-card .fan .cover .sash,.shelf-card .fan .cover .seal{display:none}
+.shelf-card .fan .cover .sash,.shelf-card .fan .cover .rated,.shelf-card .fan .cover .seal{display:none}
 .shelf-card .txt{padding:11px 13px 13px;gap:8px}
 .shelf-card h3{font-size:20px}
 .shelf-card .txt span{font-size:14.5px}
@@ -613,6 +619,7 @@ a.spine:hover{transform:translateY(-6px)}
   mask-image:linear-gradient(to bottom,transparent 0,#000 var(--fade-top),#000 calc(100% - var(--fade-bottom)),transparent 100%)}
 .nav.more-above{--fade-top:36px}
 .nav.more-below{--fade-bottom:48px}
+.nav{scroll-padding-block:44px 56px}   /* a link reached with Tab is scrolled clear of the fades (round 5; js/app.js navFocus() too) */
 .nav-group.minor a{font-size:15px}
 
 /* the main area as a page: the gutter's shadow by the binding, page edges down the right */
@@ -653,7 +660,7 @@ main::after{content:"";position:fixed;top:0;bottom:0;right:0;width:7px;pointer-e
 .hero.book-hero{padding-top:50px;padding-bottom:20px;margin-inline:0;padding-inline:0}
 .book-top{align-items:center}
 .book-top .cover{border-radius:0;margin:14px;overflow:hidden;
-  box-shadow:0 0 0 6px var(--mount),0 0 0 7px var(--line),0 0 0 13px var(--mount),0 0 0 14px var(--mount-edge-2),0 26px 40px -16px var(--shade)}
+  box-shadow:0 0 0 6px var(--mount),0 0 0 7px var(--line),0 0 0 13px var(--mount),0 0 0 14px var(--mount-edge-2)}   /* the frame's rings only: no shadow trailing under the cover (her ask, 22 Nov) */
 .book-top h1{font-size:84px}
 .book-top .authors{font:italic 400 22px var(--read)}
 .book-top .authors a{font-weight:400;border-bottom-color:var(--gilt)}
@@ -776,6 +783,10 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
   .home-link{padding:10px 0;margin-top:6px}
   main{margin-left:0;box-shadow:none}   /* no binding at the side, so no gutter shadow */
   .skip:focus{left:12px}
+  /* an iPhone on its side: the notch and rounded corners never cover the words (phone review, round 5; viewport-fit=cover) */
+  .topbar{padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+  .wrap,.foot{padding-left:max(clamp(16px,4vw,56px),env(safe-area-inset-left));padding-right:max(clamp(16px,4vw,56px),env(safe-area-inset-right))}
+  .side{padding-left:env(safe-area-inset-left)}
 }
 @media (prefers-reduced-motion: reduce){ .side,.side.jj-open{transition:none} }
 
@@ -798,6 +809,7 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
   .book-top .cover{width:min(240px,62vw)}
   /* a title card's margins from the card's own width (round 3: as percentages they came from the whole column, leaving “Witne”) */
   .book-top .cover.blank{padding:calc(min(240px,62vw) * .14) calc(min(240px,62vw) * .11) calc(min(240px,62vw) * .11)}
+  .book-top .cover.blank:has(.rated){padding-bottom:30px}
   .book-top>div:not(.cover){width:100%}
   .book-top h1{font-size:clamp(40px,10vw,84px)}
   .book-top .authors{justify-content:center}
@@ -953,3 +965,60 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 /* dark mode: the old books' shelves a dark board with the walnut ledge, not bright cream bands */
 :root[data-mode="dark"] .bookshelf{background:repeating-linear-gradient(to bottom,#2E241A 0,#261D15 168px,#6B4A2B 168px,#5E4126 182px)}
 :root[data-mode="dark"] .spine.gap{border-color:rgba(226,196,122,.45);background:repeating-linear-gradient(45deg,transparent 0 6px,rgba(226,196,122,.08) 6px 7px)}
+
+/* ===== TRY SWITCH: TEMPORARY (22 Nov, round 5), only while she chooses; delete this block with the one at the end of js/app.js =====
+   Header: As now / Cloth band / Slim masthead (wide windows only: under 900px the family's top bar and Menu drawer stay as they are).
+   Shelf list: As now / Dot only / Cloth spines / Name only. Set on <html> as data-try-header and data-try-shelf. */
+.try-switch{position:fixed;right:18px;bottom:18px;z-index:20;display:grid;gap:7px;max-width:calc(100vw - 36px);padding:10px 12px;border-radius:4px;
+  background:var(--deep);color:var(--on-deep);box-shadow:0 6px 20px rgba(0,0,0,.3);border:1px solid color-mix(in srgb,var(--gilt) 45%,transparent);font:600 12.5px/1.2 var(--body)}
+.trial-switch:not([hidden]) ~ .try-switch{bottom:76px}
+.jj-menu-open .try-switch{display:none}   /* never over the drawer or its scrim */
+.try-switch>b{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--brass)}
+.try-row{display:flex;flex-wrap:wrap;align-items:center;gap:5px}
+.try-row span{flex:1 1 100%;opacity:.85;font-weight:500}
+.try-switch button{padding:6px 11px;min-height:30px;border:0;border-radius:999px;background:rgba(255,255,255,.12);color:inherit;font:inherit;cursor:pointer}
+.try-switch button[aria-pressed="true"]{background:var(--brass);color:var(--deep)}
+.try-switch button:focus-visible{outline:2px solid var(--brass);outline-offset:2px}
+@media (max-width:600px){ .try-switch{right:10px;left:10px;bottom:10px;max-width:none;padding:8px 10px;gap:5px} .try-switch button{padding:5px 9px;min-height:28px;font-size:12px} }
+@media (max-width:900px){ .try-row:first-of-type{display:none} }   /* the Header options are for wide windows only */
+.try-head{display:none}
+@media (min-width:901px){
+  /* Cloth band: the binding's cloth across the top of every page, the name in gilt like a book's cover, between gilt rules */
+  [data-try-header="band"] .try-head{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;position:relative;min-height:112px;padding:20px 24px 18px;
+    background:var(--weave),linear-gradient(180deg,#55301D,var(--cloth));border-bottom:3px double var(--gilt);box-shadow:0 8px 18px -14px var(--shade)}
+  [data-try-header="band"] .try-head::before{content:"";position:absolute;inset:9px 14px;border:1px solid color-mix(in srgb,var(--gilt) 50%,transparent);pointer-events:none}
+  [data-try-header="band"] .try-lockup{display:grid;justify-items:center;gap:6px;text-decoration:none;color:var(--gilt-2)}
+  [data-try-header="band"] .try-lockup b{font:400 46px/1 var(--display);color:var(--on-deep);letter-spacing:.01em}
+  [data-try-header="band"] .try-lockup b em{color:var(--gilt-2)}
+  [data-try-header="band"] .try-lockup small{font:italic 400 16px/1 var(--read);color:var(--gilt-2)}
+  [data-try-header="band"] .side .brand{display:none}
+  [data-try-header="band"] #view .hero:not(.book-hero){padding-top:42px}
+  [data-try-header="band"] #view .hero:not(.book-hero) h1{font-size:clamp(48px,6vw,84px)}
+  [data-try-header="band"] #view .hero.shelved h1{font-size:min(84px,7.5cqw)}
+  /* Slim masthead: a thin printed masthead on the page between gilt rules, the name on the left and the search on the right */
+  [data-try-header="slim"] .try-head{display:flex;align-items:center;justify-content:space-between;gap:24px;
+    padding:10px calc((100cqw - min(100cqw,1180px)) / 2 + clamp(16px,4vw,56px));border-bottom:3px double var(--line);background:color-mix(in srgb,var(--paper) 92%,var(--gilt))}
+  [data-try-header="slim"] .try-lockup{display:flex;align-items:baseline;gap:14px;text-decoration:none;color:var(--ink)}
+  [data-try-header="slim"] .try-lockup b{font:400 30px/1 var(--display);white-space:nowrap}
+  [data-try-header="slim"] .try-lockup b em{color:var(--accent)}
+  [data-try-header="slim"] .try-lockup small{font:italic 400 15px/1 var(--read);color:var(--muted);white-space:nowrap}
+  [data-try-header="slim"] .try-search{flex:0 1 340px}
+  [data-try-header="slim"] .try-search .search{margin:0}
+  [data-try-header="slim"] .try-search .search input{background:var(--surface);color:var(--ink);border-color:var(--line)}
+  [data-try-header="slim"] .try-search .search input::placeholder{color:var(--muted)}
+  [data-try-header="slim"] .try-search .search-ico{color:var(--muted)}
+  [data-try-header="slim"] .side .brand{display:none}
+  [data-try-header="slim"] #view .hero:not(.book-hero){padding-top:46px}
+}
+@media (min-width:901px) and (max-width:1100px){ [data-try-header="slim"] .try-lockup small{display:none} }
+/* Shelf list: Dot only (no gilt ring round the dot, no gilt bar on the shelf she's on) */
+[data-try-shelf="dot"] .nav .dot{box-shadow:none}
+[data-try-shelf="dot"] .nav a.on,[data-try-shelf="spine"] .nav a.on,[data-try-shelf="name"] .nav a.on{box-shadow:none}
+/* Cloth spines: a small upright spine in the shelf's colour with gilt bands top and foot, in place of the dot */
+[data-try-shelf="spine"] .nav .dot{width:8px;height:22px;border-radius:1px 1px 0 0;margin-left:2px;
+  box-shadow:inset 0 3px 0 -1px color-mix(in srgb,var(--gilt-2) 80%,transparent),inset 0 -3px 0 -1px color-mix(in srgb,var(--gilt-2) 80%,transparent),inset -2px 0 0 rgba(0,0,0,.18)}
+/* Name only: no dot or icon; the shelf's colour shows as a thin rule on the left while pointed at or chosen */
+[data-try-shelf="name"] .nav-group:not(.minor) a>.dot,[data-try-shelf="name"] .nav-group:not(.minor) a>.i{display:none}
+[data-try-shelf="name"] .nav-group:not(.minor) a:hover{box-shadow:inset 2px 0 0 var(--c,var(--gilt))}
+[data-try-shelf="name"] .nav-group:not(.minor) a.on{box-shadow:inset 3px 0 0 var(--c,var(--gilt))}
+/* ===== end of TRY SWITCH ===== */

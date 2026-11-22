@@ -193,3 +193,30 @@ test("To buy: the banner counts the two lists it shows, which make the whole lis
 test("“not read yet” leaves out books she didn’t finish or paused", async () => {
   ok(!BOOKS.some(b => ["stopped", "paused"].includes(reading(b).status) && isUnread(b)), "a DNF or paused book counts as unread");
 });
+
+// round 5 (22 Nov): at 1300-1920 wide the title page's words ran into the plate of covers and its rules over the covers
+test("round 5: on every page with a plate, the title page's words stop short of it and nothing runs off the right, 901 to 1920 wide", async () => {
+  const problems = [];
+  const f = document.createElement("iframe"); f.src = "index.html";
+  f.style.cssText = "position:fixed;left:-5000px;top:0;width:1600px;height:900px;border:0";
+  await new Promise(done => { f.onload = done; document.body.append(f); });
+  try {
+    const win = f.contentWindow, d = f.contentDocument;
+    await until(() => d.getElementById("view") && d.getElementById("view").innerText.trim().length > 20, "the framed page", 15000);
+    for (const h of ["home", "shelf-fantasy", "a-enid-blyton", "stats"]) {
+      win.route(h); await wait(30);
+      for (const w of [901, 1000, 1300, 1536, 1600, 1920]) {   // one frame made wider and narrower (a fresh one each time was too slow)
+        f.style.width = w + "px"; await new Promise(r => win.requestAnimationFrame(() => win.requestAnimationFrame(r)));
+        const cw = d.documentElement.clientWidth, hero = d.querySelector("#view .hero"), plate = hero && hero.querySelector(".hero-shelf");
+        d.querySelectorAll("#view .hero, #view .hero *, #view .section-head, #view .section-head *").forEach(el => {
+          const b = el.getBoundingClientRect(); if (b.width && b.right > cw + 0.5) problems.push(`${h} @${w}: ${el.tagName}.${el.className} past the right edge`); });
+        if (plate && win.getComputedStyle(plate).position === "absolute") {
+          const p = plate.getBoundingClientRect();
+          hero.querySelectorAll(":scope > :not(.hero-shelf)").forEach(el => { const b = el.getBoundingClientRect();
+            if (b.width && b.right > p.left && b.bottom > p.top && b.top < p.bottom) problems.push(`${h} @${w}: ${el.tagName}.${el.className} into the plate`); });
+        }
+      }
+    }
+  } finally { f.remove(); }
+  eq([...new Set(problems)].slice(0, 12), [], "overlaps:");
+});
