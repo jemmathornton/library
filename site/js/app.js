@@ -1738,7 +1738,8 @@ document.addEventListener("click", e => { const a = e.target.closest && e.target
   const realBanner = shelfBanner;
   shelfBanner = list => { const html = realBanner(list); if (!html) return html;
     const spines = variedPick(list || [], 30).map(b => { const c = /^#[0-9a-f]{6}$/i.test(b.spine || b.cloth || "") ? (b.spine || b.cloth) : "#7A6650";
-      return `<span class="sp${luminance(c) > 0.33 ? " pale" : ""}" style="--c:${c};--h:${tall(b)}%;--w:${thick(b)}px"><span class="t"><b>${esc(b.t)}</b>${b.by ? `<i>${esc(b.by)}</i>` : ""}</span></span>`; }).join("");
+      const lum = luminance(c);   // pale: dark lettering (Flat); dark: gilt foil when Stamped (anything lighter is blind-stamped there, for legibility)
+      return `<span class="sp${lum > 0.33 ? " pale" : ""}${lum < 0.2 ? " dark" : ""}" style="--c:${c};--h:${tall(b)}%;--w:${thick(b)}px"><span class="t"><b>${esc(b.t)}</b>${b.by ? `<i>${esc(b.by)}</i>` : ""}</span></span>`; }).join("");
     return html + `<div class="hero-spines" aria-hidden="true"><div class="sp-row">${spines}</div></div>`; };
   // each spine's lettering fitted to it: the title and author on one line if they fit; else the title alone, a little smaller;
   // else on two lines when the spine is wide enough; only then cut short with an ellipsis. Centred both ways in the spine.
@@ -1768,16 +1769,28 @@ document.addEventListener("click", e => { const a = e.target.closest && e.target
   try { pick = localStorage.getItem("library-try-covers") || "now"; } catch {}
   pick = new URLSearchParams(location.search).get("try-covers") || pick;
   if (!OPTS.some(o => o[0] === pick)) pick = "now";
+  // a second row, "Spine finish" (her ask, 22 Nov: less flat): Flat (as built) / Stamped (rounded spines, gilt-foil or blind-stamped
+  // titles, gilt bands with a sheen); remembered in "library-try-finish", ?try-finish=… picks one
+  const FINISH = [["flat", "Flat"], ["stamped", "Stamped"]];
+  let finish = "flat";
+  try { finish = localStorage.getItem("library-try-finish") || "flat"; } catch {}
+  finish = new URLSearchParams(location.search).get("try-finish") || finish;
+  if (!FINISH.some(o => o[0] === finish)) finish = "flat";
   const root = document.documentElement;
   // the bigger options show covers larger than the banner's 180px small copies: the 460px ones instead
   const sharpen = () => { if (pick === "now") return;
     document.querySelectorAll("#view .hero-shelf img").forEach(i => { const s = i.getAttribute("src") || ""; if (/-s\.webp/.test(s)) i.setAttribute("src", s.replace("-s.webp", ".webp")); }); };
   const box = document.createElement("div"); box.className = "try-switch"; box.setAttribute("role", "group"); box.setAttribute("aria-label", "Try a look");
   const draw = () => { box.innerHTML = `<b>Try</b><div class="try-row"><span>Covers in the header</span>${OPTS.map(([v, w]) =>
-    `<button type="button" data-try="${v}" aria-pressed="${pick === v}">${w}</button>`).join("")}</div>`; };
+    `<button type="button" data-try="${v}" aria-pressed="${pick === v}">${w}</button>`).join("")}</div>`
+    + `<div class="try-row"><span>Spine finish</span>${FINISH.map(([v, w]) => `<button type="button" data-try-finish="${v}" aria-pressed="${finish === v}">${w}</button>`).join("")}</div>`; };
   const room = () => { document.body.style.paddingBottom = box.offsetHeight + 28 + "px"; };   // the page's foot is never under it
-  const apply = () => { root.dataset.tryCovers = pick; draw(); room(); sharpen(); requestAnimationFrame(fitSpines); try { localStorage.setItem("library-try-covers", pick); } catch {} };
-  box.addEventListener("click", e => { const b = e.target.closest("[data-try]"); if (!b) return; pick = b.dataset.try; apply(); box.querySelector(`[data-try="${pick}"]`)?.focus(); });
+  const apply = () => { root.dataset.tryCovers = pick; root.dataset.tryFinish = finish; draw(); room(); sharpen(); requestAnimationFrame(fitSpines);
+    try { localStorage.setItem("library-try-covers", pick); localStorage.setItem("library-try-finish", finish); } catch {} };
+  box.addEventListener("click", e => {
+    const f = e.target.closest("button[data-try-finish]"); if (f) { finish = f.dataset.tryFinish; apply(); box.querySelector(`[data-try-finish="${finish}"]`)?.focus(); return; }
+    // buttons only: <html> itself carries data-try-finish, so a plain [data-try-finish] matched every click
+    const b = e.target.closest("button[data-try]"); if (!b) return; pick = b.dataset.try; apply(); box.querySelector(`[data-try="${pick}"]`)?.focus(); });
   document.body.appendChild(box);
   addEventListener("resize", room);
   new MutationObserver(sharpen).observe(document.getElementById("view"), {childList: true});

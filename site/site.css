@@ -1034,6 +1034,21 @@ main .label,.pick-body .label,.added-note .label{font:italic 400 15px/1.2 var(--
 [data-try-covers="spines"] .hero-spines .t i[hidden]{display:none}
 [data-try-covers="spines"] .hero-spines .t.two{white-space:normal;max-width:calc(2 * 1.05em + 2px);overflow:hidden}
 [data-try-covers="spines"] .hero-spines .t.cut{overflow:hidden;text-overflow:ellipsis}
+/* Spine finish: Stamped (her ask, 22 Nov: less flat). Each spine rounded (light on its left third, darker at both edges), a faint dark
+   gap between books, gilt bands with a sheen; the title gilt foil on a dark spine, blind-stamped (darker, a light edge below) on a light one */
+[data-try-finish="stamped"][data-try-covers="spines"] .hero-spines .sp{
+  background:
+    linear-gradient(90deg,#8a6420,#f6e3a0 40%,#b5893a 70%,#7a5418) 0 4px / 100% 2px no-repeat,
+    linear-gradient(90deg,#8a6420,#f6e3a0 40%,#b5893a 70%,#7a5418) 0 calc(100% - 4px) / 100% 2px no-repeat,
+    linear-gradient(90deg,rgba(0,0,0,.32) 0,rgba(255,255,255,.2) 20%,rgba(255,255,255,.08) 36%,rgba(0,0,0,0) 58%,rgba(0,0,0,.34) 100%),
+    var(--c);
+  box-shadow:1px 0 0 rgba(0,0,0,.45),-1px 0 0 rgba(0,0,0,.25)}
+[data-try-finish="stamped"][data-try-covers="spines"] .hero-spines .sp.dark .t{
+  background:linear-gradient(90deg,#d6ad55 0,#fff3c4 45%,#f0cf78 62%,#c99a42 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(-1px 0 0 rgba(0,0,0,.75))}
+[data-try-finish="stamped"][data-try-covers="spines"] .hero-spines .sp:not(.dark) .t{
+  color:color-mix(in srgb,var(--c) 30%,#140b05);text-shadow:-1px 0 0 color-mix(in srgb,var(--c) 40%,#fff)}
+[data-try-finish="stamped"][data-try-covers="spines"] .hero-spines .sp .t i{opacity:1}
 @media (max-width:900px){
   [data-try-covers="spines"] .hero .hero-spines{order:9;height:130px;width:min(100%,420px);align-self:center;margin-top:28px}
 }
