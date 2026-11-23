@@ -435,6 +435,12 @@ test("search by ISBN, with or without hyphens", async () => {
   ok((await searchFor("979-0-000000-07-3")).includes("The Fox’s Winter"));
 });
 
+test("search counts each book once, however many copies (overnight review, 23 Nov)", async () => {
+  await searchFor("Moon Harbour");
+  eq($$(".bk", view()).length, 4, "all four copies are still shown:");
+  eq($(".section-head .more", view()).textContent.trim().toLowerCase(), "1 book", "the count beside Results for:");
+});
+
 test("search lists authors, books read elsewhere and the to-buy list apart", async () => {
   const text = await searchFor("quill");
   ok($$(".chips a.btn", view()).some(a => a.getAttribute("href") === "#a-ada-quill"), "no author chip");

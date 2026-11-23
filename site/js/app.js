@@ -1640,7 +1640,7 @@ function pageSearch(term){
     || (tn.length >= 6 && ((b.isbn13 || "").includes(tn) || (b.isbn10 || "").toLowerCase().includes(tn)));
   const books = BOOKS.filter(hit).sort(SORTS.title[1]), authors = AUTHORS.filter(a => a.name.toLowerCase().includes(t)), wish = WISH.filter(hit);
   const away = ELSEWHERE.filter(hit).sort(SORTS.title[1]);
-  return `<div class="section-head" style="margin-top:56px"><h2>Results for <em class="keep">‘${esc(term)}’</em></h2><span class="more">${plural(books.length, "book")}</span></div>`
+  return `<div class="section-head" style="margin-top:56px"><h2>Results for <em class="keep">‘${esc(term)}’</em></h2><span class="more">${plural(nBooks(books), "book")}</span></div>`   // each book once, however many copies (her call, 21 Nov; it counted copies: “47” beside Terry Pratchett · 46)
     + (authors.length ? `<div class="chips" style="margin-bottom:28px">${authors.slice(0, 20).map(a => `<a class="btn" href="#a-${a.id}">${ic("user")}<span class="keep">${esc(a.name)}</span> · ${authorBooks(a)}</a>`).join("")}</div>` : "")
     + (books.length ? grid(books) : `<p class="empty">No books match.</p>`)
     + (away.length ? sectionHead("Read or to read, <em>not on your shelves</em>") + grid(away) : "")

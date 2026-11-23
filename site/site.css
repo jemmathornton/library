@@ -238,11 +238,6 @@ main{margin-left:var(--side);min-height:100vh;container-type:inline-size}
 .facts dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums;overflow-wrap:anywhere}
 .facts dd a{text-decoration:none;border-bottom:1px solid var(--line)}
 
-/* reading controls */
-.dates{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.dates label{display:grid;gap:4px;font-size:12px;font-weight:700;color:var(--muted)}
-.dates input{padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:var(--paper);font-size:13.5px}
-.stars{display:flex;gap:2px;align-items:center}
 .saved{font-size:12px;color:var(--muted)}
 
 /* ---------- authors ---------- */
@@ -323,7 +318,6 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
 .hero .hero-shelf::before{left:8px}
 .hero .hero-shelf::after{right:8px}
 .hero-shelf .sp-row{display:flex;flex-wrap:nowrap;align-items:flex-end;justify-content:center;gap:0 2px;height:100%;overflow:hidden}
-.hero-shelf .sp-row.measuring{justify-content:flex-start}
 .hero-shelf .sp[hidden]{display:none}
 .hero-shelf .sp{flex:0 0 var(--w);height:var(--h);display:flex;align-items:center;justify-content:center;padding:10px 3px;box-sizing:border-box;overflow:hidden;border-radius:2px 2px 0 0;
   background:
@@ -401,7 +395,6 @@ a.bar-row:hover b{text-decoration:underline;text-decoration-color:var(--brass)}
   width:calc(104px + var(--s,1) * 18px);padding:6px 6px;gap:3px}
 .hero-shelf.tiered .figures .fr b{font-size:calc(22px + var(--s,1) * 8px)}
 .hero-shelf.tiered .figures .fr span{font-size:13px;line-height:1.1}
-.kicker .dot{width:10px;height:10px;box-shadow:0 0 0 2px rgba(255,255,255,.15)}
 
 /* her stars on a cover, in a strip fading up from its foot (back as before, her ask 22 Nov); an arrow, not a text cursor, and not selectable */
 .cover .rated{position:absolute;left:0;right:0;bottom:0;z-index:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:14px 8px 6px;background:linear-gradient(0deg,rgba(28,18,10,.88) 0%,rgba(28,18,10,.7) 55%,transparent);color:#F5C44E;
